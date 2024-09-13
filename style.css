@@ -128,3 +128,8 @@ nav a {
 .menu-item:hover {
   background-color: #f5f5f5;
 }
+
+.designer-circles {
+  display: flex;
+  justify-content: center;
+  gap: 
