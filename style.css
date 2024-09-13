@@ -1,4 +1,8 @@
-/* تنسيق عام للجسم */body {
+/* تنسيق عام للجسم */body {إليك كود CSS الكامل مع التعديلات اللازمة:
+
+```css
+/* تنسيق عام للجسم */
+body {
   font-family: 'Cairo', sans-serif;
   color: #333;
   background-color: #f0e6d2; /* لون بني فاتح */
@@ -10,6 +14,7 @@
   box-sizing: border-box;
 }
 
+/* تنسيق رأس الصفحة */
 header {
   background-color: #654321; /* لون بني داكن */
   color: white;
@@ -22,17 +27,21 @@ header {
   align-items: center;
 }
 
+header h1 {
+  margin: 0;
+}
+
 nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: row;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
 }
 
 nav li {
-  margin: 0;
+  margin: 0.5rem 0;
 }
 
 nav a {
@@ -48,26 +57,28 @@ nav a {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.slider-container {
-  display: flex;
-  overflow-x: auto;
-  flex-wrap: nowrap;
-  gap: 1rem;
   justify-content: center;
 }
 
+/* تنسيق حاوية الدوائر */
+.slider-container {
+  display: flex;
+  overflow-x: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* تنسيق الدائرة */
 .doctor-circle {
-  width: 15rem;
-  height: 15rem;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   overflow: hidden;
   position: relative;
   cursor: pointer;
+  margin: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
-  background: rgba(255, 255, 255, 0.7); /* خلفية دائرية شفافة */
 }
 
 .doctor-circle:hover {
@@ -80,61 +91,80 @@ nav a {
   object-fit: cover;
 }
 
+/* تنسيق اسم الدكتور */
 .doctor-name {
   position: absolute;
-  bottom: 1rem;
-  left: 0;
+  bottom: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   color: white;
   text-align: center;
   padding: 0.5rem;
   font-size: 1.25rem;
-  opacity: 1;
-  cursor: pointer;
 }
 
+/* تنسيق القائمة الدائرية */
 .circle-menu {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  background-color: rgba(101, 67, 33, 0.4); /* شفاف قليلاً */
-  flex-wrap: wrap;
-  gap: 1rem;
+  background-color: rgba(101, 67, 33, 0.7); /* بني غامق شفاف قليلاً */
   transition: transform 0.3s ease-in-out;
   z-index: 1;
 }
 
 .menu-item {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   background-color: white;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.75rem;
-  color: #654321;
-  transition: background-color 0.3s;
+  font-size: 1.5rem;
+  color: #654321; /* لون بني غامق للأيقونات */
+  transition: transform 0.3s ease-in-out, background-color 0.3s;
 }
 
 .menu-item:hover {
+  transform: scale(1.2);
   background-color: #f5f5f5;
 }
 
-.designer-circles {
-  display: flex;
-  justify-content: center;
-  gap: 
-  
-  /* تنسيق دوائر مصممي الموقع */
+/* توزيع الأيقونات بشكل دائري */
+.circle-menu .home {
+  transform: rotate(0deg) translateX(55px) rotate(0deg);
+}
+
+.circle-menu .contact {
+  transform: rotate(72deg) translateX(55px) rotate(-72deg);
+}
+
+.circle-menu .biography {
+  transform: rotate(144deg) translateX(55px) rotate(-144deg);
+}
+
+.circle-menu .office {
+  transform: rotate(216deg) translateX(55px) rotate(-216deg);
+}
+
+.circle-menu .working-hours {
+  transform: rotate(288deg) translateX(55px) rotate(-288deg);
+}
+
+/* تنسيق صفحة الطلاب */
+.designers {
+  padding: 2rem;
+  text-align: center;
+}
+
 .designer-circles {
   display: flex;
   justify-content: center;
@@ -171,3 +201,10 @@ nav a {
   padding: 0.5rem;
   font-size: 1rem;
 }
+```
+
+### ملخص التعديلات:
+- تم تحديث تنسيق `.doctor-circle` و `.circle-menu` ليكونا دائريين وصحح توزيع الأيقونات في القائمة الدائرية.
+- أضفنا تنسيق جديد لصفحة "الطلاب" لتنسيق دوائر المصممين مع صورهم وأسمائهم.
+
+يمكنك نسخ هذه الأكواد ولصقها في ملف **`style.css
