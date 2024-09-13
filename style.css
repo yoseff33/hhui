@@ -1,63 +1,51 @@
-/* إعدادات عامة للجسم */
+/* إعدادات الخلفية */
 body {
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
     font-family: 'Cairo', sans-serif;
-    background-color: #4B2E2C; /* بني غامق */
+    color: #fff;
     margin: 0;
     padding: 0;
-    color: white;
-    box-sizing: border-box;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* إعدادات للرأس والقائمة */
+/* تنسيق الهيدر والقائمة */
 header {
-    background-color: #654321; /* بني داكن */
-    padding: 2rem 1rem;
+    background-color: rgba(101, 67, 33, 0.8); /* بني شفاف قليلاً */
+    padding: 1rem;
+}
+
+.header-content {
     text-align: center;
 }
 
-.header-content h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: white;
-}
-
-nav ul {
+.menu-scroll {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 1rem 0;
     display: flex;
-    justify-content: center; /* تركز العناصر في المنتصف */
-    gap: 1rem; /* تقليل المسافة بين العناصر */
-    flex-wrap: wrap; /* السماح بالتفاف العناصر عند الحاجة */
+    gap: 1.5rem;
+    justify-content: center;
+    overflow-x: auto; /* شريط تمرير أفقي */
 }
 
-nav ul li {
+.menu-scroll li {
     display: inline-block;
 }
 
-nav ul li a {
+.menu-scroll li a {
     color: white;
     text-decoration: none;
     padding: 0.5rem 1rem;
-    font-size: 1.1rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    font-size: 1.2rem;
 }
 
-nav ul li a:hover {
-    background-color: #e6ccb2;
-    color: #4B2E2C;
-}
-
-nav {
-    margin-bottom: 1rem;
-}
-
-/* إعدادات الدوائر */
 .faculty-slider {
-    background-color: #e6ccb2;
-    padding: 1rem;
+    padding: 2rem;
+    text-align: center;
 }
 
 .slider-container {
@@ -67,73 +55,73 @@ nav {
 }
 
 .doctor-circle {
-    width: 130px;
-    height: 130px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     overflow: hidden;
     margin: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
     position: relative;
-    background-color: white;
 }
 
 .doctor-circle img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
 }
 
-.doctor-name {
+.circle-menu {
     position: absolute;
-    bottom: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 150px;
+    height: 150px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s;
+}
+
+/* الطلاب */
+.students-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.student-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+.student-circle img {
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: white;
-    padding: 0.5rem;
-    font-size: 1rem;
+    height: 100%;
+    object-fit: cover;
+}
+
+.student-name {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
     text-align: center;
+    color: #fff;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
-/* Media Queries لتصميم متجاوب */
-
-/* الأجهزة اللوحية والهواتف المتوسطة */
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column; /* عرض العناصر فوق بعضها البعض على الشاشات الصغيرة */
-        gap: 0.5rem; /* تقليل المسافات أكثر */
-    }
-
-    .header-content h1 {
-        font-size: 1.75rem; /* تصغير حجم العنوان */
-    }
+/* شريط التمرير */
+.menu-scroll::-webkit-scrollbar {
+    height: 6px;
 }
 
-/* الهواتف الذكية (شاشات أصغر من 600px) */
-@media (max-width: 600px) {
-    nav ul {
-        flex-direction: column;
-        padding: 0;
-        margin: 0;
-        gap: 0.5rem; /* تقليل المسافة بين العناصر */
-    }
-
-    .header-content h1 {
-        font-size: 1.5rem; /* تصغير العنوان أكثر */
-    }
-
-    nav ul li a {
-        padding: 0.3rem 0.7rem; /* تقليل المسافة الداخلية حول النص */
-        font-size: 1rem; /* تصغير حجم النص */
-    }
-
-    .doctor-circle {
-        width: 100px;
-        height: 100px;
-    }
-
-    .doctor-name {
-        font-size: 0.85rem; /* تصغير حجم النص ليتناسب مع الشاشة */
-    }
+.menu-scroll::-webkit-scrollbar-thumb {
+    background-color: #e6ccb2;
+    border-radius: 5px;
 }
