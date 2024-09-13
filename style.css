@@ -1,121 +1,130 @@
-/* إعداد عام للجسم */
 body {
-    font-family: 'Cairo', sans-serif;
-    background-color: #4B2E2C; /* بني غامق */
-    margin: 0;
-    padding: 0;
-    color: white;
-    box-sizing: border-box;
-    text-align: center; /* لتوسيط العناوين والقائمة */
+  font-family: 'Cairo', sans-serif;
+  color: #333;
+  background-color: #f0e6d2; /* لون بني فاتح */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 header {
-    background-color: #654321; /* بني داكن */
-    padding: 2rem 1rem;
-    text-align: center;
+  background-color: #654321; /* لون بني داكن */
+  color: white;
+  padding: 1rem;
 }
 
-.header-content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: white;
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    gap: 1rem; /* مسافات متساوية بين العناصر */
-    margin-top: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }
 
-nav ul li {
-    display: inline-block;
+nav li {
+  margin: 0;
 }
 
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    font-size: 1.2rem;
+nav a {
+  color: white;
+  text-decoration: none;
 }
 
-nav ul li a:hover {
-    background-color: #e6ccb2; /* لون بني فاتح */
-    border-radius: 5px;
-}
-
-/* تنسيق قسم أعضاء هيئة التدريس */
+/* تنسيق شريط التمرير */
 .faculty-slider {
-    background-color: #e6ccb2; /* بني فاتح */
-    padding: 2rem;
+  background-color: #e6ccb2; /* لون بني فاتح */
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .slider-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  justify-content: center;
 }
 
 .doctor-circle {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    position: relative;
-    background-color: white;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  background: rgba(255, 255, 255, 0.7); /* خلفية دائرية شفافة */
+}
+
+.doctor-circle:hover {
+  transform: scale(1.05);
 }
 
 .doctor-circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .doctor-name {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: white;
-    padding: 0.5rem;
-    font-size: 1rem;
-    text-align: center;
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  opacity: 1;
+  cursor: pointer;
 }
 
 .circle-menu {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background-color: rgba(101, 67, 33, 0.7);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    transition: transform 0.3s ease;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(101, 67, 33, 0.4); /* شفاف قليلاً */
+  flex-wrap: wrap;
+  gap: 1rem;
+  transition: transform 0.3s ease-in-out;
+  z-index: 1;
 }
 
 .menu-item {
-    width: 40px;
-    height: 40px;
-    background-color: white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    color: #654321;
-    transition: transform 0.3s ease;
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.75rem;
+  color: #654321;
+  transition: background-color 0.3s;
 }
 
 .menu-item:hover {
-    transform: scale(1.2);
+  background-color: #f5f5f5;
 }
