@@ -6,19 +6,23 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* تنسيق رأس الصفحة */
 header {
   background-color: #654321; /* لون بني داكن */
   color: white;
-  padding: 20px;
+  padding: 1rem;
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 nav ul {
@@ -26,10 +30,11 @@ nav ul {
   margin: 0;
   padding: 0;
   display: flex;
+  flex-wrap: wrap;
 }
 
 nav li {
-  margin-left: 20px;
+  margin-left: 1rem;
 }
 
 nav a {
@@ -40,7 +45,7 @@ nav a {
 /* تنسيق شريط التمرير */
 .faculty-slider {
   background-color: #e6ccb2; /* لون بني فاتح */
-  padding: 40px;
+  padding: 2rem;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -52,17 +57,19 @@ nav a {
 .slider-container {
   display: flex;
   overflow-x: auto;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 /* تنسيق الدائرة */
 .doctor-circle {
-  width: 250px;
-  height: 250px;
+  width: 15rem;
+  height: 15rem;
   border-radius: 50%;
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  margin: 20px;
+  margin: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
@@ -80,14 +87,14 @@ nav a {
 /* تنسيق اسم الدكتور */
 .doctor-name {
   position: absolute;
-  bottom: 20px;
+  bottom: 1rem;
   left: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   color: white;
   text-align: center;
-  padding: 10px;
-  font-size: 20px;
+  padding: 0.5rem;
+  font-size: 1.25rem;
   opacity: 1;
   cursor: pointer;
 }
@@ -98,8 +105,8 @@ nav a {
   top: 50%; /* مركز دائرة الدكتور */
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
-  width: 200px;
-  height: 200px;
+  width: 12.5rem;
+  height: 12.5rem;
   border-radius: 50%;
   display: flex;
   justify-content: space-around;
@@ -110,14 +117,14 @@ nav a {
 }
 
 .menu-item {
-  width: 50px;
-  height: 50px;
+  width: 3.125rem;
+  height: 3.125rem;
   background-color: white;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
+  font-size: 1.5rem;
   color: #654321; /* لون بني غامق للأيقونات */
   transition: transform 0.3s ease-in-out, background-color 0.3s;
   position: absolute;
