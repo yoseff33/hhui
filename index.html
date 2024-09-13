@@ -4,88 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>كلية إدارة الأعمال</title>
-    <!-- ربط ملف CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        .header-content {
-            text-align: center;
-            padding: 1rem;
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem; /* تباعد العناصر */
-        }
-        nav ul li {
-            display: inline;
-        }
-        nav ul li a {
-            color: black;
-            text-decoration: none;
-            font-size: 1.1rem;
-        }
-        .faculty-slider {
-            padding: 2rem;
-            text-align: center;
-        }
-        .slider-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .doctor-circle {
-            margin: 1rem;
-            text-align: center;
-            position: relative;
-        }
-        .doctor-circle img {
-            width: 100%;
-            max-width: 200px; /* زيادة حجم دائرة الدكتور */
-            border-radius: 50%;
-        }
-        .circle-menu {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px; /* تكبير الدائرة الشفافة */
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(101, 67, 33, 0.4); /* شفاف قليلاً */
-            flex-wrap: wrap;
-            gap: 1rem; /* تباعد الرموز */
-        }
-        .menu-item {
-            width: 50px;
-            height: 50px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.75rem; /* تكبير الرموز */
-            color: #654321; /* لون الرموز */
-        }
-    </style>
 </head>
 <body>
-
     <header>
         <div class="header-content">
             <h1>كلية إدارة الأعمال</h1>
@@ -118,6 +40,7 @@
                         <div class="menu-item working-hours"><i class="fas fa-clock"></i></div>
                     </div>
                 </div>
+                <!-- يمكنك تكرار هذا النموذج لدكتور آخر -->
             </div>
         </section>
     </main>
@@ -126,6 +49,6 @@
         <!-- تذييل الصفحة -->
     </footer>
 
+    <script src="script.js"></script>
 </body>
 </html>
-
