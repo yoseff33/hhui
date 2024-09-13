@@ -28,4 +28,4 @@ document.addEventListener('click', () => {
     document.querySelectorAll('.circle-menu').forEach(menu => {
         menu.style.transform = 'translate(-50%, -50%) scale(0)';
     });
-});
+}); 
