@@ -1,4 +1,4 @@
-/* إعداد عام للجسم */
+/* إعدادات عامة للجسم */
 body {
     font-family: 'Cairo', sans-serif;
     background-color: #4B2E2C; /* بني غامق */
@@ -9,6 +9,7 @@ body {
     text-align: center;
 }
 
+/* إعدادات للرأس والقائمة */
 header {
     background-color: #654321; /* بني داكن */
     padding: 2rem 1rem;
@@ -16,12 +17,11 @@ header {
 }
 
 .header-content h1 {
-    font-size: 2rem; /* حجم أصغر قليلاً للنص */
+    font-size: 2rem;
     margin-bottom: 1rem;
     color: white;
 }
 
-/* تنسيق القائمة بحيث تكون بجانب بعضها البعض */
 nav ul {
     list-style: none;
     padding: 0;
@@ -29,6 +29,7 @@ nav ul {
     display: flex;
     justify-content: center; /* تركز العناصر في المنتصف */
     gap: 1rem; /* تقليل المسافة بين العناصر */
+    flex-wrap: wrap; /* السماح بالتفاف العناصر عند الحاجة */
 }
 
 nav ul li {
@@ -38,25 +39,24 @@ nav ul li {
 nav ul li a {
     color: white;
     text-decoration: none;
-    padding: 0.5rem 1rem; /* توسيع بسيط للمساحة حول النص */
-    font-size: 1.1rem; /* حجم النص أصغر قليلاً لتناسق أفضل */
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
 nav ul li a:hover {
-    background-color: #e6ccb2; /* لون بني فاتح */
-    color: #4B2E2C; /* تغيير لون النص عند التمرير */
+    background-color: #e6ccb2;
+    color: #4B2E2C;
 }
 
-/* ضبط الهوامش والتباعد */
 nav {
     margin-bottom: 1rem;
 }
 
-/* تنسيق قسم أعضاء هيئة التدريس */
+/* إعدادات الدوائر */
 .faculty-slider {
-    background-color: #e6ccb2; /* بني فاتح */
+    background-color: #e6ccb2;
     padding: 1rem;
 }
 
@@ -94,4 +94,46 @@ nav {
     padding: 0.5rem;
     font-size: 1rem;
     text-align: center;
+}
+
+/* Media Queries لتصميم متجاوب */
+
+/* الأجهزة اللوحية والهواتف المتوسطة */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column; /* عرض العناصر فوق بعضها البعض على الشاشات الصغيرة */
+        gap: 0.5rem; /* تقليل المسافات أكثر */
+    }
+
+    .header-content h1 {
+        font-size: 1.75rem; /* تصغير حجم العنوان */
+    }
+}
+
+/* الهواتف الذكية (شاشات أصغر من 600px) */
+@media (max-width: 600px) {
+    nav ul {
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+        gap: 0.5rem; /* تقليل المسافة بين العناصر */
+    }
+
+    .header-content h1 {
+        font-size: 1.5rem; /* تصغير العنوان أكثر */
+    }
+
+    nav ul li a {
+        padding: 0.3rem 0.7rem; /* تقليل المسافة الداخلية حول النص */
+        font-size: 1rem; /* تصغير حجم النص */
+    }
+
+    .doctor-circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .doctor-name {
+        font-size: 0.85rem; /* تصغير حجم النص ليتناسب مع الشاشة */
+    }
 }
