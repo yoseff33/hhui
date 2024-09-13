@@ -1,8 +1,8 @@
-/* تنسيق عام للجسم *//* تنسيق عام للجسم */
+/* تنسيق عام للجسم *//* تنسيق عام للجسم *//* تنسيق عام للجسم */
 body {
   font-family: 'Cairo', sans-serif;
-  color: #333;
-  background-color: #f0e6d2; /* لون بني فاتح */
+  color: #fff; /* تغيير اللون إلى الأبيض للقراءة على الخلفية الداكنة */
+  background-color: #3e2723; /* لون بني داكن */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -48,7 +48,7 @@ nav a {
 
 /* تنسيق شريط التمرير */
 .faculty-slider {
-  background-color: #e6ccb2; /* لون بني فاتح */
+  background-color: #4e342e; /* لون بني داكن */
   padding: 2rem;
   flex: 1;
   display: flex;
@@ -171,4 +171,26 @@ nav a {
 
 .designer-circle {
   width: 120px;
-  height:
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.designer-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.designer-name {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
