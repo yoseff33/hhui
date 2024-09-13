@@ -1,4 +1,4 @@
-// جلب عنصر الرابط الخاص بالطلاب
+// جلب عنصر الرابط الخاص // جلب عنصر الرابط الخاص بالطلاب
 const studentsLink = document.getElementById('students-link');
 const studentList = document.getElementById('student-list');
 
