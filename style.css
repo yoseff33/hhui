@@ -61,6 +61,140 @@ nav a {
   justify-content: center;
 }
 
+/* إصلاح شكل الدائرة */
+.doctor-circle {
+  width: 15rem;
+  height: 15rem; /* تأكد من أن العرض والارتفاع متساويان للحصول على شكل دائري */
+  border-radius: 50%; /* لضمان أن تكون الدائرة دائرية تمامًا */
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  margin: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.doctor-circle:hover {
+  transform: scale(1.05);
+}
+
+.doctor-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* تنسيق اسم الدكتور */
+.doctor-name {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  opacity: 1;
+  cursor: pointer;
+}
+
+/* تنسيق القائمة المربعة */
+.circle-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 12.5rem;
+  height: 12.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* شبكة مكونة من 3 أعمدة */
+  grid-template-rows: repeat(3, 1fr); /* شبكة مكونة من 3 صفوف */
+  gap: 10px; /* الفجوة بين العناصر */
+  background-color: rgba(101, 67, 33, 0.7); /* بني غامق شفاف قليلاً */
+  transition: transform 0.3s ease-in-out;
+  z-index: 1;
+  border-radius: 1rem; /* زاوية مستديرة قليلاً */
+}
+
+.menu-item {
+  width: 3.125rem;
+  height: 3.125rem;
+  background-color: white;
+  border-radius: 0.5rem; /* زاوية مستديرة قليلاً */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #654321; /* لون بني غامق للأيقونات */
+  transition: transform 0.3s ease-in-out, background-color 0.3s;
+}
+
+.menu-item:hover {
+  transform: scale(1.2);
+  background-color: #f5f5f5;
+}
+
+/* توزيع الأيقونات بشكل مربع */
+.circle-menu .home {
+  grid-area: 1 / 1; /* الزاوية العلوية اليسرى */
+}
+
+.circle-menu .contact {
+  grid-area: 1 / 3; /* الزاوية العلوية اليمنى */
+}
+
+.circle-menu .biography {
+  grid-area: 3 / 1; /* الزاوية السفلية اليسرى */
+}
+
+.circle-menu .office {
+  grid-area: 3 / 3; /* الزاوية السفلية اليمنى */
+}
+
+.circle-menu .working-hours {
+  grid-area: 2 / 2; /* المركز */
+}
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+nav li {
+  margin-left: 1rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+/* تنسيق شريط التمرير */
+.faculty-slider {
+  background-color: #e6ccb2; /* لون بني فاتح */
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* تنسيق حاوية الدوائر */
+.slider-container {
+  display: flex;
+  overflow-x: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 /* تنسيق الدائرة */
 .doctor-circle {
   width: 15rem;
