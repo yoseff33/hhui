@@ -16,7 +16,7 @@ header {
 }
 
 .header-content h1 {
-    font-size: 2.5rem;
+    font-size: 2rem; /* حجم أصغر قليلاً للنص */
     margin-bottom: 1rem;
     color: white;
 }
@@ -25,10 +25,10 @@ header {
 nav ul {
     list-style: none;
     padding: 0;
+    margin: 0;
     display: flex;
     justify-content: center; /* تركز العناصر في المنتصف */
-    gap: 2rem; /* مسافة ثابتة بين العناصر */
-    margin-top: 1rem;
+    gap: 1rem; /* تقليل المسافة بين العناصر */
 }
 
 nav ul li {
@@ -38,8 +38,8 @@ nav ul li {
 nav ul li a {
     color: white;
     text-decoration: none;
-    padding: 0.5rem 1.5rem; /* توسيع المساحة حول النص */
-    font-size: 1.2rem;
+    padding: 0.5rem 1rem; /* توسيع بسيط للمساحة حول النص */
+    font-size: 1.1rem; /* حجم النص أصغر قليلاً لتناسق أفضل */
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
@@ -47,6 +47,11 @@ nav ul li a {
 nav ul li a:hover {
     background-color: #e6ccb2; /* لون بني فاتح */
     color: #4B2E2C; /* تغيير لون النص عند التمرير */
+}
+
+/* ضبط الهوامش والتباعد */
+nav {
+    margin-bottom: 1rem;
 }
 
 /* تنسيق قسم أعضاء هيئة التدريس */
@@ -62,8 +67,8 @@ nav ul li a:hover {
 }
 
 .doctor-circle {
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     overflow: hidden;
     margin: 1rem;
