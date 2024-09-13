@@ -1,0 +1,156 @@
+/* تنسيق عام للجسم */
+body {
+  font-family: 'Cairo', sans-serif;
+  color: #333;
+  background-color: #f0e6d2; /* لون بني فاتح */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* تنسيق رأس الصفحة */
+header {
+  background-color: #654321; /* لون بني داكن */
+  color: white;
+  padding: 20px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+nav li {
+  margin-left: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+/* تنسيق شريط التمرير */
+.faculty-slider {
+  background-color: #e6ccb2; /* لون بني فاتح */
+  padding: 40px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* تنسيق حاوية الدوائر */
+.slider-container {
+  display: flex;
+  overflow-x: auto;
+}
+
+/* تنسيق الدائرة */
+.doctor-circle {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  margin: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.doctor-circle:hover {
+  transform: scale(1.05);
+}
+
+.doctor-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* تنسيق اسم الدكتور */
+.doctor-name {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 20px;
+  opacity: 1;
+  cursor: pointer;
+}
+
+/* تنسيق القائمة الدائرية */
+.circle-menu {
+  position: absolute;
+  top: 50%; /* مركز دائرة الدكتور */
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(101, 67, 33, 0.7); /* بني غامق شفاف قليلاً */
+  transition: transform 0.3s ease-in-out;
+  z-index: 1;
+}
+
+.menu-item {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: #654321; /* لون بني غامق للأيقونات */
+  transition: transform 0.3s ease-in-out, background-color 0.3s;
+  position: absolute;
+}
+
+.menu-item:hover {
+  transform: scale(1.2);
+  background-color: #f5f5f5;
+}
+
+/* توزيع الأيقونات بشكل نصف دائري */
+.circle-menu .home {
+  top: 10%;  /* يتحكم في موضع الأيقونة في الجزء العلوي */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.circle-menu .contact {
+  top: 40%;
+  left: 20%;
+}
+
+.circle-menu .biography {
+  top: 40%;
+  left: 80%;
+}
+
+.circle-menu .office {
+  top: 70%;
+  left: 35%;
+}
+
+.circle-menu .working-hours {
+  top: 70%;
+  left: 65%;
+}
