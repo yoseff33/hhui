@@ -36,8 +36,8 @@
             color: black;
             text-decoration: none;
             font-size: 1.1rem;
+            cursor: pointer;
         }
-
         .faculty-slider {
             padding: 2rem;
             text-align: center;
@@ -83,6 +83,14 @@
             font-size: 1.75rem; /* تكبير الرموز */
             color: #654321; /* لون الرموز */
         }
+        /* إخفاء قائمة الطلاب في البداية */
+        #student-list {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.25rem;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -96,7 +104,7 @@
                     <li><a href="#">عن الكلية</a></li>
                     <li><a href="#">البرامج الأكاديمية</a></li>
                     <li><a href="#">أعضاء هيئة التدريس</a></li>
-                    <li><a href="#">الطلاب</a></li>
+                    <li><a href="#" id="students-link">الطلاب</a></li>
                     <li><a href="#">اتصل بنا</a></li>
                 </ul>
             </nav>
@@ -109,7 +117,7 @@
             <div class="slider-container">
                 <!-- دائرة الدكتور 1 -->
                 <div class="doctor-circle">
-                    <img src="noura.jpg" alt="صورة نورة السبيعي">
+                    <img src="doctor1.jpg" alt="صورة نورة السبيعي">
                     <div class="doctor-name">نورة السبيعي</div>
                     <div class="circle-menu">
                         <div class="menu-item home"><i class="fas fa-home"></i></div>
@@ -119,10 +127,15 @@
                         <div class="menu-item working-hours"><i class="fas fa-clock"></i></div>
                     </div>
                 </div>
+            </div>
 
+            <!-- قائمة الطلاب -->
+            <div id="student-list">
+                <p>يوسف عيد المطيري</p>
+                <p>حسين دغيم المطيري</p>
+                <p>سعود يحيى الشمري</p>
             </div>
         </section>
-
     </main>
 
     <footer>
@@ -130,6 +143,20 @@
     </footer>
 
     <!-- ربط ملف JavaScript -->
-    <script src="script.js"></script>
+    <script>
+        // جلب عنصر الرابط الخاص بالطلاب
+        const studentsLink = document.getElementById('students-link');
+        const studentList = document.getElementById('student-list');
+
+        // إضافة حدث عند الضغط على رابط "الطلاب"
+        studentsLink.addEventListener('click', function() {
+            // التبديل بين إظهار وإخفاء قائمة الطلاب
+            if (studentList.style.display === 'none') {
+                studentList.style.display = 'block';
+            } else {
+                studentList.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
