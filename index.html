@@ -26,29 +26,18 @@
             list-style: none;
             padding: 0;
             display: flex;
-            overflow: hidden;
-            white-space: nowrap;
-            animation: scroll 10s linear infinite;
-        }
-        nav ul:hover {
-            animation-play-state: paused; /* إيقاف الحركة عند التمرير */
+            justify-content: center;
+            gap: 1.5rem; /* لتباعد العناصر بشكل متساوي */
         }
         nav ul li {
             display: inline;
-            margin: 0 1rem;
         }
         nav ul li a {
             color: black;
             text-decoration: none;
+            font-size: 1.1rem;
         }
-        @keyframes scroll {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
+
         .faculty-slider {
             padding: 2rem;
             text-align: center;
@@ -61,20 +50,38 @@
         .doctor-circle {
             margin: 1rem;
             text-align: center;
+            position: relative;
         }
         .doctor-circle img {
             width: 100%;
-            max-width: 150px;
+            max-width: 200px; /* زيادة حجم دائرة الدكتور */
             border-radius: 50%;
         }
         .circle-menu {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px; /* تكبير الدائرة الشفافة */
+            border-radius: 50%;
             display: flex;
             justify-content: center;
-            margin-top: 0.5rem;
-            gap: 1.5rem; /* لتباعد مناسب بين الرموز */
+            align-items: center;
+            background-color: rgba(101, 67, 33, 0.4); /* شفاف قليلاً */
+            flex-wrap: wrap;
+            gap: 1rem; /* تباعد الرموز */
         }
         .menu-item {
-            margin: 0 0.5rem;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.75rem; /* تكبير الرموز */
+            color: #654321; /* لون الرموز */
         }
     </style>
 </head>
@@ -82,7 +89,7 @@
 
     <header>
         <div class="header-content">
-            <h1>كلية الأعمال</h1>
+            <h1>كلية إدارة الأعمال</h1>
             <nav>
                 <ul>
                     <li><a href="#">الرئيسية</a></li>
@@ -121,7 +128,6 @@
     <footer>
         <!-- تذييل الصفحة -->
     </footer>
-
     <!-- ربط ملف JavaScript -->
     <script src="script.js"></script>
 </body>
