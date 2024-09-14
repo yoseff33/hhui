@@ -31,11 +31,7 @@ document.addEventListener('click', () => {
     });
 });
 
-// عرض صفحة مصممي الموقع عند الضغط على زر الطلاب
-const studentsLink = document.getElementById('students-link');
-studentsLink.addEventListener('click', (event) => {
-    window.location.href = 'students.html';
-});
+
 // التحكم في ظهور وإخفاء القائمة
 const menuBtn = document.querySelector('.menu-btn');
 const nav = document.querySelector('nav');
@@ -44,6 +40,13 @@ menuBtn.addEventListener('click', () => {
     if (nav.style.display === 'none' || nav.style.display === '') {
         nav.style.display = 'block';
     } else {
+        nav.style.display = 'none';
+    }
+});
+
+// إغلاق القائمة عند النقر خارجها
+document.addEventListener('click', (event) => {
+    if (!nav.contains(event.target) && !menuBtn.contains(event.target)) {
         nav.style.display = 'none';
     }
 });
