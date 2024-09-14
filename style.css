@@ -20,7 +20,7 @@ header h1 {
     color: #fff;
 }
 
-/* تنسيق القائمة */
+/* تنسيق القائمة الرئيسية */
 nav ul {
     list-style: none;
     padding: 0;
@@ -57,4 +57,53 @@ footer {
     text-align: center;
     padding: 10px;
     color: #fff;
+}
+
+/* تنسيق لمحتوى صفحات مثل صفحة الطلاب */
+.header-content {
+    text-align: center;
+}
+
+.main {
+    padding: 20px;
+}
+
+.designer-circles {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.designer-circle {
+    background-color: #4e342e; /* بني متوسط */
+    border-radius: 50%;
+    padding: 10px;
+    text-align: center;
+}
+
+.designer-circle img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.designer-name {
+    margin-top: 10px;
+}
+
+/* تنسيق قائمة القوائم المخفية */
+.circle-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease;
+}
+
+/* تنسيق القوائم المخفية عند التمرير */
+.circle-menu.show {
+    display: block;
+    transform: translate(-50%, -50%) scale(1);
 }
