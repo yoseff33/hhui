@@ -54,3 +54,15 @@ doctorCircles.forEach(circle => {
         circleMenu.classList.toggle('active');
     });
 });
+
+// زر القائمة
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('nav ul');
+
+menuToggle.addEventListener('click', () => {
+    if (nav.style.display === 'none' || nav.style.display === '') {
+        nav.style.display = 'block';
+    } else {
+        nav.style.display = 'none';
+    }
+});
