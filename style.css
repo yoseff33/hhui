@@ -12,6 +12,7 @@ body {
 header {
     background-color: #4B2E2C; /* خلفية بنية داكنة */
     padding: 1rem;
+    position: relative; /* لجعل القائمة تظهر فوق المحتوى */
 }
 
 .header-content {
@@ -38,6 +39,7 @@ nav ul {
     width: 100%;
     background-color: #4B2E2C; /* خلفية بنية */
     text-align: center;
+    z-index: 10; /* تأكد من ظهور القائمة فوق العناصر الأخرى */
 }
 
 nav ul li {
@@ -57,6 +59,11 @@ nav ul li a {
     border: none;
     color: white;
     cursor: pointer;
+}
+
+/* إظهار القائمة عند النقر على الزر */
+.menu-toggle.active + nav ul {
+    display: block; /* إظهار القائمة */
 }
 
 /* المحتوى */
@@ -80,36 +87,4 @@ nav ul li a {
 h2 {
     color: #4B2E2C;
     font-size: 1.8rem;
-    margin-top: 2rem;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-ul li {
-    margin: 0.5rem 0;
-    font-size: 1.2rem;
-}
-
-/* تذييل */
-footer {
-    background-color: #4B2E2C;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-/* تأثيرات */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
+   
