@@ -6,6 +6,9 @@ body {
     box-sizing: border-box;
     background-color: white; /* خلفية الموقع باللون الأبيض */
     color: black; /* النصوص باللون الأسود */
+    min-height: 100vh; /* لضمان امتداد الجسم لكامل ارتفاع الشاشة */
+    display: flex;
+    flex-direction: column;
 }
 
 /* تنسيق الهيدر */
@@ -36,7 +39,6 @@ header h1 {
 
 /* تنسيق القائمة */
 nav {
-    display: none; /* إخفاء القائمة افتراضيًا */
     background-color: #4B2E2C; /* لون بني غامق */
     text-align: center;
     padding: 1rem 0;
@@ -45,6 +47,7 @@ nav {
     right: 0;
     width: 100%; /* جعل القائمة تمتد بعرض الشاشة */
     z-index: 999; /* لضمان ظهور القائمة فوق المحتويات الأخرى */
+    display: none; /* إخفاء القائمة افتراضيًا */
 }
 
 nav ul {
@@ -67,6 +70,7 @@ nav ul li a {
 .faculty-slider {
     padding: 2rem;
     text-align: center;
+    flex: 1; /* للسماح للقسم بالتمدد */
 }
 
 .slider-container {
@@ -100,8 +104,8 @@ nav ul li a {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    width: 150px;
-    height: 150px; /* تقليل حجم الدائرة المخفية */
+    width: 120px; /* تقليل حجم الدائرة المخفية */
+    height: 120px; /* تقليل حجم الدائرة المخفية */
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -111,11 +115,6 @@ nav ul li a {
     gap: 0.5rem; /* تقليل التباعد بين العناصر */
     visibility: hidden; /* إخفاء الدائرة المخفية افتراضيًا */
     transition: visibility 0.3s, transform 0.3s;
-}
-
-.doctor-circle:hover .circle-menu {
-    visibility: visible;
-    transform: translate(-50%, -50%) scale(1);
 }
 
 .menu-item {
@@ -137,9 +136,11 @@ nav ul li a {
     color: #4B2E2C; /* لون الرموز عند التمرير */
 }
 
+/* تنسيق الفوتر */
 footer {
     background-color: #4B2E2C; /* لون بني غامق */
     text-align: center;
     padding: 1rem;
     color: white; /* النص الأبيض */
+    margin-top: auto; /* لضمان ظهور التذييل في الأسفل */
 }
