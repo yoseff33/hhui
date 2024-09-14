@@ -46,3 +46,13 @@ studentsLink.addEventListener('click', function(event) {
         studentList.style.display = 'none';
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const studentsLink = document.getElementById('students-link');
+    const studentList = document.getElementById('student-list');
+
+    studentsLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        window.location.href = 'students.html'; // الانتقال إلى صفحة الطلاب
+    });
+});
