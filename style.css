@@ -104,29 +104,30 @@ nav ul li a {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    width: 120px; /* تقليل حجم الدائرة المخفية */
-    height: 120px; /* تقليل حجم الدائرة المخفية */
+    width: 150px; /* زيادة حجم الدائرة المخفية لتتناسب مع دائرة الدكتور */
+    height: 150px; /* زيادة حجم الدائرة المخفية لتتناسب مع دائرة الدكتور */
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.8); /* لون خلفية أبيض شفاف */
     flex-wrap: wrap;
-    gap: 0.5rem; /* تقليل التباعد بين العناصر */
+    gap: 0.5rem; /* تباعد مناسب بين الرموز */
     visibility: hidden; /* إخفاء الدائرة المخفية افتراضيًا */
     transition: visibility 0.3s, transform 0.3s;
+    padding: 0.5rem; /* إضافة تباعد داخلي */
 }
 
 .menu-item {
-    width: 40px;
-    height: 40px;
+    width: 40px; /* تصغير حجم الرموز */
+    height: 40px; /* تصغير حجم الرموز */
     background-color: #4B2E2C; /* بني غامق */
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
-    color: white; /* لون الرموز باللون الأبيض */
+    font-size: 1.2rem; /* تصغير حجم الرموز */
+    color: white; /* لون الرموز أبيض */
     transition: transform 0.3s;
 }
 
