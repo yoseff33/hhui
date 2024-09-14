@@ -1,3 +1,62 @@
+/* إعدادات الجسم */
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #4B2E2C; /* لون بني */
+    text-align: center;
+}
+
+/* إعدادات الهيدر */
+header {
+    background-color: #4B2E2C;
+    color: white;
+    padding: 1.5rem;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.academic-calendar {
+    padding: 2rem;
+}
+
+h2 {
+    color: #4B2E2C;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    text-align: center;
+}
+
+th {
+    background-color: #4B2E2C;
+    color: white;
+}
+
+footer {
+    background-color: #4B2E2C;
+    color: white;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+
 /* تنسيق عام */
 body {
     font-family: 'Arial', sans-serif;
