@@ -37,3 +37,20 @@ document.addEventListener('click', () => {
         menu.style.transform = 'scale(0)';
     });
 });
+// Toggle menu عند الضغط على زر الشريط
+const menuToggle = document.querySelector('.menu-toggle');
+const headerContent = document.querySelector('.header-content');
+
+menuToggle.addEventListener('click', () => {
+    headerContent.classList.toggle('show-menu');
+});
+
+// تفعيل الدائرة المخفية
+const doctorCircles = document.querySelectorAll('.doctor-circle');
+
+doctorCircles.forEach(circle => {
+    const circleMenu = circle.querySelector('.circle-menu');
+    circle.addEventListener('click', () => {
+        circleMenu.classList.toggle('active');
+    });
+});
