@@ -1,4 +1,4 @@
-// جلب جميع الدوائر الخاصة بالدكاترة
+// القوائم المخفية للدكاترة
 const doctorCircles = document.querySelectorAll('.doctor-circle');
 
 doctorCircles.forEach(circle => {
@@ -24,35 +24,15 @@ doctorCircles.forEach(circle => {
     });
 });
 
-// إخفاء جميع القوائم عند النقر خارج أي دائرة
+// إخفاء القوائم عند النقر خارج الدائرة
 document.addEventListener('click', () => {
     document.querySelectorAll('.circle-menu').forEach(menu => {
         menu.style.transform = 'translate(-50%, -50%) scale(0)';
     });
 });
 
-// جلب عنصر الرابط الخاص بالطلاب
+// عرض صفحة مصممي الموقع عند الضغط على زر الطلاب
 const studentsLink = document.getElementById('students-link');
-const studentList = document.getElementById('student-list');
-
-// إضافة حدث عند الضغط على رابط "الطلاب"
-studentsLink.addEventListener('click', function(event) {
-    event.preventDefault();
-
-    // التبديل بين إظهار وإخفاء قائمة الطلاب
-    if (studentList.style.display === 'none' || studentList.style.display === '') {
-        studentList.style.display = 'block';
-    } else {
-        studentList.style.display = 'none';
-    }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const studentsLink = document.getElementById('students-link');
-    const studentList = document.getElementById('student-list');
-
-    studentsLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        window.location.href = 'students.html'; // الانتقال إلى صفحة الطلاب
-    });
+studentsLink.addEventListener('click', (event) => {
+    window.location.href = 'students.html';
 });
