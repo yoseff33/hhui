@@ -2,78 +2,105 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>كلية إدارة الأعمال</title>
-    <!-- ربط ملف CSS -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            color: #4B2E2C; /* بني غامق */
+        }
+        header {
+            background-color: #4B2E2C; /* بني */
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        header nav {
+            width: 100%;
+            background-color: #4B2E2C; /* بني */
+            color: white;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: space-around; /* توزيع العناصر بالتساوي */
+            margin: 0;
+            width: 100%;
+        }
+        nav ul li {
+            display: inline;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 1rem 2rem; /* إضافة مساحة داخل الروابط */
+            display: block; /* جعل الروابط تأخذ عرض العنصر الأب بالكامل */
+            text-align: center;
+        }
+        footer {
+            background-color: #4B2E2C; /* بني */
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        section h2 {
+            color: #4B2E2C; /* لون بني للعناوين */
+        }
+        section {
+            padding: 2rem;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
     <header>
-        <div class="header-content">
-            <h1>كلية إدارة الأعمال</h1>
-            <button id="menu-button" aria-label="فتح القائمة"><i class="fas fa-bars"></i></button>
-            <nav id="menu">
-                <ul>
-                    <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="about.html">عن الموقع</a></li>
-                    <li><a href="objectives.html">الأهداف</a></li>
-                    <li><a href="vision.html">الرؤية</a></li>
-                    <li><a href="mission.html">الرسالة</a></li>
-                    <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
-                    <li><a href="contact.html">اتصل بنا</a></li>
-                </ul>
-            </nav>
-        </div>
+        <h1>كلية إدارة الأعمال</h1>
+        <nav>
+            <ul>
+                <li><a href="#">الرئيسية</a></li>
+                <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
+                <li><a href="#">عن الكلية</a></li>
+                <li><a href="#">اتصل بنا</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
-        <section class="faculty-slider">
-            <h2>أعضاء هيئة التدريس</h2>
-            <div class="slider-container">
-                <!-- دائرة الدكتور 1 -->
-                <div class="doctor-circle">
-                    <img src="doctor1.jpg" alt="صورة الدكتور 1">
-                    <div class="circle-menu">
-                        <div class="menu-item home"><i class="fas fa-home"></i></div>
-                        <div class="menu-item contact"><i class="fas fa-phone"></i></div>
-                        <div class="menu-item biography"><i class="fas fa-user"></i></div>
-                        <div class="menu-item office"><i class="fas fa-building"></i></div>
-                        <div class="menu-item working-hours"><i class="fas fa-clock"></i></div>
-                    </div>
-                </div>
-                <!-- يمكن تكرار دائرة الدكتور هنا -->
-            </div>
-        </section>
-
-        <!-- أقسام الموقع الأخرى -->
-        <section class="about">
+        <section>
             <h2>نبذة عن الموقع</h2>
-            <p>يهدف موقع كلية إدارة الأعمال إلى تقديم معلومات شاملة وموثوقة عن الكلية، بما في ذلك البرامج الأكاديمية، وأعضاء هيئة التدريس، والفعاليات، والتواصل مع الطلاب وأعضاء هيئة التدريس.</p>
+            <p>موقع كلية إدارة الأعمال يهدف إلى تسهيل الوصول إلى المعلومات الأكاديمية لأعضاء هيئة التدريس وتقديم معلومات شاملة عن البرامج الدراسية والخدمات المتاحة.</p>
         </section>
+        <section>
+            <h2>أهداف الموقع</h2>
+            <ul>
 
-        <section class="objectives">
-            <h2>الأهداف</h2>
-            <p>تهدف كلية إدارة الأعمال إلى تقديم تعليم متميز في مجال إدارة الأعمال، وتطوير مهارات الطلاب من خلال برامج أكاديمية شاملة وتجارب عملية مميزة.</p>
+                <li>عرض معلومات حول أعضاء هيئة التدريس وبرامج الدراسة.</li>
+                <li>تقديم خدمات تسهل العملية التعليمية.</li>
+            </ul>
         </section>
-
-        <section class="vision">
+        <section>
             <h2>الرؤية</h2>
-            <p>أن تكون كلية إدارة الأعمال رائدة في تقديم التعليم الأكاديمي في مجال إدارة الأعمال، مع التركيز على الابتكار والتميز في جميع جوانب التعليم والتدريب.</p>
+            <p>أن نكون كلية رائدة في إدارة الأعمال من خلال تقديم تعليم عالي الجودة.</p>
         </section>
-
-        <section class="mission">
+        <section>
             <h2>الرسالة</h2>
-            <p>تقديم برامج تعليمية متكاملة تعزز من قدرات الطلاب في مجال إدارة الأعمال، وتدعمهم بالمعرفة والمهارات اللازمة لتحقيق النجاح في بيئة العمل الديناميكية.</p>
+            <p>تقديم برامج أكاديمية متميزة تساهم في تطوير الطلاب وتأهيلهم لسوق العمل.</p>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 كلية إدارة الأعمال</p>
+        &copy; 2024 كلية إدارة الأعمال
     </footer>
 
-    <!-- ربط ملف JavaScript -->
-    <script src="script.js"></script>
 </body>
 </html>
