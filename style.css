@@ -1,79 +1,103 @@
 /* إعداد عام للجسم */
 body {
     font-family: 'Cairo', sans-serif;
-    background-color: #ffffff; /* أبيض */
-    color: #333; /* لون نص داكن لسهولة القراءة */
+    background-color: white; /* خلفية بيضاء */
     margin: 0;
     padding: 0;
+    color: #4B2E2C; /* لون البني الغامق */
     box-sizing: border-box;
 }
 
-/* تنسيق الهيدر */
 header {
     background-color: #4B2E2C; /* بني غامق */
-    padding: 1rem;
+    color: white;
+    padding: 1.5rem 1rem;
     text-align: center;
-    position: relative;
 }
 
-.header-content h1 {
-    font-size: 2rem;
+header h1 {
+    font-size: 2.5rem;
     margin: 0;
+}
+
+header nav {
+    width: 100%;
+    background-color: #4B2E2C; /* لون البني */
     color: white;
+    padding: 0.5rem 0;
 }
 
-#menu-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-}
-
-#menu {
-    display: none;
-    position: absolute;
-    top: 3rem;
-    right: 0;
-    background-color: #4B2E2C; /* بني غامق */
-    width: 200px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-#menu ul {
+nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    justify-content: space-around; /* توزيع العناصر بالتساوي */
 }
 
-#menu ul li {
-    border-bottom: 1px solid #eee;
+nav ul li {
+    display: inline-block;
 }
 
-#menu ul li a {
-    display: block;
-    padding: 0.5rem;
+nav ul li a {
     color: white;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    display: block; /* تجعل الرابط يأخذ كامل المساحة القابلة للضغط */
+    text-align: center;
 }
 
-#menu ul li a:hover {
-    background-color: #654321; /* بني داكن */
+nav ul li a:hover {
+    background-color: #e6ccb2; /* لون بني فاتح عند التمرير */
+    color: #4B2E2C;
+    border-radius: 5px;
 }
 
-/* تنسيق القسم */
+/* تصميم الصفحة الرئيسية */
 main {
     padding: 2rem;
     text-align: center;
 }
 
+section {
+    margin-bottom: 2rem;
+}
+
+section h2 {
+    color: #4B2E2C; /* لون البني */
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+section p, section ul {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 0.5rem;
+}
+
+footer {
+    background-color: #4B2E2C; /* لون البني الغامق */
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* تصميم صفحة أعضاء هيئة التدريس */
 .faculty-slider {
     padding: 2rem;
+    text-align: center;
 }
 
 .slider-container {
@@ -83,13 +107,14 @@ main {
 }
 
 .doctor-circle {
-    width: 250px; /* زيادة حجم دائرة الدكتور */
-    height: 250px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
-    overflow: hidden;
     margin: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
+    background-color: #e6ccb2; /* بني فاتح */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
 .doctor-circle img {
@@ -99,21 +124,31 @@ main {
     border-radius: 50%;
 }
 
+.doctor-name {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 0.5rem;
+    font-size: 1rem;
+    text-align: center;
+}
+
 .circle-menu {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    width: 120px; /* صغر حجم دائرة القائمة المخفية */
-    height: 120px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     background-color: rgba(101, 67, 33, 0.7);
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.5rem; /* تباعد الرموز بشكل مناسب */
-    transition: transform 0.3s ease, visibility 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .menu-item {
@@ -124,36 +159,33 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2rem; /* تصغير الرموز */
-    color: #654321; /* لون الرموز */
+    font-size: 1.5rem;
+    color: #654321;
 }
 
 .menu-item:hover {
     transform: scale(1.2);
 }
 
-/* تنسيق الفوتر */
-footer {
-    background-color: #4B2E2C; /* بني غامق */
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
+/* الوسائط للتأكد من التناسق على الجوالات */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+    }
 
-/* تنسيق الأقسام الإضافية */
-section {
-    margin-bottom: 2rem;
-}
+    .doctor-circle {
+        width: 150px;
+        height: 150px;
+    }
 
-section h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
+    .circle-menu {
+        width: 120px;
+        height: 120px;
+    }
 
-section p {
-    font-size: 1rem;
-    line-height: 1.6;
+    .menu-item {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+    }
 }
