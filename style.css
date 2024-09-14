@@ -88,7 +88,7 @@ nav ul li a {
 
 .doctor-circle img {
     width: 100%;
-    max-width: 250px; /* تكبير حجم دائرة الدكتور */
+    max-width: 300px; /* تكبير حجم دائرة الدكتور */
     border-radius: 50%;
     border: 5px solid white; /* إضافة حدود بيضاء حول الصورة */
 }
@@ -104,8 +104,8 @@ nav ul li a {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    width: 150px; /* زيادة حجم الدائرة المخفية لتتناسب مع دائرة الدكتور */
-    height: 150px; /* زيادة حجم الدائرة المخفية لتتناسب مع دائرة الدكتور */
+    width: 120px; /* تصغير حجم الدائرة المخفية لتتناسب مع دائرة الدكتور */
+    height: 120px; /* تصغير حجم الدائرة المخفية لتتناسب مع دائرة الدكتور */
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -119,8 +119,8 @@ nav ul li a {
 }
 
 .menu-item {
-    width: 40px; /* تصغير حجم الرموز */
-    height: 40px; /* تصغير حجم الرموز */
+    width: 35px; /* تصغير حجم الرموز */
+    height: 35px; /* تصغير حجم الرموز */
     background-color: #4B2E2C; /* بني غامق */
     border-radius: 50%;
     display: flex;
