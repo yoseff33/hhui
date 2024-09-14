@@ -31,16 +31,19 @@ h1 {
 }
 
 /* قائمة التنقل */
+nav {
+    position: absolute; /* لتكون قائمة التنقل فوق المحتوى */
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #4B2E2C; /* خلفية بنية */
+}
+
 nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
     display: none; /* نخفي القائمة في البداية */
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #4B2E2C; /* خلفية بنية */
     text-align: center;
     z-index: 10; /* تأكد من ظهور القائمة فوق العناصر الأخرى */
 }
