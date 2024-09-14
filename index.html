@@ -2,134 +2,93 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>كلية إدارة الأعمال</title>
-    <!-- ربط ملف CSS -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Cairo', sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        .header-content {
-            text-align: center;
-            padding: 1rem;
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem; /* لتباعد العناصر بشكل متساوي */
-        }
-        nav ul li {
-            display: inline;
-        }
-        nav ul li a {
-            color: black;
-            text-decoration: none;
-            font-size: 1.1rem;
-        }
 
-        .faculty-slider {
-            padding: 2rem;
-            text-align: center;
-        }
-        .slider-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .doctor-circle {
-            margin: 1rem;
+        header {
+            background-color: #654321;
+            padding: 1rem;
             text-align: center;
             position: relative;
         }
-        .doctor-circle img {
-            width: 100%;
-            max-width: 200px; /* زيادة حجم دائرة الدكتور */
-            border-radius: 50%;
-        }
-        .circle-menu {
+
+        .menu-button {
             position: absolute;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px; /* تكبير الدائرة الشفافة */
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(101, 67, 33, 0.4); /* شفاف قليلاً */
-            flex-wrap: wrap;
-            gap: 1rem; /* تباعد الرموز */
+            right: 1rem;
+            transform: translateY(-50%);
+            background-color: #654321;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1.2rem;
         }
-        .menu-item {
-            width: 50px;
-            height: 50px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.75rem; /* تكبير الرموز */
-            color: #654321; /* لون الرموز */
+
+        .menu-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #e6ccb2;
+            width: 200px;
+            text-align: right;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-options a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .menu-options a:hover {
+            background-color: #654321;
+            color: white;
         }
     </style>
 </head>
 <body>
-
     <header>
-        <div class="header-content">
-            <h1>كلية إدارة الأعمال</h1>
-            <nav>
-                <ul>
-                    <li><a href="#">الرئيسية</a></li>
-                    <li><a href="#">عن الكلية</a></li>
-                    <li><a href="#">البرامج الأكاديمية</a></li>
-                    <li><a href="#">أعضاء هيئة التدريس</a></li>
-                    <li><a href="#">الطلاب</a></li>
-                    <li><a href="#">اتصل بنا</a></li>
-                </ul>
-            </nav>
+        <h1>كلية إدارة الأعمال</h1>
+        <button class="menu-button">القائمة</button>
+        <div class="menu-options">
+            <a href="#">الرئيسية</a>
+            <a href="#">عن الكلية</a>
+            <a href="#">البرامج الأكاديمية</a>
+            <a href="#">أعضاء هيئة التدريس</a>
+            <a href="#">الطلاب</a>
+            <a href="#">اتصل بنا</a>
         </div>
     </header>
 
     <main>
-        <section class="faculty-slider">
-            <h2>أعضاء هيئة التدريس</h2>
-            <div class="slider-container">
-                <!-- دائرة الدكتور 1 -->
-                <div class="doctor-circle">
-                    <img src="doctor1.jpg" alt="صورة الدكتور 1">
-                    <div class="doctor-name">د. أحمد علي</div>
-                    <div class="circle-menu">
-                        <div class="menu-item home"><i class="fas fa-home"></i></div>
-                        <div class="menu-item contact"><i class="fas fa-phone"></i></div>
-                        <div class="menu-item biography"><i class="fas fa-user"></i></div>
-                        <div class="menu-item office"><i class="fas fa-building"></i></div>
-                        <div class="menu-item working-hours"><i class="fas fa-clock"></i></div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
+        <h2>أهلاً وسهلاً</h2>
+        <p>مرحباً بكم في كلية إدارة الأعمال.</p>
     </main>
 
-    <footer>
-        <!-- تذييل الصفحة -->
-    </footer>
+    <script>
+        const menuButton = document.querySelector('.menu-button');
+        const menuOptions = document.querySelector('.menu-options');
 
-    <!-- ربط ملف JavaScript -->
-    <script src="script.js"></script>
+        menuButton.addEventListener('click', () => {
+            menuOptions.style.display = menuOptions.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!menuButton.contains(event.target) && !menuOptions.contains(event.target)) {
+                menuOptions.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
