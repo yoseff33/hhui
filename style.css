@@ -12,7 +12,7 @@ body {
 header {
     background-color: #4B2E2C; /* خلفية بنية داكنة */
     padding: 1rem;
-    width: 100%; /* عرض كامل الصفحة */
+    width: 100%;
 }
 
 .header-content {
@@ -26,11 +26,7 @@ h1 {
     font-size: 2.5rem;
     margin: 0;
     text-align: center;
-}
-
-h1 a {
-    color: white;
-    text-decoration: none;
+    cursor: pointer; /* لجعل العنوان قابلاً للنقر */
 }
 
 nav ul {
@@ -44,10 +40,7 @@ nav ul {
     width: 100%;
     background-color: #4B2E2C; /* خلفية بنية */
     text-align: center;
-}
-
-nav ul.active {
-    display: block; /* إظهار القائمة عند النقر على زر التمرير */
+    z-index: 10;
 }
 
 nav ul li {
@@ -69,12 +62,43 @@ nav ul li a {
     cursor: pointer;
 }
 
+/* عند تفعيل القائمة */
+nav ul.active {
+    display: block; /* عرض القائمة عند تفعيل الفئة 'active' */
+}
+
 /* المحتوى */
-.content, .faculty-slider {
+.content {
     text-align: center;
     padding: 2rem;
-    overflow-y: auto; /* تمكين شريط التمرير */
-    max-height: 70vh; /* التحكم في ارتفاع المحتوى */
+}
+
+.welcome-message h2 {
+    font-size: 2rem;
+    color: #4B2E2C;
+    animation: fadeIn 1.5s ease;
+}
+
+.welcome-message p {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    animation: fadeIn 2s ease;
+}
+
+h2 {
+    color: #4B2E2C;
+    font-size: 1.8rem;
+    margin-top: 2rem;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
 }
 
 /* تذييل */
