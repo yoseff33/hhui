@@ -1,55 +1,36 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>أعضاء هيئة التدريس</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
+/* تعديل قائمة التنقل */
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none; /* نخفي القائمة في البداية */
+    position: fixed; /* نغير من absolute إلى fixed */
+    top: 0; /* نضع القائمة في أعلى الصفحة */
+    left: 0;
+    width: 100%;
+    background-color: #4B2E2C; /* خلفية بنية */
+    text-align: center;
+    z-index: 10;
+}
 
-    <header>
-        <div class="header-content">
-            <h1>كلية إدارة الأعمال</h1>
-            <button class="menu-toggle">
-                <i class="fas fa-bars"></i> <!-- رمز الشريط -->
-            </button>
-            <nav>
-                <ul>
-                    <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="about.html">عن الكلية</a></li>
-                    <li><a href="programs.html">البرامج الأكاديمية</a></li>
-                    <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
-                    <li><a href="contact.html">اتصل بنا</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+/* عند تفعيل القائمة */
+nav ul.active {
+    display: block; /* عرض القائمة عند تفعيل الفئة 'active' */
+}
 
-    <main>
-        <section class="faculty-slider">
-            <h2>أعضاء هيئة التدريس</h2>
-            <div class="slider-container">
-                <!-- دائرة الدكتور 1 -->
-                <div class="doctor-circle">
-                    <img src="doctor1.jpg" alt="د. أحمد علي">
-                    <div class="circle-menu">
-                        <div class="menu-item"><i class="fas fa-home"></i></div>
-                        <div class="menu-item"><i class="fas fa-phone"></i></div>
-                        <div class="menu-item"><i class="fas fa-user"></i></div>
-                        <div class="menu-item"><i class="fas fa-building"></i></div>
-                        <div class="menu-item"><i class="fas fa-clock"></i></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+/* باقي التنسيق كما هو */
+nav ul li {
+    padding: 1rem;
+    border-bottom: 1px solid #e6ccb2;
+}
 
-    <footer>
-        <p>© 2024 كلية إدارة الأعمال</p>
-    </footer>
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
 
-    <script src="script.js"></script>
-</body>
-</html>
+/* لضمان أن القائمة ستظهر فوق كل العناصر الأخرى */
+nav ul {
+    z-index: 9999;
+}
