@@ -31,6 +31,7 @@ header h1 {
     border: none;
     color: white;
     cursor: pointer;
+    z-index: 1000; /* لضمان ظهور الزر فوق العناصر الأخرى */
 }
 
 /* تنسيق القائمة */
@@ -39,6 +40,11 @@ nav {
     background-color: #4B2E2C; /* لون بني غامق */
     text-align: center;
     padding: 1rem 0;
+    position: absolute;
+    top: 3.5rem;
+    right: 0;
+    width: 100%; /* جعل القائمة تمتد بعرض الشاشة */
+    z-index: 999; /* لضمان ظهور القائمة فوق المحتويات الأخرى */
 }
 
 nav ul {
@@ -73,6 +79,7 @@ nav ul li a {
     margin: 1.5rem;
     text-align: center;
     position: relative;
+    cursor: pointer; /* تغيير المؤشر عند المرور فوق الدائرة */
 }
 
 .doctor-circle img {
@@ -92,7 +99,7 @@ nav ul li a {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0);
     width: 150px;
     height: 150px; /* تقليل حجم الدائرة المخفية */
     border-radius: 50%;
