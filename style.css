@@ -7,8 +7,10 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #4B2E2E; /* اللون البني الغامق */
-    color: #FFF; /* اللون الأبيض */
+    background-image: url('../images/background.jpg'); /* مسار الخلفية */
+    background-size: cover;
+    background-position: center;
+    color: #FFF;
     line-height: 1.6;
 }
 
@@ -18,10 +20,6 @@ header {
     text-align: center;
     font-size: 24px;
     color: #FFF;
-}
-
-h1 {
-    margin-bottom: 10px;
 }
 
 nav ul {
@@ -49,7 +47,6 @@ nav ul li a:hover {
     background-color: #896767; /* لون بني أفتح عند التمرير */
 }
 
-/* الأقسام */
 section {
     padding: 20px;
     margin: 20px 0;
@@ -67,7 +64,6 @@ footer {
     width: 100%;
 }
 
-/* قائمة الطلاب الدائرية */
 .student-circles {
     display: flex;
     justify-content: center;
@@ -99,7 +95,6 @@ footer {
     transform: scale(1.1);
 }
 
-/* إعدادات استجابة الجوال */
 @media (max-width: 768px) {
     nav ul {
         flex-direction: column;
