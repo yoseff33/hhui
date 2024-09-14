@@ -13,12 +13,14 @@ header {
     background-color: #4B2E2C; /* خلفية بنية داكنة */
     padding: 1rem;
     position: relative; /* لجعل القائمة تظهر فوق المحتوى */
+    width: 100%; /* تأكد من أن الهيدر يغطي كامل العرض */
 }
 
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%; /* تأكد من تغطية كامل العرض */
 }
 
 h1 {
@@ -28,6 +30,7 @@ h1 {
     text-align: center;
 }
 
+/* قائمة التنقل */
 nav ul {
     list-style: none;
     margin: 0;
@@ -70,6 +73,12 @@ nav ul li a {
 .content {
     text-align: center;
     padding: 2rem;
+}
+
+/* التأكد من تغطية كامل العرض ولون الخلفية البنية */
+main {
+    background-color: #F5F5F5; /* خلفية فاتحة للتمييز */
+    min-height: 100vh; /* تأكد من تغطية كامل الشاشة */
 }
 
 .welcome-message h2 {
@@ -119,4 +128,11 @@ footer {
     to {
         opacity: 1;
     }
+}
+
+/* صفحة أعضاء هيئة التدريس */
+.faculty-slider {
+    background-color: #F5F5F5; /* خلفية فاتحة لتمييز قسم الدوائر */
+    padding: 2rem;
+    min-height: 100vh; /* تأكد من تغطية كامل الشاشة */
 }
