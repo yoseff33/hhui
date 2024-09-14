@@ -15,7 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // التعامل مع دوائر أعضاء هيئة التدريس
+    // إضافة رابط إعادة التوجيه إلى الصفحة الرئيسية عند الضغط على "كلية إدارة الأعمال"
+    const businessSchoolLink = document.querySelector('h1 a');
+    businessSchoolLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        window.location.href = 'index.html'; // توجيه المستخدم للصفحة الرئيسية
+    });
+
+    // إعداد التفاعل مع القوائم الدائرية في صفحة أعضاء هيئة التدريس
     const doctorCircles = document.querySelectorAll('.doctor-circle');
 
     doctorCircles.forEach(circle => {
@@ -30,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 menu.style.transform = 'translate(-50%, -50%) scale(0)';
             } else {
                 menu.style.transform = 'translate(-50%, -50%) scale(1)';
-                
+
                 // إخفاء القوائم الأخرى
                 const otherMenus = document.querySelectorAll('.circle-menu');
                 otherMenus.forEach(otherMenu => {
@@ -40,23 +47,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
-    });
 
-    // جلب عنصر الرابط الخاص بالطلاب
-    const studentsLink = document.getElementById('students-link');
-    const studentList = document.getElementById('student-list');
-
-    // إضافة حدث عند الضغط على رابط "الطلاب"
-    if (studentsLink && studentList) {
-        studentsLink.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            // التبديل بين إظهار وإخفاء قائمة الطلاب
-            if (studentList.style.display === 'none' || studentList.style.display === '') {
-                studentList.style.display = 'block';
-            } else {
-                studentList.style.display = 'none';
+        // إخفاء القائمة عند النقر خارجها
+        document.addEventListener('click', (event) => {
+            const target = event.target;
+            if (!target.closest('.doctor-circle')) {
+                const otherMenus = document.querySelectorAll('.circle-menu');
+                otherMenus.forEach(otherMenu => {
+                    otherMenu.style.transform = 'translate(-50%, -50%) scale(0)';
+                });
             }
         });
-    }
+    });
 });
