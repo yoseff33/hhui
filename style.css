@@ -1,55 +1,66 @@
 /* إعداد عام للجسم */
 body {
     font-family: 'Cairo', sans-serif;
-    background-color: #4B2E2C; /* بني غامق */
     margin: 0;
     padding: 0;
-    color: white;
     box-sizing: border-box;
-    text-align: center; /* لتوسيط العناوين والقائمة */
+    background-color: white; /* خلفية الموقع باللون الأبيض */
+    color: black; /* النصوص باللون الأسود */
 }
 
+/* تنسيق الهيدر */
 header {
-    background-color: #654321; /* بني داكن */
-    padding: 2rem 1rem;
+    background-color: #4B2E2C; /* لون بني غامق */
+    padding: 1rem;
     text-align: center;
+    position: relative;
+    color: white; /* النصوص باللون الأبيض */
 }
 
-.header-content h1 {
+header h1 {
+    margin: 0;
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+}
+
+.menu-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    background-color: transparent;
+    border: none;
     color: white;
+    cursor: pointer;
+}
+
+/* تنسيق القائمة */
+nav {
+    display: none; /* إخفاء القائمة افتراضيًا */
+    background-color: #4B2E2C; /* لون بني غامق */
+    text-align: center;
+    padding: 1rem 0;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    gap: 1rem; /* مسافات متساوية بين العناصر */
-    margin-top: 1rem;
+    margin: 0;
 }
 
 nav ul li {
-    display: inline-block;
+    margin: 1rem 0;
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    font-size: 1.2rem;
-}
-
-nav ul li a:hover {
-    background-color: #e6ccb2; /* لون بني فاتح */
-    border-radius: 5px;
+    font-size: 1.5rem;
 }
 
 /* تنسيق قسم أعضاء هيئة التدريس */
 .faculty-slider {
-    background-color: #e6ccb2; /* بني فاتح */
     padding: 2rem;
+    text-align: center;
 }
 
 .slider-container {
@@ -59,63 +70,69 @@ nav ul li a:hover {
 }
 
 .doctor-circle {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    margin: 1.5rem;
+    text-align: center;
     position: relative;
-    background-color: white;
 }
 
 .doctor-circle img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 250px; /* تكبير حجم دائرة الدكتور */
     border-radius: 50%;
+    border: 5px solid white; /* إضافة حدود بيضاء حول الصورة */
 }
 
 .doctor-name {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: white;
-    padding: 0.5rem;
-    font-size: 1rem;
-    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 1.25rem;
+    color: black; /* لون النصوص بالأسود */
 }
 
 .circle-menu {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    width: 120px;
-    height: 120px;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px; /* تقليل حجم الدائرة المخفية */
     border-radius: 50%;
-    background-color: rgba(101, 67, 33, 0.7);
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    transition: transform 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.8); /* لون خلفية أبيض شفاف */
+    flex-wrap: wrap;
+    gap: 0.5rem; /* تقليل التباعد بين العناصر */
+    visibility: hidden; /* إخفاء الدائرة المخفية افتراضيًا */
+    transition: visibility 0.3s, transform 0.3s;
+}
+
+.doctor-circle:hover .circle-menu {
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .menu-item {
     width: 40px;
     height: 40px;
-    background-color: white;
+    background-color: #4B2E2C; /* بني غامق */
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;
-    color: #654321;
-    transition: transform 0.3s ease;
+    color: white; /* لون الرموز باللون الأبيض */
+    transition: transform 0.3s;
 }
 
 .menu-item:hover {
     transform: scale(1.2);
+    background-color: white; /* تغيير اللون عند التمرير */
+    color: #4B2E2C; /* لون الرموز عند التمرير */
+}
+
+footer {
+    background-color: #4B2E2C; /* لون بني غامق */
+    text-align: center;
+    padding: 1rem;
+    color: white; /* النص الأبيض */
 }
