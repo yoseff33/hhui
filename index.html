@@ -2,105 +2,42 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>كلية إدارة الأعمال</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: white;
-            color: #4B2E2C; /* بني غامق */
-        }
-        header {
-            background-color: #4B2E2C; /* بني */
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
-        header nav {
-            width: 100%;
-            background-color: #4B2E2C; /* بني */
-            color: white;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            justify-content: space-around; /* توزيع العناصر بالتساوي */
-            margin: 0;
-            width: 100%;
-        }
-        nav ul li {
-            display: inline;
-        }
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.2rem;
-            padding: 1rem 2rem; /* إضافة مساحة داخل الروابط */
-            display: block; /* جعل الروابط تأخذ عرض العنصر الأب بالكامل */
-            text-align: center;
-        }
-        footer {
-            background-color: #4B2E2C; /* بني */
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-        section h2 {
-            color: #4B2E2C; /* لون بني للعناوين */
-        }
-        section {
-            padding: 2rem;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
     <header>
-        <h1>كلية إدارة الأعمال</h1>
-        <nav>
-            <ul>
-                <li><a href="#">الرئيسية</a></li>
-                <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
-                <li><a href="#">عن الكلية</a></li>
-                <li><a href="#">اتصل بنا</a></li>
-            </ul>
-        </nav>
+        <div class="header-content">
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1>كلية إدارة الأعمال</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">الرئيسية</a></li>
+                    <li><a href="#">عن الكلية</a></li>
+                    <li><a href="#">البرامج الأكاديمية</a></li>
+                    <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
+                    <li><a href="#">الطلاب</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main>
-        <section>
-            <h2>نبذة عن الموقع</h2>
-            <p>موقع كلية إدارة الأعمال يهدف إلى تسهيل الوصول إلى المعلومات الأكاديمية لأعضاء هيئة التدريس وتقديم معلومات شاملة عن البرامج الدراسية والخدمات المتاحة.</p>
-        </section>
-        <section>
-            <h2>أهداف الموقع</h2>
-            <ul>
-
-                <li>عرض معلومات حول أعضاء هيئة التدريس وبرامج الدراسة.</li>
-                <li>تقديم خدمات تسهل العملية التعليمية.</li>
-            </ul>
-        </section>
-        <section>
-            <h2>الرؤية</h2>
-            <p>أن نكون كلية رائدة في إدارة الأعمال من خلال تقديم تعليم عالي الجودة.</p>
-        </section>
-        <section>
-            <h2>الرسالة</h2>
-            <p>تقديم برامج أكاديمية متميزة تساهم في تطوير الطلاب وتأهيلهم لسوق العمل.</p>
+        <section class="content">
+            <!-- محتوى الصفحة -->
         </section>
     </main>
 
     <footer>
-        &copy; 2024 كلية إدارة الأعمال
+        <p>© 2024 كلية إدارة الأعمال</p>
     </footer>
 
+    <script src="script.js"></script>
 </body>
 </html>
