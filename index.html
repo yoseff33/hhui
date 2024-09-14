@@ -4,32 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>كلية إدارة الأعمال</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>كلية إدارة الأعمال</h1>
-        <nav>
-            <ul id="main-menu">
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="about.html">عن الكلية</a></li>
-                <li><a href="academic-programs.html">البرامج الأكاديمية</a></li>
-                <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
-                <li><a href="students.html" id="students-link">الطلاب</a></li>
-                <li><a href="contact.html">اتصل بنا</a></li>
-            </ul>
-        </nav>
+        <div class="header-content">
+            <h1>كلية إدارة الأعمال</h1>
+            <nav>
+                <ul id="main-menu">
+                    <li><a href="#">الرئيسية</a></li>
+                    <li><a href="#">عن الكلية</a></li>
+                    <li><a href="academic-programs.html">البرامج الأكاديمية</a></li>
+                    <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
+                    <li><a href="students.html" id="students-link">الطلاب</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <section>
-        <h2>أهلاً بكم في كلية إدارة الأعمال</h2>
-        <p>مرحباً بكم في صفحتنا الرئيسية.</p>
-    </section>
+    <main>
+        <section>
+            <h2>أعضاء هيئة التدريس</h2>
+            <!-- قائمة أعضاء هيئة التدريس ستظهر هنا -->
+            <div class="faculty-container">
+                <!-- إضافة صور وأسماء أعضاء هيئة التدريس -->
+                <div class="faculty-member">
+                    <img src="faculty1.jpg" alt="د. نورة السبيعي">
+                    <p>د. نورة السبيعي</p>
+                </div>
+                <div class="faculty-member">
+                    <img src="faculty2.jpg" alt="د. أحمد الزهراني">
+                    <p>د. أحمد الزهراني</p>
+                </div>
+                <!-- يمكن إضافة المزيد من أعضاء هيئة التدريس -->
+            </div>
+        </section>
+    </main>
 
     <footer>
-        &copy; 2024 كلية إدارة الأعمال
+        <!-- تذييل الصفحة هنا -->
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
