@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>كلية إدارة الأعمال</title>
     <!-- ربط ملف CSS -->
     <link rel="stylesheet" href="style.css">
@@ -13,15 +13,16 @@
     <header>
         <div class="header-content">
             <h1>كلية إدارة الأعمال</h1>
-            <button class="menu-btn"><i class="fas fa-bars"></i></button>
-            <nav>
+            <button id="menu-button" aria-label="فتح القائمة"><i class="fas fa-bars"></i></button>
+            <nav id="menu">
                 <ul>
-                    <li><a href="#">الرئيسية</a></li>
-                    <li><a href="#">عن الكلية</a></li>
-                    <li><a href="#">البرامج الأكاديمية</a></li>
-                    <li><a href="#">أعضاء هيئة التدريس</a></li>
-                    <li><a href="#">الطلاب</a></li>
-                    <li><a href="#">اتصل بنا</a></li>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="about.html">عن الموقع</a></li>
+                    <li><a href="objectives.html">الأهداف</a></li>
+                    <li><a href="vision.html">الرؤية</a></li>
+                    <li><a href="mission.html">الرسالة</a></li>
+                    <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
                 </ul>
             </nav>
         </div>
@@ -34,7 +35,6 @@
                 <!-- دائرة الدكتور 1 -->
                 <div class="doctor-circle">
                     <img src="doctor1.jpg" alt="صورة الدكتور 1">
-                    <div class="doctor-name">د. أحمد علي</div>
                     <div class="circle-menu">
                         <div class="menu-item home"><i class="fas fa-home"></i></div>
                         <div class="menu-item contact"><i class="fas fa-phone"></i></div>
@@ -43,16 +43,34 @@
                         <div class="menu-item working-hours"><i class="fas fa-clock"></i></div>
                     </div>
                 </div>
-
-                <!-- أضف المزيد من دوائر الدكاترة هنا -->
-
+                <!-- يمكن تكرار دائرة الدكتور هنا -->
             </div>
         </section>
 
+        <!-- أقسام الموقع الأخرى -->
+        <section class="about">
+            <h2>نبذة عن الموقع</h2>
+            <p>يهدف موقع كلية إدارة الأعمال إلى تقديم معلومات شاملة وموثوقة عن الكلية، بما في ذلك البرامج الأكاديمية، وأعضاء هيئة التدريس، والفعاليات، والتواصل مع الطلاب وأعضاء هيئة التدريس.</p>
+        </section>
+
+        <section class="objectives">
+            <h2>الأهداف</h2>
+            <p>تهدف كلية إدارة الأعمال إلى تقديم تعليم متميز في مجال إدارة الأعمال، وتطوير مهارات الطلاب من خلال برامج أكاديمية شاملة وتجارب عملية مميزة.</p>
+        </section>
+
+        <section class="vision">
+            <h2>الرؤية</h2>
+            <p>أن تكون كلية إدارة الأعمال رائدة في تقديم التعليم الأكاديمي في مجال إدارة الأعمال، مع التركيز على الابتكار والتميز في جميع جوانب التعليم والتدريب.</p>
+        </section>
+
+        <section class="mission">
+            <h2>الرسالة</h2>
+            <p>تقديم برامج تعليمية متكاملة تعزز من قدرات الطلاب في مجال إدارة الأعمال، وتدعمهم بالمعرفة والمهارات اللازمة لتحقيق النجاح في بيئة العمل الديناميكية.</p>
+        </section>
     </main>
 
     <footer>
-        <p>© 2024 كلية إدارة الأعمال</p>
+        <p>&copy; 2024 كلية إدارة الأعمال</p>
     </footer>
 
     <!-- ربط ملف JavaScript -->
