@@ -1,67 +1,35 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // جلب زر التمرير والقائمة
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('nav ul');
+// كود القائمة المنسدلة
+const menuButton = document.querySelector('.menu-button');
+const menu = document.querySelector('.menu');
 
-    // عند النقر على زر التمرير، تبديل الفئة 'active'
-    menuToggle.addEventListener('click', (event) => {
-        event.stopPropagation();
-        navMenu.classList.toggle('active'); // التبديل بين إظهار وإخفاء القائمة
-    });
-
-    // إخفاء القائمة عند النقر خارج الهيدر
-    document.addEventListener('click', (event) => {
-        if (!event.target.closest('header')) {
-            navMenu.classList.remove('active'); // إخفاء القائمة عند النقر خارج الهيدر
-        }
-    });
-
-    // إضافة رابط إعادة التوجيه إلى الصفحة الرئيسية عند الضغط على "كلية إدارة الأعمال"
-    const businessSchoolLink = document.querySelector('h1');
-    if (businessSchoolLink) {
-        businessSchoolLink.addEventListener('click', (event) => {
-            event.preventDefault();
-            window.location.href = 'index.html'; // توجيه المستخدم للصفحة الرئيسية
-        });
+// عندما يتم الضغط على زر القائمة
+menuButton.addEventListener('click', function() {
+    // تبديل ظهور القائمة
+    if (menu.style.display === 'block') {
+        menu.style.display = 'none';
+    } else {
+        menu.style.display = 'block';
     }
-
-    // إعداد التفاعل مع القوائم الدائرية في صفحة أعضاء هيئة التدريس
-    const doctorCircles = document.querySelectorAll('.doctor-circle');
-
-    doctorCircles.forEach(circle => {
-        const name = circle.querySelector('.doctor-name');
-        const menu = circle.querySelector('.circle-menu');
-
-        if (name) {
-            name.addEventListener('click', (event) => {
-                event.stopPropagation(); // لمنع إخفاء القائمة عند الضغط على الدائرة نفسها
-
-                // التبديل بين إظهار وإخفاء القائمة
-                if (menu.style.transform === 'translate(-50%, -50%) scale(1)') {
-                    menu.style.transform = 'translate(-50%, -50%) scale(0)';
-                } else {
-                    menu.style.transform = 'translate(-50%, -50%) scale(1)';
-
-                    // إخفاء القوائم الأخرى
-                    const otherMenus = document.querySelectorAll('.circle-menu');
-                    otherMenus.forEach(otherMenu => {
-                        if (otherMenu !== menu) {
-                            otherMenu.style.transform = 'translate(-50%, -50%) scale(0)';
-                        }
-                    });
-                }
-            });
-
-            // إخفاء القائمة عند النقر خارجها
-            document.addEventListener('click', (event) => {
-                const target = event.target;
-                if (!target.closest('.doctor-circle')) {
-                    const otherMenus = document.querySelectorAll('.circle-menu');
-                    otherMenus.forEach(otherMenu => {
-                        otherMenu.style.transform = 'translate(-50%, -50%) scale(0)';
-                    });
-                }
-            });
-        }
-    });
 });
+
+// إغلاق القائمة عند الضغط خارجها
+document.addEventListener('click', function(event) {
+    if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+        menu.style.display = 'none';
+    }
+});
+
+// التنقل إلى الصفحة الرئيسية عند الضغط على "إدارة الأعمال"
+const businessLink = document.querySelector('.business-link');
+businessLink.addEventListener('click', function() {
+    window.location.href = 'index.html'; // توجيه إلى الصفحة الرئيسية
+});
+
+// كود خاص بالتقويم الأكاديمي
+const academicCalendar = document.querySelector('.calendar-container');
+
+// التأكد من أن صفحة التقويم تظهر بشكل صحيح
+if (academicCalendar) {
+    // يمكنك إضافة أي إعدادات إضافية هنا لصفحة التقويم
+    console.log("صفحة التقويم الأكاديمي جاهزة.");
+}
