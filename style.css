@@ -12,15 +12,13 @@ body {
 header {
     background-color: #4B2E2C; /* خلفية بنية داكنة */
     padding: 1rem;
-    position: relative; /* لجعل القائمة تظهر فوق المحتوى */
-    width: 100%; /* تأكد من أن الهيدر يغطي كامل العرض */
+    width: 100%; /* عرض كامل الصفحة */
 }
 
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%; /* تأكد من تغطية كامل العرض */
 }
 
 h1 {
@@ -30,13 +28,9 @@ h1 {
     text-align: center;
 }
 
-/* قائمة التنقل */
-nav {
-    position: absolute; /* لتكون قائمة التنقل فوق المحتوى */
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #4B2E2C; /* خلفية بنية */
+h1 a {
+    color: white;
+    text-decoration: none;
 }
 
 nav ul {
@@ -44,8 +38,16 @@ nav ul {
     margin: 0;
     padding: 0;
     display: none; /* نخفي القائمة في البداية */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #4B2E2C; /* خلفية بنية */
     text-align: center;
-    z-index: 10; /* تأكد من ظهور القائمة فوق العناصر الأخرى */
+}
+
+nav ul.active {
+    display: block; /* إظهار القائمة عند النقر على زر التمرير */
 }
 
 nav ul li {
@@ -67,49 +69,12 @@ nav ul li a {
     cursor: pointer;
 }
 
-/* إظهار القائمة عند النقر على الزر */
-.menu-toggle.active + nav ul {
-    display: block; /* إظهار القائمة */
-}
-
 /* المحتوى */
-.content {
+.content, .faculty-slider {
     text-align: center;
     padding: 2rem;
-}
-
-/* التأكد من تغطية كامل العرض ولون الخلفية البنية */
-main {
-    background-color: #F5F5F5; /* خلفية فاتحة للتمييز */
-    min-height: 100vh; /* تأكد من تغطية كامل الشاشة */
-}
-
-.welcome-message h2 {
-    font-size: 2rem;
-    color: #4B2E2C;
-    animation: fadeIn 1.5s ease;
-}
-
-.welcome-message p {
-    font-size: 1.2rem;
-    margin-top: 1rem;
-    animation: fadeIn 2s ease;
-}
-
-h2 {
-    color: #4B2E2C;
-    font-size: 1.8rem;
-    margin-top: 2rem;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-ul li {
-    margin: 0.5rem 0;
-    font-size: 1.2rem;
+    overflow-y: auto; /* تمكين شريط التمرير */
+    max-height: 70vh; /* التحكم في ارتفاع المحتوى */
 }
 
 /* تذييل */
@@ -131,11 +96,4 @@ footer {
     to {
         opacity: 1;
     }
-}
-
-/* صفحة أعضاء هيئة التدريس */
-.faculty-slider {
-    background-color: #F5F5F5; /* خلفية فاتحة لتمييز قسم الدوائر */
-    padding: 2rem;
-    min-height: 100vh; /* تأكد من تغطية كامل الشاشة */
 }
