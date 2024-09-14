@@ -87,4 +87,36 @@ nav ul li a {
 h2 {
     color: #4B2E2C;
     font-size: 1.8rem;
-   
+    margin-top: 2rem;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+/* تذييل */
+footer {
+    background-color: #4B2E2C;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* تأثيرات */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
