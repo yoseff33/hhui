@@ -1,3 +1,4 @@
+
 // التعامل مع زر المنيو
 const menuToggle = document.querySelector('.menu-toggle');
 const navMenu = document.querySelector('nav ul');
@@ -5,7 +6,17 @@ const navMenu = document.querySelector('nav ul');
 menuToggle.addEventListener('click', () => {
     navMenu.classList.toggle('active');
 });
+// زر القائمة
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('nav ul');
 
+menuToggle.addEventListener('click', () => {
+    if (nav.style.display === 'none' || nav.style.display === '') {
+        nav.style.display = 'block';
+    } else {
+        nav.style.display = 'none';
+    }
+});
 // التعامل مع الدوائر المخفية للدكاترة
 const doctorCircles = document.querySelectorAll('.doctor-circle');
 
