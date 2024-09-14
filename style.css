@@ -1,16 +1,46 @@
-/* تعديل قائمة التنقل */
+/* إعداد عام للجسم */
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #FFFFFF; /* خلفية بيضاء */
+    margin: 0;
+    padding: 0;
+    color: #4B2E2C; /* لون بني داكن */
+    box-sizing: border-box;
+}
+
+/* الهيدر والقائمة العلوية */
+header {
+    background-color: #4B2E2C; /* خلفية بنية داكنة */
+    padding: 1rem;
+    position: relative;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    color: white;
+    font-size: 2.5rem;
+    margin: 0;
+    text-align: center;
+    cursor: pointer;
+}
+
 nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
     display: none; /* نخفي القائمة في البداية */
-    position: fixed; /* نغير من absolute إلى fixed */
-    top: 0; /* نضع القائمة في أعلى الصفحة */
+    position: fixed; /* نضع القائمة ثابتة في أعلى الصفحة */
+    top: 0; /* أعلى الصفحة */
     left: 0;
     width: 100%;
     background-color: #4B2E2C; /* خلفية بنية */
     text-align: center;
-    z-index: 10;
+    z-index: 9999; /* لضمان ظهور القائمة فوق المحتوى */
 }
 
 /* عند تفعيل القائمة */
@@ -18,7 +48,6 @@ nav ul.active {
     display: block; /* عرض القائمة عند تفعيل الفئة 'active' */
 }
 
-/* باقي التنسيق كما هو */
 nav ul li {
     padding: 1rem;
     border-bottom: 1px solid #e6ccb2;
@@ -30,7 +59,117 @@ nav ul li a {
     font-size: 1.2rem;
 }
 
-/* لضمان أن القائمة ستظهر فوق كل العناصر الأخرى */
-nav ul {
-    z-index: 9999;
+.menu-toggle {
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* المحتوى */
+.content {
+    text-align: center;
+    padding: 2rem;
+}
+
+.welcome-message h2 {
+    font-size: 2rem;
+    color: #4B2E2C;
+    animation: fadeIn 1.5s ease;
+}
+
+.welcome-message p {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    animation: fadeIn 2s ease;
+}
+
+h2 {
+    color: #4B2E2C;
+    font-size: 1.8rem;
+    margin-top: 2rem;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+/* تذييل */
+footer {
+    background-color: #4B2E2C;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* تأثيرات */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* نمط صفحة أعضاء هيئة التدريس */
+.faculty-slider {
+    text-align: center;
+    padding: 2rem;
+}
+
+.slider-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.doctor-circle {
+    margin: 1rem;
+    position: relative;
+}
+
+.doctor-circle img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+.circle-menu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0); /* إخفاء القائمة */
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.circle-menu .menu-item {
+    background-color: #4B2E2C;
+    color: white;
+    padding: 0.5rem;
+    margin: 0.2rem;
+    border-radius: 50%;
+    font-size: 1.5rem;
+}
+
+.circle-menu .menu-item i {
+    color: white;
+}
+
+/* تأثير عند إظهار القائمة */
+.doctor-circle.active .circle-menu {
+    transform: translate(-50%, -50%) scale(1); /* إظهار القائمة */
 }
