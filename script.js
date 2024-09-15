@@ -1,24 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const menuButton = document.querySelector('.menu-button');
-    const menu = document.querySelector('.menu');
-    const header = document.querySelector('header');
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('nav ul');
+    const menuButton = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('nav');
 
-    // وظيفة لعرض وإخفاء القائمة الجانبية
-    menuButton.addEventListener('click', function () {
-        menu.classList.toggle('show-menu');
-    });
+    if (menuButton && menu) {
+        menuButton.addEventListener('click', function () {
+            menu.classList.toggle('active');
+        });
+    }
 
-    // وظيفة لعرض وإخفاء قائمة التنقل في الهيدر
-    menuToggle.addEventListener('click', function () {
-        navMenu.classList.toggle('active');
-    });
+    const body = document.querySelector('body');
+    if (!body.classList.contains('home-page')) {
+        const menuSidebar = document.querySelector('.menu');
+        const menuSidebarButton = document.querySelector('.menu-button');
 
-    // إغلاق القائمة الجانبية عند النقر خارجها
-    document.addEventListener('click', function (event) {
-        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
-            menu.classList.remove('show-menu');
+        if (menuSidebar && menuSidebarButton) {
+            menuSidebarButton.addEventListener('click', function () {
+                menuSidebar.classList.toggle('active');
+            });
         }
-    });
+    }
 });
