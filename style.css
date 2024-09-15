@@ -123,6 +123,52 @@ button {
     font-size: 16px;
     cursor: pointer;
 }
+.faculty-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.card {
+    background: #e0e0e0;
+    border-radius: 15px;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2), -8px -8px 15px rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.3), -12px -12px 20px rgba(255, 255, 255, 0.9);
+}
+
+.card-img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.card-role {
+    font-size: 16px;
+    color: #4a2c2a; /* بني غامق */
+}
+
+.card-department, .card-email {
+    font-size: 14px;
+    color: #333;
+}
+
+
 
 /* تنسيق الحاوية */
 .container {
