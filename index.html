@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الصفحة الرئيسية</title>
+    <title>كلية إدارة الأعمال</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- رأس الصفحة -->
     <header>
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-        <nav id="menu" class="hidden">
+        <div class="header-content">
+            <h1><a href="index.html" style="color: white; text-decoration: none;">كلية إدارة الأعمال</a></h1>
+            <button id="menu-toggle" class="menu-icon">☰</button>
+        </div>
+        <nav id="main-menu" class="menu">
             <ul>
                 <li><a href="index.html">الرئيسية</a></li>
                 <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
@@ -18,13 +23,18 @@
         </nav>
     </header>
 
-    <main>
-        <h1>مرحباً بكم في موقع الكلية</h1>
-        <p>هذا الموقع يحتوي على معلومات حول الكلية وأعضاء هيئة التدريس بالإضافة إلى التقويم الأكاديمي.</p>
-    </main>
+    <!-- محتوى الصفحة الرئيسية -->
+    <section class="homepage-content">
+        <h2>نبذة عن الموقع</h2>
+        <p class="description">
+            مرحباً بكم في موقع كلية إدارة الأعمال. يقدم الموقع معلومات شاملة عن البرامج الأكاديمية، 
+            أعضاء هيئة التدريس، والتقويم الأكاديمي. هدفنا هو تقديم تجربة تعليمية رائدة لطلابنا وزوارنا.
+        </p>
+    </section>
 
+    <!-- تذييل الصفحة -->
     <footer>
-        جميع الحقوق محفوظة © 2024
+        <p>© 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
     </footer>
 
     <script src="script.js"></script>
