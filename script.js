@@ -1,29 +1,22 @@
-// وظيفة لفتح وإغلاق القائمة عند النقر على زر القائمة
 document.addEventListener('DOMContentLoaded', function() {
-    const menuToggle = document.querySelector('.menu-toggle');
-    const menu = document.querySelector('.menu');
+    // Toggle dropdown menu visibility
+    document.querySelector('.menu-button').addEventListener('click', function() {
+        this.classList.toggle('active');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+        if (dropdownMenu.style.display === 'block') {
+            dropdownMenu.style.display = 'none';
+        } else {
+            dropdownMenu.style.display = 'block';
+        }
+    });
 
-    if (menuToggle && menu) {
-        // إضافة console.log للتأكد من أن النقر على الزر يعمل
-        menuToggle.addEventListener('click', function() {
-            console.log("تم النقر على زر القائمة");
-            menu.classList.toggle('active');
-            
-            // تغيير العرض بدلًا من toggle للـ class
-            if (menu.style.display === "block") {
-                menu.style.display = "none";
-            } else {
-                menu.style.display = "block";
-            }
-        });
-    }
+    // Close dropdown menu if clicking outside of it
+    document.addEventListener('click', function(event) {
+        const isClickInsideMenuButton = document.querySelector('.menu-button').contains(event.target);
+        const isClickInsideDropdownMenu = document.querySelector('.dropdown-menu').contains(event.target);
 
-    // وظيفة لإغلاق القائمة عند النقر على عنصر من عناصر القائمة
-    const menuItems = document.querySelectorAll('.menu a');
-    
-    menuItems.forEach(item => {
-        item.addEventListener('click', function() {
-            menu.style.display = "none"; // إغلاق القائمة عند النقر على أي عنصر
-        });
+        if (!isClickInsideMenuButton && !isClickInsideDropdownMenu) {
+            document.querySelector('.dropdown-menu').style.display = 'none';
+        }
     });
 });
