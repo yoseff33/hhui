@@ -14,7 +14,7 @@ main {
 }
 
 header {
-    background-color: #4a2c2a; /* لون بني غامق */
+    background-color: #4a2c2a; /* بني غامق */
     color: #fff;
     padding: 10px;
     position: relative;
@@ -72,7 +72,7 @@ nav ul li a:hover {
 }
 
 footer {
-    background-color: #4a2c2a; /* لون بني غامق */
+    background-color: #4a2c2a; /* بني غامق */
     color: #fff;
     padding: 10px 0;
     text-align: center;
