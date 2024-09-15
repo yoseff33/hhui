@@ -46,7 +46,7 @@ nav {
     top: 100%;
     left: 0;
     width: 100%;
-    background-color: #4a2c2a;
+    background-color: #4a2c2a; /* بني غامق */
     display: none;
 }
 
@@ -68,7 +68,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #3b1e1b;
+    background-color: #3b1e1b; /* بني داكن */
 }
 
 footer {
@@ -91,7 +91,7 @@ th, td {
 }
 
 th {
-    background-color: #4a2c2a;
+    background-color: #4a2c2a; /* بني غامق */
     color: #fff;
 }
 
