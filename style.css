@@ -214,3 +214,75 @@ button {
     margin: 0;
     padding: 0 20px;
 }
+
+/* تنسيق الصفحة الرئيسية */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff; /* خلفية بيضاء */
+}
+
+header {
+    background-color: #4a2c2a;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+}
+
+.homepage-content {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff; /* خلفية بيضاء */
+    color: #333; /* لون النص */
+}
+
+.section-container {
+    background-color: #f4f4f4; /* صندوق بلون رمادي خفيف */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* إضافة ظل خفيف للصندوق */
+}
+
+.section-title {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #4a2c2a; /* لون بني للعناوين */
+}
+
+.section-description {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.section-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 40px;
+    color: #4a2c2a; /* لون الرموز بني */
+}
+
+footer {
+    background-color: #4a2c2a;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
