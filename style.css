@@ -1,4 +1,4 @@
-/* استايل شريط التمرير والقائمة */
+/* إعدادات عامة */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -6,57 +6,70 @@ body {
     background-color: #f5f5f5;
 }
 
-/* تنسيق القائمة */
-.menu-button {
-    background-color: #8B4513; /* بني */
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    width: 100%; /* عرض الزر كامل */
-    text-align: left;
-}
-
-.menu {
-    display: none;
-    background-color: #8B4513;
-    position: absolute;
-    top: 50px; /* مسافة من أعلى الصفحة */
-    width: 100%;
-    z-index: 1000;
-}
-
-.menu a {
-    display: block;
-    color: white;
-    padding: 10px;
-    text-decoration: none;
-}
-
-.menu a:hover {
-    background-color: #5e3113; /* بني غامق */
-}
-
-/* تنسيق الصفحة الرئيسية */
+/* تنسيقات الهيدر */
 header {
-    background-color: #8B4513;
+    background-color: #5e3f23;
     color: white;
     padding: 20px;
     text-align: center;
 }
 
-.container {
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+/* تنسيقات القائمة */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #5e3f23;
+    overflow: hidden;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block;
+}
+
+nav ul li a {
+    display: block;
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+nav ul li a:hover {
+    background-color: #4d351a;
+}
+
+/* إعدادات عامة للمحتوى */
+main {
     padding: 20px;
+    background-color: #fff;
+    margin: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2 {
-    color: #8B4513;
+main h2 {
+    font-size: 1.8em;
+    color: #5e3f23;
 }
 
+main p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* تنسيقات الجدول */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin-top: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 table, th, td {
@@ -64,12 +77,12 @@ table, th, td {
 }
 
 th, td {
-    padding: 10px;
-    text-align: left;
+    padding: 12px;
+    text-align: center;
 }
 
 th {
-    background-color: #8B4513;
+    background-color: #5e3f23;
     color: white;
 }
 
@@ -77,42 +90,62 @@ tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-/* تنسيق الروابط العلوية */
-.business-link {
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-}
-
-/* تنسيق صفحة التقويم الأكاديمي */
-.calendar-container {
-    background-color: #fff;
-    padding: 20px;
-    margin-top: 20px;
-}
-
-.calendar-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-.calendar-table th, .calendar-table td {
-    border: 1px solid #8B4513;
-    padding: 10px;
+/* تنسيقات الفوتر */
+footer {
     text-align: center;
-}
-
-.calendar-table th {
-    background-color: #8B4513;
+    padding: 20px;
+    background-color: #5e3f23;
     color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
 
-.calendar-table td {
-    background-color: #f9f9f9;
+footer p {
+    margin: 0;
+    font-size: 1em;
 }
 
-.calendar-table .highlight {
-    background-color: #6a3d1a; /* تمييز الأحداث المهمة */
-    color: white;
+/* تنسيقات شريط التمرير */
+nav ul.active {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        display: none;
+    }
+
+    nav ul.active {
+        display: block;
+    }
+
+    nav ul li {
+        display: block;
+        text-align: left;
+    }
+
+    nav ul li a {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    main h2 {
+        font-size: 1.5em;
+    }
+
+    footer {
+        font-size: 0.9em;
+    }
+}
+
+/* إضافة تنسيقات إضافية */
+.scrollable-content {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
 }
