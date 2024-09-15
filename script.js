@@ -1,19 +1,22 @@
-// وظيفة لعرض أو إخفاء القائمة
-function toggleMenu() {
-    var menu = document.getElementById('menu');
-    if (menu.classList.contains('hidden')) {
-        menu.classList.remove('hidden');
-    } else {
-        menu.classList.add('hidden');
-    }
-}
+// التأكد من أن المستند جاهز للتفاعل
+document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('main-menu');
 
-// التأكد من أن القائمة تختفي عند النقر خارجها
-document.addEventListener('click', function(event) {
-    var menu = document.getElementById('menu');
-    var menuButton = document.querySelector('.menu-btn');
-    
-    if (!menuButton.contains(event.target) && !menu.contains(event.target)) {
-        menu.classList.add('hidden');
-    }
+    // عند الضغط على زر القائمة
+    menuToggle.addEventListener('click', function() {
+        // التبديل بين إظهار القائمة وإخفائها
+        if (menu.style.display === 'block') {
+            menu.style.display = 'none';
+        } else {
+            menu.style.display = 'block';
+        }
+    });
+
+    // إغلاق القائمة إذا تم الضغط في أي مكان آخر على الصفحة
+    document.addEventListener('click', function(event) {
+        if (!menuToggle.contains(event.target) && !menu.contains(event.target)) {
+            menu.style.display = 'none';
+        }
+    });
 });
