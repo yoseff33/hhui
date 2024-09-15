@@ -1,3 +1,21 @@
+document.addEventListener('DOMContentLoaded', function () {
+    // الحصول على الزر والقائمة
+    var menuButton = document.getElementById('menu-button');
+    var menu = document.getElementById('menu');
+
+    // إضافة حدث عند الضغط على زر القائمة
+    menuButton.addEventListener('click', function () {
+        // تبديل ظهور القائمة
+        menu.classList.toggle('menu-open');
+    });
+
+    // عند الضغط خارج القائمة، إغلاقها
+    document.addEventListener('click', function (event) {
+        if (!menuButton.contains(event.target) && !menu.contains(event.target)) {
+            menu.classList.remove('menu-open');
+        }
+    });
+});
 // التأكد من أن المستند جاهز للتفاعل
 document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.getElementById('menu-toggle');
