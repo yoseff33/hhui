@@ -8,6 +8,74 @@ body {
     min-height: 100vh;
 }
 
+/* ترويسة الصفحة (الجزء العلوي) */
+header {
+    background-color: #4B2E2C; /* لون بني */
+    color: #FFFFFF;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 24px;
+}
+
+nav {
+    background-color: #4B2E2C; /* لون بني */
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+
+nav a {
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
+nav a:hover {
+    background-color: #6F4F4D; /* لون بني أفتح عند التحويم */
+    border-radius: 5px;
+}
+
+/* تنسيق القائمة المنسدلة */
+.menu {
+    display: none;
+    background-color: #4B2E2C; /* لون بني */
+    color: #FFFFFF;
+    position: absolute;
+    top: 60px; /* مباشرة تحت الترويسة */
+    width: 100%; /* عرض القائمة بالكامل */
+    z-index: 1;
+    padding: 10px 0;
+}
+
+.menu a {
+    display: block;
+    padding: 10px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.menu a:hover {
+    background-color: #6F4F4D; /* لون بني أفتح عند التحويم */
+}
+
+/* زر القائمة */
+.menu-button {
+    background-color: #4B2E2C; /* لون بني */
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 18px;
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.menu-button:hover {
+    background-color: #6F4F4D;
+}
+
 /* تذييل الصفحة */
 footer {
     background-color: #4B2E2C; /* لون بني */
@@ -16,76 +84,82 @@ footer {
     padding: 20px 0;
     position: relative;
     width: 100%;
-    margin-top: auto; /* لإجبار التذييل على البقاء أسفل الصفحة */
+    margin-top: auto; /* إبقاء التذييل في أسفل الصفحة */
 }
 
-/* تنسيق القائمة */
-.menu {
-    display: none; /* إخفاء القائمة افتراضيًا */
-    background-color: #4B2E2C; /* لون بني */
-    color: #FFFFFF;
-    position: absolute;
-    top: 60px; /* المسافة من الأعلى تحت الزر */
-    left: 0;
-    right: 0;
-    width: 100%; /* عرض القائمة بعرض الصفحة */
-    z-index: 1000;
-    padding: 10px 0; /* تصغير ارتفاع القائمة */
-    text-align: center; /* خيارات الصفحات في المنتصف */
+/* الصفحة الرئيسية */
+.main-home {
+    text-align: center;
+    padding: 20px;
 }
 
-.menu a {
-    display: block;
+.main-home h1 {
+    font-size: 36px;
+    color: #4B2E2C;
+}
+
+.main-home p {
+    font-size: 18px;
+    color: #333333;
+}
+
+/* تنسيقات صفحة أعضاء هيئة التدريس */
+.faculty-page {
+    padding: 20px;
+    text-align: center;
+}
+
+.faculty-page h2 {
+    font-size: 30px;
+    color: #4B2E2C;
+}
+
+.faculty-page p {
+    font-size: 16px;
+    color: #333333;
+}
+
+/* تنسيقات صفحة التقويم الأكاديمي */
+.calendar-page {
+    padding: 20px;
+    text-align: center;
+}
+
+.calendar-page h2 {
+    font-size: 30px;
+    color: #4B2E2C;
+}
+
+.calendar-page p {
+    font-size: 16px;
+    color: #333333;
+}
+
+/* تنسيق أزرار التمرير في الصفحة */
+.scroll-bar {
+    background-color: #4B2E2C;
     color: #FFFFFF;
     padding: 10px;
-    text-decoration: none;
-}
-
-.menu a:hover {
-    background-color: #7F4B46; /* لون عند التمرير على الخيارات */
-}
-
-/* زر القائمة */
-.menu-toggle {
-    background-color: #4B2E2C; /* لون الزر بني */
-    color: #FFFFFF;
-    border: none;
-    padding: 10px 20px;
+    text-align: center;
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    z-index: 10;
     cursor: pointer;
-    position: absolute;
-    top: 10px;
-    left: 50%; /* جعله في منتصف الصفحة */
-    transform: translateX(-50%);
-    font-size: 18px;
 }
 
-/* تفعيل القائمة */
-.menu.active {
-    display: block; /* إظهار القائمة عند إضافة .active */
+.scroll-bar:hover {
+    background-color: #6F4F4D;
 }
 
-/* محتوى الصفحة الرئيسية */
-main {
-    padding: 20px;
-    flex-grow: 1; /* يسمح للمحتوى بالتمدد بين الهيدر والتذييل */
-}
-
-/* تصميم لصفحات أخرى (باستثناء الصفحة الرئيسية) */
-.page-content {
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-/* إعدادات الاستجابة لشاشات صغيرة */
-@media (max-width: 768px) {
-    .menu-toggle {
-        padding: 10px;
-        font-size: 16px;
+/* تحسينات العرض على الشاشات الصغيرة */
+@media screen and (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        text-align: center;
     }
 
-    .menu a {
-        padding: 8px;
+    .menu-button {
+        font-size: 16px;
     }
 }
