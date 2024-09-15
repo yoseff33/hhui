@@ -3,74 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بطاقات أعضاء هيئة التدريس</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .card {
-            border: 1px solid #dcdcdc;
-            border-radius: 8px;
-            padding: 16px;
-            width: 300px;
-            background-color: #ffffff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .card-header {
-            text-align: center;
-            margin-bottom: 16px;
-        }
-        .card-header h2 {
-            margin: 0;
-            color: #333;
-        }
-        .card-content {
-            margin-bottom: 16px;
-        }
-        .card-content p {
-            margin: 4px 0;
-        }
-        .card-content .title {
-            font-weight: bold;
-            color: #333;
-        }
-    </style>
+    <title>أعضاء هيئة التدريس</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="card-container">
-        <!-- بطاقة الدكتور عبدالله خلف السعد -->
-        <div class="card">
-            <div class="card-header">
-                <h2>الدكتور عبدالله خلف السعد</h2>
-            </div>
-            <div class="card-content">
-                <p class="title">الشهادات:</p>
-                <p>دكتوراه في إدارة الأعمال، جامعة أوتارا ماليزيا، 2016</p>
-                <p>ماجستير في نظم المعلومات الإدارية، جامعة اليرموك، إربد، الأردن، 2011</p>
-                <p>بكالوريوس في نظم المعلومات الإدارية، جامعة البلقاء التطبيقية، إربد، الأردن، 2007</p>
-            </div>
-            <div class="card-content">
-                <p class="title">الخبرة:</p>
-                <p>أستاذ مساعد، جامعة حفر الباطن، أغسطس 2019 – الآن</p>
-                <p>أستاذ مساعد، جامعة جدارا، إربد، الأردن، فبراير 2016 – أغسطس 2019</p>
-                <p>متخصص في تطوير المؤسسات، وزارة العدل، إربد، الأردن، فبراير 2009 – 2013</p>
-            </div>
-            <div class="card-content">
-                <p class="title">طرق التواصل:</p>
-                <p>البريد الإلكتروني: abd_alsaad@hotmail.com</p>
-                <p>رقم الهاتف المحمول: +966 563080047</p>
-                <p>الموقع: حفر الباطن، المملكة العربية السعودية</p>
-            </div>
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="business-link">كلية إدارة الأعمال</a>
+            <button id="menu-toggle" class="menu-toggle">&#9776;</button>
         </div>
-        <!-- يمكن إضافة بطاقات أخرى هنا -->
-    </div>
+        <nav id="main-menu" class="menu">
+            <a href="index.html">الرئيسية</a>
+            <a href="faculty.html">أعضاء هيئة التدريس</a>
+            <a href="calendar.html">التقويم الأكاديمي</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>أعضاء هيئة التدريس</h1>
+        <div class="faculty-cards">
+            <div class="card">
+                <img src="https://via.placeholder.com/150" alt="د. محمد علي" class="card-img">
+                <div class="card-body">
+                    <h2 class="card-title">د. محمد علي</h2>
+                    <p class="card-role">أستاذ</p>
+                    <p class="card-department">إدارة أعمال</p>
+                    <p class="card-email">mohamed.ali@university.edu</p>
+                </div>
+            </div>
+            <!-- تكرار الكود أدناه لكل عضو هيئة تدريس آخر -->
+            <div class="card">
+                <img src="https://via.placeholder.com/150" alt="د. سارة حسن" class="card-img">
+                <div class="card-body">
+                    <h2 class="card-title">د. سارة حسن</h2>
+                    <p class="card-role">أستاذة</p>
+                    <p class="card-department">إدارة أعمال</p>
+                    <p class="card-email">sara.hassan@university.edu</p>
+                </div>
+            </div>
+            <!-- أضف المزيد من البطاقات هنا -->
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
