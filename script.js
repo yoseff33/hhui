@@ -20,3 +20,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+document.addEventListener('DOMContentLoaded', function() {
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const isActive = content.style.display === 'block';
+
+            // إغلاق جميع الأقسام الأخرى
+            document.querySelectorAll('.accordion-content').forEach(item => {
+                item.style.display = 'none';
+            });
+
+            // فتح القسم الحالي إذا لم يكن مفتوحًا
+            if (!isActive) {
+                content.style.display = 'block';
+            }
+        });
+    });
+});
