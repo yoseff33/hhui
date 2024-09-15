@@ -6,6 +6,9 @@ body {
     padding: 0;
     color: #4B2E2C; /* لون بني داكن */
     box-sizing: border-box;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* الهيدر */
@@ -43,6 +46,12 @@ header {
     width: 100%;
     height: calc(100vh - 60px);
     overflow-y: auto;
+    transition: transform 0.3s ease;
+    transform: translateY(-100%);
+}
+
+.menu.open {
+    transform: translateY(0);
 }
 
 .menu ul {
@@ -70,6 +79,7 @@ header {
 main {
     margin-top: 60px; /* مساحة للهيدر الثابت */
     padding: 1rem;
+    flex: 1;
 }
 
 /* صفحة التقويم الأكاديمي */
@@ -147,4 +157,5 @@ footer {
     color: white;
     padding: 1rem;
     text-align: center;
+    margin-top: auto;
 }
