@@ -1,165 +1,129 @@
-/* إعدادات عامة */
+/* إعداد عام للجسم */
 body {
+    font-family: 'Tajawal', sans-serif;
+    color: #333;
+    background-color: #ffffff;
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* الهيدر */
+header {
+    background-color: #6F4E37; /* بني غامق */
+    padding: 15px;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+.header-content {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    align-items: center;
 }
 
-/* ترويسة الصفحة (الجزء العلوي) */
-header {
-    background-color: #4B2E2C; /* لون بني */
-    color: #FFFFFF;
-    text-align: center;
-    padding: 20px 0;
+h1 {
     font-size: 24px;
-}
-
-nav {
-    background-color: #4B2E2C; /* لون بني */
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-}
-
-nav a {
-    color: #FFFFFF;
-    text-decoration: none;
-    padding: 10px 20px;
-    font-size: 18px;
-}
-
-nav a:hover {
-    background-color: #6F4F4D; /* لون بني أفتح عند التحويم */
-    border-radius: 5px;
-}
-
-/* تنسيق القائمة المنسدلة */
-.menu {
-    display: none;
-    background-color: #4B2E2C; /* لون بني */
-    color: #FFFFFF;
-    position: absolute;
-    top: 60px; /* مباشرة تحت الترويسة */
-    width: 100%; /* عرض القائمة بالكامل */
-    z-index: 1;
-    padding: 10px 0;
-}
-
-.menu a {
-    display: block;
-    padding: 10px;
-    color: #FFFFFF;
-    text-align: center;
-}
-
-.menu a:hover {
-    background-color: #6F4F4D; /* لون بني أفتح عند التحويم */
+    margin: 0;
 }
 
 /* زر القائمة */
 .menu-button {
-    background-color: #4B2E2C; /* لون بني */
-    color: #FFFFFF;
+    background-color: #6F4E37; /* بني غامق */
+    color: white;
+    padding: 15px 30px;
     border: none;
-    padding: 10px 20px;
     cursor: pointer;
     font-size: 18px;
-    position: relative;
-    display: block;
+    font-family: 'Tajawal', sans-serif;
     width: 100%;
+    text-align: center;
+    margin-top: 10px;
 }
 
 .menu-button:hover {
-    background-color: #6F4F4D;
+    background-color: #5a3e2e;
+}
+
+/* قائمة الخيارات */
+.dropdown-menu {
+    display: none;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    width: 100%;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    z-index: 1000;
+}
+
+.dropdown-menu a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.dropdown-menu a:hover {
+    background-color: #ddd;
+}
+
+/* محتوى الصفحة */
+.main-content {
+    padding: 20px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 28px;
+    color: #6F4E37; /* بني */
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* تنسيق الجداول */
+.academic-calendar, .faculty-table {
+    width: 90%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 18px;
+    color: #333;
+}
+
+.academic-calendar th, .faculty-table th {
+    background-color: #6F4E37; /* لون بني غامق */
+    color: white;
+    padding: 15px;
+}
+
+.academic-calendar td, .faculty-table td {
+    padding: 12px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+.academic-calendar tr:nth-child(even), .faculty-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.academic-calendar tr:hover, .faculty-table tr:hover {
+    background-color: #ddd;
 }
 
 /* تذييل الصفحة */
 footer {
-    background-color: #4B2E2C; /* لون بني */
-    color: #FFFFFF;
-    text-align: center;
-    padding: 20px 0;
-    position: relative;
-    width: 100%;
-    margin-top: auto; /* إبقاء التذييل في أسفل الصفحة */
-}
-
-/* الصفحة الرئيسية */
-.main-home {
-    text-align: center;
-    padding: 20px;
-}
-
-.main-home h1 {
-    font-size: 36px;
-    color: #4B2E2C;
-}
-
-.main-home p {
-    font-size: 18px;
-    color: #333333;
-}
-
-/* تنسيقات صفحة أعضاء هيئة التدريس */
-.faculty-page {
-    padding: 20px;
-    text-align: center;
-}
-
-.faculty-page h2 {
-    font-size: 30px;
-    color: #4B2E2C;
-}
-
-.faculty-page p {
-    font-size: 16px;
-    color: #333333;
-}
-
-/* تنسيقات صفحة التقويم الأكاديمي */
-.calendar-page {
-    padding: 20px;
-    text-align: center;
-}
-
-.calendar-page h2 {
-    font-size: 30px;
-    color: #4B2E2C;
-}
-
-.calendar-page p {
-    font-size: 16px;
-    color: #333333;
-}
-
-/* تنسيق أزرار التمرير في الصفحة */
-.scroll-bar {
-    background-color: #4B2E2C;
-    color: #FFFFFF;
+    background-color: #6F4E37; /* بني */
     padding: 10px;
     text-align: center;
-    position: fixed;
-    top: 50px;
-    right: 10px;
-    z-index: 10;
-    cursor: pointer;
-}
-
-.scroll-bar:hover {
-    background-color: #6F4F4D;
-}
-
-/* تحسينات العرض على الشاشات الصغيرة */
-@media screen and (max-width: 768px) {
-    nav {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .menu-button {
-        font-size: 16px;
-    }
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
