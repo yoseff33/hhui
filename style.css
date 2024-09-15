@@ -1,38 +1,38 @@
-/* تعيين الألوان والخلفيات */
-body {
-    font-family: Arial, sans-serif;
+html, body {
+    height: 100%;
     margin: 0;
-    padding: 0;
-    background-color: #f4f4f4; /* خلفية خفيفة للصفحة */
+    font-family: Arial, sans-serif;
 }
 
-/* تنسيق الشريط العلوي */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
 header {
     background-color: #4a2c2a; /* لون بني غامق */
     color: #fff;
-    padding: 10px 0;
-    text-align: center;
+    padding: 10px;
     position: relative;
 }
 
-/* تنسيق محتويات الشريط العلوي */
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
 }
 
-/* رابط كلية إدارة الأعمال */
 .business-link {
     color: #fff;
     text-decoration: none;
     font-size: 24px;
+    font-weight: bold;
 }
 
-/* زر القائمة */
 .menu-toggle {
     background: none;
     border: none;
@@ -41,68 +41,36 @@ header {
     cursor: pointer;
 }
 
-/* قائمة التنقل */
-.menu {
-    background-color: #4a2c2a; /* لون بني غامق */
-    position: fixed;
-    top: 50px;
-    right: 0;
-    width: 250px;
-    max-height: calc(100vh - 50px);
-    overflow-y: auto;
-    padding: 10px;
-    display: none; /* مخفي افتراضيًا */
-    z-index: 1000;
+nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #4a2c2a;
+    display: none;
 }
 
-.menu a {
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    border-bottom: 1px solid #fff;
+}
+
+nav ul li a {
     display: block;
+    padding: 10px;
     color: #fff;
     text-decoration: none;
-    padding: 10px;
-    border-bottom: 1px solid #6e4c4a;
 }
 
-.menu a:hover {
-    background-color: #6e4c4a; /* لون بني أفتح */
+nav ul li a:hover {
+    background-color: #3b1e1b;
 }
 
-/* تنسيق المحتوى الرئيسي */
-main {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* تنسيق العناوين */
-h1, h2 {
-    color: #4a2c2a; /* لون بني غامق */
-}
-
-/* تنسيق الجدول */
-.calendar-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #fff; /* خلفية الجدول أبيض */
-}
-
-.calendar-table th, .calendar-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
-
-.calendar-table th {
-    background-color: #4a2c2a; /* لون بني غامق */
-    color: #fff;
-}
-
-.calendar-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-/* الشريط السفلي */
 footer {
     background-color: #4a2c2a; /* لون بني غامق */
     color: #fff;
@@ -110,19 +78,52 @@ footer {
     text-align: center;
 }
 
-/* تنسيق الزر */
-button {
-    background-color: #4a2c2a; /* لون بني غامق */
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
 }
 
-/* تنسيق الحاوية */
-.container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #4a2c2a;
+    color: #fff;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+@media (min-width: 600px) {
+    nav {
+        display: block;
+        position: static;
+        background-color: transparent;
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+    }
+
+    nav ul li {
+        border: none;
+    }
+
+    nav ul li a {
+        padding: 10px 20px;
+    }
+
+    .menu-toggle {
+        display: none;
+    }
 }
