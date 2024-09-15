@@ -207,3 +207,12 @@ footer {
         display: none; /* مخفية بشكل افتراضي */
     }
 }
+
+/* شريط التمرير الظاهر لجميع الصفحات ما عدا الرئيسية */
+body:not(.home-page) .menu-button {
+    display: block;
+}
+
+body:not(.home-page) .menu {
+    display: block; /* عرض القائمة الجانبية */
+}
