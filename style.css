@@ -102,7 +102,7 @@ h1, h2 {
     background-color: #f9f9f9;
 }
 
-/* الشريط السفلي *//* الشريط السفلي */
+/* الشريط السفلي */
 footer {
     background-color: #4a2c2a; /* لون بني غامق */
     color: #fff;
@@ -123,6 +123,8 @@ button {
     font-size: 16px;
     cursor: pointer;
 }
+
+/* تنسيق بطاقات هيئة التدريس */
 .faculty-cards {
     display: flex;
     flex-wrap: wrap;
@@ -166,13 +168,4 @@ button {
 .card-department, .card-email {
     font-size: 14px;
     color: #333;
-}
-
-
-
-/* تنسيق الحاوية */
-.container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
 }
