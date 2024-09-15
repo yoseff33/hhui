@@ -1,36 +1,24 @@
-/* تعديل قائمة التنقل */
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: none; /* نخفي القائمة في البداية */
-    position: fixed; /* نغير من absolute إلى fixed */
-    top: 0; /* نضع القائمة في أعلى الصفحة */
-    left: 0;
-    width: 100%;
-    background-color: #4B2E2C; /* خلفية بنية */
-    text-align: center;
-    z-index: 10;
-}
+document.addEventListener('DOMContentLoaded', function () {
+    const menuButton = document.querySelector('.menu-button');
+    const menu = document.querySelector('.menu');
+    const header = document.querySelector('header');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('nav ul');
 
-/* عند تفعيل القائمة */
-nav ul.active {
-    display: block; /* عرض القائمة عند تفعيل الفئة 'active' */
-}
+    // وظيفة لعرض وإخفاء القائمة الجانبية
+    menuButton.addEventListener('click', function () {
+        menu.classList.toggle('show-menu');
+    });
 
-/* باقي التنسيق كما هو */
-nav ul li {
-    padding: 1rem;
-    border-bottom: 1px solid #e6ccb2;
-}
+    // وظيفة لعرض وإخفاء قائمة التنقل في الهيدر
+    menuToggle.addEventListener('click', function () {
+        navMenu.classList.toggle('active');
+    });
 
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2rem;
-}
-
-/* لضمان أن القائمة ستظهر فوق كل العناصر الأخرى */
-nav ul {
-    z-index: 9999;
-}
+    // إغلاق القائمة الجانبية عند النقر خارجها
+    document.addEventListener('click', function (event) {
+        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+            menu.classList.remove('show-menu');
+        }
+    });
+});
