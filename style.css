@@ -169,3 +169,48 @@ button {
     font-size: 14px;
     color: #333;
 }
+/* تنسيق قسم الإنجازات */
+.achievements {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* تنسيق عناصر الأكوردين */
+.accordion {
+    border-radius: 10px;
+    background: #e0e0e0;
+}
+
+.accordion-item {
+    border-bottom: 1px solid #ddd;
+}
+
+.accordion-header {
+    background: #4a2c2a;
+    color: #fff;
+    cursor: pointer;
+    padding: 15px;
+    font-size: 18px;
+    text-align: left;
+    border: none;
+    width: 100%;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.accordion-header:hover {
+    background: #6e4c4a;
+}
+
+.accordion-content {
+    padding: 15px;
+    display: none;
+    overflow: hidden;
+}
+
+.accordion-content ul {
+    list-style-type: disc;
+    margin: 0;
+    padding: 0 20px;
+}
