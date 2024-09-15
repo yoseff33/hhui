@@ -1,28 +1,19 @@
-// كود القائمة المنسدلة// التحكم في الزر المنيو لإظهار وإخفاء القائمة
+// التحكم في الزر الجانبي لإظهار القائمة الجانبية
 document.addEventListener('DOMContentLoaded', function() {
     const menuBtn = document.querySelector('.menu-btn');
-    const navMenu = document.querySelector('nav ul');
+    const sidebar = document.querySelector('.sidebar');
 
     menuBtn.addEventListener('click', function() {
-        if (navMenu.classList.contains('active')) {
-            navMenu.classList.remove('active'); // إخفاء القائمة
+        if (sidebar.style.width === '250px') {
+            sidebar.style.width = '0';
         } else {
-            navMenu.classList.add('active'); // إظهار القائمة
+            sidebar.style.width = '250px'; // عرض الشريط الجانبي عند الضغط
         }
     });
+
+    // إغلاق القائمة الجانبية عند الضغط على زر الإغلاق
+    const closeBtn = document.querySelector('.closebtn');
+    closeBtn.addEventListener('click', function() {
+        sidebar.style.width = '0';
+    });
 });
-
-// التنقل إلى الصفحة الرئيسية عند الضغط على "إدارة الأعمال"
-const businessLink = document.querySelector('.business-link');
-businessLink.addEventListener('click', function() {
-    window.location.href = 'index.html'; // توجيه إلى الصفحة الرئيسية
-});
-
-// كود خاص بالتقويم الأكاديمي
-const academicCalendar = document.querySelector('.calendar-container');
-
-// التأكد من أن صفحة التقويم تظهر بشكل صحيح
-if (academicCalendar) {
-    // يمكنك إضافة أي إعدادات إضافية هنا لصفحة التقويم
-    console.log("صفحة التقويم الأكاديمي جاهزة.");
-}
