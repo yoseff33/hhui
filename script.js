@@ -1,39 +1,150 @@
-إليك كود JavaScript بالكامل لضمان عمل الزر الخاص بالقائمة المنسدلة في جميع الصفحات:
+/* إعداد عام للجسم */
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #FFFFFF; /* خلفية بيضاء */
+    margin: 0;
+    padding: 0;
+    color: #4B2E2C; /* لون بني داكن */
+    box-sizing: border-box;
+}
 
-### **script.js**
+/* الهيدر */
+header {
+    background-color: #4B2E2C; /* خلفية بنية داكنة */
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
 
-```javascript
-document.addEventListener('DOMContentLoaded', () => {
-    // اختار الزر الذي يفتح ويغلق القائمة
-    const menuToggle = document.querySelector('.menu-toggle');
-    // اختار القائمة التي ستظهر وتختفي
-    const navMenu = document.querySelector('nav ul');
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
 
-    // تحقق من وجود العناصر قبل إضافة الحدث
-    if (menuToggle && navMenu) {
-        // أضف حدث النقر للزر
-        menuToggle.addEventListener('click', () => {
-            // تبديل الفئة 'active' لعرض أو إخفاء القائمة
-            navMenu.classList.toggle('active');
-        });
-    }
-});
-```
+.menu-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
 
-### **توضيح الكود:**
+/* القائمة المنسدلة */
+.menu {
+    display: none;
+    background-color: #4B2E2C;
+    position: fixed;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+}
 
-1. **`document.addEventListener('DOMContentLoaded', () => {...});`**: يضمن تنفيذ الشيفرة بعد تحميل كامل محتوى الصفحة.
-2. **`const menuToggle = document.querySelector('.menu-toggle');`**: يختار الزر الذي يتحكم في القائمة.
-3. **`const navMenu = document.querySelector('nav ul');`**: يختار القائمة المنسدلة.
-4. **`menuToggle.addEventListener('click', () => {...});`**: يضيف مستمعًا للنقر على الزر، والذي بدوره يبدل الفئة `active` على القائمة لتظهر أو تختفي بناءً على حالتها الحالية.
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-### **تأكد من:**
+.menu li {
+    border-bottom: 1px solid #6f4f4f;
+}
 
-- **تضمين `script.js` في جميع صفحات HTML:**
-  ```html
-  <script src="script.js"></script>
-  ```
+.menu a {
+    display: block;
+    padding: 1rem;
+    color: white;
+    text-decoration: none;
+}
 
-- **تأكد من تطابق الكلاسات في HTML مع ما هو مستخدم في JavaScript.**
+.menu a:hover {
+    background-color: #6f4f4f;
+}
 
-إذا قمت بتطبيق هذا الكود بشكل صحيح، يجب أن يعمل الزر والقائمة المنسدلة كما هو متوقع في جميع صفحاتك.
+/* الصفحة الرئيسية */
+main {
+    margin-top: 60px; /* مساحة للهيدر الثابت */
+    padding: 1rem;
+}
+
+/* صفحة التقويم الأكاديمي */
+.academic-calendar {
+    padding: 1rem;
+}
+
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.calendar-table th, .calendar-table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.section-header {
+    background-color: #4B2E2C;
+    color: white;
+    font-weight: bold;
+}
+
+/* صفحة أعضاء هيئة التدريس */
+.faculty-slider {
+    padding: 1rem;
+}
+
+.slider-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+}
+
+.doctor-circle {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.doctor-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.circle-menu {
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.doctor-circle:hover .circle-menu {
+    opacity: 1;
+}
+
+.menu-item {
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* تذييل الصفحة */
+footer {
+    background-color: #4B2E2C;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
