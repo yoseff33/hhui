@@ -1,22 +1,19 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Toggle dropdown menu visibility
-    document.querySelector('.menu-button').addEventListener('click', function() {
-        this.classList.toggle('active');
-        const dropdownMenu = document.querySelector('.dropdown-menu');
-        if (dropdownMenu.style.display === 'block') {
-            dropdownMenu.style.display = 'none';
-        } else {
-            dropdownMenu.style.display = 'block';
-        }
-    });
+// وظيفة لعرض أو إخفاء القائمة
+function toggleMenu() {
+    var menu = document.getElementById('menu');
+    if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+    } else {
+        menu.classList.add('hidden');
+    }
+}
 
-    // Close dropdown menu if clicking outside of it
-    document.addEventListener('click', function(event) {
-        const isClickInsideMenuButton = document.querySelector('.menu-button').contains(event.target);
-        const isClickInsideDropdownMenu = document.querySelector('.dropdown-menu').contains(event.target);
-
-        if (!isClickInsideMenuButton && !isClickInsideDropdownMenu) {
-            document.querySelector('.dropdown-menu').style.display = 'none';
-        }
-    });
+// التأكد من أن القائمة تختفي عند النقر خارجها
+document.addEventListener('click', function(event) {
+    var menu = document.getElementById('menu');
+    var menuButton = document.querySelector('.menu-btn');
+    
+    if (!menuButton.contains(event.target) && !menu.contains(event.target)) {
+        menu.classList.add('hidden');
+    }
 });
