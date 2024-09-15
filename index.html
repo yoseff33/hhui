@@ -1,50 +1,30 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كلية إدارة الأعمال</title>
+    <title>الصفحة الرئيسية</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
-    <!-- هنا سيتم تحميل الرأس بشكل ديناميكي -->
     <header>
-        <div class="header-content">
-            <h1>كلية إدارة الأعمال</h1>
-            <button class="menu-button">اختر الصفحة</button>
-            <div class="dropdown-menu">
-                <a href="index.html">الرئيسية</a><br>
-                <a href="faculty.html">أعضاء هيئة التدريس</a><br>
-                <a href="calendar.html">التقويم الأكاديمي</a><br>
-            </div>
-        </div>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <nav id="menu" class="hidden">
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
+                <li><a href="calendar.html">التقويم الأكاديمي</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <main class="main-content">
-        <section class="content">
-            <div class="welcome-message">
-                <h2>مرحباً بك في كلية إدارة الأعمال!</h2>
-            </div>
-
-            <h2>أهداف الموقع</h2>
-            <ul>
-                <li>تقديم معلومات شاملة حول البرامج الأكاديمية.</li>
-                <li>تسهيل الوصول إلى أعضاء هيئة التدريس.</li>
-                <li>توفير منصة للتواصل بين الطلاب والهيئة الأكاديمية.</li>
-            </ul>
-
-            <h2>رؤية الكلية</h2>
-            <p>أن نكون رواداً في تقديم التعليم الإداري المتميز على المستوى المحلي والدولي.</p>
-
-            <h2>رسالة الكلية</h2>
-            <p>تقديم برامج تعليمية مبتكرة تساهم في تطوير القيادات المستقبلية في مختلف المجالات الإدارية.</p>
-        </section>
+    <main>
+        <h1>مرحباً بكم في موقع الكلية</h1>
+        <p>هذا الموقع يحتوي على معلومات حول الكلية وأعضاء هيئة التدريس بالإضافة إلى التقويم الأكاديمي.</p>
     </main>
 
     <footer>
-        <p>© 2024 كلية إدارة الأعمال</p>
+        جميع الحقوق محفوظة © 2024
     </footer>
 
     <script src="script.js"></script>
