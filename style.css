@@ -1,140 +1,91 @@
-/* إعداد عام للجسم */
+/* إعدادات عامة */
 body {
-    font-family: 'Cairo', sans-serif;
-    background-color: #FFFFFF; /* خلفية بيضاء */
     margin: 0;
-    padding: 0;
-    color: #4B2E2C; /* لون بني داكن */
-    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* إعدادات العنوان */
-header {
-    background-color: #4B2E2C; /* لون بني داكن */
+/* تذييل الصفحة */
+footer {
+    background-color: #4B2E2C; /* لون بني */
     color: #FFFFFF;
-    padding: 10px;
     text-align: center;
-    position: fixed;
+    padding: 20px 0;
+    position: relative;
     width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
+    margin-top: auto; /* لإجبار التذييل على البقاء أسفل الصفحة */
 }
 
-.header-content h1 {
-    margin: 0;
-}
-
-.menu-toggle {
-    background: none;
-    border: none;
-    color: #FFFFFF;
-    font-size: 24px;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
+/* تنسيق القائمة */
 .menu {
-    display: none;
-    background-color: #4B2E2C; /* لون بني داكن */
+    display: none; /* إخفاء القائمة افتراضيًا */
+    background-color: #4B2E2C; /* لون بني */
     color: #FFFFFF;
-    position: fixed;
-    top: 50px;
+    position: absolute;
+    top: 60px; /* المسافة من الأعلى تحت الزر */
+    left: 0;
     right: 0;
-    width: 200px;
-    border-radius: 5px;
+    width: 100%; /* عرض القائمة بعرض الصفحة */
     z-index: 1000;
+    padding: 10px 0; /* تصغير ارتفاع القائمة */
+    text-align: center; /* خيارات الصفحات في المنتصف */
 }
 
 .menu a {
     display: block;
-    padding: 10px;
     color: #FFFFFF;
+    padding: 10px;
     text-decoration: none;
 }
 
 .menu a:hover {
-    background-color: #6F4F4A; /* لون بني أفتح */
+    background-color: #7F4B46; /* لون عند التمرير على الخيارات */
 }
 
-/* إعدادات المحتوى */
-main {
-    margin-top: 60px;
-    padding: 20px;
-}
-
-.footer {
-    background-color: #4B2E2C; /* لون بني داكن */
+/* زر القائمة */
+.menu-toggle {
+    background-color: #4B2E2C; /* لون الزر بني */
     color: #FFFFFF;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-}
-
-/* إعدادات شريط التمرير */
-.menu {
-    height: auto; /* حجم الشريط البني صغير جداً */
-    max-height: 300px; /* أقصى ارتفاع للشريط */
-    overflow-y: auto;
-    width: 100%; /* العرض على طول الصفحة */
-}
-
-/* إعدادات الصفحة الرئيسية */
-.faculty-slider {
-    margin: 20px;
-}
-
-/* دائرة أعضاء هيئة التدريس */
-.doctor-circle {
-    position: relative;
-    border-radius: 50%;
-    overflow: hidden;
-}
-
-.doctor-circle img {
-    width: 100%;
-    height: auto;
-}
-
-.circle-menu {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    color: #FFFFFF;
-    text-align: center;
-}
-
-.menu-item {
-    padding: 10px;
+    border: none;
+    padding: 10px 20px;
     cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 50%; /* جعله في منتصف الصفحة */
+    transform: translateX(-50%);
+    font-size: 18px;
 }
 
-/* إعدادات التقويم الأكاديمي */
-.academic-calendar {
-    margin: 20px;
+/* تفعيل القائمة */
+.menu.active {
+    display: block; /* إظهار القائمة عند إضافة .active */
 }
 
-.calendar-table {
-    width: 100%;
-    border-collapse: collapse;
+/* محتوى الصفحة الرئيسية */
+main {
+    padding: 20px;
+    flex-grow: 1; /* يسمح للمحتوى بالتمدد بين الهيدر والتذييل */
 }
 
-.calendar-table th,
-.calendar-table td {
-    border: 1px solid #4B2E2C;
-    padding: 8px;
-    text-align: center;
+/* تصميم لصفحات أخرى (باستثناء الصفحة الرئيسية) */
+.page-content {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
-.calendar-table .section-header {
-    background-color: #6F4F4A; /* لون بني أفتح */
-    color: #FFFFFF;
+/* إعدادات الاستجابة لشاشات صغيرة */
+@media (max-width: 768px) {
+    .menu-toggle {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .menu a {
+        padding: 8px;
+    }
 }
