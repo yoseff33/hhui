@@ -4,37 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أعضاء هيئة التدريس</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css"> <!-- تأكد من ربط ملف CSS -->
 </head>
 <body>
-
-    <!-- رأس الصفحة -->
     <header>
         <div class="header-content">
-            <h1><a href="index.html" style="color: white; text-decoration: none;">كلية إدارة الأعمال</a></h1>
-            <button id="menu-toggle" class="menu-icon">☰</button>
+            <a href="index.html" class="business-link">كلية إدارة الأعمال</a>
+            <button class="menu-toggle">&#9776;</button>
         </div>
-        <nav id="main-menu" class="menu">
+        <nav id="menu">
             <ul>
                 <li><a href="index.html">الرئيسية</a></li>
                 <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
                 <li><a href="calendar.html">التقويم الأكاديمي</a></li>
+                <!-- أضف المزيد من الروابط حسب الحاجة -->
             </ul>
         </nav>
     </header>
-
-    <!-- محتوى الصفحة -->
-    <section>
-        <h2>أعضاء هيئة التدريس</h2>
-        <p>قائمة أعضاء هيئة التدريس في الكلية.</p>
-        <!-- يمكنك إضافة جدول أو أي محتوى إضافي هنا -->
-    </section>
-
-    <!-- تذييل الصفحة -->
+    <main>
+        <section>
+            <h1>أعضاء هيئة التدريس</h1>
+            <!-- جدول أو قائمة أعضاء هيئة التدريس -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>الوظيفة</th>
+                        <th>البريد الإلكتروني</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>أ.د. محمد أحمد</td>
+                        <td>أستاذ</td>
+                        <td>mohamed.ahmed@example.com</td>
+                    </tr>
+                    <!-- أضف المزيد من الأساتذة حسب الحاجة -->
+                </tbody>
+            </table>
+        </section>
+    </main>
     <footer>
-        <p>© 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
+        <p>جميع الحقوق محفوظة © 2024</p>
     </footer>
-
-    <script src="script.js"></script>
+    <script src="scripts.js"></script> <!-- تأكد من ربط ملف JavaScript -->
 </body>
 </html>
