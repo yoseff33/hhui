@@ -1,39 +1,109 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>التقويم الأكاديمي</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
-    <!-- رأس الصفحة -->
+    <!-- الشريط العلوي -->
     <header>
         <div class="header-content">
-            <h1><a href="index.html" style="color: white; text-decoration: none;">كلية إدارة الأعمال</a></h1>
-            <button id="menu-toggle" class="menu-icon">☰</button>
+            <a class="business-link" href="index.html">كلية إدارة الأعمال</a>
+            <button id="menu-toggle" class="menu-toggle">
+                <i class="fas fa-bars"></i> <!-- رمز الشريط -->
+            </button>
         </div>
-        <nav id="main-menu" class="menu">
-            <ul>
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
-                <li><a href="calendar.html">التقويم الأكاديمي</a></li>
-            </ul>
-        </nav>
     </header>
 
+    <!-- القائمة المنسدلة -->
+    <nav id="main-menu" class="menu">
+        <a href="index.html">الرئيسية</a>
+        <a href="faculty.html">أعضاء هيئة التدريس</a>
+        <a href="students.html">الطلاب</a>
+        <a href="calendar.html">التقويم الأكاديمي</a>
+    </nav>
+
     <!-- محتوى الصفحة -->
-    <section>
-        <h2>التقويم الأكاديمي</h2>
-        <p>هنا ستجد تفاصيل التقويم الأكاديمي للفصل الدراسي الحالي.</p>
-    </section>
+    <main class="academic-calendar">
+        <h1>التقويم الأكاديمي للعام الجامعي 2024/2025</h1>
 
-    <!-- تذييل الصفحة -->
-    <footer>
-        <p>© 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
-    </footer>
+        <!-- جدول التقويم الأكاديمي -->
+        <table class="calendar-table">
+            <thead>
+                <tr>
+                    <th>الإجراء</th>
+                    <th>التاريخ الهجري</th>
+                    <th>التاريخ الميلادي</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- الفصل الدراسي الأول -->
+                <tr class="section-header">
+                    <td colspan="3">الفصل الدراسي الأول</td>
+                </tr>
+                <tr>
+                    <td>بداية الدراسة للفصل الدراسي الأول</td>
+                    <td>1446/2/14 هـ</td>
+                    <td>2024/8/18 م</td>
+                </tr>
+                <tr>
+                    <td>إجازة اليوم الوطني</td>
+                    <td>1446/3/20 هـ</td>
+                    <td>2024/9/23 م</td>
+                </tr>
+                <tr>
+                    <td>بداية إجازة منتصف الفصل الدراسي</td>
+                    <td>1446/4/6 هـ</td>
+                    <td>2024/10/21 م</td>
+                </tr>
+                <tr>
+                    <td>نهاية الدراسة للفصل الدراسي الأول</td>
+                    <td>1446/5/15 هـ</td>
+                    <td>2024/11/17 م</td>
+                </tr>
+                <tr>
+                    <td>بداية إجازة منتصف العام الدراسي</td>
+                    <td>1446/5/16 هـ</td>
+                    <td>2024/11/18 م</td>
+                </tr>
 
+                <!-- الفصل الدراسي الثاني -->
+                <tr class="section-header">
+                    <td colspan="3">الفصل الدراسي الثاني</td>
+                </tr>
+                <tr>
+                    <td>بداية الدراسة للفصل الدراسي الثاني</td>
+                    <td>1446/6/7 هـ</td>
+                    <td>2025/1/12 م</td>
+                </tr>
+                <tr>
+                    <td>إجازة يوم التأسيس</td>
+                    <td>1446/8/2 هـ</td>
+                    <td>2025/2/23 م</td>
+                </tr>
+                <tr>
+                    <td>بداية إجازة عيد الفطر المبارك</td>
+                    <td>1446/9/20 هـ</td>
+                    <td>2025/3/20 م</td>
+                </tr>
+                <tr>
+                    <td>بداية الاختبارات النهائية</td>
+                    <td>1446/10/1 هـ</td>
+                    <td>2025/4/6 م</td>
+                </tr>
+                <tr>
+                    <td>بداية إجازة نهاية العام الدراسي</td>
+                    <td>1446/12/19 هـ</td>
+                    <td>2025/6/15 م</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <!-- تضمين السكريبت -->
     <script src="script.js"></script>
 </body>
 </html>
