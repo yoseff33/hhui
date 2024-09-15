@@ -10,11 +10,21 @@ body {
 /* رأس الصفحة */
 header {
     background-color: #4b2e24; /* لون بني غامق */
-    padding: 10px;
-    position: relative;
+    padding: 20px;
     text-align: center;
+    color: white;
+    font-size: 24px;
+    position: relative;
 }
 
+/* نص كلية إدارة الأعمال */
+header h1 {
+    color: white;
+    margin: 0;
+    font-size: 28px;
+}
+
+/* زر القائمة */
 .menu-btn {
     background-color: #4b2e24;
     color: white;
@@ -22,21 +32,22 @@ header {
     font-size: 24px;
     cursor: pointer;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 20px;
+    left: 20px;
 }
 
+/* تنسيق القائمة */
 nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
-    gap: 20px;
+    flex-direction: column;
+    text-align: center;
 }
 
 nav ul li {
-    display: inline;
+    margin-bottom: 10px;
 }
 
 nav ul li a {
@@ -44,14 +55,16 @@ nav ul li a {
     text-decoration: none;
     padding: 10px;
     font-size: 18px;
+    display: block;
+    background-color: #4b2e24;
 }
 
-/* إخفاء القائمة */
+/* إخفاء القائمة افتراضياً */
 .hidden {
     display: none;
 }
 
-/* محتوى الصفحة */
+/* تنسيق المحتوى الرئيسي */
 main {
     padding: 20px;
 }
@@ -69,11 +82,12 @@ footer {
     background-color: #4b2e24;
     color: white;
     text-align: center;
-    padding: 20px;
+    padding: 10px; /* تصغير ارتفاع التذييل */
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
+    font-size: 14px;
 }
 
 /* تنسيق الجدول */
@@ -104,7 +118,7 @@ h1.page-title {
     margin-bottom: 20px;
 }
 
-/* إضافة تأثير hover للقائمة */
+/* تأثير hover على الروابط */
 nav ul li a:hover {
     background-color: #3b1d19;
     transition: background-color 0.3s ease;
