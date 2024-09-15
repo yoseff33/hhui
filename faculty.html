@@ -7,9 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- رأس الصفحة -->
     <header>
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-        <nav id="menu" class="hidden">
+        <div class="header-content">
+            <h1><a href="index.html" style="color: white; text-decoration: none;">كلية إدارة الأعمال</a></h1>
+            <button id="menu-toggle" class="menu-icon">☰</button>
+        </div>
+        <nav id="main-menu" class="menu">
             <ul>
                 <li><a href="index.html">الرئيسية</a></li>
                 <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
@@ -18,13 +23,16 @@
         </nav>
     </header>
 
-    <main>
-        <h1>أعضاء هيئة التدريس</h1>
-        <p>تفاصيل أعضاء هيئة التدريس هنا.</p>
-    </main>
+    <!-- محتوى الصفحة -->
+    <section>
+        <h2>أعضاء هيئة التدريس</h2>
+        <p>قائمة أعضاء هيئة التدريس في الكلية.</p>
+        <!-- يمكنك إضافة جدول أو أي محتوى إضافي هنا -->
+    </section>
 
+    <!-- تذييل الصفحة -->
     <footer>
-        جميع الحقوق محفوظة © 2024
+        <p>© 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
     </footer>
 
     <script src="script.js"></script>
