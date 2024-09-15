@@ -4,49 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أعضاء هيئة التدريس</title>
-    <link rel="stylesheet" href="styles.css"> <!-- تأكد من ربط ملف CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <div class="header-content">
             <a href="index.html" class="business-link">كلية إدارة الأعمال</a>
-            <button class="menu-toggle">&#9776;</button>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         </div>
-        <nav id="menu">
+        <nav id="navbar">
             <ul>
                 <li><a href="index.html">الرئيسية</a></li>
                 <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
                 <li><a href="calendar.html">التقويم الأكاديمي</a></li>
-                <!-- أضف المزيد من الروابط حسب الحاجة -->
+                <li><a href="about.html">نبذة عن الموقع</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <section>
-            <h1>أعضاء هيئة التدريس</h1>
-            <!-- جدول أو قائمة أعضاء هيئة التدريس -->
-            <table>
-                <thead>
-                    <tr>
-                        <th>الاسم</th>
-                        <th>الوظيفة</th>
-                        <th>البريد الإلكتروني</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>أ.د. محمد أحمد</td>
-                        <td>أستاذ</td>
-                        <td>mohamed.ahmed@example.com</td>
-                    </tr>
-                    <!-- أضف المزيد من الأساتذة حسب الحاجة -->
-                </tbody>
-            </table>
-        </section>
+        <h1>أعضاء هيئة التدريس</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>الاسم</th>
+                    <th>الرتبة</th>
+                    <th>التخصص</th>
+                    <th>البريد الإلكتروني</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Add faculty members here -->
+                <tr>
+                    <td>د. محمد علي</td>
+                    <td>أستاذ</td>
+                    <td>إدارة أعمال</td>
+                    <td>mohamed.ali@university.edu</td>
+                </tr>
+                <!-- More rows as needed -->
+            </tbody>
+        </table>
     </main>
     <footer>
-        <p>جميع الحقوق محفوظة © 2024</p>
+        <p>© 2024 كلية إدارة الأعمال</p>
     </footer>
-    <script src="scripts.js"></script> <!-- تأكد من ربط ملف JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
