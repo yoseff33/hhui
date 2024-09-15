@@ -102,12 +102,16 @@ h1, h2 {
     background-color: #f9f9f9;
 }
 
-/* الشريط السفلي */
+/* الشريط السفلي *//* الشريط السفلي */
 footer {
     background-color: #4a2c2a; /* لون بني غامق */
     color: #fff;
     padding: 10px 0;
     text-align: center;
+    position: fixed; /* تثبيت في الأسفل */
+    bottom: 0;
+    width: 100%; /* عرض كامل */
+    z-index: 1000; /* التأكد من أن الشريط فوق باقي المحتويات */
 }
 
 /* تنسيق الزر */
