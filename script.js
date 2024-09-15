@@ -1,22 +1,15 @@
-// كود القائمة المنسدلة
-const menuButton = document.querySelector('.menu-button');
-const menu = document.querySelector('.menu');
+// كود القائمة المنسدلة// التحكم في الزر المنيو لإظهار وإخفاء القائمة
+document.addEventListener('DOMContentLoaded', function() {
+    const menuBtn = document.querySelector('.menu-btn');
+    const navMenu = document.querySelector('nav ul');
 
-// عندما يتم الضغط على زر القائمة
-menuButton.addEventListener('click', function() {
-    // تبديل ظهور القائمة
-    if (menu.style.display === 'block') {
-        menu.style.display = 'none';
-    } else {
-        menu.style.display = 'block';
-    }
-});
-
-// إغلاق القائمة عند الضغط خارجها
-document.addEventListener('click', function(event) {
-    if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
-        menu.style.display = 'none';
-    }
+    menuBtn.addEventListener('click', function() {
+        if (navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active'); // إخفاء القائمة
+        } else {
+            navMenu.classList.add('active'); // إظهار القائمة
+        }
+    });
 });
 
 // التنقل إلى الصفحة الرئيسية عند الضغط على "إدارة الأعمال"
