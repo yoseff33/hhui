@@ -4,37 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أعضاء هيئة التدريس</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <!-- رأس الصفحة -->
     <header>
         <div class="header-content">
-            <h1><a href="index.html" style="color: white; text-decoration: none;">كلية إدارة الأعمال</a></h1>
-            <button id="menu-toggle" class="menu-icon">☰</button>
+            <h1>كلية إدارة الأعمال</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
+                    <li><a href="calendar.html">التقويم الأكاديمي</a></li>
+                </ul>
+            </nav>
         </div>
-        <nav id="main-menu" class="menu">
-            <ul>
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
-                <li><a href="calendar.html">التقويم الأكاديمي</a></li>
-            </ul>
-        </nav>
     </header>
 
-    <!-- محتوى الصفحة -->
-    <section>
-        <h2>أعضاء هيئة التدريس</h2>
-        <p>قائمة أعضاء هيئة التدريس في الكلية.</p>
-        <!-- يمكنك إضافة جدول أو أي محتوى إضافي هنا -->
-    </section>
+    <main>
+        <h1>أعضاء هيئة التدريس</h1>
+        <div class="faculty-cards">
+            <div class="card">
+                <img src="https://via.placeholder.com/150" alt="د. محمد علي" class="card-img">
+                <div class="card-body">
+                    <h2 class="card-title">د. محمد علي</h2>
+                    <p class="card-role">أستاذ</p>
+                    <p class="card-department">إدارة أعمال</p>
+                    <p class="card-email">mohamed.ali@university.edu</p>
+                </div>
+            </div>
+            <!-- تكرار الكود أدناه لكل عضو هيئة تدريس آخر -->
+            <div class="card">
+                <img src="https://via.placeholder.com/150" alt="د. سارة حسن" class="card-img">
+                <div class="card-body">
+                    <h2 class="card-title">د. سارة حسن</h2>
+                    <p class="card-role">أستاذة</p>
+                    <p class="card-department">إدارة أعمال</p>
+                    <p class="card-email">sara.hassan@university.edu</p>
+                </div>
+            </div>
+            <!-- أضف المزيد من البطاقات هنا -->
+        </div>
+    </main>
 
-    <!-- تذييل الصفحة -->
     <footer>
-        <p>© 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
+        <p>&copy; 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
     </footer>
-
-    <script src="script.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
