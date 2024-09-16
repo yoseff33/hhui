@@ -22,7 +22,7 @@
             z-index: 10;
             display: flex;
             justify-content: space-between;
-            padding: 10px;
+            padding: 10px 20px;
         }
         .navbar a {
             color: white;
@@ -37,6 +37,21 @@
         }
         .navbar .menu-toggle {
             display: none;
+        }
+        /* تحسين التنسيق للجوال */
+        @media screen and (max-width: 600px) {
+            .navbar a {
+                float: none;
+                display: block;
+                text-align: right;
+            }
+            .navbar .menu-toggle {
+                display: block;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 24px;
+            }
         }
         /* التنسيق العام */
         header {
@@ -89,17 +104,6 @@
             text-align: center;
             padding: 20px 0;
         }
-        /* تحسين تنسيق الجوال */
-        @media screen and (max-width: 600px) {
-            .navbar a {
-                float: none;
-                display: block;
-                text-align: right;
-            }
-            .calendar-table {
-                font-size: 14px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -109,6 +113,7 @@
         <a href="index.html">الرئيسية</a>
         <a href="faculty.html">أعضاء هيئة التدريس</a>
         <a href="calendar.html">التقويم الأكاديمي</a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
     </div>
 
     <!-- الرئيسية -->
@@ -176,6 +181,13 @@
     <footer>
         جميع الحقوق محفوظة &copy; 2024 كلية إدارة الأعمال
     </footer>
+
+    <!-- JavaScript لفتح/إغلاق القائمة الجانبية -->
+    <script>
+        function toggleMenu() {
+            // لا حاجة لهذا الكود بعد إزالة القائمة الجانبية
+        }
+    </script>
 
 </body>
 </html>
