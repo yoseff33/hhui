@@ -4,117 +4,184 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>كلية إدارة الأعمال</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        /* الشريط العلوي */
+        .navbar {
+            overflow: hidden;
+            background-color: #603913;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+        .navbar a {
+            float: right;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .navbar .icon {
+            display: none;
+        }
+        /* القائمة الجانبية */
+        .menu {
+            display: none;
+            background-color: #603913;
+            position: absolute;
+            right: 0;
+            top: 50px;
+            width: 100%;
+            z-index: 1;
+        }
+        .menu a {
+            float: none;
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            display: block;
+            text-align: right;
+        }
+        .menu a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        /* قائمة الجوال */
+        @media screen and (max-width: 600px) {
+            .navbar a {
+                display: none;
+            }
+            .navbar a.icon {
+                float: right;
+                display: block;
+            }
+        }
+        @media screen and (max-width: 600px) {
+            .menu {
+                display: block;
+            }
+        }
+        /* محتوى الصفحة */
+        header {
+            background-color: #603913;
+            color: #fff;
+            padding: 100px 0; /* تم زيادة الهامش العلوي للتوافق مع الشريط العلوي */
+            text-align: center;
+        }
+        header h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+        header p {
+            font-size: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px 0;
+        }
+        .services {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .service-box {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            width: 22%;
+        }
+        .service-box h3 {
+            color: #603913;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        .service-box p {
+            font-size: 16px;
+            color: #666;
+        }
+        footer {
+            background-color: #603913;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- رأس الصفحة -->
+    <!-- الشريط العلوي -->
+    <div class="navbar">
+        <a href="#home">الرئيسية</a>
+        <a href="#faculty">أعضاء هيئة التدريس</a>
+        <a href="#calendar">التقويم الأكاديمي</a>
+        <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">☰</a>
+    </div>
+
+    <!-- القائمة الجانبية (تظهر فقط على الجوال) -->
+    <div id="menu" class="menu">
+        <a href="#home">الرئيسية</a>
+        <a href="#faculty">أعضاء هيئة التدريس</a>
+        <a href="#calendar">التقويم الأكاديمي</a>
+    </div>
+
     <header>
-        <div class="header-content">
-            <h1><a href="index.html" style="color: white; text-decoration: none;">كلية إدارة الأعمال</a></h1>
-            <button id="menu-toggle" class="menu-icon">☰</button>
-        </div>
-        <nav id="main-menu" class="menu" style="display:none;">
-            <ul>
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
-                <li><a href="calendar.html">التقويم الأكاديمي</a></li>
-            </ul>
-        </nav>
+        <h1>إنجازات كلية إدارة الأعمال</h1>
+        <p>تحقيق رؤية المملكة 2030</p>
     </header>
 
-    <!-- محتوى الصفحة الرئيسية -->
-    <section class="achievements">
-        <h2>إنجازات كلية إدارة الأعمال</h2>
-        <div class="accordion">
-            <div class="accordion-item">
-                <button class="accordion-header">تطوير البرامج الأكاديمية</button>
-                <div class="accordion-content">
-                    <ul>
-                        <li>إعادة هيكلة البرامج الأكاديمية لمواكبة رؤية المملكة 2030 واحتياجات سوق العمل.</li>
-                        <li>استحداث مسارات جديدة في برنامج إدارة الأعمال مثل الإدارة المالية والتسويق.</li>
-                        <li>تفعيل برنامج المحاسبة واستحداث برامج نظم المعلومات الإدارية والقانون.</li>
-                        <li>تقديم برامج لخدمة المجتمع المسائية لمرحلة ما بعد البكالوريوس مثل إدارة الموارد البشرية ودبلوم المحاماة.</li>
-                    </ul>
-                </div>
+    <div class="container">
+        <div class="services">
+            <div class="service-box">
+                <h3>تطوير البرامج الأكاديمية</h3>
+                <p>إعادة هيكلة البرامج الأكاديمية لمواكبة رؤية المملكة 2030 واحتياجات سوق العمل.</p>
+                <p>استحداث مسارات جديدة في برنامج إدارة الأعمال مثل الإدارة المالية والتسويق.</p>
             </div>
-
-            <div class="accordion-item">
-                <button class="accordion-header">زيادة الطاقة الاستيعابية</button>
-                <div class="accordion-content">
-                    <p>زيادة الطاقة الاستيعابية للكلية لاستيعاب المزيد من الطلاب وتلبية الطلب المتزايد على برامجها.</p>
-                </div>
+            <div class="service-box">
+                <h3>زيادة الطاقة الاستيعابية</h3>
+                <p>تفعيل برنامج المحاسبة واستحداث برامج نظم المعلومات الإدارية والقانون.</p>
+                <p>تقديم برامج لخدمة المجتمع مثل إدارة الموارد البشرية ودبلوم المحاماة.</p>
             </div>
-
-            <div class="accordion-item">
-                <button class="accordion-header">جودة أعضاء هيئة التدريس</button>
-                <div class="accordion-content">
-                    <ul>
-                        <li>استقطاب أعضاء هيئة تدريس سعوديين ذوي كفاءة عالية في مختلف تخصصات الكلية.</li>
-                        <li>توفير فرص التدريب والتطوير لأعضاء هيئة التدريس لضمان مواكبتهم لأحدث التطورات في مجال إدارة الأعمال.</li>
-                    </ul>
-                </div>
+            <div class="service-box">
+                <h3>جودة أعضاء هيئة التدريس</h3>
+                <p>نحن نضمن توفير أعضاء هيئة تدريس مؤهلين لتقديم تجربة تعليمية رائدة.</p>
             </div>
-
-            <div class="accordion-item">
-                <button class="accordion-header">الاعتماد الأكاديمي</button>
-                <div class="accordion-content">
-                    <p>السعي للحصول على الاعتماد الأكاديمي لبرامج الكلية من جهات محلية ودولية مرموقة لضمان جودة التعليم المقدم.</p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <button class="accordion-header">خدمة المجتمع</button>
-                <div class="accordion-content">
-                    <ul>
-                        <li>تقديم برامج تدريبية واستشارية للشركات والمؤسسات الحكومية في المنطقة.</li>
-                        <li>تنظيم فعاليات وندوات علمية لمناقشة القضايا والتحديات التي تواجه قطاع الأعمال.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <button class="accordion-header">تميز الخريجين</button>
-                <div class="accordion-content">
-                    <ul>
-                        <li>تخريج أجيال من الكفاءات المؤهلة والقادرة على المنافسة في سوق العمل المحلي والإقليمي.</li>
-                        <li>حصول العديد من خريجي الكلية على وظائف مرموقة في كبرى الشركات والمؤسسات.</li>
-                    </ul>
-                </div>
+            <div class="service-box">
+                <h3>الاعتماد الأكاديمي</h3>
+                <p>تحقيق الاعتماد الأكاديمي على مستوى البرامج لضمان جودة التعليم.</p>
             </div>
         </div>
-    </section>
 
-    <!-- تذييل الصفحة -->
     <footer>
-        <p>© 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
+        <p>© 2024 جميع الحقوق محفوظة لكلية إدارة الأعمال</p>
     </footer>
 
+    <!-- JavaScript لفتح/إغلاق القائمة الجانبية -->
     <script>
-        // فتح وإغلاق القائمة عند الضغط على الرمز ☰
-        const menuToggle = document.getElementById('menu-toggle');
-        const mainMenu = document.getElementById('main-menu');
-
-        menuToggle.addEventListener('click', function() {
-            if (mainMenu.style.display === 'none' || mainMenu.style.display === '') {
-                mainMenu.style.display = 'block';
+        function toggleMenu() {
+            var x = document.getElementById("menu");
+            if (x.style.display === "block") {
+                x.style.display = "none";
             } else {
-                mainMenu.style.display = 'none';
+                x.style.display = "block";
             }
-        });
-
-        // الأكوردين: فتح وإغلاق الأقسام عند الضغط
-        const accordionHeaders = document.querySelectorAll('.accordion-header');
-        accordionHeaders.forEach(header => {
-            header.addEventListener('click', function() {
-                const content = this.nextElementSibling;
-                if (content.style.display === 'block') {
-                    content.style.display = 'none';
-                } else {
-                    content.style.display = 'block';
-                }
-            });
-        });
+        }
     </script>
+
 </body>
 </html>
