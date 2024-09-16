@@ -13,26 +13,26 @@
             background-color: #f5f5f5;
         }
         
-        /* الشريط العلوي */
+        /* الشريط العلوي بدون خلفية */
         .navbar {
             overflow: hidden;
-            background-color: #603913;
+            background-color: transparent; /* إزالة الخلفية */
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 10;
             display: flex;
             justify-content: center;
-            padding: 5px 0; /* تصغير ارتفاع الشريط */
+            padding: 5px 0;
             transition: top 0.3s;
         }
         .navbar a {
-            color: white;
+            color: #603913; /* لون النص البني */
             text-align: center;
-            padding: 10px 15px; /* تصغير حجم الحشو */
+            padding: 10px 15px;
             text-decoration: none;
-            font-size: 16px; /* تصغير حجم الخط */
-            display: inline-block; /* تأكيد عرض العناصر بجانب بعضها */
+            font-size: 16px;
+            display: inline-block;
         }
         .navbar a:hover {
             background-color: #ddd;
@@ -41,8 +41,7 @@
         
         /* التنسيق العام */
         header#home {
-            background-color: #603913;
-            color: #fff;
+            color: #603913; /* اللون البني للنص */
             text-align: center;
             padding: 100px 0;
         }
@@ -107,8 +106,8 @@
                 float: none;
                 display: inline-block;
                 text-align: center;
-                padding: 8px 12px; /* تصغير حجم الحشو على الجوال */
-                font-size: 14px; /* تصغير حجم الخط على الجوال */
+                padding: 8px 12px;
+                font-size: 14px;
             }
         }
     </style>
