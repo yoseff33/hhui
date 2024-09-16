@@ -121,34 +121,43 @@
             text-align: center;
             padding: 20px 0;
         }
+
+        section {
+            padding: 80px 0;
+            margin-top: 50px;
+        }
+        #faculty, #calendar {
+            text-align: center;
+        }
+        #faculty h2, #calendar h2 {
+            color: #603913;
+            font-size: 36px;
+        }
+        #faculty p, #calendar p {
+            color: #666;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
 
     <!-- الشريط العلوي -->
-       <header>
-        <div class="header-content">
-            <h1><a href="index.html" style="color: white; text-decoration: none;">كلية إدارة الأعمال</a></h1>
-            <button id="menu-toggle" class="menu-icon">☰</button>
-        </div>
-        <nav id="main-menu" class="menu">
-            <ul>
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
-                <li><a href="calendar.html">التقويم الأكاديمي</a></li>
-            </ul>
-        </nav>
-    </header>
-
+    <div class="navbar">
+        <a href="index.html">الرئيسية</a>
+        <a href="faculty.html">أعضاء هيئة التدريس</a>
+        <a href="calendar.html">التقويم الأكاديمي</a>
+        <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">☰</a>
+    </div>
 
     <!-- القائمة الجانبية (تظهر فقط على الجوال) -->
     <div id="menu" class="menu">
-        <a href="#home">الرئيسية</a>
-        <a href="#faculty">أعضاء هيئة التدريس</a>
-        <a href="#calendar">التقويم الأكاديمي</a>
+        <a href="index.html">الرئيسية</a>
+        <a href="faculty.html">أعضاء هيئة التدريس</a>
+        <a href="calendar.html">التقويم الأكاديمي</a>
     </div>
 
-    <header>
+    <!-- الرئيسية -->
+    <header id="home">
         <h1>إنجازات كلية إدارة الأعمال</h1>
         <p>تحقيق رؤية المملكة 2030</p>
     </header>
@@ -174,6 +183,19 @@
                 <p>تحقيق الاعتماد الأكاديمي على مستوى البرامج لضمان جودة التعليم.</p>
             </div>
         </div>
+    </div>
+
+    <!-- قسم أعضاء هيئة التدريس -->
+    <section id="faculty">
+        <h2>أعضاء هيئة التدريس</h2>
+        <p>نعتمد على مجموعة من أفضل الكفاءات التعليمية في مجالات متنوعة.</p>
+    </section>
+
+    <!-- قسم التقويم الأكاديمي -->
+    <section id="calendar">
+        <h2>التقويم الأكاديمي</h2>
+        <p>اطلع على مواعيد التسجيل والاختبارات وغيرها من الأحداث الأكاديمية المهمة.</p>
+    </section>
 
     <footer>
         <p>© 2024 جميع الحقوق محفوظة لكلية إدارة الأعمال</p>
@@ -189,6 +211,11 @@
                 x.style.display = "block";
             }
         }
+    </script>
+
+</body>
+</html>
+
     </script>
 
 </body>
