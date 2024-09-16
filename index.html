@@ -5,13 +5,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>كلية إدارة الأعمال</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #8B4513; /* لون بني */
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-content h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .header-content a {
+            text-decoration: none;
+            color: white;
+        }
+
+        #main-menu ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #main-menu ul li {
+            margin: 0 15px;
+        }
+
+        #main-menu ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        section.achievements {
+            padding: 50px 0;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        section.achievements h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #8B4513; /* لون بني */
+        }
+
+        .accordion {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .accordion-item {
+            background-color: #f1f1f1;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background-color: #8B4513; /* لون بني */
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1.2em;
+            outline: none;
+        }
+
+        .accordion-content {
+            padding: 15px;
+            display: none;
+        }
+
+        .accordion-content p,
+        .accordion-content ul {
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        footer {
+            background-color: #8B4513; /* لون بني */
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        /* Animation and interaction */
+        .accordion-header:hover {
+            background-color: #5C3317; /* لون بني داكن عند التمرير */
+        }
+
+        .accordion-header.active + .accordion-content {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <!-- رأس الصفحة -->
     <header>
         <div class="header-content">
-            <h1><a href="index.html" style="color: white; text-decoration: none;">كلية إدارة الأعمال</a></h1>
+            <h1><a href="index.html">كلية إدارة الأعمال</a></h1>
             <button id="menu-toggle" class="menu-icon">☰</button>
         </div>
         <nav id="main-menu" class="menu">
@@ -31,49 +152,48 @@
             <button class="accordion-header">تطوير البرامج الأكاديمية</button>
             <div class="accordion-content">
                 <ul>
-                    <li>إعادة هيكلة البرامج الأكاديمية لمواكبة رؤية المملكة 2030 واحتياجات سوق العمل.</li>
-                    <li>استحداث مسارات جديدة في برنامج إدارة الأعمال مثل الإدارة المالية والتسويق.</li>
-                    <li>تفعيل برنامج المحاسبة واستحداث برامج نظم المعلومات الإدارية والقانون.</li>
-                    <li>تقديم برامج لخدمة المجتمع المسائية لمرحلة ما بعد البكالوريوس مثل إدارة الموارد البشرية ودبلوم المحاماة.</li>
+                    <li>إعادة هيكلة البرامج الأكاديمية لتكون أكثر توافقًا مع متطلبات سوق العمل المحلي والعالمي.</li>
+                    <li>إضافة مسارات جديدة تشمل الإدارة المالية، التسويق، ونظم المعلومات.</li>
+                    <li>توسيع مجالات الدراسات العليا مع برامج متخصصة تهدف إلى رفع كفاءة الخريجين في مجالات المحاسبة والموارد البشرية.</li>
                 </ul>
             </div>
         </div>
         <div class="accordion-item">
             <button class="accordion-header">زيادة الطاقة الاستيعابية</button>
             <div class="accordion-content">
-                <p>زيادة الطاقة الاستيعابية للكلية لاستيعاب المزيد من الطلاب وتلبية الطلب المتزايد على برامجها.</p>
+                <p>رفع الطاقة الاستيعابية للطلاب وتوفير بيئة تعليمية متطورة تساهم في تحسين تجربة الطلاب الأكاديمية.</p>
             </div>
         </div>
         <div class="accordion-item">
             <button class="accordion-header">جودة أعضاء هيئة التدريس</button>
             <div class="accordion-content">
                 <ul>
-                    <li>استقطاب أعضاء هيئة تدريس سعوديين ذوي كفاءة عالية في مختلف تخصصات الكلية.</li>
-                    <li>توفير فرص التدريب والتطوير لأعضاء هيئة التدريس لضمان مواكبتهم لأحدث التطورات في مجال إدارة الأعمال.</li>
+                    <li>استقطاب نخبة من أعضاء هيئة التدريس السعوديين والدوليين لتقديم تعليم عالمي المستوى.</li>
+                    <li>تقديم برامج تدريبية متقدمة لأعضاء الهيئة الأكاديمية لضمان الجودة التعليمية.</li>
                 </ul>
             </div>
         </div>
         <div class="accordion-item">
             <button class="accordion-header">الاعتماد الأكاديمي</button>
             <div class="accordion-content">
-                <p>السعي للحصول على الاعتماد الأكاديمي لبرامج الكلية من جهات محلية ودولية مرموقة لضمان جودة التعليم المقدم.</p>
+                <p>السعي للحصول على الاعتمادات الأكاديمية الدولية والمحلية التي تضمن معايير جودة عالية للتعليم الأكاديمي.</p>
             </div>
         </div>
         <div class="accordion-item">
-            <button class="accordion-header">خدمة المجتمع</button>
+            <button class="accordion-header">الريادة في خدمة المجتمع</button>
             <div class="accordion-content">
                 <ul>
-                    <li>تقديم برامج تدريبية واستشارية للشركات والمؤسسات الحكومية في المنطقة.</li>
-                    <li>تنظيم فعاليات وندوات علمية لمناقشة القضايا والتحديات التي تواجه قطاع الأعمال.</li>
+                    <li>إطلاق مبادرات تهدف إلى تحسين البيئة الاقتصادية والمجتمعية عبر تقديم الاستشارات والبحوث.</li>
+                    <li>تنظيم مؤتمرات وندوات تسهم في تطوير قطاع الأعمال المحلي.</li>
                 </ul>
             </div>
         </div>
         <div class="accordion-item">
-            <button class="accordion-header">تميز الخريجين</button>
+            <button class="accordion-header">إعداد خريجين متميزين</button>
             <div class="accordion-content">
                 <ul>
-                    <li>تخريج أجيال من الكفاءات المؤهلة والقادرة على المنافسة في سوق العمل المحلي والإقليمي.</li>
-                    <li>حصول العديد من خريجي الكلية على وظائف مرموقة في كبرى الشركات والمؤسسات.</li>
+                    <li>تخريج أجيال من القادة ورواد الأعمال المتميزين القادرين على مواجهة تحديات السوق بكفاءة واحترافية.</li>
+                    <li>نسبة توظيف عالية لخريجي الكلية في مختلف المجالات داخل المملكة وخارجها.</li>
                 </ul>
             </div>
         </div>
@@ -85,6 +205,19 @@
         <p>© 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        const headers = document.querySelectorAll('.accordion-header');
+        headers.forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
