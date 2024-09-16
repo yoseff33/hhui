@@ -14,34 +14,51 @@
         }
         /* الشريط العلوي */
         .navbar {
-            overflow: hidden;
             background-color: #603913;
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 10;
             display: flex;
-            justify-content: center;
-            padding: 5px 0; /* تصغير ارتفاع الشريط */
-            transition: top 0.3s;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .navbar .business-link {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
         }
         .navbar a {
             color: white;
-            text-align: center;
-            padding: 10px 15px; /* تصغير حجم الحشو */
             text-decoration: none;
-            font-size: 16px; /* تصغير حجم الخط */
-            display: inline-block; /* تأكيد عرض العناصر بجانب بعضها */
+            padding: 14px 20px;
+            font-size: 16px;
+            text-align: center;
         }
         .navbar a:hover {
             background-color: #ddd;
             color: black;
         }
-        /* إزالة القائمة الجانبية */
-        .menu {
+        .navbar .menu-toggle {
             display: none;
         }
-        /* التنسيق العام */
+        @media screen and (max-width: 600px) {
+            .navbar a {
+                display: block;
+                text-align: right;
+            }
+            .navbar .menu-toggle {
+                display: block;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 24px;
+            }
+        }
+        /* محتوى الصفحة */
         header {
             background-color: #603913;
             color: #fff;
@@ -55,34 +72,47 @@
         header p {
             font-size: 20px;
         }
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 20px 0;
-        }
-        .services {
+        .faculty-cards {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .service-box {
-            background-color: #fff;
+            justify-content: center;
+            gap: 20px;
             padding: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card {
+            background: #fff;
+            border: 1px solid #ddd;
             border-radius: 10px;
-            width: 22%;
-            margin: 10px 0; /* تعديل المسافة بين البطاقات */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 300px;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s;
         }
-        .service-box h3 {
-            color: #603913;
-            margin-bottom: 15px;
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card-img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        .card-title {
             font-size: 24px;
+            margin: 10px 0;
         }
-        .service-box p {
+        .card-role {
+            font-size: 18px;
+            color: #555;
+        }
+        .card-department {
             font-size: 16px;
             color: #666;
+        }
+        .card-email {
+            font-size: 14px;
+            color: #999;
         }
         footer {
             background-color: #603913;
@@ -90,56 +120,18 @@
             text-align: center;
             padding: 20px 0;
         }
-
-        section {
-            padding: 80px 0;
-            margin-top: 50px;
-        }
-        #faculty, #calendar {
-            text-align: center;
-        }
-        #faculty h2, #calendar h2 {
-            color: #603913;
-            font-size: 36px;
-        }
-        #faculty p, #calendar p {
-            color: #666;
-            font-size: 18px;
-        }
-
-        /* تحسين تنسيق الجوال */
-        @media screen and (max-width: 600px) {
-            .navbar {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                padding: 5px 0;
-            }
-            .navbar a {
-                float: none;
-                display: inline-block;
-                text-align: center;
-                padding: 8px 12px; /* تصغير حجم الحشو على الجوال */
-                font-size: 14px; /* تصغير حجم الخط على الجوال */
-            }
-            .services {
-                flex-direction: column;
-                align-items: center;
-            }
-            .service-box {
-                width: 90%; /* عرض أكبر للبطاقات على الجوال */
-                margin: 10px auto; /* توسيط البطاقات */
-            }
-        }
     </style>
 </head>
 <body>
-
     <!-- الشريط العلوي -->
     <div class="navbar">
-        <a href="index.html">الرئيسية</a>
-        <a href="faculty.html">أعضاء هيئة التدريس</a>
-        <a href="calendar.html">التقويم الأكاديمي</a>
+        <a href="index.html" class="business-link">كلية إدارة الأعمال</a>
+        <button id="menu-toggle" class="menu-toggle">&#9776;</button>
+        <nav id="main-menu" class="menu">
+            <a href="index.html">الرئيسية</a>
+            <a href="faculty.html">أعضاء هيئة التدريس</a>
+            <a href="calendar.html">التقويم الأكاديمي</a>
+        </nav>
     </div>
 
     <main>
@@ -176,9 +168,14 @@
     </footer>
 
     <script>
-        function toggleMenu() {
-            // لا حاجة لهذا الكود بعد إزالة القائمة الجانبية
-        }
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            var menu = document.getElementById('main-menu');
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+            }
+        });
     </script>
 </body>
 </html>
