@@ -126,12 +126,20 @@
 <body>
 
     <!-- الشريط العلوي -->
-    <div class="navbar">
+       <header>
+        <div class="header-content">
+            <h1><a href="index.html" style="color: white; text-decoration: none;">كلية إدارة الأعمال</a></h1>
+            <button id="menu-toggle" class="menu-icon">☰</button>
+        </div>
+        <nav id="main-menu" class="menu">
+            <ul>
                 <li><a href="index.html">الرئيسية</a></li>
-        <a href="#faculty.html">أعضاء هيئة التدريس</a>
-        <a href="#calendar.html">التقويم الأكاديمي</a>
-        <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">☰</a>
-    </div>
+                <li><a href="faculty.html">أعضاء هيئة التدريس</a></li>
+                <li><a href="calendar.html">التقويم الأكاديمي</a></li>
+            </ul>
+        </nav>
+    </header>
+
 
     <!-- القائمة الجانبية (تظهر فقط على الجوال) -->
     <div id="menu" class="menu">
