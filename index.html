@@ -1,3 +1,12 @@
+فهمت الآن. سأقوم بتعديل الكود لتحسين عرض الصفحة على الأجهزة المحمولة بحيث يتطابق مع تصميم الكمبيوتر.
+
+سنقوم بما يلي:
+1. **إعادة تنسيق عناصر الصفحة** بحيث تتناسب بشكل أفضل مع شاشات الهواتف المحمولة.
+2. **ضبط عرض العناصر** داخل `.services` و `.service-box` ليتناسب مع الشاشات الصغيرة.
+
+هنا هو الكود المعدل:
+
+```html
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -34,7 +43,7 @@
             background-color: #ddd;
             color: black;
         }
-        /* إخفاء القائمة الجانبية */
+        /* إزالة القائمة الجانبية */
         .menu {
             display: none;
         }
@@ -59,6 +68,7 @@
         }
         .services {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-around;
             text-align: center;
             margin-bottom: 50px;
@@ -69,6 +79,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             border-radius: 10px;
             width: 22%;
+            margin: 10px 0; /* تعديل المسافة بين البطاقات */
         }
         .service-box h3 {
             color: #603913;
@@ -100,6 +111,19 @@
         #faculty p, #calendar p {
             color: #666;
             font-size: 18px;
+        }
+
+        /* تحسين تنسيق الجوال */
+        @media screen and (max-width: 600px) {
+            .navbar a {
+                float: none;
+                display: block;
+                text-align: right;
+            }
+            .service-box {
+                width: 90%; /* عرض أكبر للبطاقات على الجوال */
+                margin: 10px auto; /* توسيط البطاقات */
+            }
         }
     </style>
 </head>
@@ -159,3 +183,14 @@
 
 </body>
 </html>
+```
+
+### التعديلات التي أجريتها:
+1. **إعادة تنسيق `.services` و `.service-box`**:
+   - استخدمت `flex-wrap: wrap` في `.services` لتجنب التداخل في الهواتف المحمولة.
+   - ضبطت `width` و `margin` في `.service-box` لتحسين العرض على الأجهزة المحمولة.
+
+2. **تحسين التنسيق العام للجوال**:
+   - عدلت `navbar` لتظهر بشكل مناسب على الأجهزة المحمولة.
+
+إذا كان هناك أي جوانب أخرى تحتاج لتعديل أو تحسين، يرجى إخباري!
