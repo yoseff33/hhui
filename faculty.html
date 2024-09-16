@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أعضاء هيئة التدريس</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <style>
         body {
             font-family: 'Tajawal', sans-serif;
@@ -22,7 +22,7 @@
             z-index: 10;
             display: flex;
             justify-content: space-between;
-            padding: 10px;
+            padding: 10px 20px;
         }
         .navbar a {
             color: white;
@@ -38,7 +38,22 @@
         .navbar .menu-toggle {
             display: none;
         }
-        /* التنسيق العام */
+        /* تحسين التنسيق للجوال */
+        @media screen and (max-width: 600px) {
+            .navbar a {
+                float: none;
+                display: block;
+                text-align: right;
+            }
+            .navbar .menu-toggle {
+                display: block;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 24px;
+            }
+        }
+        /* محتوى الصفحة */
         header {
             background-color: #603913;
             color: #fff;
@@ -55,33 +70,44 @@
         .faculty-cards {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
+            justify-content: center;
+            gap: 20px;
             padding: 20px;
         }
         .card {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background: #fff;
+            border: 1px solid #ddd;
             border-radius: 10px;
-            width: 22%;
-            margin: 10px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 300px;
             text-align: center;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
         }
         .card-img {
             border-radius: 50%;
             width: 150px;
             height: 150px;
             object-fit: cover;
-            margin-bottom: 15px;
         }
         .card-title {
-            color: #603913;
             font-size: 24px;
             margin: 10px 0;
         }
-        .card-role, .card-department, .card-email {
+        .card-role {
+            font-size: 18px;
+            color: #555;
+        }
+        .card-department {
             font-size: 16px;
             color: #666;
+        }
+        .card-email {
+            font-size: 14px;
+            color: #999;
         }
         footer {
             background-color: #603913;
@@ -89,36 +115,22 @@
             text-align: center;
             padding: 20px 0;
         }
-        /* تحسين تنسيق الجوال */
-        @media screen and (max-width: 600px) {
-            .navbar a {
-                float: none;
-                display: block;
-                text-align: right;
-            }
-            .card {
-                width: 90%;
-                margin: 10px auto;
-            }
-        }
     </style>
 </head>
 <body>
-
     <!-- الشريط العلوي -->
     <div class="navbar">
         <a href="index.html">الرئيسية</a>
         <a href="faculty.html">أعضاء هيئة التدريس</a>
         <a href="calendar.html">التقويم الأكاديمي</a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
     </div>
 
-    <!-- الرئيسية -->
-    <header id="home">
-        <h1>أعضاء هيئة التدريس</h1>
-        <p>تعرّف على أعضاء هيئة التدريس المميزين لدينا</p>
-    </header>
-
     <main>
+        <header id="home">
+            <h1>أعضاء هيئة التدريس</h1>
+        </header>
+
         <div class="faculty-cards">
             <div class="card">
                 <img src="https://via.placeholder.com/150" alt="د. محمد علي" class="card-img">
@@ -147,5 +159,10 @@
         <p>&copy; 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
     </footer>
 
+    <script>
+        function toggleMenu() {
+            // لا حاجة لهذا الكود بعد إزالة القائمة الجانبية
+        }
+    </script>
 </body>
 </html>
