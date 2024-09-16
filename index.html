@@ -22,16 +22,16 @@
             z-index: 10;
             display: flex;
             justify-content: center;
-            padding: 10px 0;
+            padding: 5px 0; /* تصغير ارتفاع الشريط */
             transition: top 0.3s;
         }
         .navbar a {
             color: white;
             text-align: center;
-            padding: 14px 20px;
+            padding: 10px 15px; /* تصغير حجم الحشو */
             text-decoration: none;
-            font-size: 18px;
-            display: inline-block; /* تأكد من عرض العناصر بجانب بعضها */
+            font-size: 16px; /* تصغير حجم الخط */
+            display: inline-block; /* تأكيد عرض العناصر بجانب بعضها */
         }
         .navbar a:hover {
             background-color: #ddd;
@@ -110,14 +110,17 @@
         /* تحسين تنسيق الجوال */
         @media screen and (max-width: 600px) {
             .navbar {
-                flex-direction: row; /* جعل العناصر بجانب بعضها */
-                flex-wrap: wrap; /* إضافة هذا للسماح للروابط باللف عند الحاجة */
-                justify-content: center; /* توسيط الروابط */
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 5px 0;
             }
             .navbar a {
                 float: none;
-                display: inline-block; /* تأكيد أن العناصر بجانب بعضها */
+                display: inline-block;
                 text-align: center;
+                padding: 8px 12px; /* تصغير حجم الحشو على الجوال */
+                font-size: 14px; /* تصغير حجم الخط على الجوال */
             }
         }
     </style>
