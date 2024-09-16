@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>التقويم الأكاديمي</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -13,108 +12,59 @@
             padding: 0;
             background-color: #f5f5f5;
         }
-
+        
         /* الشريط العلوي */
-        header {
+        .navbar {
+            overflow: hidden;
             background-color: #603913;
-            color: #fff;
-            padding: 10px 0;
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 10;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            justify-content: center;
+            padding: 5px 0; /* تصغير ارتفاع الشريط */
+            transition: top 0.3s;
         }
-        .header-content {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            padding: 0 20px;
-        }
-        .header-content .business-link {
+        .navbar a {
             color: white;
-            text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .header-content .menu-toggle {
-            display: none;
-        }
-        nav#main-menu {
-            display: flex;
-            gap: 20px;
-        }
-        nav#main-menu a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            padding: 14px 20px;
             text-align: center;
+            padding: 10px 15px; /* تصغير حجم الحشو */
+            text-decoration: none;
+            font-size: 16px; /* تصغير حجم الخط */
+            display: inline-block; /* تأكيد عرض العناصر بجانب بعضها */
         }
-        nav#main-menu a:hover {
+        .navbar a:hover {
             background-color: #ddd;
             color: black;
         }
-
-        @media screen and (max-width: 600px) {
-            nav#main-menu {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                right: 0;
-                background-color: #603913;
-                width: 100%;
-            }
-            nav#main-menu a {
-                padding: 14px 20px;
-                text-align: right;
-            }
-            .header-content .menu-toggle {
-                display: block;
-                background: none;
-                border: none;
-                color: white;
-                font-size: 24px;
-            }
-            nav#main-menu.show {
-                display: flex;
-            }
-        }
-
-        /* محتوى الصفحة */
-        main {
-            padding-top: 0px; /* لضمان عدم تداخل المحتوى مع الشريط العلوي */
-        }
-
+        
+        /* التنسيق العام */
         header#home {
             background-color: #603913;
             color: #fff;
             text-align: center;
-            padding: 20px 0;
+            padding: 100px 0;
         }
         header#home h1 {
-            font-size: 36px;
+            font-size: 48px;
             margin: 0;
         }
         header#home p {
-            font-size: 18px;
-            margin: 0;
+            font-size: 20px;
         }
-
+        
         .container {
             width: 80%;
             margin: auto;
             padding: 20px 0;
         }
-
+        
         .academic-calendar {
             padding: 20px 0;
             text-align: center;
         }
+        
         .calendar-table {
             width: 100%;
             border-collapse: collapse;
@@ -137,100 +87,102 @@
             font-size: 16px;
             color: #666;
         }
-
+        
         footer {
             background-color: #603913;
             color: white;
             text-align: center;
             padding: 20px 0;
         }
+
+        /* تحسين تنسيق الجوال */
+        @media screen and (max-width: 600px) {
+            .navbar {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 5px 0;
+            }
+            .navbar a {
+                float: none;
+                display: inline-block;
+                text-align: center;
+                padding: 8px 12px; /* تصغير حجم الحشو على الجوال */
+                font-size: 14px; /* تصغير حجم الخط على الجوال */
+            }
+        }
     </style>
 </head>
 <body>
 
     <!-- الشريط العلوي -->
-    <header>
-        <div class="header-content">
-            <a href="index.html" class="business-link">كلية إدارة الأعمال</a>
-            <button id="menu-toggle" class="menu-toggle">&#9776;</button>
-            <nav id="main-menu">
-                <a href="index.html">الرئيسية</a>
-                <a href="faculty.html">أعضاء هيئة التدريس</a>
-                <a href="calendar.html">التقويم الأكاديمي</a>
-            </nav>
-        </div>
-    </header>
+    <div class="navbar">
+        <a href="index.html">الرئيسية</a>
+        <a href="faculty.html">أعضاء هيئة التدريس</a>
+        <a href="calendar.html">التقويم الأكاديمي</a>
+    </div>
 
     <!-- الرئيسية -->
-    <main>
-        <header id="home">
-            <h1>التقويم الأكاديمي</h1>
-            <p>تابع أحدث التواريخ والمواعيد الأكاديمية</p>
-        </header>
+    <header id="home">
+        <h1>التقويم الأكاديمي</h1>
+        <p>تابع أحدث التواريخ والمواعيد الأكاديمية</p>
+    </header>
 
-        <div class="container">
-            <section class="academic-calendar">
-                <h2>جدول التقويم الأكاديمي</h2>
-                <table class="calendar-table">
-                    <thead>
-                        <tr>
-                            <th>الفصل الدراسي</th>
-                            <th>التاريخ</th>
-                            <th>الحدث</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td rowspan="4">الفصل الأول</td>
-                            <td>01-09-2024</td>
-                            <td>بداية الفصل الدراسي</td>
-                        </tr>
-                        <tr>
-                            <td>15-10-2024</td>
-                            <td>موعد الاختبارات النصفية</td>
-                        </tr>
-                        <tr>
-                            <td>01-12-2024</td>
-                            <td>نهاية الفصل الدراسي</td>
-                        </tr>
-                        <tr>
-                            <td>10-12-2024</td>
-                            <td>بدء إجازة الشتاء</td>
-                        </tr>
+    <div class="container">
+        <section class="academic-calendar">
+            <h2>جدول التقويم الأكاديمي</h2>
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>الفصل الدراسي</th>
+                        <th>التاريخ</th>
+                        <th>الحدث</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="4">الفصل الأول</td>
+                        <td>01-09-2024</td>
+                        <td>بداية الفصل الدراسي</td>
+                    </tr>
+                    <tr>
+                        <td>15-10-2024</td>
+                        <td>موعد الاختبارات النصفية</td>
+                    </tr>
+                    <tr>
+                        <td>01-12-2024</td>
+                        <td>نهاية الفصل الدراسي</td>
+                    </tr>
+                    <tr>
+                        <td>10-12-2024</td>
+                        <td>بدء إجازة الشتاء</td>
+                    </tr>
 
-                        <tr>
-                            <td rowspan="4">الفصل الثاني</td>
-                            <td>01-01-2025</td>
-                            <td>بداية الفصل الدراسي</td>
-                        </tr>
-                        <tr>
-                            <td>15-02-2025</td>
-                            <td>موعد الاختبارات النصفية</td>
-                        </tr>
-                        <tr>
-                            <td>01-05-2025</td>
-                            <td>نهاية الفصل الدراسي</td>
-                        </tr>
-                        <tr>
-                            <td>10-05-2025</td>
-                            <td>بدء إجازة الصيف</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </div>
-    </main>
+                    <tr>
+                        <td rowspan="4">الفصل الثاني</td>
+                        <td>01-01-2025</td>
+                        <td>بداية الفصل الدراسي</td>
+                    </tr>
+                    <tr>
+                        <td>15-02-2025</td>
+                        <td>موعد الاختبارات النصفية</td>
+                    </tr>
+                    <tr>
+                        <td>01-05-2025</td>
+                        <td>نهاية الفصل الدراسي</td>
+                    </tr>
+                    <tr>
+                        <td>10-05-2025</td>
+                        <td>بدء إجازة الصيف</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
 
     <footer>
         <p>&copy; 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
     </footer>
-
-    <script>
-        document.getElementById('menu-toggle').addEventListener('click', function() {
-            var menu = document.getElementById('main-menu');
-            menu.classList.toggle('show');
-        });
-    </script>
 
 </body>
 </html>
