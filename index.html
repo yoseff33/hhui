@@ -23,7 +23,7 @@
             display: flex;
             justify-content: center;
             padding: 10px 0;
-            transition: top 0.3s; /* إضافة تأثير التمرير */
+            transition: top 0.3s;
         }
         .navbar a {
             color: white;
@@ -31,16 +31,21 @@
             padding: 14px 20px;
             text-decoration: none;
             font-size: 18px;
+            display: inline-block; /* تأكد من عرض العناصر بجانب بعضها */
         }
         .navbar a:hover {
             background-color: #ddd;
             color: black;
         }
-        /* تجنب تداخل الشريط مع المحتوى */
+        /* إزالة القائمة الجانبية */
+        .menu {
+            display: none;
+        }
+        /* التنسيق العام */
         header {
             background-color: #603913;
             color: #fff;
-            padding: 120px 0 80px; /* زيادة البادينج العلوي للتوافق مع الشريط العلوي */
+            padding: 100px 0; /* تم زيادة الهامش العلوي للتوافق مع الشريط العلوي */
             text-align: center;
         }
         header h1 {
@@ -68,7 +73,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             border-radius: 10px;
             width: 22%;
-            margin: 10px 0;
+            margin: 10px 0; /* تعديل المسافة بين البطاقات */
         }
         .service-box h3 {
             color: #603913;
@@ -85,6 +90,7 @@
             text-align: center;
             padding: 20px 0;
         }
+
         section {
             padding: 80px 0;
             margin-top: 50px;
@@ -104,17 +110,14 @@
         /* تحسين تنسيق الجوال */
         @media screen and (max-width: 600px) {
             .navbar {
-                flex-direction: column;
-                align-items: center;
+                flex-direction: row; /* جعل العناصر بجانب بعضها */
+                flex-wrap: wrap; /* إضافة هذا للسماح للروابط باللف عند الحاجة */
+                justify-content: center; /* توسيط الروابط */
             }
             .navbar a {
                 float: none;
-                display: block;
+                display: inline-block; /* تأكيد أن العناصر بجانب بعضها */
                 text-align: center;
-            }
-            .service-box {
-                width: 90%; /* عرض أكبر للبطاقات على الجوال */
-                margin: 10px auto; /* توسيط البطاقات */
             }
         }
     </style>
