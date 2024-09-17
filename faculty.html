@@ -24,6 +24,7 @@
             display: flex;
             justify-content: center;
             padding: 5px 0;
+            transition: top 0.3s;
         }
         .navbar a {
             color: white;
@@ -40,12 +41,15 @@
 
         /* تنسيق العنوان */
         .section-title {
-            background-color: #603913; /* لون الخلفية البني */
-            color: white; /* لون النص الأبيض */
+            background-color: #603913;
+            color: white;
             text-align: center;
-            margin: 0; /* إزالة الهوامش */
-            padding: 100px 0 40px 0; /* ضبط الحشو ليكون مثل الصفحة الرئيسية */
+            padding: 100px 0 40px 0;
             box-sizing: border-box;
+        }
+        .section-title h1 {
+            font-size: 48px;
+            margin: 0;
         }
 
         /* تنسيق البطاقات */
@@ -54,8 +58,10 @@
             margin: auto;
             padding: 20px 0;
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             flex-wrap: wrap;
+            text-align: center;
+            margin-bottom: 50px;
         }
 
         .doctor-card {
@@ -65,7 +71,7 @@
             padding: 20px;
             text-align: center;
             width: 300px;
-            margin: 20px auto;
+            margin: 20px;
         }
 
         .doctor-card img {
@@ -96,6 +102,29 @@
 
         .doctor-card a:hover {
             text-decoration: underline;
+        }
+
+        /* تحسين تنسيق الجوال */
+        @media screen and (max-width: 600px) {
+            .navbar {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 5px 0;
+            }
+            .navbar a {
+                display: inline-block;
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .doctor-card {
+                width: 90%;
+                margin: 10px auto;
+            }
         }
 
         footer {
