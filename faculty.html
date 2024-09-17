@@ -84,6 +84,7 @@
             left: 0;
             transition: opacity 0.3s ease;
             opacity: 1;
+            overflow: hidden;
         }
 
         .doctor-card img {
@@ -104,12 +105,16 @@
             font-size: 18px;
             color: #666;
             margin-bottom: 10px;
+            word-wrap: break-word; /* منع الكلمات الطويلة من الخروج عن الحدود */
         }
 
         .bio-card {
             opacity: 0;
             display: none;
             text-align: left;
+            word-wrap: break-word; /* لمنع خروج النص */
+            max-height: 350px; /* تحديد أقصى ارتفاع */
+            overflow-y: auto; /* إضافة شريط تمرير عند الحاجة */
         }
 
         .doctor-card a {
@@ -199,3 +204,4 @@
 
 </body>
 </html>
+
