@@ -24,7 +24,6 @@
             display: flex;
             justify-content: center;
             padding: 5px 0;
-            transition: top 0.3s;
         }
         .navbar a {
             color: white;
@@ -74,6 +73,7 @@
             margin: 20px;
             cursor: pointer;
             transition: transform 0.3s ease;
+            position: relative;
         }
 
         .doctor-card:hover {
@@ -100,25 +100,20 @@
             margin-bottom: 10px;
         }
 
-        .doctor-card a {
-            font-size: 16px;
-            color: #603913;
-            text-decoration: none;
-        }
-
-        .doctor-card a:hover {
-            text-decoration: underline;
-        }
-
-        /* البطاقة الموسعة (للسيرة الذاتية) */
+        /* السيرة الذاتية التي تحل محل البطاقة */
         .bio-card {
             display: none;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             padding: 20px;
-            margin-top: 20px;
             text-align: left;
+            width: 300px;
+            margin: 20px auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
         }
 
         footer {
@@ -146,8 +141,8 @@
     <!-- محتوى الصفحة -->
     <div class="container">
         <!-- بطاقة الدكتور عبدالله السعد -->
-        <div class="doctor-card" onclick="toggleBio('bio1')">
-            <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/620/PictureProfile-Pic.jpg" alt="د. عبدالله السعد">
+        <div class="doctor-card" id="card1" onclick="toggleBio('bio1', 'card1')">
+            <img src="https://secure.b8cdn.com/images/uploads/user_photos/58/8404958_20110405155909.jpg" alt="د. عبدالله السعد">
             <h3>د. عبدالله السعد</h3>
             <p>أستاذ مساعد في إدارة الأعمال</p>
             <a href="mailto:aasaad@uhb.edu.sa">aasaad@uhb.edu.sa</a>
@@ -155,11 +150,17 @@
         <!-- السيرة الذاتية للدكتور عبدالله السعد -->
         <div id="bio1" class="bio-card">
             <h3>السيرة الذاتية - د. عبدالله السعد</h3>
-            <p>هنا ستوضع السيرة الذاتية المختصرة للدكتور عبدالله السعد...</p>
+            <p><strong>التعليم:</strong></p>
+            <ul>
+                <li>يناير 2016: جامعة أوتارا ماليزيا (معتمدة من AACSB)، كيدا، ماليزيا - دكتوراه في إدارة الأعمال. عنوان الأطروحة: "التنبؤ بنيّة اعتماد التجارة الإلكترونية بين الشركات في الأردن: دور الثقة والتبعية".</li>
+                <li>فبراير 2011: جامعة اليرموك، إربد، الأردن - ماجستير في نظم المعلومات الإدارية (MIS)، المعدل التراكمي: 80.5 جيد جدًا.</li>
+                <li>يوليو 2007: جامعة البلقاء التطبيقية، إربد، الأردن - بكالوريوس في نظم المعلومات الإدارية (MIS)، المعدل التراكمي: 3.49 من 4.00.</li>
+                <li>يوليو 2003: وزارة التربية والتعليم، الأردن - الثانوية العامة أو ما يعادلها، المعدل: 80.7 جيد جدًا.</li>
+            </ul>
         </div>
 
         <!-- بطاقة الدكتور أحمد حسين الرصاص حسين -->
-        <div class="doctor-card" onclick="toggleBio('bio2')">
+        <div class="doctor-card" id="card2" onclick="toggleBio('bio2', 'card2')">
             <img src="https://your-image-link.jpg" alt="د. أحمد حسين الرصاص حسين">
             <h3>د. أحمد حسين الرصاص حسين</h3>
             <p>أستاذ مساعد في المحاسبة</p>
@@ -177,21 +178,18 @@
     </footer>
 
     <script>
-        function toggleBio(id) {
-            var bio = document.getElementById(id);
+        function toggleBio(bioId, cardId) {
+            var bio = document.getElementById(bioId);
+            var card = document.getElementById(cardId);
             if (bio.style.display === "none" || bio.style.display === "") {
                 bio.style.display = "block";
+                card.style.display = "none";
             } else {
                 bio.style.display = "none";
+                card.style.display = "block";
             }
         }
     </script>
-
-</body>
-</html>
-
-        <p>&copy; 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
-    </footer>
 
 </body>
 </html>
