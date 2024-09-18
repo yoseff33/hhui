@@ -13,6 +13,7 @@
             background-color: #f5f5f5;
         }
 
+        /* الشريط العلوي */
         .navbar {
             overflow: hidden;
             background-color: #603913;
@@ -38,6 +39,7 @@
             color: black;
         }
 
+        /* التنسيق العام */
         header#home {
             background-color: #603913;
             color: #fff;
@@ -85,6 +87,10 @@
             font-size: 16px;
             color: #666;
         }
+        .countdown-ended {
+            color: red;
+            font-weight: bold;
+        }
 
         footer {
             background-color: #603913;
@@ -93,6 +99,7 @@
             padding: 20px 0;
         }
 
+        /* تحسين تنسيق الجوال */
         @media screen and (max-width: 600px) {
             .navbar {
                 flex-direction: row;
@@ -109,63 +116,17 @@
             }
         }
     </style>
-    <script>
-        function countdown(eventDate) {
-            const countDownDate = new Date(eventDate).getTime();
-            const now = new Date().getTime();
-            const distance = countDownDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-            return { days, hours, minutes };
-        }
-
-        function updateCountdowns() {
-            const events = [
-                { name: "بداية الدراسة", date: "2024-08-18T00:00:00" },
-                { name: "إجازة اليوم الوطني", date: "2024-09-22T00:00:00" },
-                { name: "إجازة نهاية أسبوع مطولة", date: "2024-10-09T00:00:00" },
-                { name: "بداية إجازة الخريف", date: "2024-11-07T00:00:00" },
-                { name: "بداية الدراسة بعد إجازة الخريف", date: "2024-11-17T00:00:00" },
-                { name: "إجازة نهاية أسبوع مطولة", date: "2024-12-11T00:00:00" },
-                { name: "الاختبارات النهائية", date: "2024-12-17T00:00:00" },
-                { name: "بداية إجازة منتصف العام الدراسي", date: "2025-01-02T00:00:00" },
-                { name: "بداية الدراسة الفصل الدراسي الثاني", date: "2025-01-12T00:00:00" },
-                { name: "إجازة يوم التأسيس", date: "2025-02-23T00:00:00" },
-                { name: "إجازة عيد الفطر المبارك", date: "2025-03-20T00:00:00" },
-                { name: "بداية الدراسة بعد إجازة عيد الفطر المبارك", date: "2025-04-06T00:00:00" },
-                { name: "إجازة نهاية أسبوع مطولة", date: "2025-05-07T00:00:00" },
-                { name: "الاختبارات النهائية", date: "2025-05-18T00:00:00" },
-                { name: "بداية إجازة نهاية العام الدراسي", date: "2025-05-29T00:00:00" },
-                { name: "بداية الدراسة الفصل الدراسي الصيفي", date: "2025-06-15T00:00:00" },
-                { name: "الاختبارات النهائية الفصل الدراسي الصيفي", date: "2025-08-10T00:00:00" },
-                { name: "بداية إجازة الفصل الدراسي الصيفي", date: "2025-08-12T00:00:00" },
-                { name: "بداية الدراسة للعام الدراسي القادم", date: "2025-08-24T00:00:00" }
-            ];
-
-            events.forEach(event => {
-                const { days, hours, minutes } = countdown(event.date);
-                const countdownElement = document.getElementById(`countdown-${event.name}`);
-                countdownElement.innerHTML = `يتبقى ${days} أيام، ${hours} ساعات، و ${minutes} دقائق`;
-            });
-        }
-
-        window.onload = function() {
-            updateCountdowns();
-            setInterval(updateCountdowns, 60000); // تحديث كل دقيقة
-        };
-    </script>
 </head>
 <body>
 
+    <!-- الشريط العلوي -->
     <div class="navbar">
         <a href="index.html">الرئيسية</a>
         <a href="faculty.html">أعضاء هيئة التدريس</a>
         <a href="calendar.html">التقويم الأكاديمي</a>
     </div>
 
+    <!-- الرئيسية -->
     <header id="home">
         <h1>التقويم الأكاديمي</h1>
         <p>تابع أحدث التواريخ والمواعيد الأكاديمية</p>
@@ -177,100 +138,124 @@
             <table class="calendar-table">
                 <thead>
                     <tr>
-                        <th>الفصل الدراسي</th>
-                        <th>التاريخ</th>
+                        <th>التاريخ الهجري</th>
+                        <th>التاريخ الميلادي</th>
                         <th>الحدث</th>
                         <th>العد التنازلي</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td rowspan="6">الفصل الدراسي الأول</td>
-                        <td>الأحد 1446/2/14 هـ الموافق 2024/8/18 م</td>
+                        <td>الأحد 1446/2/14 هـ</td>
+                        <td>الموافق 2024/8/18 م</td>
                         <td>بداية الدراسة</td>
-                        <td id="countdown-بداية الدراسة"></td>
+                        <td class="countdown" data-end-date="2024-08-18T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td>من الأحد 1446/2/19 هـ إلى الإثنين 1446/3/20 هـ الموافق من 2024/9/22 م إلى 2024/9/23 م</td>
+                        <td>من الأحد 1446/2/19 هـ إلى الإثنين 1446/3/20 هـ</td>
+                        <td>الموافق من 2024/9/22 م إلى 2024/9/23 م</td>
                         <td>إجازة اليوم الوطني</td>
-                        <td id="countdown-إجازة اليوم الوطني"></td>
+                        <td class="countdown" data-end-date="2024-09-23T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td>من الأربعاء 1446/3/7 هـ إلى الخميس 1446/3/8 هـ الموافق من 2024/10/9 م إلى 2024/10/10 م</td>
+                        <td>من الأربعاء 1446/3/7 هـ إلى الخميس 1446/3/8 هـ</td>
+                        <td>الموافق من 2024/10/9 م إلى 2024/10/10 م</td>
                         <td>إجازة نهاية أسبوع مطولة</td>
-                        <td id="countdown-إجازة نهاية أسبوع مطولة"></td>
+                        <td class="countdown" data-end-date="2024-10-10T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td>نهاية دوام يوم الخميس 1446/5/5 هـ الموافق 2024/11/7 م</td>
+                        <td>نهاية دوام يوم الخميس 1446/5/5 هـ</td>
+                        <td>الموافق 2024/11/7 م</td>
                         <td>بداية إجازة الخريف</td>
-                        <td id="countdown-بداية إجازة الخريف"></td>
+                        <td class="countdown" data-end-date="2024-11-07T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td>الأحد 1446/5/15 هـ الموافق 2024/11/17 م</td>
+                        <td>الأحد 1446/5/15 هـ</td>
+                        <td>الموافق 2024/11/17 م</td>
                         <td>بداية الدراسة بعد إجازة الخريف</td>
-                        <td id="countdown-بداية الدراسة بعد إجازة الخريف"></td>
+                        <td class="countdown" data-end-date="2024-11-17T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td>من الأربعاء 1446/6/10 هـ إلى الخميس 1446/6/11 هـ الموافق من 2024/12/11 م إلى 2024/12/12 م</td>
+                        <td>من الأربعاء 1446/6/10 هـ إلى الخميس 1446/6/11 هـ</td>
+                        <td>الموافق من 2024/12/11 م إلى 2024/12/12 م</td>
                         <td>إجازة نهاية أسبوع مطولة</td>
-                        <td id="countdown-إجازة نهاية أسبوع مطولة"></td>
+                        <td class="countdown" data-end-date="2024-12-12T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td>من الثلاثاء 1446/6/16 هـ إلى الأربعاء 1446/7/1 هـ الموافق من 2024/12/17 م إلى 2025/1/1 م</td>
+                        <td>من الثلاثاء 1446/6/16 هـ إلى الأربعاء 1446/7/1 هـ</td>
+                        <td>الموافق من 2024/12/17 م إلى 2025/1/1 م</td>
                         <td>الاختبارات النهائية</td>
-                        <td id="countdown-الاختبارات النهائية"></td>
+                        <td class="countdown" data-end-date="2025-01-01T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td rowspan="5">الفصل الدراسي الثاني</td>
-                        <td>الأحد 1446/7/12 هـ الموافق 2025/1/12 م</td>
+                        <td>نهاية دوام يوم الخميس 1446/7/2 هـ</td>
+                        <td>الموافق 2025/1/2 م</td>
+                        <td>بداية إجازة منتصف العام الدراسي</td>
+                        <td class="countdown" data-end-date="2025-01-02T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>الأحد 1446/7/12 هـ</td>
+                        <td>الموافق 2025/1/12 م</td>
                         <td>بداية الدراسة</td>
-                        <td id="countdown-بداية الدراسة الفصل الدراسي الثاني"></td>
+                        <td class="countdown" data-end-date="2025-01-12T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td>الأحد 1446/8/24 هـ الموافق 2025/2/23 م</td>
-                        <td>إجازة يوم التأسيس</td>
-                        <td id="countdown-إجازة يوم التأسيس"></td>
-                    </tr>
-                    <tr>
-                        <td>نهاية دوام يوم الخميس 1446/9/28 هـ الموافق 2025/3/20 م</td>
-                        <td>بداية إجازة عيد الفطر المبارك</td>
-                        <td id="countdown-بداية إجازة عيد الفطر المبارك"></td>
-                    </tr>
-                    <tr>
-                        <td>الأحد 1446/10/6 هـ الموافق 2025/4/6 م</td>
-                        <td>بداية الدراسة بعد إجازة عيد الفطر المبارك</td>
-                        <td id="countdown-بداية الدراسة بعد إجازة عيد الفطر المبارك"></td>
-                    </tr>
-                    <tr>
-                        <td>من الأربعاء 1446/11/12 هـ إلى الخميس 1446/11/13 هـ الموافق من 2025/5/7 م إلى 2025/5/8 م</td>
+                        <td>من الأربعاء 1446/7/26 هـ إلى الخميس 1446/7/27 هـ</td>
+                        <td>الموافق من 2025/2/5 م إلى 2025/2/6 م</td>
                         <td>إجازة نهاية أسبوع مطولة</td>
-                        <td id="countdown-إجازة نهاية أسبوع مطولة"></td>
+                        <td class="countdown" data-end-date="2025-02-06T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td>من الأحد 1446/11/20 هـ إلى الأربعاء 1446/12/1 هـ الموافق من 2025/5/18 م إلى 2025/5/28 م</td>
-                        <td>الاختبارات النهائية</td>
-                        <td id="countdown-الاختبارات النهائية"></td>
+                        <td>الأحد 1446/8/22 هـ</td>
+                        <td>الموافق 2025/2/2 م</td>
+                        <td>إجازة اليوم الوطني</td>
+                        <td class="countdown" data-end-date="2025-02-02T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td rowspan="3">الفصل الدراسي الصيفي</td>
-                        <td>الأحد 1446/12/15 هـ الموافق 2025/6/15 م</td>
-                        <td>بداية الدراسة</td>
-                        <td id="countdown-بداية الدراسة الفصل الدراسي الصيفي"></td>
+                        <td>نهاية دوام يوم الخميس 1446/9/25 هـ</td>
+                        <td>الموافق 2025/2/28 م</td>
+                        <td>بداية إجازة الربيع</td>
+                        <td class="countdown" data-end-date="2025-02-28T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td>من الأحد 1447/2/16 هـ إلى الثلاثاء 1447/2/18 هـ الموافق من 2025/8/10 م إلى 2025/8/12 م</td>
-                        <td>الاختبارات النهائية</td>
-                        <td id="countdown-الاختبارات النهائية الفصل الدراسي الصيفي"></td>
+                        <td>الأحد 1446/10/6 هـ</td>
+                        <td>الموافق 2025/3/9 م</td>
+                        <td>بداية الدراسة بعد إجازة الربيع</td>
+                        <td class="countdown" data-end-date="2025-03-09T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td>نهاية دوام يوم الثلاثاء 1447/2/18 هـ الموافق 2025/8/12 م</td>
-                        <td>بداية إجازة الفصل الدراسي الصيفي للطلبة</td>
-                        <td id="countdown-بداية إجازة الفصل الدراسي الصيفي"></td>
-                    </tr>
-                    <tr>
-                        <td>الأحد 1447/3/1 هـ الموافق 2025/8/24 م</td>
-                        <td>بداية الدراسة للعام الدراسي القادم 1447/1448 هـ</td>
-                        <td id="countdown-بداية الدراسة للعام الدراسي القادم"></td>
+                        <td>نهاية دوام يوم الخميس 1446/10/20 هـ</td>
+                        <td>الموافق 2025/3/23 م</td>
+                        <td>بداية إجازة نهاية العام الدراسي</td>
+                        <td class="countdown" data-end-date="2025-03-23T00:00:00Z">
+                            <span class="countdown-timer"></span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -281,5 +266,28 @@
         <p>&copy; 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
     </footer>
 
+    <script>
+        function updateCountdown() {
+            const countdownElements = document.querySelectorAll('.countdown');
+            countdownElements.forEach(el => {
+                const endDate = new Date(el.getAttribute('data-end-date')).getTime();
+                const now = new Date().getTime();
+                const distance = endDate - now;
+
+                if (distance < 0) {
+                    el.querySelector('.countdown-timer').innerText = "انتهى";
+                    el.querySelector('.countdown-timer').classList.add('countdown-ended');
+                } else {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    el.querySelector('.countdown-timer').innerText = `${days} يوم, ${hours} ساعة, ${minutes} دقيقة`;
+                }
+            });
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Call it immediately to show countdown on load
+    </script>
 </body>
 </html>
