@@ -101,6 +101,7 @@
         #faculty h2, #calendar h2 {
             color: #603913;
             font-size: 36px;
+            cursor: pointer; /* إضافة مؤشر اليد ليدل على أن العنصر قابل للنقر */
         }
         #faculty p, #calendar p {
             color: #666;
@@ -179,8 +180,8 @@
     <!-- الشريط العلوي -->
     <div class="navbar">
         <a href="index.html">الرئيسية</a>
-        <a href="faculty.html">أعضاء هيئة التدريس</a>
-        <a href="calendar.html">التقويم الأكاديمي</a>
+        <a href="faculty.html">أعضاء هيئة التدريس</a>  <!-- رابط إلى صفحة أعضاء هيئة التدريس -->
+        <a href="calendar.html">التقويم الأكاديمي</a> <!-- رابط إلى صفحة التقويم الأكاديمي -->
     </div>
 
     <!-- الرئيسية -->
@@ -191,7 +192,8 @@
 
     <!-- قسم أعضاء هيئة التدريس -->
     <section id="faculty">
-        <h2>إنجازات كلية إدارة الأعمال </h2>
+        <h2><a href="faculty.html" style="text-decoration: none; color: #603913;">أعضاء هيئة التدريس</a></h2> <!-- رابط للنقر -->
+        <p>نعتمد على مجموعة من أفضل الكفاءات التعليمية في مجالات متنوعة.</p>
     </section>
 
     <div class="container">
@@ -217,39 +219,9 @@
         </div>
     </div>
 
-    <!-- قسم أعضاء هيئة التدريس -->
-    <section id="faculty">
-        <h2>أعضاء هيئة التدريس</h2>
-        <p>نعتمد على مجموعة من أفضل الكفاءات التعليمية في مجالات متنوعة.</p>
-
-        <!-- بطاقة الدكتور عبدالله السعد -->
-        <div class="doctor-card">
-            <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/620/PictureProfile-Pic.jpg" alt="د. عبدالله السعد">
-            <h3>د. عبدالله السعد</h3>
-            <p>أستاذ مساعد في إدارة الأعمال</p>
-            <p>البريد الإلكتروني: <a href="mailto:aasaad@uhb.edu.sa">aasaad@uhb.edu.sa</a></p>
-        </div>
-
-        <!-- بطاقة الدكتور أحمد حسين الرصاص -->
-        <div class="doctor-card">
-            <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/328/PictureProfile-%D8%B5%D9%88%D8%B1%D9%87%20%D9%81%D9%8A%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8.jpeg" alt="د. أحمد حسين الرصاص">
-            <h3>د. أحمد حسين الرصاص</h3>
-            <p>وكيل كلية إدارة الأعمال</p>
-            <p>البريد الإلكتروني: <a href="mailto:drahmedhr@uhb.edu.sa">drahmedhr@uhb.edu.sa</a></p>
-        </div>
-
-        <!-- بطاقة الدكتور عبدالعزيز اليوسفي -->
-        <div class="doctor-card">
-            <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/570/PictureProfile-WhatsApp%20Image%202021-09-28%20at%2019.06.33.jpeg" alt="د. عبدالعزيز اليوسفي">
-            <h3>د. عبدالعزيز اليوسفي</h3>
-            <p>أستاذ مساعد في إدارة الأعمال</p>
-            <p>البريد الإلكتروني: <a href="mailto:dralaziz@uhb.edu.sa">dralaziz@uhb.edu.sa</a></p>
-        </div>
-    </section>
-
     <!-- قسم التقويم الأكاديمي -->
     <section id="calendar">
-        <h2>التقويم الأكاديمي</h2>
+        <h2><a href="calendar.html" style="text-decoration: none; color: #603913;">التقويم الأكاديمي</a></h2> <!-- رابط للنقر -->
         <p>اطلع على مواعيد التسجيل والاختبارات وغيرها من الأحداث الأكاديمية المهمة.</p>
     </section>
 
@@ -259,4 +231,3 @@
 
 </body>
 </html>
-
