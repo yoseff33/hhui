@@ -88,6 +88,12 @@
             color: #666;
         }
 
+        .countdown {
+            margin: 20px 0;
+            font-size: 20px;
+            color: #603913;
+        }
+
         footer {
             background-color: #603913;
             color: white;
@@ -205,12 +211,50 @@
                     </tr>
                 </tbody>
             </table>
+
+            <!-- عداد الأيام -->
+            <div class="countdown">
+                <h3>عداد الأيام المتبقية:</h3>
+                <div id="countdown-container"></div>
+            </div>
         </section>
     </div>
 
     <footer>
         <p>&copy; 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
     </footer>
+
+    <script>
+        // تواريخ الأحداث المهمة
+        const events = [
+            { name: "بداية الدراسة", date: new Date("2024-08-18") },
+            { name: "إجازة اليوم الوطني", date: new Date("2024-09-22") },
+            { name: "بداية إجازة الخريف", date: new Date("2024-11-07") },
+            { name: "بداية الدراسة بعد إجازة الخريف", date: new Date("2024-11-17") },
+            { name: "إجازة نهاية أسبوع مطولة", date: new Date("2024-12-11") },
+            { name: "الاختبارات النهائية", date: new Date("2024-12-17") },
+            { name: "بداية الدراسة الفصل الدراسي الثاني", date: new Date("2025-01-12") },
+            { name: "إجازة يوم التأسيس", date: new Date("2025-02-23") },
+            { name: "بداية إجازة عيد الفطر", date: new Date("2025-03-20") },
+            { name: "بداية الدراسة بعد إجازة عيد الفطر", date: new Date("2025-04-06") },
+            { name: "الاختبارات النهائية الفصل الدراسي الثاني", date: new Date("2025-05-18") },
+            { name: "بداية الدراسة الصيفية", date: new Date("2025-06-15") },
+            { name: "بداية الدراسة للعام الدراسي القادم", date: new Date("2025-08-24") }
+        ];
+
+        const countdownContainer = document.getElementById('countdown-container');
+
+        // حساب الأيام المتبقية لكل حدث
+        events.forEach(event => {
+            const today = new Date();
+            const timeDifference = event.date - today;
+            const daysRemaining = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+            const eventElement = document.createElement('div');
+            eventElement.textContent = `${event.name}: ${daysRemaining} يوم${daysRemaining === 1 ? '' : 'ات'} متبقية`;
+            countdownContainer.appendChild(eventElement);
+        });
+    </script>
 
 </body>
 </html>
