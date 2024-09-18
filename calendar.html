@@ -13,7 +13,6 @@
             background-color: #f5f5f5;
         }
 
-        /* الشريط العلوي */
         .navbar {
             overflow: hidden;
             background-color: #603913;
@@ -23,23 +22,22 @@
             z-index: 10;
             display: flex;
             justify-content: center;
-            padding: 5px 0; /* تصغير ارتفاع الشريط */
+            padding: 5px 0;
             transition: top 0.3s;
         }
         .navbar a {
             color: white;
             text-align: center;
-            padding: 10px 15px; /* تصغير حجم الحشو */
+            padding: 10px 15px;
             text-decoration: none;
-            font-size: 16px; /* تصغير حجم الخط */
-            display: inline-block; /* تأكيد عرض العناصر بجانب بعضها */
+            font-size: 16px;
+            display: inline-block;
         }
         .navbar a:hover {
             background-color: #ddd;
             color: black;
         }
 
-        /* التنسيق العام */
         header#home {
             background-color: #603913;
             color: #fff;
@@ -88,12 +86,6 @@
             color: #666;
         }
 
-        .countdown {
-            margin: 20px 0;
-            font-size: 20px;
-            color: #603913;
-        }
-
         footer {
             background-color: #603913;
             color: white;
@@ -101,7 +93,6 @@
             padding: 20px 0;
         }
 
-        /* تحسين تنسيق الجوال */
         @media screen and (max-width: 600px) {
             .navbar {
                 flex-direction: row;
@@ -113,22 +104,68 @@
                 float: none;
                 display: inline-block;
                 text-align: center;
-                padding: 8px 12px; /* تصغير حجم الحشو على الجوال */
-                font-size: 14px; /* تصغير حجم الخط على الجوال */
+                padding: 8px 12px;
+                font-size: 14px;
             }
         }
     </style>
+    <script>
+        function countdown(eventDate) {
+            const countDownDate = new Date(eventDate).getTime();
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            return { days, hours, minutes };
+        }
+
+        function updateCountdowns() {
+            const events = [
+                { name: "بداية الدراسة", date: "2024-08-18T00:00:00" },
+                { name: "إجازة اليوم الوطني", date: "2024-09-22T00:00:00" },
+                { name: "إجازة نهاية أسبوع مطولة", date: "2024-10-09T00:00:00" },
+                { name: "بداية إجازة الخريف", date: "2024-11-07T00:00:00" },
+                { name: "بداية الدراسة بعد إجازة الخريف", date: "2024-11-17T00:00:00" },
+                { name: "إجازة نهاية أسبوع مطولة", date: "2024-12-11T00:00:00" },
+                { name: "الاختبارات النهائية", date: "2024-12-17T00:00:00" },
+                { name: "بداية إجازة منتصف العام الدراسي", date: "2025-01-02T00:00:00" },
+                { name: "بداية الدراسة الفصل الدراسي الثاني", date: "2025-01-12T00:00:00" },
+                { name: "إجازة يوم التأسيس", date: "2025-02-23T00:00:00" },
+                { name: "إجازة عيد الفطر المبارك", date: "2025-03-20T00:00:00" },
+                { name: "بداية الدراسة بعد إجازة عيد الفطر المبارك", date: "2025-04-06T00:00:00" },
+                { name: "إجازة نهاية أسبوع مطولة", date: "2025-05-07T00:00:00" },
+                { name: "الاختبارات النهائية", date: "2025-05-18T00:00:00" },
+                { name: "بداية إجازة نهاية العام الدراسي", date: "2025-05-29T00:00:00" },
+                { name: "بداية الدراسة الفصل الدراسي الصيفي", date: "2025-06-15T00:00:00" },
+                { name: "الاختبارات النهائية الفصل الدراسي الصيفي", date: "2025-08-10T00:00:00" },
+                { name: "بداية إجازة الفصل الدراسي الصيفي", date: "2025-08-12T00:00:00" },
+                { name: "بداية الدراسة للعام الدراسي القادم", date: "2025-08-24T00:00:00" }
+            ];
+
+            events.forEach(event => {
+                const { days, hours, minutes } = countdown(event.date);
+                const countdownElement = document.getElementById(`countdown-${event.name}`);
+                countdownElement.innerHTML = `يتبقى ${days} أيام، ${hours} ساعات، و ${minutes} دقائق`;
+            });
+        }
+
+        window.onload = function() {
+            updateCountdowns();
+            setInterval(updateCountdowns, 60000); // تحديث كل دقيقة
+        };
+    </script>
 </head>
 <body>
 
-    <!-- الشريط العلوي -->
     <div class="navbar">
         <a href="index.html">الرئيسية</a>
         <a href="faculty.html">أعضاء هيئة التدريس</a>
         <a href="calendar.html">التقويم الأكاديمي</a>
     </div>
 
-    <!-- الرئيسية -->
     <header id="home">
         <h1>التقويم الأكاديمي</h1>
         <p>تابع أحدث التواريخ والمواعيد الأكاديمية</p>
@@ -143,6 +180,7 @@
                         <th>الفصل الدراسي</th>
                         <th>التاريخ</th>
                         <th>الحدث</th>
+                        <th>العد التنازلي</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -150,111 +188,98 @@
                         <td rowspan="6">الفصل الدراسي الأول</td>
                         <td>الأحد 1446/2/14 هـ الموافق 2024/8/18 م</td>
                         <td>بداية الدراسة</td>
+                        <td id="countdown-بداية الدراسة"></td>
                     </tr>
                     <tr>
                         <td>من الأحد 1446/2/19 هـ إلى الإثنين 1446/3/20 هـ الموافق من 2024/9/22 م إلى 2024/9/23 م</td>
                         <td>إجازة اليوم الوطني</td>
+                        <td id="countdown-إجازة اليوم الوطني"></td>
+                    </tr>
+                    <tr>
+                        <td>من الأربعاء 1446/3/7 هـ إلى الخميس 1446/3/8 هـ الموافق من 2024/10/9 م إلى 2024/10/10 م</td>
+                        <td>إجازة نهاية أسبوع مطولة</td>
+                        <td id="countdown-إجازة نهاية أسبوع مطولة"></td>
                     </tr>
                     <tr>
                         <td>نهاية دوام يوم الخميس 1446/5/5 هـ الموافق 2024/11/7 م</td>
                         <td>بداية إجازة الخريف</td>
+                        <td id="countdown-بداية إجازة الخريف"></td>
                     </tr>
                     <tr>
                         <td>الأحد 1446/5/15 هـ الموافق 2024/11/17 م</td>
                         <td>بداية الدراسة بعد إجازة الخريف</td>
+                        <td id="countdown-بداية الدراسة بعد إجازة الخريف"></td>
                     </tr>
                     <tr>
                         <td>من الأربعاء 1446/6/10 هـ إلى الخميس 1446/6/11 هـ الموافق من 2024/12/11 م إلى 2024/12/12 م</td>
                         <td>إجازة نهاية أسبوع مطولة</td>
+                        <td id="countdown-إجازة نهاية أسبوع مطولة"></td>
                     </tr>
                     <tr>
-                        <td>من 2024/12/17 م إلى 2025/1/1 م</td>
+                        <td>من الثلاثاء 1446/6/16 هـ إلى الأربعاء 1446/7/1 هـ الموافق من 2024/12/17 م إلى 2025/1/1 م</td>
                         <td>الاختبارات النهائية</td>
+                        <td id="countdown-الاختبارات النهائية"></td>
                     </tr>
                     <tr>
                         <td rowspan="5">الفصل الدراسي الثاني</td>
                         <td>الأحد 1446/7/12 هـ الموافق 2025/1/12 م</td>
                         <td>بداية الدراسة</td>
+                        <td id="countdown-بداية الدراسة الفصل الدراسي الثاني"></td>
                     </tr>
                     <tr>
                         <td>الأحد 1446/8/24 هـ الموافق 2025/2/23 م</td>
                         <td>إجازة يوم التأسيس</td>
+                        <td id="countdown-إجازة يوم التأسيس"></td>
                     </tr>
                     <tr>
                         <td>نهاية دوام يوم الخميس 1446/9/28 هـ الموافق 2025/3/20 م</td>
                         <td>بداية إجازة عيد الفطر المبارك</td>
+                        <td id="countdown-بداية إجازة عيد الفطر المبارك"></td>
                     </tr>
                     <tr>
                         <td>الأحد 1446/10/6 هـ الموافق 2025/4/6 م</td>
                         <td>بداية الدراسة بعد إجازة عيد الفطر المبارك</td>
+                        <td id="countdown-بداية الدراسة بعد إجازة عيد الفطر المبارك"></td>
+                    </tr>
+                    <tr>
+                        <td>من الأربعاء 1446/11/12 هـ إلى الخميس 1446/11/13 هـ الموافق من 2025/5/7 م إلى 2025/5/8 م</td>
+                        <td>إجازة نهاية أسبوع مطولة</td>
+                        <td id="countdown-إجازة نهاية أسبوع مطولة"></td>
                     </tr>
                     <tr>
                         <td>من الأحد 1446/11/20 هـ إلى الأربعاء 1446/12/1 هـ الموافق من 2025/5/18 م إلى 2025/5/28 م</td>
                         <td>الاختبارات النهائية</td>
+                        <td id="countdown-الاختبارات النهائية"></td>
                     </tr>
                     <tr>
                         <td rowspan="3">الفصل الدراسي الصيفي</td>
                         <td>الأحد 1446/12/15 هـ الموافق 2025/6/15 م</td>
                         <td>بداية الدراسة</td>
+                        <td id="countdown-بداية الدراسة الفصل الدراسي الصيفي"></td>
                     </tr>
                     <tr>
                         <td>من الأحد 1447/2/16 هـ إلى الثلاثاء 1447/2/18 هـ الموافق من 2025/8/10 م إلى 2025/8/12 م</td>
                         <td>الاختبارات النهائية</td>
+                        <td id="countdown-الاختبارات النهائية الفصل الدراسي الصيفي"></td>
                     </tr>
                     <tr>
                         <td>نهاية دوام يوم الثلاثاء 1447/2/18 هـ الموافق 2025/8/12 م</td>
                         <td>بداية إجازة الفصل الدراسي الصيفي للطلبة</td>
+                        <td id="countdown-بداية إجازة الفصل الدراسي الصيفي"></td>
                     </tr>
                     <tr>
                         <td>الأحد 1447/3/1 هـ الموافق 2025/8/24 م</td>
                         <td>بداية الدراسة للعام الدراسي القادم 1447/1448 هـ</td>
+                        <td id="countdown-بداية الدراسة للعام الدراسي القادم"></td>
                     </tr>
                 </tbody>
             </table>
-
-            <!-- عداد الأيام -->
-            <div class="countdown">
-                <h3>عداد الأيام المتبقية:</h3>
-                <div id="countdown-container"></div>
-            </div>
         </section>
     </div>
 
     <footer>
         <p>&copy; 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
     </footer>
-
-    <script>
-        // تواريخ الأحداث المهمة
-        const events = [
-            { name: "بداية الدراسة", date: new Date("2024-08-18") },
-            { name: "إجازة اليوم الوطني", date: new Date("2024-09-22") },
-            { name: "بداية إجازة الخريف", date: new Date("2024-11-07") },
-            { name: "بداية الدراسة بعد إجازة الخريف", date: new Date("2024-11-17") },
-            { name: "إجازة نهاية أسبوع مطولة", date: new Date("2024-12-11") },
-            { name: "الاختبارات النهائية", date: new Date("2024-12-17") },
-            { name: "بداية الدراسة الفصل الدراسي الثاني", date: new Date("2025-01-12") },
-            { name: "إجازة يوم التأسيس", date: new Date("2025-02-23") },
-            { name: "بداية إجازة عيد الفطر", date: new Date("2025-03-20") },
-            { name: "بداية الدراسة بعد إجازة عيد الفطر", date: new Date("2025-04-06") },
-            { name: "الاختبارات النهائية الفصل الدراسي الثاني", date: new Date("2025-05-18") },
-            { name: "بداية الدراسة الصيفية", date: new Date("2025-06-15") },
-            { name: "بداية الدراسة للعام الدراسي القادم", date: new Date("2025-08-24") }
-        ];
-
-        const countdownContainer = document.getElementById('countdown-container');
-
-        // حساب الأيام المتبقية لكل حدث
-        events.forEach(event => {
-            const today = new Date();
-            const timeDifference = event.date - today;
-            const daysRemaining = Math.ceil(timeDifference / (1000 * 3600 * 24));
-
-            const eventElement = document.createElement('div');
-            eventElement.textContent = `${event.name}: ${daysRemaining} يوم${daysRemaining === 1 ? '' : 'ات'} متبقية`;
-            countdownContainer.appendChild(eventElement);
-        });
-    </script>
 
 </body>
 </html>
