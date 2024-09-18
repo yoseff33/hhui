@@ -110,9 +110,33 @@
         }
 
         @media screen and (max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .calendar-table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .calendar-table th, .calendar-table td {
+                padding: 8px;
+                font-size: 14px;
+            }
+
             .navbar a {
                 padding: 8px 12px;
                 font-size: 14px;
+            }
+
+            header#home h1 {
+                font-size: 32px;
+            }
+
+            header#home p {
+                font-size: 16px;
             }
         }
     </style>
@@ -226,10 +250,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>الاختبارات النهائية</td>
-                        <td>من 1446/11/9 هـ إلى 1446/11/18 هـ</td>
-                        <td>من 2025/5/19 م إلى 2025/5/29 م</td>
-                        <td class="countdown" data-end-date="2025-05-29T00:00:00Z">
+                        <td>الخميس 1446/11/25 هـ</td>
+                        <td>الموافق 2025/5/25 م</td>
+                        <td>بداية الاختبارات النهائية</td>
+                        <td class="countdown" data-end-date="2025-05-25T00:00:00Z">
                             <span class="countdown-timer"></span>
                         </td>
                     </tr>
@@ -239,32 +263,30 @@
     </div>
 
     <footer>
-        <p>جميع الحقوق محفوظة © 2024</p>
+        <p>&copy; 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
     </footer>
 
     <script>
+        // Countdown timer script
         function updateCountdown() {
             const countdownElements = document.querySelectorAll('.countdown');
             countdownElements.forEach(el => {
-                const endDate = new Date(el.getAttribute('data-end-date')).getTime();
-                const now = new Date().getTime();
-                const distance = endDate - now;
+                const endDate = new Date(el.getAttribute('data-end-date'));
+                const now = new Date();
+                const diff = endDate - now;
 
-                if (distance < 0) {
-                    el.querySelector('.countdown-timer').innerText = "انتهى";
-                    el.querySelector('.countdown-timer').classList.add('countdown-ended');
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    el.querySelector('.countdown-timer').textContent = days + " يوم";
                 } else {
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    el.querySelector('.countdown-timer').innerText = `${days} يوم, ${hours} ساعة, ${minutes} دقيقة`;
+                    el.querySelector('.countdown-timer').textContent = "انتهى";
+                    el.classList.add('countdown-ended');
                 }
             });
         }
 
-        setInterval(updateCountdown, 1000); // تحديث كل ثانية
-        updateCountdown(); // استدعاء عند تحميل الصفحة
+        // Run countdown every second
+        setInterval(updateCountdown, 1000);
     </script>
-
 </body>
 </html>
