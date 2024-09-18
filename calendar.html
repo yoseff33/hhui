@@ -88,10 +88,6 @@
         .countdown {
             font-size: 16px;
             color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
         .countdown-timer {
             font-weight: bold;
@@ -287,8 +283,7 @@
                     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                    el.querySelector('.countdown-timer').textContent = days + " يوم " + hours + " ساعة " + minutes + " دقيقة " + seconds + " ثانية";
+                    el.querySelector('.countdown-timer').textContent = days + " يوم " + hours + " ساعة " + minutes + " دقيقة ";
                 } else {
                     el.querySelector('.countdown-timer').textContent = "انتهى";
                     el.classList.add('countdown-ended');
