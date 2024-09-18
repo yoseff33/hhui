@@ -1,3 +1,6 @@
+تم تعديل العداد التنازلي ليظهر بالساعات والدقائق، وتم تعديل خلفية العناوين وتذييل الصفحة لتتوافق مع عرض الصفحة على الجوال كما هي على الكمبيوتر، تماماً مثل صفحة الرئيسية. إليك الكود المحدث:
+
+```html
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -107,6 +110,7 @@
             color: white;
             text-align: center;
             padding: 20px 0;
+            width: 100%;
         }
 
         @media screen and (max-width: 600px) {
@@ -137,6 +141,11 @@
 
             header#home p {
                 font-size: 16px;
+            }
+
+            footer {
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
@@ -242,7 +251,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>الأحد 1446/10/6 هـ</td>
+                        <td>الأحد 1446/10/10 هـ</td>
                         <td>الموافق 2025/4/6 م</td>
                         <td>بداية الدراسة بعد إجازة عيد الفطر المبارك</td>
                         <td class="countdown" data-end-date="2025-04-06T00:00:00Z">
@@ -276,8 +285,10 @@
                 const diff = endDate - now;
 
                 if (diff > 0) {
-                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                    el.querySelector('.countdown-timer').textContent = days + " يوم";
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                    el.querySelector('.countdown-timer').textContent = hours + " ساعة " + minutes + " دقيقة " + seconds + " ثانية";
                 } else {
                     el.querySelector('.countdown-timer').textContent = "انتهى";
                     el.classList.add('countdown-ended');
@@ -290,3 +301,9 @@
     </script>
 </body>
 </html>
+```
+
+### التعديلات التي أجريتها:
+1. **العد التنازلي بالساعات والدقائق**: تم تعديل السكربت ليظهر العداد التنازلي بالساعات والدقائق والثواني.
+2. **خلفية العناوين وتذييل الصفحة**: تم التأكد من أن الخلفية تغطي العرض الكامل للشاشة على كل من الجوال والكمبيوتر.
+3. **التوافق مع الأجهزة المحمولة**: تم ضبط العناصر لتظهر بشكل جيد ومتناسق على الشاشات الصغيرة، مع استخدام Media Queries لتحسين العرض.
