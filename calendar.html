@@ -6,22 +6,22 @@
     <title>التقويم الأكاديمي</title>
     <style>
         body {
-            font-family: 'Tajawal', sans-serif; /* Same font as the main page */
+            font-family: 'Tajawal', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5; /* Background color */
+            background-color: #f5f5f5;
         }
 
         .navbar {
             overflow: hidden;
-            background-color: #603913; /* Same color as the main page */
+            background-color: #603913;
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 10;
             display: flex;
             justify-content: center;
-            padding: 10px 0; /* Increased padding for better appearance */
+            padding: 5px 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
@@ -39,19 +39,19 @@
         }
 
         header#home {
-            background-color: #603913; /* Same color as the main page */
+            background-color: #603913;
             color: #fff;
             text-align: center;
-            padding: 100px 0; /* Same padding as the main page */
+            padding: 100px 0;
         }
 
         header#home h1 {
-            font-size: 48px; /* Same font size as the main page */
+            font-size: 48px;
             margin: 0;
         }
 
         header#home p {
-            font-size: 20px; /* Same font size as the main page */
+            font-size: 20px;
         }
 
         .container {
@@ -61,7 +61,7 @@
         }
 
         .academic-calendar {
-            background-color: #603913; /* Same color for section */
+            background-color: #603913;
             padding: 20px 0;
             text-align: center;
             color: #fff;
@@ -72,84 +72,60 @@
             max-width: 1000px;
             margin: 20px auto;
             border-collapse: collapse;
-            background-color: #fff; /* Background color for table */
+            background-color: #fff; /* لون خلفية الجدول */
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             border-radius: 10px;
             overflow-x: auto;
         }
 
         .calendar-table th, .calendar-table td {
-            border: 1px solid #ddd; /* Border color for table */
+            border: 1px solid #ddd;
             padding: 12px;
             text-align: center;
+            color: #666; /* لون خط الجدول */
         }
 
         .calendar-table th {
-            background-color: #603913; /* Same color for header */
+            background-color: #603913;
             color: white;
-            font-size: 18px; /* Header font size */
-        }
-
-        .calendar-table td {
-            font-size: 16px; /* Table data font size */
-            color: #666;
-        }
-
-        .countdown {
-            font-size: 16px; /* Countdown font size */
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .countdown-timer {
-            font-weight: bold;
-            margin-top: 5px;
-            font-size: 18px; /* Countdown timer font size */
-        }
-
-        .countdown-ended {
-            color: red; /* Color for ended countdown */
-            font-weight: bold;
+            font-size: 18px;
         }
 
         footer {
-            background-color: #603913; /* Same footer color */
+            background-color: #603913;
             color: white;
             text-align: center;
-            padding: 20px 0; /* Footer padding */
+            padding: 20px 0;
             width: 100%;
         }
 
         @media screen and (max-width: 600px) {
             .container {
                 width: 100%;
-                padding: 10px; /* Responsive padding */
+                padding: 10px;
             }
 
             .calendar-table {
                 width: 100%;
-                overflow-x: auto; /* Responsive table */
+                overflow-x: auto;
             }
 
             .calendar-table th, .calendar-table td {
                 padding: 8px;
-                font-size: 14px; /* Smaller font for mobile */
+                font-size: 14px;
             }
 
             .navbar a {
-                padding: 8px 12px; /* Responsive navbar */
+                padding: 8px 12px;
                 font-size: 14px;
             }
 
             header#home h1 {
-                font-size: 32px; /* Responsive header font size */
+                font-size: 32px;
             }
 
             header#home p {
-                font-size: 16px; /* Responsive paragraph font size */
+                font-size: 16px;
             }
 
             footer {
@@ -182,43 +158,18 @@
                         <th>التاريخ الهجري</th>
                         <th>التاريخ الميلادي</th>
                         <th>الحدث</th>
-                        <th>العد التنازلي</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- New calendar data will be inserted here -->
+                    <!-- تم حذف بيانات الجدول هنا -->
                 </tbody>
             </table>
         </section>
     </div>
 
     <footer>
-        <p>&copy; 2024 جميع الحقوق محفوظة</p>
+        <p>&copy; 2024 كلية إدارة الأعمال</p>
     </footer>
 
-    <script>
-        document.querySelectorAll('.countdown').forEach(function(countdownElement) {
-            function updateCountdown() {
-                const endDate = new Date(countdownElement.getAttribute('data-end-date'));
-                const now = new Date();
-                const diff = endDate - now;
-                
-                if (diff <= 0) {
-                    countdownElement.querySelector('.countdown-timer').textContent = 'الوقت انتهى';
-                    countdownElement.classList.add('countdown-ended');
-                } else {
-                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                    
-                    countdownElement.querySelector('.countdown-timer').textContent = 
-                        `${days} أيام ${hours} ساعات ${minutes} دقائق ${seconds} ثواني`;
-                }
-            }
-            setInterval(updateCountdown, 1000);
-            updateCountdown();
-        });
-    </script>
 </body>
 </html>
