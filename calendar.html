@@ -12,6 +12,7 @@
             background-color: #f5f5f5;
         }
 
+        /* الشريط العلوي */
         .navbar {
             overflow: hidden;
             background-color: #603913;
@@ -22,7 +23,6 @@
             display: flex;
             justify-content: center;
             padding: 5px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .navbar a {
@@ -31,6 +31,7 @@
             padding: 10px 15px;
             text-decoration: none;
             font-size: 16px;
+            display: inline-block;
         }
 
         .navbar a:hover {
@@ -38,20 +39,14 @@
             color: black;
         }
 
-        header#home {
-            background-color: #603913;
-            color: #fff;
+        /* تنسيق العنوان */
+        .section-title {
+            background-color: #603913; /* لون الخلفية البني */
+            color: white; /* لون النص الأبيض */
             text-align: center;
-            padding: 100px 0;
-        }
-
-        header#home h1 {
-            font-size: 48px;
-            margin: 0;
-        }
-
-        header#home p {
-            font-size: 20px;
+            margin: 0; /* إزالة الهوامش */
+            padding: 100px 0 40px 0; /* ضبط الحشو ليكون مثل الصفحة الرئيسية */
+            box-sizing: border-box;
         }
 
         .container {
@@ -61,10 +56,9 @@
         }
 
         .academic-calendar {
-            background-color: #603913;
             padding: 20px 0;
             text-align: center;
-            color: #fff;
+            color: #666;
         }
 
         .calendar-table {
@@ -72,7 +66,7 @@
             max-width: 1000px;
             margin: 20px auto;
             border-collapse: collapse;
-            background-color: #fff; /* اللون البني */
+            background-color: white; /* لون الخلفية أبيض */
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             border-radius: 10px;
             overflow-x: auto;
@@ -86,7 +80,7 @@
         }
 
         .calendar-table th {
-            background-color: #603913;
+            background-color: #603913; /* لون الخلفية للعنوان */
             color: white;
             font-size: 18px;
         }
@@ -143,7 +137,7 @@
         <a href="calendar.html">التقويم الأكاديمي</a>
     </div>
 
-    <header id="home">
+    <header class="section-title">
         <h1>التقويم الأكاديمي</h1>
         <p>تابع أحدث التواريخ والمواعيد الأكاديمية</p>
     </header>
