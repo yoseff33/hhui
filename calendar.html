@@ -5,157 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>التقويم الأكاديمي</title>
     <style>
+        body {
+            font-family: 'CustomFont', sans-serif; /* هنا نستخدم نفس الخط */
+            background-color: #fff; /* لون الخلفية */
+            color: #333; /* لون النص */
+            margin: 0;
+            padding: 0;
+            direction: rtl; /* لتنسيق الصفحة من اليمين لليسار */
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            color: brown;
+            margin-top: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
         table {
             width: 100%;
+            max-width: 1200px; /* تحديد أقصى عرض للجدول */
+            margin: 20px auto;
             border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-
-        th {
-            background-color: brown;
-            color: white;
-        }
-
-        .finished {
-            color: red;
-        }
-
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 14px;
-            color: #333;
-        }
-    </style>
-</head>
-<body>
-
-    <h2>التقويم الأكاديمي لجامعة حفر الباطن - 1447/1446 هـ - 2025/2024 م</h2>
-
-    <table>
-        <tr>
-            <th>الحدث</th>
-            <th>التاريخ</th>
-            <th>العد التنازلي</th>
-        </tr>
-        <tr>
-            <td>بداية الدراسة</td>
-            <td>2024/08/18</td>
-            <td><span class="countdown" data-date="2024-08-18"></span></td>
-        </tr>
-        <tr>
-            <td>إجازة اليوم الوطني</td>
-            <td>2024/09/22</td>
-            <td><span class="countdown" data-date="2024-09-22"></span></td>
-        </tr>
-        <tr>
-            <td>بداية إجازة الخريف</td>
-            <td>2024/11/07</td>
-            <td><span class="countdown" data-date="2024-11-07"></span></td>
-        </tr>
-        <tr>
-            <td>بداية الدراسة بعد إجازة الخريف</td>
-            <td>2024/11/17</td>
-            <td><span class="countdown" data-date="2024-11-17"></span></td>
-        </tr>
-        <tr>
-            <td>إجازة نهاية أسبوع مطولة</td>
-            <td>2024/12/11</td>
-            <td><span class="countdown" data-date="2024-12-11"></span></td>
-        </tr>
-        <tr>
-            <td>الاختبارات النهائية (الفصل الأول)</td>
-            <td>2024/12/17</td>
-            <td><span class="countdown" data-date="2024-12-17"></span></td>
-        </tr>
-        <tr>
-            <td>بداية إجازة منتصف العام الدراسي</td>
-            <td>2025/01/02</td>
-            <td><span class="countdown" data-date="2025-01-02"></span></td>
-        </tr>
-        <tr>
-            <td>بداية الدراسة (الفصل الثاني)</td>
-            <td>2025/01/12</td>
-            <td><span class="countdown" data-date="2025-01-12"></span></td>
-        </tr>
-        <tr>
-            <td>إجازة يوم التأسيس</td>
-            <td>2025/02/23</td>
-            <td><span class="countdown" data-date="2025-02-23"></span></td>
-        </tr>
-        <tr>
-            <td>بداية إجازة عيد الفطر المبارك</td>
-            <td>2025/03/20</td>
-            <td><span class="countdown" data-date="2025-03-20"></span></td>
-        </tr>
-        <tr>
-            <td>بداية الدراسة بعد إجازة عيد الفطر</td>
-            <td>2025/04/06</td>
-            <td><span class="countdown" data-date="2025-04-06"></span></td>
-        </tr>
-        <tr>
-            <td>الاختبارات النهائية (الفصل الثاني)</td>
-            <td>2025/05/18</td>
-            <td><span class="countdown" data-date="2025-05-18"></span></td>
-        </tr>
-        <tr>
-            <td>بداية إجازة نهاية العام الدراسي</td>
-            <td>2025/05/29</td>
-            <td><span class="countdown" data-date="2025-05-29"></span></td>
-        </tr>
-        <tr>
-            <td>بداية الدراسة (الفصل الصيفي)</td>
-            <td>2025/06/15</td>
-            <td><span class="countdown" data-date="2025-06-15"></span></td>
-        </tr>
-        <tr>
-            <td>الاختبارات النهائية (الفصل الصيفي)</td>
-            <td>2025/08/10</td>
-            <td><span class="countdown" data-date="2025-08-10"></span></td>
-        </tr>
-        <tr>
-            <td>بداية الدراسة للعام الدراسي القادم</td>
-            <td>2025/08/24</td>
-            <td><span class="countdown" data-date="2025-08-24"></span></td>
-        </tr>
-    </table>
-
-    <footer>
-        © 2024 كلية إدارة الأعمال
-    </footer>
-
-    <script>
-        // Function to calculate the countdown
-        function updateCountdown() {
-            const countdownElements = document.querySelectorAll('.countdown');
-
-            countdownElements.forEach(function (element) {
-                const eventDate = new Date(element.getAttribute('data-date')).getTime();
-                const now = new Date().getTime();
-                const timeDifference = eventDate - now;
-
-                if (timeDifference > 0) {
-                    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-                    element.innerHTML = days + " يوم " + hours + " ساعة " + minutes + " دقيقة " + seconds + " ثانية ";
-                } else {
-                    element.innerHTML = "انتهى";
-                    element.classList.add("finished");
-                }
-            });
-        }
-
-        // Update the countdown every second
-        setInterval(updateCountdown, 1000);
-    </script>
-
-</body>
-</html>
+            background-color: #f9f9f9;
+            border-radius: 
