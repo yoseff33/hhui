@@ -6,31 +6,117 @@
     <title>التقويم الأكاديمي</title>
     <style>
         body {
-            font-family: 'CustomFont', sans-serif; /* هنا نستخدم نفس الخط */
-            background-color: #fff; /* لون الخلفية */
-            color: #333; /* لون النص */
-            margin: 0;
-            padding: 0;
-            direction: rtl; /* لتنسيق الصفحة من اليمين لليسار */
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            background-color: #f8f8f8;
+            color: #333;
         }
-
-        h1 {
-            text-align: center;
-            font-size: 2rem;
-            color: brown;
-            margin-top: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
         table {
             width: 100%;
-            max-width: 1200px; /* تحديد أقصى عرض للجدول */
-            margin: 20px auto;
             border-collapse: collapse;
-            background-color: #f9f9f9;
-            border-radius: 
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #8B4513;
+            color: white;
+        }
+        .countdown {
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h2>التقويم الأكاديمي لجامعة حفر الباطن 1447/1446 هـ - 2025/2024 م</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>الحدث</th>
+            <th>التاريخ الهجري</th>
+            <th>التاريخ الميلادي</th>
+            <th>العد التنازلي</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>بداية الدراسة</td>
+            <td>1446/2/14 هـ</td>
+            <td>2024/8/18 م</td>
+            <td><span id="event1-countdown" class="countdown"></span></td>
+        </tr>
+        <tr>
+            <td>إجازة اليوم الوطني</td>
+            <td>1446/3/19 هـ - 1446/3/20 هـ</td>
+            <td>2024/9/22 م - 2024/9/23 م</td>
+            <td><span id="event2-countdown" class="countdown"></span></td>
+        </tr>
+        <tr>
+            <td>بداية إجازة الخريف</td>
+            <td>1446/5/5 هـ</td>
+            <td>2024/11/7 م</td>
+            <td><span id="event3-countdown" class="countdown"></span></td>
+        </tr>
+        <tr>
+            <td>بداية الدراسة بعد إجازة الخريف</td>
+            <td>1446/5/15 هـ</td>
+            <td>2024/11/17 م</td>
+            <td><span id="event4-countdown" class="countdown"></span></td>
+        </tr>
+        <tr>
+            <td>إجازة نهاية أسبوع مطولة</td>
+            <td>1446/6/11 هـ</td>
+            <td>2024/12/12 م</td>
+            <td><span id="event5-countdown" class="countdown"></span></td>
+        </tr>
+        <tr>
+            <td>الاختبارات النهائية</td>
+            <td>1446/6/16 هـ - 1446/7/1 هـ</td>
+            <td>2024/12/17 م - 2025/1/1 م</td>
+            <td><span id="event6-countdown" class="countdown"></span></td>
+        </tr>
+        <tr>
+            <td>بداية إجازة منتصف العام الدراسي</td>
+            <td>1446/7/2 هـ</td>
+            <td>2025/1/2 م</td>
+            <td><span id="event7-countdown" class="countdown"></span></td>
+        </tr>
+        <!-- Add more events as necessary -->
+    </tbody>
+</table>
+
+<script>
+    // Function to calculate the countdown
+    function calculateCountdown(targetDate, elementId) {
+        const eventDate = new Date(targetDate).getTime();
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+
+        if (distance < 0) {
+            document.getElementById(elementId).innerHTML = "انتهى!";
+        } else {
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById(elementId).innerHTML = days + " يوم";
+        }
+    }
+
+    // Countdown for each event
+    calculateCountdown("2024-08-18", "event1-countdown");
+    calculateCountdown("2024-09-22", "event2-countdown");
+    calculateCountdown("2024-11-07", "event3-countdown");
+    calculateCountdown("2024-11-17", "event4-countdown");
+    calculateCountdown("2024-12-12", "event5-countdown");
+    calculateCountdown("2024-12-17", "event6-countdown");
+    calculateCountdown("2025-01-02", "event7-countdown");
+
+    // Add more countdowns as necessary
+</script>
+
+</body>
+</html>
