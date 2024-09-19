@@ -54,19 +54,6 @@
             margin: auto;
             padding: 20px 0;
         }
-        .countdown {
-            text-align: center;
-            font-size: 24px;
-            margin: 40px 0;
-        }
-        .countdown h2 {
-            color: #603913;
-            font-size: 36px;
-        }
-        .countdown p {
-            font-size: 20px;
-            color: #666;
-        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -80,6 +67,13 @@
         th {
             background-color: #603913;
             color: white;
+        }
+        .countdown {
+            font-size: 18px;
+            color: #603913;
+        }
+        .expired {
+            color: red;
         }
         @media screen and (max-width: 600px) {
             .navbar {
@@ -101,23 +95,48 @@
         }
     </style>
     <script>
-        function startCountdown() {
-            var endDate = new Date("2024-12-31T23:59:59").getTime();
-            var x = setInterval(function() {
-                var now = new Date().getTime();
-                var distance = endDate - now;
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                document.getElementById("countdown").innerHTML = days + " يوم " + hours + " ساعة " + minutes + " دقيقة " + seconds + " ثانية ";
+        function updateCountdowns() {
+            const events = [
+                { date: '2024-08-18', id: 'event1' },
+                { date: '2024-09-22', id: 'event2' },
+                { date: '2024-11-07', id: 'event3' },
+                { date: '2024-11-17', id: 'event4' },
+                { date: '2024-12-11', id: 'event5' },
+                { date: '2024-12-17', id: 'event6' },
+                { date: '2025-01-02', id: 'event7' },
+                { date: '2025-01-12', id: 'event8' },
+                { date: '2025-02-23', id: 'event9' },
+                { date: '2025-03-20', id: 'event10' },
+                { date: '2025-04-06', id: 'event11' },
+                { date: '2025-05-18', id: 'event12' },
+                { date: '2025-05-29', id: 'event13' },
+                { date: '2025-06-15', id: 'event14' },
+                { date: '2025-08-12', id: 'event15' }
+            ];
+
+            events.forEach(event => {
+                const eventDate = new Date(event.date).getTime();
+                const now = new Date().getTime();
+                const distance = eventDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+                const countdownElement = document.getElementById(event.id);
+
                 if (distance < 0) {
-                    clearInterval(x);
-                    document.getElementById("countdown").innerHTML = "انتهى";
+                    countdownElement.innerHTML = "<span class='expired'>انتهى</span>";
+                } else {
+                    countdownElement.innerHTML = days + " يوم " + hours + " ساعة " + minutes + " دقيقة ";
                 }
-            }, 1000);
+            });
         }
-        window.onload = startCountdown;
+
+        window.onload = function() {
+            updateCountdowns();
+            setInterval(updateCountdowns, 60000); // تحديث كل دقيقة
+        };
     </script>
 </head>
 <body>
@@ -134,35 +153,59 @@
     </header>
 
     <div class="container">
-        <div class="countdown">
-            <h2>العد التنازلي للحدث القادم</h2>
-            <p id="countdown"></p>
-        </div>
-
         <table>
             <thead>
                 <tr>
                     <th>التاريخ</th>
                     <th>الحدث</th>
                     <th>الوصف</th>
+                    <th>العد التنازلي</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>01/10/2024</td>
-                    <td>بداية الفصل الدراسي</td>
+                    <td>18/08/2024</td>
+                    <td>بداية الدراسة</td>
                     <td>بدء الفصل الدراسي الأول للعام 2024-2025.</td>
+                    <td id="event1" class="countdown"></td>
                 </tr>
                 <tr>
-                    <td>15/11/2024</td>
-                    <td>موعد منتصف الفصل</td>
-                    <td>اختبارات منتصف الفصل الدراسي الأول.</td>
+                    <td>22/09/2024</td>
+                    <td>إجازة اليوم الوطني</td>
+                    <td>إجازة اليوم الوطني السعودي.</td>
+                    <td id="event2" class="countdown"></td>
                 </tr>
                 <tr>
-                    <td>20/12/2024</td>
-                    <td>اختبارات نهاية الفصل</td>
+                    <td>07/11/2024</td>
+                    <td>بداية إجازة الخريف</td>
+                    <td>بداية إجازة الخريف.</td>
+                    <td id="event3" class="countdown"></td>
+                </tr>
+                <tr>
+                    <td>17/11/2024</td>
+                    <td>بداية الدراسة بعد إجازة الخريف</td>
+                    <td>استئناف الدراسة بعد إجازة الخريف.</td>
+                    <td id="event4" class="countdown"></td>
+                </tr>
+                <tr>
+                    <td>11/12/2024</td>
+                    <td>إجازة نهاية أسبوع مطولة</td>
+                    <td>بداية إجازة نهاية أسبوع مطولة.</td>
+                    <td id="event5" class="countdown"></td>
+                </tr>
+                <tr>
+                    <td>17/12/2024</td>
+                    <td>الاختبارات النهائية</td>
                     <td>بداية اختبارات نهاية الفصل الدراسي الأول.</td>
+                    <td id="event6" class="countdown"></td>
                 </tr>
+                <tr>
+                    <td>02/01/2025</td>
+                    <td>بداية إجازة منتصف العام الدراسي</td>
+                    <td>بداية إجازة منتصف العام الدراسي.</td>
+                    <td id="event7" class="countdown"></td>
+                </tr>
+                <!-- Add the rest of the events in the same format -->
             </tbody>
         </table>
     </div>
