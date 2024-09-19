@@ -6,236 +6,120 @@
     <title>التقويم الأكاديمي</title>
     <style>
         body {
-            font-family: 'Tajawal', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
         }
 
-        /* الشريط العلوي */
-        .navbar {
-            overflow: hidden;
-            background-color: #603913;
-            position: fixed;
-            top: 0;
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: brown;
+            margin-top: 20px;
+        }
+
+        table {
             width: 100%;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            padding: 5px 0;
-        }
-
-        .navbar a {
-            color: white;
-            text-align: center;
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 16px;
-            display: inline-block;
-        }
-
-        .navbar a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        /* تنسيق العنوان */
-        .section-title {
-            background-color: #603913; /* لون الخلفية البني */
-            color: white; /* لون النص الأبيض */
-            text-align: center;
-            margin: 0; /* إزالة الهوامش */
-            padding: 100px 0 40px 0; /* ضبط الحشو ليكون مثل الصفحة الرئيسية */
-            box-sizing: border-box;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 20px 0;
-        }
-
-        .academic-calendar {
-            padding: 20px 0;
-            text-align: center;
-            color: #666;
-        }
-
-        .calendar-table {
-            width: 90%;
-            max-width: 1000px;
+            max-width: 800px;
             margin: 20px auto;
             border-collapse: collapse;
-            background-color: white; /* لون الخلفية أبيض */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-radius: 10px;
-            overflow-x: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .calendar-table th, .calendar-table td {
+        th, td {
             border: 1px solid #ddd;
             padding: 12px;
             text-align: center;
-            color: #666;
         }
 
-        .calendar-table th {
-            background-color: #603913; /* لون الخلفية للعنوان */
+        th {
+            background-color: brown;
             color: white;
-            font-size: 18px;
         }
 
-        footer {
-            background-color: #603913;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            width: 100%;
+        td {
+            font-size: 16px;
+            color: #333;
         }
 
+        .countdown {
+            font-size: 14px;
+            color: red;
+        }
+
+        /* تنسيق للجوال */
         @media screen and (max-width: 600px) {
-            .container {
-                width: 100%;
-                padding: 10px;
+            table {
+                width: 90%;
+                font-size: 14px;
             }
 
-            .calendar-table {
-                width: 100%;
-                overflow-x: auto;
-            }
-
-            .calendar-table th, .calendar-table td {
+            td, th {
                 padding: 8px;
-                font-size: 14px;
             }
 
-            .navbar a {
-                padding: 8px 12px;
-                font-size: 14px;
-            }
-
-            header#home h1 {
-                font-size: 32px;
-            }
-
-            header#home p {
-                font-size: 16px;
-            }
-
-            footer {
-                width: 100%;
-                text-align: center;
+            h1 {
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="navbar">
-        <a href="index.html">الرئيسية</a>
-        <a href="faculty.html">أعضاء هيئة التدريس</a>
-        <a href="calendar.html">التقويم الأكاديمي</a>
-    </div>
+<h1>التقويم الأكاديمي</h1>
 
-    <header class="section-title">
-        <h1>التقويم الأكاديمي</h1>
-        <p>تابع أحدث التواريخ والمواعيد الأكاديمية</p>
-    </header>
+<table>
+    <thead>
+        <tr>
+            <th>الفصل</th>
+            <th>الحدث</th>
+            <th>التاريخ</th>
+            <th>العد التنازلي</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="2">الفصل الدراسي الأول</td>
+            <td>بداية الدراسة</td>
+            <td>2024-09-30</td>
+            <td><span class="countdown" id="countdown1"></span></td>
+        </tr>
+        <tr>
+            <td>نهاية الدراسة</td>
+            <td>2024-12-30</td>
+            <td><span class="countdown" id="countdown2"></span></td>
+        </tr>
+    </tbody>
+</table>
 
-    <div class="container">
-        <section class="academic-calendar">
-            <h2>جدول التقويم الأكاديمي 1447/1446 هـ - 2025/2024 م</h2>
-            <table class="calendar-table">
-                <thead>
-                    <tr>
-                        <th>الفصل الدراسي</th>
-                        <th>التاريخ الهجري</th>
-                        <th>التاريخ الميلادي</th>
-                        <th>الحدث</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td rowspan="6">الفصل الدراسي الأول</td>
-                        <td>الأحد 1446/2/14 هـ</td>
-                        <td>الموافق 2024/8/18 م</td>
-                        <td>بداية الدراسة</td>
-                    </tr>
-                    <tr>
-                        <td>الأحد 1446/3/19 هـ</td>
-                        <td>الموافق 2024/9/22 م</td>
-                        <td>إجازة اليوم الوطني</td>
-                    </tr>
-                    <tr>
-                        <td>نهاية دوام يوم الخميس 1446/5/5 هـ</td>
-                        <td>الموافق 2024/11/7 م</td>
-                        <td>بداية إجازة الخريف</td>
-                    </tr>
-                    <tr>
-                        <td>الأحد 1446/5/15 هـ</td>
-                        <td>الموافق 2024/11/17 م</td>
-                        <td>بداية الدراسة بعد إجازة الخريف</td>
-                    </tr>
-                    <tr>
-                        <td>الخميس 1446/6/11 هـ</td>
-                        <td>الموافق 2024/12/12 م</td>
-                        <td>إجازة نهاية أسبوع مطولة</td>
-                    </tr>
-                    <tr>
-                        <td>الثلاثاء 1446/6/16 هـ</td>
-                        <td>الموافق 2024/12/17 م</td>
-                        <td>الاختبارات النهائية</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="5">الفصل الدراسي الثاني</td>
-                        <td>الأحد 1446/7/12 هـ</td>
-                        <td>الموافق 2025/1/12 م</td>
-                        <td>بداية الدراسة</td>
-                    </tr>
-                    <tr>
-                        <td>الأحد 1446/8/24 هـ</td>
-                        <td>الموافق 2025/2/23 م</td>
-                        <td>إجازة يوم التأسيس</td>
-                    </tr>
-                    <tr>
-                        <td>الخميس 1446/9/20 هـ</td>
-                        <td>الموافق 2025/3/20 م</td>
-                        <td>بداية إجازة عيد الفطر</td>
-                    </tr>
-                    <tr>
-                        <td>الأحد 1446/10/8 هـ</td>
-                        <td>الموافق 2025/4/6 م</td>
-                        <td>بداية الدراسة بعد إجازة عيد الفطر</td>
-                    </tr>
-                    <tr>
-                        <td>الأحد 1446/11/29 هـ</td>
-                        <td>الموافق 2025/5/18 م</td>
-                        <td>الاختبارات النهائية</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="3">الفصل الدراسي الصيفي</td>
-                        <td>الأحد 1446/12/19 هـ</td>
-                        <td>الموافق 2025/6/15 م</td>
-                        <td>بداية الدراسة</td>
-                    </tr>
-                    <tr>
-                        <td>الأحد 1447/2/16 هـ</td>
-                        <td>الموافق 2025/8/10 م</td>
-                        <td>الاختبارات النهائية</td>
-                    </tr>
-                    <tr>
-                        <td>الثلاثاء 1447/2/18 هـ</td>
-                        <td>الموافق 2025/8/12 م</td>
-                        <td>بداية إجازة الفصل الدراسي الصيفي</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-    </div>
+<script>
+    // دالة حساب العد التنازلي
+    function countdown(dateString, elementId) {
+        const countDownDate = new Date(dateString).getTime();
+        const countdownElement = document.getElementById(elementId);
 
-    <footer>
-        <p>&copy; 2024 كلية إدارة الأعمال</p>
-    </footer>
+        const interval = setInterval(function () {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdownElement.innerHTML = `${days} يوم ${hours} ساعة ${minutes} دقيقة ${seconds} ثانية`;
+
+            if (distance < 0) {
+                clearInterval(interval);
+                countdownElement.innerHTML = "انتهى الحدث";
+            }
+        }, 1000);
+    }
+
+    // تفعيل العد التنازلي
+    countdown('2024-09-30', 'countdown1');
+    countdown('2024-12-30', 'countdown2');
+</script>
 
 </body>
 </html>
