@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحة الكلية</title>
+    <title>أعضاء هيئة التدريس</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -40,11 +40,11 @@
 
         /* تنسيق العنوان */
         .section-title {
-            background-color: #603913; /* لون الخلفية البني */
-            color: white; /* لون النص الأبيض */
+            background-color: #603913;
+            color: white;
             text-align: center;
-            margin: 0; /* إزالة الهوامش */
-            padding: 100px 0 40px 0; /* ضبط الحشو ليكون مثل الصفحة الرئيسية */
+            margin: 0;
+            padding: 100px 0 40px 0;
             box-sizing: border-box;
         }
 
@@ -58,20 +58,19 @@
             flex-wrap: wrap;
         }
 
-        .card {
+        .doctor-card {
+            background-color: #fff;
             border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             padding: 20px;
             text-align: center;
             width: 48%; /* عرض البطاقة بنسبة 48% لتكون كل بطاقتين جنب بعض */
             margin: 20px 0;
             position: relative;
             transition: all 0.3s ease;
-            background-color: transparent; /* إزالة الخلفية */
-            color: #603913; /* إعادة اللون السابق */
-            cursor: pointer;
         }
 
-        .card img {
+        .doctor-card img {
             border-radius: 50%;
             width: 150px;
             height: 150px;
@@ -79,32 +78,43 @@
             margin-bottom: 15px;
         }
 
-        .card h3 {
+        .doctor-card h3 {
             font-size: 24px;
             color: #603913;
             margin-bottom: 10px;
         }
 
-        .card p {
+        .doctor-card p {
             font-size: 18px;
             color: #666;
             margin-bottom: 10px;
         }
 
-        .card:hover {
+        .doctor-card a {
+            font-size: 16px;
+            color: #603913;
+            text-decoration: none;
+        }
+
+        .doctor-card a:hover {
             text-decoration: underline;
         }
 
-        .card-link {
-            text-decoration: none;
-            color: inherit;
+        /* سيرة ذاتية */
+        .doctor-card.open .cv {
+            display: block;
         }
 
-        /* وسائل الإعلام للتأكد من أن البطاقات تظهر بشكل صحيح على الشاشات الصغيرة */
-        @media (max-width: 768px) {
-            .card {
-                width: 100%; /* البطاقة تأخذ العرض الكامل على الشاشات الصغيرة */
-            }
+        .cv {
+            display: none;
+            padding-top: 10px;
+        }
+
+        .cv p {
+            text-align: left;
+            color: #444;
+            font-size: 16px;
+            line-height: 1.6;
         }
 
         footer {
@@ -113,6 +123,7 @@
             text-align: center;
             padding: 20px 0;
         }
+
     </style>
 </head>
 <body>
@@ -124,73 +135,65 @@
         <a href="calendar.html">التقويم الأكاديمي</a>
     </div>
 
-    <!-- عنوان إنجازات كلية إدارة الأعمال -->
-    <div class="section-title">
-        <h1>إنجازات كلية إدارة الأعمال</h1>
-    </div>
-
-    <!-- بطاقات إنجازات الكلية -->
-    <div class="container">
-        <!-- بطاقة الإنجاز الأول -->
-        <div class="card">
-            <h3>الاعتماد الأكاديمي</h3>
-            <p>حصلت الكلية على الاعتماد الأكاديمي...</p>
-        </div>
-
-        <!-- بطاقة الإنجاز الثاني -->
-        <div class="card">
-            <h3>جودة أعضاء هيئة التدريس</h3>
-            <p>تتميز الكلية بأعضاء هيئة تدريس على مستوى عالٍ من الجودة...</p>
-        </div>
-
-        <!-- بطاقة الإنجاز الثالث -->
-        <div class="card">
-            <h3>خدمة المجتمع</h3>
-            <p>ساهمت الكلية بشكل كبير في خدمة المجتمع من خلال البرامج التدريبية...</p>
-        </div>
-
-        <!-- بطاقة الإنجاز الرابع -->
-        <div class="card">
-            <h3>زيادة الطاقة الاستيعابية</h3>
-            <p>عملت الكلية على زيادة الطاقة الاستيعابية للطلاب...</p>
-        </div>
-    </div>
-
-    <!-- عنوان أعضاء هيئة التدريس -->
+    <!-- عنوان الصفحة -->
     <div class="section-title">
         <h1>أعضاء هيئة التدريس</h1>
     </div>
 
-    <!-- محتوى الصفحة لأعضاء هيئة التدريس -->
+    <!-- محتوى الصفحة -->
     <div class="container">
         <!-- بطاقة الدكتور عبدالله السعد -->
-        <a href="faculty-details.html" class="card">
+        <div class="doctor-card" onclick="toggleCV(this)">
             <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/620/PictureProfile-Pic.jpg" alt="د. عبدالله السعد">
             <h3>د. عبدالله السعد</h3>
             <p>أستاذ مساعد في إدارة الأعمال</p>
             <a href="mailto:aasaad@uhb.edu.sa">aasaad@uhb.edu.sa</a>
-        </a>
+            <div class="cv">
+                <h3>السيرة الذاتية</h3>
+                <p>الدكتور عبد الله خلف السعد هو أستاذ مساعد في جامعة حفر الباطن. حصل على درجة الدكتوراه في إدارة الأعمال من جامعة شمال ماليزيا. كان عنوان رسالته "التنبؤ بنية اعتماد التجارة الإلكترونية B2B في الأردن: دور التوسط بين الثقة والاعتماد". كما يحمل درجة الماجستير في نظم المعلومات الإدارية (MIS) من جامعة اليرموك. وأخيرًا ، يحمل درجة البكالوريوس في نظم المعلومات الإدارية (MIS) من جامعة البلقاء التطبيقية.</p>
+                <p>لدى الدكتور السعد خبرة في القطاعين الخاص والحكومي. في القطاع الخاص ، عمل كأستاذ مساعد في جامعة جدارا. في القطاع الحكومي ، عمل كمتخصص في التنمية المؤسسية في وزارة العدل.</p>
+            </div>
+        </div>
 
         <!-- بطاقة الدكتور أحمد حسين الرصاص -->
-        <a href="faculty-details.html" class="card">
+        <div class="doctor-card" onclick="toggleCV(this)">
             <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/328/PictureProfile-%D8%B5%D9%88%D8%B1%D9%87%20%D9%81%D9%8A%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8.jpeg" alt="د. أحمد حسين الرصاص">
             <h3>د. أحمد حسين الرصاص</h3>
             <p>أستاذ مساعد في المحاسبة</p>
             <a href="mailto:drahmedhr@uhb.edu.sa">drahmedhr@uhb.edu.sa</a>
-        </a>
+            <div class="cv">
+                <h3>السيرة الذاتية</h3>
+                <p>الدكتور أحمد حسين الرصاص هو أستاذ مساعد في قسم المحاسبة بجامعة حفر الباطن. حصل على درجة الدكتوراه في المحاسبة من جامعة شمال ماليزيا عام 2016. وحصل على الماجستير في إدارة الأعمال تخصص المحاسبة من نفس الجامعة عام 2011 بتقدير جيد جدًا. وحصل على درجة البكالوريوس في الاقتصاد من جامعة اليرموك في عام 2001.</p>
+            </div>
+        </div>
 
         <!-- بطاقة الدكتور عبد العزيز اليوسفي -->
-        <a href="faculty-details.html" class="card">
+        <div class="doctor-card" onclick="toggleCV(this)">
             <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/570/PictureProfile-WhatsApp%20Image%202021-09-28%20at%2019.06.33.jpeg" alt="د. عبد العزيز اليوسفي">
             <h3>د. عبد العزيز اليوسفي</h3>
             <p>أستاذ مساعد ومسجل كلية إدارة الأعمال</p>
             <a href="mailto:your-email@example.com">تواصل الآن</a>
-        </a>
+            <div class="cv">
+                <h3>السيرة الذاتية</h3>
+                <p>الدكتور عبد العزيز اليوسفي هو أستاذ مساعد ومسجل في كلية إدارة الأعمال بجامعة حفر الباطن. حصل على درجته العلمية من جامعة كينت في المملكة المتحدة. لديه خبرة واسعة في مجالات إدارة الأعمال وتطوير البرامج الأكاديمية. عمل كمدرب ومستشار في عدة مؤسسات تعليمية.</p>
+            </div>
+        </div>
     </div>
 
     <footer>
         <p>&copy; 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
     </footer>
+
+    <script>
+        function toggleCV(card) {
+            const isOpen = card.classList.contains('open');
+            const allCards = document.querySelectorAll('.doctor-card');
+            allCards.forEach(c => c.classList.remove('open'));
+            if (!isOpen) {
+                card.classList.add('open');
+            }
+        }
+    </script>
 
 </body>
 </html>
