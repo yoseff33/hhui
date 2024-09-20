@@ -59,15 +59,16 @@
         }
 
         .card {
-            background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             padding: 20px;
             text-align: center;
             width: 48%; /* عرض البطاقة بنسبة 48% لتكون كل بطاقتين جنب بعض */
             margin: 20px 0;
             position: relative;
             transition: all 0.3s ease;
+            background-color: transparent; /* إزالة الخلفية */
+            color: #603913; /* إعادة اللون السابق */
+            cursor: pointer;
         }
 
         .card img {
@@ -90,14 +91,13 @@
             margin-bottom: 10px;
         }
 
-        .card a {
-            font-size: 16px;
-            color: #603913;
-            text-decoration: none;
+        .card:hover {
+            text-decoration: underline;
         }
 
-        .card a:hover {
-            text-decoration: underline;
+        .card-link {
+            text-decoration: none;
+            color: inherit;
         }
 
         /* وسائل الإعلام للتأكد من أن البطاقات تظهر بشكل صحيح على الشاشات الصغيرة */
@@ -164,46 +164,28 @@
     <!-- محتوى الصفحة لأعضاء هيئة التدريس -->
     <div class="container">
         <!-- بطاقة الدكتور عبدالله السعد -->
-        <div class="card">
+        <a href="faculty-details.html" class="card">
             <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/620/PictureProfile-Pic.jpg" alt="د. عبدالله السعد">
             <h3>د. عبدالله السعد</h3>
             <p>أستاذ مساعد في إدارة الأعمال</p>
             <a href="mailto:aasaad@uhb.edu.sa">aasaad@uhb.edu.sa</a>
-        </div>
+        </a>
 
         <!-- بطاقة الدكتور أحمد حسين الرصاص -->
-        <div class="card">
+        <a href="faculty-details.html" class="card">
             <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/328/PictureProfile-%D8%B5%D9%88%D8%B1%D9%87%20%D9%81%D9%8A%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8.jpeg" alt="د. أحمد حسين الرصاص">
             <h3>د. أحمد حسين الرصاص</h3>
             <p>أستاذ مساعد في المحاسبة</p>
             <a href="mailto:drahmedhr@uhb.edu.sa">drahmedhr@uhb.edu.sa</a>
-        </div>
+        </a>
 
         <!-- بطاقة الدكتور عبد العزيز اليوسفي -->
-        <div class="card">
+        <a href="faculty-details.html" class="card">
             <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/570/PictureProfile-WhatsApp%20Image%202021-09-28%20at%2019.06.33.jpeg" alt="د. عبد العزيز اليوسفي">
             <h3>د. عبد العزيز اليوسفي</h3>
             <p>أستاذ مساعد ومسجل كلية إدارة الأعمال</p>
             <a href="mailto:your-email@example.com">تواصل الآن</a>
-        </div>
-    </div>
-
-    <!-- قسم التقويم الأكاديمي -->
-    <div class="section-title">
-        <h1>التقويم الأكاديمي</h1>
-    </div>
-
-    <!-- التقويم الأكاديمي (بإمكانك تعديل المحتوى) -->
-    <div class="container">
-        <div class="card">
-            <h3>بداية الفصل الدراسي</h3>
-            <p>1447/01/01</p>
-        </div>
-
-        <div class="card">
-            <h3>نهاية الفصل الدراسي</h3>
-            <p>1447/04/01</p>
-        </div>
+        </a>
     </div>
 
     <footer>
