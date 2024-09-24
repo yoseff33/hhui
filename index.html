@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
@@ -135,12 +135,18 @@
         .doctor-card {
             background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             padding: 20px;
             text-align: center;
             width: 300px;
             margin: 20px auto;
             cursor: pointer; /* لإظهار أن البطاقة قابلة للضغط */
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
         }
 
         .doctor-card img {
@@ -250,31 +256,66 @@
         </div>
 
         <div class="doctor-card" onclick="toggleCV(this)">
-            <img src="https://i.postimg.cc/1RrKSYJj/IMG-9228.jpg" alt="د. أحمد حسين الرصاص حسين">
-            <h3>د. أحمد حسين الرصاص حسين</h3>
-            <p>وكيل كلية إدارة الأعمال</p>
-            <a href="mailto:drahmedhr@uhb.edu.sa">drahmedhr@uhb.edu.sa</a>
+            <img src="https://i.postimg.cc/1RrKSYJj/IMG-9228.jpg" alt="د. ناصر العنزي">
+            <h3>د. ناصر العنزي</h3>
+            <p>أستاذ مساعد في نظم المعلومات</p>
+            <a href="mailto:naalanz@uhb.edu.sa">naalanz@uhb.edu.sa</a>
             <div class="cv">
                 <h3>السيرة الذاتية</h3>
-                <p>الدكتور أحمد حسين هو وكيل كلية إدارة الأعمال وله خبرة في تطوير البرامج الأكاديمية. حصل على درجة الماجستير في إدارة الأعمال من جامعة الملك سعود.</p>
+                <p>الدكتور ناصر العنزي هو أستاذ مساعد في قسم نظم المعلومات، يتمتع بخبرة في تطوير الأنظمة وتحليل البيانات.</p>
             </div>
         </div>
 
         <div class="doctor-card" onclick="toggleCV(this)">
-            <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/570/PictureProfile-WhatsApp%20Image%202021-09-28%20at%2019.06.33.jpeg" alt="د. عبدالعزيز اليوسفي">
-            <h3>د. عبدالعزيز اليوسفي</h3>
-            <p>عضو هيئة التدريس</p>
-            <a href="mailto:aalyousefi@uhb.edu.sa">aalyousefi@uhb.edu.sa</a>
+            <img src="https://i.postimg.cc/sXHbFbb9/IMG-7836.jpg" alt="د. عبدالرحمن العلي">
+            <h3>د. عبدالرحمن العلي</h3>
+            <p>أستاذ مساعد في التسويق</p>
+            <a href="mailto:raali@uhb.edu.sa">raali@uhb.edu.sa</a>
             <div class="cv">
                 <h3>السيرة الذاتية</h3>
-                <p>الدكتور عبد العزيز اليوسفي هو عضو هيئة التدريس في قسم إدارة الأعمال ولديه خبرة كبيرة في مجال التسويق.</p>
+                <p>الدكتور عبدالرحمن العلي متخصص في التسويق ولديه خبرة طويلة في مجال التسويق الرقمي.</p>
             </div>
         </div>
+
+        <div class="doctor-card" onclick="toggleCV(this)">
+            <img src="https://i.postimg.cc/q7Rrtz6M/IMG-9153.jpg" alt="د. سامي الجبري">
+            <h3>د. سامي الجبري</h3>
+            <p>أستاذ مساعد في الإدارة المالية</p>
+            <a href="mailto:saalj@uhb.edu.sa">saalj@uhb.edu.sa</a>
+            <div class="cv">
+                <h3>السيرة الذاتية</h3>
+                <p>الدكتور سامي الجبري له اهتمامات بحثية في مجالات الإدارة المالية والتحليل المالي.</p>
+            </div>
+        </div>
+
+        <div class="doctor-card" onclick="toggleCV(this)">
+            <img src="https://i.postimg.cc/zvs8ZX3Y/IMG-7835.jpg" alt="د. ناصر السلمي">
+            <h3>د. ناصر السلمي</h3>
+            <p>أستاذ مساعد في الإدارة العامة</p>
+            <a href="mailto:nas@uhb.edu.sa">nas@uhb.edu.sa</a>
+            <div class="cv">
+                <h3>السيرة الذاتية</h3>
+                <p>الدكتور ناصر السلمي متخصص في الإدارة العامة وله خبرة في التخطيط الاستراتيجي.</p>
+            </div>
+        </div>
+
+        <div class="doctor-card" onclick="toggleCV(this)">
+            <img src="https://i.postimg.cc/vZZt1wXx/IMG-7837.jpg" alt="د. عبدالعزيز اليوسفي">
+            <h3>د. عبدالعزيز اليوسفي</h3>
+            <p>أستاذ مساعد ومسجل الكلية</p>
+            <a href="mailto:aalyosfi@uhb.edu.sa">aalyosfi@uhb.edu.sa</a>
+            <div class="cv">
+                <h3>السيرة الذاتية</h3>
+                <p>الدكتور عبدالعزيز اليوسفي له دور أساسي في تطوير خطط الدراسة والمناهج.</p>
+            </div>
+        </div>
+
     </div>
 
     <!-- قسم التقويم الأكاديمي -->
     <section id="calendar">
-        <h2><a href="calendar.html" style="text-decoration: none; color: #603913;">التقويم الأكاديمي</a></h2>
+        <h2>التقويم الأكاديمي</h2>
+        <p>سنقوم بإصدار التقويم الأكاديمي للعام الدراسي 1447/1446 هـ قريباً.</p>
     </section>
 
     <footer>
@@ -283,7 +324,7 @@
 
     <script>
         function toggleCV(card) {
-            card.classList.toggle('open');
+            card.classList.toggle("open");
         }
     </script>
 </body>
