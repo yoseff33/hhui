@@ -11,6 +11,10 @@
             margin: 0;
             padding: 0;
             background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
         /* الشريط العلوي */
@@ -40,17 +44,17 @@
 
         /* تنسيق العنوان */
         .section-title {
-            background-color: #603913; /* لون الخلفية البني */
-            color: white; /* لون النص الأبيض */
+            background-color: #603913;
+            color: white;
             text-align: center;
-            margin: 0; /* إزالة الهوامش */
-            padding: 100px 0 40px 0; /* ضبط الحشو ليكون مثل الصفحة الرئيسية */
+            margin: 0;
+            padding: 100px 0 40px 0;
             box-sizing: border-box;
         }
 
         /* تنسيق البطاقات */
         .container {
-            width: 80%;
+            width: 100%;
             margin: auto;
             padding: 20px 0;
             display: flex;
@@ -59,15 +63,55 @@
         }
 
         .doctor-card {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 20px;
-            text-align: center;
-            width: 300px;
-            margin: 20px auto;
             position: relative;
-            transition: all 0.3s ease;
+            width: 350px;
+            height: 350px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: 0.5s;
+            margin: 20px;
+        }
+
+        .doctor-card:hover {
+            width: 600px;
+            transition-delay: 0.5s;
+        }
+
+        .doctor-card .circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .doctor-card .circle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            border: 8px solid #603913;
+            background: #191919;
+            transition: 0.5s, background 0.5s;
+            transition-delay: 0.75s, 1s;
+            filter: drop-shadow(0 0 10px #603913) drop-shadow(0 0 60px #603913);
+        }
+
+        .doctor-card:hover .circle::before {
+            width: 100%;
+            transition-delay: 0.5s;
+            height: 100%;
+            border-radius: 20px;
+            background: #603913;
         }
 
         .doctor-card img {
@@ -76,45 +120,59 @@
             height: 150px;
             object-fit: cover;
             margin-bottom: 15px;
+            position: relative;
+            transition: 0.5s ease-in-out;
         }
 
-        .doctor-card h3 {
+        .doctor-card:hover img {
+            transition-delay: 0.75s;
+            transform: translate(-50%, -50%) scale(1.2) rotate(15deg);
+            top: 45%;
+            left: 75%;
+            height: 200px;
+        }
+
+        .doctor-card .content {
+            position: absolute;
+            width: 50%;
+            left: 20%;
+            padding: 20px;
+            opacity: 0;
+            transition: 0.5s;
+            visibility: hidden;
+        }
+
+        .doctor-card:hover .content {
+            transition-delay: 0.75s;
+            opacity: 1;
+            visibility: visible;
+            left: 0;
+        }
+
+        .doctor-card .content h3 {
             font-size: 24px;
-            color: #603913;
+            color: #fff;
             margin-bottom: 10px;
         }
 
-        .doctor-card p {
+        .doctor-card .content p {
             font-size: 18px;
-            color: #666;
+            color: #fff;
             margin-bottom: 10px;
         }
 
-        .doctor-card a {
+        .doctor-card .content a {
             font-size: 16px;
-            color: #603913;
+            color: #111;
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
             text-decoration: none;
+            font-weight: 600;
         }
 
-        .doctor-card a:hover {
+        .doctor-card .content a:hover {
             text-decoration: underline;
-        }
-
-        /* سيرة ذاتية */
-        .doctor-card.open .cv {
-            display: block;
-        }
-
-        .cv {
-            display: none;
-            padding-top: 10px;
-        }
-
-        .cv p {
-            text-align: left;
-            color: #444;
-            font-size: 16px;
-            line-height: 1.6;
         }
 
         footer {
@@ -123,7 +181,6 @@
             text-align: center;
             padding: 20px 0;
         }
-
     </style>
 </head>
 <body>
@@ -143,39 +200,32 @@
     <!-- محتوى الصفحة -->
     <div class="container">
         <!-- بطاقة الدكتور عبدالله السعد -->
-        <div class="doctor-card" onclick="toggleCV(this)">
+        <div class="doctor-card">
             <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/620/PictureProfile-Pic.jpg" alt="د. عبدالله السعد">
-            <h3>د. عبدالله السعد</h3>
-            <p>أستاذ مساعد في إدارة الأعمال</p>
-            <a href="mailto:aasaad@uhb.edu.sa">aasaad@uhb.edu.sa</a>
-            <div class="cv">
-                <h3>السيرة الذاتية</h3>
-                <p>الدكتور عبد الله خلف السعد هو أستاذ مساعد في جامعة حفر الباطن. حصل على درجة الدكتوراه في إدارة الأعمال من جامعة شمال ماليزيا. كان عنوان رسالته "التنبؤ بنية اعتماد التجارة الإلكترونية B2B في الأردن: دور التوسط بين الثقة والاعتماد". كما يحمل درجة الماجستير في نظم المعلومات الإدارية (MIS) من جامعة اليرموك. وأخيرًا ، يحمل درجة البكالوريوس في نظم المعلومات الإدارية (MIS) من جامعة البلقاء التطبيقية.</p>
-                <p>لدى الدكتور السعد خبرة في القطاعين الخاص والحكومي. في القطاع الخاص ، عمل كأستاذ مساعد في جامعة جدارا. في القطاع الحكومي ، عمل كمتخصص في التنمية المؤسسية في وزارة العدل.</p>
+            <div class="content">
+                <h3>د. عبدالله السعد</h3>
+                <p>أستاذ مساعد في إدارة الأعمال</p>
+                <a href="mailto:aasaad@uhb.edu.sa">aasaad@uhb.edu.sa</a>
             </div>
         </div>
 
         <!-- بطاقة الدكتور أحمد حسين الرصاص -->
-        <div class="doctor-card" onclick="toggleCV(this)">
+        <div class="doctor-card">
             <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/328/PictureProfile-%D8%B5%D9%88%D8%B1%D9%87%20%D9%81%D9%8A%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8.jpeg" alt="د. أحمد حسين الرصاص">
-            <h3>د. أحمد حسين الرصاص</h3>
-            <p>أستاذ مساعد في المحاسبة</p>
-            <a href="mailto:drahmedhr@uhb.edu.sa">drahmedhr@uhb.edu.sa</a>
-            <div class="cv">
-                <h3>السيرة الذاتية</h3>
-                <p>الدكتور أحمد حسين الرصاص هو أستاذ مساعد في قسم المحاسبة بجامعة حفر الباطن. حصل على درجة الدكتوراه في المحاسبة من جامعة شمال ماليزيا عام 2016. وحصل على الماجستير في إدارة الأعمال تخصص المحاسبة من نفس الجامعة عام 2011 بتقدير جيد جدًا. وحصل على درجة البكالوريوس في الاقتصاد من جامعة اليرموك في عام 2001.</p>
+            <div class="content">
+                <h3>د. أحمد حسين الرصاص</h3>
+                <p>أستاذ مساعد في المحاسبة</p>
+                <a href="mailto:drahmedhr@uhb.edu.sa">drahmedhr@uhb.edu.sa</a>
             </div>
         </div>
 
         <!-- بطاقة الدكتور عبد العزيز اليوسفي -->
-        <div class="doctor-card" onclick="toggleCV(this)">
+        <div class="doctor-card">
             <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/570/PictureProfile-WhatsApp%20Image%202021-09-28%20at%2019.06.33.jpeg" alt="د. عبد العزيز اليوسفي">
-            <h3>د. عبد العزيز اليوسفي</h3>
-            <p>أستاذ مساعد ومسجل كلية إدارة الأعمال</p>
-            <a href="mailto:your-email@example.com">تواصل الآن</a>
-            <div class="cv">
-                <h3>السيرة الذاتية</h3>
-                <p>الدكتور عبد العزيز اليوسفي هو أستاذ مساعد ومسجل في كلية إدارة الأعمال بجامعة حفر الباطن. حصل على درجته العلمية من جامعة كينت في المملكة المتحدة. لديه خبرة واسعة في مجالات إدارة الأعمال وتطوير البرامج الأكاديمية. عمل كمدرب ومستشار في عدة مؤسسات تعليمية.</p>
+            <div class="content">
+                <h3>د. عبد العزيز اليوسفي</h3>
+                <p>أستاذ مساعد ومسجل كلية إدارة الأعمال</p>
+                <a href="mailto:your-email@example.com">تواصل الآن</a>
             </div>
         </div>
     </div>
@@ -183,17 +233,5 @@
     <footer>
         <p>&copy; 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
     </footer>
-
-    <script>
-        function toggleCV(card) {
-            const isOpen = card.classList.contains('open');
-            const allCards = document.querySelectorAll('.doctor-card');
-            allCards.forEach(c => c.classList.remove('open'));
-            if (!isOpen) {
-                card.classList.add('open');
-            }
-        }
-    </script>
-
 </body>
 </html>
