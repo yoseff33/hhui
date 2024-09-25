@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +12,7 @@
             padding: 0;
             background-color: #f5f5f5;
         }
+
         /* الشريط العلوي */
         .navbar {
             overflow: hidden;
@@ -23,8 +24,8 @@
             display: flex;
             justify-content: center;
             padding: 5px 0;
-            transition: top 0.3s;
         }
+
         .navbar a {
             color: white;
             text-align: center;
@@ -33,155 +34,198 @@
             font-size: 16px;
             display: inline-block;
         }
+
         .navbar a:hover {
             background-color: #ddd;
             color: black;
         }
-        /* إزالة القائمة الجانبية */
-        .menu {
-            display: none;
-        }
-        /* التنسيق العام */
+
+        /* تنسيق العنوان */
         header {
             background-color: #603913;
             color: #fff;
             padding: 100px 0;
             text-align: center;
         }
+
         header h1 {
             font-size: 48px;
             margin: 0;
         }
+
         header p {
             font-size: 20px;
         }
+
         .container {
             width: 80%;
             margin: auto;
             padding: 20px 0;
         }
-        .services {
+
+        /* تنسيق بطاقات أعضاء هيئة التدريس */
+        .doctor-card {
+            position: relative;
+            width: 250px;
+            height: 450px;
+            border-radius: 20px;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .service-box {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             background-color: #fff;
-            padding: 20px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-radius: 10px;
-            width: 22%;
-            margin: 10px 0;
+            transition: 0.5s;
+            margin: 20px;
+            cursor: pointer;
+            overflow: hidden;
         }
-        .service-box h3 {
-            color: #603913; /* لون بني للعناوين */
-            margin-bottom: 15px;
-            font-size: 24px;
+
+        .doctor-card:hover, .doctor-card:active {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
-        .service-box p {
-            font-size: 16px;
+
+        .doctor-card .circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border: 3px solid #603913;
+            margin-bottom: 10px;
+        }
+
+        .doctor-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .doctor-card .content {
+            text-align: center;
+            padding: 10px;
+            flex: 1;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .doctor-card .content h3 {
+            font-size: 18px;
+            color: #603913;
+            margin-bottom: 5px;
+        }
+
+        .doctor-card .content p {
+            font-size: 14px;
             color: #666;
+            margin-bottom: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
+
+        .doctor-card .content a {
+            font-size: 14px;
+            color: #111;
+            background: #fff;
+            padding: 8px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .doctor-card .content a:hover {
+            text-decoration: underline;
+        }
+
+        /* السيرة الذاتية */
+        .cv {
+            max-height: 0;
+            overflow: hidden;
+            font-size: 14px;
+            color: #444;
+            text-align: left;
+            transition: max-height 0.5s ease;
+            padding: 0 10px;
+        }
+
+        .doctor-card.open .cv {
+            max-height: 200px;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        .cv h4 {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #603913;
+        }
+
+        .cv p {
+            margin: 0 0 5px;
+            word-wrap: break-word;
+        }
+
         footer {
             background-color: #603913;
             color: white;
             text-align: center;
             padding: 20px 0;
         }
-        section {
-            padding: 80px 0;
-            margin-top: 50px;
-        }
-        #faculty, #calendar, #achievements {
-            text-align: center;
-        }
-        #faculty h2, #calendar h2, #achievements h2 {
-            color: #603913;
-            font-size: 36px;
-        }
-        #faculty p, #calendar p, #achievements p {
-            color: #666;
-            font-size: 18px;
-        }
 
-        /* تحسين تنسيق الجوال */
-        @media screen and (max-width: 600px) {
-            .navbar {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                padding: 5px 0;
-            }
-            .navbar a {
-                float: none;
-                display: inline-block;
-                text-align: center;
-                padding: 8px 12px;
-                font-size: 14px;
-            }
-            .services {
-                flex-direction: column;
-                align-items: center;
-            }
-            .service-box {
-                width: 90%;
-                margin: 10px auto;
-            }
-        }
-
-        /* تنسيق بطاقات أعضاء هيئة التدريس */
-        .doctor-card {
+        /* قسم الإنجازات */
+        .achievements {
             background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 20px;
+            padding: 40px 0;
             text-align: center;
-            width: 300px;
-            margin: 20px auto;
-            cursor: pointer; /* لإظهار أن البطاقة قابلة للضغط */
         }
 
-        .doctor-card img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            margin-bottom: 15px;
-        }
-
-        .doctor-card h3 {
-            font-size: 24px;
+        .achievements h2 {
             color: #603913;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
-        .doctor-card p {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .doctor-card a {
+        .achievements p {
             font-size: 16px;
+            color: #666;
+            width: 60%;
+            margin: auto;
+        }
+
+        /* قسم التقويم الأكاديمي */
+        .academic-calendar {
+            background-color: #f9f9f9;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .academic-calendar h2 {
             color: #603913;
-            text-decoration: none;
+            margin-bottom: 20px;
         }
 
-        .doctor-card a:hover {
-            text-decoration: underline;
+        .calendar-table {
+            width: 60%;
+            margin: auto;
+            border-collapse: collapse;
         }
 
-        /* سيرة ذاتية */
-        .cv {
-            display: none;
-            padding-top: 10px;
+        .calendar-table th, .calendar-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
         }
 
-        .doctor-card.open .cv {
-            display: block;
+        .calendar-table th {
+            background-color: #603913;
+            color: white;
         }
+
     </style>
 </head>
 <body>
@@ -195,94 +239,89 @@
 
     <!-- الرئيسية -->
     <header id="home">
-        <h1> كلية إدارة الأعمال</h1>
+        <h1>كلية إدارة الأعمال</h1>
         <p>تحقيق رؤية المملكة 2030</p>
     </header>
 
     <!-- قسم إنجازات كلية إدارة الأعمال -->
-    <section id="achievements">
+    <section class="achievements">
         <h2>إنجازات كلية إدارة الأعمال</h2>
-        <p>إعادة هيكلة البرامج الأكاديمية لمواكبة رؤية المملكة 2030 واحتياجات سوق العمل.</p>
-        <p>استحداث مسارات جديدة في برنامج إدارة الأعمال مثل الإدارة المالية والتسويق.</p>
-        <p>تفعيل برنامج المحاسبة واستحداث برامج نظم المعلومات الإدارية والقانون.</p>
-        <p>تقديم برامج لخدمة المجتمع مثل إدارة الموارد البشرية ودبلوم المحاماة.</p>
-        <p>نحن نضمن توفير أعضاء هيئة تدريس مؤهلين لتقديم تجربة تعليمية رائدة.</p>
-        <p>تحقيق الاعتماد الأكاديمي على مستوى البرامج لضمان جودة التعليم.</p>
+        <p>لقد حققت كلية إدارة الأعمال العديد من الإنجازات المتميزة في مجالات التعليم، البحث العلمي، وخدمة المجتمع، والتي ساهمت بشكل كبير في تطوير الاقتصاد الوطني.</p>
     </section>
-
-    <div class="container">
-        <div class="services">
-            <div class="service-box">
-                <h3>تطوير البرامج الأكاديمية</h3>
-                <p>إعادة هيكلة البرامج الأكاديمية لمواكبة رؤية المملكة 2030 واحتياجات سوق العمل.</p>
-            </div>
-            <div class="service-box">
-                <h3>زيادة الطاقة الاستيعابية</h3>
-                <p>تفعيل برنامج المحاسبة واستحداث برامج نظم المعلومات الإدارية والقانون.</p>
-            </div>
-            <div class="service-box">
-                <h3>جودة أعضاء هيئة التدريس</h3>
-                <p>نحن نضمن توفير أعضاء هيئة تدريس مؤهلين لتقديم تجربة تعليمية رائدة.</p>
-            </div>
-            <div class="service-box">
-                <h3>الاعتماد الأكاديمي</h3>
-                <p>تحقيق الاعتماد الأكاديمي على مستوى البرامج لضمان جودة التعليم.</p>
-            </div>
-        </div>
-    </div>
 
     <!-- قسم أعضاء هيئة التدريس -->
     <section id="faculty">
-        <h2><a href="faculty.html" style="text-decoration: none; color: #603913;">أعضاء هيئة التدريس</a></h2>
+        <h2>أعضاء هيئة التدريس</h2>
         <p>نعتمد على مجموعة من أفضل الكفاءات التعليمية في مجالات متنوعة.</p>
     </section>
 
     <div class="container">
+        <!-- بطاقة الدكتور عبدالله السعد -->
         <div class="doctor-card" onclick="toggleCV(this)">
-            <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/620/PictureProfile-Pic.jpg" alt="د. عبدالله السعد">
-            <h3>د. عبدالله السعد</h3>
-            <p>أستاذ مساعد في إدارة الأعمال</p>
-            <a href="mailto:aasaad@uhb.edu.sa">aasaad@uhb.edu.sa</a>
-            <div class="cv">
-                <h3>السيرة الذاتية</h3>
-                <p>الدكتور عبد الله خلف السعد هو أستاذ مساعد في جامعة حفر الباطن. حصل على درجة الدكتوراه في إدارة الأعمال من جامعة شمال ماليزيا. لديه خبرة واسعة في القطاعين الخاص والحكومي.</p>
+            <div class="circle">
+                <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/620/PictureProfile-Pic.jpg" alt="د. عبدالله السعد">
+            </div>
+            <div class="content">
+                <h3>د. عبدالله السعد</h3>
+                <p>أستاذ مساعد في إدارة الأعمال</p>
+                <a href="mailto:aasaad@uhb.edu.sa">aasaad@uhb.edu.sa</a>
+                <div class="cv">
+                    <h4>السيرة الذاتية</h4>
+                    <p>الدكتور عبد الله خلف السعد هو أستاذ مساعد في جامعة حفر الباطن. حصل على درجة الدكتوراه في إدارة الأعمال من جامعة شمال ماليزيا.</p>
+                </div>
             </div>
         </div>
 
+        <!-- بطاقة الدكتور أحمد حسين الرصاص -->
         <div class="doctor-card" onclick="toggleCV(this)">
-            <img src=" https://www.uhb.edu.sa/Lists/MemberShip/Attachments/328/PictureProfile-صوره%20في%20المكتب.jpeg " alt="د. أحمد حسين الرصاص حسين">
-            <h3>د. أحمد حسين الرصاص حسين</h3>
-            <p>وكيل كلية إدارة الأعمال</p>
-            <a href="mailto:drahmedhr
-
-@uhb.edu.sa">drahmedhr@uhb.edu.sa</a>
-            <div class="cv">
-                <h3>السيرة الذاتية</h3>
-                <p>الدكتور أحمد حسين الرصاص هو وكيل كلية إدارة الأعمال في جامعة حفر الباطن. لديه خبرة تعليمية متميزة وبحوث في مجال إدارة الأعمال.</p>
+            <div class="circle">
+                <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/328/PictureProfile-%D8%B5%D9%88%D8%B1%D9%87%20%D9%81%D9%8A%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8.jpeg" alt="د. أحمد حسين الرصاص">
             </div>
-        </div>
-
-        <div class="doctor-card" onclick="toggleCV(this)">
-            <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/570/PictureProfile-WhatsApp%20Image%202021-09-28%20at%2019.06.33.jpeg" alt="د. عايش الشمري">
-            <h3>عبد العزيز اليوسفي </h3>
-            <p>أستاذ مساعد ومسجل كلية إدارة الأعمال</p>
-            <a href="mailto:abdulazeezalyousfi@uhb.edu.sa:">abdulazeezalyousfi@uhb.edu.sa</a>
-            <div class="cv">
-                <h3>السيرة الذاتية</h3>
-                <p>الدكتور عبد العزيز اليوسفي هو أستاذ مساعد ومسجل في كلية إدارة الأعمال بجامعة حفر الباطن. حصل على درجته العلمية من جامعة كينت في المملكة المتحدة</p>
+            <div class="content">
+                <h3>د. أحمد حسين الرصاص</h3>
+                <p>أستاذ مساعد في المحاسبة</p>
+                <a href="mailto:drahmedhr@uhb.edu.sa">drahmedhr@uhb.edu.sa</a>
+                <div class="cv">
+                    <h4>السيرة الذاتية</h4>
+                    <p>الدكتور أحمد حسين الرصاص هو أستاذ مساعد في قسم المحاسبة بجامعة حفر الباطن.</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- تذييل الصفحة -->
+    <!-- قسم التقويم الأكاديمي -->
+    <section class="academic-calendar" id="calendar">
+        <h2>التقويم الأكاديمي</h2>
+        <table class="calendar-table">
+            <tr>
+                <th>التاريخ</th>
+                <th>الفعالية</th>
+            </tr>
+            <tr>
+                <td>سبتمبر 2024</td>
+                <td>بدء الدراسة للفصل الدراسي الأول</td>
+            </tr>
+            <tr>
+                <td>ديسمبر 2024</td>
+                <td>بداية اختبارات نهاية الفصل الدراسي الأول</td>
+            </tr>
+        </table>
+    </section>
+
     <footer>
-        <p>© 2024 كلية إدارة الأعمال</p>
+        <p>&copy; 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
     </footer>
 
     <script>
         function toggleCV(card) {
-            card.classList.toggle('open');
+            const isOpen = card.classList.contains('open');
+            const allCards = document.querySelectorAll('.doctor-card');
+            allCards.forEach(c => c.classList.remove('open')); // إغلاق جميع البطاقات
+            if (!isOpen) {
+                card.classList.add('open'); // فتح البطاقة الحالية
+            }
         }
     </script>
+
 </body>
 </html>
