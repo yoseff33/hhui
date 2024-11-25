@@ -45,7 +45,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column; /* رتبت العناصر بشكل عمودي */
+            flex-direction: column; 
             margin: 20px;
         }
 
@@ -56,7 +56,8 @@
             background-color: white;
             overflow: hidden;
             text-align: center;
-            margin-bottom: 20px; /* أضفت مسافة بين البطاقات */
+            margin-bottom: 20px; 
+            cursor: pointer; /*  أضفت مؤشر يد للإشارة إلى إمكانية النقر */
         }
 
         .contact-card h3 {
@@ -68,11 +69,11 @@
             color: #555;
             margin: 10px;
             font-size: 16px;
-            display: none; /* أخفيت النص في البداية */
+            display: none; 
         }
 
-        .contact-card:hover p {
-            display: block; /* أظهرت النص عند التمرير */
+        .contact-card.show p { 
+            display: block; 
         }
     </style>
 </head>
@@ -99,5 +100,15 @@
             <p>+966 123456789</p> 
         </div>
     </div>
+
+    <script>
+        const cards = document.querySelectorAll('.contact-card');
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('show'); 
+            });
+        });
+    </script>
 </body>
 </html>
