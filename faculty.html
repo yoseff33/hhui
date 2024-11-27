@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أعضاء هيئة التدريس</title>
+    <title>موقعي الشخصي</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -25,26 +25,27 @@
             justify-content: center;
             padding: 5px 0;
         }
+
         .navbar a {
             color: white;
             text-align: center;
             padding: 10px 15px;
             text-decoration: none;
             font-size: 16px;
-            display: inline-block;
         }
+
         .navbar a:hover {
             background-color: #ddd;
             color: black;
         }
 
-        /* تنسيق العنوان */
+        /* عنوان الصفحة */
         .section-title {
-            background-color: #603913; /* لون الخلفية البني */
-            color: white; /* لون النص الأبيض */
+            background-color: #603913;
+            color: white;
             text-align: center;
-            margin: 0; /* إزالة الهوامش */
-            padding: 100px 0 40px 0; /* ضبط الحشو ليكون مثل الصفحة الرئيسية */
+            margin: 0;
+            padding: 100px 0 40px 0;
             box-sizing: border-box;
         }
 
@@ -58,15 +59,11 @@
             flex-wrap: wrap;
         }
 
-        .doctor-card {
+        .student-card {
             position: relative;
             width: 250px;
             height: 450px;
             border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: 0.5s;
@@ -75,53 +72,43 @@
             overflow: hidden;
         }
 
-        .doctor-card:hover, .doctor-card:active {
+        .student-card:hover, .student-card:active {
             transform: scale(1.05);
             box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
 
-        .doctor-card .circle {
-            position: relative;
+        .student-card .circle {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
             border: 3px solid #603913;
-            margin-bottom: 10px;
+            margin: 20px auto;
+            overflow: hidden;
         }
 
-        .doctor-card img {
+        .student-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .doctor-card .content {
+        .student-card .content {
             text-align: center;
             padding: 10px;
-            flex: 1;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
         }
 
-        .doctor-card .content h3 {
+        .student-card .content h3 {
             font-size: 18px;
             color: #603913;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
-        .doctor-card .content p {
+        .student-card .content p {
             font-size: 14px;
             color: #666;
-            margin-bottom: 5px;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
-        .doctor-card .content a {
+        .student-card .content a {
             font-size: 14px;
             color: #111;
             background: #fff;
@@ -133,11 +120,10 @@
             margin-top: 10px;
         }
 
-        .doctor-card .content a:hover {
+        .student-card .content a:hover {
             text-decoration: underline;
         }
 
-        /* السيرة الذاتية */
         .cv {
             max-height: 0;
             overflow: hidden;
@@ -148,21 +134,10 @@
             padding: 0 10px;
         }
 
-        .doctor-card.open .cv {
+        .student-card.open .cv {
             max-height: 200px;
             padding: 10px;
             overflow-y: auto;
-        }
-
-        .cv h4 {
-            margin: 5px 0;
-            font-size: 16px;
-            color: #603913;
-        }
-
-        .cv p {
-            margin: 0 0 5px;
-            word-wrap: break-word;
         }
 
         footer {
@@ -179,80 +154,49 @@
     <!-- الشريط العلوي -->
     <div class="navbar">
         <a href="index.html">الرئيسية</a>
-        <a href="faculty.html">أعضاء هيئة التدريس</a>
-        <a href="calendar.html">التقويم الأكاديمي</a>
+        <a href="about.html">عنّي</a>
+        <a href="portfolio.html">أعمالي</a>
+        <a href="contact.html">اتصل بي</a>
     </div>
 
     <!-- عنوان الصفحة -->
     <div class="section-title">
-        <h1>أعضاء هيئة التدريس</h1>
+        <h1>مرحباً بكم في موقعي الشخصي</h1>
     </div>
 
     <!-- محتوى الصفحة -->
     <div class="container">
-        <!-- بطاقة الدكتور عبدالله السعد -->
-        <div class="doctor-card" onclick="toggleCV(this)">
+        <!-- البطاقة -->
+        <div class="student-card" onclick="toggleCV(this)">
             <div class="circle">
-                <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/620/PictureProfile-Pic.jpg" alt="د. عبدالله السعد">
+                <img src="https://i.ibb.co/R3PvYPb/photo.jpg" alt="صورتك الشخصية">
             </div>
             <div class="content">
-                <h3>د. عبدالله السعد</h3>
-                <p>أستاذ مساعد في إدارة الأعمال</p>
-                <a href="mailto:aasaad@uhb.edu.sa">aasaad@uhb.edu.sa</a>
+                <h3>يوسف عيد المطيري</h3>
+                <p>بكالوريوس نظم معلومات إدارية - جامعة حفر الباطن</p>
+                <a href="mailto:your-email@example.com">راسلني</a>
                 <div class="cv">
                     <h4>السيرة الذاتية</h4>
-                    <p>الدكتور عبد الله خلف السعد هو أستاذ مساعد في جامعة حفر الباطن. حصل على درجة الدكتوراه في إدارة الأعمال من جامعة شمال ماليزيا.</p>
-                    <p>لدى الدكتور السعد خبرة في القطاعين الخاص والحكومي. في القطاع الخاص ، عمل كأستاذ مساعد في جامعة جدارا. في القطاع الحكومي ، عمل كمتخصص في التنمية المؤسسية في وزارة العدل.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- بطاقة الدكتور أحمد حسين الرصاص -->
-        <div class="doctor-card" onclick="toggleCV(this)">
-            <div class="circle">
-                <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/328/PictureProfile-%D8%B5%D9%88%D8%B1%D9%87%20%D9%81%D9%8A%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8.jpeg" alt="د. أحمد حسين الرصاص">
-            </div>
-            <div class="content">
-                <h3>د. أحمد حسين الرصاص</h3>
-                <p>أستاذ مساعد في المحاسبة</p>
-                <a href="mailto:drahmedhr@uhb.edu.sa">drahmedhr@uhb.edu.sa</a>
-                <div class="cv">
-                    <h4>السيرة الذاتية</h4>
-                    <p>الدكتور أحمد حسين الرصاص هو أستاذ مساعد في قسم المحاسبة بجامعة حفر الباطن. حصل على درجة الدكتوراه في المحاسبة من جامعة شمال ماليزيا عام 2016.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- بطاقة الدكتور عبد العزيز اليوسفي -->
-        <div class="doctor-card" onclick="toggleCV(this)">
-            <div class="circle">
-                <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/570/PictureProfile-WhatsApp%20Image%202021-09-28%20at%2019.06.33.jpeg" alt="د. عبد العزيز اليوسفي">
-            </div>
-            <div class="content">
-                <h3>د. عبد العزيز اليوسفي</h3>
-                <p>أستاذ مساعد ومسجل كلية إدارة الأعمال</p>
-                <a href="mailto:abdulazeezalyousfi@uhb.edu.sa"> abdulazeezalyousfi@uhb.edu.sa</a>
-                <div class="cv">
-                    <h4>السيرة الذاتية</h4>
-                    <p>الدكتور عبد العزيز اليوسفي هو أستاذ مساعد ومسجل في كلية إدارة الأعمال بجامعة حفر الباطن. حصل على درجته العلمية من جامعة كينت في المملكة المتحدة.</p>
+                    <p>مهندس برمجيات ذو خبرة في تطوير التطبيقات والأنظمة البرمجية.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2024 كلية إدارة الأعمال. جميع الحقوق محفوظة.</p>
+        <p>&copy; 2024 يوسف عيد المطيري</p>
     </footer>
 
     <script>
         function toggleCV(card) {
             const isOpen = card.classList.contains('open');
-            const allCards = document.querySelectorAll('.doctor-card');
-            allCards.forEach(c => c.classList.remove('open')); // إغلاق جميع البطاقات
+            const allCards = document.querySelectorAll('.student-card');
+            allCards.forEach(c => c.classList.remove('open'));
             if (!isOpen) {
-                card.classList.add('open'); // فتح البطاقة الحالية
+                card.classList.add('open');
             }
         }
     </script>
+
 </body>
 </html>
