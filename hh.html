@@ -6,21 +6,98 @@
     <title>موقعي الشخصي</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; margin: 0; background: #f5f5f5; }
-        .navbar { background: #603913; padding: 5px 0; position: fixed; top: 0; width: 100%; display: flex; justify-content: center; }
-        .navbar a { color: white; padding: 10px 15px; text-decoration: none; }
-        .navbar a:hover { background: #ddd; color: black; }
-        .section-title { background: #603913; color: white; text-align: center; padding: 80px 0 30px; }
-        .container { display: flex; justify-content: center; flex-wrap: wrap; padding: 20px 0; }
-        .student-card { width: 250px; background: #fff; border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin: 20px; overflow: hidden; cursor: pointer; text-align: center; transition: 0.5s; }
-        .student-card:hover { transform: scale(1.05); }
-        .circle { width: 120px; height: 120px; margin: 20px auto; border-radius: 50%; border: 3px solid #603913; overflow: hidden; }
-        .circle img { width: 100%; height: 100%; object-fit: cover; }
-        .content h3 { color: #603913; margin: 10px 0; }
-        .content p { color: #666; font-size: 14px; }
-        .cv { max-height: 0; overflow: hidden; transition: max-height 0.5s; padding: 0 10px; color: #444; }
-        .student-card.open .cv { max-height: 150px; padding: 10px; }
-        footer { background: #603913; color: white; text-align: center; padding: 10px 0; }
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            margin: 0; 
+            background: #f5f5f5; 
+            padding-bottom: 50px; /* إضافة مساحة للتذييل الثابت */
+        }
+        .navbar { 
+            background: #603913; 
+            padding: 5px 0; 
+            position: fixed; 
+            top: 0; 
+            width: 100%; 
+            display: flex; 
+            justify-content: center; 
+        }
+        .navbar a { 
+            color: white; 
+            padding: 10px 15px; 
+            text-decoration: none; 
+        }
+        .navbar a:hover { 
+            background: #ddd; 
+            color: black; 
+        }
+        .section-title { 
+            background: #603913; 
+            color: white; 
+            text-align: center; 
+            padding: 80px 0 30px; 
+        }
+        .container { 
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            padding: 20px 0; 
+        }
+        .student-card { 
+            width: 250px; 
+            background: #fff; 
+            border-radius: 20px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+            margin: 20px; 
+            overflow: hidden; 
+            cursor: pointer; 
+            text-align: center; 
+            transition: 0.5s; 
+        }
+        .student-card:hover { 
+            transform: scale(1.05); 
+        }
+        .circle { 
+            width: 120px; 
+            height: 120px; 
+            margin: 20px auto; 
+            border-radius: 50%; 
+            border: 3px solid #603913; 
+            overflow: hidden; 
+        }
+        .circle img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
+        .content h3 { 
+            color: #603913; 
+            margin: 10px 0; 
+        }
+        .content p { 
+            color: #666; 
+            font-size: 14px; 
+        }
+        .cv { 
+            max-height: 0; 
+            overflow: hidden; 
+            transition: max-height 0.5s; 
+            padding: 0 10px; 
+            color: #444; 
+        }
+        .student-card.open .cv { 
+            max-height: 150px; 
+            padding: 10px; 
+        }
+        footer { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            background: #603913; 
+            color: white; 
+            text-align: center; 
+            padding: 10px 0; 
+        }
     </style>
 </head>
 <body>
@@ -30,18 +107,26 @@
         <a href="portfolio.html">أعمالي</a>
         <a href="contact.html">اتصل بي</a>
     </div>
-    <div class="section-title"><h1>مرحباً بكم في موقعي الشخصي</h1></div>
+    <div class="section-title">
+        <h1>مرحباً بكم في موقعي الشخصي</h1>
+    </div>
     <div class="container">
         <div class="student-card" onclick="toggleCV(this)">
-            <div class="circle"><img src="https://i.ibb.co/R3PvYPb/photo.jpg" alt="صورتك"></div>
+            <div class="circle">
+                <img src="https://i.ibb.co/R3PvYPb/photo.jpg" alt="صورتك">
+            </div>
             <div class="content">
                 <h3>يوسف المطيري</h3>
                 <p>بكالوريوس نظم معلومات إدارية</p>
-                <div class="cv"><p>السيرة الذاتية: خبرة في البرمجة وتطوير التطبيقات.</p></div>
+                <div class="cv">
+                    <p>السيرة الذاتية: خبرة في البرمجة وتطوير التطبيقات.</p>
+                </div>
             </div>
         </div>
     </div>
-    <footer>&copy; 2024 يوسف المطيري</footer>
+    <footer>
+        &copy; 2024 يوسف المطيري
+    </footer>
     <script>
         function toggleCV(card) {
             document.querySelectorAll('.student-card').forEach(c => c.classList.remove('open'));
