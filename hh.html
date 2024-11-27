@@ -12,7 +12,6 @@
             padding: 0;
             background-color: #f5f5f5;
         }
-
         .navbar {
             background-color: #603913;
             overflow: hidden;
@@ -20,19 +19,16 @@
             justify-content: center;
             padding: 10px 0;
         }
-
         .navbar a {
             color: white;
             text-decoration: none;
             padding: 10px 15px;
             font-size: 18px;
         }
-
         .navbar a:hover {
             background-color: #ddd;
             color: black;
         }
-
         .section-title {
             text-align: center;
             padding: 40px 0;
@@ -40,62 +36,87 @@
             color: white;
             margin: 0;
         }
-
         .container {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 20px 0;
         }
-
-        .profile-card {
-            width: 300px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: white;
+        .doctor-card {
+            width: 250px;
+            height: 450px;
+            border-radius: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: 0.5s;
+            margin: 20px;
             overflow: hidden;
             text-align: center;
-            transition: transform 0.3s ease;
+            cursor: pointer;
         }
-
-        .profile-card:hover {
+        .doctor-card:hover {
             transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
-
-        .profile-card img {
+        .circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #603913;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .doctor-card img {
             width: 100%;
-            height: 300px;
+            height: 100%;
             object-fit: cover;
         }
-
-        .profile-card h2 {
-            color: #603913;
-            margin: 10px 0;
-        }
-
-        .profile-card p {
-            color: #555;
-            margin: 10px;
-            font-size: 16px;
-        }
-
-        .profile-card a {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px 0;
-            color: white;
-            background-color: #603913;
-            text-decoration: none;
-            border-radius: 20px;
-        }
-
-        .profile-card a:hover {
-            background-color: #80562c;
-        }
-
         .content {
-            padding: 20px;
+            padding: 10px;
+            flex: 1;
+        }
+        .content h3 {
+            font-size: 18px;
+            color: #603913;
+            margin-bottom: 5px;
+        }
+        .content p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .content a {
+            font-size: 14px;
+            color: #111;
+            background: #fff;
+            padding: 8px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .content a:hover {
+            text-decoration: underline;
+        }
+        .cv {
+            max-height: 0;
+            overflow: hidden;
+            font-size: 14px;
+            color: #444;
+            text-align: left;
+            transition: max-height 0.5s ease;
+        }
+        .doctor-card.open .cv {
+            max-height: 200px;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        footer {
+            background-color: #603913;
+            color: white;
             text-align: center;
+            padding: 20px 0;
         }
     </style>
 </head>
@@ -106,18 +127,35 @@
         <a href="portfolio.html">معرض الأعمال</a>
         <a href="contact.html">اتصل بي</a>
     </div>
-
     <div class="section-title">
         <h1>مرحباً بكم في موقعي الشخصي</h1>
     </div>
-
     <div class="container">
-        <div class="profile-card">
-            <img src="https://i.ibb.co/R3PvYPb/photo.jpg" alt="صورة شخصية">
-            <h2>يوسف عيد المطيري</h2>
-            <p>أهلاً وسهلاً بكم في موقعي الشخصي. هنا تجدون معلومات عني، هواياتي، وأعمالي السابقة.</p>
-            <a href="about.html">المزيد عني</a>
+        <div class="doctor-card">
+            <div class="circle">
+                <img src="https://i.ibb.co/R3PvYPb/photo.jpg" alt="صورتك الشخصية">
+            </div>
+            <div class="content">
+                <h3>يوسف عيد المطيري</h3>
+                <p>أهلاً وسهلاً بكم في موقعي الشخصي. هنا تجدون معلومات عني، هواياتي، وأعمالي السابقة.</p>
+                <a href="#" onclick="toggleCV()">السيرة الذاتية</a>
+                <div class="cv">
+                    <h4>التعليم</h4>
+                    <p>بكالوريوس في نظم معلومات إدارية من جامعة حفر الباطن</p>
+                    <h4>الخبرات العملية</h4>
+                    <p>مهندس برمجيات في شركة ABC</p>
+                </div>
+            </div>
         </div>
     </div>
+    <footer>
+        <p>&copy; 2024 يوسف عيد المطيري</p>
+    </footer>
+    <script>
+        function toggleCV() {
+            const cv = document.querySelector('.cv');
+            cv.classList.toggle('open');
+        }
+    </script>
 </body>
 </html>
