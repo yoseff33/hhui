@@ -15,14 +15,17 @@
         .about-card { width: 320px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: white; padding: 20px; margin-bottom: 20px; text-align: center; }
         .about-card h3 { color: #603913; margin: 10px 0; }
         .skills, .education { margin-top: 20px; }
-        .skills ul, .education ul { list-style-type: none; padding: 0; }
-        .skills li, .education li { background-color: #f0f0f0; padding: 10px; margin: 5px 0; border-radius: 5px; }
+        .skills, .education { display: flex; justify-content: center; flex-direction: column; align-items: center; }
+        .skills .card, .education .card { width: 90%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: white; margin: 10px 0; padding: 15px; }
+        .skills .card ul, .education .card ul { list-style-type: none; padding: 0; margin: 0; }
+        .skills .card li, .education .card li { background-color: #f0f0f0; padding: 8px; margin: 5px 0; border-radius: 5px; }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <a href="hh.html">الرئيسية</a>
+        <a href="index.html">الرئيسية</a>
         <a href="about.html">عنّي</a>
+        <a href="portfolio.html">معرض الأعمال</a>
         <a href="contact.html">اتصل بي</a>
     </div>
     <div class="section-title"><h1>من أنا</h1></div>
@@ -32,13 +35,26 @@
             <p>طالب في جامعة حفر الباطن - نظم معلومات إدارية</p>
             <p>شغفي هو تعلم التقنيات الحديثة وتطبيقها في مجالات الأعمال.</p>
         </div>
+        
         <div class="skills">
-            <h3>المهارات</h3>
-            <ul><li>برمجة وتطوير التطبيقات</li><li>إدارة قواعد البيانات</li><li>تحليل النظم</li></ul>
+            <div class="card">
+                <h3>المهارات</h3>
+                <ul>
+                    <li>برمجة وتطوير التطبيقات</li>
+                    <li>إدارة قواعد البيانات</li>
+                    <li>تحليل النظم</li>
+                </ul>
+            </div>
         </div>
+        
         <div class="education">
-            <h3>التعليم</h3>
-            <ul><li>بكالوريوس نظم معلومات إدارية، جامعة حفر الباطن</li><li>دورات في البرمجة وتطوير الويب</li></ul>
+            <div class="card">
+                <h3>التعليم</h3>
+                <ul>
+                    <li>بكالوريوس نظم معلومات إدارية، جامعة حفر الباطن</li>
+                    <li>دورات في البرمجة وتطوير الويب</li>
+                </ul>
+            </div>
         </div>
     </div>
 </body>
