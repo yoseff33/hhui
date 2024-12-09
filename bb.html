@@ -10,8 +10,10 @@
         .navbar, footer { background-color: #309ca0; text-align: center; padding: 10px 0; color: white; }
         .navbar a { color: white; padding: 10px 15px; text-decoration: none; }
         .navbar a:hover { background-color: #ddd; color: black; }
-        .section-title { text-align: center; padding: 40px 0; background-color: #309ca0; color: white; }
-        .card { width: 320px; background: white; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin: 10px 0; padding: 15px; text-align: center; }
+        .section-title { text-align: center; padding: 20px 0; background-color: #309ca0; color: white; }
+        .cards-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin: 20px; }
+        .card { width: 300px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 15px; text-align: center; }
+        .card h3 { color: #309ca0; }
         footer { position: fixed; bottom: 0; width: 100%; font-size: 14px; }
     </style>
 </head>
@@ -22,8 +24,20 @@
         <a href="rr.html">اتصل بي</a>
     </div>
     <div class="section-title"><h1>من أنا - سعود الشمري</h1></div>
-    <div class="card"><h3>سعود الشمري</h3><p>طالب في جامعة حفر الباطن - نظم معلومات إدارية</p></div>
-    <div class="card"><h3>المهارات</h3><ul><li>تحليل البيانات</li><li>التسويق الإلكتروني</li><li>إدارة المشاريع</li></ul></div>
+    <div class="cards-container">
+        <div class="card">
+            <h3>سعود الشمري</h3>
+            <p>طالب في جامعة حفر الباطن - نظم معلومات إدارية</p>
+        </div>
+        <div class="card">
+            <h3>المهارات</h3>
+            <ul>
+                <li>تحليل البيانات</li>
+                <li>التسويق الإلكتروني</li>
+                <li>إدارة المشاريع</li>
+            </ul>
+        </div>
+    </div>
     <footer>&#169; 2024 سعود الشمري</footer>
 </body>
 </html>
