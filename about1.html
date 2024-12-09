@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اتصل بي - حسين</title>
+    <title>عنّي - حسين</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; margin: 0; background: #f5f5f5; }
-        .navbar, footer { background: #FF5733; color: white; text-align: center; padding: 10px 0; }
+        body { font-family: 'Tajawal', sans-serif; margin: 0; background: #f9f9f9; }
+        .navbar, footer { background: #4CAF50; color: white; text-align: center; padding: 10px 0; }
         .navbar a { color: white; text-decoration: none; padding: 10px 15px; font-size: 18px; }
-        .navbar a:hover { background: #fff; color: #FF5733; }
-        .section-title { text-align: center; background: #FF5733; color: white; padding: 20px 0; }
-        .card { width: 320px; margin: 20px auto; background: #FFE4D1; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; }
-        .card h3 { color: #FF5733; }
+        .navbar a:hover { background: #fff; color: #4CAF50; }
+        .section-title { text-align: center; background: #4CAF50; color: white; padding: 20px 0; }
+        .card { width: 320px; margin: 20px auto; background: #E8F5E9; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; }
+        .card img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; }
+        .card h3 { color: #4CAF50; margin-bottom: 10px; }
         .card p { color: #555; }
+        .cards-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         footer { position: fixed; bottom: 0; width: 100%; }
     </style>
 </head>
@@ -24,15 +26,19 @@
         <a href="cc.html">اتصل بي</a>
     </div>
     <div class="section-title">
-        <h1>اتصل بي</h1>
+        <h1>من أنا</h1>
     </div>
-    <div class="card">
-        <h3>البريد الإلكتروني</h3>
-        <p>hussein33@gmail.com</p>
-    </div>
-    <div class="card">
-        <h3>رقم الهاتف</h3>
-        <p>+966 554443332</p>
+    <div class="cards-container">
+        <div class="card">
+            <img src="https://via.placeholder.com/80" alt="صورة حسين">
+            <h3>حسين المطيري</h3>
+            <p>طالب في جامعة حفر الباطن</p>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/80" alt="صورة حسين">
+            <h3>مهاراتي</h3>
+            <p>إدارة الوقت، البرمجة، تحليل الأنظمة</p>
+        </div>
     </div>
     <footer>&copy; 2024 حسين المطيري</footer>
 </body>
