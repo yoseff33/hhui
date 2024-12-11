@@ -18,6 +18,9 @@
     <button onclick="askAI()">إرسال</button>
     <div id="response" class="response"></div>
 
+    <!-- إضافة مكتبة transformers.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@latest"></script>
+
     <script>
         async function askAI() {
             const question = document.getElementById("question").value;
@@ -42,10 +45,11 @@
                     }
                 });
 
+                // عرض الرد
                 responseDiv.innerHTML = `<p>${response.generated_text}</p>`;
             } catch (error) {
-                console.error("Error:", error);
-                responseDiv.innerHTML = "<p style='color: red;'>حدث خطأ أثناء المعالجة.</p>";
+                console.error("Error:", error); // عرض تفاصيل الخطأ في وحدة التحكم.
+                responseDiv.innerHTML = `<p style='color: red;'>حدث خطأ أثناء المعالجة: ${error.message}</p>`;
             }
         }
     </script>
