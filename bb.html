@@ -18,10 +18,17 @@
     <button onclick="askAI()">إرسال</button>
     <div id="response" class="response"></div>
 
-    <!-- إضافة مكتبة transformers.js -->
+    <!-- إضافة مكتبة transformers.js من مصدر جديد -->
     <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@latest"></script>
 
     <script>
+        // التأكد من تحميل المكتبة بشكل صحيح
+        if (window.transformers) {
+            console.log("مكتبة transformers.js محملة بنجاح");
+        } else {
+            console.error("فشل في تحميل مكتبة transformers.js");
+        }
+
         async function askAI() {
             const question = document.getElementById("question").value;
             const responseDiv = document.getElementById("response");
