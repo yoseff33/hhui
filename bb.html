@@ -34,20 +34,18 @@
             responseDiv.innerHTML = "<p>جاري المعالجة...</p>";
 
             try {
-                // تحميل نموذج نصي باستخدام TensorFlow.js
-                const model = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/transformer_vqa_tfjs/model.json');
+                // هنا سنقوم باستخدام نموذج نصي بسيط من TensorFlow.js
+                const model = await tf.loadLayersModel('https://tfhub.dev/google/nnlm-ar-all/2');
 
-                // تحويل السؤال إلى تنسيق يمكن للنموذج معالجته
-                const inputTensor = tf.tensor([question.length], [1, 1]);
-                
-                // توليد الرد
+                // توليد الرد على أساس نموذج النص
+                const inputTensor = tf.tensor2d([question.split(" ")], [1, question.split(" ").length]);
                 const prediction = model.predict(inputTensor);
-                const responseText = prediction.dataSync()[0]; // تعديل هذا الجزء ليتوافق مع نموذجك
+                const responseText = prediction.dataSync()[0].toString();
 
                 // عرض الرد
                 responseDiv.innerHTML = `<p>${responseText}</p>`;
             } catch (error) {
-                console.error("Error:", error); // عرض تفاصيل الخطأ في وحدة التحكم.
+                console.error("Error:", error);
                 responseDiv.innerHTML = `<p style='color: red;'>حدث خطأ أثناء المعالجة: ${error.message}</p>`;
             }
         }
