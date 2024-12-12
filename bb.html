@@ -18,9 +18,9 @@
     <button onclick="askAI()">إرسال</button>
     <div id="response" class="response"></div>
 
-    <!-- إضافة مكتبة transformers.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@latest"></script>
-
+    <!-- إضافة مكتبة TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    
     <script>
         async function askAI() {
             const question = document.getElementById("question").value;
@@ -34,19 +34,18 @@
             responseDiv.innerHTML = "<p>جاري المعالجة...</p>";
 
             try {
-                // تحميل نموذج GPT-2
-                const model = await window.transformers.load('gpt2');
+                // تحميل نموذج نصي باستخدام TensorFlow.js
+                const model = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/transformer_vqa_tfjs/model.json');
 
+                // تحويل السؤال إلى تنسيق يمكن للنموذج معالجته
+                const inputTensor = tf.tensor([question.length], [1, 1]);
+                
                 // توليد الرد
-                const response = await model.generate({
-                    inputs: question,
-                    parameters: { 
-                        max_new_tokens: 50 
-                    }
-                });
+                const prediction = model.predict(inputTensor);
+                const responseText = prediction.dataSync()[0]; // تعديل هذا الجزء ليتوافق مع نموذجك
 
                 // عرض الرد
-                responseDiv.innerHTML = `<p>${response.generated_text}</p>`;
+                responseDiv.innerHTML = `<p>${responseText}</p>`;
             } catch (error) {
                 console.error("Error:", error); // عرض تفاصيل الخطأ في وحدة التحكم.
                 responseDiv.innerHTML = `<p style='color: red;'>حدث خطأ أثناء المعالجة: ${error.message}</p>`;
