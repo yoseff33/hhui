@@ -18,17 +18,10 @@
     <button onclick="askAI()">إرسال</button>
     <div id="response" class="response"></div>
 
-    <!-- إضافة مكتبة transformers.js من مصدر جديد -->
+    <!-- إضافة مكتبة transformers.js -->
     <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@latest"></script>
 
     <script>
-        // التأكد من تحميل المكتبة بشكل صحيح
-        if (window.transformers) {
-            console.log("مكتبة transformers.js محملة بنجاح");
-        } else {
-            console.error("فشل في تحميل مكتبة transformers.js");
-        }
-
         async function askAI() {
             const question = document.getElementById("question").value;
             const responseDiv = document.getElementById("response");
@@ -41,14 +34,14 @@
             responseDiv.innerHTML = "<p>جاري المعالجة...</p>";
 
             try {
-                // تحميل نموذج GPT-Neo
-                const model = await window.transformers.load('EleutherAI/gpt-neo-1.3B');
-                
+                // تحميل نموذج GPT-2
+                const model = await window.transformers.load('gpt2');
+
                 // توليد الرد
                 const response = await model.generate({
                     inputs: question,
                     parameters: { 
-                        max_new_tokens: 150 
+                        max_new_tokens: 50 
                     }
                 });
 
