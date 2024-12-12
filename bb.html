@@ -20,7 +20,9 @@
 
     <!-- إضافة مكتبة TensorFlow.js -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    
+    <!-- إضافة مكتبة TensorFlow.js للنموذج النصي -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity"></script>
+
     <script>
         async function askAI() {
             const question = document.getElementById("question").value;
@@ -34,16 +36,21 @@
             responseDiv.innerHTML = "<p>جاري المعالجة...</p>";
 
             try {
-                // هنا سنقوم باستخدام نموذج نصي بسيط من TensorFlow.js
-                const model = await tf.loadLayersModel('https://tfhub.dev/google/nnlm-ar-all/2');
+                // تحميل نموذج قياس السمية من TensorFlow.js
+                const threshold = 0.9;
+                const model = await toxicity.load(threshold);
 
-                // توليد الرد على أساس نموذج النص
-                const inputTensor = tf.tensor2d([question.split(" ")], [1, question.split(" ").length]);
-                const prediction = model.predict(inputTensor);
-                const responseText = prediction.dataSync()[0].toString();
+                // استخدام النموذج لتحليل النص المدخل
+                const predictions = await model.classify([question]);
+
+                // تجهيز الرد بناءً على النتائج
+                let responseText = '';
+                predictions.forEach(prediction => {
+                    responseText += `<p>${prediction.label}: ${prediction.results[0].match}</p>`;
+                });
 
                 // عرض الرد
-                responseDiv.innerHTML = `<p>${responseText}</p>`;
+                responseDiv.innerHTML = responseText;
             } catch (error) {
                 console.error("Error:", error);
                 responseDiv.innerHTML = `<p style='color: red;'>حدث خطأ أثناء المعالجة: ${error.message}</p>`;
