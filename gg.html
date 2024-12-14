@@ -1,33 +1,201 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع حسين</title>
+    <title>كلية إدارة الأعمال</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; margin: 0; background: #1A1A1A; color: #FFFFFF; }
-        .navbar, footer { background: #D32F2F; color: white; text-align: center; padding: 10px 0; }
-        .navbar a { color: white; text-decoration: none; padding: 10px 15px; font-size: 18px; }
-        .navbar a:hover { color: #D32F2F; background: white; }
-        .card { width: 300px; margin: 50px auto; padding: 20px; background: #333333; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); text-align: center; }
-        .card img { width: 100px; height: 100px; border-radius: 50%; margin-bottom: 10px; }
-        .card h3 { color: #D32F2F; }
-        .card p { color: #FFFFFF; }
-        footer { position: fixed; bottom: 0; width: 100%; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .navbar {
+            overflow: hidden;
+            background-color: #603913;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            padding: 5px 0;
+        }
+        .navbar a {
+            color: white;
+            text-align: center;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 16px;
+            display: inline-block;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        header {
+            background-color: #603913;
+            color: #fff;
+            padding: 100px 0;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+        header p {
+            font-size: 20px;
+        }
+        section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        section h2 {
+            color: #603913;
+            font-size: 36px;
+        }
+        section p {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.8;
+            margin: 10px 0;
+        }
+        footer {
+            background-color: #603913;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .quiz {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .quiz h3 {
+            color: #603913;
+            margin-bottom: 15px;
+        }
+        .quiz button {
+            background-color: #603913;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .quiz button:hover {
+            background-color: #885c44;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
+
+    <!-- الشريط العلوي -->
     <div class="navbar">
-        <a href="gg.html">الرئيسية</a>
-        <a href="about1.html">عنّي</a>
-        <a href="cc.html">اتصل بي</a>
+        <a href="index.html">الرئيسية</a>
+        <a href="calendar.html">التقويم الأكاديمي</a>
     </div>
-    <div class="card">
-        <img src="https://i.ibb.co/sgWbCsL/hussein.jpg" alt="صورة حسين">
-        <h3>حسين المطيري</h3>
-        <p>طالب في جامعة حفر الباطن - نظم معلومات إدارية</p>
-    </div>
-    <footer>&copy; 2024 حسين المطيري</footer>
+
+    <!-- الرئيسية -->
+    <header>
+        <h1>ملخص أثر الحكومة الإلكترونية</h1>
+        <p>تحليل شامل لتأثيرها على كفاءة العمليات والخدمات الحكومية</p>
+    </header>
+
+    <!-- الملخص -->
+    <section id="summary">
+        <h2>الملخص</h2>
+        <p><strong>1. مقدمة:</strong> الحكومة الإلكترونية تعتمد على التكنولوجيا لتحسين الخدمات الحكومية، وتُسهم في تبسيط الإجراءات وزيادة الكفاءة، وهي جزء أساسي من رؤية 2030.</p>
+        <p><strong>2. مشكلة البحث:</strong> كيف تؤثر الحكومة الإلكترونية على كفاءة العمليات والخدمات؟ وما التحديات المرتبطة بتنفيذها؟</p>
+        <p><strong>3. أهداف البحث:</strong> قياس تأثير الحكومة الإلكترونية على الكفاءة وتقليل الأخطاء والتكاليف.</p>
+        <p><strong>4. أهمية البحث:</strong> إثراء المعرفة النظرية وتقديم حلول عملية للتحول الرقمي.</p>
+        <p><strong>5. النتائج:</strong> أظهرت الدراسات علاقة إيجابية بين الحكومة الإلكترونية وتحسين جودة الخدمات وزيادة الكفاءة التشغيلية.</p>
+        <p><strong>6. التوصيات:</strong> الاستثمار في البنية التحتية الرقمية، تدريب الموظفين، وزيادة وعي المستفيدين بفوائد الحكومة الإلكترونية.</p>
+    </section>
+
+    <!-- اللعبة التفاعلية -->
+    <section id="quiz">
+        <h2>لعبة تفاعلية</h2>
+        <div class="quiz">
+            <h3 id="question">السؤال سيظهر هنا</h3>
+            <div id="answers">
+                <button onclick="checkAnswer(0)">الخيار الأول</button>
+                <button onclick="checkAnswer(1)">الخيار الثاني</button>
+                <button onclick="checkAnswer(2)">الخيار الثالث</button>
+                <button onclick="checkAnswer(3)">الخيار الرابع</button>
+            </div>
+            <div class="result" id="result"></div>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <p>© 2024 كلية إدارة الأعمال</p>
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                question: "ما هو أحد أهداف الحكومة الإلكترونية؟",
+                answers: ["زيادة الأخطاء", "تقليل التكاليف", "إلغاء العمليات", "تعطيل الخدمات"],
+                correct: 1
+            },
+            {
+                question: "ما أحد تحديات تطبيق الحكومة الإلكترونية؟",
+                answers: ["البنية التحتية", "زيادة الشفافية", "زيادة الكفاءة", "تقليل التكاليف"],
+                correct: 0
+            },
+            {
+                question: "ما علاقة الحكومة الإلكترونية بالكفاءة؟",
+                answers: ["لا علاقة", "تقلل الكفاءة", "تزيد الكفاءة", "تزيد الأخطاء"],
+                correct: 2
+            },
+            // أضف المزيد من الأسئلة هنا لتصل إلى 30 سؤالاً.
+        ];
+
+        let currentQuestion = 0;
+
+        function loadQuestion() {
+            const questionData = questions[currentQuestion];
+            document.getElementById("question").textContent = questionData.question;
+            const buttons = document.querySelectorAll("#answers button");
+            buttons.forEach((button, index) => {
+                button.textContent = questionData.answers[index];
+            });
+            document.getElementById("result").textContent = "";
+        }
+
+        function checkAnswer(selected) {
+            const questionData = questions[currentQuestion];
+            const resultDiv = document.getElementById("result");
+            if (selected === questionData.correct) {
+                resultDiv.textContent = "إجابة صحيحة!";
+                resultDiv.style.color = "green";
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    setTimeout(loadQuestion, 1000);
+                } else {
+                    resultDiv.textContent = "مبروك! لقد أكملت اللعبة!";
+                }
+            } else {
+                resultDiv.textContent = "إجابة خاطئة. حاول مرة أخرى.";
+                resultDiv.style.color = "red";
+            }
+        }
+
+        loadQuestion();
+    </script>
 </body>
 </html>
