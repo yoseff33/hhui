@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كلية إدارة الأعمال</title>
+    <title>كلية إدارة الأعمال - ملخص البحث</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -11,7 +11,9 @@
             margin: 0;
             padding: 0;
             background-color: #f5f5f5;
+            color: #333;
         }
+
         .navbar {
             overflow: hidden;
             background-color: #603913;
@@ -29,16 +31,16 @@
             padding: 10px 15px;
             text-decoration: none;
             font-size: 16px;
-            display: inline-block;
         }
         .navbar a:hover {
             background-color: #ddd;
             color: black;
         }
+
         header {
             background-color: #603913;
             color: #fff;
-            padding: 100px 0;
+            padding: 60px 20px;
             text-align: center;
         }
         header h1 {
@@ -48,32 +50,81 @@
         header p {
             font-size: 20px;
         }
-        section {
-            padding: 80px 20px;
+
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin: 15px;
+            padding: 20px;
+            width: 300px;
             text-align: center;
+            transition: transform 0.3s;
         }
-        section h2 {
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card h3 {
             color: #603913;
-            font-size: 36px;
+            margin-bottom: 15px;
         }
-        section p {
-            color: #666;
-            font-size: 18px;
+        .card p {
+            font-size: 16px;
             line-height: 1.8;
-            margin: 10px 0;
+            color: #666;
         }
+
+        .map-container {
+            margin: 40px auto;
+            text-align: center;
+            padding: 20px;
+        }
+        .map-container img {
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
         footer {
             background-color: #603913;
             color: white;
             text-align: center;
             padding: 20px 0;
         }
+
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        table th, table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        table th {
+            background-color: #603913;
+            color: white;
+        }
+
         .quiz {
             background-color: #fff;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             border-radius: 10px;
-            max-width: 600px;
+            max-width: 800px;
             margin: 20px auto;
         }
         .quiz h3 {
@@ -104,30 +155,92 @@
 
     <!-- الشريط العلوي -->
     <div class="navbar">
-        <a href="index.html">الرئيسية</a>
-        <a href="calendar.html">التقويم الأكاديمي</a>
+        <a href="#summary">الملخص</a>
+        <a href="#map">الخريطة التفاعلية</a>
+        <a href="#table">الجدول</a>
+        <a href="#quiz">اللعبة التفاعلية</a>
     </div>
 
-    <!-- الرئيسية -->
+    <!-- الرأس -->
     <header>
         <h1>ملخص أثر الحكومة الإلكترونية</h1>
-        <p>تحليل شامل لتأثيرها على كفاءة العمليات والخدمات الحكومية</p>
+        <p>تحليل شامل لتأثير الحكومة الإلكترونية على كفاءة العمليات والخدمات الحكومية</p>
     </header>
 
-    <!-- الملخص -->
-    <section id="summary">
-        <h2>الملخص</h2>
-        <p><strong>1. مقدمة:</strong> الحكومة الإلكترونية تعتمد على التكنولوجيا لتحسين الخدمات الحكومية، وتُسهم في تبسيط الإجراءات وزيادة الكفاءة، وهي جزء أساسي من رؤية 2030.</p>
-        <p><strong>2. مشكلة البحث:</strong> كيف تؤثر الحكومة الإلكترونية على كفاءة العمليات والخدمات؟ وما التحديات المرتبطة بتنفيذها؟</p>
-        <p><strong>3. أهداف البحث:</strong> قياس تأثير الحكومة الإلكترونية على الكفاءة وتقليل الأخطاء والتكاليف.</p>
-        <p><strong>4. أهمية البحث:</strong> إثراء المعرفة النظرية وتقديم حلول عملية للتحول الرقمي.</p>
-        <p><strong>5. النتائج:</strong> أظهرت الدراسات علاقة إيجابية بين الحكومة الإلكترونية وتحسين جودة الخدمات وزيادة الكفاءة التشغيلية.</p>
-        <p><strong>6. التوصيات:</strong> الاستثمار في البنية التحتية الرقمية، تدريب الموظفين، وزيادة وعي المستفيدين بفوائد الحكومة الإلكترونية.</p>
+    <!-- الملخص - بطاقات -->
+    <section id="summary" class="cards-container">
+        <div class="card">
+            <h3>مقدمة</h3>
+            <p>الحكومة الإلكترونية تعتمد على استخدام التكنولوجيا لتحسين الخدمات الحكومية، وتُسهم في تبسيط الإجراءات وزيادة الكفاءة لتحقيق رؤية المملكة 2030.</p>
+        </div>
+        <div class="card">
+            <h3>مشكلة البحث</h3>
+            <p>تتمثل في دراسة تأثير الحكومة الإلكترونية على كفاءة العمليات والخدمات، ومعالجة التحديات المرتبطة بتنفيذها.</p>
+        </div>
+        <div class="card">
+            <h3>أهداف البحث</h3>
+            <p>قياس تأثير الحكومة الإلكترونية على تحسين الكفاءة التشغيلية، تقليل الأخطاء، وزيادة رضا المستفيدين.</p>
+        </div>
+        <div class="card">
+            <h3>أهمية البحث</h3>
+            <p>نظريًا: إثراء المعرفة حول الحكومة الإلكترونية. عمليًا: تقديم حلول لتحسين الخدمات الحكومية وتقليل التكاليف.</p>
+        </div>
+        <div class="card">
+            <h3>النتائج</h3>
+            <p>أثبتت الدراسات أن الحكومة الإلكترونية تُسهم في تقليل التكاليف، زيادة الشفافية، وتحسين جودة الخدمات.</p>
+        </div>
+        <div class="card">
+            <h3>التوصيات</h3>
+            <p>الاستثمار في البنية التحتية الرقمية، تدريب الموظفين، وزيادة وعي المستفيدين بفوائد الحكومة الإلكترونية.</p>
+        </div>
+    </section>
+
+    <!-- الخريطة التفاعلية -->
+    <section id="map" class="map-container">
+        <h2>الخريطة التفاعلية</h2>
+        <p>الخريطة التالية توضح نقاط القوة والتحديات في تطبيق الحكومة الإلكترونية:</p>
+        <img src="https://via.placeholder.com/800x400" alt="خريطة تفاعلية">
+    </section>
+
+    <!-- الجدول -->
+    <section id="table">
+        <h2>الجدول الزمني للتحول الرقمي في الحكومة الإلكترونية</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>المرحلة</th>
+                    <th>الوصف</th>
+                    <th>المدة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>المرحلة 1</td>
+                    <td>تحليل الوضع الحالي وتحديد الاحتياجات التقنية</td>
+                    <td>شهرين</td>
+                </tr>
+                <tr>
+                    <td>المرحلة 2</td>
+                    <td>تطوير البنية التحتية الرقمية</td>
+                    <td>6 أشهر</td>
+                </tr>
+                <tr>
+                    <td>المرحلة 3</td>
+                    <td>تطبيق الخدمات الإلكترونية وتجربة المستخدم</td>
+                    <td>3 أشهر</td>
+                </tr>
+                <tr>
+                    <td>المرحلة 4</td>
+                    <td>مراقبة الأداء وتقييم فاعلية التحول الرقمي</td>
+                    <td>شهرين</td>
+                </tr>
+            </tbody>
+        </table>
     </section>
 
     <!-- اللعبة التفاعلية -->
     <section id="quiz">
-        <h2>لعبة تفاعلية</h2>
+        <h2>اللعبة التفاعلية</h2>
         <div class="quiz">
             <h3 id="question">السؤال سيظهر هنا</h3>
             <div id="answers">
@@ -140,7 +253,7 @@
         </div>
     </section>
 
-    <!-- تذييل الصفحة -->
+    <!-- التذييل -->
     <footer>
         <p>© 2024 كلية إدارة الأعمال</p>
     </footer>
@@ -162,7 +275,7 @@
                 answers: ["لا علاقة", "تقلل الكفاءة", "تزيد الكفاءة", "تزيد الأخطاء"],
                 correct: 2
             },
-            // أضف المزيد من الأسئلة هنا لتصل إلى 30 سؤالاً.
+            // إضافة أسئلة إضافية حتى 30 سؤالًا
         ];
 
         let currentQuestion = 0;
@@ -197,5 +310,6 @@
 
         loadQuestion();
     </script>
+
 </body>
 </html>
