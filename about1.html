@@ -10,8 +10,8 @@
         body {
             font-family: 'Tajawal', sans-serif;
             margin: 0;
-            background: #f4f4f4;
-            color: #333;
+            background: #000;
+            color: #fff;
         }
 
         .navbar,
@@ -95,6 +95,41 @@
             width: 100%;
         }
 
+        .quiz {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .quiz h3 {
+            color: #D32F2F;
+            margin-bottom: 15px;
+        }
+
+        .quiz button {
+            background-color: #D32F2F;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .quiz button:hover {
+            background-color: #885c44;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
     </style>
 </head>
 
@@ -103,6 +138,7 @@
     <div class="navbar">
         <a href="#summary">الملخص</a>
         <a href="#table">الجدول الزمني</a>
+        <a href="#quiz">الكويز</a>
     </div>
 
     <div class="section-title">
@@ -111,39 +147,105 @@
 
     <!-- الملخص الجديد - بطاقات -->
     <section id="summary" class="cards-container">
+        <!-- الفصل الخامس -->
         <div class="card">
             <h3>الفصل الخامس: إدارة نطاق المشروع</h3>
             <p>
-                مكونات إدارة النطاق تشمل جمع المتطلبات وتحديد نطاق العمل باستخدام هيكل تقسيم العمل (WBS) الذي
-                يجب أن يشمل كل العمل المطلوب.
+                <strong>مكونات إدارة النطاق:</strong>
+                <ul>
+                    <li><strong>جمع المتطلبات:</strong> تحديد متطلبات أصحاب المصلحة.</li>
+                    <li><strong>تحديد النطاق:</strong> إنشاء وثيقة النطاق تشمل أهداف المشروع، مخرجاته، ومتطلبات العمل.</li>
+                    <li><strong>هيكل تقسيم العمل (WBS):</strong> تقسيم المشروع إلى أجزاء صغيرة قابلة للإدارة.</li>
+                </ul>
+                <br>
+                <strong>بيان النطاق:</strong> يشمل اسم المشروع، أهدافه، أدوار أصحاب المصلحة، جدول زمني، وتقديرات التكلفة.
+                <br><br>
+                <strong>مبادئ إنشاء WBS:</strong>
+                <ul>
+                    <li>استخدام المشاريع السابقة كنموذج.</li>
+                    <li>الأساليب: من أعلى إلى أسفل أو من أسفل إلى أعلى.</li>
+                </ul>
             </p>
         </div>
+
+        <!-- الفصل السادس -->
         <div class="card">
             <h3>الفصل السادس: إدارة الموارد البشرية</h3>
             <p>
-                إدارة الموارد البشرية تتضمن تحديد المهام باستخدام مصفوفة الأدوار والمهام (RRM)، والتخطيط لهيكل
-                الفريق باستخدام المخطط التنظيمي للمشروع.
+                <strong>خطوات إدارة الموارد البشرية:</strong>
+                <ul>
+                    <li><strong>مصفوفة الأدوار والمهام (RRM):</strong> تحديد المهام وتوزيعها.</li>
+                    <li><strong>المخطط التنظيمي للمشروع (POC):</strong> عرض هيكل الفريق.</li>
+                    <li><strong>خطة إدارة الطاقم (SMP):</strong> تعيين ومتابعة أداء الفريق.</li>
+                </ul>
+                <br>
+                <strong>مصفوفة الأدوار والمهام (RRM):</strong>
+                <ul>
+                    <li>تشمل المسؤوليات، الاستشارة، الاطلاع، واتخاذ القرارات.</li>
+                    <li>مزايا: تحسين التواصل والتزام الفريق.</li>
+                    <li>عيوب: صعوبة التنفيذ في البداية.</li>
+                </ul>
+                <br>
+                <strong>خطة إدارة الطاقم (SMP):</strong> تشمل تعيين الفريق، تدريبهم، ومتابعة أدائهم.
             </p>
         </div>
+
+        <!-- الفصل السابع -->
         <div class="card">
             <h3>الفصل السابع: إدارة وقت المشروع</h3>
             <p>
-                تشمل إدارة وقت المشروع تقدير الموارد، حساب المسار الحرج (CPM)، واستخدام مخططات جانت (Gantt
-                Charts) لتنظيم الأنشطة.
+                <strong>مراحل إدارة الوقت:</strong>
+                <ul>
+                    <li>تحديد الأنشطة.</li>
+                    <li>تقدير الموارد والمدة.</li>
+                    <li>تطوير الجدول الزمني.</li>
+                </ul>
+                <br>
+                <strong>تقنيات تقدير الوقت:</strong>
+                <ul>
+                    <li><strong>LOC:</strong> حساب أسطر الكود.</li>
+                    <li><strong>النقاط الوظيفية (Function Points):</strong> بناءً على متطلبات النظام.</li>
+                    <li><strong>التقدير الثلاثي (Three-Point Estimation):</strong> (متفائل، متوقع، متشائم).</li>
+                </ul>
+                <br>
+                <strong>المسار الحرج (CPM):</strong> أطول مسار في المشروع ويحدد مدة إنجازه.
+                <br>
+                <strong>طرق الجدولة:</strong>
+                <ul>
+                    <li><strong>طريقة المسار الحرج (CPM):</strong> تحديد الأنشطة الحرجة.</li>
+                    <li><strong>مخططات جانت (Gantt Charts):</strong> عرض الأنشطة بجدول زمني مرئي.</li>
+                </ul>
             </p>
         </div>
+
+        <!-- الفصل الثامن -->
         <div class="card">
             <h3>الفصل الثامن: إدارة المخاطر</h3>
             <p>
-                إدارة المخاطر تتعلق بتحديد المخاطر المحتملة، تحليلها، وتخطيط استجابة فعالة للتعامل معها، باستخدام
-                استراتيجيات مثل التجنب، التخفيف، والتحويل.
+                <strong>تعريف المخاطر:</strong> أحداث قد تؤثر على الوقت، التكلفة، الجودة، أو الموارد.
+                تهدف إدارة المخاطر إلى تقليل التأثيرات السلبية وزيادة الإيجابية.
+                <br><br>
+                <strong>خطوات إدارة المخاطر:</strong>
+                <ul>
+                    <li><strong>تحديد المخاطر:</strong> عبر العصف الذهني، تحليل SWOT.</li>
+                    <li><strong>تحليل المخاطر:</strong> نوعي وكمي.</li>
+                    <li><strong>تخطيط الاستجابة:</strong> استراتيجيات (تجنب، تقبل، تخفيف، تحويل).</li>
+                </ul>
+                <br>
+                <strong>استراتيجيات التخفيف:</strong>
+                <ul>
+                    <li>الخطط الاحتياطية والطوارئ.</li>
+                    <li>تخصيص ميزانيات واحتياطيات إضافية.</li>
+                </ul>
+                <br>
+                <strong>سجل المخاطر:</strong> يوثق جميع المخاطر المحتملة، تقييمها، واستجاباتها.
             </p>
         </div>
     </section>
 
-    <!-- مسائل عن المسار الحرج -->
+    <!-- المسائل وحلول المسار الحرج -->
     <section id="table">
-        <h2 style="text-align: center; color: #D32F2F;">مسائل وحلول المسار الحرج</h2>
+        <h2 style="text-align: center; color: #D32F2F;">المسائل وحلول المسار الحرج</h2>
         <table>
             <thead>
                 <tr>
@@ -178,7 +280,65 @@
         </table>
     </section>
 
+    <!-- الكويز -->
+    <section id="quiz">
+        <h2 style="text-align: center; color: #D32F2F;">الكويز - اختبار إدارة المشاريع</h2>
+        <div class="quiz">
+            <h3 id="question">السؤال سيظهر هنا</h3>
+            <div id="answers">
+                <button onclick="checkAnswer(0)">الخيار الأول</button>
+                <button onclick="checkAnswer(1)">الخيار الثاني</button>
+                <button onclick="checkAnswer(2)">الخيار الثالث</button>
+                <button onclick="checkAnswer(3)">الخيار الرابع</button>
+            </div>
+            <div class="result" id="result"></div>
+        </div>
+    </section>
+
     <footer>&copy; 2024 إدارة المشاريع</footer>
+
+    <script>
+        const questions = [
+            { question: "ما هي مكونات إدارة النطاق؟", answers: ["جمع المتطلبات", "تحديد النطاق", "هيكل تقسيم العمل (WBS)", "جميع ما ذكر"], correct: 3 },
+            { question: "ما هي خطوات إدارة الموارد البشرية؟", answers: ["مصفوفة الأدوار والمهام (RRM)", "خطة إدارة الطاقم (SMP)", "المخطط التنظيمي للمشروع (POC)", "جميع ما ذكر"], correct: 3 },
+            { question: "ما هو المسار الحرج في إدارة الوقت؟", answers: ["أطول مسار في المشروع", "أقصر مسار في المشروع", "المسار الذي يحتوي على أكبر عدد من الأنشطة", "المسار الذي يتضمن أقل عدد من الأنشطة"], correct: 0 },
+            { question: "ما هي استراتيجيات إدارة المخاطر؟", answers: ["التجنب", "التخفيف", "التحويل", "جميع ما ذكر"], correct: 3 },
+            { question: "ما هو الوقت المتوقع في التقدير الثلاثي؟", answers: ["E = (O + 4M + P) / 6", "E = (O + M + P) / 3", "E = (M + P) / 2", "E = (O + M) / 2"], correct: 0 },
+            // Add more questions until 30
+        ];
+
+        let currentQuestion = 0;
+
+        function loadQuestion() {
+            const questionData = questions[currentQuestion];
+            document.getElementById("question").textContent = questionData.question;
+            const buttons = document.querySelectorAll("#answers button");
+            buttons.forEach((button, index) => {
+                button.textContent = questionData.answers[index];
+            });
+            document.getElementById("result").textContent = "";
+        }
+
+        function checkAnswer(selected) {
+            const questionData = questions[currentQuestion];
+            const resultDiv = document.getElementById("result");
+            if (selected === questionData.correct) {
+                resultDiv.textContent = "إجابة صحيحة!";
+                resultDiv.style.color = "green";
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    setTimeout(loadQuestion, 1000);
+                } else {
+                    resultDiv.textContent = "مبروك! لقد أكملت اللعبة!";
+                }
+            } else {
+                resultDiv.textContent = "إجابة خاطئة. حاول مرة أخرى.";
+                resultDiv.style.color = "red";
+            }
+        }
+
+        loadQuestion();
+    </script>
 
 </body>
 
