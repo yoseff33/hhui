@@ -1,43 +1,185 @@
 <!DOCTYPE html>
 <html lang="ar">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عنّي - حسين</title>
+    <title>ملخص إدارة المشاريع</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; margin: 0; background: #1A1A1A; color: #FFFFFF; }
-        .navbar, footer { background: #D32F2F; color: white; text-align: center; padding: 10px 0; }
-        .navbar a { color: white; text-decoration: none; padding: 10px 15px; font-size: 18px; }
-        .navbar a:hover { color: #D32F2F; background: white; }
-        .section-title { text-align: center; background: #D32F2F; color: white; padding: 20px 0; }
-        .card { width: 320px; margin: 20px auto; background: #333333; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); text-align: center; }
-        .card img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; }
-        .card h3 { color: #D32F2F; margin-bottom: 10px; }
-        .card p { color: #FFFFFF; }
-        .cards-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        footer { position: fixed; bottom: 0; width: 100%; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        .navbar,
+        footer {
+            background: #D32F2F;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            color: #D32F2F;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            background: #D32F2F;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .card {
+            width: 320px;
+            margin: 20px auto;
+            background: #333333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .card h3 {
+            color: #D32F2F;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        table {
+            width: 90%;
+            margin: 40px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        table th,
+        table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #D32F2F;
+            color: white;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
     </style>
 </head>
+
 <body>
+
     <div class="navbar">
-        <a href="gg.html">الرئيسية</a>
-        <a href="about1.html">عنّي</a>
-        <a href="cc.html">اتصل بي</a>
+        <a href="#summary">الملخص</a>
+        <a href="#table">الجدول الزمني</a>
     </div>
+
     <div class="section-title">
-        <h1>من أنا</h1>
+        <h1>ملخص إدارة المشاريع</h1>
     </div>
-    <div class="cards-container">
+
+    <!-- الملخص الجديد - بطاقات -->
+    <section id="summary" class="cards-container">
         <div class="card">
-            <h3>حسين دغيم المطيري</h3>
-            <p>طالب في جامعة حفر الباطن، مستوى ما قبل الأخير، تخصص نظم معلومات إدارية</p>
+            <h3>الفصل الخامس: إدارة نطاق المشروع</h3>
+            <p>
+                مكونات إدارة النطاق تشمل جمع المتطلبات وتحديد نطاق العمل باستخدام هيكل تقسيم العمل (WBS) الذي
+                يجب أن يشمل كل العمل المطلوب.
+            </p>
         </div>
         <div class="card">
-            <h3>مهاراتي</h3>
-            <p>إدارة الوقت، تحليل الأنظمة</p>
+            <h3>الفصل السادس: إدارة الموارد البشرية</h3>
+            <p>
+                إدارة الموارد البشرية تتضمن تحديد المهام باستخدام مصفوفة الأدوار والمهام (RRM)، والتخطيط لهيكل
+                الفريق باستخدام المخطط التنظيمي للمشروع.
+            </p>
         </div>
-    </div>
-    <footer>&copy; 2024 حسين المطيري</footer>
+        <div class="card">
+            <h3>الفصل السابع: إدارة وقت المشروع</h3>
+            <p>
+                تشمل إدارة وقت المشروع تقدير الموارد، حساب المسار الحرج (CPM)، واستخدام مخططات جانت (Gantt
+                Charts) لتنظيم الأنشطة.
+            </p>
+        </div>
+        <div class="card">
+            <h3>الفصل الثامن: إدارة المخاطر</h3>
+            <p>
+                إدارة المخاطر تتعلق بتحديد المخاطر المحتملة، تحليلها، وتخطيط استجابة فعالة للتعامل معها، باستخدام
+                استراتيجيات مثل التجنب، التخفيف، والتحويل.
+            </p>
+        </div>
+    </section>
+
+    <!-- مسائل عن المسار الحرج -->
+    <section id="table">
+        <h2 style="text-align: center; color: #D32F2F;">مسائل وحلول المسار الحرج</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>المثال</th>
+                    <th>الوصف</th>
+                    <th>الحل</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>المثال الأول</td>
+                    <td>تحديد المسار الحرج للمشروع مع الأنشطة والعلاقات الزمنية.</td>
+                    <td>
+                        المسار الحرج: A → C → D → F (المدة الإجمالية 19 يومًا)
+                    </td>
+                </tr>
+                <tr>
+                    <td>المثال الثاني</td>
+                    <td>حساب زمن الركود لكل نشاط.</td>
+                    <td>
+                        الأنشطة الحرجة هي A → C → D → F (المدة الإجمالية 19 يومًا)
+                    </td>
+                </tr>
+                <tr>
+                    <td>المثال الثالث</td>
+                    <td>تقدير الوقت باستخدام التقدير الثلاثي (الوقت المتفائل، العادي، والمتشائم).</td>
+                    <td>
+                        الوقت المتوقع = 12 يومًا، الانحراف المعياري = 2.67.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>&copy; 2024 إدارة المشاريع</footer>
+
 </body>
+
 </html>
