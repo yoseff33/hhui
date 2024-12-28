@@ -6,91 +6,233 @@
     <title>الخدمات الإلكترونية السريعة</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        .navbar { background-color: #2c3e50; color: white; text-align: center; padding: 15px; position: fixed; top: 0; width: 100%; z-index: 10; }
-        .navbar a { color: white; padding: 10px 15px; text-decoration: none; font-size: 18px; }
-        .navbar a:hover { background-color: #ddd; color: black; }
+        /* إعدادات الخطوط */
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            margin: 0; padding: 0; 
+            background-color: #f8f9fa; 
+            color: #333; 
+        }
 
-        .container { padding: 100px 15px; display: flex; flex-wrap: wrap; justify-content: center; }
-        .card { background-color: white; width: 250px; margin: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; padding: 20px; }
-        .card img { width: 100%; height: auto; border-radius: 5px; }
-        .card h3 { font-size: 20px; color: #2c3e50; margin: 10px 0; }
-        .card p { font-size: 16px; color: #777; margin-bottom: 10px; }
+        /* التنقل العلوي */
+        .navbar { 
+            background-color: #1abc9c; 
+            color: white; 
+            text-align: center; 
+            padding: 20px; 
+            position: fixed; 
+            top: 0; 
+            width: 100%; 
+            z-index: 10;
+            font-size: 18px;
+        }
 
-        .stars { color: #f39c12; }
-        .button { background-color: #25D366; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; font-size: 16px; margin-top: 10px; }
-        .button:hover { background-color: #128C7E; }
+        .navbar a { 
+            color: white; 
+            padding: 15px 20px; 
+            text-decoration: none; 
+            font-size: 18px; 
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
 
-        .footer { background-color: #2c3e50; color: white; padding: 10px; text-align: center; font-size: 14px; position: fixed; bottom: 0; width: 100%; }
+        .navbar a:hover { 
+            background-color: #16a085; 
+        }
 
-        .reviews { margin-top: 20px; display: flex; justify-content: center; flex-wrap: wrap; }
-        .review { background-color: white; width: 280px; margin: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; padding: 20px; }
-        .review p { font-size: 16px; color: #777; margin-bottom: 10px; }
+        /* الحاوية الرئيسية */
+        .container { 
+            padding: 100px 15px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            background-color: #ecf0f1;
+        }
 
-        .row { display: flex; flex-wrap: wrap; justify-content: space-around; }
-        .col { flex: 1; min-width: 240px; margin: 15px; }
+        .card { 
+            background-color: #fff; 
+            width: 280px; 
+            margin: 15px; 
+            border-radius: 10px; 
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); 
+            text-align: center; 
+            padding: 25px; 
+            transition: transform 0.3s ease-in-out;
+        }
 
-        .review-section { width: 100%; padding: 30px 0; background-color: #f1f1f1; }
-        .review-section h3 { text-align: center; font-size: 24px; color: #2c3e50; margin-bottom: 20px; }
+        .card:hover { 
+            transform: translateY(-8px); 
+        }
+
+        .card img { 
+            width: 100%; 
+            height: auto; 
+            border-radius: 8px; 
+            margin-bottom: 15px;
+        }
+
+        .card h3 { 
+            font-size: 22px; 
+            color: #34495e; 
+            margin-bottom: 10px;
+        }
+
+        .card p { 
+            font-size: 16px; 
+            color: #777; 
+            margin-bottom: 15px;
+        }
+
+        /* النجوم */
+        .stars { 
+            color: #f39c12; 
+            font-size: 20px; 
+            margin-bottom: 15px;
+        }
+
+        /* أزرار الواتس */
+        .button { 
+            background-color: #25D366; 
+            color: white; 
+            padding: 12px 20px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-size: 16px; 
+            margin-top: 15px; 
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .button:hover { 
+            background-color: #128C7E; 
+        }
+
+        /* قسم التقييمات */
+        .reviews { 
+            margin-top: 60px; 
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap;
+        }
+
+        .review { 
+            background-color: #fff; 
+            width: 280px; 
+            margin: 15px; 
+            border-radius: 10px; 
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); 
+            text-align: center; 
+            padding: 25px; 
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .review:hover { 
+            transform: translateY(-8px); 
+        }
+
+        .review p { 
+            font-size: 16px; 
+            color: #555; 
+            margin-bottom: 10px;
+        }
+
+        /* عرض التقييمات */
+        .review-section { 
+            width: 100%; 
+            padding: 60px 0; 
+            background-color: #ecf0f1; 
+        }
+
+        .review-section h3 { 
+            text-align: center; 
+            font-size: 28px; 
+            color: #2c3e50; 
+            margin-bottom: 25px;
+        }
+
+        .review-section p { 
+            font-size: 18px; 
+            color: #555; 
+            text-align: center; 
+            max-width: 850px; 
+            margin: 0 auto;
+        }
+
+        /* الهيدر المخصص */
+        .footer { 
+            background-color: #1abc9c; 
+            color: white; 
+            padding: 10px; 
+            text-align: center; 
+            font-size: 14px; 
+        }
+
+        /* تحسين عرض الصفحات */
+        @media (max-width: 768px) {
+            .card {
+                width: 100%;
+                margin: 10px 0;
+            }
+            .container {
+                padding: 60px 15px;
+            }
+            .navbar a {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- التنقل العلوي -->
     <div class="navbar">
         <a href="#">الرئيسية</a>
         <a href="#">عنّا</a>
         <a href="#">اتصل بنا</a>
     </div>
 
+    <!-- المنتجات -->
     <div class="container">
         <div class="row">
             <!-- تقديم الضمان -->
-            <div class="col">
-                <div class="card">
-                    <img src="https://a.top4top.io/p_32843lbp11.jpeg" alt="ضمان">
-                    <h3>تقديم الضمان</h3>
-                    <p>السعر: 50 ريال</p>
-                    <p>خدمة تقديم الضمان بكل سهولة وسرعة</p>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <a href="https://wa.me/0565464718?text=استفسار%20عن%20تقديم%20الضمان" class="button">طلب عبر الواتس</a>
-                </div>
+            <div class="card">
+                <img src="https://a.top4top.io/p_32843lbp11.jpeg" alt="ضمان">
+                <h3>تقديم الضمان</h3>
+                <p>السعر: 50 ريال</p>
+                <p>خدمة تقديم الضمان بكل سهولة وسرعة</p>
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <a href="https://wa.me/0565464718?text=استفسار%20عن%20تقديم%20الضمان" class="button">طلب عبر الواتس</a>
             </div>
 
             <!-- حساب المواطن -->
-            <div class="col">
-                <div class="card">
-                    <img src="https://l.top4top.io/p_3284jzy3v0.jpeg" alt="حساب المواطن">
-                    <h3>حساب المواطن</h3>
-                    <p>السعر: 30 ريال</p>
-                    <p>مساعدتك في تقديم حساب المواطن بكل سلاسة</p>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <a href="https://wa.me/0565464718?text=استفسار%20عن%20حساب%20المواطن" class="button">طلب عبر الواتس</a>
-                </div>
+            <div class="card">
+                <img src="https://l.top4top.io/p_3284jzy3v0.jpeg" alt="حساب المواطن">
+                <h3>حساب المواطن</h3>
+                <p>السعر: 30 ريال</p>
+                <p>مساعدتك في تقديم حساب المواطن بكل سلاسة</p>
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <a href="https://wa.me/0565464718?text=استفسار%20عن%20حساب%20المواطن" class="button">طلب عبر الواتس</a>
             </div>
         </div>
 
         <div class="row">
             <!-- دعم ريف -->
-            <div class="col">
-                <div class="card">
-                    <img src="https://c.top4top.io/p_3284rk1ws0.jpeg" alt="دعم ريف">
-                    <h3>دعم ريف</h3>
-                    <p>السعر: 120 ريال</p>
-                    <p>ساعدك في تقديم طلب دعم ريف بكل سهولة</p>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <a href="https://wa.me/0565464718?text=استفسار%20عن%20دعم%20ريف" class="button">طلب عبر الواتس</a>
-                </div>
+            <div class="card">
+                <img src="https://c.top4top.io/p_3284rk1ws0.jpeg" alt="دعم ريف">
+                <h3>دعم ريف</h3>
+                <p>السعر: 120 ريال</p>
+                <p>ساعدك في تقديم طلب دعم ريف بكل سهولة</p>
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <a href="https://wa.me/0565464718?text=استفسار%20عن%20دعم%20ريف" class="button">طلب عبر الواتس</a>
             </div>
 
             <!-- شهادة عمل حر -->
-            <div class="col">
-                <div class="card">
-                    <img src="https://c.top4top.io/p_3284cnbi93.jpeg" alt="شهادة عمل حر">
-                    <h3>شهادة عمل حر</h3>
-                    <p>السعر: 100 ريال</p>
-                    <p>إصدار شهادة عمل حر بسرعة وبساطة</p>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <a href="https://wa.me/0565464718?text=استفسار%20عن%20شهادة%20عمل%20حر" class="button">طلب عبر الواتس</a>
-                </div>
+            <div class="card">
+                <img src="https://c.top4top.io/p_3284cnbi93.jpeg" alt="شهادة عمل حر">
+                <h3>شهادة عمل حر</h3>
+                <p>السعر: 100 ريال</p>
+                <p>إصدار شهادة عمل حر بسرعة وبساطة</p>
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <a href="https://wa.me/0565464718?text=استفسار%20عن%20شهادة%20عمل%20حر" class="button">طلب عبر الواتس</a>
             </div>
         </div>
     </div>
@@ -98,44 +240,31 @@
     <!-- نبذة عن الموقع -->
     <div class="review-section">
         <h3>نبذة عن الموقع</h3>
-        <p style="font-size: 18px; color: #555; text-align: center; max-width: 800px; margin: 0 auto;">
-            خدماتنا تشمل تقديم جميع الخدمات الإلكترونية بكل سهولة وسرعة، من خلال التواصل معنا عبر الواتس أب، نحن هنا لخدمتك!
-        </p>
+        <p>خدماتنا تشمل تقديم جميع الخدمات الإلكترونية بكل سهولة وسرعة، من خلال التواصل معنا عبر الواتس أب، نحن هنا لخدمتك!</p>
     </div>
 
-    <!-- قسم التقييمات -->
+    <!-- التقييمات -->
     <div class="review-section">
         <h3>آراء العملاء</h3>
         <div class="reviews">
             <div class="review">
-                <p>ما شاء الله عليه، فاهم شغله وسريع.</p>
+                <p>خدمة سريعة واحترافية، شكراً لكم!</p>
                 <div class="stars">⭐⭐⭐⭐⭐</div>
             </div>
             <div class="review">
-                <p>خدمة ممتازة، سريع ومتعاون.</p>
+                <p>من أفضل المواقع في الخدمة.</p>
                 <div class="stars">⭐⭐⭐⭐⭐</div>
             </div>
             <div class="review">
-                <p>أنصح الجميع، خدمة مضمونة.</p>
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-            </div>
-            <div class="review">
-                <p>أفضل خدمة، سريع وسهل.</p>
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-            </div>
-            <div class="review">
-                <p>خدمة ممتازة وسعر معقول.</p>
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-            </div>
-            <div class="review">
-                <p>أخذت الخدمة وكان التعامل جيد جداً.</p>
+                <p>جودة عالية وسرعة في التعامل.</p>
                 <div class="stars">⭐⭐⭐⭐⭐</div>
             </div>
         </div>
     </div>
 
+    <!-- التذييل -->
     <div class="footer">
-        <p>© 2024 الخدمات الإلكترونية السريعة</p>
+        <p>&copy; 2024 خدمات إلكترونية سريعة</p>
     </div>
 </body>
 </html>
