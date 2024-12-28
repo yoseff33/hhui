@@ -48,9 +48,9 @@
             margin: 10px 0;
         }
         .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
             margin: 50px auto;
             padding: 20px;
             max-width: 1200px;
@@ -104,8 +104,8 @@
             background-color: #128c7e;
         }
         .reviews {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 20px;
             max-width: 1200px;
             margin: 30px auto;
@@ -129,6 +129,28 @@
         .review-box p {
             font-size: 14px;
             color: #333;
+        }
+        .review-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .review-form input[type="text"], .review-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        .review-form button {
+            background-color: #309ca0;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
         }
         .footer {
             background-color: #309ca0;
@@ -185,17 +207,7 @@
         </div>
 
         <div class="product">
-            <img src="https://c.top4top.io/p_3284cnbi93.jpeg" alt="شهادة عمل حر">
-            <h4>شهادة عمل حر</h4>
-            <p>تقديم خدمة إصدار شهادة العمل الحر.</p>
-            <p class="price">السعر: 100 ريال</p>
-            <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20شهادة%20عمل%20حر%20-20أريد%20تقديم%20طلب%20لشهادة%20عمل%20حر">
-                <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
-            </a>
-        </div>
-
-        <div class="product">
-            <img src="https://b.top4top.io/p_3284l9tj12.jpeg" alt="دعم ريف">
+            <img src="https://c.top4top.io/p_3284rk1ws0.jpeg" alt="دعم ريف">
             <h4>دعم ريف</h4>
             <p>تقديم خدمة التسجيل في دعم ريف.</p>
             <p class="price">السعر: 120 ريال</p>
@@ -205,29 +217,29 @@
         </div>
     </div>
 
-    <!-- Reviews Section -->
+    <!-- Reviews -->
     <div class="reviews">
         <div class="review-box">
-            <h4>تقييمات العملاء</h4>
-            <span class="stars">★★★★★</span>
-            <p>"الرجال ثقة، أنصح التعامل معه سريع."</p>
+            <h4>تقييمات العملاء:</h4>
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p>خدمة رائعة وسريعة، استمتعت بالتعامل معهم. أستطيع الآن التقديم بسهولة على حساب المواطن.</p>
         </div>
         <div class="review-box">
-            <h4>تقييمات العملاء</h4>
-            <span class="stars">★★★★☆</span>
-            <p>"خدمة ممتازة وسريعة. أنصح بها."</p>
+            <h4>تقييمات العملاء:</h4>
+            <div class="stars">⭐⭐⭐⭐</div>
+            <p>تمت المعاملة بسرعة واحترافية، لكن أتمنى لو كانت الخدمة أسرع قليلاً في المستقبل.</p>
         </div>
         <div class="review-box">
-            <h4>تقييمات العملاء</h4>
-            <span class="stars">★★★★★</span>
-            <p>"تجربة رائعة، الخدمة تم تقديمها في وقت قياسي."</p>
+            <h4>تقييمات العملاء:</h4>
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p>دائماً متعاونين، الخدمة ممتازة. كل شيء تم بسهولة، سأكرر التعامل معهم.</p>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="footer">
-        &copy; 2024 خدمات الكترونية سريعة | جميع الحقوق محفوظة
-    </footer>
-    
+    <div class="footer">
+        <p>&copy; 2024 خدمات الكترونية سريعة. جميع الحقوق محفوظة.</p>
+    </div>
+
 </body>
 </html>
