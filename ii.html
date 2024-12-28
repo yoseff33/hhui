@@ -34,10 +34,11 @@
             color: black;
         }
         .header {
-            padding: 80px 0 40px;
+            padding: 90px 0 40px;
             background-color: #309ca0;
             text-align: center;
             color: white;
+            margin-top: 60px;
         }
         .header h1 {
             font-size: 36px;
@@ -48,8 +49,8 @@
             margin: 10px 0;
         }
         .products {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             margin: 50px auto;
             padding: 20px;
@@ -63,7 +64,6 @@
             text-align: center;
             transition: transform 0.3s ease;
             overflow: hidden;
-            width: 45%;
         }
         .product:hover {
             transform: translateY(-10px);
@@ -131,28 +131,6 @@
             font-size: 14px;
             color: #333;
         }
-        .review-form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        }
-        .review-form input[type="text"], .review-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-        .review-form button {
-            background-color: #309ca0;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-        }
         .footer {
             background-color: #309ca0;
             color: white;
@@ -189,12 +167,12 @@
                 <div class="review-box">
                     <h4>تقييمات العملاء:</h4>
                     <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>اللي جرب الخدمة قالوا إنها سريعة وممتازة، واستخدمتها بكل سهولة. أنصح فيها!</p>
+                    <p>خدمة سريعة ورائعة. أنصح بها بشدة!</p>
                 </div>
                 <div class="review-box">
                     <h4>تقييمات العملاء:</h4>
                     <div class="stars">⭐⭐⭐⭐</div>
-                    <p>خدمة جيدة لكن أحتاج لو كان في تواصل أسرع، عموماً كانت تجربة ممتازة.</p>
+                    <p>خدمة جيدة ولكن الوقت يستغرق أكثر مما توقعت.</p>
                 </div>
             </div>
         </div>
@@ -216,7 +194,7 @@
                 <div class="review-box">
                     <h4>تقييمات العملاء:</h4>
                     <div class="stars">⭐⭐⭐⭐</div>
-                    <p>خدمة ممتازة، بس أتمنى لو كانت الإجراءات أسرع.</p>
+                    <p>خدمة ممتازة، لكن سرعة الاستجابة من الدعم تحتاج للتحسين.</p>
                 </div>
             </div>
         </div>
@@ -239,6 +217,28 @@
                     <h4>تقييمات العملاء:</h4>
                     <div class="stars">⭐⭐⭐⭐</div>
                     <p>خدمة جيدة لكن أحتاج إلى تحسين سرعة استجابة الدعم.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="https://b.top4top.io/p_3284l9tj12.jpeg" alt="دعم ريف">
+            <h4>دعم ريف</h4>
+            <p>تقديم خدمة التسجيل في دعم ريف.</p>
+            <p class="price">السعر: 120 ريال</p>
+            <a href="https://wa.me/966565464718?text=استفسار%20عن%20دعم%20ريف%20-20أريد%20تقديم%20طلب%20لدعم%20ريف">
+                <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
+            </a>
+            <div class="reviews">
+                <div class="review-box">
+                    <h4>تقييمات العملاء:</h4>
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>الخدمة كانت ممتازة وسريعة، أنصح بها بشدة!</p>
+                </div>
+                <div class="review-box">
+                    <h4>تقييمات العملاء:</h4>
+                    <div class="stars">⭐⭐⭐⭐</div>
+                    <p>خدمة ممتازة، ولكن يحتاج إلى تحسين في بعض التفاصيل.</p>
                 </div>
             </div>
         </div>
