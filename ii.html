@@ -9,15 +9,15 @@
         body {
             font-family: 'Tajawal', sans-serif;
             margin: 0;
-            background-color: #f5f5f5;
+            background-color: #f4f4f4;
             color: #333;
             box-sizing: border-box;
         }
         .navbar {
-            background-color: #309ca0;
+            background-color: #2c3e50;
             color: white;
             text-align: center;
-            padding: 15px 0;
+            padding: 20px 0;
             position: fixed;
             top: 0;
             width: 100%;
@@ -30,40 +30,40 @@
             font-size: 18px;
         }
         .navbar a:hover {
-            background-color: #ddd;
+            background-color: #16a085;
             color: black;
         }
         .header {
-            padding: 90px 0 40px;
-            background-color: #309ca0;
+            padding: 120px 0 40px;
+            background-color: #2c3e50;
             text-align: center;
             color: white;
-            margin-top: 60px;
         }
         .header h1 {
-            font-size: 36px;
+            font-size: 42px;
             margin: 0;
         }
         .header p {
-            font-size: 18px;
-            margin: 10px 0;
+            font-size: 20px;
+            margin-top: 10px;
         }
-        .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 50px auto;
-            padding: 20px;
-            max-width: 1200px;
+        .products-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+            padding: 0 20px;
         }
         .product {
-            background: #fff;
+            background-color: white;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 280px;
             text-align: center;
             transition: transform 0.3s ease;
-            overflow: hidden;
+            margin-bottom: 20px;
         }
         .product:hover {
             transform: translateY(-10px);
@@ -75,19 +75,18 @@
             border-radius: 8px;
         }
         .product h4 {
-            color: #309ca0;
-            font-size: 22px;
-            margin-bottom: 10px;
+            color: #2c3e50;
+            font-size: 24px;
+            margin-top: 15px;
         }
         .product p {
             color: #666;
             font-size: 16px;
-            margin: 5px 0;
         }
-        .product .price {
+        .price {
             font-size: 18px;
-            color: #333;
             font-weight: bold;
+            color: #e67e22;
             margin-top: 10px;
         }
         .whatsapp-btn {
@@ -98,45 +97,59 @@
             border-radius: 8px;
             cursor: pointer;
             margin-top: 20px;
-            font-size: 16px;
             width: 100%;
+            font-size: 16px;
         }
         .whatsapp-btn:hover {
             background-color: #128c7e;
         }
-        .reviews {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 20px;
+
+        /* Reviews Section */
+        .reviews-section {
+            background-color: #ecf0f1;
+            padding: 40px 0;
+            text-align: center;
         }
-        .review-box {
-            background: #fff;
+        .reviews-section h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+        .reviews-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .review {
+            background-color: white;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            width: 300px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         .stars {
             color: #ffcc00;
             font-size: 20px;
         }
-        .review-box h4 {
-            font-size: 18px;
-            color: #309ca0;
-            margin-bottom: 10px;
-        }
-        .review-box p {
-            font-size: 14px;
-            color: #333;
+        .review p {
+            color: #666;
+            font-size: 16px;
+            margin-top: 10px;
         }
         .footer {
-            background-color: #309ca0;
+            background-color: #2c3e50;
             color: white;
-            padding: 10px 0;
+            padding: 15px 0;
             text-align: center;
             font-size: 14px;
+        }
+
+        /* Custom layout for product display */
+        .product-container-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
         }
     </style>
 </head>
@@ -150,103 +163,85 @@
     <!-- Header -->
     <div class="header">
         <h1>خدمات الكترونية سريعة</h1>
-        <p>نقدم لك خدمات سريعة وموثوقة عبر الإنترنت.</p>
+        <p>نقدم لك خدمات سريعة وموثوقة عبر الإنترنت، مع ضمان الجودة والسهولة.</p>
     </div>
 
     <!-- Products -->
-    <div class="products">
-        <div class="product">
-            <img src="https://l.top4top.io/p_3284jzy3v0.jpeg" alt="خدمة حساب المواطن">
-            <h4>خدمة حساب المواطن</h4>
-            <p>تقديم خدمة التسجيل في حساب المواطن.</p>
-            <p class="price">السعر: 30 ريال</p>
-            <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20حساب%20المواطن%20-20أريد%20تقديم%20طلب%20لخدمة%20حساب%20المواطن">
-                <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
-            </a>
-            <div class="reviews">
-                <div class="review-box">
-                    <h4>تقييمات العملاء:</h4>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>خدمة سريعة ورائعة. أنصح بها بشدة!</p>
-                </div>
-                <div class="review-box">
-                    <h4>تقييمات العملاء:</h4>
-                    <div class="stars">⭐⭐⭐⭐</div>
-                    <p>خدمة جيدة ولكن الوقت يستغرق أكثر مما توقعت.</p>
-                </div>
+    <div class="products-container">
+
+        <!-- First Row: الضمان الاجتماعي + حساب المواطن -->
+        <div class="product-container-row">
+            <div class="product">
+                <img src="https://a.top4top.io/p_32843lbp11.jpeg" alt="خدمة الضمان">
+                <h4>خدمة الضمان الاجتماعي</h4>
+                <p>تقديم خدمة التسجيل في الضمان الاجتماعي.</p>
+                <p class="price">السعر: 50 ريال</p>
+                <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20الضمان%20الاجتماعي">
+                    <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
+                </a>
+            </div>
+
+            <div class="product">
+                <img src="https://l.top4top.io/p_3284jzy3v0.jpeg" alt="خدمة حساب المواطن">
+                <h4>خدمة حساب المواطن</h4>
+                <p>تقديم خدمة التسجيل في حساب المواطن.</p>
+                <p class="price">السعر: 30 ريال</p>
+                <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20حساب%20المواطن">
+                    <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
+                </a>
             </div>
         </div>
 
-        <div class="product">
-            <img src="https://a.top4top.io/p_32843lbp11.jpeg" alt="خدمة الضمان">
-            <h4>خدمة الضمان</h4>
-            <p>تقديم خدمة التسجيل في الضمان الاجتماعي.</p>
-            <p class="price">السعر: 50 ريال</p>
-            <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20الضمان%20-20أريد%20تقديم%20طلب%20لخدمة%20الضمان">
-                <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
-            </a>
-            <div class="reviews">
-                <div class="review-box">
-                    <h4>تقييمات العملاء:</h4>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>سجلت في الضمان بسهولة وسرعة، الخدمة جدا ممتازة.</p>
-                </div>
-                <div class="review-box">
-                    <h4>تقييمات العملاء:</h4>
-                    <div class="stars">⭐⭐⭐⭐</div>
-                    <p>خدمة ممتازة، لكن سرعة الاستجابة من الدعم تحتاج للتحسين.</p>
-                </div>
+        <!-- Second Row: دعم ريف + شهادة عمل الحر -->
+        <div class="product-container-row">
+            <div class="product">
+                <img src="https://b.top4top.io/p_3284l9tj12.jpeg" alt="خدمة دعم ريف">
+                <h4>خدمة دعم ريف</h4>
+                <p>تقديم خدمة التسجيل في دعم ريف.</p>
+                <p class="price">السعر: 120 ريال</p>
+                <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20دعم%20ريف">
+                    <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
+                </a>
+            </div>
+
+            <div class="product">
+                <img src="https://c.top4top.io/p_3284cnbi93.jpeg" alt="خدمة شهادة عمل حر">
+                <h4>خدمة شهادة عمل حر</h4>
+                <p>تقديم خدمة إصدار شهادة عمل حر.</p>
+                <p class="price">السعر: 100 ريال</p>
+                <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20شهادة%20عمل%20حر">
+                    <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
+                </a>
             </div>
         </div>
+    </div>
 
-        <div class="product">
-            <img src="https://www.ejar.sa/sites/default/files/styles/large/public/EjarLogo_9_5.png?itok=4hLzJ1IP" alt="عقد ايجار موثق شامل الكهرباء والماء">
-            <h4>عقد ايجار موثق شامل الكهرباء والماء</h4>
-            <p>تقديم خدمة إصدار عقد إيجار موثق شامل الكهرباء والماء.</p>
-            <p class="price">السعر: 350 ريال</p>
-            <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20عقد%20الإيجار%20الموثق%20-20أريد%20تقديم%20طلب%20لعقد%20إيجار%20موثق">
-                <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
-            </a>
-            <div class="reviews">
-                <div class="review-box">
-                    <h4>تقييمات العملاء:</h4>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>العملية كانت سريعة وممتازة، والأسعار معقولة.</p>
-                </div>
-                <div class="review-box">
-                    <h4>تقييمات العملاء:</h4>
-                    <div class="stars">⭐⭐⭐⭐</div>
-                    <p>خدمة جيدة لكن أحتاج إلى تحسين سرعة استجابة الدعم.</p>
-                </div>
+    <!-- Reviews Section -->
+    <div class="reviews-section">
+        <h2>آراء العملاء</h2>
+        <div class="reviews-container">
+            <div class="review">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>ما شاء الله عليه، فاهم شغله وبسرعة خلصها. الله يرزقه، خدمة سريعة وسهلة!</p>
             </div>
-        </div>
-
-        <div class="product">
-            <img src="https://b.top4top.io/p_3284l9tj12.jpeg" alt="دعم ريف">
-            <h4>دعم ريف</h4>
-            <p>تقديم خدمة التسجيل في دعم ريف.</p>
-            <p class="price">السعر: 120 ريال</p>
-            <a href="https://wa.me/966565464718?text=استفسار%20عن%20دعم%20ريف%20-20أريد%20تقديم%20طلب%20لدعم%20ريف">
-                <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
-            </a>
-            <div class="reviews">
-                <div class="review-box">
-                    <h4>تقييمات العملاء:</h4>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>الخدمة كانت ممتازة وسريعة، أنصح بها بشدة!</p>
-                </div>
-                <div class="review-box">
-                    <h4>تقييمات العملاء:</h4>
-                    <div class="stars">⭐⭐⭐⭐</div>
-                    <p>خدمة ممتازة، ولكن يحتاج إلى تحسين في بعض التفاصيل.</p>
-                </div>
+            <div class="review">
+                <div class="stars">⭐⭐⭐⭐</div>
+                <p>مضمون من عندي، خدمة ممتازة واحترافية. يعطيكم العافية.</p>
+            </div>
+            <div class="review">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>الله يرزقكم، الخدمة سريعة وما شاء الله عليهم دايمًا متواجدين.</p>
+            </div>
+            <div class="review">
+                <div class="stars">⭐⭐⭐⭐</div>
+                <p>سهلت علي الأمور، لكن كان في تأخير بسيط في الرد.</p>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
     <div class="footer">
-        <p>© 2024 خدمات الكترونية سريعة</p>
+        <p>&copy; 2024 خدمات الكترونية سريعة. جميع الحقوق محفوظة.</p>
     </div>
 
 </body>
