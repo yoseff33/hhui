@@ -6,73 +6,119 @@
     <title>خدمات الكترونية سريعة</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; margin: 0; background: #f5f5f5; }
-        .navbar { background-color: #309ca0; color: white; text-align: center; padding: 10px 0; position: fixed; top: 0; width: 100%; z-index: 10; }
-        .navbar a { color: white; padding: 10px 15px; text-decoration: none; font-size: 18px; }
+        body { font-family: 'Tajawal', sans-serif; margin: 0; background: #f5f5f5; color: #333; }
+        .navbar { background-color: #309ca0; color: white; text-align: center; padding: 15px 0; position: fixed; top: 0; width: 100%; z-index: 10; }
+        .navbar a { color: white; padding: 12px 20px; text-decoration: none; font-size: 18px; }
         .navbar a:hover { background-color: #ddd; color: black; }
-        .card { width: 280px; margin: 100px auto; padding: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; }
-        .circle { width: 100px; height: 100px; margin: 0 auto; border-radius: 50%; overflow: hidden; border: 3px solid #309ca0; }
-        .circle img { width: 100%; height: 100%; object-fit: cover; }
-        .card h3 { color: #309ca0; margin-top: 10px; font-size: 22px; }
-        .card p { color: #666; font-size: 14px; margin: 5px 0; }
-        .products { display: flex; flex-wrap: wrap; justify-content: center; margin: 50px 0; }
-        .product { background: #fff; padding: 20px; margin: 10px; width: 250px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; }
-        .product h4 { color: #309ca0; font-size: 18px; }
-        .product p { color: #666; font-size: 14px; margin: 5px 0; }
-        .whatsapp-btn { background-color: #25d366; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; }
+        .header { padding: 80px 0 40px; background-color: #309ca0; text-align: center; color: white; }
+        .header h1 { font-size: 36px; margin: 0; }
+        .header p { font-size: 18px; margin: 10px 0; }
+        .products { display: flex; flex-wrap: wrap; justify-content: space-around; margin: 50px auto; max-width: 1200px; gap: 20px; }
+        .product { background: #fff; padding: 20px; width: 45%; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s; }
+        .product:hover { transform: translateY(-10px); }
+        .product img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; }
+        .product h4 { color: #309ca0; font-size: 22px; margin-bottom: 10px; }
+        .product p { color: #666; font-size: 16px; margin: 5px 0; }
+        .product .price { font-size: 18px; color: #333; font-weight: bold; margin-top: 10px; }
+        .whatsapp-btn { background-color: #25d366; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; margin-top: 20px; font-size: 16px; width: 100%; }
         .whatsapp-btn:hover { background-color: #128c7e; }
-        footer { background-color: #309ca0; color: white; padding: 10px 0; text-align: center; font-size: 14px; position: fixed; bottom: 0; width: 100%; }
+        .footer { background-color: #309ca0; color: white; padding: 10px 0; text-align: center; font-size: 14px; position: fixed; bottom: 0; width: 100%; }
+        .reviews { display: flex; justify-content: space-between; max-width: 1200px; margin: 30px auto; }
+        .review-box { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); width: 30%; }
+        .stars { color: #ffcc00; font-size: 20px; }
+        .review-box h4 { font-size: 18px; color: #309ca0; margin-bottom: 10px; }
+        .review-box p { font-size: 14px; color: #333; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h3>خدمات الكترونية سريعة</h3>
-        <p>بكالوريوس نظم معلومات إدارية</p>
-        <p>طالب في جامعة حفر الباطن</p>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="https://wa.me/966565464718?text=مرحباً%20أريد%20مساعدة%20في%20تقديم%20طلب">اتصل بنا</a>
     </div>
 
+    <!-- Header -->
+    <div class="header">
+        <h1>خدمات الكترونية سريعة</h1>
+        <p>نقدم لك خدمات سريعة وموثوقة عبر الإنترنت.</p>
+    </div>
+
+    <!-- Products -->
     <div class="products">
         <div class="product">
+            <img src="https://l.top4top.io/p_3284jzy3v0.jpeg" alt="خدمة حساب المواطن">
             <h4>خدمة حساب المواطن</h4>
             <p>تقديم خدمة التسجيل في حساب المواطن.</p>
-            <p><strong>السعر: 30 ريال</strong></p>
-            <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20حساب%20المواطن%20-%20أريد%20تقديم%20طلب%20لخدمة%20حساب%20المواطن">
+            <p class="price">السعر: 30 ريال</p>
+            <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20حساب%20المواطن%20-20أريد%20تقديم%20طلب%20لخدمة%20حساب%20المواطن">
                 <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
             </a>
         </div>
+
         <div class="product">
+            <img src="https://a.top4top.io/p_32843lbp11.jpeg" alt="خدمة الضمان">
             <h4>خدمة الضمان</h4>
             <p>تقديم خدمة التسجيل في الضمان الاجتماعي.</p>
-            <p><strong>السعر: 50 ريال</strong></p>
+            <p class="price">السعر: 50 ريال</p>
             <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20الضمان%20-20أريد%20تقديم%20طلب%20لخدمة%20الضمان">
                 <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
             </a>
         </div>
+
         <div class="product">
+            <img src="https://www.ejar.sa/sites/default/files/styles/large/public/EjarLogo_9_5.png?itok=4hLzJ1IP" alt="عقد ايجار موثق شامل الكهرباء والماء">
             <h4>عقد ايجار موثق شامل الكهرباء والماء</h4>
             <p>تقديم خدمة إصدار عقد إيجار موثق شامل الكهرباء والماء.</p>
-            <p><strong>السعر: 350 ريال</strong></p>
+            <p class="price">السعر: 350 ريال</p>
             <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20عقد%20الإيجار%20الموثق%20-20أريد%20تقديم%20طلب%20لعقد%20إيجار%20موثق">
                 <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
             </a>
         </div>
+
         <div class="product">
+            <img src="https://c.top4top.io/p_3284cnbi93.jpeg" alt="شهادة عمل حر">
             <h4>شهادة عمل حر</h4>
             <p>تقديم خدمة إصدار شهادة العمل الحر.</p>
-            <p><strong>السعر: 100 ريال</strong></p>
+            <p class="price">السعر: 100 ريال</p>
             <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20شهادة%20عمل%20حر%20-20أريد%20تقديم%20طلب%20لشهادة%20عمل%20حر">
+                <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
+            </a>
+        </div>
+
+        <div class="product">
+            <img src="https://b.top4top.io/p_3284l9tj12.jpeg" alt="دعم ريف">
+            <h4>دعم ريف</h4>
+            <p>تقديم خدمة التسجيل في دعم ريف.</p>
+            <p class="price">السعر: 120 ريال</p>
+            <a href="https://wa.me/966565464718?text=استفسار%20عن%20خدمة%20دعم%20ريف%20-20أريد%20تقديم%20طلب%20لدعم%20ريف">
                 <button class="whatsapp-btn">تقديم طلب عبر واتساب</button>
             </a>
         </div>
     </div>
 
-    <div class="card">
-        <h3>طريقة الدفع</h3>
-        <p>الدفع يكون عبر التحويل البنكي إلى الحساب التالي:</p>
-        <p><strong>رقم الحساب: 1234567890</strong></p>
-        <p><strong>اسم البنك: البنك العربي</strong></p>
+    <!-- Reviews Section -->
+    <div class="reviews">
+        <div class="review-box">
+            <h4>تقييمات العملاء</h4>
+            <span class="stars">★★★★★</span>
+            <p>"الرجال ثقة، أنصح التعامل معه سريع."</p>
+        </div>
+        <div class="review-box">
+            <h4>تقييمات العملاء</h4>
+            <span class="stars">★★★★☆</span>
+            <p>"خدمة ممتازة وسريعة. أنصح بها."</p>
+        </div>
+        <div class="review-box">
+            <h4>تقييمات العملاء</h4>
+            <span class="stars">★★★★★</span>
+            <p>"تجربة رائعة، الخدمة تم تقديمها في وقت قياسي."</p>
+        </div>
     </div>
 
-    <footer>&copy; 2024 خدمات الكترونية سريعة</footer>
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; 2024 خدمات الكترونية سريعة | جميع الحقوق محفوظة
+    </footer>
+    
 </body>
 </html>
