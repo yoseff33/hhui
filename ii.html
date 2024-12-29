@@ -3,57 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الخدمات الإلكترونية السريعة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <title>الخدمات الإلكترونية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* الخطوط والألوان */
+        /* إعدادات عامة */
         body {
-            font-family: 'Tajawal', sans-serif;
+            font-family: 'Cairo', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f3f4f6;
-            color: #333;
+            background-color: #f8f9fa;
+            color: #212529;
         }
 
         header {
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: white;
-            padding: 15px;
+            padding: 15px 20px;
             position: fixed;
-            top: 0;
             width: 100%;
+            top: 0;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         header h1 {
-            margin: 0;
             font-size: 1.5rem;
+            margin: 0;
         }
 
         header nav a {
             color: white;
             text-decoration: none;
-            margin-left: 15px;
-            font-weight: 700;
+            margin: 0 10px;
+            font-weight: 600;
             font-size: 1rem;
         }
 
         .container {
             max-width: 1200px;
-            margin: 80px auto;
-            padding: 15px;
+            margin: 100px auto;
+            padding: 20px;
         }
 
         .section-title {
             text-align: center;
-            margin: 20px 0;
             font-size: 1.8rem;
-            color: #333;
-            font-weight: 700;
+            margin-bottom: 20px;
+            color: #4CAF50;
+            font-weight: 600;
         }
 
         .products {
@@ -64,15 +64,16 @@
 
         .card {
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             text-align: center;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
 
         .card img {
@@ -83,30 +84,30 @@
 
         .card h3 {
             font-size: 1.2rem;
-            color: #007bff;
-            margin: 10px 0;
+            margin: 15px 0;
+            color: #4CAF50;
         }
 
         .card p {
-            margin: 5px 0;
             font-size: 1rem;
-            color: #555;
+            color: #666;
+            margin: 5px 0;
         }
 
         .card .price {
             font-size: 1.2rem;
             color: #28a745;
-            font-weight: bold;
+            font-weight: 700;
         }
 
         .card a {
             display: inline-block;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
             margin: 10px 0;
+            padding: 10px 20px;
+            color: white;
+            background-color: #007bff;
             border-radius: 5px;
+            text-decoration: none;
             transition: background-color 0.3s ease;
         }
 
@@ -115,19 +116,20 @@
         }
 
         footer {
-            background-color: #333;
+            background-color: #212529;
             color: white;
             text-align: center;
-            padding: 15px;
-            margin-top: 30px;
-            font-size: 0.9rem;
+            padding: 15px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>الخدمات الإلكترونية السريعة</h1>
+    <h1>الخدمات الإلكترونية</h1>
     <nav>
         <a href="#about">نبذة</a>
         <a href="#products">المنتجات</a>
@@ -136,11 +138,11 @@
 </header>
 
 <div class="container">
-    <!-- نبذة تعريفية -->
+    <!-- نبذة عن الموقع -->
     <section id="about">
         <h2 class="section-title">نبذة عن الموقع</h2>
         <p style="text-align: center;">
-            نقدم لكم خدمات إلكترونية متنوعة بجودة عالية وسرعة تنفيذ. هدفنا هو تقديم حلول تناسب احتياجات العملاء وبأسعار تنافسية.
+            نقدم خدمات إلكترونية متنوعة مثل التسجيل في برامج الدعم الحكومي، تجهيز الوثائق الرسمية، وخدمات العقود الإلكترونية.
         </p>
     </section>
 
@@ -152,38 +154,38 @@
                 <img src="https://k.top4top.io/p_32843fghi0.jpeg" alt="الضمان الاجتماعي">
                 <h3>الضمان الاجتماعي</h3>
                 <p class="price">50 ريال</p>
-                <a href="https://wa.me/966565464718">لطلب الخدمة</a>
+                <a href="https://wa.me/966565464718?text=أرغب%20في%20طلب%20خدمة%20الضمان%20الاجتماعي">طلب الخدمة</a>
             </div>
             <div class="card">
                 <img src="https://l.top4top.io/p_3284yf7451.jpeg" alt="حساب المواطن">
                 <h3>حساب المواطن</h3>
                 <p class="price">30 ريال</p>
-                <a href="https://wa.me/966565464718">لطلب الخدمة</a>
+                <a href="https://wa.me/966565464718?text=أرغب%20في%20طلب%20خدمة%20حساب%20المواطن">طلب الخدمة</a>
             </div>
             <div class="card">
                 <img src="https://a.top4top.io/p_32843grkb0.jpeg" alt="دعم ريف">
                 <h3>دعم ريف</h3>
                 <p class="price">120 ريال</p>
-                <a href="https://wa.me/966565464718">لطلب الخدمة</a>
+                <a href="https://wa.me/966565464718?text=أرغب%20في%20طلب%20خدمة%20دعم%20ريف">طلب الخدمة</a>
             </div>
             <div class="card">
                 <img src="https://c.top4top.io/p_3284voray0.jpeg" alt="وثيقة العمل الحر">
                 <h3>وثيقة العمل الحر</h3>
                 <p class="price">50 ريال</p>
-                <a href="https://wa.me/966565464718">لطلب الخدمة</a>
+                <a href="https://wa.me/966565464718?text=أرغب%20في%20طلب%20وثيقة%20العمل%20الحر">طلب الخدمة</a>
             </div>
             <div class="card">
                 <img src="https://e.top4top.io/p_3284ipmzp2.png" alt="عقد الإيجار">
                 <h3>عقد الإيجار</h3>
                 <p class="price">350 ريال</p>
-                <a href="https://wa.me/966565464718">لطلب الخدمة</a>
+                <a href="https://wa.me/966565464718?text=أرغب%20في%20طلب%20عقد%20الإيجار">طلب الخدمة</a>
             </div>
         </div>
     </section>
 </div>
 
 <footer>
-    &copy; 2024 الخدمات الإلكترونية السريعة. جميع الحقوق محفوظة.
+    &copy; 2024 الخدمات الإلكترونية. جميع الحقوق محفوظة.
 </footer>
 
 </body>
