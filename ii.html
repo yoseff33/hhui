@@ -4,251 +4,202 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الخدمات الإلكترونية السريعة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* إعدادات عامة */
         body {
-            font-family: 'Tajawal', sans-serif;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
         }
-
-        /* شريط العنوان */
-        .header {
-            background-color: #2c3e50;
+        header {
+            background-color: #4CAF50;
             color: white;
-            padding: 20px;
+            padding: 10px;
             text-align: center;
-            font-size: 28px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
         }
-
-        /* الحاوية الرئيسية */
-        .container {
-            width: 90%;
-            margin: auto;
-            flex: 1;
-        }
-
-        /* الأقسام */
-        .section {
-            margin-bottom: 30px;
+        .content {
             padding: 20px;
+        }
+        .intro-section {
             background-color: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
-        .section h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #2c3e50;
-            border-bottom: 2px solid #1abc9c;
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
-        /* نبذة عن الموقع */
-        .about {
+        .intro-section h2 {
             text-align: center;
+            color: #333;
         }
-
-        .about p {
-            font-size: 16px;
-            line-height: 1.8;
-            color: #555;
-            max-width: 700px;
-            margin: 0 auto;
+        .intro-section p {
+            text-align: center;
+            color: #666;
         }
-
-        .about img {
-            width: 100px;
-            height: 100px;
-            margin: 15px 0;
-        }
-
-        /* المنتجات */
         .products {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            gap: 20px;
         }
-
         .product-card {
-            width: 48%;
             background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 45%;
+            margin-bottom: 20px;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 15px;
         }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
         .product-card img {
             width: 100%;
             height: auto;
             border-radius: 8px;
-            margin-bottom: 10px;
         }
-
         .product-card h3 {
+            color: #333;
             font-size: 18px;
-            color: #2c3e50;
-            margin-bottom: 8px;
+            margin: 10px 0;
         }
-
         .product-card p {
-            font-size: 14px;
-            color: #777;
-            margin-bottom: 8px;
-        }
-
-        .product-card .price {
+            color: #555;
             font-size: 16px;
-            font-weight: bold;
-            color: #1abc9c;
-            margin-bottom: 10px;
         }
-
-        .button {
-            background-color: #1abc9c;
+        .product-card .price {
+            font-size: 18px;
+            color: #4CAF50;
+            margin: 10px 0;
+        }
+        .product-card .whatsapp-button {
+            background-color: #25D366;
             color: white;
-            padding: 8px 15px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
             text-decoration: none;
-            border-radius: 5px;
-            display: inline-block;
-            font-size: 14px;
         }
-
-        .button:hover {
-            background-color: #16a085;
-        }
-
-        /* آراء العملاء */
         .reviews {
+            margin-top: 40px;
+        }
+        .review-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .review-card h4 {
+            color: #333;
+        }
+        .review-card p {
+            color: #666;
+        }
+        .review-card .stars {
+            color: gold;
+        }
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            margin-top: 40px;
+        }
+        .footer-links {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: center;
             gap: 20px;
         }
-
-        .review-card {
-            width: 48%;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-align: center;
-        }
-
-        .review-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .review-card p {
-            font-size: 14px;
-            color: #555;
-        }
-
-        .review-card .author {
-            font-size: 12px;
-            color: #777;
-            margin-top: 5px;
-        }
-
-        .review-card .stars {
-            color: #f39c12;
-            margin-top: 5px;
-        }
-
-        /* التذييل */
-        .footer {
-            background-color: #2c3e50;
+        .footer-links a {
             color: white;
-            text-align: center;
-            padding: 10px;
-            font-size: 14px;
-            margin-top: auto;
-            position: relative;
-        }
-
-        /* تجاوب */
-        @media (max-width: 768px) {
-            .product-card, .review-card {
-                width: 100%;
-            }
+            text-decoration: none;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
+    <header>
         الخدمات الإلكترونية السريعة
-    </div>
+    </header>
 
-    <div class="container">
+    <div class="content">
+
         <!-- نبذة عن الموقع -->
-        <div class="section about">
+        <section class="intro-section">
             <h2>نبذة عن الموقع</h2>
-            <img src="https://cdn-icons-png.flaticon.com/512/2991/2991133.png" alt="نبذة">
-            <p>موقعنا يقدم خدمات إلكترونية متعددة منها تقديم الضمان الاجتماعي، حساب المواطن، دعم ريف، وشهادة العمل الحر. خدماتنا تتميز بالسرعة والاحترافية لضمان رضا العملاء.</p>
-        </div>
+            <p>نحن نقدم لك خدمات إلكترونية سريعة ودقيقة لتلبية احتياجاتك اليومية بكل سهولة ويسر.</p>
+        </section>
 
         <!-- المنتجات -->
-        <div class="section">
-            <h2>المنتجات</h2>
-            <div class="products">
-                <div class="product-card">
-                    <img src="https://a.top4top.io/p_32843lbp11.jpeg" alt="ضمان">
-                    <h3>تقديم الضمان</h3>
-                    <p>خدمة تقديم الضمان الاجتماعي بسهولة وسرعة.</p>
-                    <div class="price">50 ريال</div>
-                    <a href="https://wa.me/0565464718" class="button">لطلب اضغط هنا</a>
-                </div>
-                <div class="product-card">
-                    <img src="https://l.top4top.io/p_3284jzy3v0.jpeg" alt="حساب المواطن">
-                    <h3>حساب المواطن</h3>
-                    <p>مساعدتك في التسجيل لحساب المواطن بكل سهولة.</p>
-                    <div class="price">30 ريال</div>
-                    <a href="https://wa.me/0565464718" class="button">لطلب اضغط هنا</a>
-                </div>
+        <div class="products">
+            <div class="product-card">
+                <img src="https://b.top4top.io/p_3284l9tj12.jpeg" alt="دعم ريف">
+                <h3>دعم ريف</h3>
+                <p>نساعدك في الحصول على دعم ريف في المملكة العربية السعودية</p>
+                <p class="price">120 ريال</p>
+                <a href="https://wa.me/0565464718?text=أريد%20تقديم%20طلب%20دعم%20ريف" class="whatsapp-button">طلب عبر واتساب</a>
+            </div>
+            <div class="product-card">
+                <img src="https://c.top4top.io/p_3284voray0.jpeg" alt="وثيقة عمل حر">
+                <h3>وثيقة عمل حر</h3>
+                <p>سجل في وثيقة العمل الحر مع أفضل الأسعار.</p>
+                <p class="price">100 ريال</p>
+                <a href="https://wa.me/0565464718?text=أريد%20تقديم%20طلب%20وثيقة%20عمل%20حر" class="whatsapp-button">طلب عبر واتساب</a>
+            </div>
+            <div class="product-card">
+                <img src="https://e.top4top.io/p_3284ipmzp2.png" alt="عقد إيجار">
+                <h3>عقد إيجار موثق</h3>
+                <p>نقدم لك عقد إيجار موثق يشمل الكهرباء والماء</p>
+                <p class="price">350 ريال</p>
+                <a href="https://wa.me/0565464718?text=أريد%20تقديم%20طلب%20عقد%20إيجار" class="whatsapp-button">طلب عبر واتساب</a>
+            </div>
+            <div class="product-card">
+                <img src="https://www.ejar.sa/sites/default/files/styles/large/public/EjarLogo_9_5.png?itok=4hLzJ1IP" alt="حساب المواطن">
+                <h3>حساب المواطن</h3>
+                <p>دعم حساب المواطن لجميع المواطنين في المملكة</p>
+                <p class="price">30 ريال</p>
+                <a href="https://wa.me/0565464718?text=أريد%20تقديم%20طلب%20حساب%20المواطن" class="whatsapp-button">طلب عبر واتساب</a>
+            </div>
+            <div class="product-card">
+                <img src="https://a.top4top.io/p_32843grkb0.jpeg" alt="الضمان">
+                <h3>الضمان الاجتماعي</h3>
+                <p>تقديم طلب ضمان اجتماعي بسهولة</p>
+                <p class="price">50 ريال</p>
+                <a href="https://wa.me/0565464718?text=أريد%20تقديم%20طلب%20ضمان" class="whatsapp-button">طلب عبر واتساب</a>
             </div>
         </div>
 
         <!-- آراء العملاء -->
-        <div class="section">
+        <div class="reviews">
             <h2>آراء العملاء</h2>
-            <div class="reviews">
-                <div class="review-card">
-                    <p>ما شاء الله، خدمة ممتازة وسريعة.</p>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <div class="author">- سعود</div>
-                </div>
-                <div class="review-card">
-                    <p>مضمون وسهل التعامل معهم.</p>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <div class="author">- فهد</div>
-                </div>
+            <div class="review-card">
+                <h4>ما شاء الله عليه، فاهم شغله وبسرعة خلصها</h4>
+                <p>تعاملت مع الموقع وكان سريع ومرتب، أنصح به الجميع.</p>
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+            </div>
+            <div class="review-card">
+                <h4>سريع جدًا، الله يرزقه</h4>
+                <p>خدمة ممتازة وسريعة، وساعدني في تقديم طلبي بكل سهولة.</p>
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+            </div>
+            <div class="review-card">
+                <h4>مضمون من عندي</h4>
+                <p>الخدمة كانت فوق المتوقع، وكان التعامل محترف للغاية.</p>
+                <div class="stars">⭐⭐⭐⭐⭐</div>
             </div>
         </div>
+
     </div>
 
-    <div class="footer">
-        © 2024 جميع الحقوق محفوظة - الخدمات الإلكترونية السريعة
-    </div>
+    <footer>
+        <p>© 2024 خدمات إلكترونية سريعة | جميع الحقوق محفوظة</p>
+        <div class="footer-links">
+            <a href="#">الشروط والأحكام</a>
+            <a href="#">سياسة الخصوصية</a>
+        </div>
+    </footer>
 
 </body>
 </html>
