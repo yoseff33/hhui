@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الخدمات الإلكترونية السريعة</title>
-    <!-- رابط مكتبة خطوط Google -->
+    <!-- مكتبة خطوط Google -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <!-- رابط مكتبة رموز Font Awesome -->
+    <!-- مكتبة رموز Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -48,17 +48,15 @@
             line-height: 1.8;
         }
         .products {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
             padding: 20px;
         }
         .product-card {
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 45%;
-            margin: 10px 0;
             text-align: center;
             padding: 15px;
             transition: transform 0.3s ease;
@@ -73,15 +71,15 @@
         }
         .product-card h3 {
             color: #1d3557;
-            font-size: 20px;
+            font-size: 18px;
             margin: 10px 0;
         }
         .product-card p {
             color: #555;
-            font-size: 16px;
+            font-size: 14px;
         }
         .price {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
             color: #e63946;
             margin: 10px 0;
@@ -90,10 +88,10 @@
             display: inline-block;
             background-color: #1d3557;
             color: white;
-            padding: 12px 20px;
+            padding: 10px 15px;
             border-radius: 5px;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 14px;
         }
         .reviews {
             background-color: #ffffff;
@@ -135,13 +133,26 @@
             bottom: 0;
             width: 100%;
         }
-        /* Responsiveness for small screens */
+        /* تحسين العرض للشاشات الصغيرة */
         @media (max-width: 768px) {
-            .product-card {
-                width: 100%;
-            }
             .intro p {
                 font-size: 16px;
+            }
+            .product-card {
+                padding: 10px;
+            }
+            .product-card h3 {
+                font-size: 16px;
+            }
+            .product-card p {
+                font-size: 12px;
+            }
+            .price {
+                font-size: 18px;
+            }
+            .button {
+                padding: 8px 12px;
+                font-size: 12px;
             }
         }
     </style>
@@ -213,10 +224,24 @@
             <p>"ما شاء الله سرعة ودقة."</p>
             <div class="stars">⭐⭐⭐⭐⭐</div>
         </div>
+    </
+
+```html
+        <div class="review-card">
+            <h4>نورة القحطاني</h4>
+            <p>"أفضل تجربة لخدمات إلكترونية. السعر مناسب والخدمة رائعة."</p>
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+        </div>
+        <div class="review-card">
+            <h4>عبدالله المطيري</h4>
+            <p>"شكراً على الخدمة السريعة. سأتعامل معكم دائماً."</p>
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+        </div>
     </div>
 
     <div class="footer">
-        <p>© 2024 جميع الحقوق محفوظة | الخدمات السريعة الإلكترونية </p>
+        <p>© 2024 جميع الحقوق محفوظة - الخدمات الإلكترونية السريعة</p>
+        <p>للتواصل: <a href="tel:+966565464718" style="color: white;">+966565464718</a></p>
     </div>
 
 </body>
