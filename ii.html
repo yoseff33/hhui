@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الخدمات الإلكترونية السريعة</title>
+    <!-- رابط مكتبة خطوط Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- رابط مكتبة رموز Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f9;
@@ -15,7 +19,7 @@
         .header {
             background-color: #1d3557;
             color: white;
-            padding: 10px;
+            padding: 20px;
             text-align: center;
         }
         .header img {
@@ -24,18 +28,19 @@
         }
         .intro {
             background-color: #ffffff;
-            padding: 20px;
+            padding: 30px;
             text-align: center;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
         }
         .intro h2 {
-            font-size: 24px;
+            font-size: 28px;
             color: #1d3557;
+            font-family: 'Amiri', serif;
         }
         .intro p {
-            font-size: 16px;
+            font-size: 18px;
             color: #333;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
         .products {
@@ -46,12 +51,16 @@
         }
         .product-card {
             background-color: #fff;
-            border-radius: 8px;
+            border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 45%;
             margin: 10px 0;
             text-align: center;
             padding: 15px;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover {
+            transform: scale(1.05);
         }
         .product-card img {
             max-width: 100%;
@@ -60,7 +69,7 @@
         }
         .product-card h3 {
             color: #1d3557;
-            font-size: 18px;
+            font-size: 20px;
             margin: 10px 0;
         }
         .product-card p {
@@ -68,7 +77,7 @@
             font-size: 16px;
         }
         .price {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             color: #e63946;
             margin: 10px 0;
@@ -77,15 +86,17 @@
             display: inline-block;
             background-color: #1d3557;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 5px;
             text-decoration: none;
+            font-size: 16px;
         }
         .reviews {
             background-color: #ffffff;
             padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
+            margin-top: 40px;
         }
         .review-card {
             display: inline-block;
@@ -93,7 +104,11 @@
             border-radius: 8px;
             padding: 15px;
             margin: 10px;
-            max-width: 200px;
+            max-width: 220px;
+            transition: transform 0.3s ease;
+        }
+        .review-card:hover {
+            transform: scale(1.05);
         }
         .review-card p {
             font-size: 14px;
@@ -111,10 +126,19 @@
             text-align: center;
             background-color: #1d3557;
             color: white;
-            padding: 10px;
+            padding: 20px;
             position: fixed;
             bottom: 0;
             width: 100%;
+        }
+        /* Responsiveness for small screens */
+        @media (max-width: 768px) {
+            .product-card {
+                width: 100%;
+            }
+            .intro p {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
@@ -127,26 +151,29 @@
 
     <div class="intro">
         <h2>نبذة عن الموقع</h2>
-        <p>نحن نقدم لك أفضل الخدمات الإلكترونية بسرعة وسهولة، حيث يمكنك التقديم لأهم الخدمات مثل الضمان، حساب المواطن، دعم ريف، وغيرها، بكل بساطة من خلال موقعنا الإلكتروني. هدفنا هو توفير الوقت والجهد لعملائنا الكرام من خلال تقديم خدمات مضمونة وسريعة.</p>
+        <p>نحن نقدم لك أفضل الخدمات الإلكترونية بسرعة وسهولة، حيث يمكنك التقديم لأهم الخدمات مثل الضمان الاجتماعي، حساب المواطن، دعم ريف، وثيقة عمل حر، وغيرها، بكل بساطة من خلال موقعنا الإلكتروني. هدفنا هو توفير الوقت والجهد لعملائنا الكرام من خلال تقديم خدمات مضمونة وسريعة، على أعلى مستوى من الكفاءة.</p>
     </div>
 
     <div class="products">
+        <!-- Product 1: ضمان اجتماعي -->
         <div class="product-card">
-            <img src="https://a.top4top.io/p_32843lbp11.jpeg" alt="الضمان">
-            <h3>خدمة الضمان</h3>
-            <p>نقدم لك خدمة الضمان بسرعة واحترافية.</p>
+            <img src="https://k.top4top.io/p_32843fghi0.jpeg" alt="الضمان الاجتماعي">
+            <h3>خدمة الضمان الاجتماعي</h3>
+            <p>نقدم لك خدمة الضمان الاجتماعي بسرعة واحترافية.</p>
             <div class="price">50 ريال</div>
-            <a href="https://wa.me/0565464718?text=استفسار%20عن%20الضمان" class="button">طلب عبر واتساب</a>
+            <a href="https://wa.me/0565464718?text=استفسار%20عن%20الضمان%20الاجتماعي" class="button">طلب عبر واتساب</a>
         </div>
 
+        <!-- Product 2: حساب المواطن -->
         <div class="product-card">
-            <img src="https://l.top4top.io/p_3284jzy3v0.jpeg" alt="حساب المواطن">
+            <img src="https://l.top4top.io/p_3284yf7451.jpeg" alt="حساب المواطن">
             <h3>خدمة حساب المواطن</h3>
             <p>احصل على خدمة حساب المواطن بسرعة واحترافية.</p>
             <div class="price">30 ريال</div>
             <a href="https://wa.me/0565464718?text=استفسار%20عن%20حساب%20المواطن" class="button">طلب عبر واتساب</a>
         </div>
 
+        <!-- Product 3: وثيقة عمل حر -->
         <div class="product-card">
             <img src="https://c.top4top.io/p_3284voray0.jpeg" alt="وثيقة عمل حر">
             <h3>خدمة وثيقة عمل حر</h3>
@@ -155,6 +182,7 @@
             <a href="https://wa.me/0565464718?text=استفسار%20عن%20وثيقة%20عمل%20حر" class="button">طلب عبر واتساب</a>
         </div>
 
+        <!-- Product 4: دعم ريف -->
         <div class="product-card">
             <img src="https://a.top4top.io/p_32843grkb0.jpeg" alt="دعم ريف">
             <h3>خدمة دعم ريف</h3>
@@ -163,6 +191,7 @@
             <a href="https://wa.me/0565464718?text=استفسار%20عن%20دعم%20ريف" class="button">طلب عبر واتساب</a>
         </div>
 
+        <!-- Product 5: عقد إيجار -->
         <div class="product-card">
             <img src="https://e.top4top.io/p_3284ipmzp2.png" alt="عقد إيجار">
             <h3>خدمة عقد إيجار</h3>
@@ -185,22 +214,10 @@
             <p>"مضمون من عندي، خدمة سريعة وأكيد أنصح بالتعامل معه."</p>
             <div class="stars">⭐⭐⭐⭐⭐</div>
         </div>
-
-        <div class="review-card">
-            <h4>سارة الدوسري</h4>
-            <p>"خدمة ممتازة وسريعة. جداً راضية عن التعامل معكم."</p>
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-        </div>
-
-        <div class="review-card">
-            <h4>فهد القحطاني</h4>
-            <p>"خدمة سريعة وسهلة جداً. تعاملت مع الموقع وكان الشغل مميز."</p>
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-        </div>
     </div>
 
     <div class="footer">
-        <p>&copy; 2024 خدمات إلكترونية سريعة | جميع الحقوق محفوظة</p>
+        <p>© 2024 جميع الحقوق محفوظة  </p>
     </div>
 
 </body>
