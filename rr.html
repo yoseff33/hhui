@@ -153,42 +153,96 @@
                     <td>طفايات الحريق</td>
                     <td><input type="number" id="num12" value="1"></td>
                 </tr>
-                <!-- أضف باقي الأسطر كما في المثال السابق -->
+                <tr>
+                    <td>الحمامات</td>
+                    <td><input type="number" id="num13" value="1"></td>
+                    <td>كاميرات المراقبة</td>
+                    <td><input type="number" id="num14" value="1"></td>
+                    <td>فتحاات تصريف المياه الأسطح</td>
+                    <td><input type="number" id="num15" value="1"></td>
+                    <td>كشافات الحريق والدخان</td>
+                    <td><input type="number" id="num16" value="1"></td>
+                </tr>
+                <tr>
+                    <td>دورات المياه</td>
+                    <td><input type="number" id="num17" value="1"></td>
+                    <td>مفتاح الكهرباء</td>
+                    <td><input type="number" id="num18" value="1"></td>
+                    <td>برادات شرب المياه</td>
+                    <td><input type="number" id="num19" value="1"></td>
+                    <td>رشاشات ماء الإطفاء</td>
+                    <td><input type="number" id="num20" value="1"></td>
+                </tr>
+                <tr>
+                    <td>غرف العيادات</td>
+                    <td><input type="number" id="num21" value="1"></td>
+                    <td>البروجكتر</td>
+                    <td><input type="number" id="num22" value="1"></td>
+                    <td>مواطير المياه</td>
+                    <td><input type="number" id="num23" value="1"></td>
+                    <td>جرس الإنذار</td>
+                    <td><input type="number" id="num24" value="1"></td>
+                </tr>
+                <tr>
+                    <td>معامل الحاسب</td>
+                    <td><input type="number" id="num25" value="1"></td>
+                    <td>أفياش الكهرباء</td>
+                    <td><input type="number" id="num26" value="1"></td>
+                    <td>مرواح الشفط</td>
+                    <td><input type="number" id="num27" value="1"></td>
+                    <td>لوحات مخارج الطوارئ</td>
+                    <td><input type="number" id="num28" value="1"></td>
+                </tr>
+                <tr>
+                    <td>المقاصف</td>
+                    <td><input type="number" id="num29" value="1"></td>
+                    <td>مكيف شباك</td>
+                    <td><input type="number" id="num30" value="1"></td>
+                    <td>لوحات أنظمة الحريق</td>
+                    <td><input type="number" id="num31" value="1"></td>
+                    <td>صناديق خراطيم الإطفاء</td>
+                    <td><input type="number" id="num32" value="1"></td>
+                </tr>
+                <tr>
+                    <td>الأدوار</td>
+                    <td><input type="number" id="num33" value="1"></td>
+                    <td>مكيفات سبليت</td>
+                    <td><input type="number" id="num34" value="1"></td>
+                    <td>لوحات تجمع</td>
+                    <td><input type="number" id="num35" value="1"></td>
+                    <td>حواجز سلامة</td>
+                    <td><input type="number" id="num36" value="1"></td>
+                </tr>
+                <tr>
+                    <td>مكاتب إدارية</td>
+                    <td><input type="number" id="num37" value="1"></td>
+                    <td>الكمبيوترات المكتبية</td>
+                    <td><input type="number" id="num38" value="1"></td>
+                    <td>السبورات التعليمية</td>
+                    <td><input type="number" id="num39" value="1"></td>
+                    <td>مضخات إطفاء حكومية خارجية</td>
+                    <td><input type="number" id="num40" value="1"></td>
+                </tr>
             </tbody>
         </table>
-        <button class="export-btn" onclick="exportToPDF()">تصدير إلى PDF</button>
-        <button class="export-btn" onclick="exportToWord()">تصدير إلى Word</button>
+        <button class="export-btn" id="exportBtn">تصدير إلى PDF</button>
     </div>
 
     <footer>
-        © 2024 كلية إدارة الأعمال
+        <p>© 2024 كلية إدارة الأعمال</p>
     </footer>
 
     <script>
-        // تصدير الجدول إلى PDF باستخدام jsPDF
-        function exportToPDF() {
+        document.getElementById('exportBtn').addEventListener('click', () => {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('p', 'mm', 'a4');
-            
-            let table = document.getElementById('myTable');
-            doc.autoTable({ html: table });
-            doc.save('جدول_جولة_مدرسية.pdf');
-        }
-
-        // تصدير الجدول إلى Word
-        function exportToWord() {
-            let table = document.getElementById('myTable');
-            let html = table.outerHTML;
-
-            let blob = new Blob(['\ufeff', html], {
-                type: 'application/msword'
+            doc.html(document.body, {
+                callback: function (doc) {
+                    doc.save('جولة ميدانية في المدارس.pdf');
+                },
+                margin: [10, 10, 10, 10],
             });
-
-            let link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'جدول_جولة_مدرسية.doc';
-            link.click();
-        }
+        });
     </script>
 </body>
 </html>
