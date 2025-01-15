@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إرسال الجدول عبر WhatsApp</title>
+  <title>إرسال بيانات المدرسة عبر WhatsApp</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     body {
@@ -17,11 +17,18 @@
     .btn {
       margin-top: 20px;
     }
+    #school-name {
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
 
-  <h1>إرسال الجدول بيانات المدرسة عبر WhatsApp</h1>
+  <h1>إرسال بيانات المدرسة عبر WhatsApp</h1>
+
+  <!-- حقل اسم المدرسة -->
+  <label for="school-name">اسم المدرسة:</label>
+  <input type="text" id="school-name" class="form-control" placeholder="أدخل اسم المدرسة" value="مدرسة ">
 
   <!-- جدول بيانات المدرسة -->
   <table class="table table-bordered">
@@ -33,35 +40,74 @@
     </thead>
     <tbody>
       <tr>
-        <td>الفصول الدراسية</td>
-        <td><input type="number" id="classrooms" class="form-control" value="0"></td>
+        <th colspan="2">(مكونات المبنى)</th>
       </tr>
+      <tr><td>الفصول الدراسية</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>الملاعب</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>المضلات الخارجية</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>الحمامات</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>دورات المياه</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>غرف العيادات</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>معامل الحاسب</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>المقاصف</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>الأدوار</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>مكاتب إدارية</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>معامل العلوم</td><td><input type="number" class="form-control" value="0"></td></tr>
       <tr>
-        <td>الملاعب</td>
-        <td><input type="number" id="fields" class="form-control" value="0"></td>
+        <th colspan="2">(أصول الكهرباء)</th>
       </tr>
+      <tr><td>الإضاءة الخارجية الأعمدة</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>الطابعات</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>الشاشات</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>كاميرات المراقبة</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>مفتاح الكهرباء</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>البروجكتر</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>أفياش الكهرباء</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>مكيف شباك</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>مكيفات سبليت</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>الكمبيوترات المكتبية</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>السبورات التعليمية</td><td><input type="number" class="form-control" value="0"></td></tr>
       <tr>
-        <td>الحمامات</td>
-        <td><input type="number" id="bathrooms" class="form-control" value="0"></td>
+        <th colspan="2">(أصول الأدوات الصحية)</th>
       </tr>
+      <tr><td>السخانات الكهربائية</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>الخزانات الخرسانية</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>خزانات PVC</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>فتحات تصريف المياه الأسطح</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>برادات شرب المياه</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>مواطير المياه</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>مراوح الشفط</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr>
+        <th colspan="2">(أصول الصحة والسلامة)</th>
+      </tr>
+      <tr><td>مخارج الطوارئ</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>مضخات نظام الإطفاء</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>طفايات الحريق</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>كشافات الحريق والدخان</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>رشاشات ماء الإطفاء</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>جرس الإنذار</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>لوحات مخارج الطوارئ</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>صناديق خراطيم الإطفاء</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>لوحات أنظمة الحريق</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>مضخات إطفاء حكومية خارجية</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>لوحات تجمع</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>حواجز سلامة</td><td><input type="number" class="form-control" value="0"></td></tr>
     </tbody>
   </table>
 
-  <!-- زر إرسال البيانات عبر WhatsApp -->
+  <!-- زر الإرسال عبر WhatsApp -->
   <button id="sendMessage" class="btn btn-success">إرسال عبر WhatsApp</button>
 
   <script>
     document.getElementById("sendMessage").addEventListener("click", function() {
-      // جمع البيانات من الجدول
-      let message = "بيانات المدرسة:\n";
+      const schoolName = document.getElementById("school-name").value.trim();
+      let message = `بيانات المدرسة: ${schoolName}\n`;
       const rows = document.querySelectorAll("tbody tr");
       rows.forEach(row => {
         const label = row.children[0].innerText.trim();
-        const value = row.children[1].querySelector("input").value.trim();
+        const value = row.children[1]?.querySelector("input")?.value || "0";
         message += `${label}: ${value}\n`;
       });
-
-      // إعداد رابط WhatsApp
       const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
       window.open(whatsappURL, "_blank");
     });
