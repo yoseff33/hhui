@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اتصل بي - سعود الشمري</title>
+    <title>التقارير اليومية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <style>
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: #f5f5f5; }
         .navbar { background-color: #309ca0; display: flex; justify-content: center; padding: 10px 0; }
@@ -12,29 +14,85 @@
         .navbar a:hover { background-color: #ddd; color: black; }
         .section-title { text-align: center; padding: 40px 0; background-color: #309ca0; color: white; }
         .container { display: flex; flex-direction: column; align-items: center; margin: 20px; }
-        .contact-card { width: 300px; background: white; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; margin-bottom: 20px; padding: 20px; }
+        .contact-card { width: 80%; background: white; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; margin-bottom: 20px; padding: 20px; }
         .contact-card h3 { color: #309ca0; margin: 10px 0; }
         .contact-card p { color: #555; font-size: 16px; margin: 10px 0; }
+        table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+        table th, table td { padding: 10px; border: 1px solid #ddd; text-align: center; }
         footer { background-color: #309ca0; color: white; text-align: center; padding: 10px 0; font-size: 14px; margin-top: 20px; position: fixed; bottom: 0; width: 100%; }
+        .export-buttons { display: flex; justify-content: center; margin-top: 20px; }
+        .export-buttons button { padding: 10px 20px; background-color: #309ca0; color: white; border: none; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        .export-buttons button:hover { background-color: #207c7b; }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <a href="ii.html">الرئيسية</a>
-        <a href="bb.html">عنّي</a>
-        <a href="rr.html">اتصل بي</a>
     </div>
-    <div class="section-title"><h1>اتصل بي - سعود الشمري</h1></div>
+    <div class="section-title"><h1>التقارير اليومية</h1></div>
     <div class="container">
-        <div class="contact-card">
-            <h3>البريد الإلكتروني</h3>
-            <p>Saud521@gmail.com </p>
-        </div>
-        <div class="contact-card">
-            <h3>رقم الهاتف</h3>
-            <p>+966 53 555 3785</p>
+        <table id="reportTable">
+            <thead>
+                <tr>
+                    <th>الفئة</th>
+                    <th>المكون</th>
+                    <th>العدد المطلوب</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>مكونات المبنى</td>
+                    <td>الفصول الدراسية</td>
+                    <td><input type="number" id="classrooms" /></td>
+                </tr>
+                <tr>
+                    <td>مكونات المبنى</td>
+                    <td>الملاعب</td>
+                    <td><input type="number" id="playgrounds" /></td>
+                </tr>
+                <tr>
+                    <td>أصول الكهرباء</td>
+                    <td>الإضاءة الخارجية الأعمدة</td>
+                    <td><input type="number" id="externalLights" /></td>
+                </tr>
+                <tr>
+                    <td>أصول الأدوات الصحية</td>
+                    <td>السخانات الكهربائية</td>
+                    <td><input type="number" id="electricHeaters" /></td>
+                </tr>
+                <tr>
+                    <td>أصول الصحة والسلامة</td>
+                    <td>مخارج الطوارئ</td>
+                    <td><input type="number" id="emergencyExits" /></td>
+                </tr>
+                <tr>
+                    <td>أصول الصحة والسلامة</td>
+                    <td>حواجز السلامة</td>
+                    <td><input type="number" id="safetyBarriers" /></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="export-buttons">
+            <button onclick="exportToExcel()">تصدير إلى Excel</button>
+            <button onclick="exportToPDF()">تصدير إلى PDF</button>
         </div>
     </div>
     <footer>&#169; 2024 سعود الشمري</footer>
+
+    <script>
+        // تصدير إلى Excel
+        function exportToExcel() {
+            var wb = XLSX.utils.table_to_book(document.getElementById('reportTable'), { sheet: "التقارير اليومية" });
+            XLSX.writeFile(wb, "التقارير_اليومية.xlsx");
+        }
+
+        // تصدير إلى PDF
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            var doc = new jsPDF();
+            doc.text("التقارير اليومية", 14, 20);
+            doc.autoTable({ html: '#reportTable' });
+            doc.save("التقارير_اليومية.pdf");
+        }
+    </script>
 </body>
 </html>
