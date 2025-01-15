@@ -16,14 +16,17 @@
             text-align: right;
             direction: rtl;
             margin: 20px;
+            background-color: #f4f4f4;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         table, th, td {
-            border: 1px solid black;
+            border: 1px solid #ddd;
         }
         th, td {
             padding: 10px;
@@ -32,6 +35,8 @@
         input[type="number"], input[type="text"] {
             width: 100%;
             padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
         button {
             background-color: #4CAF50;
@@ -40,9 +45,22 @@
             border: none;
             cursor: pointer;
             margin: 10px 0;
+            border-radius: 5px;
+            font-size: 16px;
         }
         button:hover {
             background-color: #45a049;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #888;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -50,8 +68,8 @@
     <h1>بيانات المدرسة</h1>
     
     <label for="schoolName">اسم المدرسة:</label>
-    <input type="text" id="schoolName" value="مدرسة مثال">
-    
+    <input type="text" id="schoolName" value="مدرسة المثال">
+
     <div style="margin-top: 20px;">
         <table id="dataTable">
             <thead>
@@ -61,6 +79,130 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td>الفصول الدراسية</td>
+                    <td><input type="number" id="classrooms" value="0"></td>
+                </tr>
+                <tr>
+                    <td>الملاعب</td>
+                    <td><input type="number" id="playgrounds" value="0"></td>
+                </tr>
+                <tr>
+                    <td>المضلات الخارجية</td>
+                    <td><input type="number" id="outdoorShades" value="0"></td>
+                </tr>
+                <tr>
+                    <td>الحمامات</td>
+                    <td><input type="number" id="bathrooms" value="0"></td>
+                </tr>
+                <tr>
+                    <td>دورات المياه</td>
+                    <td><input type="number" id="restrooms" value="0"></td>
+                </tr>
+                <tr>
+                    <td>غرف العيادات</td>
+                    <td><input type="number" id="clinicRooms" value="0"></td>
+                </tr>
+                <tr>
+                    <td>معامل الحاسب</td>
+                    <td><input type="number" id="computerLabs" value="0"></td>
+                </tr>
+                <tr>
+                    <td>المقاصف</td>
+                    <td><input type="number" id="cafeterias" value="0"></td>
+                </tr>
+                <tr>
+                    <td>الأدوار</td>
+                    <td><input type="number" id="floors" value="0"></td>
+                </tr>
+                <tr>
+                    <td>مكاتب إدارية</td>
+                    <td><input type="number" id="adminOffices" value="0"></td>
+                </tr>
+                <tr>
+                    <td>معامل العلوم</td>
+                    <td><input type="number" id="scienceLabs" value="0"></td>
+                </tr>
+                <tr>
+                    <td>الإضاءة الخارجية الأعمدة</td>
+                    <td><input type="number" id="externalLighting" value="0"></td>
+                </tr>
+                <tr>
+                    <td>الطابعات</td>
+                    <td><input type="number" id="printers" value="0"></td>
+                </tr>
+                <tr>
+                    <td>الشاشات</td>
+                    <td><input type="number" id="screens" value="0"></td>
+                </tr>
+                <tr>
+                    <td>كاميرات المراقبة</td>
+                    <td><input type="number" id="cctvCameras" value="0"></td>
+                </tr>
+                <tr>
+                    <td>مفتاح الكهرباء</td>
+                    <td><input type="number" id="electricitySwitches" value="0"></td>
+                </tr>
+                <tr>
+                    <td>البروجكتر</td>
+                    <td><input type="number" id="projectors" value="0"></td>
+                </tr>
+                <tr>
+                    <td>أفياش الكهرباء</td>
+                    <td><input type="number" id="electricitySockets" value="0"></td>
+                </tr>
+                <tr>
+                    <td>مكيف شباك</td>
+                    <td><input type="number" id="windowAC" value="0"></td>
+                </tr>
+                <tr>
+                    <td>مكيفات سبليت</td>
+                    <td><input type="number" id="splitAC" value="0"></td>
+                </tr>
+                <tr>
+                    <td>الكمبيوترات المكتبية</td>
+                    <td><input type="number" id="desktopComputers" value="0"></td>
+                </tr>
+                <tr>
+                    <td>السبورات التعلمية</td>
+                    <td><input type="number" id="learningBoards" value="0"></td>
+                </tr>
+                <tr>
+                    <td>السخانات الكهربائية</td>
+                    <td><input type="number" id="electricHeaters" value="0"></td>
+                </tr>
+                <tr>
+                    <td>الخزانات الخرسانية</td>
+                    <td><input type="number" id="concreteTanks" value="0"></td>
+                </tr>
+                <tr>
+                    <td>خزانات PVC</td>
+                    <td><input type="number" id="pvcTanks" value="0"></td>
+                </tr>
+                <tr>
+                    <td>برادات شرب المياه</td>
+                    <td><input type="number" id="waterCoolers" value="0"></td>
+                </tr>
+                <tr>
+                    <td>مواطير المياه</td>
+                    <td><input type="number" id="waterMotors" value="0"></td>
+                </tr>
+                <tr>
+                    <td>مراوح الشفط</td>
+                    <td><input type="number" id="exhaustFans" value="0"></td>
+                </tr>
+                <tr>
+                    <td>مخارج الطوارئ</td>
+                    <td><input type="number" id="emergencyExits" value="0"></td>
+                </tr>
+                <tr>
+                    <td>مضخات نظام الإطفاء</td>
+                    <td><input type="number" id="firePumps" value="0"></td>
+                </tr>
+                <tr>
+                    <td>طفايات الحريق</td>
+                    <td><input type="number" id="fireExtinguishers" value="0"></td>
+                </tr>
                 <tr>
                     <td>كشافات الحريق والدخان</td>
                     <td><input type="number" id="fireSmokeLights" value="0"></td>
@@ -87,11 +229,7 @@
                 </tr>
                 <tr>
                     <td>مضخات إطفاء حكومية خارجية</td>
-                    <td><input type="number" id="govFirePumps" value="0"></td>
-                </tr>
-                <tr>
-                    <td>لوحات تجمع</td>
-                    <td><input type="number" id="gatheringSigns" value="0"></td>
+                    <td><input type="number" id="governmentFirePumps" value="0"></td>
                 </tr>
                 <tr>
                     <td>حواجز سلامة</td>
@@ -99,70 +237,60 @@
                 </tr>
             </tbody>
         </table>
+        
+        <!-- إضافة الأزرار -->
+        <div style="margin-top: 20px;">
+            <button onclick="downloadPDF()">حفظ كـ PDF</button>
+            <button onclick="downloadWord()">حفظ كـ Word</button>
+            <button onclick="downloadExcel()">حفظ كـ Excel</button>
+            <button onclick="sendToWhatsApp()">إرسال عبر WhatsApp</button>
+        </div>
     </div>
-    
-    <button onclick="exportToExcel()">تصدير إلى Excel</button>
-    <button onclick="exportToWord()">تصدير إلى Word</button>
-    <button onclick="exportToPDF()">تصدير إلى PDF</button>
-    <button onclick="shareWhatsApp()">مشاركة عبر WhatsApp</button>
 
     <footer>
-        <p>© 2024 المدرسة</p>
+        <p>&copy; 2024 جميع الحقوق محفوظة.</p>
     </footer>
 
     <script>
-        // دالة تصدير البيانات إلى Excel
-        function exportToExcel() {
-            var table = document.getElementById("dataTable");
-            var wb = XLSX.utils.table_to_book(table);
-            XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'binary'});
-            saveAs(new Blob([s2ab(XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'binary'}))], {type: "application/octet-stream"}), "data.xlsx");
-        }
-
-        // دالة تصدير البيانات إلى Word
-        function exportToWord() {
-            var table = document.getElementById("dataTable");
-            var html = table.outerHTML;
-            var converted = htmlDocx.asBlob(html);
-            saveAs(converted, "data.docx");
-        }
-
-        // دالة تصدير البيانات إلى PDF
-        function exportToPDF() {
+        // وظيفة حفظ الـ PDF
+        function downloadPDF() {
             const { jsPDF } = window.jspdf;
-            var doc = new jsPDF();
-            doc.html(document.body, {
-                callback: function (doc) {
-                    doc.save('data.pdf');
-                },
-                x: 10,
-                y: 10
-            });
+            const doc = new jsPDF();
+            doc.text("بيانات المدرسة", 20, 10);
+            doc.autoTable({ html: '#dataTable' });
+            doc.save('school_data.pdf');
         }
 
-        // دالة مساعدة لتحويل النص إلى array buffer ل Excel
-        function s2ab(s) {
-            var buf = new ArrayBuffer(s.length);
-            var view = new Uint8Array(buf);
-            for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
-            return buf;
+        // وظيفة حفظ الـ Word
+        function downloadWord() {
+            const html = document.getElementById('dataTable').outerHTML;
+            const converted = htmlDocx.asBlob(html);
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(converted);
+            link.download = 'school_data.docx';
+            link.click();
         }
 
-        // دالة إرسال البيانات عبر WhatsApp
-        function shareWhatsApp() {
-            var schoolName = document.getElementById("schoolName").value;
-            var tableRows = document.querySelectorAll("#dataTable tbody tr");
-            var message = `تم تجهيز بيانات المدرسة: ${schoolName} بنجاح.\n\n`;
+        // وظيفة حفظ الـ Excel
+        function downloadExcel() {
+            const ws = XLSX.utils.table_to_sheet(document.getElementById('dataTable'));
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Data');
+            XLSX.writeFile(wb, 'school_data.xlsx');
+        }
 
-            tableRows.forEach(function(row) {
-                var columns = row.querySelectorAll("td");
-                var item = columns[0].textContent.trim();
-                var quantity = columns[1].querySelector("input").value.trim();
-                message += `${item}: ${quantity}\n`;
+        // وظيفة إرسال البيانات عبر WhatsApp
+        function sendToWhatsApp() {
+            const schoolName = document.getElementById('schoolName').value;
+            let message = `بيانات المدرسة: ${schoolName}%0A`;
+
+            const rows = document.querySelectorAll('#dataTable tbody tr');
+            rows.forEach(row => {
+                const columns = row.querySelectorAll('td');
+                message += `${columns[0].innerText}: ${columns[1].querySelector('input').value}%0A`;
             });
 
-            var phoneNumber = "+966565464718"; // رقم المشرف
-            var url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
             window.open(url, '_blank');
         }
     </script>
