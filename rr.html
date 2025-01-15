@@ -3,296 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بيانات المدرسة</title>
-    
-    <!-- إضافة المكتبات اللازمة -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-docx-js/0.5.0/html-docx.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
+    <title>إدارة البيانات</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: right;
             direction: rtl;
-            margin: 20px;
-            background-color: #f4f4f4;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
         }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            background-color: white;
         }
+
         table, th, td {
             border: 1px solid #ddd;
         }
+
         th, td {
             padding: 10px;
             text-align: center;
         }
-        input[type="number"], input[type="text"] {
-            width: 100%;
-            padding: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+
+        th {
+            background-color: #f4f4f9;
         }
+
         button {
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
             border: none;
             cursor: pointer;
-            margin: 10px 0;
-            border-radius: 5px;
-            font-size: 16px;
+            margin: 5px;
         }
+
         button:hover {
             background-color: #45a049;
         }
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 14px;
-            color: #888;
+
+        .action-buttons {
+            margin-top: 20px;
         }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
+
+        .action-buttons button {
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>بيانات المدرسة</h1>
-    
+
+<header>
+    <h1>إدارة بيانات المدرسة</h1>
+</header>
+
+<div class="container">
+    <h2>معلومات المدرسة</h2>
     <label for="schoolName">اسم المدرسة:</label>
-    <input type="text" id="schoolName" value="مدرسة المثال">
+    <input type="text" id="schoolName" placeholder="أدخل اسم المدرسة">
 
-    <div style="margin-top: 20px;">
-        <table id="dataTable">
-            <thead>
-                <tr>
-                    <th>العنصر</th>
-                    <th>العدد</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>الفصول الدراسية</td>
-                    <td><input type="number" id="classrooms" value="0"></td>
-                </tr>
-                <tr>
-                    <td>الملاعب</td>
-                    <td><input type="number" id="playgrounds" value="0"></td>
-                </tr>
-                <tr>
-                    <td>المضلات الخارجية</td>
-                    <td><input type="number" id="outdoorShades" value="0"></td>
-                </tr>
-                <tr>
-                    <td>الحمامات</td>
-                    <td><input type="number" id="bathrooms" value="0"></td>
-                </tr>
-                <tr>
-                    <td>دورات المياه</td>
-                    <td><input type="number" id="restrooms" value="0"></td>
-                </tr>
-                <tr>
-                    <td>غرف العيادات</td>
-                    <td><input type="number" id="clinicRooms" value="0"></td>
-                </tr>
-                <tr>
-                    <td>معامل الحاسب</td>
-                    <td><input type="number" id="computerLabs" value="0"></td>
-                </tr>
-                <tr>
-                    <td>المقاصف</td>
-                    <td><input type="number" id="cafeterias" value="0"></td>
-                </tr>
-                <tr>
-                    <td>الأدوار</td>
-                    <td><input type="number" id="floors" value="0"></td>
-                </tr>
-                <tr>
-                    <td>مكاتب إدارية</td>
-                    <td><input type="number" id="adminOffices" value="0"></td>
-                </tr>
-                <tr>
-                    <td>معامل العلوم</td>
-                    <td><input type="number" id="scienceLabs" value="0"></td>
-                </tr>
-                <tr>
-                    <td>الإضاءة الخارجية الأعمدة</td>
-                    <td><input type="number" id="externalLighting" value="0"></td>
-                </tr>
-                <tr>
-                    <td>الطابعات</td>
-                    <td><input type="number" id="printers" value="0"></td>
-                </tr>
-                <tr>
-                    <td>الشاشات</td>
-                    <td><input type="number" id="screens" value="0"></td>
-                </tr>
-                <tr>
-                    <td>كاميرات المراقبة</td>
-                    <td><input type="number" id="cctvCameras" value="0"></td>
-                </tr>
-                <tr>
-                    <td>مفتاح الكهرباء</td>
-                    <td><input type="number" id="electricitySwitches" value="0"></td>
-                </tr>
-                <tr>
-                    <td>البروجكتر</td>
-                    <td><input type="number" id="projectors" value="0"></td>
-                </tr>
-                <tr>
-                    <td>أفياش الكهرباء</td>
-                    <td><input type="number" id="electricitySockets" value="0"></td>
-                </tr>
-                <tr>
-                    <td>مكيف شباك</td>
-                    <td><input type="number" id="windowAC" value="0"></td>
-                </tr>
-                <tr>
-                    <td>مكيفات سبليت</td>
-                    <td><input type="number" id="splitAC" value="0"></td>
-                </tr>
-                <tr>
-                    <td>الكمبيوترات المكتبية</td>
-                    <td><input type="number" id="desktopComputers" value="0"></td>
-                </tr>
-                <tr>
-                    <td>السبورات التعلمية</td>
-                    <td><input type="number" id="learningBoards" value="0"></td>
-                </tr>
-                <tr>
-                    <td>السخانات الكهربائية</td>
-                    <td><input type="number" id="electricHeaters" value="0"></td>
-                </tr>
-                <tr>
-                    <td>الخزانات الخرسانية</td>
-                    <td><input type="number" id="concreteTanks" value="0"></td>
-                </tr>
-                <tr>
-                    <td>خزانات PVC</td>
-                    <td><input type="number" id="pvcTanks" value="0"></td>
-                </tr>
-                <tr>
-                    <td>برادات شرب المياه</td>
-                    <td><input type="number" id="waterCoolers" value="0"></td>
-                </tr>
-                <tr>
-                    <td>مواطير المياه</td>
-                    <td><input type="number" id="waterMotors" value="0"></td>
-                </tr>
-                <tr>
-                    <td>مراوح الشفط</td>
-                    <td><input type="number" id="exhaustFans" value="0"></td>
-                </tr>
-                <tr>
-                    <td>مخارج الطوارئ</td>
-                    <td><input type="number" id="emergencyExits" value="0"></td>
-                </tr>
-                <tr>
-                    <td>مضخات نظام الإطفاء</td>
-                    <td><input type="number" id="firePumps" value="0"></td>
-                </tr>
-                <tr>
-                    <td>طفايات الحريق</td>
-                    <td><input type="number" id="fireExtinguishers" value="0"></td>
-                </tr>
-                <tr>
-                    <td>كشافات الحريق والدخان</td>
-                    <td><input type="number" id="fireSmokeLights" value="0"></td>
-                </tr>
-                <tr>
-                    <td>رشاشات ماء الإطفاء</td>
-                    <td><input type="number" id="fireSprinklers" value="0"></td>
-                </tr>
-                <tr>
-                    <td>جرس الإنذار</td>
-                    <td><input type="number" id="alarmBell" value="0"></td>
-                </tr>
-                <tr>
-                    <td>لوحات مخارج الطوارئ</td>
-                    <td><input type="number" id="emergencyExitSigns" value="0"></td>
-                </tr>
-                <tr>
-                    <td>صناديق خراطيم الإطفاء</td>
-                    <td><input type="number" id="fireHoseBoxes" value="0"></td>
-                </tr>
-                <tr>
-                    <td>لوحات أنظمة الحريق</td>
-                    <td><input type="number" id="fireSystemSigns" value="0"></td>
-                </tr>
-                <tr>
-                    <td>مضخات إطفاء حكومية خارجية</td>
-                    <td><input type="number" id="governmentFirePumps" value="0"></td>
-                </tr>
-                <tr>
-                    <td>حواجز سلامة</td>
-                    <td><input type="number" id="safetyBarriers" value="0"></td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <!-- إضافة الأزرار -->
-        <div style="margin-top: 20px;">
-            <button onclick="downloadPDF()">حفظ كـ PDF</button>
-            <button onclick="downloadWord()">حفظ كـ Word</button>
-            <button onclick="downloadExcel()">حفظ كـ Excel</button>
-            <button onclick="sendToWhatsApp()">إرسال عبر WhatsApp</button>
-        </div>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>المكونات</th>
+                <th>العدد</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>الفصول الدراسية</td><td><input type="number" id="classrooms" value="0"></td></tr>
+            <tr><td>الملاعب</td><td><input type="number" id="playgrounds" value="0"></td></tr>
+            <tr><td>المضلات الخارجية</td><td><input type="number" id="outdoorShades" value="0"></td></tr>
+            <tr><td>الحمامات</td><td><input type="number" id="bathrooms" value="0"></td></tr>
+            <tr><td>دورات المياه</td><td><input type="number" id="restrooms" value="0"></td></tr>
+            <tr><td>غرف العيادات</td><td><input type="number" id="clinicRooms" value="0"></td></tr>
+            <tr><td>معامل الحاسب</td><td><input type="number" id="computerLabs" value="0"></td></tr>
+            <tr><td>المقاصف</td><td><input type="number" id="cafeterias" value="0"></td></tr>
+            <tr><td>الأدوار</td><td><input type="number" id="floors" value="0"></td></tr>
+            <tr><td>مكاتب ادارية</td><td><input type="number" id="adminOffices" value="0"></td></tr>
+            <tr><td>معامل العلوم</td><td><input type="number" id="scienceLabs" value="0"></td></tr>
+            <tr><td>الإضاءة الخارجية الأعمدة</td><td><input type="number" id="outdoorLights" value="0"></td></tr>
+            <tr><td>الطابعات</td><td><input type="number" id="printers" value="0"></td></tr>
+            <tr><td>الشاشات</td><td><input type="number" id="screens" value="0"></td></tr>
+            <tr><td>كاميرات المراقبة</td><td><input type="number" id="cameras" value="0"></td></tr>
+            <tr><td>مفتاح الكهرباء</td><td><input type="number" id="electricSwitch" value="0"></td></tr>
+            <tr><td>البروجكتر</td><td><input type="number" id="projector" value="0"></td></tr>
+            <tr><td>أفياش الكهرباء</td><td><input type="number" id="electricSockets" value="0"></td></tr>
+            <tr><td>مكيف شباك</td><td><input type="number" id="windowAC" value="0"></td></tr>
+            <tr><td>مكيفات سبليت</td><td><input type="number" id="splitACs" value="0"></td></tr>
+            <tr><td>الكمبيوترات المكتبية</td><td><input type="number" id="desktopComputers" value="0"></td></tr>
+            <tr><td>السبورات التعليمية</td><td><input type="number" id="smartBoards" value="0"></td></tr>
+            <tr><td>السخانات الكهربائية</td><td><input type="number" id="electricHeaters" value="0"></td></tr>
+            <tr><td>الخزانات الخرسانية</td><td><input type="number" id="concreteTanks" value="0"></td></tr>
+            <tr><td>خزانات PVC</td><td><input type="number" id="pvcTanks" value="0"></td></tr>
+            <tr><td>فتحات تصريف المياه الأسطح</td><td><input type="number" id="waterDrains" value="0"></td></tr>
+            <tr><td>برادات شرب المياه</td><td><input type="number" id="waterCoolers" value="0"></td></tr>
+            <tr><td>مواطير المياه</td><td><input type="number" id="waterPumps" value="0"></td></tr>
+            <tr><td>مراوح الشفط</td><td><input type="number" id="exhaustFans" value="0"></td></tr>
+            <tr><td>مخارج الطوارئ</td><td><input type="number" id="emergencyExits" value="0"></td></tr>
+            <tr><td>مضخات نظام الإطفاء</td><td><input type="number" id="fireSystemPumps" value="0"></td></tr>
+            <tr><td>طفايات الحريق</td><td><input type="number" id="fireExtinguishers" value="0"></td></tr>
+            <tr><td>كشافات الحريق والدخان</td><td><input type="number" id="fireSmokeLights" value="0"></td></tr>
+            <tr><td>رشاشات ماء الإطفاء</td><td><input type="number" id="fireSprinklers" value="0"></td></tr>
+            <tr><td>جرس الإنذار</td><td><input type="number" id="alarmBell" value="0"></td></tr>
+            <tr><td>لوحات مخارج الطوارئ</td><td><input type="number" id="emergencyExitSigns" value="0"></td></tr>
+            <tr><td>صناديق خراطيم الإطفاء</td><td><input type="number" id="fireHoseBoxes" value="0"></td></tr>
+            <tr><td>لوحات أنظمة الحريق</td><td><input type="number" id="fireSystemSigns" value="0"></td></tr>
+            <tr><td>مضخات إطفاء حكومية خارجية</td><td><input type="number" id="governmentFirePumps" value="0"></td></tr>
+            <tr><td>حواجز سلامة</td><td><input type="number" id="safetyBarriers" value="0"></td></tr>
+        </tbody>
+    </table>
+
+    <div class="action-buttons">
+        <button onclick="downloadPDF()">حفظ كـ PDF</button>
+        <button onclick="downloadWord()">حفظ كـ Word</button>
+        <button onclick="downloadExcel()">حفظ كـ Excel</button>
+        <button onclick="sendToWhatsApp()">إرسال عبر WhatsApp</button>
     </div>
+</div>
 
-    <footer>
-        <p>&copy; 2024 جميع الحقوق محفوظة.</p>
-    </footer>
+<footer>
+    <p>&copy; 2024 جميع الحقوق محفوظة.</p>
+</footer>
 
-    <script>
-        // وظيفة حفظ الـ PDF
-        function downloadPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            doc.text("بيانات المدرسة", 20, 10);
-            doc.autoTable({ html: '#dataTable' });
-            doc.save('school_data.pdf');
-        }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsPDF/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html-docx-js/0.9.0/html-docx.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
-        // وظيفة حفظ الـ Word
-        function downloadWord() {
-            const html = document.getElementById('dataTable').outerHTML;
-            const converted = htmlDocx.asBlob(html);
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(converted);
-            link.download = 'school_data.docx';
-            link.click();
-        }
+<script>
+    // وظيفة حفظ الـ PDF
+    function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.text("بيانات المدرسة", 20, 10);
+        doc.autoTable({ html: '#dataTable' });
+        doc.save('school_data.pdf');
+    }
 
-        // وظيفة حفظ الـ Excel
-        function downloadExcel() {
-            const ws = XLSX.utils.table_to_sheet(document.getElementById('dataTable'));
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Data');
-            XLSX.writeFile(wb, 'school_data.xlsx');
-        }
+    // وظيفة حفظ الـ Word
+    function downloadWord() {
+        const html = document.getElementById('dataTable').outerHTML;
+        const converted = htmlDocx.asBlob(html);
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(converted);
+        link.download = 'school_data.docx';
+        link.click();
+    }
 
-        // وظيفة إرسال البيانات عبر WhatsApp
-        function sendToWhatsApp() {
-            const schoolName = document.getElementById('schoolName').value;
-            let message = `بيانات المدرسة: ${schoolName}%0A`;
+    // وظيفة حفظ الـ Excel
+    function downloadExcel() {
+        const ws = XLSX.utils.table_to_sheet(document.getElementById('dataTable'));
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Data');
+        XLSX.writeFile(wb, 'school_data.xlsx');
+    }
 
-            const rows = document.querySelectorAll('#dataTable tbody tr');
-            rows.forEach(row => {
-                const columns = row.querySelectorAll('td');
-                message += `${columns[0].innerText}: ${columns[1].querySelector('input').value}%0A`;
-            });
+    // وظيفة إرسال البيانات عبر WhatsApp
+    function sendToWhatsApp() {
+        const schoolName = document.getElementById('schoolName').value;
+        let message = `بيانات المدرسة: ${schoolName}%0A`;
 
-            const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
-            window.open(url, '_blank');
-        }
-    </script>
+        const rows = document.querySelectorAll('#dataTable tbody tr');
+        rows.forEach(row => {
+            const columns = row.querySelectorAll('td');
+            message += `${columns[0].innerText}: ${columns[1].querySelector('input').value}%0A`;
+        });
+
+        const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank');
+    }
+</script>
+
 </body>
 </html>
