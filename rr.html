@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إرسال جدول بيانات المدرسة</title>
+  <title>إرسال الجدول عبر WhatsApp</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -21,7 +22,7 @@
 </head>
 <body>
 
-  <h1>إرسال جدول بيانات المدرسة</h1>
+  <h1>إرسال أو حفظ الجدول بيانات المدرسة</h1>
 
   <!-- جدول بيانات المدرسة -->
   <table class="table table-bordered">
@@ -188,14 +189,6 @@
         <td><input type="number" id="fireSystemBoards" class="form-control" value="0"></td>
       </tr>
       <tr>
-        <td>مضخات إطفاء حكومية خارجية</td>
-        <td><input type="number" id="externalGovFirePumps" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>لوحات تجمع</td>
-        <td><input type="number" id="gatheringBoards" class="form-control" value="0"></td>
-      </tr>
-      <tr>
         <td>حواجز سلامة</td>
         <td><input type="number" id="safetyBarriers" class="form-control" value="0"></td>
       </tr>
@@ -203,20 +196,21 @@
   </table>
 
   <!-- زر إرسال البيانات عبر WhatsApp -->
-  <a href="https://wa.me/?text=" id="sendMessage" class="btn btn-success">إرسال عبر WhatsApp</a>
+  <button id="sendMessage" class="btn btn-success">إرسال عبر WhatsApp</button>
 
   <script>
     document.getElementById("sendMessage").addEventListener("click", function() {
       var tableData = "";
       var elements = document.querySelectorAll("tbody tr td:first-child");
       var numbers = document.querySelectorAll("tbody tr td:last-child input");
-      
+
       for (var i = 0; i < elements.length; i++) {
-        tableData += elements[i].innerText + " (" + numbers[i].value + ")\n";
+        tableData += elements[i].innerText + ": " + numbers[i].value + "\n";
       }
 
       var schoolName = "مدرسة (اسم المدرسة)";  // إضافة اسم المدرسة هنا
-      var url = "https://wa.me/?text=" + encodeURIComponent(schoolName + "\n\n" + tableData);
+      var message = schoolName + "\n\n" + tableData;
+      var url = "https://wa.me/?text=" + encodeURIComponent(message);
       window.open(url, "_blank");
     });
   </script>
