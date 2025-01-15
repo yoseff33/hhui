@@ -6,6 +6,8 @@
     <title>جولة ميدانية في المدارس</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
     <style>
         body {
             font-family: 'Tajawal', sans-serif;
@@ -96,6 +98,19 @@
             background-color: #ddd;
             color: black;
         }
+
+        .whatsapp-btn {
+            background-color: #25d366;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #128c7e;
+        }
     </style>
 </head>
 <body>
@@ -109,6 +124,11 @@
     </div>
 
     <div class="container">
+        <div style="margin-bottom: 20px;">
+            <label for="schoolName">اسم المدرسة:</label>
+            <input type="text" id="schoolName" placeholder="أدخل اسم المدرسة">
+        </div>
+        
         <table id="myTable">
             <thead>
                 <tr>
@@ -158,7 +178,7 @@
                     <td><input type="number" id="num13" value="1"></td>
                     <td>كاميرات المراقبة</td>
                     <td><input type="number" id="num14" value="1"></td>
-                    <td>فتحاات تصريف المياه الأسطح</td>
+                    <td>فتحيات تصريف المياه الأسطح</td>
                     <td><input type="number" id="num15" value="1"></td>
                     <td>كشافات الحريق والدخان</td>
                     <td><input type="number" id="num16" value="1"></td>
@@ -210,22 +230,14 @@
                     <td><input type="number" id="num34" value="1"></td>
                     <td>لوحات تجمع</td>
                     <td><input type="number" id="num35" value="1"></td>
-                    <td>حواجز سلامة</td>
+                    <td>مراوح السقف</td>
                     <td><input type="number" id="num36" value="1"></td>
-                </tr>
-                <tr>
-                    <td>مكاتب إدارية</td>
-                    <td><input type="number" id="num37" value="1"></td>
-                    <td>الكمبيوترات المكتبية</td>
-                    <td><input type="number" id="num38" value="1"></td>
-                    <td>السبورات التعليمية</td>
-                    <td><input type="number" id="num39" value="1"></td>
-                    <td>مضخات إطفاء حكومية خارجية</td>
-                    <td><input type="number" id="num40" value="1"></td>
                 </tr>
             </tbody>
         </table>
-        <button class="export-btn" id="exportBtn">تصدير إلى PDF</button>
+
+        <button class="export-btn" onclick="generateExcel()">تصدير إلى Excel</button>
+        <button class="whatsapp-btn" onclick="generatePDF()">تحميل PDF</button>
     </div>
 
     <footer>
@@ -233,16 +245,20 @@
     </footer>
 
     <script>
-        document.getElementById('exportBtn').addEventListener('click', () => {
+        function generateExcel() {
+            const wb = XLSX.utils.table_to_book(document.getElementById('myTable'));
+            XLSX.writeFile(wb, 'جولة_ميدانية_في_المدارس.xlsx');
+        }
+
+        function generatePDF() {
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'mm', 'a4');
+            const doc = new jsPDF();
             doc.html(document.body, {
                 callback: function (doc) {
-                    doc.save('جولة ميدانية في المدارس.pdf');
-                },
-                margin: [10, 10, 10, 10],
+                    doc.save('جولة_ميدانية_في_المدارس.pdf');
+                }
             });
-        });
+        }
     </script>
 </body>
 </html>
