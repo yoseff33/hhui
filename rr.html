@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التقارير اليومية</title>
+    <title>جولة ميدانية في المدارس</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -13,9 +13,10 @@
         .navbar a:hover { background-color: #ddd; color: black; }
         .section-title { text-align: center; padding: 40px 0; background-color: #309ca0; color: white; }
         .container { display: flex; flex-direction: column; align-items: center; margin: 20px; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; border: 1px solid #ddd; }
+        th, td { border: 1px solid #ddd; padding: 10px 15px; text-align: center; }
         th { background-color: #309ca0; color: white; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 5px; box-sizing: border-box; }
         .contact-card { width: 300px; background: white; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; margin-bottom: 20px; padding: 20px; }
         .contact-card h3 { color: #309ca0; margin: 10px 0; }
         .contact-card p { color: #555; font-size: 16px; margin: 10px 0; }
@@ -28,12 +29,13 @@
         <a href="bb.html">عنّي</a>
         <a href="rr.html">اتصل بي</a>
     </div>
-    <div class="section-title"><h1>التقارير اليومية</h1></div>
+    <div class="section-title"><h1>جولة ميدانية في المدارس</h1></div>
     <div class="container">
-        <table id="data-table">
+        <h2>مدرسة ( )</h2>
+        <h3>مكونات المبنى</h3>
+        <table id="building-table">
             <thead>
                 <tr>
-                    <th>المدرسة</th>
                     <th>الفصول الدراسية</th>
                     <th>الملاعب</th>
                     <th>المضلات الخارجية</th>
@@ -49,61 +51,159 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="text" placeholder="المدرسة"></td>
-                    <td><input type="number" placeholder="الفصول الدراسية"></td>
-                    <td><input type="number" placeholder="الملاعب"></td>
-                    <td><input type="number" placeholder="المضلات الخارجية"></td>
-                    <td><input type="number" placeholder="الحمامات"></td>
-                    <td><input type="number" placeholder="دورات المياه"></td>
-                    <td><input type="number" placeholder="غرف العيادات"></td>
-                    <td><input type="number" placeholder="معامل الحاسب"></td>
-                    <td><input type="number" placeholder="المقاصف"></td>
-                    <td><input type="number" placeholder="الأدوار"></td>
-                    <td><input type="number" placeholder="مكاتب ادارية"></td>
-                    <td><input type="number" placeholder="معامل العلوم"></td>
+                    <td><input type="number" placeholder="عدد الفصول"></td>
+                    <td><input type="number" placeholder="عدد الملاعب"></td>
+                    <td><input type="number" placeholder="عدد المضلات"></td>
+                    <td><input type="number" placeholder="عدد الحمامات"></td>
+                    <td><input type="number" placeholder="عدد دورات المياه"></td>
+                    <td><input type="number" placeholder="عدد غرف العيادات"></td>
+                    <td><input type="number" placeholder="عدد معامل الحاسب"></td>
+                    <td><input type="number" placeholder="عدد المقاصف"></td>
+                    <td><input type="number" placeholder="عدد الأدوار"></td>
+                    <td><input type="number" placeholder="عدد المكاتب الادارية"></td>
+                    <td><input type="number" placeholder="عدد معامل العلوم"></td>
                 </tr>
             </tbody>
         </table>
+        
+        <h3>أصول الكهرباء</h3>
+        <table id="electricity-table">
+            <thead>
+                <tr>
+                    <th>الإضاءة الخارجية الأعمدة</th>
+                    <th>الطابعات</th>
+                    <th>الشاشات</th>
+                    <th>كاميرات المراقبة</th>
+                    <th>مفتاح الكهرباء</th>
+                    <th>البروجكتر</th>
+                    <th>أفياش الكهرباء</th>
+                    <th>مكيف شباك</th>
+                    <th>مكيفات سبليت</th>
+                    <th>الكمبيوترات المكتبية</th>
+                    <th>السبورات التعليمية</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" placeholder="عدد الأعمدة"></td>
+                    <td><input type="number" placeholder="عدد الطابعات"></td>
+                    <td><input type="number" placeholder="عدد الشاشات"></td>
+                    <td><input type="number" placeholder="عدد الكاميرات"></td>
+                    <td><input type="number" placeholder="عدد المفاتيح"></td>
+                    <td><input type="number" placeholder="عدد البروجكترات"></td>
+                    <td><input type="number" placeholder="عدد الأفياش"></td>
+                    <td><input type="number" placeholder="عدد مكيفات الشباك"></td>
+                    <td><input type="number" placeholder="عدد المكيفات السبليت"></td>
+                    <td><input type="number" placeholder="عدد الكمبيوترات المكتبية"></td>
+                    <td><input type="number" placeholder="عدد السبورات التعليمية"></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>أصول الأدوات الصحية</h3>
+        <table id="plumbing-table">
+            <thead>
+                <tr>
+                    <th>السخانات الكهربائية</th>
+                    <th>الخزانات الخرسانية</th>
+                    <th>خزانات PVC</th>
+                    <th>فتحات تصريف المياه الأسطح</th>
+                    <th>برادات شرب المياه</th>
+                    <th>مواطير المياه</th>
+                    <th>مراوح الشفط</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" placeholder="عدد السخانات"></td>
+                    <td><input type="number" placeholder="عدد الخزانات الخرسانية"></td>
+                    <td><input type="number" placeholder="عدد خزانات PVC"></td>
+                    <td><input type="number" placeholder="عدد فتحات التصريف"></td>
+                    <td><input type="number" placeholder="عدد البرادات"></td>
+                    <td><input type="number" placeholder="عدد المواطير"></td>
+                    <td><input type="number" placeholder="عدد المراوح"></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>أصول الصحة والسلامة</h3>
+        <table id="safety-table">
+            <thead>
+                <tr>
+                    <th>مخارج الطوارئ</th>
+                    <th>مضخات نظام الإطفاء</th>
+                    <th>طفايات الحريق</th>
+                    <th>كشافات الحريق والدخان</th>
+                    <th>رشاشات ماء الإطفاء</th>
+                    <th>جرس الإنذار</th>
+                    <th>لوحات مخارج الطوارئ</th>
+                    <th>صناديق خراطيم الإطفاء</th>
+                    <th>لوحات أنظمة الحريق</th>
+                    <th>مضخات إطفاء حكومية خارجية</th>
+                    <th>لوحات تجمع</th>
+                    <th>حواجز سلامة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" placeholder="عدد المخارج"></td>
+                    <td><input type="number" placeholder="عدد المضخات"></td>
+                    <td><input type="number" placeholder="عدد الطفايات"></td>
+                    <td><input type="number" placeholder="عدد الكشافات"></td>
+                    <td><input type="number" placeholder="عدد الرشاشات"></td>
+                    <td><input type="number" placeholder="عدد الأجراس"></td>
+                    <td><input type="number" placeholder="عدد اللوحات"></td>
+                    <td><input type="number" placeholder="عدد الصناديق"></td>
+                    <td><input type="number" placeholder="عدد اللوحات"></td>
+                    <td><input type="number" placeholder="عدد المضخات الحكومية"></td>
+                    <td><input type="number" placeholder="عدد لوحات التجمع"></td>
+                    <td><input type="number" placeholder="عدد الحواجز"></td>
+                </tr>
+            </tbody>
+        </table>
+
         <button onclick="generatePDF()">تصدير إلى PDF</button>
     </div>
-    <footer>&#169; 2024 تقارير يومية</footer>
+    <footer>&#169; 2024 جولة ميدانية في المدارس</footer>
 
     <script>
         function generatePDF() {
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-
-            // إضافة العنوان
-            doc.setFontSize(22);
-            doc.text("التقارير اليومية", 14, 22);
+            const doc = new jsPDF('p', 'mm', 'a4');
+            doc.setFontSize(18);
+            doc.text("جولة ميدانية في المدارس", 14, 20);
 
             // إعداد الجدول
-            const table = document.getElementById('data-table');
-            const rows = table.querySelectorAll('tr');
-            const headers = rows[0].querySelectorAll('th');
-            const bodyRows = Array.from(rows).slice(1);
-
-            let startX = 14;
+            const tables = ['building-table', 'electricity-table', 'plumbing-table', 'safety-table'];
             let startY = 30;
 
-            // إضافة العناوين
-            headers.forEach((header, index) => {
-                doc.text(header.innerText, startX + index * 35, startY);
-            });
+            tables.forEach((tableId, index) => {
+                const table = document.getElementById(tableId);
+                const rows = table.querySelectorAll('tr');
+                const headers = rows[0].querySelectorAll('th');
+                const bodyRows = Array.from(rows).slice(1);
 
-            startY += 10;
-
-            // إضافة البيانات
-            bodyRows.forEach(row => {
-                const cells = row.querySelectorAll('input');
-                cells.forEach((cell, index) => {
-                    doc.text(cell.value, startX + index * 35, startY);
+                // إضافة العناوين
+                headers.forEach((header, index) => {
+                    doc.text(header.innerText, 14 + index * 18, startY);
                 });
-                startY += 10;
+
+                startY += 8;
+
+                // إضافة البيانات
+                bodyRows.forEach(row => {
+                    const cells = row.querySelectorAll('input');
+                    cells.forEach((cell, index) => {
+                        doc.text(cell.value, 14 + index * 18, startY);
+                    });
+                    startY += 8;
+                });
+
+                startY += 20; // إضافة مسافة بين الجداول
             });
 
             // حفظ الملف
-            doc.save("تقارير_يومية.pdf");
+            doc.save("جولة_ميدانية_في_المدارس.pdf");
         }
     </script>
 </body>
