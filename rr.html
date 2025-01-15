@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إرسال جدول عبر WhatsApp</title>
+  <title>إرسال جدول بيانات المدرسة</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     body {
@@ -193,7 +193,7 @@
       </tr>
       <tr>
         <td>لوحات تجمع</td>
-        <td><input type="number" id="assemblyBoards" class="form-control" value="0"></td>
+        <td><input type="number" id="gatheringBoards" class="form-control" value="0"></td>
       </tr>
       <tr>
         <td>حواجز سلامة</td>
@@ -203,7 +203,7 @@
   </table>
 
   <!-- زر إرسال البيانات عبر WhatsApp -->
-  <a href="https://wa.me/966565464718?text=" id="sendMessage" class="btn btn-success">إرسال عبر WhatsApp</a>
+  <a href="https://wa.me/?text=" id="sendMessage" class="btn btn-success">إرسال عبر WhatsApp</a>
 
   <script>
     document.getElementById("sendMessage").addEventListener("click", function() {
@@ -215,8 +215,8 @@
         tableData += elements[i].innerText + " (" + numbers[i].value + ")\n";
       }
 
-      var schoolName = "مدرسة ()";  // إضافة اسم المدرسة هنا
-      var url = "https://wa.me/966565464718?text=" + encodeURIComponent(schoolName + "\n\n" + tableData);
+      var schoolName = "مدرسة (اسم المدرسة)";  // إضافة اسم المدرسة هنا
+      var url = "https://wa.me/?text=" + encodeURIComponent(schoolName + "\n\n" + tableData);
       window.open(url, "_blank");
     });
   </script>
