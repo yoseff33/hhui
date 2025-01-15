@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>إرسال الجدول عبر WhatsApp</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -22,7 +21,7 @@
 </head>
 <body>
 
-  <h1>إرسال أو حفظ الجدول بيانات المدرسة</h1>
+  <h1>إرسال الجدول بيانات المدرسة عبر WhatsApp</h1>
 
   <!-- جدول بيانات المدرسة -->
   <table class="table table-bordered">
@@ -33,10 +32,6 @@
       </tr>
     </thead>
     <tbody>
-      <!-- قسم مكونات المبنى -->
-      <tr>
-        <td colspan="2"><strong>مكونات المبنى</strong></td>
-      </tr>
       <tr>
         <td>الفصول الدراسية</td>
         <td><input type="number" id="classrooms" class="form-control" value="0"></td>
@@ -46,151 +41,8 @@
         <td><input type="number" id="fields" class="form-control" value="0"></td>
       </tr>
       <tr>
-        <td>المضلات الخارجية</td>
-        <td><input type="number" id="shades" class="form-control" value="0"></td>
-      </tr>
-      <tr>
         <td>الحمامات</td>
         <td><input type="number" id="bathrooms" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>دورات المياه</td>
-        <td><input type="number" id="waterRooms" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>غرف العيادات</td>
-        <td><input type="number" id="clinics" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>معامل الحاسب</td>
-        <td><input type="number" id="computerLabs" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>المقاصف</td>
-        <td><input type="number" id="canteens" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>الأدوار</td>
-        <td><input type="number" id="floors" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>مكاتب إدارية</td>
-        <td><input type="number" id="adminOffices" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>معامل العلوم</td>
-        <td><input type="number" id="scienceLabs" class="form-control" value="0"></td>
-      </tr>
-
-      <!-- قسم أصول الكهرب -->
-      <tr>
-        <td colspan="2"><strong>أصول الكهرب</strong></td>
-      </tr>
-      <tr>
-        <td>الإضاءة الخارجية الأعمدة</td>
-        <td><input type="number" id="outdoorLighting" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>الطابعات</td>
-        <td><input type="number" id="printers" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>الشاشات</td>
-        <td><input type="number" id="screens" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>كاميرات المراقبة</td>
-        <td><input type="number" id="cameras" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>مفتاح الكهرباء</td>
-        <td><input type="number" id="electricitySwitch" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>البروجكتر</td>
-        <td><input type="number" id="projector" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>أفياش الكهرباء</td>
-        <td><input type="number" id="electricSockets" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>مكيف شباك</td>
-        <td><input type="number" id="windowAC" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>مكيفات سبليت</td>
-        <td><input type="number" id="splitAC" class="form-control" value="0"></td>
-      </tr>
-
-      <!-- قسم أصول الأدوات الصحية -->
-      <tr>
-        <td colspan="2"><strong>أصول الأدوات الصحية</strong></td>
-      </tr>
-      <tr>
-        <td>السخانات الكهربائية</td>
-        <td><input type="number" id="electricHeaters" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>الخزانات الخرسانية</td>
-        <td><input type="number" id="concreteTanks" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>خزانات PVC</td>
-        <td><input type="number" id="pvcTanks" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>فتحات تصريف المياه الأسطح</td>
-        <td><input type="number" id="waterDrain" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>برادات شرب المياه</td>
-        <td><input type="number" id="waterCoolers" class="form-control" value="0"></td>
-      </tr>
-
-      <!-- قسم الصحة والسلامة -->
-      <tr>
-        <td colspan="2"><strong>أصول الصحة والسلامة</strong></td>
-      </tr>
-      <tr>
-        <td>مخارج الطوارئ</td>
-        <td><input type="number" id="emergencyExits" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>مضخات نظام الإطفاء</td>
-        <td><input type="number" id="firePumps" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>طفايات الحريق</td>
-        <td><input type="number" id="fireExtinguishers" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>كشافات الحريق والدخان</td>
-        <td><input type="number" id="fireSmokeSensors" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>رشاشات ماء الإطفاء</td>
-        <td><input type="number" id="fireSprinklers" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>جرس الإنذار</td>
-        <td><input type="number" id="alarmBell" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>لوحات مخارج الطوارئ</td>
-        <td><input type="number" id="emergencyExitSigns" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>صناديق خراطيم الإطفاء</td>
-        <td><input type="number" id="fireHoseBoxes" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>لوحات أنظمة الحريق</td>
-        <td><input type="number" id="fireSystemBoards" class="form-control" value="0"></td>
-      </tr>
-      <tr>
-        <td>حواجز سلامة</td>
-        <td><input type="number" id="safetyBarriers" class="form-control" value="0"></td>
       </tr>
     </tbody>
   </table>
@@ -200,18 +52,18 @@
 
   <script>
     document.getElementById("sendMessage").addEventListener("click", function() {
-      var tableData = "";
-      var elements = document.querySelectorAll("tbody tr td:first-child");
-      var numbers = document.querySelectorAll("tbody tr td:last-child input");
+      // جمع البيانات من الجدول
+      let message = "بيانات المدرسة:\n";
+      const rows = document.querySelectorAll("tbody tr");
+      rows.forEach(row => {
+        const label = row.children[0].innerText.trim();
+        const value = row.children[1].querySelector("input").value.trim();
+        message += `${label}: ${value}\n`;
+      });
 
-      for (var i = 0; i < elements.length; i++) {
-        tableData += elements[i].innerText + ": " + numbers[i].value + "\n";
-      }
-
-      var schoolName = "مدرسة (اسم المدرسة)";  // إضافة اسم المدرسة هنا
-      var message = schoolName + "\n\n" + tableData;
-      var url = "https://wa.me/?text=" + encodeURIComponent(message);
-      window.open(url, "_blank");
+      // إعداد رابط WhatsApp
+      const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
+      window.open(whatsappURL, "_blank");
     });
   </script>
 
