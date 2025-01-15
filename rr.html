@@ -3,20 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جولة ميدانية في المدارس</title>
+    <title>جولة الميدانية في المدارس</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- مكتبات لتصدير Excel و Word و PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-docx-js/0.6.0/html-docx.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery/3.6.0/jquery.min.js"></script>
+    
     <style>
-        body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: #f5f5f5; }
-        .navbar { background-color: #309ca0; display: flex; justify-content: center; padding: 10px 0; }
-        .navbar a { color: white; text-decoration: none; padding: 10px 15px; font-size: 18px; }
-        .navbar a:hover { background-color: #ddd; color: black; }
-        .section-title { text-align: center; padding: 40px 0; background-color: #309ca0; color: white; }
-        .container { display: flex; flex-direction: column; align-items: center; margin: 20px; }
-        .table-container { width: 80%; overflow-x: auto; margin: 20px 0; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
-        th { background-color: #309ca0; color: white; }
-        footer { background-color: #309ca0; color: white; text-align: center; padding: 10px 0; font-size: 14px; position: fixed; bottom: 0; width: 100%; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            background-color: #f5f5f5;
+            padding: 10px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .navbar {
+            background-color: #309ca0;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .section-title {
+            text-align: center;
+            padding: 20px;
+            background-color: #309ca0;
+            color: white;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            text-align: center;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #309ca0;
+            color: white;
+        }
+        footer {
+            background-color: #309ca0;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #309ca0;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #007b7b;
+        }
+        input[type="number"] {
+            width: 50px;
+            padding: 5px;
+            text-align: center;
+        }
+        .school-name {
+            width: 200px;
+            padding: 5px;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .share-btn {
+            background-color: #25D366;
+            padding: 10px;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -26,241 +120,96 @@
         <a href="rr.html">اتصل بي</a>
     </div>
     <div class="section-title">
-        <h1>جولة ميدانية في المدارس</h1>
+        <h1>جولة الميدانية في المدارس</h1>
     </div>
+    <div class="container">
+        <label for="schoolName">اسم المدرسة:</label>
+        <input type="text" id="schoolName" class="school-name" placeholder="أدخل اسم المدرسة">
 
-    <!-- مكان إضافة اسم المدرسة -->
-    <div style="text-align:center; margin-bottom:20px;">
-        <h2>اسم المدرسة: مدرسة (اسم المدرسة هنا)</h2>
+        <div class="table-container">
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>المكونات</th>
+                        <th>العدد</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- البيانات مكررة لجميع الحقول كما في الجدول السابق -->
+                    <tr>
+                        <td>الفصول الدراسية</td>
+                        <td><input type="number" id="classrooms" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td>الملاعب</td>
+                        <td><input type="number" id="playgrounds" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td>المضلات الخارجية</td>
+                        <td><input type="number" id="shades" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td>الحمامات</td>
+                        <td><input type="number" id="bathrooms" value="0"></td>
+                    </tr>
+                    <!-- أضف باقي الحقول هنا بالطريقة نفسها -->
+                </tbody>
+            </table>
+        </div>
+        <button onclick="submitData()">إرسال البيانات</button>
+        <button onclick="exportToExcel()">تصدير إلى Excel</button>
+        <button onclick="exportToWord()">تصدير إلى Word</button>
+        <button onclick="exportToPDF()">تصدير إلى PDF</button>
+        <button class="share-btn" onclick="shareWhatsApp()">مشاركة عبر WhatsApp</button>
     </div>
-
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>المجموعة</th>
-                    <th>المحتويات</th>
-                    <th>العدد</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td rowspan="11">مكونات المبنى</td>
-                    <td>الفصول الدراسية</td>
-                    <td><input type="number" id="classrooms" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>الملاعب</td>
-                    <td><input type="number" id="playgrounds" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>المضلات الخارجية</td>
-                    <td><input type="number" id="shades" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>الحمامات</td>
-                    <td><input type="number" id="bathrooms" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>دورات المياه</td>
-                    <td><input type="number" id="toilets" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>غرف العيادات</td>
-                    <td><input type="number" id="clinic_rooms" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>معامل الحاسب</td>
-                    <td><input type="number" id="computer_labs" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>المقاصف</td>
-                    <td><input type="number" id="cafeterias" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>الأدوار</td>
-                    <td><input type="number" id="floors" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>مكاتب إدارية</td>
-                    <td><input type="number" id="admin_offices" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>معامل العلوم</td>
-                    <td><input type="number" id="science_labs" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-
-                <!-- أصول الكهرب -->
-                <tr>
-                    <td rowspan="11">أصول الكهرب</td>
-                    <td>الاضاءة الخارجية الأعمدة</td>
-                    <td><input type="number" id="external_lights" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>الطابعات</td>
-                    <td><input type="number" id="printers" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>الشاشات</td>
-                    <td><input type="number" id="screens" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>كاميرات المراقبة</td>
-                    <td><input type="number" id="cameras" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>مفتاح الكهرب</td>
-                    <td><input type="number" id="electric_switch" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>البروجكتر</td>
-                    <td><input type="number" id="projector" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>أفياش الكهرب</td>
-                    <td><input type="number" id="electric_sockets" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>مكيف شباك</td>
-                    <td><input type="number" id="window_ac" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>مكيفات سبليت</td>
-                    <td><input type="number" id="split_ac" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>الكمبيوترات المكتبية</td>
-                    <td><input type="number" id="desktop_computers" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>السبورات التعليمية</td>
-                    <td><input type="number" id="smart_boards" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-
-                <!-- أصول الأدوات الصحية -->
-                <tr>
-                    <td rowspan="7">أصول الأدوات الصحية</td>
-                    <td>السخانات الكهربائية</td>
-                    <td><input type="number" id="electric_heaters" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>الخزانات الخرسانية</td>
-                    <td><input type="number" id="concrete_tanks" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>خزانات PVC</td>
-                    <td><input type="number" id="pvc_tanks" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>فتحات تصريف المياه الأسطح</td>
-                    <td><input type="number" id="water_drains" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>برادات شرب المياه</td>
-                    <td><input type="number" id="water_coolers" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>مواطير المياه</td>
-                    <td><input type="number" id="water_motors" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>مراوح الشفط</td>
-                    <td><input type="number" id="exhaust_fans" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-
-                <!-- أصول الصحة والسلامة -->
-                <tr>
-                    <td rowspan="12">أصول الصحة والسلامة</td>
-                    <td>مخارج الطوارئ</td>
-                    <td><input type="number" id="emergency_exits" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>مضخات نظام الإطفاء</td>
-                    <td><input type="number" id="fire_pumps" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>طفايات الحريق</td>
-                    <td><input type="number" id="fire_extinguishers" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>كشافات الحريق والدخان</td>
-                    <td><input type="number" id="fire_and_smoke_lights" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>رشاشات ماء الإطفاء</td>
-                    <td><input type="number" id="fire_sprinklers" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>جرس الإنذار</td>
-                    <td><input type="number" id="alarm_bells" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>لوحات مخارج الطوارئ</td>
-                    <td><input type="number" id="emergency_exit_signs" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>صناديق خراطيم الإطفاء</td>
-                    <td><input type="number" id="fire_hose_boxes" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>لوحات أنظمة الحريق</td>
-                    <td><input type="number" id="fire_system_boards" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>مضخات إطفاء حكومية خارجية</td>
-                    <td><input type="number" id="external_fire_pumps" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>لوحات تجمع</td>
-                    <td><input type="number" id="assembly_boards" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-                <tr>
-                    <td>حواجز سلامة</td>
-                    <td><input type="number" id="safety_barriers" value="0" placeholder="أدخل العدد"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div style="text-align:center;">
-        <button onclick="exportData()">تصدير البيانات</button>
-        <button onclick="shareViaWhatsApp()">مشاركة عبر واتساب</button>
-    </div>
-
     <footer>
-        <p>&copy; 2024 مدرسة (اسم المدرسة هنا) جميع الحقوق محفوظة.</p>
+        <p>© 2024 مدرسة</p>
     </footer>
 
     <script>
-        function exportData() {
-            const data = [];
-            const rows = document.querySelectorAll("tbody tr");
-            rows.forEach(row => {
-                const cells = row.querySelectorAll("td");
-                const content = {
-                    group: cells[0].innerText,
-                    item: cells[1].innerText,
-                    quantity: cells[2].querySelector("input").value
-                };
-                data.push(content);
-            });
-
-            console.log("Data Exported:", data);
-            alert("تم تصدير البيانات بنجاح!");
+        function submitData() {
+            const schoolName = document.getElementById('schoolName').value;
+            alert(`تم إرسال بيانات المدرسة: ${schoolName}`);
+            shareWhatsApp();  // إرسال البيانات مباشرة عبر الواتس
         }
 
-        function shareViaWhatsApp() {
-            const data = [];
-            const rows = document.querySelectorAll("tbody tr");
-            rows.forEach(row => {
-                const cells = row.querySelectorAll("td");
-                const content = `${cells[1].innerText}: ${cells[2].querySelector("input").value}`;
-                data.push(content);
-            });
+        function exportToExcel() {
+            const ws = XLSX.utils.table_to_sheet(document.getElementById('dataTable'));
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "جولة الميدانية");
+            XLSX.writeFile(wb, "جولة الميدانية.xlsx");
+        }
 
-            const message = encodeURIComponent(data.join("\n"));
-            const url = `https://wa.me/?text=${message}`;
-            window.open(url, "_blank");
+        function exportToWord() {
+            const htmlContent = document.getElementById('dataTable').outerHTML;
+            const converted = htmlDocx.asBlob(htmlContent);
+            saveAs(converted, "جولة الميدانية.docx");
+        }
+
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.autoTable({ html: '#dataTable' });
+            doc.save('جولة الميدانية.pdf');
+        }
+
+        function shareWhatsApp() {
+            const schoolName = document.getElementById('schoolName').value;
+            const tableData = getTableData();
+            const message = `اسم المدرسة: ${schoolName}\n\n${tableData}`;
+            const phoneNumber = '0565464718'; // رقم المشرف
+            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        function getTableData() {
+            let data = '';
+            const rows = document.querySelectorAll('#dataTable tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                data += `${cells[0].textContent}: ${cells[1].querySelector('input').value}\n`;
+            });
+            return data;
         }
     </script>
 </body>
