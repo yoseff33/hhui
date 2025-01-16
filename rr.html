@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إرسال بيانات المدرسة عبر WhatsApp</title>
+  <title>بيانات المدرسة</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     body {
@@ -28,7 +28,7 @@
 
   <!-- حقل اسم المدرسة -->
   <label for="school-name">اسم المدرسة:</label>
-  <input type="text" id="school-name" class="form-control" placeholder="أدخل اسم المدرسة" value="مدرسة ">
+  <input type="text" id="school-name" class="form-control" placeholder="أدخل اسم المدرسة" value="مدرسة سعود بن نايف">
 
   <!-- جدول بيانات المدرسة -->
   <table class="table table-bordered">
@@ -39,12 +39,13 @@
       </tr>
     </thead>
     <tbody>
+      <!-- مكونات المبنى -->
       <tr>
         <th colspan="2">(مكونات المبنى)</th>
       </tr>
       <tr><td>الفصول الدراسية</td><td><input type="number" class="form-control" value="0"></td></tr>
       <tr><td>الملاعب</td><td><input type="number" class="form-control" value="0"></td></tr>
-      <tr><td>المضلات الخارجية</td><td><input type="number" class="form-control" value="0"></td></tr>
+      <tr><td>المظلات الخارجية</td><td><input type="number" class="form-control" value="0"></td></tr>
       <tr><td>الحمامات</td><td><input type="number" class="form-control" value="0"></td></tr>
       <tr><td>دورات المياه</td><td><input type="number" class="form-control" value="0"></td></tr>
       <tr><td>غرف العيادات</td><td><input type="number" class="form-control" value="0"></td></tr>
@@ -53,6 +54,8 @@
       <tr><td>الأدوار</td><td><input type="number" class="form-control" value="0"></td></tr>
       <tr><td>مكاتب إدارية</td><td><input type="number" class="form-control" value="0"></td></tr>
       <tr><td>معامل العلوم</td><td><input type="number" class="form-control" value="0"></td></tr>
+
+      <!-- أصول الكهرباء -->
       <tr>
         <th colspan="2">(أصول الكهرباء)</th>
       </tr>
@@ -67,6 +70,8 @@
       <tr><td>مكيفات سبليت</td><td><input type="number" class="form-control" value="0"></td></tr>
       <tr><td>الكمبيوترات المكتبية</td><td><input type="number" class="form-control" value="0"></td></tr>
       <tr><td>السبورات التعليمية</td><td><input type="number" class="form-control" value="0"></td></tr>
+
+      <!-- أصول الأدوات الصحية -->
       <tr>
         <th colspan="2">(أصول الأدوات الصحية)</th>
       </tr>
@@ -77,6 +82,8 @@
       <tr><td>برادات شرب المياه</td><td><input type="number" class="form-control" value="0"></td></tr>
       <tr><td>مواطير المياه</td><td><input type="number" class="form-control" value="0"></td></tr>
       <tr><td>مراوح الشفط</td><td><input type="number" class="form-control" value="0"></td></tr>
+
+      <!-- أصول الصحة والسلامة -->
       <tr>
         <th colspan="2">(أصول الصحة والسلامة)</th>
       </tr>
@@ -95,7 +102,7 @@
     </tbody>
   </table>
 
-  <!-- زر الإرسال عبر WhatsApp -->
+  <!-- زر الإرسال -->
   <button id="sendMessage" class="btn btn-success">إرسال عبر WhatsApp</button>
 
   <script>
@@ -104,9 +111,11 @@
       let message = `بيانات المدرسة: ${schoolName}\n`;
       const rows = document.querySelectorAll("tbody tr");
       rows.forEach(row => {
-        const label = row.children[0].innerText.trim();
+        const label = row.children[0]?.innerText.trim();
         const value = row.children[1]?.querySelector("input")?.value || "0";
-        message += `${label}: ${value}\n`;
+        if (label) {
+          message += `${label}: ${value}\n`;
+        }
       });
       const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
       window.open(whatsappURL, "_blank");
