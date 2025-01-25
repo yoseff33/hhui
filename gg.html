@@ -2,34 +2,109 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>خريطة مفاهيم بسيطة</title>
+    <title>خريطة مفاهيم جذابة</title>
     <style>
+        /* إعدادات الخطوط */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+
+        /* إعدادات الخريطة */
         .mind-map {
             position: relative;
-            text-align: center;
-        }
-
-        .central-concept {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
+            width: 100%;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
             padding: 20px;
-            border: 1px solid #ccc;
         }
 
+        /* تصميم المفهوم المركزي */
+        .central-concept {
+            position: relative;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+            margin-bottom: 50px;
+        }
+
+        .central-concept h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .central-concept p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* تصميم المفاهيم الفرعية */
         .sub-concept {
             position: absolute;
-            /* قم بتعديل قيم top و left لتحديد الموضع */
-            background-color: #f0f0f0;
-            padding: 15px;
-            border: 1px solid #ccc;
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 250px;
+            transition: transform 0.3s ease-in-out;
         }
 
+        .sub-concept h3 {
+            font-size: 20px;
+            color: #444;
+        }
+
+        .sub-concept p {
+            font-size: 14px;
+            color: #777;
+        }
+
+        .sub-concept:hover {
+            transform: scale(1.05);
+        }
+
+        /* تصميم الاتصالات */
         .connection {
             position: absolute;
-            border: 1px solid black;
+            background-color: #3498db;
+            height: 2px;
+            width: 100px;
+            top: 50%;
+            z-index: -1;
+        }
+
+        /* تخصيص مواقع العناصر */
+        .sub-concept-1 {
+            top: 150px;
+            left: 150px;
+        }
+
+        .sub-concept-2 {
+            top: 150px;
+            left: -250px;
+        }
+
+        /* تحسين الخريطة */
+        .mind-map::after {
+            content: '';
+            position: absolute;
+            background-color: #3498db;
+            width: 2px;
+            height: 100px;
+            top: 0;
+            left: 50%;
+            z-index: -1;
         }
     </style>
 </head>
@@ -37,18 +112,18 @@
     <div class="mind-map">
         <div class="central-concept">
             <h2>المفهوم المركزي</h2>
-            <p>وصف للمفهوم المركزي</p>
+            <p>وصف للمفهوم المركزي يمكن أن يكون هنا بشكل شامل ومبسط.</p>
         </div>
-        <div class="sub-concept" style="top: 150px; left: 250px;">
+        <div class="sub-concept sub-concept-1">
             <h3>المفهوم الفرعي 1</h3>
-            <p>وصف للمفهوم الفرعي 1</p>
+            <p>وصف للمفهوم الفرعي 1 بشكل موجز يوضح الفكرة الأساسية.</p>
         </div>
-        <div class="sub-concept" style="top: 150px; left: 50px;">
+        <div class="sub-concept sub-concept-2">
             <h3>المفهوم الفرعي 2</h3>
-            <p>وصف للمفهوم الفرعي 2</p>
+            <p>وصف للمفهوم الفرعي 2 يوضح ارتباطه بالمفهوم المركزي.</p>
         </div>
-        <div class="connection" style="top: 100px; left: 100px; width: 150px;"></div>
-        <div class="connection" style="top: 100px; left: 350px; width: 150px;"></div>
+        <div class="connection" style="top: 180px; left: 150px; width: 150px;"></div>
+        <div class="connection" style="top: 180px; left: -250px; width: 150px;"></div>
     </div>
 </body>
 </html>
