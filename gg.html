@@ -21,6 +21,7 @@
         .mind-map {
             position: relative;
             width: 80%;
+            max-width: 1000px;
             height: 70%;
             display: flex;
             justify-content: center;
@@ -89,19 +90,28 @@
             position: absolute;
             background-color: #3498db;
             height: 3px;
-            width: 150px;
             z-index: -1;
         }
 
         /* تخصيص مواقع المفاهيم الفرعية */
         .sub-concept-1 {
-            top: 120px;
-            left: 180px;
+            top: 150px;
+            left: 200px;
         }
 
         .sub-concept-2 {
-            top: 120px;
-            left: -180px;
+            top: 150px;
+            left: -200px;
+        }
+
+        .sub-concept-3 {
+            top: -150px;
+            left: 0;
+        }
+
+        .sub-concept-4 {
+            top: 300px;
+            left: 0;
         }
 
         /* تحسين الخريطة */
@@ -110,29 +120,48 @@
             position: absolute;
             background-color: #3498db;
             width: 2px;
-            height: 100px;
+            height: 100%;
             top: 50%;
             left: 50%;
             z-index: -1;
         }
+
+        /* تحسين عرض الخريطة في الصفحة */
+        .mind-map-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
-    <div class="mind-map">
-        <div class="central-concept">
-            <h2>المفهوم المركزي</h2>
-            <p>وصف للمفهوم المركزي يمكن أن يكون هنا بشكل شامل ومبسط. هذا هو العنصر الرئيسي في خريطة المفاهيم.</p>
+    <div class="mind-map-container">
+        <div class="mind-map">
+            <div class="central-concept">
+                <h2>المفهوم المركزي</h2>
+                <p>وصف للمفهوم المركزي يمكن أن يكون هنا بشكل شامل ومبسط. هذا هو العنصر الرئيسي في خريطة المفاهيم.</p>
+            </div>
+            <div class="sub-concept sub-concept-1">
+                <h3>المفهوم الفرعي 1</h3>
+                <p>وصف للمفهوم الفرعي 1 بشكل موجز يوضح الفكرة الأساسية.</p>
+            </div>
+            <div class="sub-concept sub-concept-2">
+                <h3>المفهوم الفرعي 2</h3>
+                <p>وصف للمفهوم الفرعي 2 يوضح ارتباطه بالمفهوم المركزي.</p>
+            </div>
+            <div class="sub-concept sub-concept-3">
+                <h3>المفهوم الفرعي 3</h3>
+                <p>وصف للمفهوم الفرعي 3 يوضح تفاصيل إضافية تتعلق بالمفهوم المركزي.</p>
+            </div>
+            <div class="sub-concept sub-concept-4">
+                <h3>المفهوم الفرعي 4</h3>
+                <p>وصف للمفهوم الفرعي 4 يوضح دور هذا المفهوم في السياق العام.</p>
+            </div>
+            <div class="connection" style="top: 190px; left: 200px; width: 150px;"></div>
+            <div class="connection" style="top: 190px; left: -200px; width: 150px;"></div>
+            <div class="connection" style="top: 100px; left: 0px; width: 150px;"></div>
+            <div class="connection" style="top: 350px; left: 0px; width: 150px;"></div>
         </div>
-        <div class="sub-concept sub-concept-1">
-            <h3>المفهوم الفرعي 1</h3>
-            <p>وصف للمفهوم الفرعي 1 بشكل موجز يوضح الفكرة الأساسية.</p>
-        </div>
-        <div class="sub-concept sub-concept-2">
-            <h3>المفهوم الفرعي 2</h3>
-            <p>وصف للمفهوم الفرعي 2 يوضح ارتباطه بالمفهوم المركزي.</p>
-        </div>
-        <div class="connection" style="top: 180px; left: 180px; width: 150px;"></div>
-        <div class="connection" style="top: 180px; left: -180px; width: 150px;"></div>
     </div>
 </body>
 </html>
