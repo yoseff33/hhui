@@ -57,13 +57,13 @@
 
         /* تصميم المفاهيم الفرعية */
         .sub-concept {
-            position: absolute;
             background-color: #ecf0f1;
             padding: 20px 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
             width: 250px;
+            margin-bottom: 30px;
             transition: transform 0.3s ease-in-out, background-color 0.3s ease;
             cursor: pointer;
         }
@@ -85,48 +85,7 @@
             color: white;
         }
 
-        /* تصميم الاتصالات */
-        .connection {
-            position: absolute;
-            background-color: #3498db;
-            height: 3px;
-            z-index: -1;
-        }
-
-        /* تخصيص مواقع المفاهيم الفرعية */
-        .sub-concept-1 {
-            top: 150px;
-            left: 200px;
-        }
-
-        .sub-concept-2 {
-            top: 150px;
-            left: -200px;
-        }
-
-        .sub-concept-3 {
-            top: -150px;
-            left: 0;
-        }
-
-        .sub-concept-4 {
-            top: 300px;
-            left: 0;
-        }
-
-        /* تحسين الخريطة */
-        .mind-map::after {
-            content: '';
-            position: absolute;
-            background-color: #3498db;
-            width: 2px;
-            height: 100%;
-            top: 50%;
-            left: 50%;
-            z-index: -1;
-        }
-
-        /* إضافة الأسهــم */
+        /* تصميم الأسهــم */
         .arrow {
             position: absolute;
             width: 0;
@@ -136,65 +95,95 @@
             border-top: 20px solid #3498db;
         }
 
-        /* تخصيص الأسهــم بين المفهوم المركزي والمفاهيم الفرعية */
+        /* تخصيص مواقع المفاهيم الفرعية */
+        .sub-concepts-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .sub-concept-wrapper {
+            position: relative;
+        }
+
+        /* تحديد موقع كل سهم */
         .arrow-1 {
-            top: 100px;
-            left: 250px;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .arrow-2 {
-            top: 100px;
-            left: -250px;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .arrow-3 {
-            top: -120px;
-            left: 100px;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .arrow-4 {
-            top: 300px;
-            left: 100px;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
         }
+
     </style>
 </head>
 <body>
-    <div class="mind-map-container">
-        <div class="mind-map">
-            <!-- المفهوم المركزي -->
-            <div class="central-concept">
-                <h2>مقاييس النزعة المركزية</h2>
-                <p>تشمل المتوسط الحسابي، الوسيط، والمنوال. تساعد في تحليل البيانات وتحديد تموضع القيم.</p>
+    <div class="mind-map">
+        <!-- المفهوم المركزي -->
+        <div class="central-concept">
+            <h2>مقاييس النزعة المركزية</h2>
+            <p>تشمل المتوسط الحسابي، الوسيط، والمنوال. تساعد في تحليل البيانات وتحديد تموضع القيم.</p>
+        </div>
+
+        <!-- المفاهيم الفرعية مع الأسهــم -->
+        <div class="sub-concepts-container">
+            <div class="sub-concept-wrapper">
+                <!-- السهم -->
+                <div class="arrow arrow-1"></div>
+                <div class="sub-concept">
+                    <h3>المتوسط الحسابي</h3>
+                    <p>يستخدم إذا لم توجد قيم متطرفة. نقسم مجموع الأعداد على عددها.</p>
+                    <p>مثال: 1, 3, 6, 7 → (1+3+6+7)/4 = 4.25</p>
+                </div>
             </div>
 
-            <!-- الأسهــم بين المفهوم المركزي والمفاهيم الفرعية -->
-            <div class="arrow arrow-1"></div>
-            <div class="arrow arrow-2"></div>
-            <div class="arrow arrow-3"></div>
-            <div class="arrow arrow-4"></div>
-
-            <!-- المفاهيم الفرعية -->
-            <div class="sub-concept sub-concept-1">
-                <h3>المتوسط الحسابي</h3>
-                <p>يستخدم إذا لم توجد قيم متطرفة. نقسم مجموع الأعداد على عددها.</p>
-                <p>مثال: 1, 3, 6, 7 → (1+3+6+7)/4 = 4.25</p>
+            <div class="sub-concept-wrapper">
+                <!-- السهم -->
+                <div class="arrow arrow-2"></div>
+                <div class="sub-concept">
+                    <h3>الوسيط</h3>
+                    <p>يستخدم إذا وجدت قيم متطرفة. نرتب الأعداد ثم نأخذ الحد الأوسط.</p>
+                    <p>مثال: 1, 3, 4, 7, 8 → الوسيط = 4</p>
+                </div>
             </div>
 
-            <div class="sub-concept sub-concept-2">
-                <h3>الوسيط</h3>
-                <p>يستخدم إذا وجدت قيم متطرفة. نرتب الأعداد ثم نأخذ الحد الأوسط.</p>
-                <p>مثال: 1, 3, 4, 7, 8 → الوسيط = 4</p>
+            <div class="sub-concept-wrapper">
+                <!-- السهم -->
+                <div class="arrow arrow-3"></div>
+                <div class="sub-concept">
+                    <h3>المنوال</h3>
+                    <p>يستخدم إذا وجدت قيم متكررة. نأخذ القيمة الأكثر تكرارًا.</p>
+                    <p>مثال: 1, 3, 3, 3, 4 → المنوال = 3</p>
+                </div>
             </div>
+        </div>
 
-            <div class="sub-concept sub-concept-3">
-                <h3>المنوال</h3>
-                <p>يستخدم إذا وجدت قيم متكررة. نأخذ القيمة الأكثر تكرارًا.</p>
-                <p>مثال: 1, 3, 3, 3, 4 → المنوال = 3</p>
-            </div>
-
-            <div class="sub-concept sub-concept-4">
-                <h3>مثال آخر</h3>
-                <p>مثال: 13, 3, 3, 4, 3, 3, 5 → المنوال = 3</p>
+        <!-- إضافة المزيد من المفاهيم الفرعية (اختياري) -->
+        <div class="sub-concepts-container">
+            <div class="sub-concept-wrapper">
+                <!-- السهم -->
+                <div class="arrow arrow-4"></div>
+                <div class="sub-concept">
+                    <h3>مثال آخر</h3>
+                    <p>مثال: 13, 3, 3, 4, 3, 3, 5 → المنوال = 3</p>
+                </div>
             </div>
         </div>
     </div>
