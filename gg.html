@@ -126,11 +126,42 @@
             z-index: -1;
         }
 
+        /* إضافة الأسهــم */
+        .arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 20px solid #3498db;
+        }
+
         /* تحسين عرض الخريطة في الصفحة */
         .mind-map-container {
             width: 100%;
             display: flex;
             justify-content: center;
+        }
+
+        /* تخصيص الأسهــم بين المفهوم المركزي والمفاهيم الفرعية */
+        .arrow-1 {
+            top: 100px;
+            left: 250px;
+        }
+
+        .arrow-2 {
+            top: 100px;
+            left: -250px;
+        }
+
+        .arrow-3 {
+            top: -120px;
+            left: 100px;
+        }
+
+        .arrow-4 {
+            top: 300px;
+            left: 100px;
         }
     </style>
 </head>
@@ -141,6 +172,14 @@
                 <h2>المفهوم المركزي</h2>
                 <p>وصف للمفهوم المركزي يمكن أن يكون هنا بشكل شامل ومبسط. هذا هو العنصر الرئيسي في خريطة المفاهيم.</p>
             </div>
+
+            <!-- الأسهــم بين المفهوم المركزي والمفاهيم الفرعية -->
+            <div class="arrow arrow-1"></div>
+            <div class="arrow arrow-2"></div>
+            <div class="arrow arrow-3"></div>
+            <div class="arrow arrow-4"></div>
+
+            <!-- المفاهيم الفرعية -->
             <div class="sub-concept sub-concept-1">
                 <h3>المفهوم الفرعي 1</h3>
                 <p>وصف للمفهوم الفرعي 1 بشكل موجز يوضح الفكرة الأساسية.</p>
@@ -157,10 +196,6 @@
                 <h3>المفهوم الفرعي 4</h3>
                 <p>وصف للمفهوم الفرعي 4 يوضح دور هذا المفهوم في السياق العام.</p>
             </div>
-            <div class="connection" style="top: 190px; left: 200px; width: 150px;"></div>
-            <div class="connection" style="top: 190px; left: -200px; width: 150px;"></div>
-            <div class="connection" style="top: 100px; left: 0px; width: 150px;"></div>
-            <div class="connection" style="top: 350px; left: 0px; width: 150px;"></div>
         </div>
     </div>
 </body>
