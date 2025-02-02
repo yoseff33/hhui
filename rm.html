@@ -11,8 +11,6 @@
       margin: 0;
       padding: 0;
       background-color: #f4f4f4;
-      display: flex;
-      justify-content: center; /* لتوسيط المحتوى */
     }
 
     h1, h2 {
@@ -25,8 +23,6 @@
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
-      max-width: 800px; /* تحديد عرض أقصى للموقع */
-      width: 100%; /* لجعل العرض يتناسب مع الشاشة */
     }
 
     ul {
@@ -83,6 +79,42 @@
 
       a {
         font-size: 14px;
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        font-size: 10px; /* تصغير حجم الخط للطباعة */
+        line-height: 1.1; /* تقليل المسافة بين الأسطر */
+      }
+
+      section.cv {
+        margin: 0; /* إزالة الهوامش للطباعة */
+        padding: 5px; /* تقليل الحشو */
+        box-shadow: none; /* إزالة الظل */
+        border-radius: 0; /* إزالة الزوايا المدورة */
+      }
+
+      h1 {
+        font-size: 14px; /* تصغير حجم العناوين */
+      }
+
+      h2 {
+        font-size: 12px; /* تصغير حجم العناوين الفرعية */
+      }
+
+      ul li {
+        margin-bottom: 3px; /* تقليل المسافة بين العناصر */
+      }
+
+      a {
+        color: #000; /* جعل الروابط سوداء للطباعة */
+      }
+
+      /* تجنب تقسيم المحتوى بين الصفحات */
+      section.cv {
+        page-break-inside: avoid; /* تجنب تقسيم القسم بين صفحات الطباعة */
       }
     }
   </style>
