@@ -1,187 +1,224 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Abdullah Al-Mutairi - CV</title>
-  <style>
-    /* General Styles */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      line-height: 1.3; /* زيادة التباعد بين الأسطر */
-    }
-
-    section.cv {
-      width: 80%;
-      margin: 15px auto;
-      padding: 12px;
-      background-color: #fff;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-    }
-
-    h1, h2 {
-      color: #333;
-      margin: 8px 0;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 5px 0;
-    }
-
-    ul li {
-      margin-bottom: 8px; /* زيادة بسيطة في التباعد بين العناصر */
-    }
-
-    p {
-      margin-bottom: 8px; /* زيادة بسيطة في التباعد بين الفقرات */
-    }
-
-    a {
-      color: #333;
-      text-decoration: none;
-    }
-
-    /* Ensure proper text direction */
-    [lang="ar"] {
-      direction: rtl;
-      text-align: right;
-    }
-
-    [lang="en"] {
-      direction: ltr;
-      text-align: left;
-    }
-
-    /* Print Styles */
-    @media print {
-      body {
-        font-size: 10px;
-        line-height: 1.2; /* تقليل التباعد قليلاً عند الطباعة */
-      }
-
-      section.cv {
-        width: 100%;
-        margin: 0;
-        padding: 8px;
-        box-shadow: none;
-        border-radius: 0;
-        page-break-inside: avoid;
-      }
-
-      h1 {
-        font-size: 12px;
-      }
-
-      h2 {
-        font-size: 11px;
-      }
-
-      ul li, p {
-        font-size: 10px;
-        margin-bottom: 5px;
-      }
-
-      a {
-        color: #000;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الحروب الإلكترونية والتهديدات الخفية: كيف تغير العالم بصمت؟</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            direction: rtl;
+        }
+        header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header h1 {
+            font-size: 48px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        header p {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.imgur.com/6ZmJjXk.jpg') no-repeat center center;
+            background-size: cover;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        .navbar {
+            background-color: #34495e;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .navbar a {
+            float: right;
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .navbar a:hover {
+            background-color: #2980b9;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px 0;
+        }
+        section {
+            margin-top: 80px;
+            padding: 40px 0;
+        }
+        .section-title {
+            color: #2c3e50;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .section-content {
+            font-size: 18px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        .example-box {
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            text-align: center;
+        }
+        .example-box i {
+            font-size: 48px;
+            color: #2980b9;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .example-box h3 {
+            color: #2980b9;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        footer {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        .download-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .download-buttons a {
+            display: inline-block;
+            background-color: #2980b9;
+            color: #fff;
+            padding: 10px 20px;
+            margin: 5px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .download-buttons a:hover {
+            background-color: #34495e;
+        }
+        @media screen and (max-width: 768px) {
+            header h1 {
+                font-size: 36px;
+            }
+            .navbar a {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <section class="cv" lang="en">
-    <h1>Abdullah Al-Mutairi</h1>
-    <p><strong>📞 Mobile:</strong> 0533774766</p>
-    <p><strong>📧 Email:</strong> <a href="mailto:bb77tn@gmail.com">bb77tn@gmail.com</a></p>
+    <!-- الشريط العلوي -->
+    <div class="navbar">
+        <a href="#home">الرئيسية</a>
+        <a href="#threats">المهددات</a>
+        <a href="#examples">أمثلة عملية</a>
+        <a href="#footer">تواصل معنا</a>
+    </div>
 
-    <h2>Career Objective</h2>
-    <p>I seek to join a professional work environment that enables me to effectively utilize my skills and abilities while contributing to the organization’s success through high-quality and efficient performance. I aspire to develop my expertise and enhance my professional skills to achieve sustainable growth for both myself and my workplace.</p>
+    <!-- الصفحة الرئيسية -->
+    <header id="home">
+        <h1>الحروب الإلكترونية والتهديدات الخفية: كيف تغير العالم بصمت؟</h1>
+        <p>اكتشف الأحداث المثيرة التي غيرت مسار التاريخ من خلال التهديدات السيبرانية الحديثة.</p>
+    </header>
 
-    <h2>Educational Qualifications</h2>
-    <ul>
-      <li>Bachelor’s Degree in Social Work – University of Hafr Al-Batin (Graduation Year: 2022).</li>
-      <li>Professional Classification from the Saudi Commission for Health Specialties (Social Work Specialist).</li>
-    </ul>
+    <!-- قسم المهددات -->
+    <section id="threats">
+        <div class="container">
+            <h2 class="section-title">ما هي التهديدات السيبرانية التي تهز العالم؟</h2>
+            <div class="section-content">
+                <p>في عصر التكنولوجيا، أصبحت التهديدات السيبرانية أكثر تعقيدًا وخطورة. هذه التهديدات لا تقتصر على الهجمات التقليدية فقط، بل تتعدى ذلك لتشمل حروبًا إلكترونية، كوارث تقنية وطبيعية، أخطاء بشرية، برامج خبيثة، مخترقين محترفين، وثغرات خطيرة. كل واحدة منها تحمل في طياتها قصة مثيرة ومليئة بالتفاصيل الغامضة.</p>
+            </div>
+        </div>
+    </section>
 
-    <h2>Work Experience</h2>
-    <ul>
-      <li><strong>Cooperative Training & Graduation Project – Comprehensive Rehabilitation Center:</strong></li>
-      <ul>
-        <li>Contributed to rehabilitation and social support programs.</li>
-        <li>Conducted assessments and managed social cases.</li>
-      </ul>
+    <!-- أمثلة عملية -->
+    <section id="examples">
+        <div class="container">
+            <h2 class="section-title">أمثلة عملية على التهديدات السيبرانية</h2>
+            <div class="section-content">
+                <div class="example-box">
+                    <i class="fas fa-network-wired"></i>
+                    <h3>الحروب الإلكترونية</h3>
+                    <p><strong>التعريف:</strong> الحروب الإلكترونية هي استخدام الهجمات السيبرانية لتحقيق أهداف سياسية أو عسكرية.</p>
+                    <p><strong>مثال:</strong> هجوم "Sandworm" (2015): مجموعة من المخترقين الروس المعروفة باسم "Sandworm" قامت بشن هجوم على شبكة الكهرباء الأوكرانية باستخدام برمجية خبيثة تُدعى "BlackEnergy". أدى الهجوم إلى انقطاع التيار الكهربائي عن أكثر من 230,000 شخص في ذروة فصل الشتاء. هذا الهجوم كان أول مثال معروف على استخدام الهجمات السيبرانية لإيقاف البنية التحتية الحيوية لدولة.</p>
+                </div>
+                <div class="example-box">
+                    <i class="fas fa-bolt"></i>
+                    <h3>الكوارث التقنية والطبيعية</h3>
+                    <p><strong>التعريف:</strong> الكوارث الطبيعية مثل الزلازل والفيضانات يمكن أن تؤثر على البنية التحتية الرقمية، بينما الكوارث التقنية تشمل أعطال الأجهزة أو البرمجيات.</p>
+                    <p><strong>مثال:</strong> انهيار نظام "TSMC" (2018): في أغسطس 2018، تعرضت شركة "TSMC"، أكبر شركة تصنيع رقائق في العالم، لهجوم بفيروس انتشر عبر أنظمتها نتيجة خطأ داخلي أثناء تثبيت برنامج جديد. أدى هذا الهجوم إلى تعطل خطوط الإنتاج وتأخير تصنيع بعض المنتجات الإلكترونية، بما في ذلك أجهزة iPhone. السبب الرئيسي كان عدم تحديث الأنظمة القديمة، مما سمح للفيروس بالانتشار بسرعة عبر الشبكة الداخلية للشركة.</p>
+                </div>
+                <div class="example-box">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>الأخطاء البشرية</h3>
+                    <p><strong>التعريف:</strong> الأخطاء البشرية تشمل الأفعال غير المقصودة مثل إدخال بيانات خاطئة، فقدان الأجهزة، أو عدم اتباع سياسات الأمان.</p>
+                    <p><strong>مثال:</strong> تسريب بيانات "Facebook" (2018): نتيجة خطأ بشري في إعدادات الخصوصية، تم تسريب بيانات أكثر من 87 مليون مستخدم إلى شركة "Cambridge Analytica". استخدمت الشركة البيانات للتأثير على الانتخابات الأمريكية عام 2016. الحادثة أثارت جدلًا كبيرًا حول دور وسائل التواصل الاجتماعي في التلاعب السياسي.</p>
+                </div>
+                <div class="example-box">
+                    <i class="fas fa-bug"></i>
+                    <h3>البرامج الخبيثة</h3>
+                    <p><strong>التعريف:</strong> البرامج الخبيثة هي برامج ضارة مصممة لتعطيل الأنظمة، سرقة البيانات، أو التحكم في الأجهزة دون إذن المستخدم.</p>
+                    <p><strong>مثال:</strong> هجوم "TrickBot" (2020): كان TrickBot أحد أخطر البرامج الخبيثة في العالم، حيث استهدف البنوك والمؤسسات المالية. استخدم البرنامج تقنيات متقدمة لسرقة بيانات تسجيل الدخول وأرقام البطاقات الائتمانية. في النهاية، تم إيقافه بعد تعاون دولي بين الولايات المتحدة والمملكة المتحدة.</p>
+                </div>
+                <div class="example-box">
+                    <i class="fas fa-user-secret"></i>
+                    <h3>المخترقون</h3>
+                    <p><strong>التعريف:</strong> المخترقون هم أفراد أو جماعات يستخدمون مهاراتهم التقنية لاختراق الأنظمة الأمنية بهدف سرقة البيانات أو تحقيق مكاسب مالية.</p>
+                    <p><strong>مثال:</strong> اختراق "Equifax" (2017): تمكن مجموعة من المخترقين الصينيين من اختراق شركة Equifax، وهي واحدة من أكبر شركات التقارير الائتمانية في العالم. سُرقت بيانات أكثر من 147 مليون شخص، بما في ذلك أرقام الضمان الاجتماعي والعناوين الشخصية. الحادثة كانت واحدة من أكبر تسريبات البيانات في التاريخ.</p>
+                </div>
+                <div class="example-box">
+                    <i class="fas fa-unlock-alt"></i>
+                    <h3>الثغرات</h3>
+                    <p><strong>التعريف:</strong> الثغرات هي نقاط ضعف في البرمجيات أو الأجهزة يمكن للمهاجمين استغلالها للوصول غير المصرح به إلى الأنظمة.</p>
+                    <p><strong>مثال:</strong> ثغرة "BlueKeep" (2019): كانت هذه الثغرة موجودة في نظام Windows القديم، وتسمح للمهاجمين بالتحكم الكامل في الأجهزة المصابة عن بُعد. حذرت وكالة الأمن القومي (NSA) من خطورة الثغرة، حيث يمكن أن تؤدي إلى هجمات على نطاق واسع مشابهة لهجوم WannaCry.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <li><strong>Health Volunteering – Directorate of Health Affairs (80 Hours):</strong></li>
-      <ul>
-        <li>Provided social and awareness support to patients and visitors.</li>
-      </ul>
+    <!-- زر التنزيل -->
+    <div class="download-buttons">
+        <a href="article.docx" download>تحميل كـ Word</a>
+        <a href="article.pptx" download>تحميل كـ PowerPoint</a>
+        <a href="article.pdf" download>تحميل كـ PDF</a>
+    </div>
 
-      <li><strong>Health Volunteering – Directorate of Health Affairs (30 Hours):</strong></li>
-      <ul>
-        <li>Focused on offering social counseling and psychological support.</li>
-      </ul>
-    </ul>
-
-    <h2>Training & Professional Development</h2>
-    <ul>
-      <li>Training for social workers (in social work - sociology - psychology).</li>
-      <li>Crisis intervention and stress management.</li>
-      <li>Strategies for dealing with social issues.</li>
-      <li>The role of social workers in handling suicide cases.</li>
-      <li>Negotiation skills in social work with different groups.</li>
-      <li>Leadership Awareness Training.</li>
-      <li>Public Speaking Skills to enhance social impact.</li>
-    </ul>
-
-    <h2>Professional & Personal Skills</h2>
-    <ul>
-      <li>Effective Communication: Ability to build positive relationships with individuals and communities.</li>
-      <li>Interpersonal Skills: Advanced social skills to understand and address individuals’ needs.</li>
-      <li>Teamwork & Collaboration: Experience working within multidisciplinary teams.</li>
-      <li>Decision-Making & Problem-Solving: Ability to analyze social issues and make effective decisions.</li>
-      <li>Emotional Intelligence: Strong ability to understand and manage emotions to enhance professional relationships.</li>
-      <li>Responsibility & Discipline: Commitment to work ethics and ability to perform under pressure.</li>
-      <li>Leadership & Management: Skills in planning, organizing, and supervising social activities.</li>
-    </ul>
-  </section>
-
-  <section class="cv" lang="ar">
-    <h1>عبدالله المطيري</h1>
-    <p><strong>📞 الجوال:</strong> 0533774766</p>
-    <p><strong>📧 البريد الإلكتروني:</strong> <a href="mailto:bb77tn@gmail.com">bb77tn@gmail.com</a></p>
-
-    <h2>الهدف الوظيفي</h2>
-    <p>أسعى إلى الانضمام إلى بيئة عمل احترافية تتيح لي توظيف مهاراتي وقدراتي بشكل فعّال والمساهمة في تحقيق أهداف المؤسسة من خلال العمل بجودة وكفاءة. أطمح إلى تطوير خبراتي وتعزيز مهاراتي المهنية بما يحقق النمو المستدام لي وللجهة التي أعمل بها.</p>
-
-    <h2>المؤهلات العلمية</h2>
-    <ul>
-      <li>بكالوريوس في الخدمة الاجتماعية – جامعة حفر الباطن (سنة التخرج: 2022).</li>
-      <li>تصنيف مهني من الهيئة السعودية للتخصصات الصحية (أخصائي اجتماعي).</li>
-    </ul>
-
-    <h2>الخبرات العملية</h2>
-    <ul>
-      <li><strong>تدريب تعاوني مشروع تخرج – مركز التأهيل الشامل:</strong></li>
-      <ul>
-        <li>المساهمة في برامج التأهيل والدعم الاجتماعي.</li>
-        <li>إجراء التقييمات وإدارة الحالات الاجتماعية.</li>
-      </ul>
-
-      <li><strong>التطوع الصحي – مديرية الشؤون الصحية (80 ساعة):</strong></li>
-      <ul>
-        <li>تقديم الدعم الاجتماعي والتوعوي للمراجعين.</li>
-      </ul>
-
-      <li><strong>التطوع الصحي - مديرية الشؤون الصحية (30 ساعة):</strong></li>
-      <ul>
-        <li>التركيز على تقديم الإرشاد الاجتماعي والمساندة النفسية.</li>
-      </ul>
-    </ul>
-  </section>
+    <!-- تذييل الصفحة -->
+    <footer id="footer">
+        <p>© 2024 الحروب الإلكترونية والتهديدات الخفية: كيف تغير العالم بصمت؟ | جميع الحقوق محفوظة</p>
+    </footer>
 </body>
 </html>
