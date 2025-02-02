@@ -13,25 +13,28 @@
       background-color: #f4f4f4;
     }
 
-    h1, h2 {
-      color: #333;
+    section.cv {
+      width: 80%;
+      margin: 10px auto;
+      padding: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
     }
 
-    section.cv {
-      margin: 20px;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
+    h1, h2 {
+      color: #333;
+      margin: 5px 0;
     }
 
     ul {
       list-style-type: none;
       padding: 0;
+      margin: 5px 0;
     }
 
     ul li {
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
 
     a {
@@ -39,88 +42,58 @@
       text-decoration: none;
     }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      section.cv {
-        margin: 10px;
-        padding: 15px;
-      }
-
-      h1 {
-        font-size: 24px;
-      }
-
-      h2 {
-        font-size: 20px;
-      }
-
-      ul li {
-        font-size: 14px;
-      }
+    p {
+      margin: 5px 0;
     }
 
-    @media (max-width: 480px) {
-      section.cv {
-        margin: 5px;
-        padding: 10px;
-      }
+    /* Ensure proper text direction */
+    [lang="ar"] {
+      direction: rtl;
+      text-align: right;
+    }
 
-      h1 {
-        font-size: 20px;
-      }
-
-      h2 {
-        font-size: 18px;
-      }
-
-      ul li {
-        font-size: 12px;
-      }
-
-      a {
-        font-size: 14px;
-      }
+    [lang="en"] {
+      direction: ltr;
+      text-align: left;
     }
 
     /* Print Styles */
     @media print {
       body {
-        font-size: 10px; /* تصغير حجم الخط للطباعة */
-        line-height: 1.1; /* تقليل المسافة بين الأسطر */
+        font-size: 10px;
+        line-height: 1.1;
       }
 
       section.cv {
-        margin: 0; /* إزالة الهوامش للطباعة */
-        padding: 5px; /* تقليل الحشو */
-        box-shadow: none; /* إزالة الظل */
-        border-radius: 0; /* إزالة الزوايا المدورة */
+        width: 100%;
+        margin: 0;
+        padding: 5px;
+        box-shadow: none;
+        border-radius: 0;
+        page-break-inside: avoid;
       }
 
       h1 {
-        font-size: 14px; /* تصغير حجم العناوين */
+        font-size: 12px;
       }
 
       h2 {
-        font-size: 12px; /* تصغير حجم العناوين الفرعية */
+        font-size: 10px;
       }
 
-      ul li {
-        margin-bottom: 3px; /* تقليل المسافة بين العناصر */
+      ul li, p {
+        font-size: 9px;
+        margin-bottom: 3px;
       }
 
       a {
-        color: #000; /* جعل الروابط سوداء للطباعة */
-      }
-
-      /* تجنب تقسيم المحتوى بين الصفحات */
-      section.cv {
-        page-break-inside: avoid; /* تجنب تقسيم القسم بين صفحات الطباعة */
+        color: #000;
       }
     }
   </style>
 </head>
 <body>
-  <section class="cv">
+  <section class="cv" lang="en">
     <h1>Abdullah Al-Mutairi</h1>
     <p><strong>📞 Mobile:</strong> 0533774766</p>
     <p><strong>📧 Email:</strong> <a href="mailto:bb77tn@gmail.com">bb77tn@gmail.com</a></p>
@@ -136,14 +109,26 @@
 
     <h2>Work Experience</h2>
     <ul>
-      <li><strong>Cooperative Training & Graduation Project – Comprehensive Rehabilitation Center:</strong> Contributed to rehabilitation and social support programs. Conducted assessments and managed social cases.</li>
-      <li><strong>Health Volunteering – Directorate of Health Affairs (80 Hours):</strong> Provided social and awareness support to patients and visitors.</li>
-      <li><strong>Health Volunteering – Directorate of Health Affairs (30 Hours):</strong> Focused on offering social counseling and psychological support.</li>
+      <li><strong>Cooperative Training & Graduation Project – Comprehensive Rehabilitation Center:</strong></li>
+      <ul>
+        <li>Contributed to rehabilitation and social support programs.</li>
+        <li>Conducted assessments and managed social cases.</li>
+      </ul>
+
+      <li><strong>Health Volunteering – Directorate of Health Affairs (80 Hours):</strong></li>
+      <ul>
+        <li>Provided social and awareness support to patients and visitors.</li>
+      </ul>
+
+      <li><strong>Health Volunteering – Directorate of Health Affairs (30 Hours):</strong></li>
+      <ul>
+        <li>Focused on offering social counseling and psychological support.</li>
+      </ul>
     </ul>
 
     <h2>Training & Professional Development</h2>
     <ul>
-      <li>Training for social workers (in social work, sociology, psychology).</li>
+      <li>Training for social workers (in social work - sociology - psychology).</li>
       <li>Crisis intervention and stress management.</li>
       <li>Strategies for dealing with social issues.</li>
       <li>The role of social workers in handling suicide cases.</li>
@@ -164,7 +149,7 @@
     </ul>
   </section>
 
-  <section class="cv">
+  <section class="cv" lang="ar">
     <h1>عبدالله المطيري</h1>
     <p><strong>📞 الجوال:</strong> 0533774766</p>
     <p><strong>📧 البريد الإلكتروني:</strong> <a href="mailto:bb77tn@gmail.com">bb77tn@gmail.com</a></p>
@@ -180,31 +165,30 @@
 
     <h2>الخبرات العملية</h2>
     <ul>
-      <li><strong>تدريب تعاوني مشروع تخرج – مركز التأهيل الشامل:</strong> المساهمة في برامج التأهيل والدعم الاجتماعي. إجراء التقييمات وإدارة الحالات الاجتماعية.</li>
-      <li><strong>التطوع الصحي – مديرية الشؤون الصحية (80 ساعة):</strong> تم تقديم الدعم الاجتماعي والتوعوي للمراجعين.</li>
-      <li><strong>التطوع الصحي - مديرية الشؤون الصحية (30 ساعة):</strong> التركيز على تقديم الإرشاد الاجتماعي والمساندة النفسية.</li>
+      <li><strong>تدريب تعاوني مشروع تخرج – مركز التأهيل الشامل:</strong></li>
+      <ul>
+        <li>المساهمة في برامج التأهيل والدعم الاجتماعي.</li>
+        <li>إجراء التقييمات وإدارة الحالات الاجتماعية.</li>
+      </ul>
+
+      <li><strong>التطوع الصحي – مديرية الشؤون الصحية (80 ساعة):</strong></li>
+      <ul>
+        <li>تقديم الدعم الاجتماعي والتوعوي للمراجعين.</li>
+      </ul>
+
+      <li><strong>التطوع الصحي - مديرية الشؤون الصحية (30 ساعة):</strong></li>
+      <ul>
+        <li>التركيز على تقديم الإرشاد الاجتماعي والمساندة النفسية.</li>
+      </ul>
     </ul>
 
     <h2>الدورات التدريبية والتطوير المهني</h2>
     <ul>
-      <li>تدريب الأخصائيين الاجتماعيين في مجالات (الخدمة الاجتماعية - علم الاجتماع - علم النفس).</li>
       <li>التدخل في الأزمات الشخصية والاجتماعية وكيفية إدارة الضغوط.</li>
       <li>استراتيجيات التعامل مع المشكلات الاجتماعية.</li>
-      <li>دور الأخصائي الاجتماعي في التعامل مع حالات الانتحار.</li>
       <li>مهارات التفاوض في الخدمة الاجتماعية مع الفئات المختلفة.</li>
       <li>الوعي القيادي.</li>
       <li>فن الخطابة لتعزيز التأثير المجتمعي.</li>
-    </ul>
-
-    <h2>المهارات المهنية والشخصية</h2>
-    <ul>
-      <li>التواصل الفعّال: القدرة على بناء علاقات إيجابية مع الأفراد والمجتمع.</li>
-      <li>التعامل مع مختلف الشخصيات: مهارات اجتماعية متقدمة لفهم احتياجات الأفراد.</li>
-      <li>العمل الجماعي والتعاون: خبرة في العمل ضمن فرق متعددة التخصصات.</li>
-      <li>اتخاذ القرار وحل المشكلات: القدرة على تحليل القضايا الاجتماعية واتخاذ قرارات فعالة.</li>
-      <li>الذكاء العاطفي: مهارات في فهم وإدارة المشاعر لتعزيز العلاقات المهنية.</li>
-      <li>تحمل المسؤولية والانضباط: الالتزام بأخلاقيات العمل والقدرة على العمل تحت الضغط.</li>
-      <li>القيادة والإدارة: مهارات في التخطيط والتنظيم والإشراف على الأنشطة الاجتماعية.</li>
     </ul>
   </section>
 </body>
