@@ -11,12 +11,12 @@
             font-family: 'Tajawal', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            background-color: #f5f5f5;
             color: #333;
             direction: rtl;
         }
         header {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: #fff;
             padding: 80px 20px;
             text-align: center;
@@ -32,20 +32,8 @@
             font-size: 20px;
             margin-top: 10px;
         }
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://i.imgur.com/6ZmJjXk.jpg') no-repeat center center;
-            background-size: cover;
-            opacity: 0.2;
-            z-index: -1;
-        }
         .navbar {
-            background-color: #34495e;
+            background-color: #2a5298;
             overflow: hidden;
             position: fixed;
             top: 0;
@@ -62,7 +50,7 @@
             font-size: 16px;
         }
         .navbar a:hover {
-            background-color: #2980b9;
+            background-color: #1e3c72;
         }
         .container {
             width: 80%;
@@ -74,7 +62,7 @@
             padding: 40px 0;
         }
         .section-title {
-            color: #2c3e50;
+            color: #1e3c72;
             font-size: 32px;
             margin-bottom: 20px;
             text-align: center;
@@ -85,7 +73,7 @@
             text-align: justify;
         }
         .example-box {
-            background-color: #ecf0f1;
+            background-color: #dfeaf6;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -95,38 +83,86 @@
         }
         .example-box i {
             font-size: 48px;
-            color: #2980b9;
+            color: #2a5298;
             margin-bottom: 15px;
             display: block;
         }
         .example-box h3 {
-            color: #2980b9;
+            color: #2a5298;
             font-size: 24px;
             margin-bottom: 10px;
         }
         footer {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: #fff;
             text-align: center;
             padding: 20px 0;
             margin-top: 40px;
         }
-        .download-buttons {
-            margin-top: 20px;
+        /* تنسيق العرض كشرائح */
+        .slideshow-container {
+            max-width: 100%;
+            position: relative;
+            margin: auto;
+            overflow: hidden;
             text-align: center;
         }
-        .download-buttons a {
-            display: inline-block;
-            background-color: #2980b9;
-            color: #fff;
+        .slide {
+            display: none;
+            padding: 40px;
+            background-color: #dfeaf6;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .slide.active {
+            display: block;
+        }
+        .slide h2 {
+            color: #1e3c72;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        .slide p {
+            font-size: 18px;
+            line-height: 1.8;
+        }
+        .presentation-controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .presentation-controls button {
+            background-color: #2a5298;
+            color: white;
+            border: none;
             padding: 10px 20px;
             margin: 5px;
-            text-decoration: none;
             border-radius: 5px;
+            cursor: pointer;
             font-size: 16px;
         }
-        .download-buttons a:hover {
-            background-color: #34495e;
+        .presentation-controls button:hover {
+            background-color: #1e3c72;
+        }
+        .slide-navigation {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        .slide-navigation button {
+            background-color: #2a5298;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .slide-navigation button:hover {
+            background-color: #1e3c72;
         }
         @media screen and (max-width: 768px) {
             header h1 {
@@ -145,13 +181,13 @@
         <a href="#home">الرئيسية</a>
         <a href="#threats">المهددات</a>
         <a href="#examples">أمثلة عملية</a>
-        <a href="#footer">تواصل معنا</a>
+        <a href="#slideshow">عرض الشرائح</a>
     </div>
 
     <!-- الصفحة الرئيسية -->
     <header id="home">
         <h1>الحروب الإلكترونية والتهديدات الخفية: كيف تغير العالم بصمت؟</h1>
-        <p>اكتشف الأحداث المثيرة التي غيرت مسار التاريخ من خلال التهديدات السيبرانية الحديثة.</p>
+        <p>إعداد: يوسف عيد دليم المطيري | المادة: المقدمة في أمن نظم المعلومات</p>
     </header>
 
     <!-- قسم المهددات -->
@@ -209,16 +245,107 @@
         </div>
     </section>
 
-    <!-- زر التنزيل -->
-    <div class="download-buttons">
-        <a href="article.docx" download>تحميل كـ Word</a>
-        <a href="article.pptx" download>تحميل كـ PowerPoint</a>
-        <a href="article.pdf" download>تحميل كـ PDF</a>
-    </div>
+    <!-- عرض الشرائح -->
+    <section id="slideshow">
+        <div class="container">
+            <h2 class="section-title">عرض الشرائح</h2>
+            <div class="presentation-controls">
+                <button onclick="togglePresentation()">بدء العرض</button>
+                <button onclick="zoomIn()">تكبير</button>
+                <button onclick="zoomOut()">تصغير</button>
+                <button onclick="closePresentation()">إغلاق</button>
+            </div>
+            <div class="slideshow-container" id="slideshowContainer">
+                <div class="slide active">
+                    <h2>الحروب الإلكترونية</h2>
+                    <p><strong>التعريف:</strong> الحروب الإلكترونية هي استخدام الهجمات السيبرانية لتحقيق أهداف سياسية أو عسكرية.</p>
+                    <p><strong>مثال:</strong> هجوم "Sandworm" (2015): مجموعة من المخترقين الروس المعروفة باسم "Sandworm" قامت بشن هجوم على شبكة الكهرباء الأوكرانية باستخدام برمجية خبيثة تُدعى "BlackEnergy". أدى الهجوم إلى انقطاع التيار الكهربائي عن أكثر من 230,000 شخص في ذروة فصل الشتاء. هذا الهجوم كان أول مثال معروف على استخدام الهجمات السيبرانية لإيقاف البنية التحتية الحيوية لدولة.</p>
+                </div>
+                <div class="slide">
+                    <h2>الكوارث التقنية والطبيعية</h2>
+                    <p><strong>التعريف:</strong> الكوارث الطبيعية مثل الزلازل والفيضانات يمكن أن تؤثر على البنية التحتية الرقمية، بينما الكوارث التقنية تشمل أعطال الأجهزة أو البرمجيات.</p>
+                    <p><strong>مثال:</strong> انهيار نظام "TSMC" (2018): في أغسطس 2018، تعرضت شركة "TSMC"، أكبر شركة تصنيع رقائق في العالم، لهجوم بفيروس انتشر عبر أنظمتها نتيجة خطأ داخلي أثناء تثبيت برنامج جديد. أدى هذا الهجوم إلى تعطل خطوط الإنتاج وتأخير تصنيع بعض المنتجات الإلكترونية، بما في ذلك أجهزة iPhone. السبب الرئيسي كان عدم تحديث الأنظمة القديمة، مما سمح للفيروس بالانتشار بسرعة عبر الشبكة الداخلية للشركة.</p>
+                </div>
+                <div class="slide">
+                    <h2>الأخطاء البشرية</h2>
+                    <p><strong>التعريف:</strong> الأخطاء البشرية تشمل الأفعال غير المقصودة مثل إدخال بيانات خاطئة، فقدان الأجهزة، أو عدم اتباع سياسات الأمان.</p>
+                    <p><strong>مثال:</strong> تسريب بيانات "Facebook" (2018): نتيجة خطأ بشري في إعدادات الخصوصية، تم تسريب بيانات أكثر من 87 مليون مستخدم إلى شركة "Cambridge Analytica". استخدمت الشركة البيانات للتأثير على الانتخابات الأمريكية عام 2016. الحادثة أثارت جدلًا كبيرًا حول دور وسائل التواصل الاجتماعي في التلاعب السياسي.</p>
+                </div>
+                <div class="slide">
+                    <h2>البرامج الخبيثة</h2>
+                    <p><strong>التعريف:</strong> البرامج الخبيثة هي برامج ضارة مصممة لتعطيل الأنظمة، سرقة البيانات، أو التحكم في الأجهزة دون إذن المستخدم.</p>
+                    <p><strong>مثال:</strong> هجوم "TrickBot" (2020): كان TrickBot أحد أخطر البرامج الخبيثة في العالم، حيث استهدف البنوك والمؤسسات المالية. استخدم البرنامج تقنيات متقدمة لسرقة بيانات تسجيل الدخول وأرقام البطاقات الائتمانية. في النهاية، تم إيقافه بعد تعاون دولي بين الولايات المتحدة والمملكة المتحدة.</p>
+                </div>
+                <div class="slide">
+                    <h2>المخترقون</h2>
+                    <p><strong>التعريف:</strong> المخترقون هم أفراد أو جماعات يستخدمون مهاراتهم التقنية لاختراق الأنظمة الأمنية بهدف سرقة البيانات أو تحقيق مكاسب مالية.</p>
+                    <p><strong>مثال:</strong> اختراق "Equifax" (2017): تمكن مجموعة من المخترقين الصينيين من اختراق شركة Equifax، وهي واحدة من أكبر شركات التقارير الائتمانية في العالم. سُرقت بيانات أكثر من 147 مليون شخص، بما في ذلك أرقام الضمان الاجتماعي والعناوين الشخصية. الحادثة كانت واحدة من أكبر تسريبات البيانات في التاريخ.</p>
+                </div>
+                <div class="slide">
+                    <h2>الثغرات</h2>
+                    <p><strong>التعريف:</strong> الثغرات هي نقاط ضعف في البرمجيات أو الأجهزة يمكن للمهاجمين استغلالها للوصول غير المصرح به إلى الأنظمة.</p>
+                    <p><strong>مثال:</strong> ثغرة "BlueKeep" (2019): كانت هذه الثغرة موجودة في نظام Windows القديم، وتسمح للمهاجمين بالتحكم الكامل في الأجهزة المصابة عن بُعد. حذرت وكالة الأمن القومي (NSA) من خطورة الثغرة، حيث يمكن أن تؤدي إلى هجمات على نطاق واسع مشابهة لهجوم WannaCry.</p>
+                </div>
+                <div class="slide-navigation">
+                    <button onclick="changeSlide(-1)">السابق</button>
+                    <button onclick="changeSlide(1)">التالي</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- تذييل الصفحة -->
     <footer id="footer">
         <p>© 2024 الحروب الإلكترونية والتهديدات الخفية: كيف تغير العالم بصمت؟ | جميع الحقوق محفوظة</p>
     </footer>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        let isPresentationMode = false;
+
+        function changeSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function togglePresentation() {
+            const container = document.getElementById('slideshowContainer');
+            if (!isPresentationMode) {
+                container.style.position = 'fixed';
+                container.style.top = '0';
+                container.style.left = '0';
+                container.style.width = '100%';
+                container.style.height = '100%';
+                container.style.zIndex = '1000';
+                container.style.backgroundColor = '#fff';
+                container.style.overflowY = 'auto';
+                isPresentationMode = true;
+            } else {
+                container.style.position = 'relative';
+                container.style.top = '';
+                container.style.left = '';
+                container.style.width = '';
+                container.style.height = '';
+                container.style.zIndex = '';
+                container.style.backgroundColor = '';
+                container.style.overflowY = '';
+                isPresentationMode = false;
+            }
+        }
+
+        function zoomIn() {
+            document.body.style.zoom = parseFloat(document.body.style.zoom || 1) + 0.1;
+        }
+
+        function zoomOut() {
+            document.body.style.zoom = parseFloat(document.body.style.zoom || 1) - 0.1;
+        }
+
+        function closePresentation() {
+            togglePresentation();
+        }
+    </script>
 </body>
 </html>
