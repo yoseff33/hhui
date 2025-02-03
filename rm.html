@@ -11,12 +11,12 @@
             font-family: 'Tajawal', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color: #f9fafb;
             color: #333;
             direction: rtl;
         }
         header {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
             color: #fff;
             padding: 80px 20px;
             text-align: center;
@@ -32,37 +32,17 @@
             font-size: 20px;
             margin-top: 10px;
         }
-        .navbar {
-            background-color: #2a5298;
-            overflow: hidden;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-        .navbar a {
-            float: right;
-            display: block;
-            color: #fff;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-            font-size: 16px;
-        }
-        .navbar a:hover {
-            background-color: #1e3c72;
-        }
         .container {
             width: 80%;
             margin: auto;
             padding: 20px 0;
         }
         section {
-            margin-top: 80px;
+            margin-top: 40px;
             padding: 40px 0;
         }
         .section-title {
-            color: #1e3c72;
+            color: #1e3a8a;
             font-size: 32px;
             margin-bottom: 20px;
             text-align: center;
@@ -73,7 +53,7 @@
             text-align: justify;
         }
         .example-box {
-            background-color: #dfeaf6;
+            background-color: #dbeafe;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -83,17 +63,17 @@
         }
         .example-box i {
             font-size: 48px;
-            color: #2a5298;
+            color: #3b82f6;
             margin-bottom: 15px;
             display: block;
         }
         .example-box h3 {
-            color: #2a5298;
+            color: #3b82f6;
             font-size: 24px;
             margin-bottom: 10px;
         }
         footer {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
             color: #fff;
             text-align: center;
             padding: 20px 0;
@@ -110,7 +90,7 @@
         .slide {
             display: none;
             padding: 40px;
-            background-color: #dfeaf6;
+            background-color: #dbeafe;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
@@ -119,7 +99,7 @@
             display: block;
         }
         .slide h2 {
-            color: #1e3c72;
+            color: #1e3a8a;
             font-size: 32px;
             margin-bottom: 20px;
         }
@@ -132,7 +112,7 @@
             margin-top: 20px;
         }
         .presentation-controls button {
-            background-color: #2a5298;
+            background-color: #3b82f6;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -142,7 +122,22 @@
             font-size: 16px;
         }
         .presentation-controls button:hover {
-            background-color: #1e3c72;
+            background-color: #1e3a8a;
+        }
+        .exit-presentation {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #dc2626;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .exit-presentation:hover {
+            background-color: #b91c1c;
         }
         .slide-navigation {
             position: absolute;
@@ -153,7 +148,7 @@
             gap: 10px;
         }
         .slide-navigation button {
-            background-color: #2a5298;
+            background-color: #3b82f6;
             color: white;
             border: none;
             padding: 10px 15px;
@@ -162,28 +157,16 @@
             font-size: 16px;
         }
         .slide-navigation button:hover {
-            background-color: #1e3c72;
+            background-color: #1e3a8a;
         }
         @media screen and (max-width: 768px) {
             header h1 {
                 font-size: 36px;
             }
-            .navbar a {
-                padding: 12px 15px;
-                font-size: 14px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- الشريط العلوي -->
-    <div class="navbar">
-        <a href="#home">الرئيسية</a>
-        <a href="#threats">المهددات</a>
-        <a href="#examples">أمثلة عملية</a>
-        <a href="#slideshow">عرض الشرائح</a>
-    </div>
-
     <!-- الصفحة الرئيسية -->
     <header id="home">
         <h1>الحروب الإلكترونية والتهديدات الخفية: كيف تغير العالم بصمت؟</h1>
@@ -253,9 +236,9 @@
                 <button onclick="togglePresentation()">بدء العرض</button>
                 <button onclick="zoomIn()">تكبير</button>
                 <button onclick="zoomOut()">تصغير</button>
-                <button onclick="closePresentation()">إغلاق</button>
             </div>
             <div class="slideshow-container" id="slideshowContainer">
+                <button class="exit-presentation" onclick="closePresentation()">خروج</button>
                 <div class="slide active">
                     <h2>الحروب الإلكترونية</h2>
                     <p><strong>التعريف:</strong> الحروب الإلكترونية هي استخدام الهجمات السيبرانية لتحقيق أهداف سياسية أو عسكرية.</p>
