@@ -8,7 +8,6 @@
   <link href='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css' rel='stylesheet' />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <style>
-    /* نظام التصميم الحديث */
     :root {
       --primary: #4361ee;
       --secondary: #3f37c9;
@@ -42,7 +41,6 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* الهيدر الحديث */
     .app-bar {
       background: var(--surface);
       padding: 1rem 2rem;
@@ -76,7 +74,6 @@
       font-weight: 700;
     }
 
-    /* نظام التخطيط الرئيسي */
     .main-layout {
       display: grid;
       grid-template-columns: 1fr 400px;
@@ -85,7 +82,6 @@
       height: calc(100vh - 80px);
     }
 
-    /* الخريطة المعدلة */
     .map-container {
       border-radius: var(--border-radius);
       overflow: hidden;
@@ -94,7 +90,6 @@
       background: var(--surface);
     }
 
-    /* لوحة التحكم الجانبية */
     .dashboard-panel {
       background: var(--surface);
       border-radius: var(--border-radius);
@@ -106,7 +101,6 @@
       overflow-y: auto;
     }
 
-    /* بطاقة الطالب المعدلة */
     .student-card {
       background: var(--background);
       border-radius: 12px;
@@ -166,7 +160,6 @@
       box-shadow: 0 0 8px var(--success);
     }
 
-    /* عناصر التحكم */
     .control-panel {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -199,7 +192,6 @@
       color: white;
     }
 
-    /* الإشعارات المعدلة */
     .notification-toast {
       position: fixed;
       bottom: 2rem;
@@ -220,7 +212,6 @@
       to { transform: translateX(0); }
     }
 
-    /* نظام الظلام المتقدم */
     .theme-switch {
       position: fixed;
       bottom: 2rem;
@@ -235,7 +226,6 @@
       cursor: pointer;
     }
 
-    /* التكيف مع الأجهزة المحمولة */
     @media (max-width: 768px) {
       .main-layout {
         grid-template-columns: 1fr;
@@ -271,7 +261,6 @@
       <div class="students-list">
         <h2 class="section-title">قائمة الركاب</h2>
         <div class="students-grid">
-          <!-- بطاقات الطلاب -->
           <div class="student-card">
             <div class="student-avatar">A</div>
             <div class="student-info">
@@ -283,7 +272,7 @@
               <span class="eta">2 دقيقة</span>
             </div>
           </div>
-          <!-- ... بطاقات أخرى ... -->
+          <!-- يمكن إضافة المزيد من البطاقات هنا -->
         </div>
       </div>
 
@@ -305,20 +294,52 @@
   </div>
 
   <script>
-    // تهيئة النظام
-    const theme = localStorage.getItem('theme') || 'light';
-    document.body.setAttribute('data-theme', theme);
+    // إدارة الحالة العامة للتطبيق
+    class AppState {
+      constructor() {
+        this.theme = localStorage.getItem('theme') || 'light';
+        this.students = [];
+        this.notifications = new NotificationSystem();
+      }
 
-    function toggleTheme() {
-      const currentTheme = document.body.getAttribute('data-theme');
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      document.body.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      document.getElementById('theme-icon').textContent = 
-        newTheme === 'light' ? 'dark_mode' : 'light_mode';
+      toggleTheme() {
+        this.theme = this.theme === 'light' ? 'dark' : 'light';
+        document.body.setAttribute('data-theme', this.theme);
+        localStorage.setItem('theme', this.theme);
+        document.getElementById('theme-icon').textContent = 
+          this.theme === 'light' ? 'dark_mode' : 'light_mode';
+      }
     }
 
-    // تهيئة الخريطة (يجب إضافة مفتاح Mapbox)
+    // نظام الإشعارات
+    class NotificationSystem {
+      show(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `notification-toast ${type}`;
+        toast.innerHTML = `
+          <span class="material-icons-round">${this.getIcon(type)}</span>
+          ${message}
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 5000);
+      }
+
+      getIcon(type) {
+        const icons = {
+          info: 'info',
+          success: 'check_circle',
+          warning: 'warning',
+          error: 'error'
+        };
+        return icons[type] || 'info';
+      }
+    }
+
+    // تهيئة التطبيق
+    const app = new AppState();
+    document.body.setAttribute('data-theme', app.theme);
+
+    // تهيئة الخريطة
     mapboxgl.accessToken = 'YOUR_MAPBOX_KEY';
     const map = new mapboxgl.Map({
       container: 'map',
@@ -327,28 +348,45 @@
       zoom: 14
     });
 
-    // إضافة عناصر التحكم في الخريطة
     map.addControl(new mapboxgl.NavigationControl());
     map.addControl(new mapboxgl.FullscreenControl());
 
-    // محاكاة البيانات الديناميكية
-    const students = [
-      { name: "أحمد", location: [24.7150, 46.6760], status: 'in_transit' },
-      // ... بيانات أخرى ...
+    // محاكاة بيانات الطلاب
+    const mockStudents = [
+      {
+        id: 1,
+        name: "أحمد محمد",
+        location: [24.7150, 46.6760],
+        status: 'in_transit',
+        eta: '2 دقيقة'
+      },
+      // يمكن إضافة المزيد من البيانات هنا
     ];
 
-    // دالة تحديث الواجهة
-    function updateUI() {
-      // ... منطق التحديث ...
+    function renderStudents() {
+      const container = document.querySelector('.students-grid');
+      container.innerHTML = mockStudents.map(student => `
+        <div class="student-card">
+          <div class="student-avatar">${student.name.charAt(0)}</div>
+          <div class="student-info">
+            <span class="student-name">${student.name}</span>
+            <span class="student-location">${student.location.join(', ')}</span>
+          </div>
+          <div class="student-status">
+            <div class="status-indicator"></div>
+            <span class="eta">${student.eta}</span>
+          </div>
+        </div>
+      `).join('');
     }
 
-    // Websocket للبيانات الحية
-    const ws = new WebSocket('wss://your-server.com/ws');
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      // ... معالجة البيانات ...
-      updateUI();
-    };
+    // event listeners
+    document.querySelector('.btn-primary').addEventListener('click', () => {
+      app.notifications.show('تم بدء الرحلة بنجاح', 'success');
+    });
+
+    // التهيئة الأولية
+    renderStudents();
   </script>
 </body>
 </html>
