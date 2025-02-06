@@ -223,6 +223,8 @@
             color: #e0e0e0;
             text-align: center;
             width: 150px;
+            height: 180px;
+            vertical-align: top;
         }
 
         .team-member i {
@@ -268,7 +270,8 @@
             margin-top: 10px;
         }
 
-        .hidden-options a {
+        .hidden-options a,
+        .hidden-options button {
             display: inline-block;
             margin: 10px;
             padding: 10px 20px;
@@ -279,7 +282,8 @@
             transition: background-color 0.3s ease;
         }
 
-        .hidden-options a:hover {
+        .hidden-options a:hover,
+        .hidden-options button:hover {
             background-color: #16a085;
         }
 
@@ -425,8 +429,8 @@
 
     <!-- خيارات التحميل والعرض -->
     <div class="options-container hidden-options" id="hiddenOptions">
-        <a href="#" download="job-description.pdf"><i class="fas fa-file-pdf"></i> تحميل كـ PDF</a>
-        <a href="#" download="job-description.pptx"><i class="fas fa-file-powerpoint"></i> تحميل كـ PowerPoint</a>
+        <a href="#" id="downloadPdf"><i class="fas fa-file-pdf"></i> تحميل كـ PDF</a>
+        <a href="#" id="downloadPpt"><i class="fas fa-file-powerpoint"></i> تحميل كـ PowerPoint</a>
         <button class="start-presentation-btn" onclick="openPresentation()">ابدأ العرض</button>
     </div>
 
@@ -443,6 +447,8 @@
         <p>تم إعداد هذا المشروع بواسطة: يوسف عيد المطيري، نايف حسين الشمري، مونس إبراهيم الشمري | تحت إشراف د. علي سلمان</p>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-docx-js/0.5.0/html-docx.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
         // JavaScript Code
         document.addEventListener('DOMContentLoaded', () => {
@@ -467,6 +473,26 @@
 
             toggleBtn.addEventListener('click', () => {
                 hiddenOptions.style.display = hiddenOptions.style.display === 'none' ? 'block' : 'none';
+            });
+
+            // Download as PDF
+            document.getElementById('downloadPdf').addEventListener('click', () => {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                doc.html(document.body, {
+                    callback: function (doc) {
+                        doc.save('job-description.pdf');
+                    },
+                    x: 10,
+                    y: 10
+                });
+            });
+
+            // Download as PowerPoint
+            document.getElementById('downloadPpt').addEventListener('click', () => {
+                const content = document.documentElement.outerHTML;
+                const converted = htmlDocx.asBlob(content);
+                saveAs(converted, 'job-description.pptx');
             });
         });
 
