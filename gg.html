@@ -1,185 +1,485 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة مفاهيم تفاعلية</title>
-    <!-- إضافة خط من Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <title>بطاقة الوصف الوظيفي</title>
+    <!-- تضمين خطوط Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <!-- تضمين مكتبة Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* إعدادات الخطوط */
-        body {
-            font-family: 'Amiri', serif;
-            background-color: #f7f7f7;
+        /* تنسيقات CSS */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            color: #fff;
+            line-height: 1.6;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
-            direction: rtl;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* إعدادات الخريطة */
-        .mind-map {
-            position: relative;
-            width: 80%;
-            max-width: 1200px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        /* تصميم المفهوم المركزي */
-        .central-concept {
-            position: relative;
-            background-color: #3498db;
-            color: white;
-            padding: 30px 40px;
-            border-radius: 15px;
+        header {
             text-align: center;
-            width: 300px;
-            margin: 0 auto 50px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            padding: 40px 20px;
+            width: 100%;
         }
 
-        .central-concept h2 {
-            font-size: 24px;
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .intro-section {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            text-align: justify;
+        }
+
+        .intro-section h2 {
+            color: #1abc9c;
+            border-bottom: 2px solid #1abc9c;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .intro-section p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #e0e0e0;
+        }
+
+        .intro-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .intro-section ul li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: #e0e0e0;
+        }
+
+        .intro-section ul li i {
+            margin-right: 10px;
+            color: #1abc9c;
+        }
+
+        .container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background-color: #1abc9c;
+            border-radius: 10px;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 350px;
+            margin: 10px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card h2 {
+            color: #1abc9c;
+            border-bottom: 2px solid #1abc9c;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .card p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #e0e0e0;
+            text-align: justify;
+        }
+
+        .card ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .card ul li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: #e0e0e0;
+        }
+
+        .card ul li i {
+            margin-right: 10px;
+            color: #1abc9c;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 0.9em;
+            width: 100%;
+        }
+
+        footer a {
+            color: #1abc9c;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Team Section */
+        .team-section {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .team-section h2 {
+            color: #1abc9c;
+            border-bottom: 2px solid #1abc9c;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .team-member {
+            display: inline-block;
+            margin: 10px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #e0e0e0;
+            text-align: center;
+            width: 150px;
+        }
+
+        .team-member i {
+            font-size: 2em;
+            color: #1abc9c;
             margin-bottom: 10px;
         }
 
-        .central-concept p {
-            font-size: 16px;
+        .team-member h3 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
         }
 
-        .central-concept:hover {
-            transform: scale(1.05);
+        .team-member p {
+            font-size: 0.9em;
+            opacity: 0.8;
         }
 
-        /* تصميم المفاهيم الفرعية */
-        .sub-concept {
-            background-color: #ecf0f1;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Download and Presentation Options */
+        .options-container {
+            margin-top: 30px;
             text-align: center;
-            width: 250px;
-            margin: 0 auto 30px;
-            transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+        }
+
+        .toggle-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #1abc9c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .sub-concept h3 {
-            font-size: 20px;
-            color: #34495e;
+        .toggle-btn:hover {
+            background-color: #16a085;
         }
 
-        .sub-concept p {
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-
-        .sub-concept:hover {
-            transform: scale(1.1);
-            background-color: #3498db;
-            color: white;
-        }
-
-        /* تصميم الأسهــم */
-        .arrow {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 20px solid #3498db;
-        }
-
-        /* تخصيص مواقع المفاهيم الفرعية */
-        .sub-concepts-container {
-            display: flex;
-            justify-content: space-evenly;
-            margin-top: 50px;
-            gap: 30px;
-        }
-
-        .sub-concept-wrapper {
-            position: relative;
-            text-align: center;
-        }
-
-        /* تخصيص موقع الأسهــم بين المفاهيم */
-        .arrow-1 {
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .arrow-2 {
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .arrow-3 {
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        /* تحسين تنسيق النصوص داخل المفاهيم */
-        .sub-concept p {
+        .hidden-options {
+            display: none;
             margin-top: 10px;
         }
 
+        .hidden-options a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #1abc9c;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .hidden-options a:hover {
+            background-color: #16a085;
+        }
+
+        /* Presentation Mode */
+        .presentation-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .presentation-mode.active {
+            display: flex;
+        }
+
+        .presentation-content {
+            background-color: #fff;
+            color: #333;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .presentation-content h1 {
+            color: #2c3e50;
+        }
+
+        .presentation-content button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #1abc9c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .presentation-content button:hover {
+            background-color: #16a085;
+        }
     </style>
 </head>
+
 <body>
-    <div class="mind-map">
-        <!-- المفهوم المركزي -->
-        <div class="central-concept">
-            <h2>مقاييس النزعة المركزية</h2>
-            <p>تشمل المتوسط الحسابي، الوسيط، والمنوال. تساعد في تحليل البيانات وتحديد تموضع القيم.</p>
+    <header>
+        <h1>بطاقة الوصف الوظيفي</h1>
+        <p>مشروع طلاب جامعة حفر الباطن - تخصص نظم معلومات إدارية</p>
+    </header>
+
+    <!-- قسم شرح الوصف الوظيفي -->
+    <div class="intro-section">
+        <h2><i class="fas fa-info-circle"></i> ما هو الوصف الوظيفي؟</h2>
+        <p>الوصف الوظيفي هو وثيقة تحدد المهام والمسؤوليات الرئيسية المرتبطة بوظيفة معينة داخل منظمة أو شركة. يهدف الوصف الوظيفي إلى:</p>
+        <ul>
+            <li><i class="fas fa-check"></i> تحديد الأدوار والواجبات التي يجب أن يقوم بها الموظف.</li>
+            <li><i class="fas fa-check"></i> تحديد المؤهلات والمهارات المطلوبة للوظيفة.</li>
+            <li><i class="fas fa-check"></i> تقديم موجز عام عن طبيعة العمل وأهدافه.</li>
+            <li><i class="fas fa-check"></i> تسهيل عملية التوظيف والتقييم الوظيفي.</li>
+        </ul>
+        <p><strong>أهمية الوصف الوظيفي:</strong></p>
+        <ul>
+            <li><i class="fas fa-check"></i> يساعد في توضيح التوقعات بين الموظف وإدارته.</li>
+            <li><i class="fas fa-check"></i> يساهم في تحسين عملية التدريب والتطوير المهني.</li>
+            <li><i class="fas fa-check"></i> يوفر إطارًا واضحًا لتقييم الأداء الوظيفي.</li>
+        </ul>
+    </div>
+
+    <div class="container" id="cardContainer">
+        <!-- بطاقة الوصف الوظيفي -->
+        <div class="card">
+            <h2>وصف الوظيفة</h2>
+            <p><strong>اسم الوظيفة:</strong> محلل نظم معلومات إدارية</p>
+            <p><strong>القسم / الإدارة:</strong> قسم تقنية المعلومات</p>
+            <p><strong>المشرف المسؤول عن الوظيفة:</strong> د. علي سلمان</p>
+            <p><strong>موجز عام عن الوظيفة:</strong> مسؤول عن تحليل وتقييم أنظمة المعلومات الإدارية لتحسين العمليات وزيادة الكفاءة.</p>
         </div>
 
-        <!-- المفاهيم الفرعية مع الأسهــم -->
-        <div class="sub-concepts-container">
-            <div class="sub-concept-wrapper">
-                <!-- السهم -->
-                <div class="arrow arrow-1"></div>
-                <div class="sub-concept">
-                    <h3>المتوسط الحسابي</h3>
-                    <p>يستخدم اذا لم توجد قيم متطرفة.</p>
-                    <p>نقسم مجموع الأعداد على عددها.</p>
-                    <p>مثال: ١،٣،٦،٧ → (١+٣+٦+٧)/٤ = ٤٫٢٥</p>
-                </div>
-            </div>
+        <!-- بطاقة الواجبات -->
+        <div class="card">
+            <h2>واجبات الوظيفة</h2>
+            <ul>
+                <li><i class="fas fa-check"></i> تحليل البيانات وتقديم التقارير.</li>
+                <li><i class="fas fa-check"></i> تصميم وتطوير أنظمة المعلومات.</li>
+                <li><i class="fas fa-check"></i> تقديم الدعم الفني للمستخدمين.</li>
+            </ul>
+        </div>
 
-            <div class="sub-concept-wrapper">
-                <!-- السهم -->
-                <div class="arrow arrow-2"></div>
-                <div class="sub-concept">
-                    <h3>الوسيط</h3>
-                    <p>يستخدم اذا وجدت قيم متطرفة.</p>
-                    <p>نرتب الأعداد ترتيبًا تصاعديًا أو تنازليًا، ثم إذا كان عددها فردي نأخذ الحد الأوسط، وإذا كان عددها زوجي نأخذ مجموع الحدين الأوسطين ونقسمها على العدد ٢.</p>
-                    <p>مثال: ١،٣،٤،٧،٨ → الوسيط = ٤</p>
-                </div>
-            </div>
+        <!-- بطاقة المسؤوليات -->
+        <div class="card">
+            <h2>مسؤوليات الوظيفة</h2>
+            <p><strong>المسؤولية المالية:</strong> إدارة الميزانية الخاصة بالمشاريع التقنية.</p>
+            <p><strong>المسؤولية الفنية:</strong> ضمان جودة الأنظمة المطورة.</p>
+            <p><strong>المسؤولية الإدارية:</strong> تنسيق العمل بين الفرق المختلفة.</p>
+        </div>
 
-            <div class="sub-concept-wrapper">
-                <!-- السهم -->
-                <div class="arrow arrow-3"></div>
-                <div class="sub-concept">
-                    <h3>المنوال</h3>
-                    <p>يستخدم اذا وجدت قيم متكررة.</p>
-                    <p>نأخذ القيمة الأكثر تكراراً.</p>
-                    <p>مثال: ٣،٣،٣،٤ → المنوال = ٣</p>
-                </div>
-            </div>
+        <!-- بطاقة المتطلبات -->
+        <div class="card">
+            <h2>متطلبات وشروط الوظيفة</h2>
+            <ul>
+                <li><i class="fas fa-graduation-cap"></i> <strong>المستوى التعليمي:</strong> بكالوريوس في نظم المعلومات الإدارية أو ما يعادله.</li>
+                <li><i class="fas fa-cogs"></i> <strong>المهارات:</strong> تحليل البيانات، البرمجة، إدارة المشاريع.</li>
+                <li><i class="fas fa-chart-line"></i> <strong>القدرات:</strong> القدرة على حل المشكلات واتخاذ القرارات.</li>
+                <li><i class="fas fa-user-tie"></i> <strong>السمات الشخصية:</strong> التنظيم، القيادة، التواصل الجيد.</li>
+            </ul>
         </div>
     </div>
+
+    <!-- قسم الفريق -->
+    <div class="team-section">
+        <h2><i class="fas fa-users"></i> فريق العمل</h2>
+        <div class="team-member">
+            <i class="fas fa-user"></i>
+            <h3>يوسف عيد المطيري</h3>
+            <p>طالب - جامعة حفر الباطن</p>
+        </div>
+        <div class="team-member">
+            <i class="fas fa-user"></i>
+            <h3>نايف حسين الشمري</h3>
+            <p>طالب - جامعة حفر الباطن</p>
+        </div>
+        <div class="team-member">
+            <i class="fas fa-user"></i>
+            <h3>مونس إبراهيم الشمري</h3>
+            <p>طالب - جامعة حفر الباطن</p>
+        </div>
+        <div class="team-member">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <h3>د. علي سلمان</h3>
+            <p>المشرف - جامعة حفر الباطن</p>
+        </div>
+    </div>
+
+    <!-- زر الخيارات المخفية -->
+    <button class="toggle-btn" id="toggleOptionsBtn">خيارات إضافية</button>
+
+    <!-- خيارات التحميل والعرض -->
+    <div class="options-container hidden-options" id="hiddenOptions">
+        <a href="#" download="job-description.pdf"><i class="fas fa-file-pdf"></i> تحميل كـ PDF</a>
+        <a href="#" download="job-description.pptx"><i class="fas fa-file-powerpoint"></i> تحميل كـ PowerPoint</a>
+        <button class="start-presentation-btn" onclick="openPresentation()">ابدأ العرض</button>
+    </div>
+
+    <!-- نافذة العرض التقديمي -->
+    <div class="presentation-mode" id="presentationMode">
+        <div class="presentation-content">
+            <h1>عرض تقديمي للمشروع</h1>
+            <p>مرحبًا! هذا هو العرض التقديمي لمشروع بطاقة الوصف الوظيفي. يمكنك استخدام هذه النافذة لتحويل الموقع إلى عرض تقديمي تفاعلي.</p>
+            <button onclick="closePresentation()">إغلاق العرض</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>تم إعداد هذا المشروع بواسطة: يوسف عيد المطيري، نايف حسين الشمري، مونس إبراهيم الشمري | تحت إشراف د. علي سلمان</p>
+    </footer>
+
+    <script>
+        // JavaScript Code
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // Toggle Hidden Options
+            const toggleBtn = document.getElementById('toggleOptionsBtn');
+            const hiddenOptions = document.getElementById('hiddenOptions');
+
+            toggleBtn.addEventListener('click', () => {
+                hiddenOptions.style.display = hiddenOptions.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+
+        // Function to open presentation mode
+        function openPresentation() {
+            document.getElementById('presentationMode').classList.add('active');
+        }
+
+        // Function to close presentation mode
+        function closePresentation() {
+            document.getElementById('presentationMode').classList.remove('active');
+        }
+    </script>
 </body>
+
 </html>
