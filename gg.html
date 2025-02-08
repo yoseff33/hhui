@@ -31,46 +31,47 @@
 
         header {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px 20px;
             width: 100%;
         }
 
         header h1 {
-            font-size: 2.5em;
+            font-size: 1.8em;
             margin-bottom: 10px;
             animation: fadeIn 2s ease-in-out;
         }
 
         header p {
-            font-size: 1.2em;
+            font-size: 0.9em;
             opacity: 0.9;
         }
 
         .intro-section {
             background-color: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             width: 90%;
             max-width: 800px;
             margin: 20px auto;
-            padding: 30px;
+            padding: 20px;
             text-align: justify;
         }
 
         .intro-section h2 {
             color: #1abc9c;
-            border-bottom: 2px solid #1abc9c;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 1.8em;
+            border-bottom: 1px solid #1abc9c;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            font-size: 1.4em;
             text-align: center;
         }
 
         .intro-section p {
-            line-height: 1.6;
-            margin-bottom: 15px;
+            line-height: 1.4;
+            margin-bottom: 8px;
             color: #e0e0e0;
+            font-size: 0.9em;
         }
 
         .intro-section ul {
@@ -79,69 +80,52 @@
         }
 
         .intro-section ul li {
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
             color: #e0e0e0;
+            font-size: 0.9em;
         }
 
         .intro-section ul li i {
-            margin-right: 10px;
+            margin-right: 6px;
             color: #1abc9c;
+            font-size: 0.9em;
         }
 
         .container {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            gap: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
             padding: 20px;
-            width: 100%;
-        }
-
-        .container::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .container::-webkit-scrollbar-thumb {
-            background-color: #1abc9c;
-            border-radius: 10px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
         }
 
         .card {
             background-color: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 350px;
-            margin: 10px;
-            padding: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
-            scroll-snap-align: start;
-            flex-shrink: 0;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .card.active {
-            opacity: 1;
-            transform: translateY(0);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card h2 {
             color: #1abc9c;
-            border-bottom: 2px solid #1abc9c;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 1.8em;
+            border-bottom: 1px solid #1abc9c;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
             text-align: center;
         }
 
         .card p {
-            line-height: 1.6;
-            margin-bottom: 15px;
+            line-height: 1.4;
+            margin-bottom: 6px;
             color: #e0e0e0;
+            font-size: 0.85em;
             text-align: justify;
         }
 
@@ -151,24 +135,26 @@
         }
 
         .card ul li {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
             color: #e0e0e0;
+            font-size: 0.85em;
         }
 
         .card ul li i {
-            margin-right: 10px;
+            margin-right: 5px;
             color: #1abc9c;
+            font-size: 0.9em;
         }
 
         footer {
             text-align: center;
-            margin-top: 30px;
-            padding: 20px;
+            margin-top: 20px;
+            padding: 15px;
             background-color: rgba(0, 0, 0, 0.3);
             color: #fff;
-            font-size: 0.9em;
+            font-size: 0.8em;
             width: 100%;
         }
 
@@ -181,156 +167,69 @@
             text-decoration: underline;
         }
 
-        /* Animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         /* Team Section */
         .team-section {
             background-color: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             width: 90%;
             max-width: 800px;
             margin: 20px auto;
-            padding: 30px;
+            padding: 20px;
             text-align: center;
         }
 
         .team-section h2 {
             color: #1abc9c;
-            border-bottom: 2px solid #1abc9c;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 1.8em;
+            border-bottom: 1px solid #1abc9c;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
         }
 
         .team-member {
             display: inline-block;
             margin: 10px;
-            padding: 20px;
+            padding: 15px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             color: #e0e0e0;
             text-align: center;
-            width: 150px;
-            height: 180px;
+            width: 110px;
+            height: 140px;
             vertical-align: top;
         }
 
         .team-member i {
-            font-size: 2em;
+            font-size: 1.2em;
             color: #1abc9c;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
 
         .team-member h3 {
-            font-size: 1.2em;
+            font-size: 0.9em;
             margin-bottom: 5px;
         }
 
         .team-member p {
-            font-size: 0.9em;
+            font-size: 0.8em;
             opacity: 0.8;
         }
 
-        /* Download and Presentation Options */
-        .options-container {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .toggle-btn {
-            display: block;
+        /* Two Columns Layout */
+        .two-columns {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 90%;
+            max-width: 1200px;
             margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #1abc9c;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
-        .toggle-btn:hover {
-            background-color: #16a085;
-        }
-
-        .hidden-options {
-            display: none;
-            margin-top: 10px;
-        }
-
-        .hidden-options a,
-        .hidden-options button {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 20px;
-            background-color: #1abc9c;
-            color: #fff;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .hidden-options a:hover,
-        .hidden-options button:hover {
-            background-color: #16a085;
-        }
-
-        /* Presentation Mode */
-        .presentation-mode {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .two-columns .card,
+        .two-columns .team-member {
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .presentation-mode.active {
-            display: flex;
-        }
-
-        .presentation-content {
-            background-color: #fff;
-            color: #333;
-            padding: 40px;
-            border-radius: 15px;
-            max-width: 800px;
-            text-align: center;
-        }
-
-        .presentation-content h1 {
-            color: #2c3e50;
-        }
-
-        .presentation-content button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #1abc9c;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .presentation-content button:hover {
-            background-color: #16a085;
         }
     </style>
 </head>
@@ -359,14 +258,15 @@
         </ul>
     </div>
 
-    <div class="container" id="cardContainer">
+    <!-- البطاقات (اثنتين جنب بعض) -->
+    <div class="two-columns">
         <!-- بطاقة الوصف الوظيفي -->
         <div class="card">
             <h2>وصف الوظيفة</h2>
             <p><strong>اسم الوظيفة:</strong> محلل نظم معلومات إدارية</p>
             <p><strong>القسم / الإدارة:</strong> قسم تقنية المعلومات</p>
-            <p><strong>المشرف المسؤول عن الوظيفة:</strong> د. علي سلمان</p>
-            <p><strong>موجز عام عن الوظيفة:</strong> مسؤول عن تحليل وتقييم أنظمة المعلومات الإدارية لتحسين العمليات وزيادة الكفاءة.</p>
+            <p><strong>المشرف المسؤول:</strong> د. علي سلمان</p>
+            <p><strong>موجز الوظيفة:</strong> مسؤول عن تحليل وتقييم أنظمة المعلومات الإدارية لتحسين العمليات وزيادة الكفاءة.</p>
         </div>
 
         <!-- بطاقة الواجبات -->
@@ -382,130 +282,55 @@
         <!-- بطاقة المسؤوليات -->
         <div class="card">
             <h2>مسؤوليات الوظيفة</h2>
-            <p><strong>المسؤولية المالية:</strong> إدارة الميزانية الخاصة بالمشاريع التقنية.</p>
-            <p><strong>المسؤولية الفنية:</strong> ضمان جودة الأنظمة المطورة.</p>
-            <p><strong>المسؤولية الإدارية:</strong> تنسيق العمل بين الفرق المختلفة.</p>
+            <ul>
+                <li><i class="fas fa-check"></i> إدارة الميزانية الخاصة بالمشاريع التقنية.</li>
+                <li><i class="fas fa-check"></i> ضمان جودة الأنظمة المطورة.</li>
+                <li><i class="fas fa-check"></i> تنسيق العمل بين الفرق المختلفة.</li>
+            </ul>
         </div>
 
         <!-- بطاقة المتطلبات -->
         <div class="card">
-            <h2>متطلبات وشروط الوظيفة</h2>
+            <h2>متطلبات الوظيفة</h2>
             <ul>
                 <li><i class="fas fa-graduation-cap"></i> <strong>المستوى التعليمي:</strong> بكالوريوس في نظم المعلومات الإدارية أو ما يعادله.</li>
                 <li><i class="fas fa-cogs"></i> <strong>المهارات:</strong> تحليل البيانات، البرمجة، إدارة المشاريع.</li>
-                <li><i class="fas fa-chart-line"></i> <strong>القدرات:</strong> القدرة على حل المشكلات واتخاذ القرارات.</li>
+                <li><i class="fas fa-chart-line"></i> <strong>القدرات:</strong> حل المشكلات واتخاذ القرارات.</li>
                 <li><i class="fas fa-user-tie"></i> <strong>السمات الشخصية:</strong> التنظيم، القيادة، التواصل الجيد.</li>
             </ul>
         </div>
     </div>
 
-    <!-- قسم الفريق -->
+    <!-- قسم الفريق (اثنين جنب بعض) -->
     <div class="team-section">
         <h2><i class="fas fa-users"></i> فريق العمل</h2>
-        <div class="team-member">
-            <i class="fas fa-user"></i>
-            <h3>يوسف عيد المطيري</h3>
-            <p>طالب - جامعة حفر الباطن</p>
-        </div>
-        <div class="team-member">
-            <i class="fas fa-user"></i>
-            <h3>نايف حسين الشمري</h3>
-            <p>طالب - جامعة حفر الباطن</p>
-        </div>
-        <div class="team-member">
-            <i class="fas fa-user"></i>
-            <h3>مونس إبراهيم الشمري</h3>
-            <p>طالب - جامعة حفر الباطن</p>
-        </div>
-        <div class="team-member">
-            <i class="fas fa-chalkboard-teacher"></i>
-            <h3>د. علي سلمان</h3>
-            <p>المشرف - جامعة حفر الباطن</p>
-        </div>
-    </div>
-
-    <!-- زر الخيارات المخفية -->
-    <button class="toggle-btn" id="toggleOptionsBtn">خيارات إضافية</button>
-
-    <!-- خيارات التحميل والعرض -->
-    <div class="options-container hidden-options" id="hiddenOptions">
-        <a href="#" id="downloadPdf"><i class="fas fa-file-pdf"></i> تحميل كـ PDF</a>
-        <a href="#" id="downloadPpt"><i class="fas fa-file-powerpoint"></i> تحميل كـ PowerPoint</a>
-        <button class="start-presentation-btn" onclick="openPresentation()">ابدأ العرض</button>
-    </div>
-
-    <!-- نافذة العرض التقديمي -->
-    <div class="presentation-mode" id="presentationMode">
-        <div class="presentation-content">
-            <h1>عرض تقديمي للمشروع</h1>
-            <p>مرحبًا! هذا هو العرض التقديمي لمشروع بطاقة الوصف الوظيفي. يمكنك استخدام هذه النافذة لتحويل الموقع إلى عرض تقديمي تفاعلي.</p>
-            <button onclick="closePresentation()">إغلاق العرض</button>
+        <div class="two-columns">
+            <div class="team-member">
+                <i class="fas fa-user"></i>
+                <h3>يوسف عيد المطيري</h3>
+                <p>طالب - جامعة حفر الباطن</p>
+            </div>
+            <div class="team-member">
+                <i class="fas fa-user"></i>
+                <h3>نايف حسين الشمري</h3>
+                <p>طالب - جامعة حفر الباطن</p>
+            </div>
+            <div class="team-member">
+                <i class="fas fa-user"></i>
+                <h3>مونس إبراهيم الشمري</h3>
+                <p>طالب - جامعة حفر الباطن</p>
+            </div>
+            <div class="team-member">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <h3>د. علي سلمان</h3>
+                <p>المشرف - جامعة حفر الباطن</p>
+            </div>
         </div>
     </div>
 
     <footer>
         <p>تم إعداد هذا المشروع بواسطة: يوسف عيد المطيري، نايف حسين الشمري، مونس إبراهيم الشمري | تحت إشراف د. علي سلمان</p>
     </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-docx-js/0.5.0/html-docx.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script>
-        // JavaScript Code
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.card');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, {
-                threshold: 0.5
-            });
-
-            cards.forEach(card => {
-                observer.observe(card);
-            });
-
-            // Toggle Hidden Options
-            const toggleBtn = document.getElementById('toggleOptionsBtn');
-            const hiddenOptions = document.getElementById('hiddenOptions');
-
-            toggleBtn.addEventListener('click', () => {
-                hiddenOptions.style.display = hiddenOptions.style.display === 'none' ? 'block' : 'none';
-            });
-
-            // Download as PDF
-            document.getElementById('downloadPdf').addEventListener('click', () => {
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-                doc.html(document.body, {
-                    callback: function (doc) {
-                        doc.save('job-description.pdf');
-                    },
-                    x: 10,
-                    y: 10
-                });
-            });
-
-            // Download as PowerPoint
-            document.getElementById('downloadPpt').addEventListener('click', () => {
-                const content = document.documentElement.outerHTML;
-                const converted = htmlDocx.asBlob(content);
-                saveAs(converted, 'job-description.pptx');
-            });
-        });
-
-        // Function to open presentation mode
-        function openPresentation() {
-            document.getElementById('presentationMode').classList.add('active');
-        }
-
-        // Function to close presentation mode
-        function closePresentation() {
-            document.getElementById('presentationMode').classList.remove('active');
-        }
-    </script>
 </body>
 
 </html>
