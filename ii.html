@@ -1,192 +1,184 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الخدمات الإلكترونية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+    <title>السيرة الذاتية - يوسف عيد المطيري</title>
+    <!-- تضمين خطوط Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <!-- تضمين مكتبة Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* إعدادات عامة */
-        body {
-            font-family: 'Cairo', sans-serif;
+        /* تنسيقات CSS */
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
-            color: #212529;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            color: #fff;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 20px;
-            position: fixed;
+            text-align: center;
+            padding: 30px 20px;
             width: 100%;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         header h1 {
-            font-size: 1.5rem;
-            margin: 0;
+            font-size: 2em;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-in-out;
         }
 
-        header nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: 600;
-            font-size: 1rem;
+        header p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .intro-section {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: justify;
+        }
+
+        .intro-section h2 {
+            color: #1abc9c;
+            border-bottom: 1px solid #1abc9c;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .intro-section p {
+            line-height: 1.4;
+            margin-bottom: 8px;
+            color: #e0e0e0;
+            font-size: 0.9em;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 100px auto;
-            padding: 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #4CAF50;
-            font-weight: 600;
-        }
-
-        .products {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
         }
 
         .card {
-            background: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 15px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        .card h3 {
-            font-size: 1.2rem;
-            margin: 15px 0;
-            color: #4CAF50;
+        .card h2 {
+            color: #1abc9c;
+            border-bottom: 1px solid #1abc9c;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            text-align: center;
         }
 
         .card p {
-            font-size: 1rem;
-            color: #666;
-            margin: 5px 0;
+            line-height: 1.4;
+            margin-bottom: 6px;
+            color: #e0e0e0;
+            font-size: 0.85em;
+            text-align: justify;
         }
 
-        .card .price {
-            font-size: 1.2rem;
-            color: #28a745;
-            font-weight: 700;
+        .card ul {
+            list-style-type: none;
+            padding: 0;
         }
 
-        .card a {
-            display: inline-block;
-            margin: 10px 0;
-            padding: 10px 20px;
-            color: white;
-            background-color: #007bff;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
+        .card ul li {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            color: #e0e0e0;
+            font-size: 0.85em;
         }
 
-        .card a:hover {
-            background-color: #0056b3;
+        .card ul li i {
+            margin-right: 5px;
+            color: #1abc9c;
+            font-size: 0.9em;
         }
 
-        footer {
-            background-color: #212529;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body>
+    <header>
+        <h1>السيرة الذاتية</h1>
+        <p>يوسف عيد المطيري - طالب في جامعة حفر الباطن | تخصص نظم معلومات</p>
+    </header>
 
-<header>
-    <h1>الخدمات الإلكترونية</h1>
-    <nav>
-        <a href="#about">نبذة</a>
-        <a href="#products">المنتجات</a>
-        <a href="#contact">اتصل بنا</a>
-    </nav>
-</header>
+    <!-- قسم التعريف الشخصي -->
+    <div class="intro-section">
+        <h2><i class="fas fa-user"></i> نبذة عنّي</h2>
+        <p>مرحبًا! أنا يوسف عيد المطيري، طالب في جامعة حفر الباطن متخصص في نظم المعلومات. أحب العمل مع التكنولوجيا وتطوير الأنظمة البسيطة. لدي شغف بالتعلم المستمر وأسعى لتحسين مهاراتي في البرمجة وتحليل البيانات.</p>
+        <p><strong>رقم الجوال:</strong> 0565464718</p>
+    </div>
 
-<div class="container">
-    <!-- نبذة عن الموقع -->
-    <section id="about">
-        <h2 class="section-title">نبذة عن الموقع</h2>
-        <p style="text-align: center;">
-            نقدم خدمات إلكترونية متنوعة مثل التسجيل في برامج الدعم الحكومي، تجهيز الوثائق الرسمية، وخدمات العقود الإلكترونية.
-        </p>
-    </section>
-
-    <!-- المنتجات -->
-    <section id="products">
-        <h2 class="section-title">المنتجات</h2>
-        <div class="products">
-            <div class="card">
-                <img src="https://k.top4top.io/p_32843fghi0.jpeg" alt="الضمان الاجتماعي">
-                <h3>الضمان الاجتماعي</h3>
-                <p class="price">50 ريال</p>
-                <a href="https://wa.me/966565464718?text=أرغب%20في%20طلب%20خدمة%20الضمان%20الاجتماعي">طلب الخدمة</a>
-            </div>
-            <div class="card">
-                <img src="https://l.top4top.io/p_3284yf7451.jpeg" alt="حساب المواطن">
-                <h3>حساب المواطن</h3>
-                <p class="price">30 ريال</p>
-                <a href="https://wa.me/966565464718?text=أرغب%20في%20طلب%20خدمة%20حساب%20المواطن">طلب الخدمة</a>
-            </div>
-            <div class="card">
-                <img src="https://a.top4top.io/p_32843grkb0.jpeg" alt="دعم ريف">
-                <h3>دعم ريف</h3>
-                <p class="price">120 ريال</p>
-                <a href="https://wa.me/966565464718?text=أرغب%20في%20طلب%20خدمة%20دعم%20ريف">طلب الخدمة</a>
-            </div>
-            <div class="card">
-                <img src="https://c.top4top.io/p_3284voray0.jpeg" alt="وثيقة العمل الحر">
-                <h3>وثيقة العمل الحر</h3>
-                <p class="price">50 ريال</p>
-                <a href="https://wa.me/966565464718?text=أرغب%20في%20طلب%20وثيقة%20العمل%20الحر">طلب الخدمة</a>
-            </div>
-            <div class="card">
-                <img src="https://e.top4top.io/p_3284ipmzp2.png" alt="عقد الإيجار">
-                <h3>عقد الإيجار</h3>
-                <p class="price">350 ريال</p>
-                <a href="https://wa.me/966565464718?text=أرغب%20في%20طلب%20عقد%20الإيجار">طلب الخدمة</a>
-            </div>
+    <!-- البطاقات (اثنتين جنب بعض) -->
+    <div class="container">
+        <!-- بطاقة المهارات -->
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> المهارات</h2>
+            <ul>
+                <li><i class="fas fa-check"></i> استخدام برامج الكمبيوتر الأساسية (Word, Excel)</li>
+                <li><i class="fas fa-check"></i> معرفة بسيطة بلغة البرمجة Python</li>
+                <li><i class="fas fa-check"></i> تحليل البيانات باستخدام Excel</li>
+                <li><i class="fas fa-check"></i> تصميم عروض تقديمية بسيطة</li>
+            </ul>
         </div>
-    </section>
-</div>
 
-<footer>
-    &copy; 2024 الخدمات الإلكترونية. جميع الحقوق محفوظة.
-</footer>
-
+        <!-- بطاقة الخبرات -->
+        <div class="card">
+            <h2><i class="fas fa-briefcase"></i> الخبرات</h2>
+            <ul>
+                <li><i class="fas fa-check"></i> المشاركة في مشروع صغير لإدارة الجداول الدراسية</li>
+                <li><i class="fas fa-check"></i> العمل على تحليل بيانات بسيطة باستخدام Excel</li>
+                <li><i class="fas fa-check"></i> إعداد عروض تقديمية لمشاريع الجامعة</li>
+            </ul>
+        </div>
+    </div>
 </body>
+
 </html>
