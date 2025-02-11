@@ -1,288 +1,106 @@
-<!DOCTYPE html> 
-<html lang="ar">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كلية إدارة الأعمال</title>
+    <title>دليل إدارة الموارد البشرية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            box-sizing: border-box;
         }
-        /* الشريط العلوي */
-        .navbar {
-            overflow: hidden;
-            background-color: #603913;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            padding: 5px 0;
-            transition: top 0.3s;
-        }
-        .navbar a {
-            color: white;
-            text-align: center;
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 16px;
-            display: inline-block;
-        }
-        .navbar a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-        /* إزالة القائمة الجانبية */
-        .menu {
-            display: none;
-        }
-        /* التنسيق العام */
-        header {
-            background-color: #603913;
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
             color: #fff;
-            padding: 100px 0;
             text-align: center;
-        }
-        header h1 {
-            font-size: 48px;
-            margin: 0;
-        }
-        header p {
-            font-size: 20px;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 20px 0;
-        }
-        .services {
+            line-height: 1.6;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .service-box {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-radius: 10px;
-            width: 22%;
-            margin: 10px 0;
-        }
-        .service-box h3 {
-            color: #603913; /* لون بني للعناوين */
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
-        .service-box p {
-            font-size: 16px;
-            color: #666;
-        }
-        footer {
-            background-color: #603913;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-        }
-        section {
-            padding: 80px 0;
-            margin-top: 50px;
-        }
-        #faculty, #calendar, #achievements {
-            text-align: center;
-        }
-        #faculty h2, #calendar h2, #achievements h2 {
-            color: #603913;
-            font-size: 36px;
-        }
-        #faculty p, #calendar p, #achievements p {
-            color: #666;
-            font-size: 18px;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        /* تحسين تنسيق الجوال */
-        @media screen and (max-width: 600px) {
-            .navbar {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                padding: 5px 0;
-            }
-            .navbar a {
-                float: none;
-                display: inline-block;
-                text-align: center;
-                padding: 8px 12px;
-                font-size: 14px;
-            }
-            .services {
-                flex-direction: column;
-                align-items: center;
-            }
-            .service-box {
-                width: 90%;
-                margin: 10px auto;
-            }
+        header {
+            padding: 40px 20px;
+            width: 100%;
         }
 
-        /* تنسيق بطاقات أعضاء هيئة التدريس */
-        .doctor-card {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 20px;
-            text-align: center;
-            width: 300px;
-            margin: 20px auto;
-            cursor: pointer; /* لإظهار أن البطاقة قابلة للضغط */
-        }
-
-        .doctor-card img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            margin-bottom: 15px;
-        }
-
-        .doctor-card h3 {
-            font-size: 24px;
-            color: #603913;
+        header h1 {
+            font-size: 2.5em;
             margin-bottom: 10px;
         }
 
-        .doctor-card p {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 10px;
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .doctor-card a {
-            font-size: 16px;
-            color: #603913;
+        .chapter-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .chapter-list li {
+            margin: 15px 0;
+            font-size: 1.2em;
+        }
+
+        .chapter-list a {
             text-decoration: none;
+            color: #1abc9c;
+            font-weight: bold;
+            transition: color 0.3s;
         }
 
-        .doctor-card a:hover {
-            text-decoration: underline;
+        .chapter-list a:hover {
+            color: #f1c40f;
         }
 
-        /* سيرة ذاتية */
-        .cv {
-            display: none;
-            padding-top: 10px;
-        }
-
-        .doctor-card.open .cv {
-            display: block;
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            width: 100%;
         }
     </style>
 </head>
+
 <body>
-
-    <!-- الشريط العلوي -->
-    <div class="navbar">
-        <a href="index.html">الرئيسية</a>
-        <a href="faculty.html">أعضاء هيئة التدريس</a>
-        <a href="calendar.html">التقويم الأكاديمي</a>
-    </div>
-
-    <!-- الرئيسية -->
-    <header id="home">
-        <h1> كلية إدارة الأعمال</h1>
-        <p>تحقيق رؤية المملكة 2030</p>
+    <header>
+        <h1>دليل إدارة الموارد البشرية</h1>
+        <p>مادة علمية متكاملة - إصدار 2024</p>
     </header>
 
-    <!-- قسم إنجازات كلية إدارة الأعمال -->
-    <section id="achievements">
-        <h2>إنجازات كلية إدارة الأعمال</h2>
-        <p>إعادة هيكلة البرامج الأكاديمية لمواكبة رؤية المملكة 2030 واحتياجات سوق العمل.</p>
-        <p>استحداث مسارات جديدة في برنامج إدارة الأعمال مثل الإدارة المالية والتسويق.</p>
-        <p>تفعيل برنامج المحاسبة واستحداث برامج نظم المعلومات الإدارية والقانون.</p>
-        <p>تقديم برامج لخدمة المجتمع مثل إدارة الموارد البشرية ودبلوم المحاماة.</p>
-        <p>نحن نضمن توفير أعضاء هيئة تدريس مؤهلين لتقديم تجربة تعليمية رائدة.</p>
-        <p>تحقيق الاعتماد الأكاديمي على مستوى البرامج لضمان جودة التعليم.</p>
-    </section>
-
     <div class="container">
-        <div class="services">
-            <div class="service-box">
-                <h3>تطوير البرامج الأكاديمية</h3>
-                <p>إعادة هيكلة البرامج الأكاديمية لمواكبة رؤية المملكة 2030 واحتياجات سوق العمل.</p>
-            </div>
-            <div class="service-box">
-                <h3>زيادة الطاقة الاستيعابية</h3>
-                <p>تفعيل برنامج المحاسبة واستحداث برامج نظم المعلومات الإدارية والقانون.</p>
-            </div>
-            <div class="service-box">
-                <h3>جودة أعضاء هيئة التدريس</h3>
-                <p>نحن نضمن توفير أعضاء هيئة تدريس مؤهلين لتقديم تجربة تعليمية رائدة.</p>
-            </div>
-            <div class="service-box">
-                <h3>الاعتماد الأكاديمي</h3>
-                <p>تحقيق الاعتماد الأكاديمي على مستوى البرامج لضمان جودة التعليم.</p>
-            </div>
-        </div>
+        <h2>فصول الدليل</h2>
+        <ul class="chapter-list">
+            <li><a href="chapter1.html">الفصل الأول: مقدمة في إدارة الموارد البشرية</a></li>
+            <li><a href="chapter2.html">الفصل الثاني: تحليل وتوصيف الوظائف</a></li>
+            <li><a href="chapter3.html">الفصل الثالث: تخطيط احتياجات الموارد البشرية</a></li>
+            <li><a href="chapter4.html">الفصل الرابع: الاستقطاب والاختيار</a></li>
+            <li><a href="chapter5.html">الفصل الخامس: التدريب وتطوير الموارد البشرية</a></li>
+            <li><a href="chapter6.html">الفصل السادس: تقييم الأداء</a></li>
+            <li><a href="chapter7.html">الفصل السابع: التحفيز في بيئة العمل</a></li>
+            <li><a href="chapter8.html">الفصل الثامن: الأجور والتعويضات</a></li>
+            <li><a href="chapter9.html">الفصل التاسع: الصحة والسلامة المهنية</a></li>
+            <li><a href="chapter10.html">الفصل العاشر: استراتيجيات الصحة والسلامة المهنية</a></li>
+        </ul>
     </div>
 
-    <!-- قسم أعضاء هيئة التدريس -->
-    <section id="faculty">
-        <h2><a href="faculty.html" style="text-decoration: none; color: #603913;">أعضاء هيئة التدريس</a></h2>
-        <p>نعتمد على مجموعة من أفضل الكفاءات التعليمية في مجالات متنوعة.</p>
-    </section>
-
-    <div class="container">
-        <div class="doctor-card" onclick="toggleCV(this)">
-            <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/620/PictureProfile-Pic.jpg" alt="د. عبدالله السعد">
-            <h3>د. عبدالله السعد</h3>
-            <p>أستاذ مساعد في إدارة الأعمال</p>
-            <a href="mailto:aasaad@uhb.edu.sa">aasaad@uhb.edu.sa</a>
-            <div class="cv">
-                <h3>السيرة الذاتية</h3>
-                <p>الدكتور عبد الله خلف السعد هو أستاذ مساعد في جامعة حفر الباطن. حصل على درجة الدكتوراه في إدارة الأعمال من جامعة شمال ماليزيا. لديه خبرة واسعة في القطاعين الخاص والحكومي.</p>
-            </div>
-        </div>
-
-        <div class="doctor-card" onclick="toggleCV(this)">
-            <img src=" https://www.uhb.edu.sa/Lists/MemberShip/Attachments/328/PictureProfile-صوره%20في%20المكتب.jpeg " alt="د. أحمد حسين الرصاص حسين">
-            <h3>د. أحمد حسين الرصاص حسين</h3>
-            <p>وكيل كلية إدارة الأعمال</p>
-            <a href="mailto:drahmedhr
-
-@uhb.edu.sa">drahmedhr@uhb.edu.sa</a>
-            <div class="cv">
-                <h3>السيرة الذاتية</h3>
-                <p>الدكتور أحمد حسين الرصاص هو وكيل كلية إدارة الأعمال في جامعة حفر الباطن. لديه خبرة تعليمية متميزة وبحوث في مجال إدارة الأعمال.</p>
-            </div>
-        </div>
-
-        <div class="doctor-card" onclick="toggleCV(this)">
-            <img src="https://www.uhb.edu.sa/Lists/MemberShip/Attachments/570/PictureProfile-WhatsApp%20Image%202021-09-28%20at%2019.06.33.jpeg" alt="د. عايش الشمري">
-            <h3>عبد العزيز اليوسفي </h3>
-            <p>أستاذ مساعد ومسجل كلية إدارة الأعمال</p>
-            <a href="mailto:abdulazeezalyousfi@uhb.edu.sa:">abdulazeezalyousfi@uhb.edu.sa</a>
-            <div class="cv">
-                <h3>السيرة الذاتية</h3>
-                <p>الدكتور عبد العزيز اليوسفي هو أستاذ مساعد ومسجل في كلية إدارة الأعمال بجامعة حفر الباطن. حصل على درجته العلمية من جامعة كينت في المملكة المتحدة</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- تذييل الصفحة -->
     <footer>
-        <p>© 2024 كلية إدارة الأعمال</p>
+        <p>تم إعداد المحتوى بواسطة فريق الخبراء © 2024</p>
     </footer>
-
-    <script>
-        function toggleCV(card) {
-            card.classList.toggle('open');
-        }
-    </script>
 </body>
+
 </html>
