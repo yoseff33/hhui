@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض تقديمي - نظام الأجور والتحفيز</title>
+    <title>نظام الأجور والتحفيز - جامعة حفر الباطن</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -25,103 +25,29 @@
         body {
             background: #f5f7fa;
             color: var(--dark);
-            overflow: hidden;
+            line-height: 1.7;
         }
 
-        .presentation {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
-        .slides-container {
-            display: flex;
-            height: 100%;
-            transition: transform 0.6s ease-out;
-            will-change: transform;
-        }
-
-        .slide {
-            min-width: 100%;
-            height: 100%;
-            padding: 3rem 8%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow-y: auto;
-        }
-
-        /* تصميم الشرائح */
-        .title-slide {
+        /* رأس الصفحة */
+        .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             text-align: center;
+            padding: 3rem 1rem;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .content-slide {
-            background: white;
-        }
-
-        .section-header {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .section-header::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            right: 50%;
-            transform: translateX(50%);
-            width: 80px;
-            height: 4px;
-            background: var(--secondary);
-        }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            width: 100%;
-            margin-top: 1rem;
-        }
-
-        .info-card {
-            background: #fff;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            border: 1px solid #eee;
-        }
-
-        .card-title {
-            font-size: 1.4rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .card-icon {
-            font-size: 1.5rem;
-            color: var(--secondary);
-        }
-
-        .card-content {
-            line-height: 1.7;
-            font-size: 1.1rem;
-        }
-
-        /* شعار الجامعة */
         .university-logo {
-            width: 180px;
-            height: 180px;
+            width: 150px;
+            height: 150px;
             object-fit: contain;
             margin-bottom: 1.5rem;
             background: white;
@@ -130,323 +56,423 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* أزرار التنقل المحسنة */
-        .nav-buttons {
-            position: fixed;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 100;
+        .main-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
 
-        .nav-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--secondary);
-            border: none;
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-            font-size: 1.1rem;
-        }
-
-        .nav-btn:hover {
-            background: var(--primary);
-            transform: scale(1.1);
-        }
-
-        /* شريحة العنوان */
-        .presentation-title {
-            font-size: 2.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .presentation-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
+        .sub-title {
+            font-size: 1.3rem;
             opacity: 0.9;
+            margin-bottom: 2rem;
         }
 
-        .team-members {
+        .team-info {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin: 2rem 0;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-card {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            min-width: 250px;
+        }
+
+        .team-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 0.5rem;
         }
 
         .member {
             display: flex;
             align-items: center;
+            gap: 0.8rem;
+            margin: 0.8rem 0;
+        }
+
+        /* أقسام المحتوى */
+        .content-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+
+        .section-header {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 3px solid var(--secondary);
+            display: flex;
+            align-items: center;
             gap: 1rem;
-            font-size: 1.2rem;
         }
 
-        .member-icon {
-            color: var(--light);
+        .section-icon {
+            font-size: 1.8rem;
+            color: var(--secondary);
         }
 
-        /* تحسينات للجوال */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .card-icon {
+            font-size: 1.3rem;
+        }
+
+        .card-content {
+            padding-right: 1rem;
+        }
+
+        .card-content ul {
+            padding-right: 1.5rem;
+        }
+
+        .card-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* التذييل */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            margin-top: 3rem;
+        }
+
+        /* زر العودة للأعلى */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
         @media (max-width: 768px) {
-            .slide {
-                padding: 2rem 5%;
+            .container {
+                padding: 1rem;
+            }
+            
+            .header {
+                padding: 2rem 1rem;
+            }
+            
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .content-section {
+                padding: 1.5rem;
             }
             
             .section-header {
-                font-size: 2rem;
+                font-size: 1.6rem;
             }
             
             .content-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .nav-buttons {
-                left: 10px;
-            }
-            
-            .nav-btn {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .university-logo {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .presentation-title {
-                font-size: 2.2rem;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="presentation">
-        <div class="slides-container">
-            <!-- الشريحة 1 - المقدمة -->
-            <section class="slide title-slide">
-                <!-- تم تضمين الشعار كصورة مباشرة -->
-                <img src="https://i.ibb.co/9cVbHqy/university-logo.png" alt="شعار جامعة حفر الباطن" class="university-logo">
-                <h1 class="presentation-title">نظام الأجور والتحفيز</h1>
-                <p class="presentation-subtitle">دراسة تحليلية للتحديات والحلول</p>
-                
-                <div class="team-members">
-                    <div class="member">
-                        <i class="fas fa-user member-icon"></i>
-                        <span>يوسف عيد دليم المطيري</span>
-                    </div>
-                    <div class="member">
-                        <i class="fas fa-user member-icon"></i>
-                        <span>نايف حسين الشمري</span>
-                    </div>
-                    <div class="member">
-                        <i class="fas fa-user member-icon"></i>
-                        <span>مونس ابراهيم الشمري</span>
-                    </div>
-                </div>
-                
-                <div class="team-members">
-                    <div class="member">
-                        <i class="fas fa-user-tie member-icon"></i>
-                        <span>د. علي سليمان محمد إمام</span>
-                    </div>
-                    <div class="member">
-                        <i class="fas fa-book member-icon"></i>
-                        <span>إدارة الموارد البشرية - MGT323</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- الشريحة 2 - تعريف الأجور (تم التعديل) -->
-            <section class="slide content-slide">
-                <h2 class="section-header"><i class="fas fa-money-bill-wave card-icon"></i> نظام الأجور</h2>
-                <div class="content-grid">
-                    <div class="info-card">
-                        <h3 class="card-title"><i class="fas fa-check-circle"></i> المميزات</h3>
-                        <div class="card-content">
-                            <ul>
-                                <li>يوفر حزمة تعويضات عادلة للموظفين</li>
-                                <li>يساهم في جذب الكفاءات المؤهلة</li>
-                                <li>يعزز العدالة التنظيمية الداخلية</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="info-card">
-                        <h3 class="card-title"><i class="fas fa-times-circle"></i> التحديات</h3>
-                        <div class="card-content">
-                            <ul>
-                                <li>صعوبة تحديد المستويات المناسبة</li>
-                                <li>التأثر بالتقلبات الاقتصادية</li>
-                                <li>عدم مراعاة الفروق الفردية</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- الشريحة 3 - نظام التحفيز -->
-            <section class="slide content-slide">
-                <h2 class="section-header"><i class="fas fa-medal card-icon"></i> نظام التحفيز</h2>
-                <div class="content-grid">
-                    <div class="info-card">
-                        <h3 class="card-title"><i class="fas fa-check-circle"></i> الفوائد</h3>
-                        <div class="card-content">
-                            <ul>
-                                <li>يزيد من إنتاجية الموظفين</li>
-                                <li>يحسن من الرضا الوظيفي</li>
-                                <li>يعزز الولاء للمؤسسة</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="info-card">
-                        <h3 class="card-title"><i class="fas fa-times-circle"></i> المشكلات</h3>
-                        <div class="card-content">
-                            <ul>
-                                <li>اختلاف الدوافع بين الأفراد</li>
-                                <li>التكلفة العالية للحوافز المادية</li>
-                                <li>صعوبة قياس الأثر الفعلي</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- الشريحة 4 - التحديات -->
-            <section class="slide content-slide">
-                <h2 class="section-header"><i class="fas fa-exclamation-triangle card-icon"></i> التحديات الرئيسية</h2>
-                <div class="content-grid">
-                    <div class="info-card">
-                        <h3 class="card-title"><i class="fas fa-chart-line"></i> تحديات الأجور</h3>
-                        <div class="card-content">
-                            <ul>
-                                <li>عدم التوازن بين الكفاءة والعدالة</li>
-                                <li>صعوبة التكيف مع التضخم</li>
-                                <li>القيود الحكومية والتنظيمية</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="info-card">
-                        <h3 class="card-title"><i class="fas fa-users"></i> تحديات التحفيز</h3>
-                        <div class="card-content">
-                            <ul>
-                                <li>عدم وضوح معايير التقييم</li>
-                                <li>قصور أنظمة القياس</li>
-                                <li>صعوبة استدامة الحوافز</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- الشريحة 5 - الحلول -->
-            <section class="slide content-slide">
-                <h2 class="section-header"><i class="fas fa-lightbulb card-icon"></i> الحلول المقترحة</h2>
-                <div class="content-grid">
-                    <div class="info-card">
-                        <h3 class="card-title"><i class="fas fa-cogs"></i> حلول هيكلية</h3>
-                        <div class="card-content">
-                            <ul>
-                                <li>إجراء دراسات سوقية دورية</li>
-                                <li>ربط الأجور بمؤشرات الأداء</li>
-                                <li>إنشاء أنظمة مرنة قابلة للتكيف</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="info-card">
-                        <h3 class="card-title"><i class="fas fa-hands-helping"></i> حلول تنظيمية</h3>
-                        <div class="card-content">
-                            <ul>
-                                <li>تطوير برامج تدريب للمدراء</li>
-                                <li>إنشاء أنظمة تقييم شاملة</li>
-                                <li>مشاركة الموظفين في التخطيط</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- الشريحة 6 - الخاتمة -->
-            <section class="slide title-slide">
-                <h1 class="presentation-title">خاتمة وتوصيات</h1>
-                <div class="content-grid" style="max-width: 600px; margin: 2rem auto;">
-                    <div class="info-card">
-                        <div class="card-content">
-                            <ul>
-                                <li>أهمية تحقيق التوازن بين العدالة والكفاءة</li>
-                                <li>ضرورة المراجعة الدورية للأنظمة</li>
-                                <li>تعزيز الثقافة التنظيمية الداعمة</li>
-                            </ul>
-                            <p style="text-align: center; margin-top: 2rem; font-weight: bold;">
-                                شكراً لحسن استماعكم
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- أزرار التنقل المحسنة -->
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="moveSlide(-1)"><i class="fas fa-arrow-right"></i></button>
-            <button class="nav-btn" onclick="moveSlide(1)"><i class="fas fa-arrow-left"></i></button>
-        </div>
+    <!-- زر العودة للأعلى -->
+    <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-arrow-up"></i>
     </div>
 
+    <!-- رأس الصفحة -->
+    <header class="header">
+        <img src="https://i.ibb.co/9cVbHqy/university-logo.png" alt="شعار جامعة حفر الباطن" class="university-logo">
+        <h1 class="main-title">نظام الأجور والتحفيز</h1>
+        <p class="sub-title">دراسة تحليلية للتحديات والحلول</p>
+        
+        <div class="team-info">
+            <div class="team-card">
+                <h3 class="team-title"><i class="fas fa-users"></i> فريق العمل</h3>
+                <div class="member">
+                    <i class="fas fa-user"></i>
+                    <span>يوسف عيد دليم المطيري</span>
+                </div>
+                <div class="member">
+                    <i class="fas fa-user"></i>
+                    <span>نايف حسين الشمري</span>
+                </div>
+                <div class="member">
+                    <i class="fas fa-user"></i>
+                    <span>مونس ابراهيم الشمري</span>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <h3 class="team-title"><i class="fas fa-info-circle"></i> معلومات المشروع</h3>
+                <div class="member">
+                    <i class="fas fa-user-tie"></i>
+                    <span>د. علي سليمان محمد إمام</span>
+                </div>
+                <div class="member">
+                    <i class="fas fa-book"></i>
+                    <span>إدارة الموارد البشرية - MGT323</span>
+                </div>
+                <div class="member">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>١٤٤٥/٠٥/١٠ هـ</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <!-- قسم نظام الأجور -->
+        <section class="content-section">
+            <h2 class="section-header">
+                <i class="fas fa-money-bill-wave section-icon"></i>
+                نظام الأجور
+            </h2>
+            
+            <div class="content-grid">
+                <div class="info-card">
+                    <h3 class="card-title">
+                        <i class="fas fa-check-circle card-icon" style="color: #2ecc71;"></i>
+                        المميزات
+                    </h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>يوفر حزمة تعويضات عادلة للموظفين</li>
+                            <li>يساهم في جذب الكفاءات المؤهلة</li>
+                            <li>يعزز العدالة التنظيمية الداخلية</li>
+                            <li>يربط الأجر بالأداء والإنجازات</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3 class="card-title">
+                        <i class="fas fa-times-circle card-icon" style="color: #e74c3c;"></i>
+                        التحديات
+                    </h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>صعوبة تحديد المستويات المناسبة</li>
+                            <li>التأثر بالتقلبات الاقتصادية</li>
+                            <li>عدم مراعاة الفروق الفردية</li>
+                            <li>القيود الحكومية والتنظيمية</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم التحفيز -->
+        <section class="content-section">
+            <h2 class="section-header">
+                <i class="fas fa-medal section-icon"></i>
+                نظام التحفيز
+            </h2>
+            
+            <div class="content-grid">
+                <div class="info-card">
+                    <h3 class="card-title">
+                        <i class="fas fa-check-circle card-icon" style="color: #2ecc71;"></i>
+                        الفوائد
+                    </h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>يزيد من إنتاجية الموظفين</li>
+                            <li>يحسن من الرضا الوظيفي</li>
+                            <li>يعزز الولاء للمؤسسة</li>
+                            <li>يشجع على الإبداع والابتكار</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3 class="card-title">
+                        <i class="fas fa-times-circle card-icon" style="color: #e74c3c;"></i>
+                        المشكلات
+                    </h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>اختلاف الدوافع بين الأفراد</li>
+                            <li>التكلفة العالية للحوافز المادية</li>
+                            <li>صعوبة قياس الأثر الفعلي</li>
+                            <li>عدم وضوح معايير التقييم</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم التحديات -->
+        <section class="content-section">
+            <h2 class="section-header">
+                <i class="fas fa-exclamation-triangle section-icon"></i>
+                التحديات الرئيسية
+            </h2>
+            
+            <div class="content-grid">
+                <div class="info-card">
+                    <h3 class="card-title">
+                        <i class="fas fa-chart-line card-icon"></i>
+                        تحديات الأجور
+                    </h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>عدم التوازن بين الكفاءة والعدالة</li>
+                            <li>صعوبة التكيف مع التضخم</li>
+                            <li>القيود الحكومية والتنظيمية</li>
+                            <li>اختلاف تكاليف المعيشة بين المناطق</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3 class="card-title">
+                        <i class="fas fa-users card-icon"></i>
+                        تحديات التحفيز
+                    </h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>عدم وضوح معايير التقييم</li>
+                            <li>قصور أنظمة القياس</li>
+                            <li>صعوبة استدامة الحوافز</li>
+                            <li>اختلاف الثقافات التنظيمية</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الحلول -->
+        <section class="content-section">
+            <h2 class="section-header">
+                <i class="fas fa-lightbulb section-icon"></i>
+                الحلول المقترحة
+            </h2>
+            
+            <div class="content-grid">
+                <div class="info-card">
+                    <h3 class="card-title">
+                        <i class="fas fa-cogs card-icon"></i>
+                        حلول هيكلية
+                    </h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>إجراء دراسات سوقية دورية</li>
+                            <li>ربط الأجور بمؤشرات الأداء</li>
+                            <li>إنشاء أنظمة مرنة قابلة للتكيف</li>
+                            <li>تطوير هيكل أجور متدرج</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3 class="card-title">
+                        <i class="fas fa-hands-helping card-icon"></i>
+                        حلول تنظيمية
+                    </h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>تطوير برامج تدريب للمدراء</li>
+                            <li>إنشاء أنظمة تقييم شاملة</li>
+                            <li>مشاركة الموظفين في التخطيط</li>
+                            <li>تعزيز الشفافية في القرارات</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الخاتمة -->
+        <section class="content-section">
+            <h2 class="section-header">
+                <i class="fas fa-star section-icon"></i>
+                الخاتمة والتوصيات
+            </h2>
+            
+            <div class="content-grid">
+                <div class="info-card" style="grid-column: 1 / -1;">
+                    <h3 class="card-title">
+                        <i class="fas fa-clipboard-check card-icon"></i>
+                        النتائج الرئيسية
+                    </h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>أهمية تحقيق التوازن بين العدالة والكفاءة في أنظمة الأجور</li>
+                            <li>ضرورة الربط بين التحفيز والأداء الفعلي للموظفين</li>
+                            <li>الحاجة إلى أنظمة مرنة تستجيب للتغيرات الاقتصادية</li>
+                            <li>أهمية الشفافية والمشاركة في صنع القرار</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- تذييل الصفحة -->
+    <footer class="footer">
+        <p>جامعة حفر الباطن - كلية إدارة الأعمال - قسم إدارة الأعمال</p>
+        <p>إعداد: يوسف المطيري، نايف الشمري، مونس الشمري</p>
+        <p>جميع الحقوق محفوظة &copy; 2023</p>
+    </footer>
+
     <script>
-        let currentSlide = 0;
-        const slides = document.querySelector('.slides-container');
-        const totalSlides = document.querySelectorAll('.slide').length;
-        let isAnimating = false;
-
-        function moveSlide(direction) {
-            if (isAnimating) return;
-            
-            isAnimating = true;
-            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
-            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
-            
-            setTimeout(() => {
-                isAnimating = false;
-            }, 600);
-        }
-
-        // تحسين التحكم بلوحة المفاتيح
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') moveSlide(-1);
-            if (e.key === 'ArrowLeft') moveSlide(1);
-        });
-
-        // تحسين التحكم بالسحب على الأجهزة اللماسة
-        let touchStartX = 0;
-        let touchEndX = 0;
-        const touchThreshold = 50;
-
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].clientX;
-        }, { passive: true });
-
-        document.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].clientX;
-            handleSwipe();
-        }, { passive: true });
-
-        function handleSwipe() {
-            if (Math.abs(touchEndX - touchStartX) < touchThreshold) return;
-            
-            if (touchEndX < touchStartX) moveSlide(1);
-            if (touchEndX > touchStartX) moveSlide(-1);
-        }
-
-        // التأكد من تحميل الصفحة بشكل صحيح
-        window.addEventListener('load', () => {
-            slides.style.transform = 'translateX(0)';
+        // إظهار/إخفاء زر العودة للأعلى
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
         });
     </script>
 </body>
