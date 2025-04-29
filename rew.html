@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الثورة الذكية في إدارة الشبكات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --cyber-purple: #bc13fe;
+            --matrix-green: #00ff9d;
+            --hologram-bg: linear-gradient(45deg, #0a0a2e, #1a1a4f);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background: var(--hologram-bg);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* تصميم الهيدر */
+        .cyber-header {
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-header::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--neon-blue) 0%, transparent 70%);
+            animation: pulse 8s infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.1; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.3; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.1; }
+        }
+
+        .title-box {
+            background: rgba(0,0,0,0.8);
+            padding: 2rem;
+            border: 3px solid var(--matrix-green);
+            border-radius: 20px;
+            box-shadow: 0 0 30px var(--matrix-green);
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-family: 'Cairo';
+            background: linear-gradient(45deg, var(--neon-blue), var(--cyber-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.8rem;
+            margin: 1rem 0;
+        }
+
+        /* فريق العمل */
+        .cyber-team {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .member-card {
+            text-align: center;
+            padding: 1.5rem;
+            border: 2px solid var(--cyber-purple);
+            border-radius: 15px;
+            background: rgba(188,19,254,0.1);
+            transition: all 0.3s;
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px var(--cyber-purple);
+        }
+
+        .member-icon {
+            font-size: 2.5rem;
+            color: var(--neon-blue);
+            margin-bottom: 1rem;
+        }
+
+        /* المحتوى الأكاديمي */
+        .cyber-article {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .chapter {
+            background: rgba(0,0,0,0.7);
+            border: 2px solid var(--neon-blue);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 45%,
+                var(--matrix-green) 50%,
+                transparent 55%);
+            animation: scan 6s infinite linear;
+        }
+
+        @keyframes scan {
+            100% { transform: translate(100%, 100%); }
+        }
+
+        .chapter-header {
+            font-family: 'Cairo';
+            color: var(--matrix-green);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .chapter-content {
+            position: relative;
+            z-index: 1;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .ai-feature {
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background: rgba(255,255,255,0.05);
+            border-left: 4px solid var(--neon-blue);
+            border-radius: 10px;
+        }
+
+        /* القائمة الجانبية */
+        .cyber-nav {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            width: 15px;
+            height: 15px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-item.active {
+            background: var(--matrix-green);
+            transform: scale(1.5);
+            box-shadow: 0 0 10px var(--matrix-green);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .chapter-header { font-size: 1.8rem; }
+            .cyber-nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- القائمة الجانبية -->
+    <div class="cyber-nav">
+        <div class="nav-item active" onclick="scrollToSection(0)"></div>
+        <div class="nav-item" onclick="scrollToSection(1)"></div>
+        <div class="nav-item" onclick="scrollToSection(2)"></div>
+        <div class="nav-item" onclick="scrollToSection(3)"></div>
+    </div>
+
+    <!-- الهيدر -->
+    <div class="cyber-header">
+        <div class="title-box">
+            <i class="fa-solid fa-brain-circuit" style="font-size: 3rem; color: var(--matrix-green); margin-bottom: 1rem;"></i>
+            <h1>تأثير الذكاء الاصطناعي على الشبكات والاتصالات</h1>
+            <p style="color: var(--neon-blue);">مادة: إدارة شبكات والاتصال</p>
+            <p style="color: var(--cyber-purple);">إشراف: د. عبد الرحمن السريحي</p>
+        </div>
+    </div>
+
+    <!-- فريق العمل -->
+    <div class="cyber-team">
+        <div class="member-card">
+            <i class="fa-solid fa-user-astronaut member-icon"></i>
+            <h3>يوسف عيد المطيري</h3>
+            <p>محلل أنظمة ذكية</p>
+        </div>
+        <div class="member-card">
+            <i class="fa-solid fa-robot member-icon"></i>
+            <h3>نايف حسين الشمري</h3>
+            <p>خبير أمن سيبراني</p>
+        </div>
+        <div class="member-card">
+            <i class="fa-solid fa-microchip member-icon"></i>
+            <h3>مونس إبراهيم الشمري</h3>
+            <p>مهندس شبكات عصبية</p>
+        </div>
+        <div class="member-card">
+            <i class="fa-solid fa-network-wired member-icon"></i>
+            <h3>مطلق بزيع السهلي</h3>
+            <p>مطور حلول AI</p>
+        </div>
+        <div class="member-card">
+            <i class="fa-solid fa-shield-halved member-icon"></i>
+            <h3>مبارك محمد السهلي</h3>
+            <p>خبير تحليل بيانات</p>
+        </div>
+    </div>
+
+    <!-- المحتوى الأكاديمي -->
+    <div class="cyber-article">
+        <!-- المقدمة -->
+        <div class="chapter" id="section1">
+            <div class="chapter-header">
+                <i class="fa-solid fa-brain-circuit"></i>
+                مقدمة: التحول الرقمي غير المسبوق
+            </div>
+            <div class="chapter-content">
+                <div class="ai-feature">
+                    <p>في العقد الأخير، شهدت إدارة الشبكات تحولًا جذريًا باستخدام الذكاء الاصطناعي...</p>
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                        <div style="flex: 1; padding: 1rem; background: rgba(0,243,255,0.1); border-radius: 10px;">
+                            <i class="fa-solid fa-chart-line" style="color: var(--matrix-green);"></i>
+                            <h4>+85% كفاءة</h4>
+                            <p>تحسين في إدارة الموارد</p>
+                        </div>
+                        <div style="flex: 1; padding: 1rem; background: rgba(188,19,254,0.1); border-radius: 10px;">
+                            <i class="fa-solid fa-shield-halved" style="color: var(--neon-blue);"></i>
+                            <h4>-92% هجمات</h4>
+                            <p>انخفاض التهديدات الأمنية</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الفصل الأول -->
+        <div class="chapter" id="section2">
+            <div class="chapter-header">
+                <i class="fa-solid fa-atom"></i>
+                الأسس النظرية للذكاء الاصطناعي
+            </div>
+            <div class="chapter-content">
+                <div class="ai-feature">
+                    <h3><i class="fa-solid fa-robot"></i> تعلم الآلة</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                        <div style="padding: 1rem; background: rgba(0,255,157,0.1); border-radius: 10px;">
+                            <h4><i class="fa-solid fa-eye"></i> التعلم الخاضع للإشراف</h4>
+                            <p>دقة تصنيف تصل إلى 98.7%</p>
+                        </div>
+                        <div style="padding: 1rem; background: rgba(188,19,254,0.1); border-radius: 10px;">
+                            <h4><i class="fa-solid fa-magnifying-glass"></i> التعلم غير الخاضع</h4>
+                            <p>تحليل أنماط المستخدمين</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الفصل الثاني -->
+        <div class="chapter" id="section3">
+            <div class="chapter-header">
+                <i class="fa-solid fa-network-wired"></i>
+                إدارة الشبكات الذكية
+            </div>
+            <div class="chapter-content">
+                <div class="ai-feature">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                        <div style="padding: 1.5rem; border: 2px solid var(--neon-blue); border-radius: 15px;">
+                            <h4><i class="fa-solid fa-radar"></i> المراقبة الذكية</h4>
+                            <ul style="list-style: none; padding: 0;">
+                                <li><i class="fa-solid fa-check" style="color: var(--matrix-green);"></i> تحليل 10TB بيانات/ثانية</li>
+                                <li><i class="fa-solid fa-check" style="color: var(--matrix-green);"></i> تنبؤ بالأعطاب قبل 48 ساعة</li>
+                            </ul>
+                        </div>
+                        <div style="padding: 1.5rem; border: 2px solid var(--cyber-purple); border-radius: 15px;">
+                            <h4><i class="fa-solid fa-route"></i> التوجيه الذكي</h4>
+                            <p>خفض زمن التأخير إلى 2.3ms</p>
+                            <div style="height: 5px; background: rgba(255,255,255,0.1); margin: 1rem 0;">
+                                <div style="width: 92%; height: 100%; background: linear-gradient(90deg, var(--matrix-green), var(--neon-blue));"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // كود الجافاسكريبت للتحكم في التمرير
+        function scrollToSection(index) {
+            const sections = document.querySelectorAll('.chapter');
+            sections[index].scrollIntoView({behavior: 'smooth'});
+            updateNavDots(index);
+        }
+
+        function updateNavDots(activeIndex) {
+            document.querySelectorAll('.nav-item').forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeIndex);
+            });
+        }
+
+        // تفعيل التتبع التلقائي للقسم النشط
+        window.addEventListener('scroll', () => {
+            const chapters = document.querySelectorAll('.chapter');
+            chapters.forEach((chapter, index) => {
+                const rect = chapter.getBoundingClientRect();
+                if (rect.top <= 150 && rect.bottom >= 150) {
+                    updateNavDots(index);
+                }
+            });
+        });
+
+        // تأثيرات عند التحميل
+        window.onload = () => {
+            document.querySelectorAll('.member-card').forEach(card => {
+                card.style.transform = 'translateY(50px)';
+                card.style.opacity = '0';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease-out';
+                    card.style.transform = 'translateY(0)';
+                    card.style.opacity = '1';
+                }, 500);
+            });
+        };
+    </script>
+</body>
+</html>
