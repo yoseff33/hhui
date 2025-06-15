@@ -1,0 +1,144 @@
+فكرت اسوي جريدة 
+وهذي كود الجريدة 
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>جريدة توني</title>
+
+  <!-- خطوط Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome للرموز -->
+  <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script> <!-- ← ضع الكود الخاص بك هنا -->
+
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #f3eee8;
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .newspaper {
+      background: #fffdf8;
+      width: 400px;
+      padding: 30px 35px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      border: 1px solid #ddd;
+    }
+
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #a67c52;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 32px;
+      color: #5b3c1d;
+    }
+
+    .header p {
+      font-size: 15px;
+      color: #7d5e3c;
+      margin-top: 6px;
+    }
+
+    .news h3 {
+      font-size: 16px;
+      color: #3a2a1b;
+      margin-bottom: 4px;
+    }
+
+    .news p {
+      font-size: 14px;
+      color: #5e4b3c;
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+
+    .puzzle-section {
+      border-top: 1px dashed #bbb;
+      padding-top: 15px;
+      margin-top: 20px;
+    }
+
+    .puzzle-section h3 {
+      font-size: 16px;
+      color: #3a2a1b;
+      margin-bottom: 8px;
+    }
+
+    .puzzle-section p {
+      font-size: 14px;
+      color: #4a3b2b;
+    }
+
+    .code-box {
+      font-family: monospace;
+      font-size: 18px;
+      background-color: #f0e9da;
+      padding: 6px 12px;
+      display: inline-block;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    .reward-box {
+      margin-top: 15px;
+      background-color: #fff4d5;
+      padding: 12px;
+      border: 1px dashed #e0b760;
+      font-size: 14px;
+      color: #5a3a00;
+      border-radius: 8px;
+    }
+
+    .reward-box strong {
+      color: #bb7d00;
+    }
+  </style>
+</head>
+<body>
+  <div class="newspaper">
+    <div class="header">
+      <h1>توني</h1>
+      <p><i class="fas fa-mug-hot"></i> نغمة اليوم تبدأ مع فنجان وفضول</p>
+    </div>
+
+    <div class="news">
+      <h3><i class="fas fa-solar-panel"></i> تجربة طيران بالطاقة الشمسية</h3>
+      <p>ناسا تعلن عن نجاح أول طائرة تعمل بالطاقة الشمسية فقط وتحلق لـ72 ساعة فوق صحراء نيفادا.</p>
+
+      <h3><i class="fab fa-bitcoin"></i> سوق العملات الرقمية يهتز</h3>
+      <p>هبوط غير متوقع في أسعار بيتكوين وسط مخاوف من تشريعات تنظيمية في أوروبا وآسيا.</p>
+
+      <h3><i class="fas fa-seedling"></i> الذكاء الاصطناعي في التمور</h3>
+      <p>شركة سعودية تطلق نظام تصنيف ذكي لفرز التمور حسب الحجم والنضج في أقل من 3 ثوانٍ.</p>
+    </div>
+
+    <div class="puzzle-section">
+      <h3><i class="fas fa-lock"></i> لعبة الشيفرة المخبأة</h3>
+      <p>
+        الرسالة المشفّرة:
+        <span class="code-box">ثغ ةصاوم زل!</span><br>
+        كل حرف تم تبديله بحرفين بعده في الأبجدية.  
+        <br><br>هل تستطيع فك الرسالة؟
+      </p>
+
+      <div class="reward-box">
+        <strong>🎁 إذا فكّيت الشيفرة:</strong><br>
+        خذ قهوتك المجانية من <strong>توني</strong> بكل فخر،  
+        لأن الذكاء يستحق Espresso على حسابنا ☕️
+      </div>
+    </div>
+  </div>
+</body>
+</html>
