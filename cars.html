@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <!-- نفس الهيدر السابق مع تغيير العنوان -->
+    <title>وُجْهَة | مسارك الآمن لإيجاد السيارة المثالية</title>
+</head>
+<body>
+    <!-- نفس الهيدر مع تغيير الصفحة النشطة -->
+    <header>
+        <nav class="navbar">
+            <!-- ... -->
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="cars.html" class="active">معرض السيارات</a></li>
+                <!-- ... -->
+            </ul>
+        </nav>
+    </header>
+
+    <section class="cars-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>استكشف السيارات المتاحة</h2>
+                <p>اختر من بين مجموعة واسعة من السيارات التي تناسب احتياجاتك</p>
+            </div>
+            
+            <div class="cars-filter">
+                <button class="filter-btn active">الكل</button>
+                <button class="filter-btn">سيدان</button>
+                <button class="filter-btn">دفع رباعي</button>
+                <button class="filter-btn">فاخرة</button>
+                <button class="filter-btn">اقتصادية</button>
+            </div>
+            
+            <div class="cars-grid">
+                <!-- بطاقات السيارات -->
+                <div class="car-card">
+                    <div class="car-img">
+                        <img src="assets/images/car1.jpg" alt="تويوتا كامري">
+                        <div class="car-badge">الأكثر طلباً</div>
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header">
+                            <h3 class="car-title">تويوتا كامري 2022</h3>
+                            <div class="car-price">85 <span>ريال/اليوم</span></div>
+                        </div>
+                        <div class="car-meta">
+                            <!-- مواصفات السيارة -->
+                        </div>
+                        <a href="car-details.html?id=1" class="btn btn-primary">تفاصيل السيارة</a>
+                    </div>
+                </div>
+                <!-- المزيد من السيارات -->
+            </div>
+        </div>
+    </section>
+</body>
+</html>
