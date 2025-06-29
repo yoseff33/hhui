@@ -1,33 +1,51 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>SmartDecision - المستشار الذكي</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وُجْهَة | وجهتك الأولى لتأجير السيارات</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body dir="rtl">
+<body>
     <header>
-        <h1>SmartDecision</h1>
-        <p>المستشار الذكي لقرارات إدارية مدروسة</p>
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">و</div>
+                <div class="logo-text">وُجْهَة</div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">الرئيسية</a></li>
+                <li><a href="cars.html">معرض السيارات</a></li>
+                <li><a href="how-it-works.html">كيف يعمل</a></li>
+                <li><a href="about.html">عن المنصة</a></li>
+                <li><a href="contact.html">اتصل بنا</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-outline">تسجيل الدخول</a>
+                <a href="add-car.html" class="btn btn-primary">أضف سيارتك</a>
+            </div>
+        </nav>
     </header>
 
-    <main>
-        <section class="input-section">
-            <h2>ما هو الموقف الذي تواجهه؟</h2>
-            <textarea id="situationInput" placeholder="اكتب مشكلتك هنا... مثال: 'العميل طلب خصم 40%'"></textarea>
-            <button onclick="analyzeSituation()">تحليل الموقف</button>
-        </section>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>حوّل سيارتك الواقعة إلى مصدر دخل مستمر</h1>
+                <p>أول منصة سعودية لتأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة</p>
+                <div class="hero-buttons">
+                    <a href="add-car.html" class="btn btn-primary">
+                        <i class="fas fa-car"></i> أضف سيارتك
+                    </a>
+                    <a href="cars.html" class="btn btn-secondary">
+                        <i class="fas fa-search"></i> استكشف السيارات
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <section class="result-section" id="resultSection" style="display:none;">
-            <h2>تحليل الموقف</h2>
-            <div id="analysisResult"></div>
-        </section>
-    </main>
-
-    <footer>
-        &copy; 2025 SmartDecision - كل الحقوق محفوظة
-    </footer>
-
-    <script src="script.js"></script>
+    <!-- باقي محتوى الصفحة الرئيسية -->
+    
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
