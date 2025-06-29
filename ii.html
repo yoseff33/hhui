@@ -255,4 +255,1306 @@
             left: 0;
             right: 0;
             height: 200px;
-            background: linear-gradient(to top
+            background: linear-gradient(to top, var(--light), transparent);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 750px;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 45px;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        /* ميزات */
+        .features {
+            position: relative;
+            z-index: 10;
+            margin-top: -100px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            text-align: center;
+            border-bottom: 4px solid transparent;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-15px);
+            border-bottom-color: var(--secondary);
+        }
+        
+        .feature-icon {
+            width: 90px;
+            height: 90px;
+            background: rgba(46, 139, 87, 0.1);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 2.2rem;
+            color: var(--accent);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        /* السيارات */
+        .cars-section {
+            background: var(--light);
+        }
+        
+        .cars-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 12px 28px;
+            border-radius: 12px;
+            background: white;
+            border: 2px solid var(--light-gray);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.05rem;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 35px;
+            margin-top: 30px;
+        }
+        
+        .car-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .car-img {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .car-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .car-card:hover .car-img img {
+            transform: scale(1.05);
+        }
+        
+        .car-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 700;
+            z-index: 2;
+        }
+        
+        .car-info {
+            padding: 30px;
+        }
+        
+        .car-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        
+        .car-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--dark);
+        }
+        
+        .car-price {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 1.6rem;
+        }
+        
+        .car-price span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray);
+        }
+        
+        .car-meta {
+            display: flex;
+            margin: 20px 0;
+            padding: 15px 0;
+            border-top: 1px solid var(--light-gray);
+            border-bottom: 1px solid var(--light-gray);
+            gap: 20px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            gap: 8px;
+        }
+        
+        .meta-item i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+        
+        .car-location {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            margin-bottom: 20px;
+            gap: 8px;
+        }
+        
+        .car-location i {
+            color: var(--accent);
+        }
+        
+        .car-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .car-actions .btn {
+            flex: 1;
+            text-align: center;
+            justify-content: center;
+        }
+        
+        /* كيف تعمل */
+        .how-it-works {
+            background: linear-gradient(to bottom, #f8f9fa, #e9f0ef);
+        }
+        
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 50px;
+        }
+        
+        .steps-container:before {
+            content: "";
+            position: absolute;
+            top: 60px;
+            right: 10%;
+            left: 10%;
+            height: 3px;
+            background: var(--accent);
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            z-index: 2;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            box-shadow: var(--box-shadow);
+            width: 22%;
+            text-align: center;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0 auto 25px;
+        }
+        
+        .step h3 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .step p {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+        
+        /* لوحة التحكم */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            min-height: 600px;
+            margin-top: 40px;
+        }
+        
+        .dashboard-sidebar {
+            background: var(--primary);
+            color: white;
+            padding: 30px;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .user-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .user-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+        
+        .user-info p {
+            opacity: 0.8;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 12px;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+        
+        .sidebar-menu a:hover, 
+        .sidebar-menu a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .sidebar-menu a i {
+            font-size: 1.2rem;
+        }
+        
+        .dashboard-content {
+            padding: 30px;
+        }
+        
+        .dashboard-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--dark);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .stat-card h3 {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark);
+        }
+        
+        .recent-bookings {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            padding: 25px;
+        }
+        
+        .recent-bookings h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--dark);
+        }
+        
+        .booking-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .booking-item:last-child {
+            border-bottom: none;
+        }
+        
+        .booking-car {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .booking-car img {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .booking-details {
+            flex: 1;
+        }
+        
+        .booking-date {
+            width: 200px;
+            text-align: center;
+        }
+        
+        .booking-status {
+            padding: 6px 15px;
+            border-radius: 30px;
+            font-weight: 700;
+        }
+        
+        .status-active {
+            background: rgba(46, 139, 87, 0.1);
+            color: var(--accent);
+        }
+        
+        .status-completed {
+            background: rgba(108, 117, 125, 0.1);
+            color: var(--gray);
+        }
+        
+        /* إضافة سيارة */
+        .add-car-form {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 30px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        /* فوتر */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .footer-col h3:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-col ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            display: block;
+            padding: 5px 0;
+        }
+        
+        .footer-col ul li a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .footer-contact li {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-contact i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+            color: var(--dark);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* متجاوب */
+        @media (max-width: 1200px) {
+            .steps-container {
+                flex-wrap: wrap;
+                gap: 30px;
+            }
+            
+            .step {
+                width: 48%;
+            }
+            
+            .steps-container:before {
+                display: none;
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-sidebar {
+                padding: 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .step {
+                width: 100%;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .car-actions {
+                flex-direction: column;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <div class="logo-icon">و</div>
+                    <div class="logo-text">وُجْهَة</div>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#" class="active">الرئيسية</a></li>
+                    <li><a href="#cars">استكشف السيارات</a></li>
+                    <li><a href="#how-it-works">كيف تعمل</a></li>
+                    <li><a href="#dashboard">لوحة التحكم</a></li>
+                    <li><a href="#add-car">أضف سيارتك</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <a href="#" class="btn btn-outline">تسجيل الدخول</a>
+                    <a href="#" class="btn btn-primary">تسجيل جديد</a>
+                </div>
+                <button class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- القسم البطولي -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>حوّل سيارتك الواقعة إلى مصدر دخل مستمر</h1>
+                <p>أول منصة سعودية لتأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. انضم إلى آلاف المالكين الذين يحققون أرباحاً شهرية من سياراتهم</p>
+                <div class="hero-buttons">
+                    <a href="#add-car" class="btn btn-primary">
+                        <i class="fas fa-car"></i> أضف سيارتك
+                    </a>
+                    <a href="#cars" class="btn btn-secondary">
+                        <i class="fas fa-search"></i> استكشف السيارات
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ميزات المنصة -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>لماذا تختار وُجْهَة؟</h2>
+                <p>مزايا فريدة تجعلنا المنصة المثالية لتأجير السيارات بين الأفراد</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>حماية كاملة</h3>
+                    <p>تأمين شامل ضد الحوادث والتلف والسرقة لسيارتك طوال فترة التأجير</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <h3>تسعير ذكي</h3>
+                    <p>نظام تسعير ديناميكي يضمن لك أفضل عائد مالي حسب الطلب والموسم</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>توصيل السيارة</h3>
+                    <p>خدمة توصيل السيارة إلى أي مكان في مدينتك خلال 60 دقيقة فقط</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3>مستأجرون موثوقون</h3>
+                    <p>نظام تقييم متقدم لضمان جودة المستأجرين وسجلهم الحافل</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>تقارير متقدمة</h3>
+                    <p>لوحة تحكم ذكية لمتابعة أرباحك وتحليل أدائك واتخاذ قرارات أفضل</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>دعم فني 24/7</h3>
+                    <p>فريق دعم فني متاح على مدار الساعة لحل أي مشكلة تواجهك</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- السيارات المتاحة -->
+    <section id="cars" class="cars-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>السيارات المتاحة للتأجير</h2>
+                <p>اختر من بين مجموعة متنوعة من السيارات التي يقدمها ملاك موثوقون</p>
+            </div>
+            
+            <div class="cars-filter">
+                <button class="filter-btn active">الكل</button>
+                <button class="filter-btn">سيدان</button>
+                <button class="filter-btn">دفع رباعي</button>
+                <button class="filter-btn">فاخرة</button>
+                <button class="filter-btn">اقتصادية</button>
+            </div>
+            
+            <div class="cars-grid">
+                <div class="car-card">
+                    <div class="car-img">
+                        <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="تويوتا كامري">
+                        <div class="car-badge">الأكثر طلباً</div>
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header">
+                            <h3 class="car-title">تويوتا كامري 2022</h3>
+                            <div class="car-price">85 <span>ريال/اليوم</span></div>
+                        </div>
+                        <div class="car-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-car"></i> أوتوماتيك
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-gas-pump"></i> بنزين
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i> 5 ركاب
+                            </div>
+                        </div>
+                        <div class="car-location">
+                            <i class="fas fa-map-marker-alt"></i> الرياض، حي المروج
+                        </div>
+                        <div class="car-actions">
+                            <a href="#" class="btn btn-outline">
+                                <i class="far fa-heart"></i> المفضلة
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> احجز الآن
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="car-card">
+                    <div class="car-img">
+                        <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="سيارة لاندكروزر">
+                        <div class="car-badge">خصم 20%</div>
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header">
+                            <h3 class="car-title">تويوتا لاندكروزر 2021</h3>
+                            <div class="car-price">220 <span>ريال/اليوم</span></div>
+                        </div>
+                        <div class="car-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-car"></i> أوتوماتيك
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-gas-pump"></i> بنزين
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i> 7 ركاب
+                            </div>
+                        </div>
+                        <div class="car-location">
+                            <i class="fas fa-map-marker-alt"></i> جدة، حي الصفا
+                        </div>
+                        <div class="car-actions">
+                            <a href="#" class="btn btn-outline">
+                                <i class="far fa-heart"></i> المفضلة
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> احجز الآن
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="car-card">
+                    <div class="car-img">
+                        <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="سيارة هونداي النترا">
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header">
+                            <h3 class="car-title">هونداي النترا 2023</h3>
+                            <div class="car-price">75 <span>ريال/اليوم</span></div>
+                        </div>
+                        <div class="car-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-car"></i> أوتوماتيك
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-gas-pump"></i> بنزين
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i> 5 ركاب
+                            </div>
+                        </div>
+                        <div class="car-location">
+                            <i class="fas fa-map-marker-alt"></i> الدمام، حي الروضة
+                        </div>
+                        <div class="car-actions">
+                            <a href="#" class="btn btn-outline">
+                                <i class="far fa-heart"></i> المفضلة
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> احجز الآن
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="car-card">
+                    <div class="car-img">
+                        <img src="https://images.unsplash.com/photo-1507136566006-cfc505b114fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="سيارة مرسيدس">
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header">
+                            <h3 class="car-title">مرسيدس E-Class 2020</h3>
+                            <div class="car-price">300 <span>ريال/اليوم</span></div>
+                        </div>
+                        <div class="car-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-car"></i> أوتوماتيك
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-gas-pump"></i> بنزين
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i> 5 ركاب
+                            </div>
+                        </div>
+                        <div class="car-location">
+                            <i class="fas fa-map-marker-alt"></i> الرياض، حي السفارات
+                        </div>
+                        <div class="car-actions">
+                            <a href="#" class="btn btn-outline">
+                                <i class="far fa-heart"></i> المفضلة
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> احجز الآن
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="#" class="btn btn-outline">استكشف المزيد من السيارات</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- كيف تعمل المنصة -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>كيف تعمل منصة وُجْهَة؟</h2>
+                <p>أربع خطوات بسيطة لتأجير سيارتك أو استئجار سيارة</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>أضف سيارتك</h3>
+                    <p>سجل في المنصة وأضف سيارتك مع صور ومواصفات واضحة في دقائق معدودة</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>حدد المواعيد</h3>
+                    <p>حدد الأوقات المتاحة للتأجير والأسعار المناسبة لسيارتك</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>قابل المستأجر</h3>
+                    <p>التقِ بالمستأجر في المكان المحدد أو استخدم خدمة التوصيل الذكي</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>اكسب المال</h3>
+                    <p>استلم أموالك بعد انتهاء فترة التأجير بكل أمان وسهولة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- لوحة التحكم -->
+    <section id="dashboard" class="dashboard-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>لوحة التحكم الشخصية</h2>
+                <p>إدارة سياراتك وحجوزاتك وأرباحك من مكان واحد</p>
+            </div>
+            
+            <div class="dashboard">
+                <div class="dashboard-sidebar">
+                    <div class="user-profile">
+                        <div class="user-avatar">ن</div>
+                        <div class="user-info">
+                            <h3>نواف السبيعي</h3>
+                            <p>مالك معتمد</p>
+                        </div>
+                    </div>
+                    
+                    <ul class="sidebar-menu">
+                        <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
+                        <li><a href="#"><i class="fas fa-car"></i> سياراتي</a></li>
+                        <li><a href="#"><i class="fas fa-calendar-alt"></i> الحجوزات</a></li>
+                        <li><a href="#"><i class="fas fa-wallet"></i> الأرباح</a></li>
+                        <li><a href="#"><i class="fas fa-star"></i> التقييمات</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> الدعم</a></li>
+                    </ul>
+                </div>
+                
+                <div class="dashboard-content">
+                    <h2 class="dashboard-title">مرحبا بك، نواف!</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>إجمالي الأرباح</h3>
+                            <div class="value">8,450 ر.س</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <h3>الحجوزات النشطة</h3>
+                            <div class="value">3</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <h3>عدد السيارات</h3>
+                            <div class="value">2</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <h3>التقييم العام</h3>
+                            <div class="value">4.8/5</div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-bookings">
+                        <h3>الحجوزات الأخيرة</h3>
+                        
+                        <div class="booking-item">
+                            <div class="booking-car">
+                                <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="تويوتا كامري">
+                                <div class="booking-details">
+                                    <h4>تويوتا كامري 2022</h4>
+                                    <p>محمد العتيبي</p>
+                                </div>
+                            </div>
+                            <div class="booking-date">
+                                <p>15 - 20 نوفمبر</p>
+                                <p>5 أيام</p>
+                            </div>
+                            <div class="booking-price">425 ر.س</div>
+                            <div class="booking-status status-active">نشطة</div>
+                        </div>
+                        
+                        <div class="booking-item">
+                            <div class="booking-car">
+                                <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="تويوتا لاندكروزر">
+                                <div class="booking-details">
+                                    <h4>تويوتا لاندكروزر 2021</h4>
+                                    <p>فهد القحطاني</p>
+                                </div>
+                            </div>
+                            <div class="booking-date">
+                                <p>10 - 12 نوفمبر</p>
+                                <p>3 أيام</p>
+                            </div>
+                            <div class="booking-price">660 ر.س</div>
+                            <div class="booking-status status-completed">مكتملة</div>
+                        </div>
+                        
+                        <div class="booking-item">
+                            <div class="booking-car">
+                                <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="تويوتا كامري">
+                                <div class="booking-details">
+                                    <h4>تويوتا كامري 2022</h4>
+                                    <p>سارة الحربي</p>
+                                </div>
+                            </div>
+                            <div class="booking-date">
+                                <p>5 - 8 نوفمبر</p>
+                                <p>4 أيام</p>
+                            </div>
+                            <div class="booking-price">340 ر.س</div>
+                            <div class="booking-status status-completed">مكتملة</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- إضافة سيارة جديدة -->
+    <section id="add-car" class="add-car-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>أضف سيارتك وابدأ الربح</h2>
+                <p>املأ النموذج التالي لإضافة سيارتك إلى منصتنا والبدء في تحقيق أرباح</p>
+            </div>
+            
+            <div class="add-car-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>نوع السيارة</label>
+                        <select class="form-control">
+                            <option value="">اختر نوع السيارة</option>
+                            <option value="sedan">سيدان</option>
+                            <option value="suv">دفع رباعي</option>
+                            <option value="luxury">فاخرة</option>
+                            <option value="economic">اقتصادية</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>الموديل</label>
+                        <input type="text" class="form-control" placeholder="مثال: تويوتا كامري 2022">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>سعر التأجير اليومي (ريال)</label>
+                        <input type="number" class="form-control" placeholder="مثال: 100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>المدينة</label>
+                        <select class="form-control">
+                            <option value="">اختر المدينة</option>
+                            <option value="riyadh">الرياض</option>
+                            <option value="jeddah">جدة</option>
+                            <option value="dammam">الدمام</option>
+                            <option value="khobar">الخبر</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>الحي</label>
+                        <input type="text" class="form-control" placeholder="اسم الحي">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>عدد الركاب</label>
+                        <select class="form-control">
+                            <option value="2">2</option>
+                            <option value="4">4</option>
+                            <option value="5" selected>5</option>
+                            <option value="7">7</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>نوع ناقل الحركة</label>
+                        <select class="form-control">
+                            <option value="automatic">أوتوماتيك</option>
+                            <option value="manual">يدوي</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>نوع الوقود</label>
+                        <select class="form-control">
+                            <option value="gasoline">بنزين</option>
+                            <option value="hybrid">هايبرد</option>
+                            <option value="electric">كهرباء</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>وصف السيارة</label>
+                    <textarea class="form-control" rows="4" placeholder="أضف وصفاً دقيقاً لسيارتك..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>صور السيارة (يمكن رفع حتى 5 صور)</label>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
+                        <div style="width: 120px; height: 90px; background: #f5f5f5; border: 2px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #777;">
+                            <i class="fas fa-plus" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <div style="width: 120px; height: 90px; background: #f5f5f5; border: 2px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #777;">
+                            <i class="fas fa-plus" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <div style="width: 120px; height: 90px; background: #f5f5f5; border: 2px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #777;">
+                            <i class="fas fa-plus" style="font-size: 1.5rem;"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" style="padding: 16px 50px;">
+                        <i class="fas fa-check-circle"></i> إضافة السيارة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- فوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>عن وُجْهَة</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
+                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. نسعى لتحويل السيارات الواقعة إلى أصول منتجة.
+                    </p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="#">الرئيسية</a></li>
+                        <li><a href="#">استكشف السيارات</a></li>
+                        <li><a href="#">كيف تعمل</a></li>
+                        <li><a href="#">المدونة</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>للأفراد</h3>
+                    <ul>
+                        <li><a href="#">تسجيل كمستأجر</a></li>
+                        <li><a href="#">البحث عن سيارة</a></li>
+                        <li><a href="#">شروط الاستئجار</a></li>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">دليل المستخدم</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>تواصل معنا</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>الرياض، حي الصحافة، شارع الملك فهد</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+966 11 123 4567</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@wajhah.app</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 وُجْهَة. جميع الحقوق محفوظة. | تم التطوير بكل ❤️ في المملكة العربية السعودية</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // تنشيط فلتر السيارات
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelector('.filter-btn.active').classList.remove('active');
+                this.classList.add('active');
+            });
+        });
+        
+        // تأثير التنقل عند التمرير
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.padding = '10px 0';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.padding = '15px 0';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.05)';
+            }
+        });
+        
+        // تنشيط القائمة الجانبية
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector('.sidebar-menu a.active').classList.remove('active');
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
