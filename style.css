@@ -1,62 +1,53 @@
-/* تعيين الألوان والخلفيات */* {
-    box-sizing: border-box;
-    font-family: 'Tajawal', sans-serif;
-}
-
+/* أنماط أساسية */
 body {
-    margin: 0;
-    background-color: #f9f9f9;
+    font-family: 'Tajawal', sans-serif;
+    background-color: #f8f9fa;
     color: #333;
-    padding: 20px;
+    line-height: 1.7;
 }
 
-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-header h1 {
-    color: #007BFF;
-}
-
-main {
-    max-width: 800px;
-    margin: auto;
-    background: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.input-section textarea {
+.container {
     width: 100%;
-    height: 100px;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 16px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    resize: none;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-.input-section button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+/* أنماط التنقل */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
 }
 
-.result-section {
-    margin-top: 30px;
-    background: #e9f7ef;
-    padding: 20px;
+/* أنماط الأزرار */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
     border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
-#analysisResult {
-    margin-top: 10px;
+.btn-primary {
+    background: linear-gradient(135deg, #1a3c37, #2e8b57);
+    color: white;
+    box-shadow: 0 4px 12px rgba(26, 60, 55, 0.2);
+}
+
+/* أنماط بطاقات السيارات */
+.car-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.car-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
