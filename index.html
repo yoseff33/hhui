@@ -3,35 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | وجهتك الأولى لتأجير السيارات</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>وُجْهَة | منصة تأجير السيارات بين الأفراد</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- شريط التنقل -->
     <header>
-        <nav class="navbar">
-            <a href="index.html" class="logo">
-                <div class="logo-icon">و</div>
-                <div class="logo-text">وُجْهَة</div>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">الرئيسية</a></li>
-                <li><a href="cars.html">معرض السيارات</a></li>
-                <li><a href="how-it-works.html">كيف يعمل</a></li>
-                <li><a href="about.html">عن المنصة</a></li>
-                <li><a href="contact.html">اتصل بنا</a></li>
-            </ul>
-            <div class="nav-buttons">
-                <a href="login.html" class="btn btn-outline">تسجيل الدخول</a>
-                <a href="add-car.html" class="btn btn-primary">أضف سيارتك</a>
-            </div>
-        </nav>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">و</div>
+                    <div class="logo-text">وُجْهَة</div>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">الرئيسية</a></li>
+                    <li><a href="cars.html">استكشف السيارات</a></li>
+                    <li><a href="how-it-works.html">كيف تعمل</a></li>
+                    <li><a href="owner-dashboard.html">لوحة المؤجر</a></li>
+                    <li><a href="renter-dashboard.html">لوحة المستأجر</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <a href="login.html" class="btn btn-outline">تسجيل الدخول</a>
+                    <a href="register.html" class="btn btn-primary">تسجيل جديد</a>
+                </div>
+                <button class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
     </header>
 
+    <!-- القسم البطولي -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
                 <h1>حوّل سيارتك الواقعة إلى مصدر دخل مستمر</h1>
-                <p>أول منصة سعودية لتأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة</p>
+                <p>أول منصة سعودية لتأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. انضم إلى آلاف المالكين الذين يحققون أرباحاً شهرية من سياراتهم</p>
                 <div class="hero-buttons">
                     <a href="add-car.html" class="btn btn-primary">
                         <i class="fas fa-car"></i> أضف سيارتك
@@ -44,8 +54,55 @@
         </div>
     </section>
 
-    <!-- باقي محتوى الصفحة الرئيسية -->
-    
-    <script src="assets/js/main.js"></script>
+    <!-- ميزات المنصة -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>لماذا تختار وُجْهَة؟</h2>
+                <p>مزايا فريدة تجعلنا المنصة المثالية لتأجير السيارات بين الأفراد</p>
+            </div>
+            
+            <div class="features-grid">
+                <!-- 6 بطاقات ميزات -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>حماية كاملة</h3>
+                    <p>تأمين شامل ضد الحوادث والتلف والسرقة لسيارتك طوال فترة التأجير</p>
+                </div>
+                
+                <!-- باقي بطاقات الميزات -->
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- 4 أعمدة للفوتر -->
+                <div class="footer-col">
+                    <h3>عن وُجْهَة</h3>
+                    <p>أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
+                    </div>
+                </div>
+                
+                <!-- باقي أعمدة الفوتر -->
+                
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 وُجْهَة. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
