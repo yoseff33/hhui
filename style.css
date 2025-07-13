@@ -1,9 +1,28 @@
-/* أنماط أساسية */
-body {
+:root {
+    --primary: #1a3c37;
+    --secondary: #d4af37;
+    --accent: #2e8b57;
+    --light: #f8f9fa;
+    --dark: #0f2925;
+    --gray: #6c757d;
+    --light-gray: #e9ecef;
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --border-radius: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: 'Tajawal', sans-serif;
-    background-color: #f8f9fa;
+}
+
+body {
+    background-color: var(--light);
     color: #333;
     line-height: 1.7;
+    overflow-x: hidden;
 }
 
 .container {
@@ -14,40 +33,43 @@ body {
 }
 
 /* أنماط التنقل */
+header {
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    padding: 15px 0;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
 }
 
-/* أنماط الأزرار */
-.btn {
-    display: inline-flex;
+.logo {
+    display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.3s ease;
+    gap: 15px;
+    text-decoration: none;
 }
 
-.btn-primary {
-    background: linear-gradient(135deg, #1a3c37, #2e8b57);
+.logo-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;
-    box-shadow: 0 4px 12px rgba(26, 60, 55, 0.2);
+    font-size: 1.4rem;
+    font-weight: bold;
 }
 
-/* أنماط بطاقات السيارات */
-.car-card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.car-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
+/* باقي أنماط CSS */
