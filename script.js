@@ -48,6 +48,9 @@ function updateLoyaltyCard(completedRentals) {
 
     const progressBarFill = document.querySelector('.loyalty-line-fill');
     const loyaltyDots = document.querySelectorAll('.loyalty-dot');
+    const currentRentalsText = document.getElementById('current-rentals-count');
+    const remainingRentalsText = document.getElementById('remaining-rentals-count');
+
 
     if (progressBarFill) {
         progressBarFill.style.width = `${progressPercentage}%`;
@@ -62,9 +65,23 @@ function updateLoyaltyCard(completedRentals) {
         dot.textContent = index + 1; // ترقيم النقاط من 1 إلى 8
     });
 
-    const currentRentalsText = document.getElementById('current-rentals-count');
     if (currentRentalsText) {
         currentRentalsText.textContent = completedRentals;
+    }
+    if (remainingRentalsText) {
+        remainingRentalsText.textContent = totalRentalsNeeded - completedRentals;
+    }
+
+    // إذا تم إكمال جميع الحجوزات
+    if (completedRentals >= totalRentalsNeeded) {
+        if (remainingRentalsText) {
+            remainingRentalsText.textContent = '0';
+        }
+        const rewardInfo = document.querySelector('.loyalty-reward-info small');
+        if (rewardInfo) {
+            rewardInfo.textContent = 'تهانينا! تأجيرك المجاني بانتظارك!';
+        }
+        // يمكنك هنا عرض زر "استخدم المكافأة" مثلاً
     }
 }
 
