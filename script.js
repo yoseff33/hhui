@@ -22,6 +22,39 @@ window.addEventListener('scroll', function() {
     }
 });
 
+// Mobile Menu Toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const overlay = document.createElement('div');
+    overlay.classList.add('mobile-menu-overlay');
+    document.body.appendChild(overlay);
+
+    mobileToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+        overlay.style.display = navLinks.classList.contains('open') ? 'block' : 'none';
+        document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : ''; /* Disable scroll when menu is open */
+    });
+
+    overlay.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+    });
+
+    // Close menu when a link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navLinks.classList.contains('open')) {
+                navLinks.classList.remove('open');
+                overlay.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+    });
+});
+
+
 // تنشيط القائمة الجانبية (سيستخدم في صفحات لوحات التحكم)
 document.querySelectorAll('.sidebar-menu a').forEach(link => {
     link.addEventListener('click', function(e) {
@@ -39,7 +72,7 @@ document.querySelectorAll('.sidebar-menu a').forEach(link => {
 
 function updateNavbarBasedOnLoginStatus() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    const userType = localStorage.getItem('userType'); // 'owner' or 'renter'
+    const userType = localStorage.getItem('userType');
 
     const authLinks = document.querySelectorAll('.nav-links .auth-link');
     const ownerDashboardLink = document.getElementById('nav-owner-dashboard');
@@ -47,11 +80,11 @@ function updateNavbarBasedOnLoginStatus() {
     const addCarLink = document.getElementById('nav-add-car');
 
     const guestButton = document.getElementById('nav-guest-button');
-    const userProfilePlaceholder = document.getElementById('nav-user-profile-placeholder'); // عنصر جديد
+    const userProfilePlaceholder = document.getElementById('nav-user-profile-placeholder');
 
     if (isLoggedIn) {
         if (guestButton) guestButton.style.display = 'none';
-        if (userProfilePlaceholder) { // عرض placeholder للملف الشخصي وزر الخروج
+        if (userProfilePlaceholder) {
             userProfilePlaceholder.innerHTML = `
                 <a href="#" class="btn btn-outline" onclick="logoutUser()" style="margin-right: 10px;">
                     <i class="fas fa-sign-out-alt"></i> خروج
@@ -64,7 +97,7 @@ function updateNavbarBasedOnLoginStatus() {
             userProfilePlaceholder.style.alignItems = 'center';
         }
 
-        authLinks.forEach(link => link.style.display = 'none'); // إخفاء كل روابط لوحة التحكم أولاً
+        authLinks.forEach(link => link.style.display = 'none');
 
         if (userType === 'owner') {
             if (ownerDashboardLink) ownerDashboardLink.style.display = 'block';
@@ -112,6 +145,7 @@ function updateLoyaltyCard(completedRentals) {
     const currentRentalsText = document.getElementById('current-rentals-count');
     const remainingRentalsText = document.getElementById('remaining-rentals-count');
 
+
     if (progressBarFill) {
         progressBarFill.style.width = `${progressPercentage}%`;
     }
@@ -151,7 +185,6 @@ function setupThemeToggle() {
     const themeToggleBtn = document.getElementById('theme-toggle');
     if (!themeToggleBtn) return;
 
-    // Check saved preference or default to light
     const currentTheme = localStorage.getItem('theme') || 'light';
     document.body.classList.add(currentTheme + '-mode');
     themeToggleBtn.innerHTML = currentTheme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
@@ -177,24 +210,21 @@ function setupThemeToggle() {
 // -------------------------------------
 
 const RECENTLY_VIEWED_KEY = 'recentlyViewedCars';
-const MAX_RECENTLY_VIEWED = 5; // عدد السيارات التي تظهر في الشريط
+const MAX_RECENTLY_VIEWED = 5;
 
 function addCarToRecentlyViewed(carId, carImg, carTitle) {
     let recentlyViewed = JSON.parse(localStorage.getItem(RECENTLY_VIEWED_KEY)) || [];
 
-    // إزالة السيارة إذا كانت موجودة بالفعل (لنقلها للأعلى)
     recentlyViewed = recentlyViewed.filter(car => car.id !== carId);
 
-    // إضافة السيارة الجديدة في البداية
     recentlyViewed.unshift({ id: carId, img: carImg, title: carTitle });
 
-    // قص القائمة لـ Max_RECENTLY_VIEWED
     if (recentlyViewed.length > MAX_RECENTLY_VIEWED) {
         recentlyViewed = recentlyViewed.slice(0, MAX_RECENTLY_VIEWED);
     }
 
     localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(recentlyViewed));
-    renderRecentlyViewedCars(); // إعادة رسم الشريط بعد التحديث
+    renderRecentlyViewedCars();
 }
 
 function renderRecentlyViewedCars() {
@@ -208,7 +238,7 @@ function renderRecentlyViewedCars() {
             container.innerHTML = '';
             recentlyViewed.forEach(car => {
                 const carLink = document.createElement('a');
-                carLink.href = '#'; // هنا يمكنك وضع رابط لصفحة تفاصيل السيارة الحقيقية
+                carLink.href = '#';
                 carLink.classList.add('recent-car-thumb');
                 carLink.innerHTML = `<img src="${car.img}" alt="${car.title}">`;
                 container.appendChild(carLink);
@@ -228,17 +258,14 @@ function showSlides() {
     const dots = document.querySelectorAll('.dot');
     if (slides.length === 0) return;
 
-    // Hide all slides and remove active class from dots
     slides.forEach(slide => slide.style.display = 'none');
     dots.forEach(dot => dot.classList.remove('active'));
 
-    // Move to next slide
     slideIndex++;
     if (slideIndex > slides.length) {
         slideIndex = 1;
     }
 
-    // Display current slide and add active class to current dot
     slides[slideIndex - 1].style.display = 'block';
     dots[slideIndex - 1].classList.add('active');
 }
@@ -276,7 +303,6 @@ function setupQuiz() {
         let recommendation = "لا يمكننا تحديد سيارة مناسبة بناءً على اختياراتك.";
         let carType = "";
 
-        // Simple quiz logic
         if (answers.passengers === '5' || answers.passengers === '7') {
             if (answers.budget === 'medium' || answers.budget === 'high') {
                 recommendation = "نوصي بسيارة دفع رباعي فسيحة ومريحة لرحلاتك العائلية.";
@@ -312,36 +338,149 @@ function setupQuiz() {
 
 
 // -------------------------------------
+// وظائف خريطة السيارات (Leaflet Map)
+// -------------------------------------
+
+let map;
+let carMarkersLayer;
+
+// بيانات السيارات الافتراضية داخل جامعة القصيم (مع إحداثيات حقيقية من المستخدم)
+const qassimCarsData = [
+    {
+        id: 'car1', type: 'سيدان', model: 'تويوتا كامري 2022', price: '85', location: 'موقع 1 (جامعة القصيم)',
+        lat: 26.348037, lng: 43.771591, // الإحداثيات من المستخدم
+        img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3'
+    },
+    {
+        id: 'car2', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2021', price: '220', location: 'كلية الهندسة',
+        lat: 26.3350, lng: 43.7685, // لم يتم تغييرها، بقيت افتراضية
+        img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg'
+    },
+    {
+        id: 'car3', type: 'اقتصادية', model: 'هونداي النترا 2023', price: '75', location: 'موقع 2 (جامعة القصيم)',
+        lat: 26.351008, lng: 43.775861, // الإحداثيات من المستخدم
+        img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp'
+    },
+    {
+        id: 'car4', type: 'فاخرة', model: 'مرسيدس E-Class 2020', price: '300', location: 'موقع 3 (جامعة القصيم)',
+        lat: 26.349181, lng: 43.761351, // الإحداثيات من المستخدم
+        img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg'
+    },
+    {
+        id: 'car5', type: 'سيدان', model: 'شيفروليه ماليبو 2020', price: '90', location: 'سكن الطلاب (بوابة 4)',
+        lat: 26.3400, lng: 43.7630,
+        img: 'https://cdn.motor1.com/images/mgl/zZX8w/s3/2020-chevrolet-malibu.jpg'
+    },
+    {
+        id: 'car6', type: 'دفع رباعي', model: 'نيسان باترول 2023', price: '250', location: 'مواقف كلية العلوم',
+        lat: 26.3365, lng: 43.7645,
+        img: 'https://www.nissan-cdn.net/content/dam/Nissan/middle-east/vehicles/Patrol/Patrol-MY23/overview/2023-Nissan-Patrol-hero-desktop.webp'
+    },
+    {
+        id: 'car7', type: 'اقتصادية', model: 'كيا ريو 2024', price: '65', location: 'مواقف كلية الحاسب',
+        lat: 26.3340, lng: 43.7670,
+        img: 'https://www.kia.com/content/dam/kw/vehicles/rio/2024/kia_rio_sedan_2024_01_m.jpg'
+    },
+];
+
+function initMap() {
+    const qassimUniversityCoords = [26.345, 43.769]; // مركز جامعة القصيم التقريبي
+    const defaultZoom = 14; // مستوى تكبير مناسب لعرض الجامعة
+
+    map = L.map('mapid').setView(qassimUniversityCoords, defaultZoom);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    carMarkersLayer = L.layerGroup().addTo(map);
+    renderCarsOnMap('الكل');
+}
+
+function createCarIcon(carType) {
+    let iconClass = 'fas fa-car';
+    return L.divIcon({
+        className: 'custom-car-icon',
+        html: `<i class="${iconClass}"></i>`,
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [0, -40]
+    });
+}
+
+function renderCarsOnMap(filterType = 'الكل') {
+    if (!map) return;
+    carMarkersLayer.clearLayers();
+
+    const filteredCars = filterType === 'الكل' ? qassimCarsData : qassimCarsData.filter(car => car.type === filterType);
+
+    filteredCars.forEach(car => {
+        const carIcon = createCarIcon(car.type);
+        const marker = L.marker([car.lat, car.lng], { icon: carIcon }).addTo(carMarkersLayer);
+
+        const popupContent = `
+            <div class="popup-car-details">
+                <img src="${car.img}" alt="${car.model}" class="car-img-popup">
+                <h4>${car.model}</h4>
+                <p><strong>السعر:</strong> ${car.price} ريال/اليوم</p>
+                <p><strong>الموقع:</strong> ${car.location}</p>
+                <a href="#" class="btn btn-primary">احجز الآن</a>
+            </div>
+        `;
+        marker.bindPopup(popupContent);
+    });
+}
+
+// Setup map filters (already exists, but adding to general DOMContentLoaded)
+function setupMapFilters() {
+    document.querySelectorAll('.map-filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const currentActive = document.querySelector('.map-filter-btn.active');
+            if (currentActive) {
+                currentActive.classList.remove('active');
+            }
+            this.classList.add('active');
+            
+            const filterType = this.dataset.filter;
+            renderCarsOnMap(filterType);
+        });
+    });
+}
+
+
+// -------------------------------------
 // عند تحميل المحتوى (DOMContentLoaded)
 // -------------------------------------
 
 document.addEventListener('DOMContentLoaded', () => {
-    setupThemeToggle(); // إعداد تبديل الثيم
-    updateNavbarBasedOnLoginStatus(); // تحديث حالة الـ Navbar
+    setupThemeToggle();
+    updateNavbarBasedOnLoginStatus();
 
-    // هذا رقم افتراضي، سيتغير ليأتي من بيانات المستخدم الفعلية من الخادم
-    const userCompletedRentals = 3; // مثال: المستخدم أتم 3 حجوزات
-    updateLoyaltyCard(userCompletedRentals); // تحديث بطاقة الولاء أيضاً
+    const userCompletedRentals = 3;
+    updateLoyaltyCard(userCompletedRentals);
 
-    renderRecentlyViewedCars(); // عرض شريط آخر مشاهدة للسيارات
+    renderRecentlyViewedCars();
 
-    // تشغيل السلايدر كل 5 ثوانٍ
     if (document.querySelector('.testimonial-slider')) {
-        showSlides(); // Display initial slide
+        showSlides();
         setInterval(showSlides, 5000);
     }
     
-    setupQuiz(); // إعداد وظيفة الاختبار
+    setupQuiz();
+
+    // Initial render and setup for the car map
+    if (document.getElementById('mapid')) {
+        initMap();
+        setupMapFilters();
+    }
 });
 
-// For demonstration purposes: Simulate adding cars to recently viewed
-// In a real app, this would happen when a user views a car's detail page.
 document.addEventListener('click', (e) => {
     if (e.target.closest('.car-card')) {
         const carCard = e.target.closest('.car-card');
         const carImg = carCard.querySelector('.car-img img').src;
         const carTitle = carCard.querySelector('.car-title').textContent;
-        const carId = carTitle.replace(/\s/g, '-'); // Simple ID for demo
+        const carId = carTitle.replace(/\s/g, '-');
 
         addCarToRecentlyViewed(carId, carImg, carTitle);
     }
