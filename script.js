@@ -24,21 +24,32 @@ window.addEventListener('scroll', function() {
 
 // Mobile Menu Toggle
 document.addEventListener('DOMContentLoaded', () => {
-    const mobileToggle = document.querySelector('.mobile-toggle');
+    const mobileToggleButtons = document.querySelectorAll('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
     const overlay = document.querySelector('.mobile-menu-overlay');
 
-    if (mobileToggle && navLinks && overlay) {
-        mobileToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-            overlay.style.display = navLinks.classList.contains('open') ? 'block' : 'none';
-            document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : ''; /* Disable scroll when menu is open */
+    if (mobileToggleButtons.length > 0 && navLinks && overlay) {
+        mobileToggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const isOpen = navLinks.classList.toggle('open');
+                overlay.style.display = isOpen ? 'block' : 'none';
+                document.body.style.overflow = isOpen ? 'hidden' : ''; // Disable scroll when menu is open
+
+                // Update the icon of the main mobile toggle button
+                if (button.closest('header')) { // Only for the button in the header
+                    button.innerHTML = isOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+                }
+            });
         });
 
         overlay.addEventListener('click', () => {
             navLinks.classList.remove('open');
             overlay.style.display = 'none';
             document.body.style.overflow = '';
+            // Reset the main mobile toggle button icon
+            if (mobileToggleButtons[0].closest('header')) {
+                mobileToggleButtons[0].innerHTML = '<i class="fas fa-bars"></i>';
+            }
         });
 
         // Close menu when a link is clicked
@@ -48,6 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     navLinks.classList.remove('open');
                     overlay.style.display = 'none';
                     document.body.style.overflow = '';
+                    // Reset the main mobile toggle button icon
+                    if (mobileToggleButtons[0].closest('header')) {
+                        mobileToggleButtons[0].innerHTML = '<i class="fas fa-bars"></i>';
+                    }
                 }
             });
         });
@@ -127,8 +142,7 @@ function updateNavbarBasedOnLoginStatus() {
 
         // Hide all auth links first (desktop and mobile)
         desktopAuthLinks.forEach(link => link.style.display = 'none');
-        // Mobile auth links are within .nav-links so they are handled by mobile menu open/close
-        // We control their display directly for logged in state
+        // Mobile auth links are within .nav-links so we only control their individual display
         if (mobileOwnerDashboardLink) mobileOwnerDashboardLink.style.display = 'none';
         if (mobileRenterDashboardLink) mobileRenterDashboardLink.style.display = 'none';
         if (mobileAddCarLink) mobileAddCarLink.style.display = 'none';
@@ -148,7 +162,7 @@ function updateNavbarBasedOnLoginStatus() {
     } else {
         // Hide user profile placeholder on desktop and mobile
         if (desktopGuestButton) desktopGuestButton.style.display = 'flex';
-        if (mobileGuestButton) mobileGuestButton.style.display = 'flex'; // Ensure it's visible on mobile as well
+        if (mobileGuestButton) mobileGuestButton.style.display = 'flex';
 
         if (desktopUserProfilePlaceholder) desktopUserProfilePlaceholder.style.display = 'none';
         if (mobileUserProfilePlaceholder) mobileUserProfilePlaceholder.style.display = 'none';
@@ -231,32 +245,38 @@ function updateLoyaltyCard(completedRentals) {
 
 function setupThemeToggle() {
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const mobileThemeToggleBtn = document.getElementById('mobile-theme-toggle');
+    const mobileThemeToggleBtn = document.getElementById('mobile-theme-toggle'); // Get mobile toggle button
 
-    const applyTheme = (btn, theme) => {
+    const applyTheme = (theme) => {
         document.body.classList.remove('light-mode', 'dark-mode');
         document.body.classList.add(theme + '-mode');
         localStorage.setItem('theme', theme);
-        btn.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+
+        // Update both desktop and mobile buttons' icons
+        if (themeToggleBtn) {
+            themeToggleBtn.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        }
+        if (mobileThemeToggleBtn) {
+            mobileThemeToggleBtn.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        }
     };
 
-    const initializeTheme = (btn) => {
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        applyTheme(btn, currentTheme);
-        btn.addEventListener('click', () => {
-            const newTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
-            applyTheme(themeToggleBtn, newTheme); // Update desktop button
-            if (mobileThemeToggleBtn) { // Update mobile button if exists
-                 applyTheme(mobileThemeToggleBtn, newTheme);
-            }
-        });
-    };
+    // Initialize theme based on localStorage
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(currentTheme);
 
+    // Add event listeners
     if (themeToggleBtn) {
-        initializeTheme(themeToggleBtn);
+        themeToggleBtn.addEventListener('click', () => {
+            const newTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
+            applyTheme(newTheme);
+        });
     }
-    if (mobileThemeToggleBtn && themeToggleBtn !== mobileThemeToggleBtn) { // Ensure they are not the same element if only one is used
-        initializeTheme(mobileThemeToggleBtn);
+    if (mobileThemeToggleBtn) {
+        mobileThemeToggleBtn.addEventListener('click', () => {
+            const newTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
+            applyTheme(newTheme);
+        });
     }
 }
 
@@ -308,7 +328,7 @@ function renderRecentlyViewedCars() {
 // شهادات العملاء كـ "سلايدر" تفاعلي (Interactive Testimonial Slider)
 // -------------------------------------
 let slideIndex = 0;
-let slideInterval; // To store the interval ID
+let slideInterval;
 
 function showSlides() {
     const slides = document.querySelectorAll('.testimonial-slide');
@@ -340,8 +360,7 @@ function currentSlide(n) {
     slides[slideIndex - 1].style.display = 'block';
     dots[slideIndex - 1].classList.add('active');
     
-    // Restart auto-slide after manual navigation
-    slideInterval = setInterval(showSlides, 5000);
+    slideInterval = setInterval(showSlides, 5000); // Restart auto-slide after manual navigation
 }
 
 
@@ -364,6 +383,7 @@ function setupQuiz() {
         let recommendation = "لا يمكننا تحديد سيارة مناسبة بناءً على اختياراتك.";
         let carType = "";
 
+        // Simple quiz logic
         if (answers.passengers === '5' || answers.passengers === '7') {
             if (answers.budget === 'medium' || answers.budget === 'high') {
                 recommendation = "نوصي بسيارة دفع رباعي فسيحة ومريحة لرحلاتك العائلية.";
@@ -405,25 +425,26 @@ function setupQuiz() {
 let map;
 let carMarkersLayer;
 
+// بيانات السيارات الافتراضية داخل جامعة القصيم (مع إحداثيات من المستخدم)
 const qassimCarsData = [
     {
         id: 'camry', type: 'سيدان', model: 'تويوتا كامري 2022', price: '85', location: 'مواقف المبنى الإداري',
-        lat: 26.348037, lng: 43.771591,
+        lat: 26.348037, lng: 43.771591, // الإحداثيات من المستخدم
         img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3'
     },
     {
-        id: 'landcruiser', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2021', price: '220', location: 'مواقف كلية الهندسة',
-        lat: 26.3350, lng: 43.7685,
+        id: 'landcruiser', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2021', price: '220', location: 'كلية الهندسة',
+        lat: 26.3350, lng: 43.7685, // افتراضية
         img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg'
     },
     {
         id: 'elantra', type: 'اقتصادية', model: 'هونداي النترا 2023', price: '75', location: 'بجوار المكتبة المركزية',
-        lat: 26.351008, lng: 43.775861,
+        lat: 26.351008, lng: 43.775861, // الإحداثيات من المستخدم
         img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp'
     },
     {
         id: 'mercedes', type: 'فاخرة', model: 'مرسيدس E-Class 2020', price: '300', location: 'المركز الثقافي',
-        lat: 26.349181, lng: 43.761351,
+        lat: 26.349181, lng: 43.761351, // الإحداثيات من المستخدم
         img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg'
     },
     {
@@ -522,7 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (document.querySelector('.testimonial-slider')) {
         showSlides();
-        slideInterval = setInterval(showSlides, 5000); // Start auto-slide
+        slideInterval = setInterval(showSlides, 5000);
     }
     
     setupQuiz();
