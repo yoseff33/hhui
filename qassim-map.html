@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وُجْهَة | خريطة سيارات جامعة القصيم</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIINfQPDQyUS7OzDaXhlVGgExA3U9TBoYguLhQWneigT4HQgaMmdenNL"
+     crossorigin=""/>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">و</div>
+                    <div class="logo-text">وُجْهَة</div>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="cars.html">استكشف السيارات</a></li>
+                    <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+                    <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
+                    <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
+                    <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
+                    <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
+                    <li><a href="qassim-map.html" class="active">خريطة جامعة القصيم</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
+                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
+                    <div id="nav-user-profile-placeholder"></div>
+                </div>
+                <button class="mobile-toggle" aria-label="Toggle mobile menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-nav-menu">
+        <div class="nav-buttons" style="flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <button id="mobile-theme-toggle" class="theme-toggle" style="margin: 0;"><i class="fas fa-moon"></i></button>
+            <button class="mobile-toggle" aria-label="Close mobile menu" style="color: var(--dark);"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="cars.html">استكشف السيارات</a></li>
+            <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+            <li><a href="dashboard-owner.html" class="auth-link" id="mobile-nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
+            <li><a href="dashboard-renter.html" class="auth-link" id="mobile-nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
+            <li><a href="add-car.html" class="auth-link" id="mobile-nav-add-car">أضف سيارتك</a></li>
+            <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
+            <li><a href="qassim-map.html" class="active">خريطة جامعة القصيم</a></li>
+        </ul>
+        <div class="nav-buttons" style="flex-direction: column; width: 100%; margin-top: auto; padding-top: 20px; border-top: 1px solid var(--light-gray);">
+            <a href="landing.html" class="btn btn-primary guest-only" id="mobile-nav-guest-button" style="width: 100%;">تسجيل دخول / جديد</a>
+            <div id="mobile-nav-user-profile-placeholder" style="width: 100%; display: flex; flex-direction: column; align-items: center;"></div>
+        </div>
+    </div>
+
+
+    <section id="qassim-car-map-section" class="car-map-section" style="padding-top: 150px;">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>السيارات المتاحة داخل جامعة القصيم</h2>
+                <p>تصفح مواقع السيارات المتوفرة داخل حرم الجامعة</p>
+            </div>
+            
+            <div class="map-filters" data-aos="fade-up" data-aos-delay="100">
+                <button class="map-filter-btn active" data-filter="الكل">الكل</button>
+                <button class="map-filter-btn" data-filter="سيدان">سيدان</button>
+                <button class="map-filter-btn" data-filter="دفع رباعي">دفع رباعي</button>
+                <button class="map-filter-btn" data-filter="اقتصادية">اقتصادية</button>
+                <button class="map-filter-btn" data-filter="فاخرة">فاخرة</button>
+            </div>
+
+            <div id="mapid" class="map-container" data-aos="zoom-in" data-aos-delay="200" style="height: 600px;">
+                </div>
+            <p style="text-align: center; color: var(--gray); margin-top: 20px; font-size: 0.9rem;">
+                <i class="fas fa-info-circle"></i> هذه الخريطة توضح المواقع التقديرية للسيارات داخل الجامعة.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>عن وُجْهَة</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
+                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. نسعى لتحويل السيارات الواقعة إلى أصول منتجة.
+                    </p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="cars.html">استكشف السيارات</a></li>
+                        <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+                        <li><a href="#">المدونة</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>للأفراد</h3>
+                    <ul>
+                        <li><a href="#">تسجيل كمستأجر</a></li>
+                        <li><a href="#">البحث عن سيارة</a></li>
+                        <li><a href="#">شروط الاستئجار</a></li>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">دليل المستخدم</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>تواصل معنا</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>الرياض، حي الصحافة، شارع الملك فهد</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+966 11 123 4567</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@wajhah.app</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 وُجْهَة. جميع الحقوق محفوظة. | تم التطوير بكل ❤️ في المملكة العربية السعودية</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZQXlgWuqMox+RbFkNPKVyB5Wso8-"
+     crossorigin=""></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
