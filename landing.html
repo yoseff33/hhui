@@ -8,40 +8,47 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* إضافة بعض التنسيقات الخاصة لهذه الصفحة */
+        /* إضافة بعض التنسيقات الخاصة لهذه الصفحة فقط */
         .choice-container {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(105deg, rgba(15, 41, 37, 0.95) 0%, rgba(26, 60, 55, 0.9) 100%), url('https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            background: linear-gradient(105deg, rgba(15, 41, 37, 0.95) 0%, rgba(26, 60, 55, 0.9) 100%), url('https://www.almowaten.net/wp-content/uploads/2022/10/Ff0vop3XkAACLm8-877x492.jpg') no-repeat center center/cover;
+            background-size: cover; /* التأكيد على تغطية الخلفية */
             color: white;
             text-align: center;
             flex-direction: column;
             gap: 40px;
+            padding: 20px; /* بادينج عام للصفحة */
         }
         .choice-container h1 {
             font-size: 3.5rem;
             margin-bottom: 20px;
             font-weight: 800;
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            line-height: 1.2;
         }
         .choice-container p {
             font-size: 1.3rem;
             margin-bottom: 50px;
             max-width: 600px;
             line-height: 1.8;
+            opacity: 0.9;
         }
         .choice-buttons {
             display: flex;
             gap: 30px;
             flex-wrap: wrap;
             justify-content: center;
+            width: 100%; /* لتوسيط الأزرار في المنتصف تمامًا */
         }
         .choice-buttons .btn {
             padding: 20px 45px;
             font-size: 1.3rem;
             min-width: 200px;
+            flex-grow: 1; /* للسماح للأزرار بالتمدد */
+            max-width: 300px; /* حد أقصى لعرض الزر */
         }
         /* لتجاوبية أفضل لهذه الصفحة */
         @media (max-width: 768px) {
@@ -51,13 +58,29 @@
             .choice-container p {
                 font-size: 1rem;
                 padding: 0 20px;
+                margin-bottom: 30px;
             }
             .choice-buttons {
                 flex-direction: column;
-                width: 80%;
+                width: 70%; /* تصغير عرض الأزرار على الجوال */
+                margin: 0 auto;
             }
             .choice-buttons .btn {
                 width: 100%;
+                max-width: none; /* إزالة الحد الأقصى للعرض للسماح بالتمدد الكامل */
+                padding: 18px 30px;
+                font-size: 1.15rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .choice-container h1 {
+                font-size: 2rem;
+            }
+            .choice-container p {
+                font-size: 0.9rem;
+            }
+            .choice-buttons {
+                width: 90%;
             }
         }
     </style>
