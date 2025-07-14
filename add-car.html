@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وُجْهَة | أضف سيارتك</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">و</div>
+                    <div class="logo-text">وُجْهَة</div>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="cars.html">استكشف السيارات</a></li>
+                    <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+                    <li><a href="dashboard-owner.html">لوحة تحكم المؤجر</a></li>
+                    <li><a href="dashboard-renter.html">لوحة تحكم المستأجر</a></li>
+                    <li><a href="add-car.html" class="active">أضف سيارتك</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <a href="#" class="btn btn-outline">تسجيل الدخول</a>
+                    <a href="#" class="btn btn-primary">تسجيل جديد</a>
+                </div>
+                <button class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section id="add-car" class="add-car-section" style="padding-top: 150px;">
+        <div class="container">
+            <div class="section-title">
+                <h2>أضف سيارتك وابدأ الربح</h2>
+                <p>املأ النموذج التالي لإضافة سيارتك إلى منصتنا والبدء في تحقيق أرباح</p>
+            </div>
+            
+            <div class="add-car-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>نوع السيارة</label>
+                        <select class="form-control">
+                            <option value="">اختر نوع السيارة</option>
+                            <option value="sedan">سيدان</option>
+                            <option value="suv">دفع رباعي</option>
+                            <option value="luxury">فاخرة</option>
+                            <option value="economic">اقتصادية</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>الموديل</label>
+                        <input type="text" class="form-control" placeholder="مثال: تويوتا كامري 2022">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>سعر التأجير اليومي (ريال)</label>
+                        <input type="number" class="form-control" placeholder="مثال: 100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>المدينة</label>
+                        <select class="form-control">
+                            <option value="">اختر المدينة</option>
+                            <option value="riyadh">الرياض</option>
+                            <option value="jeddah">جدة</option>
+                            <option value="dammam">الدمام</option>
+                            <option value="khobar">الخبر</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>الحي</label>
+                        <input type="text" class="form-control" placeholder="اسم الحي">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>عدد الركاب</label>
+                        <select class="form-control">
+                            <option value="2">2</option>
+                            <option value="4">4</option>
+                            <option value="5" selected>5</option>
+                            <option value="7">7</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>نوع ناقل الحركة</label>
+                        <select class="form-control">
+                            <option value="automatic">أوتوماتيك</option>
+                            <option value="manual">يدوي</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>نوع الوقود</label>
+                        <select class="form-control">
+                            <option value="gasoline">بنزين</option>
+                            <option value="hybrid">هايبرد</option>
+                            <option value="electric">كهرباء</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>وصف السيارة</label>
+                    <textarea class="form-control" rows="4" placeholder="أضف وصفاً دقيقاً لسيارتك..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>صور السيارة (يمكن رفع حتى 5 صور)</label>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
+                        <div style="width: 120px; height: 90px; background: #f5f5f5; border: 2px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #777;">
+                            <i class="fas fa-plus" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <div style="width: 120px; height: 90px; background: #f5f5f5; border: 2px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #777;">
+                            <i class="fas fa-plus" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <div style="width: 120px; height: 90px; background: #f5f5f5; border: 2px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #777;">
+                            <i class="fas fa-plus" style="font-size: 1.5rem;"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" style="padding: 16px 50px;">
+                        <i class="fas fa-check-circle"></i> إضافة السيارة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>عن وُجْهَة</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
+                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. نسعى لتحويل السيارات الواقعة إلى أصول منتجة.
+                    </p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="cars.html">استكشف السيارات</a></li>
+                        <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+                        <li><a href="#">المدونة</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>للأفراد</h3>
+                    <ul>
+                        <li><a href="#">تسجيل كمستأجر</a></li>
+                        <li><a href="#">البحث عن سيارة</a></li>
+                        <li><a href="#">شروط الاستئجار</a></li>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">دليل المستخدم</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>تواصل معنا</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>الرياض، حي الصحافة، شارع الملك فهد</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+966 11 123 4567</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@wajhah.app</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 وُجْهَة. جميع الحقوق محفوظة. | تم التطوير بكل ❤️ في المملكة العربية السعودية</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
