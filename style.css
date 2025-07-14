@@ -232,7 +232,8 @@ header {
 
 /* القسم البطولي */
 .hero {
-    background: linear-gradient(105deg, rgba(15, 41, 37, 0.92) 0%, rgba(26, 60, 55, 0.88) 100%), url('https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+    /* تم تحديث رابط الصورة هنا */
+    background: linear-gradient(105deg, rgba(15, 41, 37, 0.92) 0%, rgba(26, 60, 55, 0.88) 100%), url('https://www.almowaten.net/wp-content/uploads/2022/10/Ff0vop3XkAACLm8-877x492.jpg') no-repeat center center/cover;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -963,20 +964,25 @@ footer {
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
+    /* إضافة لمسة فخمة للتقدم */
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 8px;
 }
 
 .loyalty-dot {
-    width: 35px;
-    height: 35px;
+    width: 38px; /* حجم أكبر قليلاً */
+    height: 38px; /* حجم أكبر قليلاً */
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.3); /* لون أوضح للنقاط غير المكتملة */
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
+    font-size: 1rem; /* حجم خط أوضح */
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.6);
-    flex-shrink: 0; /* لمنع التقلص */
+    color: rgba(255, 255, 255, 0.8); /* لون أوضح للأرقام */
+    flex-shrink: 0;
+    transition: var(--transition); /* لإضافة تأثير عند التغيير */
 }
 
 .loyalty-dot.completed {
@@ -987,45 +993,53 @@ footer {
 
 .loyalty-line {
     flex-grow: 1;
-    height: 4px;
+    height: 6px; /* خط أكثر سمكًا */
     background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 2px;
+    border-radius: 3px; /* حواف أكثر نعومة */
     position: relative;
+    overflow: hidden; /* لضمان أن التعبئة لا تتجاوز الحدود */
 }
 
 .loyalty-line-fill {
     height: 100%;
     background-color: var(--secondary);
     width: 0%; /* سيتم التحكم بها بـ JS */
-    border-radius: 2px;
-    transition: width 0.5s ease-in-out;
+    border-radius: 3px;
+    transition: width 0.8s ease-in-out; /* انتقال أبطأ وأكثر سلاسة */
 }
 
 .loyalty-reward-info {
-    font-size: 1rem;
+    font-size: 1.05rem; /* حجم أوضح */
     opacity: 0.8;
+}
+
+.loyalty-promo-section {
+    padding: 80px 0; /* تقليل البادينج قليلاً */
+    background: linear-gradient(to bottom, #e9f0ef, #f8f9fa); /* خلفية خفيفة مميزة */
 }
 
 .loyalty-promo {
     background: white;
     border-radius: var(--border-radius);
-    padding: 30px;
+    padding: 40px; /* بادينج أكبر قليلاً */
     box-shadow: var(--box-shadow);
     text-align: center;
-    margin: 60px auto; /* توسيط الإعلان */
+    margin: 0 auto; /* توسيط الإعلان */
     max-width: 800px;
 }
 
 .loyalty-promo h3 {
-    font-size: 2rem;
+    font-size: 2.1rem; /* حجم خط أكبر */
     color: var(--dark);
     margin-bottom: 15px;
+    font-weight: 800; /* وزن أثقل */
 }
 
 .loyalty-promo p {
-    font-size: 1.15rem;
+    font-size: 1.2rem; /* حجم خط أكبر */
     color: var(--gray);
-    margin-bottom: 25px;
+    margin-bottom: 30px; /* مسافة أكبر للزر */
+    line-height: 1.7;
 }
 
 
@@ -1144,9 +1158,16 @@ footer {
     .loyalty-progress {
         flex-wrap: wrap; /* السماح بعناصر التقدم بالالتفاف */
         justify-content: center;
+        padding: 5px;
     }
     .loyalty-dot {
-        margin-bottom: 10px; /* مسافة بين النقاط الملفوفة */
+        margin: 5px; /* مسافة بين النقاط الملفوفة */
+        width: 30px; /* تصغير حجم النقطة */
+        height: 30px; /* تصغير حجم النقطة */
+        font-size: 0.85rem;
+    }
+    .loyalty-line {
+        height: 4px; /* تصغير الخط */
     }
 }
 
@@ -1211,6 +1232,18 @@ footer {
     }
     .booking-details {
         text-align: right;
+    }
+    .loyalty-card h3 {
+        font-size: 1.8rem;
+    }
+    .loyalty-card p {
+        font-size: 1rem;
+    }
+    .loyalty-promo h3 {
+        font-size: 1.8rem;
+    }
+    .loyalty-promo p {
+        font-size: 1rem;
     }
 }
 
