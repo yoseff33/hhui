@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وُجْهَة | تسجيل الدخول</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* إضافة بعض التنسيقات الخاصة لهذه الصفحة */
+        .choice-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(105deg, rgba(15, 41, 37, 0.95) 0%, rgba(26, 60, 55, 0.9) 100%), url('https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            flex-direction: column;
+            gap: 40px;
+        }
+        .choice-container h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .choice-container p {
+            font-size: 1.3rem;
+            margin-bottom: 50px;
+            max-width: 600px;
+            line-height: 1.8;
+        }
+        .choice-buttons {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .choice-buttons .btn {
+            padding: 20px 45px;
+            font-size: 1.3rem;
+            min-width: 200px;
+        }
+        /* لتجاوبية أفضل لهذه الصفحة */
+        @media (max-width: 768px) {
+            .choice-container h1 {
+                font-size: 2.5rem;
+            }
+            .choice-container p {
+                font-size: 1rem;
+                padding: 0 20px;
+            }
+            .choice-buttons {
+                flex-direction: column;
+                width: 80%;
+            }
+            .choice-buttons .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="choice-container">
+        <h1>مرحبًا بك في وُجْهَة!</h1>
+        <p>الرجاء اختيار نوع الحساب الذي تريد تسجيل الدخول إليه أو التسجيل به.</p>
+        <div class="choice-buttons">
+            <a href="dashboard-owner.html" class="btn btn-secondary">
+                <i class="fas fa-car-alt"></i> أنا مؤجر
+            </a>
+            <a href="cars.html" class="btn btn-primary">
+                <i class="fas fa-key"></i> أنا مستأجر
+            </a>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
