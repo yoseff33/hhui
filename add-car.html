@@ -25,18 +25,42 @@
                     <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
                     <li><a href="add-car.html" class="auth-link active" id="nav-add-car">أضف سيارتك</a></li>
                     <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
+                    <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
                 </ul>
                 <div class="nav-buttons">
                     <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
                     <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
                     <div id="nav-user-profile-placeholder"></div>
                 </div>
-                <button class="mobile-toggle">
+                <button class="mobile-toggle" aria-label="Toggle mobile menu">
                     <i class="fas fa-bars"></i>
                 </button>
             </nav>
         </div>
     </header>
+
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-nav-menu">
+        <div class="nav-buttons" style="flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <button id="mobile-theme-toggle" class="theme-toggle" style="margin: 0;"><i class="fas fa-moon"></i></button>
+            <button class="mobile-toggle" aria-label="Close mobile menu" style="color: var(--dark);"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="cars.html">استكشف السيارات</a></li>
+            <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+            <li><a href="dashboard-owner.html" class="auth-link" id="mobile-nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
+            <li><a href="dashboard-renter.html" class="auth-link" id="mobile-nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
+            <li><a href="add-car.html" class="auth-link active" id="mobile-nav-add-car">أضف سيارتك</a></li>
+            <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
+            <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
+        </ul>
+        <div class="nav-buttons" style="flex-direction: column; width: 100%; margin-top: auto; padding-top: 20px; border-top: 1px solid var(--light-gray);">
+            <a href="landing.html" class="btn btn-primary guest-only" id="mobile-nav-guest-button" style="width: 100%;">تسجيل دخول / جديد</a>
+            <div id="mobile-nav-user-profile-placeholder" style="width: 100%; display: flex; flex-direction: column; align-items: center;"></div>
+        </div>
+    </div>
+
 
     <section id="add-car" class="add-car-section" style="padding-top: 150px;">
         <div class="container">
