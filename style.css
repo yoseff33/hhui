@@ -30,12 +30,17 @@
 }
 
 /* Base styles for Light Mode */
+html {
+    scroll-padding-top: 80px; /* Offset for fixed header when using anchor links */
+}
+
 body {
     background-color: var(--body-bg-light);
     color: var(--text-color-light);
     line-height: 1.7;
     overflow-x: hidden;
     font-size: 1.05rem;
+    padding-top: 80px; /* Add padding to body to prevent content from going under fixed header */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -54,6 +59,14 @@ h1, h2, h3, h4, h5, h6 {
 header {
     background-color: var(--navbar-bg-light);
     box-shadow: 0 5px 20px var(--shadow-color-light);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    padding: 15px 0;
 }
 
 footer {
@@ -371,7 +384,7 @@ body.dark-mode .nav-links li a {
 }
 
 .nav-links li a:hover,
-body.dark-mode .nav-links li a.active { /* Specific for dark mode active */
+body.dark-mode .nav-links li a.active {
     color: var(--primary);
 }
 body.dark-mode .nav-links li a:hover,
@@ -388,13 +401,13 @@ body.dark-mode .nav-links li a.active {
 
 /* Mobile Toggle Button */
 .mobile-toggle {
-    display: none; /* Hidden by default on desktop */
+    display: none;
     background: none;
     border: none;
     font-size: 1.8rem;
     color: var(--primary);
     cursor: pointer;
-    z-index: 1001; /* Ensure it's above other elements if menu is open */
+    z-index: 1001;
 }
 body.dark-mode .mobile-toggle {
     color: var(--text-color-dark);
@@ -409,17 +422,17 @@ body.dark-mode .mobile-toggle {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 999;
-    display: none; /* Hidden by default */
+    display: none;
 }
 
 /* Mobile Menu Container */
 .mobile-nav-menu {
     position: fixed;
     top: 0;
-    right: -300px; /* Hidden off-screen to the right */
-    width: 280px; /* Width of the mobile menu */
+    right: -300px;
+    width: 280px;
     height: 100%;
-    background-color: var(--navbar-bg-light); /* Match header background */
+    background-color: var(--navbar-bg-light);
     box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     transition: right 0.3s ease-in-out;
@@ -432,7 +445,7 @@ body.dark-mode .mobile-nav-menu {
 }
 
 .mobile-nav-menu.open {
-    right: 0; /* Slide in */
+    right: 0;
 }
 
 .mobile-nav-menu .nav-links {
@@ -468,15 +481,15 @@ body.dark-mode .mobile-nav-menu .nav-links li a {
     flex-direction: column;
     width: 100%;
     margin-top: 30px;
-    align-items: flex-start; /* Align mobile nav buttons to start */
+    align-items: flex-start;
     gap: 10px;
 }
 .mobile-nav-menu .nav-buttons .btn {
     width: 100%;
-    margin-bottom: 0; /* Override default margin-bottom */
+    margin-bottom: 0;
 }
 .mobile-nav-menu .theme-toggle {
-    width: auto; /* Allow theme toggle to size naturally */
+    width: auto;
     text-align: right;
     margin-top: 10px;
     margin-left: 0;
@@ -1896,9 +1909,9 @@ body.dark-mode .popup-car-details p {
         display: none;
         position: fixed;
         top: 0;
-        right: -300px; /* Hidden off-screen */
-        width: 280px; /* Adjust width as needed */
-        max-width: 80%; /* Max width relative to viewport */
+        right: -300px;
+        width: 280px;
+        max-width: 80%;
         height: 100%;
         background-color: var(--navbar-bg-light);
         box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
@@ -1907,7 +1920,7 @@ body.dark-mode .popup-car-details p {
         padding: 20px;
         flex-direction: column;
         align-items: flex-start;
-        overflow-y: auto; /* Allow scrolling if content overflows */
+        overflow-y: auto;
     }
     body.dark-mode .nav-links {
         background-color: var(--navbar-bg-dark);
@@ -1941,7 +1954,7 @@ body.dark-mode .popup-car-details p {
     }
     /* Overlay for mobile menu */
     .mobile-menu-overlay {
-        display: none; /* Controlled by JS */
+        display: none;
         position: fixed;
         top: 0;
         left: 0;
@@ -2018,7 +2031,7 @@ body.dark-mode .popup-car-details p {
     }
 }
 
-/* للهواتف الذكية الصغيرة (أقل من 768 بكسل) */
+/* لأجهزة الكمبيوتر اللوحية الصغيرة (أقل من 768 بكسل) */
 @media (max-width: 768px) {
     .hero h1 {
         font-size: 2.5rem;
