@@ -1,27 +1,45 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <!-- نفس الهيدر السابق مع تغيير العنوان -->
-    <title>وُجْهَة | مسارك الآمن لإيجاد السيارة المثالية</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وُجْهَة | استكشف السيارات</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- نفس الهيدر مع تغيير الصفحة النشطة -->
     <header>
-        <nav class="navbar">
-            <!-- ... -->
-            <ul class="nav-links">
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="cars.html" class="active">معرض السيارات</a></li>
-                <!-- ... -->
-            </ul>
-        </nav>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">و</div>
+                    <div class="logo-text">وُجْهَة</div>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="cars.html" class="active">استكشف السيارات</a></li>
+                    <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+                    <li><a href="dashboard-owner.html">لوحة تحكم المؤجر</a></li>
+                    <li><a href="dashboard-renter.html">لوحة تحكم المستأجر</a></li>
+                    <li><a href="add-car.html">أضف سيارتك</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <a href="#" class="btn btn-outline">تسجيل الدخول</a>
+                    <a href="#" class="btn btn-primary">تسجيل جديد</a>
+                </div>
+                <button class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
     </header>
 
-    <section class="cars-section">
+    <section id="cars" class="cars-section" style="padding-top: 150px;">
         <div class="container">
             <div class="section-title">
-                <h2>استكشف السيارات المتاحة</h2>
-                <p>اختر من بين مجموعة واسعة من السيارات التي تناسب احتياجاتك</p>
+                <h2>السيارات المتاحة للتأجير</h2>
+                <p>اختر من بين مجموعة متنوعة من السيارات التي يقدمها ملاك موثوقون</p>
             </div>
             
             <div class="cars-filter">
@@ -33,10 +51,9 @@
             </div>
             
             <div class="cars-grid">
-                <!-- بطاقات السيارات -->
                 <div class="car-card">
                     <div class="car-img">
-                        <img src="assets/images/car1.jpg" alt="تويوتا كامري">
+                        <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="تويوتا كامري">
                         <div class="car-badge">الأكثر طلباً</div>
                     </div>
                     <div class="car-info">
@@ -45,14 +62,203 @@
                             <div class="car-price">85 <span>ريال/اليوم</span></div>
                         </div>
                         <div class="car-meta">
-                            <!-- مواصفات السيارة -->
+                            <div class="meta-item">
+                                <i class="fas fa-car"></i> أوتوماتيك
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-gas-pump"></i> بنزين
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i> 5 ركاب
+                            </div>
                         </div>
-                        <a href="car-details.html?id=1" class="btn btn-primary">تفاصيل السيارة</a>
+                        <div class="car-location">
+                            <i class="fas fa-map-marker-alt"></i> الرياض، حي المروج
+                        </div>
+                        <div class="car-actions">
+                            <a href="#" class="btn btn-outline">
+                                <i class="far fa-heart"></i> المفضلة
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> احجز الآن
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <!-- المزيد من السيارات -->
+                
+                <div class="car-card">
+                    <div class="car-img">
+                        <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="سيارة لاندكروزر">
+                        <div class="car-badge">خصم 20%</div>
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header">
+                            <h3 class="car-title">تويوتا لاندكروزر 2021</h3>
+                            <div class="car-price">220 <span>ريال/اليوم</span></div>
+                        </div>
+                        <div class="car-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-car"></i> أوتوماتيك
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-gas-pump"></i> بنزين
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i> 7 ركاب
+                            </div>
+                        </div>
+                        <div class="car-location">
+                            <i class="fas fa-map-marker-alt"></i> جدة، حي الصفا
+                        </div>
+                        <div class="car-actions">
+                            <a href="#" class="btn btn-outline">
+                                <i class="far fa-heart"></i> المفضلة
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> احجز الآن
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="car-card">
+                    <div class="car-img">
+                        <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="سيارة هونداي النترا">
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header">
+                            <h3 class="car-title">هونداي النترا 2023</h3>
+                            <div class="car-price">75 <span>ريال/اليوم</span></div>
+                        </div>
+                        <div class="car-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-car"></i> أوتوماتيك
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-gas-pump"></i> بنزين
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i> 5 ركاب
+                            </div>
+                        </div>
+                        <div class="car-location">
+                            <i class="fas fa-map-marker-alt"></i> الدمام، حي الروضة
+                        </div>
+                        <div class="car-actions">
+                            <a href="#" class="btn btn-outline">
+                                <i class="far fa-heart"></i> المفضلة
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> احجز الآن
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="car-card">
+                    <div class="car-img">
+                        <img src="https://images.unsplash.com/photo-1507136566006-cfc505b114fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="سيارة مرسيدس">
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header">
+                            <h3 class="car-title">مرسيدس E-Class 2020</h3>
+                            <div class="car-price">300 <span>ريال/اليوم</span></div>
+                        </div>
+                        <div class="car-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-car"></i> أوتوماتيك
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-gas-pump"></i> بنزين
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i> 5 ركاب
+                            </div>
+                        </div>
+                        <div class="car-location">
+                            <i class="fas fa-map-marker-alt"></i> الرياض، حي السفارات
+                        </div>
+                        <div class="car-actions">
+                            <a href="#" class="btn btn-outline">
+                                <i class="far fa-heart"></i> المفضلة
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> احجز الآن
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="#" class="btn btn-outline">استكشف المزيد من السيارات</a>
             </div>
         </div>
     </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>عن وُجْهَة</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
+                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. نسعى لتحويل السيارات الواقعة إلى أصول منتجة.
+                    </p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="cars.html">استكشف السيارات</a></li>
+                        <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+                        <li><a href="#">المدونة</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>للأفراد</h3>
+                    <ul>
+                        <li><a href="#">تسجيل كمستأجر</a></li>
+                        <li><a href="#">البحث عن سيارة</a></li>
+                        <li><a href="#">شروط الاستئجار</a></li>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">دليل المستخدم</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>تواصل معنا</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>الرياض، حي الصحافة، شارع الملك فهد</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+966 11 123 4567</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@wajhah.app</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 وُجْهَة. جميع الحقوق محفوظة. | تم التطوير بكل ❤️ في المملكة العربية السعودية</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
