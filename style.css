@@ -1896,8 +1896,9 @@ body.dark-mode .popup-car-details p {
         display: none;
         position: fixed;
         top: 0;
-        right: -300px;
-        width: 280px;
+        right: -300px; /* Hidden off-screen */
+        width: 280px; /* Adjust width as needed */
+        max-width: 80%; /* Max width relative to viewport */
         height: 100%;
         background-color: var(--navbar-bg-light);
         box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
@@ -1906,6 +1907,7 @@ body.dark-mode .popup-car-details p {
         padding: 20px;
         flex-direction: column;
         align-items: flex-start;
+        overflow-y: auto; /* Allow scrolling if content overflows */
     }
     body.dark-mode .nav-links {
         background-color: var(--navbar-bg-dark);
