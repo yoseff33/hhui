@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وُجْهَة | اختبار السيارة المناسبة لي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">و</div>
+                    <div class="logo-text">وُجْهَة</div>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="cars.html">استكشف السيارات</a></li>
+                    <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+                    <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
+                    <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
+                    <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
+                    <li><a href="quiz.html" class="active">اختبار السيارة المناسبة</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
+                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
+                    <div id="nav-user-profile-placeholder"></div>
+                </div>
+                <button class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section id="quiz-section" style="padding-top: 150px;">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>اختبار السيارة المناسبة لك</h2>
+                <p>أجب عن بعض الأسئلة لنساعدك في العثور على سيارتك المثالية</p>
+            </div>
+            
+            <div class="quiz-container" data-aos="zoom-in">
+                <form id="car-quiz-form">
+                    <div class="quiz-question">
+                        <p>1. كم عدد الركاب الذين سيتنقلون معك عادةً؟</p>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="passengers" value="2"> 2 ركاب أو أقل</label>
+                            <label><input type="radio" name="passengers" value="4"> 3-4 ركاب</label>
+                            <label><input type="radio" name="passengers" value="5"> 5 ركاب</label>
+                            <label><input type="radio" name="passengers" value="7"> 6-7 ركاب</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <p>2. ما هي ميزانيتك التقريبية لتأجير السيارة يومياً؟</p>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="budget" value="low"> أقل من 100 ريال</label>
+                            <label><input type="radio" name="budget" value="medium"> 100 - 200 ريال</label>
+                            <label><input type="radio" name="budget" value="high"> أكثر من 200 ريال</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <p>3. ما هو أسلوب القيادة الذي تفضله أو طبيعة رحلتك؟</p>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="style" value="economic"> اقتصادي وعملي (داخل المدينة)</label>
+                            <label><input type="radio" name="style" value="family"> عائلي ومريح (للسفر والرحلات الطويلة)</label>
+                            <label><input type="radio" name="style" value="sporty"> رياضي وممتع (للقيادة السريعة والترفيه)</label>
+                            <label><input type="radio" name="style" value="luxury"> فاخر وأنيق (للمناسبات الخاصة والأداء العالي)</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> احصل على توصيتي</button>
+                    </div>
+                </form>
+
+                <div id="quiz-results" class="quiz-results" style="display: none;">
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>عن وُجْهَة</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
+                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. نسعى لتحويل السيارات الواقعة إلى أصول منتجة.
+                    </p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="cars.html">استكشف السيارات</a></li>
+                        <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+                        <li><a href="#">المدونة</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>للأفراد</h3>
+                    <ul>
+                        <li><a href="#">تسجيل كمستأجر</a></li>
+                        <li><a href="#">البحث عن سيارة</a></li>
+                        <li><a href="#">شروط الاستئجار</a></li>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">دليل المستخدم</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>تواصل معنا</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>الرياض، حي الصحافة، شارع الملك فهد</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+966 11 123 4567</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@wajhah.app</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 وُجْهَة. جميع الحقوق محفوظة. | تم التطوير بكل ❤️ في المملكة العربية السعودية</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
