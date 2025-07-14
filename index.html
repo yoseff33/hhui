@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -19,12 +20,16 @@
                 <ul class="nav-links">
                     <li><a href="index.html" class="active">الرئيسية</a></li>
                     <li><a href="cars.html">استكشف السيارات</a></li>
-                    <li><a href="index.html#how-it-works">كيف تعمل</a></li> <li><a href="dashboard-owner.html">لوحة تحكم المؤجر</a></li>
-                    <li><a href="dashboard-renter.html">لوحة تحكم المستأجر</a></li>
-                    <li><a href="add-car.html">أضف سيارتك</a></li>
+                    <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+                    <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
+                    <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
+                    <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
+                    <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
                 </ul>
                 <div class="nav-buttons">
-                    <a href="landing.html" class="btn btn-primary">تسجيل دخول / جديد</a>
+                    <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
+                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
+                    <div id="nav-user-profile-placeholder"></div>
                 </div>
                 <button class="mobile-toggle">
                     <i class="fas fa-bars"></i>
@@ -34,8 +39,8 @@
     </header>
 
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
+        <div id="particles-js"></div> <div class="container">
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
                 <h1>حوّل سيارتك الواقعة إلى مصدر دخل مستمر</h1>
                 <p>أول منصة سعودية لتأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. انضم إلى آلاف المالكين الذين يحققون أرباحاً شهرية من سياراتهم</p>
                 <div class="hero-buttons">
@@ -52,13 +57,13 @@
 
     <section class="features">
         <div class="container">
-            <div class="section-title">
+            <div class="section-title" data-aos="fade-up">
                 <h2>لماذا تختار وُجْهَة؟</h2>
                 <p>مزايا فريدة تجعلنا المنصة المثالية لتأجير السيارات بين الأفراد</p>
             </div>
             
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
@@ -66,7 +71,7 @@
                     <p>تأمين شامل ضد الحوادث والتلف والسرقة لسيارتك طوال فترة التأجير</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="feature-icon">
                         <i class="fas fa-tag"></i>
                     </div>
@@ -74,7 +79,7 @@
                     <p>نظام تسعير ديناميكي يضمن لك أفضل عائد مالي حسب الطلب والموسم</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="feature-icon">
                         <i class="fas fa-truck"></i>
                     </div>
@@ -82,7 +87,7 @@
                     <p>خدمة توصيل السيارة إلى أي مكان في مدينتك خلال 60 دقيقة فقط</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
                     <div class="feature-icon">
                         <i class="fas fa-user-shield"></i>
                     </div>
@@ -90,7 +95,7 @@
                     <p>نظام تقييم متقدم لضمان جودة المستأجرين وسجلهم الحافل</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
                     <div class="feature-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
@@ -98,7 +103,7 @@
                     <p>لوحة تحكم ذكية لمتابعة أرباحك وتحليل أدائك واتخاذ قرارات أفضل</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
                     <div class="feature-icon">
                         <i class="fas fa-headset"></i>
                     </div>
@@ -111,11 +116,11 @@
 
     <section class="loyalty-promo-section">
         <div class="container">
-            <div class="section-title">
+            <div class="section-title" data-aos="fade-up">
                 <h2>برنامج وُجْهَة للولاء</h2>
                 <p>اجعل كل رحلة تكسبك المزيد من المكافآت!</p>
             </div>
-            <div class="loyalty-promo">
+            <div class="loyalty-promo" data-aos="zoom-in">
                 <h3>تأجيرك التاسع علينا!</h3>
                 <p>استأجر 8 سيارات، واحصل على تأجيرك التاسع مجانًا بحد أقصى 159 ريال سعودي.</p>
                 <a href="dashboard-renter.html" class="btn btn-primary">
@@ -125,33 +130,68 @@
         </div>
     </section>
 
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>ماذا يقول عملاؤنا؟</h2>
+                <p>تجارب حقيقية من مستخدمي وُجْهَة السعداء</p>
+            </div>
+            <div class="testimonial-slider" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-slide active">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="صورة العميل أحمد" class="testimonial-author-img">
+                    <p class="testimonial-text">"وُجْهَة غيّرت طريقة تأجيري للسيارات! سهولة في الحجز، وأسعار منافسة، ودعم فني رائع. أنصح بها بشدة!"</p>
+                    <p class="testimonial-author-name">أحمد المالكي</p>
+                    <p class="testimonial-author-role">مستأجر متكرر</p>
+                </div>
+                <div class="testimonial-slide">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="صورة العميل فاطمة" class="testimonial-author-img">
+                    <p class="testimonial-text">"منصة رائعة لتحويل سيارتي إلى مصدر دخل. الأمان والحماية التي توفرها وُجْهَة جعلتني أشعر بالراحة التامة."</p>
+                    <p class="testimonial-author-name">فاطمة الزهراني</p>
+                    <p class="testimonial-author-role">مؤجرة معتمدة</p>
+                </div>
+                <div class="testimonial-slide">
+                    <img src="https://randomuser.me/api/portraits/men/50.jpg" alt="صورة العميل خالد" class="testimonial-author-img">
+                    <p class="testimonial-text">"الخدمة سريعة وموثوقة، والسيارات نظيفة وفي حالة ممتازة. تجربة لا تُنسى في كل مرة."</p>
+                    <p class="testimonial-author-name">خالد الحربي</p>
+                    <p class="testimonial-author-role">مستأجر</p>
+                </div>
+                <div class="slider-dots">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <section id="how-it-works" class="how-it-works">
         <div class="container">
-            <div class="section-title">
+            <div class="section-title" data-aos="fade-up">
                 <h2>كيف تعمل منصة وُجْهَة؟</h2>
                 <p>أربع خطوات بسيطة لتأجير سيارتك أو استئجار سيارة</p>
             </div>
             
             <div class="steps-container">
-                <div class="step">
+                <div class="step" data-aos="fade-up" data-aos-delay="100">
                     <div class="step-number">1</div>
                     <h3>أضف سيارتك</h3>
                     <p>سجل في المنصة وأضف سيارتك مع صور ومواصفات واضحة في دقائق معدودة</p>
                 </div>
                 
-                <div class="step">
+                <div class="step" data-aos="fade-up" data-aos-delay="200">
                     <div class="step-number">2</div>
                     <h3>حدد المواعيد</h3>
                     <p>حدد الأوقات المتاحة للتأجير والأسعار المناسبة لسيارتك</p>
                 </div>
                 
-                <div class="step">
+                <div class="step" data-aos="fade-up" data-aos-delay="300">
                     <div class="step-number">3</div>
                     <h3>قابل المستأجر</h3>
                     <p>التقِ بالمستأجر في المكان المحدد أو استخدم خدمة التوصيل الذكي</p>
                 </div>
                 
-                <div class="step">
+                <div class="step" data-aos="fade-up" data-aos-delay="400">
                     <div class="step-number">4</div>
                     <h3>اكسب المال</h3>
                     <p>استلم أموالك بعد انتهاء فترة التأجير بكل أمان وسهولة</p>
@@ -222,6 +262,117 @@
             </div>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script> <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> <script>
+        AOS.init({
+            once: true, // Whether animation should happen only once - while scrolling down
+        });
+        // particles.js initialization
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    },
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
