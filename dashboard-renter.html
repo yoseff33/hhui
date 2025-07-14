@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -20,12 +21,15 @@
                     <li><a href="index.html">الرئيسية</a></li>
                     <li><a href="cars.html">استكشف السيارات</a></li>
                     <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-                    <li><a href="dashboard-owner.html">لوحة تحكم المؤجر</a></li>
-                    <li><a href="dashboard-renter.html" class="active">لوحة تحكم المستأجر</a></li>
-                    <li><a href="add-car.html">أضف سيارتك</a></li>
+                    <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
+                    <li><a href="dashboard-renter.html" class="auth-link active" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
+                    <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
+                    <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
                 </ul>
                 <div class="nav-buttons">
-                    <a href="landing.html" class="btn btn-primary">تسجيل دخول / جديد</a>
+                    <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
+                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
+                    <div id="nav-user-profile-placeholder"></div>
                 </div>
                 <button class="mobile-toggle">
                     <i class="fas fa-bars"></i>
@@ -36,12 +40,12 @@
 
     <section id="dashboard-renter" class="dashboard-section" style="padding-top: 150px;">
         <div class="container">
-            <div class="section-title">
+            <div class="section-title" data-aos="fade-up">
                 <h2>لوحة تحكم المستأجر</h2>
                 <p>إدارة حجوزاتك وعرض سياراتك المفضلة</p>
             </div>
             
-            <div class="dashboard">
+            <div class="dashboard" data-aos="fade-up" data-aos-delay="100">
                 <div class="dashboard-sidebar">
                     <div class="user-profile">
                         <div class="user-avatar">س</div>
@@ -64,7 +68,7 @@
                 <div class="dashboard-content">
                     <h2 class="dashboard-title">مرحبا بك، سارة!</h2>
                     
-                    <div class="loyalty-card">
+                    <div class="loyalty-card" data-aos="zoom-in" data-aos-delay="150">
                         <div class="loyalty-card-content">
                             <h3>بطاقة وُجْهَة للولاء</h3>
                             <p>أنت على بعد <span id="remaining-rentals-count">5</span> حجوزات من تأجيرك المجاني!</p>
@@ -72,12 +76,14 @@
                                 <div class="loyalty-dot">1</div>
                                 <div class="loyalty-dot">2</div>
                                 <div class="loyalty-dot">3</div>
-                                <div class="loyalty-line"><div class="loyalty-line-fill"></div></div>
                                 <div class="loyalty-dot">4</div>
                                 <div class="loyalty-dot">5</div>
                                 <div class="loyalty-dot">6</div>
                                 <div class="loyalty-dot">7</div>
                                 <div class="loyalty-dot">8</div>
+                            </div>
+                            <div class="loyalty-line">
+                                <div class="loyalty-line-fill"></div>
                             </div>
                             <div class="loyalty-reward-info">
                                 <span>أتممت <span id="current-rentals-count">3</span> من 8 حجوزات مؤهلة.</span>
@@ -88,32 +94,32 @@
                     </div>
 
                     <div class="stats-grid">
-                        <div class="stat-card">
+                        <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
                             <h3>الحجوزات المكتملة</h3>
                             <div class="value">12</div>
                         </div>
                         
-                        <div class="stat-card">
+                        <div class="stat-card" data-aos="zoom-in" data-aos-delay="250">
                             <h3>الحجوزات القادمة</h3>
                             <div class="value">1</div>
                         </div>
                         
-                        <div class="stat-card">
+                        <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
                             <h3>السيارات المفضلة</h3>
                             <div class="value">5</div>
                         </div>
                         
-                        <div class="stat-card">
+                        <div class="stat-card" data-aos="zoom-in" data-aos-delay="350">
                             <h3>نقاط الولاء</h3>
                             <div class="value">340</div>
                         </div>
                     </div>
                     
-                    <div class="recent-bookings">
+                    <div class="recent-bookings" data-aos="fade-up" data-aos-delay="400">
                         <h3>حجوزاتي الأخيرة</h3>
                         <div class="booking-item">
                             <div class="booking-car">
-                                <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="هونداي النترا">
+                                <img src="https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp" alt="هونداي النترا">
                                 <div class="booking-details">
                                     <h4>هونداي النترا 2023</h4>
                                     <p>المالك: خالد عبدالله</p>
@@ -129,7 +135,7 @@
                         
                         <div class="booking-item">
                             <div class="booking-car">
-                                <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="تويوتا كامري">
+                                <img src="https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="تويوتا كامري">
                                 <div class="booking-details">
                                     <h4>تويوتا كامري 2022</h4>
                                     <p>المالك: نواف السبيعي</p>
@@ -212,6 +218,12 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
