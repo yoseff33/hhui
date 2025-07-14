@@ -25,21 +25,46 @@
                     <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
                     <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
                     <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
+                    <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
                 </ul>
                 <div class="nav-buttons">
                     <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
                     <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
                     <div id="nav-user-profile-placeholder"></div>
                 </div>
-                <button class="mobile-toggle">
+                <button class="mobile-toggle" aria-label="Toggle mobile menu">
                     <i class="fas fa-bars"></i>
                 </button>
             </nav>
         </div>
     </header>
 
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-nav-menu">
+        <div class="nav-buttons" style="flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <button id="mobile-theme-toggle" class="theme-toggle" style="margin: 0;"><i class="fas fa-moon"></i></button>
+            <button class="mobile-toggle" aria-label="Close mobile menu" style="color: var(--dark);"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">الرئيسية</a></li>
+            <li><a href="cars.html">استكشف السيارات</a></li>
+            <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+            <li><a href="dashboard-owner.html" class="auth-link" id="mobile-nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
+            <li><a href="dashboard-renter.html" class="auth-link" id="mobile-nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
+            <li><a href="add-car.html" class="auth-link" id="mobile-nav-add-car">أضف سيارتك</a></li>
+            <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
+            <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
+        </ul>
+        <div class="nav-buttons" style="flex-direction: column; width: 100%; margin-top: auto; padding-top: 20px; border-top: 1px solid var(--light-gray);">
+            <a href="landing.html" class="btn btn-primary guest-only" id="mobile-nav-guest-button" style="width: 100%;">تسجيل دخول / جديد</a>
+            <div id="mobile-nav-user-profile-placeholder" style="width: 100%; display: flex; flex-direction: column; align-items: center;"></div>
+        </div>
+    </div>
+
+
     <section class="hero">
-        <div id="particles-js"></div> <div class="container">
+        <div id="particles-js"></div>
+        <div class="container">
             <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
                 <h1>حوّل سيارتك الواقعة إلى مصدر دخل مستمر</h1>
                 <p>أول منصة سعودية لتأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. انضم إلى آلاف المالكين الذين يحققون أرباحاً شهرية من سياراتهم</p>
@@ -262,11 +287,13 @@
             </div>
         </div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script> <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> <script>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
         AOS.init({
-            once: true, // Whether animation should happen only once - while scrolling down
+            once: true,
         });
-        // particles.js initialization
         particlesJS("particles-js", {
             "particles": {
                 "number": {
@@ -336,7 +363,7 @@
                 "events": {
                     "onhover": {
                         "enable": true,
-                        "mode": "grab"
+                        ""mode": "grab"
                     },
                     "onclick": {
                         "enable": true,
