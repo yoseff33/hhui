@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وُجْهَة | لوحة تحكم المستأجر</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">و</div>
+                    <div class="logo-text">وُجْهَة</div>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="cars.html">استكشف السيارات</a></li>
+                    <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+                    <li><a href="dashboard-owner.html">لوحة تحكم المؤجر</a></li>
+                    <li><a href="dashboard-renter.html" class="active">لوحة تحكم المستأجر</a></li>
+                    <li><a href="add-car.html">أضف سيارتك</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <a href="#" class="btn btn-outline">تسجيل الدخول</a>
+                    <a href="#" class="btn btn-primary">تسجيل جديد</a>
+                </div>
+                <button class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section id="dashboard-renter" class="dashboard-section" style="padding-top: 150px;">
+        <div class="container">
+            <div class="section-title">
+                <h2>لوحة تحكم المستأجر</h2>
+                <p>إدارة حجوزاتك وعرض سياراتك المفضلة</p>
+            </div>
+            
+            <div class="dashboard">
+                <div class="dashboard-sidebar">
+                    <div class="user-profile">
+                        <div class="user-avatar">س</div>
+                        <div class="user-info">
+                            <h3>سارة الحربي</h3>
+                            <p>مستأجر معتمد</p>
+                        </div>
+                    </div>
+                    
+                    <ul class="sidebar-menu">
+                        <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> نظرة عامة</a></li>
+                        <li><a href="#"><i class="fas fa-calendar-check"></i> حجوزاتي</a></li>
+                        <li><a href="#"><i class="fas fa-heart"></i> السيارات المفضلة</a></li>
+                        <li><a href="#"><i class="fas fa-comment-dots"></i> تقييماتي</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> الدعم</a></li>
+                    </ul>
+                </div>
+                
+                <div class="dashboard-content">
+                    <h2 class="dashboard-title">مرحبا بك، سارة!</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>الحجوزات المكتملة</h3>
+                            <div class="value">12</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <h3>الحجوزات القادمة</h3>
+                            <div class="value">1</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <h3>السيارات المفضلة</h3>
+                            <div class="value">5</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <h3>نقاط الولاء</h3>
+                            <div class="value">340</div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-bookings">
+                        <h3>حجوزاتي الأخيرة</h3>
+                        <div class="booking-item">
+                            <div class="booking-car">
+                                <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="هونداي النترا">
+                                <div class="booking-details">
+                                    <h4>هونداي النترا 2023</h4>
+                                    <p>المالك: خالد عبدالله</p>
+                                </div>
+                            </div>
+                            <div class="booking-date">
+                                <p>1 - 5 ديسمبر</p>
+                                <p>5 أيام</p>
+                            </div>
+                            <div class="booking-price">375 ر.س</div>
+                            <div class="booking-status status-active">قادمة</div>
+                        </div>
+                        
+                        <div class="booking-item">
+                            <div class="booking-car">
+                                <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="تويوتا كامري">
+                                <div class="booking-details">
+                                    <h4>تويوتا كامري 2022</h4>
+                                    <p>المالك: نواف السبيعي</p>
+                                </div>
+                            </div>
+                            <div class="booking-date">
+                                <p>5 - 8 نوفمبر</p>
+                                <p>4 أيام</p>
+                            </div>
+                            <div class="booking-price">340 ر.س</div>
+                            <div class="booking-status status-completed">مكتملة</div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>عن وُجْهَة</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
+                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. نسعى لتحويل السيارات الواقعة إلى أصول منتجة.
+                    </p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="cars.html">استكشف السيارات</a></li>
+                        <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+                        <li><a href="#">المدونة</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>للأفراد</h3>
+                    <ul>
+                        <li><a href="#">تسجيل كمستأجر</a></li>
+                        <li><a href="#">البحث عن سيارة</a></li>
+                        <li><a href="#">شروط الاستئجار</a></li>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">دليل المستخدم</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>تواصل معنا</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>الرياض، حي الصحافة، شارع الملك فهد</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+966 11 123 4567</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@wajhah.app</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 وُجْهَة. جميع الحقوق محفوظة. | تم التطوير بكل ❤️ في المملكة العربية السعودية</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
