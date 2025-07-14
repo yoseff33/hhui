@@ -36,3 +36,42 @@ document.querySelectorAll('.sidebar-menu a').forEach(link => {
         this.classList.add('active');
     });
 });
+
+// -------------------------------------
+// وظيفة تحديث بطاقة الولاء (Loyalty Card)
+// -------------------------------------
+
+// هذه الوظيفة ستكون مبدئية، وفي نظام حقيقي ستأخذ البيانات من الخادم
+function updateLoyaltyCard(completedRentals) {
+    const totalRentalsNeeded = 8;
+    const progressPercentage = (completedRentals / totalRentalsNeeded) * 100;
+
+    const progressBarFill = document.querySelector('.loyalty-line-fill');
+    const loyaltyDots = document.querySelectorAll('.loyalty-dot');
+
+    if (progressBarFill) {
+        progressBarFill.style.width = `${progressPercentage}%`;
+    }
+
+    loyaltyDots.forEach((dot, index) => {
+        if (index < completedRentals) {
+            dot.classList.add('completed');
+        } else {
+            dot.classList.remove('completed');
+        }
+        dot.textContent = index + 1; // ترقيم النقاط من 1 إلى 8
+    });
+
+    const currentRentalsText = document.getElementById('current-rentals-count');
+    if (currentRentalsText) {
+        currentRentalsText.textContent = completedRentals;
+    }
+}
+
+// استدعاء وظيفة تحديث البطاقة عند تحميل الصفحة التي تحتوي على بطاقة الولاء.
+// في النظام الحقيقي، ستقوم بجلب "completedRentals" من قاعدة بيانات المستخدم.
+document.addEventListener('DOMContentLoaded', () => {
+    // هذا رقم افتراضي، سيتغير ليأتي من بيانات المستخدم الفعلية من الخادم
+    const userCompletedRentals = 3; // مثال: المستخدم أتم 3 حجوزات
+    updateLoyaltyCard(userCompletedRentals);
+});
