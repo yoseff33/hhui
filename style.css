@@ -6,8 +6,8 @@
     --dark: #0f2925;
     --gray: #6c757d;
     --light-gray: #e9ecef;
-    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* ظل أعمق وأكثر انتشارًا */
+    --transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); /* انتقال أكثر سلاسة */
     --border-radius: 16px;
 }
 
@@ -23,6 +23,7 @@ body {
     color: #333;
     line-height: 1.7;
     overflow-x: hidden;
+    font-size: 1.05rem; /* زيادة طفيفة لحجم الخط الأساسي لتحسين القراءة */
 }
 
 .container {
@@ -42,12 +43,12 @@ section {
 }
 
 .section-title h2 {
-    font-size: 2.8rem;
+    font-size: 3rem; /* زيادة طفيفة في حجم العنوان الرئيسي */
     color: var(--dark);
     margin-bottom: 20px;
     position: relative;
     display: inline-block;
-    font-weight: 800;
+    font-weight: 900; /* وزن أثقل لجعله يبرز أكثر */
 }
 
 .section-title h2:after {
@@ -66,7 +67,7 @@ section {
     color: var(--gray);
     max-width: 700px;
     margin: 25px auto 0;
-    font-size: 1.2rem;
+    font-size: 1.25rem; /* حجم خط أوضح قليلاً للوصف */
     line-height: 1.8;
 }
 
@@ -74,11 +75,11 @@ section {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 16px 36px;
+    padding: 18px 40px; /* زيادة حجم الأزرار قليلاً */
     border-radius: var(--border-radius);
     text-decoration: none;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.15rem; /* حجم خط أكبر قليلاً للأزرار */
     transition: var(--transition);
     cursor: pointer;
     border: none;
@@ -97,8 +98,8 @@ section {
 }
 
 .btn-primary:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(26, 60, 55, 0.3);
+    transform: translateY(-7px); /* تأثير تحويم أعمق قليلاً */
+    box-shadow: 0 18px 35px rgba(26, 60, 55, 0.4); /* ظل أكبر وأكثر وضوحًا عند التحويم */
 }
 
 .btn-secondary {
@@ -109,7 +110,8 @@ section {
 
 .btn-secondary:hover {
     background: #c9a22e;
-    transform: translateY(-5px);
+    transform: translateY(-7px); /* تأثير تحويم أعمق قليلاً */
+    box-shadow: 0 18px 35px rgba(212, 175, 55, 0.4); /* ظل أكبر وأكثر وضوحًا عند التحويم */
 }
 
 .btn-outline {
@@ -122,7 +124,8 @@ section {
 .btn-outline:hover {
     background: var(--primary);
     color: white;
-    transform: translateY(-5px);
+    transform: translateY(-7px); /* تأثير تحويم أعمق قليلاً */
+    box-shadow: 0 18px 35px rgba(26, 60, 55, 0.2); /* ظل أكبر وأكثر وضوحًا عند التحويم */
 }
 
 /* التنقل */
@@ -257,7 +260,7 @@ header {
 }
 
 .hero h1 {
-    font-size: 4rem;
+    font-size: 4.2rem; /* زيادة طفيفة */
     line-height: 1.2;
     margin-bottom: 30px;
     font-weight: 800;
@@ -265,7 +268,7 @@ header {
 }
 
 .hero p {
-    font-size: 1.4rem;
+    font-size: 1.5rem; /* زيادة طفيفة */
     margin-bottom: 45px;
     opacity: 0.9;
     line-height: 1.8;
@@ -302,33 +305,35 @@ header {
 }
 
 .feature-card:hover {
-    transform: translateY(-15px);
+    transform: translateY(-20px); /* تأثير تحويم أعمق */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* ظل أكبر وأكثر وضوحًا */
     border-bottom-color: var(--secondary);
 }
 
 .feature-icon {
-    width: 90px;
-    height: 90px;
+    width: 100px; /* حجم أكبر قليلاً */
+    height: 100px;
     background: rgba(46, 139, 87, 0.1);
     border-radius: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 30px;
-    font-size: 2.2rem;
+    font-size: 2.5rem; /* أيقونة أكبر */
     color: var(--accent);
 }
 
 .feature-card h3 {
-    font-size: 1.8rem;
+    font-size: 1.9rem; /* زيادة طفيفة */
     margin-bottom: 20px;
     color: var(--dark);
+    font-weight: 700; /* التأكيد على العناوين الفرعية */
 }
 
 .feature-card p {
     color: var(--gray);
     line-height: 1.8;
-    font-size: 1.1rem;
+    font-size: 1.15rem; /* زيادة طفيفة */
 }
 
 /* السيارات */
@@ -378,8 +383,8 @@ header {
 }
 
 .car-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    transform: translateY(-12px); /* تأثير تحويم أعمق قليلاً للسيارات */
+    box-shadow: 0 18px 45px rgba(0,0,0,0.18); /* ظل أكبر وأكثر وضوحًا */
 }
 
 .car-img {
@@ -423,19 +428,19 @@ header {
 }
 
 .car-title {
-    font-size: 1.6rem;
-    font-weight: 800;
+    font-size: 1.7rem; /* زيادة طفيفة */
+    font-weight: 700; /* التأكيد على العناوين الفرعية */
     color: var(--dark);
 }
 
 .car-price {
     color: var(--primary);
     font-weight: 800;
-    font-size: 1.6rem;
+    font-size: 1.7rem; /* زيادة طفيفة */
 }
 
 .car-price span {
-    font-size: 1rem;
+    font-size: 1.05rem; /* زيادة طفيفة */
     font-weight: 500;
     color: var(--gray);
 }
@@ -456,11 +461,12 @@ header {
     align-items: center;
     color: var(--gray);
     gap: 8px;
+    font-size: 1.05rem; /* حجم خط أوضح */
 }
 
 .meta-item i {
     color: var(--accent);
-    font-size: 1.2rem;
+    font-size: 1.25rem; /* أيقونة أكبر قليلاً */
 }
 
 .car-location {
@@ -469,6 +475,7 @@ header {
     color: var(--gray);
     margin-bottom: 20px;
     gap: 8px;
+    font-size: 1.05rem; /* حجم خط أوضح */
 }
 
 .car-location i {
@@ -484,6 +491,8 @@ header {
     flex: 1;
     text-align: center;
     justify-content: center;
+    padding: 14px 25px; /* تصغير طفيف ليناسب البطاقة */
+    font-size: 1rem; /* تصغير طفيف ليناسب البطاقة */
 }
 
 /* كيف تعمل */
@@ -521,21 +530,21 @@ header {
 }
 
 .step-number {
-    width: 60px;
-    height: 60px;
+    width: 65px; /* حجم أكبر قليلاً */
+    height: 65px;
     background: var(--primary);
     color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
+    font-size: 2rem; /* أيقونة أكبر */
     font-weight: 800;
     margin: 0 auto 25px;
 }
 
 .step h3 {
-    font-size: 1.6rem;
+    font-size: 1.7rem; /* زيادة طفيفة */
     margin-bottom: 20px;
     color: var(--dark);
 }
@@ -543,6 +552,7 @@ header {
 .step p {
     color: var(--gray);
     line-height: 1.8;
+    font-size: 1.1rem; /* زيادة طفيفة */
 }
 
 /* لوحة التحكم */
@@ -585,12 +595,13 @@ header {
 }
 
 .user-info h3 {
-    font-size: 1.4rem;
+    font-size: 1.45rem; /* زيادة طفيفة */
     margin-bottom: 5px;
 }
 
 .user-info p {
     opacity: 0.8;
+    font-size: 1rem; /* حجم أوضح */
 }
 
 .sidebar-menu {
@@ -598,28 +609,29 @@ header {
 }
 
 .sidebar-menu li {
-    margin-bottom: 12px;
+    margin-bottom: 8px; /* تباعد أقل قليلاً بين العناصر */
 }
 
 .sidebar-menu a {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 14px 20px;
+    padding: 16px 25px; /* مساحة أكبر للروابط */
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.85); /* لون أوضح */
     border-radius: 12px;
     transition: var(--transition);
+    font-size: 1.1rem; /* حجم خط أوضح */
 }
 
 .sidebar-menu a:hover, 
 .sidebar-menu a.active {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15); /* خلفية أوضح عند التحويم/التنشيط */
     color: white;
 }
 
 .sidebar-menu a i {
-    font-size: 1.2rem;
+    font-size: 1.3rem; /* أيقونة أكبر قليلاً */
 }
 
 .dashboard-content {
@@ -627,7 +639,7 @@ header {
 }
 
 .dashboard-title {
-    font-size: 2rem;
+    font-size: 2.2rem; /* زيادة طفيفة */
     margin-bottom: 30px;
     color: var(--dark);
 }
@@ -645,16 +657,17 @@ header {
     padding: 25px;
     text-align: center;
     border-left: 4px solid var(--accent);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* ظل خفيف للبطاقات الإحصائية */
 }
 
 .stat-card h3 {
-    font-size: 1.1rem;
+    font-size: 1.15rem; /* زيادة طفيفة */
     color: var(--gray);
     margin-bottom: 10px;
 }
 
 .stat-card .value {
-    font-size: 2.2rem;
+    font-size: 2.3rem; /* زيادة طفيفة */
     font-weight: 800;
     color: var(--dark);
 }
@@ -663,10 +676,11 @@ header {
     background: var(--light);
     border-radius: var(--border-radius);
     padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* ظل خفيف لجدول الحجوزات */
 }
 
 .recent-bookings h3 {
-    font-size: 1.5rem;
+    font-size: 1.6rem; /* زيادة طفيفة */
     margin-bottom: 25px;
     color: var(--dark);
 }
@@ -676,6 +690,8 @@ header {
     align-items: center;
     padding: 20px;
     border-bottom: 1px solid var(--light-gray);
+    flex-wrap: wrap; /* للسماح بالتجاوبية على الشاشات الصغيرة */
+    gap: 15px; /* تباعد بين العناصر */
 }
 
 .booking-item:last-child {
@@ -686,7 +702,7 @@ header {
     display: flex;
     align-items: center;
     gap: 15px;
-    flex: 1;
+    flex: 1 1 250px; /* مرونة في الحجم */
 }
 
 .booking-car img {
@@ -698,10 +714,32 @@ header {
 
 .booking-details {
     flex: 1;
+    min-width: 150px; /* لضمان عدم تقلصها بشكل كبير */
+}
+
+.booking-details h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.booking-details p {
+    font-size: 0.95rem;
+    color: var(--gray);
 }
 
 .booking-date {
     width: 200px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--gray);
+}
+
+.booking-price {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.1rem;
+    min-width: 80px; /* لضمان عدم تقلصها */
     text-align: center;
 }
 
@@ -709,6 +747,9 @@ header {
     padding: 6px 15px;
     border-radius: 30px;
     font-weight: 700;
+    font-size: 0.9rem;
+    min-width: 80px; /* لضمان عدم تقلصها */
+    text-align: center;
 }
 
 .status-active {
@@ -740,6 +781,7 @@ header {
     margin-bottom: 10px;
     font-weight: 700;
     color: var(--dark);
+    font-size: 1.1rem; /* حجم خط أوضح */
 }
 
 .form-control {
@@ -754,6 +796,7 @@ header {
 .form-control:focus {
     border-color: var(--accent);
     outline: none;
+    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.2); /* ظل خفيف عند التركيز */
 }
 
 .form-grid {
@@ -813,6 +856,7 @@ footer {
     transition: var(--transition);
     display: block;
     padding: 5px 0;
+    font-size: 1.05rem; /* حجم خط أوضح */
 }
 
 .footer-col ul li a:hover {
@@ -824,6 +868,8 @@ footer {
     display: flex;
     gap: 15px;
     margin-bottom: 20px;
+    color: rgba(255, 255, 255, 0.8); /* لون أوضح للنصوص */
+    font-size: 1.05rem; /* حجم خط أوضح */
 }
 
 .footer-contact i {
@@ -861,76 +907,357 @@ footer {
     padding-top: 30px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem; /* حجم خط أوضح */
 }
 
-/* متجاوب */
+/* ------------------------------------- */
+/* بطاقة الولاء (Loyalty Card) */
+/* ------------------------------------- */
+
+.loyalty-card {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.loyalty-card::before {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="%23d4af37" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>');
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    opacity: 0.1;
+    transform: rotate(15deg);
+    font-size: 10rem;
+    color: var(--secondary);
+    z-index: 1;
+}
+
+.loyalty-card-content {
+    position: relative;
+    z-index: 2;
+}
+
+.loyalty-card h3 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: var(--light);
+}
+
+.loyalty-card p {
+    font-size: 1.15rem;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.loyalty-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.loyalty-dot {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    flex-shrink: 0; /* لمنع التقلص */
+}
+
+.loyalty-dot.completed {
+    background-color: var(--secondary);
+    color: var(--dark);
+    box-shadow: 0 0 0 5px rgba(212, 175, 55, 0.3);
+}
+
+.loyalty-line {
+    flex-grow: 1;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    position: relative;
+}
+
+.loyalty-line-fill {
+    height: 100%;
+    background-color: var(--secondary);
+    width: 0%; /* سيتم التحكم بها بـ JS */
+    border-radius: 2px;
+    transition: width 0.5s ease-in-out;
+}
+
+.loyalty-reward-info {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.loyalty-promo {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    margin: 60px auto; /* توسيط الإعلان */
+    max-width: 800px;
+}
+
+.loyalty-promo h3 {
+    font-size: 2rem;
+    color: var(--dark);
+    margin-bottom: 15px;
+}
+
+.loyalty-promo p {
+    font-size: 1.15rem;
+    color: var(--gray);
+    margin-bottom: 25px;
+}
+
+
+/* ------------------------------------- */
+/* التجاوبية (Responsive Design) */
+/* ------------------------------------- */
+
+/* لأجهزة الكمبيوتر اللوحية والشاشات المتوسطة (أقل من 1200 بكسل) */
 @media (max-width: 1200px) {
+    .hero h1 {
+        font-size: 3.8rem;
+    }
+    .hero p {
+        font-size: 1.3rem;
+    }
+    .features-grid, .cars-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px; /* تباعد أقل قليلاً */
+    }
     .steps-container {
         flex-wrap: wrap;
+        justify-content: center; /* توسيط الخطوات عند الالتفاف */
         gap: 30px;
     }
-    
     .step {
-        width: 48%;
+        width: 48%; /* خطوتين في الصف */
+        padding: 30px 20px;
     }
-    
     .steps-container:before {
-        display: none;
+        display: none; /* إخفاء الخط الأفقي في الشاشات الصغيرة */
     }
-    
     .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr); /* عمودين في الفوتر */
+        gap: 30px;
+    }
+    .dashboard {
+        grid-template-columns: 1fr; /* عمود واحد للوحة التحكم */
+    }
+    .dashboard-sidebar {
+        padding: 20px;
+        text-align: center; /* توسيط محتوى الشريط الجانبي */
+    }
+    .user-profile {
+        justify-content: center; /* توسيط صورة المستخدم */
+    }
+    .user-info {
+        text-align: center;
+    }
+    .sidebar-menu {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    .sidebar-menu li {
+        margin-bottom: 0;
+    }
+    .sidebar-menu a {
+        padding: 10px 15px; /* تصغير حجم روابط القائمة الجانبية */
+        font-size: 0.95rem;
     }
 }
 
+/* لأجهزة الكمبيوتر اللوحية الصغيرة والهواتف الكبيرة (أقل من 992 بكسل) */
 @media (max-width: 992px) {
-    .dashboard {
-        grid-template-columns: 1fr; /* لتصبح لوحة التحكم عمود واحد في الشاشات الصغيرة */
-    }
-    
-    .dashboard-sidebar {
-        padding: 20px;
-    }
-    
     .nav-links {
-        display: none;
+        display: none; /* إخفاء قائمة التنقل الرئيسية */
     }
-    
     .mobile-toggle {
-        display: block;
+        display: block; /* إظهار زر القائمة المتنقلة */
     }
-    
     .hero h1 {
         font-size: 3rem;
     }
-    
     .hero p {
         font-size: 1.2rem;
     }
+    .section-title h2 {
+        font-size: 2.5rem;
+    }
+    .section-title p {
+        font-size: 1.1rem;
+    }
+    .btn {
+        padding: 15px 30px;
+        font-size: 1rem;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr; /* عمود واحد للفوتر */
+    }
+    .footer-col {
+        text-align: center;
+    }
+    .footer-col h3:after {
+        right: 50%;
+        transform: translateX(50%); /* توسيط الخط تحت العنوان */
+    }
+    .social-links {
+        justify-content: center; /* توسيط أيقونات التواصل الاجتماعي */
+    }
+    .booking-item {
+        flex-direction: column; /* جعل عناصر الحجز عمودية */
+        align-items: flex-start; /* محاذاة لليسار */
+        text-align: right; /* محاذاة النص لليمين للعربية */
+    }
+    .booking-car, .booking-details, .booking-date, .booking-price, .booking-status {
+        width: 100%;
+        text-align: right; /* محاذاة كل عنصر لليمين */
+    }
+    .booking-date, .booking-price, .booking-status {
+        text-align: right; /* النص يكون لليمين في وضع عمودي */
+    }
+    .booking-car img {
+        margin-right: 15px; /* مسافة لليمين */
+    }
+    .loyalty-progress {
+        flex-wrap: wrap; /* السماح بعناصر التقدم بالالتفاف */
+        justify-content: center;
+    }
+    .loyalty-dot {
+        margin-bottom: 10px; /* مسافة بين النقاط الملفوفة */
+    }
 }
 
+/* للهواتف الذكية الصغيرة (أقل من 768 بكسل) */
 @media (max-width: 768px) {
-    .step {
-        width: 100%;
+    .hero h1 {
+        font-size: 2.5rem;
     }
-    
-    .form-grid {
-        grid-template-columns: 1fr;
+    .hero p {
+        font-size: 1.1rem;
     }
-    
-    .footer-grid {
-        grid-template-columns: 1fr;
+    .hero-buttons {
+        flex-direction: column; /* الأزرار تكون عمودية */
+        align-items: center; /* توسيط الأزرار */
     }
-    
+    .hero-buttons .btn {
+        width: 80%; /* جعل الأزرار تأخذ عرضًا أكبر */
+    }
     .section-title h2 {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
-    
+    .section-title p {
+        font-size: 1.1rem;
+    }
+    .steps-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .step {
+        width: 90%; /* خطوة واحدة في الصف */
+    }
+    .form-grid {
+        grid-template-columns: 1fr; /* عمود واحد في نماذج الإضافة */
+    }
+    .add-car-form {
+        padding: 25px; /* تصغير البادينج */
+    }
     .car-actions {
         flex-direction: column;
     }
-    
-    .hero-buttons {
+    .car-actions .btn {
+        width: 100%;
+    }
+    .dashboard-content {
+        padding: 20px; /* تصغير البادينج في لوحة التحكم */
+    }
+    .stats-grid {
+        grid-template-columns: 1fr; /* عمود واحد لبطاقات الإحصائيات */
+        gap: 20px;
+    }
+    .recent-bookings {
+        padding: 15px; /* تصغير البادينج */
+    }
+    .booking-car {
         flex-direction: column;
+        align-items: flex-end; /* محاذاة الصورة والنص لليمين */
+        text-align: right;
+    }
+    .booking-car img {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+    .booking-details {
+        text-align: right;
+    }
+}
+
+/* للهواتف الذكية الصغيرة جداً (أقل من 480 بكسل) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+    .section-title p {
+        font-size: 0.95rem;
+    }
+    .btn {
+        padding: 12px 25px;
+        font-size: 0.95rem;
+    }
+    .filter-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    .car-card {
+        margin: 0 auto;
+        max-width: 300px; /* للتحكم في حجم البطاقة الواحدة */
+    }
+    .car-info {
+        padding: 20px;
+    }
+    .car-title, .car-price {
+        font-size: 1.5rem;
+    }
+    .feature-card {
+        padding: 30px 20px;
+    }
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+    }
+    .feature-card h3 {
+        font-size: 1.6rem;
     }
 }
