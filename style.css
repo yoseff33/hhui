@@ -9,21 +9,176 @@
     --box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* ظل أعمق وأكثر انتشارًا */
     --transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); /* انتقال أكثر سلاسة */
     --border-radius: 16px;
+
+    /* Dark Mode Variables */
+    --body-bg-light: #f8f9fa;
+    --body-bg-dark: #121212;
+    --card-bg-light: white;
+    --card-bg-dark: #1e1e1e;
+    --text-color-light: #333;
+    --text-color-dark: #e0e0e0;
+    --heading-color-light: var(--dark);
+    --heading-color-dark: #ffffff;
+    --footer-bg-light: var(--dark);
+    --footer-bg-dark: #000;
+    --navbar-bg-light: rgba(255, 255, 255, 0.98);
+    --navbar-bg-dark: rgba(20, 20, 20, 0.98);
+    --border-color-light: var(--light-gray);
+    --border-color-dark: #333;
+    --shadow-color-light: rgba(0, 0, 0, 0.08);
+    --shadow-color-dark: rgba(0, 0, 0, 0.4);
 }
 
+/* Base styles for Light Mode */
+body {
+    background-color: var(--body-bg-light);
+    color: var(--text-color-light);
+    line-height: 1.7;
+    overflow-x: hidden;
+    font-size: 1.05rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--heading-color-light);
+}
+
+.feature-card, .car-card, .loyalty-promo, .add-car-form, .stat-card, .recent-bookings, .loyalty-card {
+    background: var(--card-bg-light);
+    box-shadow: 0 15px 40px var(--shadow-color-light);
+}
+.loyalty-card {
+    background: linear-gradient(135deg, var(--primary), var(--accent)); /* Loyalty card keeps its own gradient */
+    box-shadow: 0 15px 40px var(--shadow-color-light);
+}
+
+header {
+    background-color: var(--navbar-bg-light);
+    box-shadow: 0 5px 20px var(--shadow-color-light);
+}
+
+footer {
+    background: var(--footer-bg-light);
+}
+
+.form-control {
+    border: 2px solid var(--border-color-light);
+}
+
+/* Dark Mode specific styles */
+body.dark-mode {
+    background-color: var(--body-bg-dark);
+    color: var(--text-color-dark);
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+    color: var(--heading-color-dark);
+}
+
+body.dark-mode .feature-card,
+body.dark-mode .car-card,
+body.dark-mode .loyalty-promo,
+body.dark-mode .add-car-form,
+body.dark-mode .stat-card,
+body.dark-mode .recent-bookings {
+    background: var(--card-bg-dark);
+    box-shadow: 0 15px 40px var(--shadow-color-dark);
+}
+body.dark-mode .loyalty-card {
+    background: linear-gradient(135deg, var(--dark), var(--primary)); /* Darker gradient for loyalty card */
+    box-shadow: 0 15px 40px var(--shadow-color-dark);
+}
+
+
+body.dark-mode header {
+    background-color: var(--navbar-bg-dark);
+    box-shadow: 0 5px 20px var(--shadow-color-dark);
+}
+
+body.dark-mode footer {
+    background: var(--footer-bg-dark);
+}
+
+body.dark-mode .form-control {
+    border-color: var(--border-color-dark);
+    background-color: #2a2a2a;
+    color: var(--text-color-dark);
+}
+body.dark-mode .form-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.4);
+}
+
+body.dark-mode .filter-btn {
+    background: #333;
+    border-color: #444;
+    color: var(--text-color-dark);
+}
+body.dark-mode .filter-btn.active,
+body.dark-mode .filter-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+body.dark-mode .car-price {
+    color: var(--secondary); /* Make price stand out */
+}
+
+body.dark-mode .car-meta .meta-item,
+body.dark-mode .car-location {
+    color: var(--text-color-dark);
+}
+
+body.dark-mode .section-title p {
+    color: var(--text-color-dark);
+}
+
+body.dark-mode .copyright {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+body.dark-mode .footer-col ul li a {
+    color: rgba(255, 255, 255, 0.6);
+}
+body.dark-mode .footer-col ul li a:hover {
+    color: white;
+}
+body.dark-mode .footer-contact li {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Toggle Button */
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--dark);
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 20px;
+    transition: var(--transition);
+}
+.theme-toggle:hover {
+    color: var(--primary);
+}
+body.dark-mode .theme-toggle {
+    color: white;
+}
+body.dark-mode .theme-toggle:hover {
+    color: var(--secondary);
+}
+
+
+/* General Styles (unchanged from previous version) */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Tajawal', sans-serif;
-}
-
-body {
-    background-color: var(--light);
-    color: #333;
-    line-height: 1.7;
-    overflow-x: hidden;
-    font-size: 1.05rem; /* زيادة طفيفة لحجم الخط الأساسي لتحسين القراءة */
 }
 
 .container {
@@ -43,12 +198,12 @@ section {
 }
 
 .section-title h2 {
-    font-size: 3rem; /* زيادة طفيفة في حجم العنوان الرئيسي */
-    color: var(--dark);
+    font-size: 3rem;
+    color: var(--heading-color-light); /* Adjusted for dark mode */
     margin-bottom: 20px;
     position: relative;
     display: inline-block;
-    font-weight: 900; /* وزن أثقل لجعله يبرز أكثر */
+    font-weight: 900;
 }
 
 .section-title h2:after {
@@ -64,10 +219,10 @@ section {
 }
 
 .section-title p {
-    color: var(--gray);
+    color: var(--gray); /* Adjusted for dark mode */
     max-width: 700px;
     margin: 25px auto 0;
-    font-size: 1.25rem; /* حجم خط أوضح قليلاً للوصف */
+    font-size: 1.25rem;
     line-height: 1.8;
 }
 
@@ -75,11 +230,11 @@ section {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 18px 40px; /* زيادة حجم الأزرار قليلاً */
+    padding: 18px 40px;
     border-radius: var(--border-radius);
     text-decoration: none;
     font-weight: 700;
-    font-size: 1.15rem; /* حجم خط أكبر قليلاً للأزرار */
+    font-size: 1.15rem;
     transition: var(--transition);
     cursor: pointer;
     border: none;
@@ -98,8 +253,8 @@ section {
 }
 
 .btn-primary:hover {
-    transform: translateY(-7px); /* تأثير تحويم أعمق قليلاً */
-    box-shadow: 0 18px 35px rgba(26, 60, 55, 0.4); /* ظل أكبر وأكثر وضوحًا عند التحويم */
+    transform: translateY(-7px);
+    box-shadow: 0 18px 35px rgba(26, 60, 55, 0.4);
 }
 
 .btn-secondary {
@@ -110,8 +265,8 @@ section {
 
 .btn-secondary:hover {
     background: #c9a22e;
-    transform: translateY(-7px); /* تأثير تحويم أعمق قليلاً */
-    box-shadow: 0 18px 35px rgba(212, 175, 55, 0.4); /* ظل أكبر وأكثر وضوحًا عند التحويم */
+    transform: translateY(-7px);
+    box-shadow: 0 18px 35px rgba(212, 175, 55, 0.4);
 }
 
 .btn-outline {
@@ -124,14 +279,14 @@ section {
 .btn-outline:hover {
     background: var(--primary);
     color: white;
-    transform: translateY(-7px); /* تأثير تحويم أعمق قليلاً */
-    box-shadow: 0 18px 35px rgba(26, 60, 55, 0.2); /* ظل أكبر وأكثر وضوحًا عند التحويم */
+    transform: translateY(-7px);
+    box-shadow: 0 18px 35px rgba(26, 60, 55, 0.2);
 }
 
 /* التنقل */
 header {
-    background-color: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    background-color: var(--navbar-bg-light); /* Adjusted for dark mode */
+    box-shadow: 0 5px 20px var(--shadow-color-light); /* Adjusted for dark mode */
     position: fixed;
     top: 0;
     left: 0;
@@ -186,13 +341,17 @@ header {
 
 .nav-links li a {
     text-decoration: none;
-    color: var(--dark);
+    color: var(--dark); /* Adjusted for dark mode */
     font-weight: 700;
     font-size: 1.1rem;
     position: relative;
     padding: 10px 0;
     transition: var(--transition);
 }
+body.dark-mode .nav-links li a {
+    color: var(--text-color-dark);
+}
+
 
 .nav-links li a:after {
     content: "";
@@ -215,10 +374,16 @@ header {
 .nav-links li a.active {
     color: var(--primary);
 }
+body.dark-mode .nav-links li a:hover,
+body.dark-mode .nav-links li a.active {
+    color: var(--secondary);
+}
+
 
 .nav-buttons {
     display: flex;
     gap: 20px;
+    align-items: center; /* Align items vertically in nav-buttons */
 }
 
 .mobile-toggle {
@@ -229,6 +394,24 @@ header {
     color: var(--primary);
     cursor: pointer;
 }
+body.dark-mode .mobile-toggle {
+    color: var(--text-color-dark);
+}
+
+/* إخفاء لوحات التحكم وأضف سيارتك افتراضيًا */
+.nav-links .auth-link {
+    display: none;
+}
+
+/* إخفاء زر تسجيل الدخول/جديد بعد تسجيل الدخول */
+.nav-buttons .guest-only {
+    display: flex; /* لكي يظهر فقط للزوار */
+}
+
+.nav-buttons .user-only {
+    display: none; /* ليظهر فقط للمستخدمين المسجلين دخول */
+}
+
 
 /* القسم البطولي */
 .hero {
@@ -243,6 +426,16 @@ header {
     overflow: hidden;
 }
 
+/* Particles effect container */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0; /* Behind other content */
+}
+
 .hero:before {
     content: "";
     position: absolute;
@@ -250,9 +443,13 @@ header {
     left: 0;
     right: 0;
     height: 200px;
-    background: linear-gradient(to top, var(--light), transparent);
+    background: linear-gradient(to top, var(--light), transparent); /* Adjusted for dark mode */
     z-index: 1;
 }
+body.dark-mode .hero:before {
+    background: linear-gradient(to top, var(--dark), transparent);
+}
+
 
 .hero-content {
     position: relative;
@@ -261,18 +458,20 @@ header {
 }
 
 .hero h1 {
-    font-size: 4.2rem; /* زيادة طفيفة */
+    font-size: 4.2rem;
     line-height: 1.2;
     margin-bottom: 30px;
     font-weight: 800;
     text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    color: white; /* Always white for hero text */
 }
 
 .hero p {
-    font-size: 1.5rem; /* زيادة طفيفة */
+    font-size: 1.5rem;
     margin-bottom: 45px;
     opacity: 0.9;
     line-height: 1.8;
+    color: white; /* Always white for hero text */
 }
 
 .hero-buttons {
@@ -296,23 +495,29 @@ header {
 }
 
 .feature-card {
-    background: white;
+    background: var(--card-bg-light); /* Adjusted for dark mode */
     border-radius: var(--border-radius);
     padding: 40px 30px;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
     text-align: center;
     border-bottom: 4px solid transparent;
+    /* Pseudo-3D effect on hover */
+    transform-style: preserve-3d;
 }
 
 .feature-card:hover {
-    transform: translateY(-20px); /* تأثير تحويم أعمق */
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* ظل أكبر وأكثر وضوحًا */
+    transform: translateY(-20px) translateZ(10px); /* Lift and push forward */
+    box-shadow: 0 20px 50px var(--shadow-color-light); /* Adjusted for dark mode */
     border-bottom-color: var(--secondary);
 }
+body.dark-mode .feature-card:hover {
+    box-shadow: 0 20px 50px var(--shadow-color-dark);
+}
+
 
 .feature-icon {
-    width: 100px; /* حجم أكبر قليلاً */
+    width: 100px;
     height: 100px;
     background: rgba(46, 139, 87, 0.1);
     border-radius: 22px;
@@ -320,26 +525,32 @@ header {
     align-items: center;
     justify-content: center;
     margin: 0 auto 30px;
-    font-size: 2.5rem; /* أيقونة أكبر */
+    font-size: 2.5rem;
     color: var(--accent);
+    /* Pseudo-3D effect */
+    transform-style: preserve-3d;
+    transform: translateZ(20px); /* Push icon forward */
 }
 
 .feature-card h3 {
-    font-size: 1.9rem; /* زيادة طفيفة */
+    font-size: 1.9rem;
     margin-bottom: 20px;
-    color: var(--dark);
-    font-weight: 700; /* التأكيد على العناوين الفرعية */
+    color: var(--heading-color-light); /* Adjusted for dark mode */
+    font-weight: 700;
 }
 
 .feature-card p {
-    color: var(--gray);
+    color: var(--gray); /* Adjusted for dark mode */
     line-height: 1.8;
-    font-size: 1.15rem; /* زيادة طفيفة */
+    font-size: 1.15rem;
 }
 
 /* السيارات */
 .cars-section {
-    background: var(--light);
+    background: var(--light); /* Adjusted for dark mode */
+}
+body.dark-mode .cars-section {
+    background: var(--body-bg-dark);
 }
 
 .cars-filter {
@@ -353,19 +564,27 @@ header {
 .filter-btn {
     padding: 12px 28px;
     border-radius: 12px;
-    background: white;
-    border: 2px solid var(--light-gray);
+    background: var(--card-bg-light); /* Adjusted for dark mode */
+    border: 2px solid var(--border-color-light); /* Adjusted for dark mode */
     font-weight: 700;
     cursor: pointer;
     transition: var(--transition);
     font-size: 1.05rem;
+    color: var(--dark); /* Adjusted for dark mode */
 }
+body.dark-mode .filter-btn {
+    background: #333;
+    border-color: #444;
+    color: var(--text-color-dark);
+}
+
 
 .filter-btn.active, .filter-btn:hover {
     background: var(--primary);
     color: white;
     border-color: var(--primary);
 }
+
 
 .cars-grid {
     display: grid;
@@ -375,18 +594,24 @@ header {
 }
 
 .car-card {
-    background: white;
+    background: var(--card-bg-light); /* Adjusted for dark mode */
     border-radius: var(--border-radius);
     overflow: hidden;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
     position: relative;
+    /* Pseudo-3D effect on hover */
+    transform-style: preserve-3d;
 }
 
 .car-card:hover {
-    transform: translateY(-12px); /* تأثير تحويم أعمق قليلاً للسيارات */
-    box-shadow: 0 18px 45px rgba(0,0,0,0.18); /* ظل أكبر وأكثر وضوحًا */
+    transform: translateY(-12px) translateZ(8px); /* Lift and push forward */
+    box-shadow: 0 18px 45px var(--shadow-color-light); /* Adjusted for dark mode */
 }
+body.dark-mode .car-card:hover {
+    box-shadow: 0 18px 45px var(--shadow-color-dark);
+}
+
 
 .car-img {
     height: 250px;
@@ -429,55 +654,72 @@ header {
 }
 
 .car-title {
-    font-size: 1.7rem; /* زيادة طفيفة */
-    font-weight: 700; /* التأكيد على العناوين الفرعية */
-    color: var(--dark);
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--heading-color-light); /* Adjusted for dark mode */
 }
 
 .car-price {
     color: var(--primary);
     font-weight: 800;
-    font-size: 1.7rem; /* زيادة طفيفة */
+    font-size: 1.7rem;
+}
+body.dark-mode .car-price {
+    color: var(--secondary); /* Price stands out more in dark mode */
 }
 
+
 .car-price span {
-    font-size: 1.05rem; /* زيادة طفيفة */
+    font-size: 1.05rem;
     font-weight: 500;
-    color: var(--gray);
+    color: var(--gray); /* Adjusted for dark mode */
 }
 
 .car-meta {
     display: flex;
     margin: 20px 0;
     padding: 15px 0;
-    border-top: 1px solid var(--light-gray);
-    border-bottom: 1px solid var(--light-gray);
+    border-top: 1px solid var(--border-color-light); /* Adjusted for dark mode */
+    border-bottom: 1px solid var(--border-color-light); /* Adjusted for dark mode */
     gap: 20px;
     justify-content: space-between;
     flex-wrap: wrap;
 }
+body.dark-mode .car-meta {
+    border-top-color: var(--border-color-dark);
+    border-bottom-color: var(--border-color-dark);
+}
+
 
 .meta-item {
     display: flex;
     align-items: center;
-    color: var(--gray);
+    color: var(--gray); /* Adjusted for dark mode */
     gap: 8px;
-    font-size: 1.05rem; /* حجم خط أوضح */
+    font-size: 1.05rem;
 }
+body.dark-mode .meta-item {
+    color: var(--text-color-dark);
+}
+
 
 .meta-item i {
     color: var(--accent);
-    font-size: 1.25rem; /* أيقونة أكبر قليلاً */
+    font-size: 1.25rem;
 }
 
 .car-location {
     display: flex;
     align-items: center;
-    color: var(--gray);
+    color: var(--gray); /* Adjusted for dark mode */
     margin-bottom: 20px;
     gap: 8px;
-    font-size: 1.05rem; /* حجم خط أوضح */
+    font-size: 1.05rem;
 }
+body.dark-mode .car-location {
+    color: var(--text-color-dark);
+}
+
 
 .car-location i {
     color: var(--accent);
@@ -492,14 +734,64 @@ header {
     flex: 1;
     text-align: center;
     justify-content: center;
-    padding: 14px 25px; /* تصغير طفيف ليناسب البطاقة */
-    font-size: 1rem; /* تصغير طفيف ليناسب البطاقة */
+    padding: 14px 25px;
+    font-size: 1rem;
 }
+
+/* Recently Viewed Cars Bar */
+.recently-viewed-bar {
+    background: var(--card-bg-light); /* Adjusted for dark mode */
+    border-top: 1px solid var(--border-color-light); /* Adjusted for dark mode */
+    padding: 20px 0;
+    margin-top: 50px;
+    box-shadow: 0 -5px 15px var(--shadow-color-light);
+    text-align: center;
+}
+body.dark-mode .recently-viewed-bar {
+    background: var(--card-bg-dark);
+    border-top-color: var(--border-color-dark);
+    box-shadow: 0 -5px 15px var(--shadow-color-dark);
+}
+
+.recently-viewed-bar h3 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    color: var(--heading-color-light); /* Adjusted for dark mode */
+}
+
+.recently-viewed-cars-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.recent-car-thumb {
+    width: 120px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+.recent-car-thumb:hover {
+    transform: translateY(-5px);
+}
+.recent-car-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 
 /* كيف تعمل */
 .how-it-works {
-    background: linear-gradient(to bottom, #f8f9fa, #e9f0ef);
+    background: linear-gradient(to bottom, var(--light-gray), var(--light)); /* Adjusted for dark mode */
 }
+body.dark-mode .how-it-works {
+    background: linear-gradient(to bottom, #1e1e1e, #121212);
+}
+
 
 .steps-container {
     display: flex;
@@ -522,7 +814,7 @@ header {
 .step {
     position: relative;
     z-index: 2;
-    background: white;
+    background: var(--card-bg-light); /* Adjusted for dark mode */
     border-radius: var(--border-radius);
     padding: 40px 30px;
     box-shadow: var(--box-shadow);
@@ -531,7 +823,7 @@ header {
 }
 
 .step-number {
-    width: 65px; /* حجم أكبر قليلاً */
+    width: 65px;
     height: 65px;
     background: var(--primary);
     color: white;
@@ -539,29 +831,128 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem; /* أيقونة أكبر */
+    font-size: 2rem;
     font-weight: 800;
     margin: 0 auto 25px;
 }
 
 .step h3 {
-    font-size: 1.7rem; /* زيادة طفيفة */
+    font-size: 1.7rem;
     margin-bottom: 20px;
-    color: var(--dark);
+    color: var(--heading-color-light); /* Adjusted for dark mode */
 }
 
 .step p {
-    color: var(--gray);
+    color: var(--gray); /* Adjusted for dark mode */
     line-height: 1.8;
-    font-size: 1.1rem; /* زيادة طفيفة */
+    font-size: 1.1rem;
 }
+
+/* Testimonial Slider */
+.testimonials-section {
+    background: var(--body-bg-light); /* Adjusted for dark mode */
+    padding: 100px 0;
+}
+body.dark-mode .testimonials-section {
+    background: var(--body-bg-dark);
+}
+
+.testimonial-slider {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.testimonial-slide {
+    display: none; /* Controlled by JS */
+    text-align: center;
+    padding: 40px;
+    background: var(--card-bg-light); /* Adjusted for dark mode */
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    animation: fadein 0.8s ease-in-out;
+}
+body.dark-mode .testimonial-slide {
+    background: var(--card-bg-dark);
+    box-shadow: 0 15px 40px var(--shadow-color-dark);
+}
+
+
+.testimonial-slide.active {
+    display: block;
+}
+
+.testimonial-text {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--text-color-light); /* Adjusted for dark mode */
+}
+body.dark-mode .testimonial-text {
+    color: var(--text-color-dark);
+}
+
+.testimonial-author-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid var(--secondary);
+}
+
+.testimonial-author-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--heading-color-light); /* Adjusted for dark mode */
+}
+
+.testimonial-author-role {
+    font-size: 0.95rem;
+    color: var(--gray); /* Adjusted for dark mode */
+    margin-top: 5px;
+}
+
+.slider-dots {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: var(--light-gray); /* Adjusted for dark mode */
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+    cursor: pointer;
+}
+body.dark-mode .dot {
+    background-color: #555;
+}
+
+
+.dot.active {
+    background-color: var(--primary);
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 
 /* لوحة التحكم */
 .dashboard {
     display: grid;
     grid-template-columns: 280px 1fr;
     gap: 30px;
-    background: white;
+    background: var(--card-bg-light); /* Adjusted for dark mode */
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     overflow: hidden;
@@ -596,13 +987,15 @@ header {
 }
 
 .user-info h3 {
-    font-size: 1.45rem; /* زيادة طفيفة */
+    font-size: 1.45rem;
     margin-bottom: 5px;
+    color: white; /* Always white for sidebar */
 }
 
 .user-info p {
     opacity: 0.8;
-    font-size: 1rem; /* حجم أوضح */
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9); /* More readable in dark sidebar */
 }
 
 .sidebar-menu {
@@ -610,29 +1003,29 @@ header {
 }
 
 .sidebar-menu li {
-    margin-bottom: 8px; /* تباعد أقل قليلاً بين العناصر */
+    margin-bottom: 8px;
 }
 
 .sidebar-menu a {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 16px 25px; /* مساحة أكبر للروابط */
+    padding: 16px 25px;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.85); /* لون أوضح */
+    color: rgba(255, 255, 255, 0.85);
     border-radius: 12px;
     transition: var(--transition);
-    font-size: 1.1rem; /* حجم خط أوضح */
+    font-size: 1.1rem;
 }
 
 .sidebar-menu a:hover, 
 .sidebar-menu a.active {
-    background: rgba(255, 255, 255, 0.15); /* خلفية أوضح عند التحويم/التنشيط */
+    background: rgba(255, 255, 255, 0.15);
     color: white;
 }
 
 .sidebar-menu a i {
-    font-size: 1.3rem; /* أيقونة أكبر قليلاً */
+    font-size: 1.3rem;
 }
 
 .dashboard-content {
@@ -640,9 +1033,9 @@ header {
 }
 
 .dashboard-title {
-    font-size: 2.2rem; /* زيادة طفيفة */
+    font-size: 2.2rem;
     margin-bottom: 30px;
-    color: var(--dark);
+    color: var(--heading-color-light); /* Adjusted for dark mode */
 }
 
 .stats-grid {
@@ -653,47 +1046,61 @@ header {
 }
 
 .stat-card {
-    background: var(--light);
+    background: var(--light); /* Adjusted for dark mode */
     border-radius: var(--border-radius);
     padding: 25px;
     text-align: center;
     border-left: 4px solid var(--accent);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* ظل خفيف للبطاقات الإحصائية */
+    box-shadow: 0 5px 15px var(--shadow-color-light); /* Adjusted for dark mode */
+}
+body.dark-mode .stat-card {
+    background: #2a2a2a;
+    box-shadow: 0 5px 15px var(--shadow-color-dark);
 }
 
+
 .stat-card h3 {
-    font-size: 1.15rem; /* زيادة طفيفة */
-    color: var(--gray);
+    font-size: 1.15rem;
+    color: var(--gray); /* Adjusted for dark mode */
     margin-bottom: 10px;
 }
 
 .stat-card .value {
-    font-size: 2.3rem; /* زيادة طفيفة */
+    font-size: 2.3rem;
     font-weight: 800;
-    color: var(--dark);
+    color: var(--heading-color-light); /* Adjusted for dark mode */
 }
 
 .recent-bookings {
-    background: var(--light);
+    background: var(--light); /* Adjusted for dark mode */
     border-radius: var(--border-radius);
     padding: 25px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* ظل خفيف لجدول الحجوزات */
+    box-shadow: 0 5px 15px var(--shadow-color-light); /* Adjusted for dark mode */
+}
+body.dark-mode .recent-bookings {
+    background: #2a2a2a;
+    box-shadow: 0 5px 15px var(--shadow-color-dark);
 }
 
+
 .recent-bookings h3 {
-    font-size: 1.6rem; /* زيادة طفيفة */
+    font-size: 1.6rem;
     margin-bottom: 25px;
-    color: var(--dark);
+    color: var(--heading-color-light); /* Adjusted for dark mode */
 }
 
 .booking-item {
     display: flex;
     align-items: center;
     padding: 20px;
-    border-bottom: 1px solid var(--light-gray);
-    flex-wrap: wrap; /* للسماح بالتجاوبية على الشاشات الصغيرة */
-    gap: 15px; /* تباعد بين العناصر */
+    border-bottom: 1px solid var(--border-color-light); /* Adjusted for dark mode */
+    flex-wrap: wrap;
+    gap: 15px;
 }
+body.dark-mode .booking-item {
+    border-bottom-color: var(--border-color-dark);
+}
+
 
 .booking-item:last-child {
     border-bottom: none;
@@ -703,7 +1110,7 @@ header {
     display: flex;
     align-items: center;
     gap: 15px;
-    flex: 1 1 250px; /* مرونة في الحجم */
+    flex: 1 1 250px;
 }
 
 .booking-car img {
@@ -715,41 +1122,45 @@ header {
 
 .booking-details {
     flex: 1;
-    min-width: 150px; /* لضمان عدم تقلصها بشكل كبير */
+    min-width: 150px;
 }
 
 .booking-details h4 {
     font-size: 1.15rem;
     font-weight: 700;
-    color: var(--dark);
+    color: var(--heading-color-light); /* Adjusted for dark mode */
 }
 
 .booking-details p {
     font-size: 0.95rem;
-    color: var(--gray);
+    color: var(--gray); /* Adjusted for dark mode */
 }
 
 .booking-date {
     width: 200px;
     text-align: center;
     font-size: 0.95rem;
-    color: var(--gray);
+    color: var(--gray); /* Adjusted for dark mode */
 }
 
 .booking-price {
     font-weight: 700;
     color: var(--primary);
     font-size: 1.1rem;
-    min-width: 80px; /* لضمان عدم تقلصها */
+    min-width: 80px;
     text-align: center;
 }
+body.dark-mode .booking-price {
+    color: var(--secondary); /* Stands out in dark mode */
+}
+
 
 .booking-status {
     padding: 6px 15px;
     border-radius: 30px;
     font-weight: 700;
     font-size: 0.9rem;
-    min-width: 80px; /* لضمان عدم تقلصها */
+    min-width: 80px;
     text-align: center;
 }
 
@@ -765,7 +1176,7 @@ header {
 
 /* إضافة سيارة */
 .add-car-form {
-    background: white;
+    background: var(--card-bg-light); /* Adjusted for dark mode */
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     padding: 40px;
@@ -781,24 +1192,34 @@ header {
     display: block;
     margin-bottom: 10px;
     font-weight: 700;
-    color: var(--dark);
-    font-size: 1.1rem; /* حجم خط أوضح */
+    color: var(--heading-color-light); /* Adjusted for dark mode */
+    font-size: 1.1rem;
 }
 
 .form-control {
     width: 100%;
     padding: 16px 20px;
-    border: 2px solid var(--light-gray);
+    border: 2px solid var(--border-color-light); /* Adjusted for dark mode */
     border-radius: 12px;
     font-size: 1.1rem;
     transition: var(--transition);
+    color: var(--text-color-light); /* Adjusted for dark mode */
+}
+body.dark-mode .form-control {
+    background-color: #2a2a2a;
+    border-color: var(--border-color-dark);
+    color: var(--text-color-dark);
 }
 
 .form-control:focus {
     border-color: var(--accent);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.2); /* ظل خفيف عند التركيز */
+    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.2);
 }
+body.dark-mode .form-control:focus {
+    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.4);
+}
+
 
 .form-grid {
     display: grid;
@@ -814,7 +1235,7 @@ header {
 
 /* فوتر */
 footer {
-    background: var(--dark);
+    background: var(--footer-bg-light); /* Adjusted for dark mode */
     color: white;
     padding: 80px 0 30px;
 }
@@ -852,13 +1273,17 @@ footer {
 }
 
 .footer-col ul li a {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.7); /* Adjusted for dark mode */
     text-decoration: none;
     transition: var(--transition);
     display: block;
     padding: 5px 0;
-    font-size: 1.05rem; /* حجم خط أوضح */
+    font-size: 1.05rem;
 }
+body.dark-mode .footer-col ul li a {
+    color: rgba(255, 255, 255, 0.6);
+}
+
 
 .footer-col ul li a:hover {
     color: white;
@@ -869,9 +1294,13 @@ footer {
     display: flex;
     gap: 15px;
     margin-bottom: 20px;
-    color: rgba(255, 255, 255, 0.8); /* لون أوضح للنصوص */
-    font-size: 1.05rem; /* حجم خط أوضح */
+    color: rgba(255, 255, 255, 0.8); /* Adjusted for dark mode */
+    font-size: 1.05rem;
 }
+body.dark-mode .footer-contact li {
+    color: rgba(255, 255, 255, 0.7);
+}
+
 
 .footer-contact i {
     color: var(--secondary);
@@ -907,12 +1336,16 @@ footer {
     text-align: center;
     padding-top: 30px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.95rem; /* حجم خط أوضح */
+    color: rgba(255, 255, 255, 0.6); /* Adjusted for dark mode */
+    font-size: 0.95rem;
+}
+body.dark-mode .copyright {
+    color: rgba(255, 255, 255, 0.5);
 }
 
+
 /* ------------------------------------- */
-/* بطاقة الولاء (Loyalty Card) */
+/* Loyalty Card & Promo */
 /* ------------------------------------- */
 
 .loyalty-card {
@@ -925,7 +1358,20 @@ footer {
     margin-bottom: 40px;
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
 }
+body.dark-mode .loyalty-card {
+    background: linear-gradient(135deg, var(--dark), var(--primary));
+    box-shadow: 0 15px 40px var(--shadow-color-dark);
+}
+.loyalty-card:hover {
+    transform: translateY(-8px) translateZ(5px);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.25); /* Slightly stronger shadow on hover */
+}
+body.dark-mode .loyalty-card:hover {
+    box-shadow: 0 18px 45px var(--shadow-color-dark);
+}
+
 
 .loyalty-card::before {
     content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="%23d4af37" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>');
@@ -964,25 +1410,24 @@ footer {
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
-    /* إضافة لمسة فخمة للتقدم */
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 50px;
     padding: 8px;
 }
 
 .loyalty-dot {
-    width: 38px; /* حجم أكبر قليلاً */
-    height: 38px; /* حجم أكبر قليلاً */
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.3); /* لون أوضح للنقاط غير المكتملة */
+    background-color: rgba(255, 255, 255, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem; /* حجم خط أوضح */
+    font-size: 1rem;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.8); /* لون أوضح للأرقام */
+    color: rgba(255, 255, 255, 0.8);
     flex-shrink: 0;
-    transition: var(--transition); /* لإضافة تأثير عند التغيير */
+    transition: var(--transition);
 }
 
 .loyalty-dot.completed {
@@ -993,55 +1438,158 @@ footer {
 
 .loyalty-line {
     flex-grow: 1;
-    height: 6px; /* خط أكثر سمكًا */
+    height: 6px;
     background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 3px; /* حواف أكثر نعومة */
+    border-radius: 3px;
     position: relative;
-    overflow: hidden; /* لضمان أن التعبئة لا تتجاوز الحدود */
+    overflow: hidden;
 }
 
 .loyalty-line-fill {
     height: 100%;
     background-color: var(--secondary);
-    width: 0%; /* سيتم التحكم بها بـ JS */
+    width: 0%;
     border-radius: 3px;
-    transition: width 0.8s ease-in-out; /* انتقال أبطأ وأكثر سلاسة */
+    transition: width 0.8s ease-in-out;
 }
 
 .loyalty-reward-info {
-    font-size: 1.05rem; /* حجم أوضح */
+    font-size: 1.05rem;
     opacity: 0.8;
 }
 
 .loyalty-promo-section {
-    padding: 80px 0; /* تقليل البادينج قليلاً */
-    background: linear-gradient(to bottom, #e9f0ef, #f8f9fa); /* خلفية خفيفة مميزة */
+    padding: 80px 0;
+    background: linear-gradient(to bottom, var(--light-gray), var(--light)); /* Adjusted for dark mode */
+}
+body.dark-mode .loyalty-promo-section {
+    background: linear-gradient(to bottom, #1e1e1e, #121212);
 }
 
 .loyalty-promo {
-    background: white;
+    background: var(--card-bg-light); /* Adjusted for dark mode */
     border-radius: var(--border-radius);
-    padding: 40px; /* بادينج أكبر قليلاً */
+    padding: 40px;
     box-shadow: var(--box-shadow);
     text-align: center;
-    margin: 0 auto; /* توسيط الإعلان */
+    margin: 0 auto;
     max-width: 800px;
 }
 
 .loyalty-promo h3 {
-    font-size: 2.1rem; /* حجم خط أكبر */
-    color: var(--dark);
+    font-size: 2.1rem;
+    color: var(--heading-color-light); /* Adjusted for dark mode */
     margin-bottom: 15px;
-    font-weight: 800; /* وزن أثقل */
+    font-weight: 800;
 }
 
 .loyalty-promo p {
-    font-size: 1.2rem; /* حجم خط أكبر */
-    color: var(--gray);
-    margin-bottom: 30px; /* مسافة أكبر للزر */
+    font-size: 1.2rem;
+    color: var(--gray); /* Adjusted for dark mode */
+    margin-bottom: 30px;
     line-height: 1.7;
 }
 
+/* Quiz Page Styles */
+.quiz-container {
+    background: var(--card-bg-light); /* Adjusted for dark mode */
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    max-width: 700px;
+    margin: 80px auto 40px; /* Adjusted top margin */
+    text-align: center;
+}
+
+.quiz-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--heading-color-light); /* Adjusted for dark mode */
+}
+
+.quiz-question {
+    margin-bottom: 30px;
+    text-align: right; /* RTL align */
+}
+
+.quiz-question p {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--text-color-light); /* Adjusted for dark mode */
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: right; /* RTL align */
+}
+
+.quiz-options label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    background: var(--light); /* Adjusted for dark mode */
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color-light); /* Adjusted for dark mode */
+    transition: var(--transition);
+    color: var(--text-color-light); /* Adjusted for dark mode */
+}
+body.dark-mode .quiz-options label {
+    background: #2a2a2a;
+    border-color: #444;
+    color: var(--text-color-dark);
+}
+.quiz-options label:hover {
+    background: var(--light-gray); /* Adjusted for dark mode */
+}
+body.dark-mode .quiz-options label:hover {
+    background: #333;
+}
+
+
+.quiz-options input[type="radio"] {
+    margin-left: 10px; /* Spacing for RTL */
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.quiz-actions {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.quiz-results {
+    margin-top: 40px;
+    padding: 30px;
+    background: var(--light); /* Adjusted for dark mode */
+    border-radius: var(--border-radius);
+    text-align: center;
+    color: var(--text-color-light); /* Adjusted for dark mode */
+}
+body.dark-mode .quiz-results {
+    background: #2a2a2a;
+    color: var(--text-color-dark);
+}
+
+
+.quiz-results h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: var(--heading-color-light); /* Adjusted for dark mode */
+}
+
+.quiz-results p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
 
 /* ------------------------------------- */
 /* التجاوبية (Responsive Design) */
@@ -1100,6 +1648,22 @@ footer {
     .sidebar-menu a {
         padding: 10px 15px; /* تصغير حجم روابط القائمة الجانبية */
         font-size: 0.95rem;
+    }
+    .testimonial-slide {
+        padding: 30px;
+    }
+    .testimonial-text {
+        font-size: 1.15rem;
+    }
+    .quiz-container {
+        padding: 30px;
+    }
+    .quiz-question p {
+        font-size: 1.1rem;
+    }
+    .quiz-options label {
+        font-size: 1rem;
+        padding: 12px 15px;
     }
 }
 
@@ -1168,6 +1732,9 @@ footer {
     }
     .loyalty-line {
         height: 4px; /* تصغير الخط */
+    }
+    .quiz-container {
+        margin: 120px auto 40px; /* Adjusted top margin for smaller screens */
     }
 }
 
@@ -1245,6 +1812,29 @@ footer {
     .loyalty-promo p {
         font-size: 1rem;
     }
+    .recently-viewed-bar {
+        padding: 15px 0;
+    }
+    .recently-viewed-bar h3 {
+        font-size: 1.2rem;
+    }
+    .recent-car-thumb {
+        width: 100px;
+        height: 70px;
+    }
+    .testimonial-slide {
+        padding: 20px;
+    }
+    .testimonial-text {
+        font-size: 1rem;
+    }
+    .testimonial-author-img {
+        width: 60px;
+        height: 60px;
+    }
+    .testimonial-author-name {
+        font-size: 1rem;
+    }
 }
 
 /* للهواتف الذكية الصغيرة جداً (أقل من 480 بكسل) */
@@ -1274,7 +1864,7 @@ footer {
     }
     .car-card {
         margin: 0 auto;
-        max-width: 300px; /* للتحكم في حجم البطاقة الواحدة */
+        max-width: 300px;
     }
     .car-info {
         padding: 20px;
