@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         /* إضافة بعض التنسيقات الخاصة لهذه الصفحة فقط */
         .choice-container {
@@ -90,14 +91,20 @@
         <h1>مرحبًا بك في وُجْهَة!</h1>
         <p>الرجاء اختيار نوع الحساب الذي تريد تسجيل الدخول إليه أو التسجيل به.</p>
         <div class="choice-buttons">
-            <a href="dashboard-owner.html" class="btn btn-secondary">
+            <a href="#" class="btn btn-secondary" onclick="loginUser('owner')">
                 <i class="fas fa-car-alt"></i> أنا مؤجر
             </a>
-            <a href="cars.html" class="btn btn-primary">
+            <a href="#" class="btn btn-primary" onclick="loginUser('renter')">
                 <i class="fas fa-key"></i> أنا مستأجر
             </a>
         </div>
     </div>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
