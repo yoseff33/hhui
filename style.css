@@ -6,8 +6,8 @@
     --dark: #0f2925;
     --gray: #6c757d;
     --light-gray: #e9ecef;
-    --box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* ظل أعمق وأكثر انتشارًا */
-    --transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); /* انتقال أكثر سلاسة */
+    --box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    --transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     --border-radius: 16px;
 
     /* Dark Mode Variables */
@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 15px 40px var(--shadow-color-light);
 }
 .loyalty-card {
-    background: linear-gradient(135deg, var(--primary), var(--accent)); /* Loyalty card keeps its own gradient */
+    background: linear-gradient(135deg, var(--primary), var(--accent));
     box-shadow: 0 15px 40px var(--shadow-color-light);
 }
 
@@ -89,7 +89,7 @@ body.dark-mode .recent-bookings {
     box-shadow: 0 15px 40px var(--shadow-color-dark);
 }
 body.dark-mode .loyalty-card {
-    background: linear-gradient(135deg, var(--dark), var(--primary)); /* Darker gradient for loyalty card */
+    background: linear-gradient(135deg, var(--dark), var(--primary));
     box-shadow: 0 15px 40px var(--shadow-color-dark);
 }
 
@@ -126,7 +126,7 @@ body.dark-mode .filter-btn:hover {
 }
 
 body.dark-mode .car-price {
-    color: var(--secondary); /* Make price stand out */
+    color: var(--secondary);
 }
 
 body.dark-mode .car-meta .meta-item,
@@ -173,7 +173,7 @@ body.dark-mode .theme-toggle:hover {
 }
 
 
-/* General Styles (unchanged from previous version) */
+/* General Styles */
 * {
     margin: 0;
     padding: 0;
@@ -199,7 +199,7 @@ section {
 
 .section-title h2 {
     font-size: 3rem;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
     margin-bottom: 20px;
     position: relative;
     display: inline-block;
@@ -219,7 +219,7 @@ section {
 }
 
 .section-title p {
-    color: var(--gray); /* Adjusted for dark mode */
+    color: var(--gray);
     max-width: 700px;
     margin: 25px auto 0;
     font-size: 1.25rem;
@@ -285,8 +285,8 @@ section {
 
 /* التنقل */
 header {
-    background-color: var(--navbar-bg-light); /* Adjusted for dark mode */
-    box-shadow: 0 5px 20px var(--shadow-color-light); /* Adjusted for dark mode */
+    background-color: var(--navbar-bg-light);
+    box-shadow: 0 5px 20px var(--shadow-color-light);
     position: fixed;
     top: 0;
     left: 0;
@@ -341,7 +341,7 @@ header {
 
 .nav-links li a {
     text-decoration: none;
-    color: var(--dark); /* Adjusted for dark mode */
+    color: var(--dark);
     font-weight: 700;
     font-size: 1.1rem;
     position: relative;
@@ -383,39 +383,113 @@ body.dark-mode .nav-links li a.active {
 .nav-buttons {
     display: flex;
     gap: 20px;
-    align-items: center; /* Align items vertically in nav-buttons */
+    align-items: center;
 }
 
+/* Mobile Toggle Button */
 .mobile-toggle {
-    display: none;
+    display: none; /* Hidden by default on desktop */
     background: none;
     border: none;
     font-size: 1.8rem;
     color: var(--primary);
     cursor: pointer;
+    z-index: 1001; /* Ensure it's above other elements if menu is open */
 }
 body.dark-mode .mobile-toggle {
     color: var(--text-color-dark);
 }
 
-/* إخفاء لوحات التحكم وأضف سيارتك افتراضيًا */
+/* Overlay for mobile menu */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    display: none; /* Hidden by default */
+}
+
+/* Mobile Menu Container */
+.mobile-nav-menu {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Hidden off-screen to the right */
+    width: 280px; /* Width of the mobile menu */
+    height: 100%;
+    background-color: var(--navbar-bg-light); /* Match header background */
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: right 0.3s ease-in-out;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+body.dark-mode .mobile-nav-menu {
+    background-color: var(--navbar-bg-dark);
+}
+
+.mobile-nav-menu.open {
+    right: 0; /* Slide in */
+}
+
+.mobile-nav-menu .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.mobile-nav-menu .nav-links li a {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 1.2rem;
+    color: var(--dark);
+    border-bottom: 1px solid var(--light-gray);
+}
+body.dark-mode .mobile-nav-menu .nav-links li a {
+    color: var(--text-color-dark);
+    border-bottom-color: var(--border-color-dark);
+}
+
+.mobile-nav-menu .nav-links li:last-child a {
+    border-bottom: none;
+}
+
+.mobile-nav-menu .nav-buttons {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 30px;
+}
+.mobile-nav-menu .nav-buttons .btn {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.mobile-nav-menu .theme-toggle {
+    width: 100%;
+    text-align: right; /* RTL align */
+    margin-top: 10px;
+    margin-left: 0; /* Remove default margin */
+}
+
+
+/* Links visibility based on login status */
 .nav-links .auth-link {
     display: none;
 }
-
-/* إخفاء زر تسجيل الدخول/جديد بعد تسجيل الدخول */
 .nav-buttons .guest-only {
-    display: flex; /* لكي يظهر فقط للزوار */
+    display: flex;
+}
+.nav-buttons #nav-user-profile-placeholder {
+    display: none;
 }
 
-.nav-buttons .user-only {
-    display: none; /* ليظهر فقط للمستخدمين المسجلين دخول */
-}
 
-
-/* القسم البطولي */
+/* Hero Section */
 .hero {
-    /* تم تحديث رابط الصورة هنا */
     background: linear-gradient(105deg, rgba(15, 41, 37, 0.92) 0%, rgba(26, 60, 55, 0.88) 100%), url('https://www.almowaten.net/wp-content/uploads/2022/10/Ff0vop3XkAACLm8-877x492.jpg') no-repeat center center/cover;
     min-height: 100vh;
     display: flex;
@@ -433,7 +507,7 @@ body.dark-mode .mobile-toggle {
     height: 100%;
     top: 0;
     left: 0;
-    z-index: 0; /* Behind other content */
+    z-index: 0;
 }
 
 .hero:before {
@@ -443,7 +517,7 @@ body.dark-mode .mobile-toggle {
     left: 0;
     right: 0;
     height: 200px;
-    background: linear-gradient(to top, var(--light), transparent); /* Adjusted for dark mode */
+    background: linear-gradient(to top, var(--light), transparent);
     z-index: 1;
 }
 body.dark-mode .hero:before {
@@ -463,7 +537,7 @@ body.dark-mode .hero:before {
     margin-bottom: 30px;
     font-weight: 800;
     text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    color: white; /* Always white for hero text */
+    color: white;
 }
 
 .hero p {
@@ -471,7 +545,7 @@ body.dark-mode .hero:before {
     margin-bottom: 45px;
     opacity: 0.9;
     line-height: 1.8;
-    color: white; /* Always white for hero text */
+    color: white;
 }
 
 .hero-buttons {
@@ -480,7 +554,7 @@ body.dark-mode .hero:before {
     flex-wrap: wrap;
 }
 
-/* ميزات */
+/* Features Section */
 .features {
     position: relative;
     z-index: 10;
@@ -495,20 +569,19 @@ body.dark-mode .hero:before {
 }
 
 .feature-card {
-    background: var(--card-bg-light); /* Adjusted for dark mode */
+    background: var(--card-bg-light);
     border-radius: var(--border-radius);
     padding: 40px 30px;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
     text-align: center;
     border-bottom: 4px solid transparent;
-    /* Pseudo-3D effect on hover */
     transform-style: preserve-3d;
 }
 
 .feature-card:hover {
-    transform: translateY(-20px) translateZ(10px); /* Lift and push forward */
-    box-shadow: 0 20px 50px var(--shadow-color-light); /* Adjusted for dark mode */
+    transform: translateY(-20px) translateZ(10px);
+    box-shadow: 0 20px 50px var(--shadow-color-light);
     border-bottom-color: var(--secondary);
 }
 body.dark-mode .feature-card:hover {
@@ -527,27 +600,26 @@ body.dark-mode .feature-card:hover {
     margin: 0 auto 30px;
     font-size: 2.5rem;
     color: var(--accent);
-    /* Pseudo-3D effect */
     transform-style: preserve-3d;
-    transform: translateZ(20px); /* Push icon forward */
+    transform: translateZ(20px);
 }
 
 .feature-card h3 {
     font-size: 1.9rem;
     margin-bottom: 20px;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
     font-weight: 700;
 }
 
 .feature-card p {
-    color: var(--gray); /* Adjusted for dark mode */
+    color: var(--gray);
     line-height: 1.8;
     font-size: 1.15rem;
 }
 
-/* السيارات */
+/* Cars Section */
 .cars-section {
-    background: var(--light); /* Adjusted for dark mode */
+    background: var(--light);
 }
 body.dark-mode .cars-section {
     background: var(--body-bg-dark);
@@ -564,13 +636,13 @@ body.dark-mode .cars-section {
 .filter-btn {
     padding: 12px 28px;
     border-radius: 12px;
-    background: var(--card-bg-light); /* Adjusted for dark mode */
-    border: 2px solid var(--border-color-light); /* Adjusted for dark mode */
+    background: var(--card-bg-light);
+    border: 2px solid var(--border-color-light);
     font-weight: 700;
     cursor: pointer;
     transition: var(--transition);
     font-size: 1.05rem;
-    color: var(--dark); /* Adjusted for dark mode */
+    color: var(--dark);
 }
 body.dark-mode .filter-btn {
     background: #333;
@@ -594,19 +666,18 @@ body.dark-mode .filter-btn {
 }
 
 .car-card {
-    background: var(--card-bg-light); /* Adjusted for dark mode */
+    background: var(--card-bg-light);
     border-radius: var(--border-radius);
     overflow: hidden;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
     position: relative;
-    /* Pseudo-3D effect on hover */
     transform-style: preserve-3d;
 }
 
 .car-card:hover {
-    transform: translateY(-12px) translateZ(8px); /* Lift and push forward */
-    box-shadow: 0 18px 45px var(--shadow-color-light); /* Adjusted for dark mode */
+    transform: translateY(-12px) translateZ(8px);
+    box-shadow: 0 18px 45px var(--shadow-color-light);
 }
 body.dark-mode .car-card:hover {
     box-shadow: 0 18px 45px var(--shadow-color-dark);
@@ -656,7 +727,7 @@ body.dark-mode .car-card:hover {
 .car-title {
     font-size: 1.7rem;
     font-weight: 700;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
 }
 
 .car-price {
@@ -665,22 +736,22 @@ body.dark-mode .car-card:hover {
     font-size: 1.7rem;
 }
 body.dark-mode .car-price {
-    color: var(--secondary); /* Price stands out more in dark mode */
+    color: var(--secondary);
 }
 
 
 .car-price span {
     font-size: 1.05rem;
     font-weight: 500;
-    color: var(--gray); /* Adjusted for dark mode */
+    color: var(--gray);
 }
 
 .car-meta {
     display: flex;
     margin: 20px 0;
     padding: 15px 0;
-    border-top: 1px solid var(--border-color-light); /* Adjusted for dark mode */
-    border-bottom: 1px solid var(--border-color-light); /* Adjusted for dark mode */
+    border-top: 1px solid var(--border-color-light);
+    border-bottom: 1px solid var(--border-color-light);
     gap: 20px;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -694,7 +765,7 @@ body.dark-mode .car-meta {
 .meta-item {
     display: flex;
     align-items: center;
-    color: var(--gray); /* Adjusted for dark mode */
+    color: var(--gray);
     gap: 8px;
     font-size: 1.05rem;
 }
@@ -711,7 +782,7 @@ body.dark-mode .meta-item {
 .car-location {
     display: flex;
     align-items: center;
-    color: var(--gray); /* Adjusted for dark mode */
+    color: var(--gray);
     margin-bottom: 20px;
     gap: 8px;
     font-size: 1.05rem;
@@ -725,11 +796,6 @@ body.dark-mode .car-location {
     color: var(--accent);
 }
 
-.car-actions {
-    display: flex;
-    gap: 15px;
-}
-
 .car-actions .btn {
     flex: 1;
     text-align: center;
@@ -740,8 +806,8 @@ body.dark-mode .car-location {
 
 /* Recently Viewed Cars Bar */
 .recently-viewed-bar {
-    background: var(--card-bg-light); /* Adjusted for dark mode */
-    border-top: 1px solid var(--border-color-light); /* Adjusted for dark mode */
+    background: var(--card-bg-light);
+    border-top: 1px solid var(--border-color-light);
     padding: 20px 0;
     margin-top: 50px;
     box-shadow: 0 -5px 15px var(--shadow-color-light);
@@ -756,7 +822,7 @@ body.dark-mode .recently-viewed-bar {
 .recently-viewed-bar h3 {
     font-size: 1.4rem;
     margin-bottom: 20px;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
 }
 
 .recently-viewed-cars-grid {
@@ -784,9 +850,9 @@ body.dark-mode .recently-viewed-bar {
 }
 
 
-/* كيف تعمل */
+/* How It Works Section */
 .how-it-works {
-    background: linear-gradient(to bottom, var(--light-gray), var(--light)); /* Adjusted for dark mode */
+    background: linear-gradient(to bottom, var(--light-gray), var(--light));
 }
 body.dark-mode .how-it-works {
     background: linear-gradient(to bottom, #1e1e1e, #121212);
@@ -814,7 +880,7 @@ body.dark-mode .how-it-works {
 .step {
     position: relative;
     z-index: 2;
-    background: var(--card-bg-light); /* Adjusted for dark mode */
+    background: var(--card-bg-light);
     border-radius: var(--border-radius);
     padding: 40px 30px;
     box-shadow: var(--box-shadow);
@@ -839,18 +905,18 @@ body.dark-mode .how-it-works {
 .step h3 {
     font-size: 1.7rem;
     margin-bottom: 20px;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
 }
 
 .step p {
-    color: var(--gray); /* Adjusted for dark mode */
+    color: var(--gray);
     line-height: 1.8;
     font-size: 1.1rem;
 }
 
 /* Testimonial Slider */
 .testimonials-section {
-    background: var(--body-bg-light); /* Adjusted for dark mode */
+    background: var(--body-bg-light);
     padding: 100px 0;
 }
 body.dark-mode .testimonials-section {
@@ -866,10 +932,10 @@ body.dark-mode .testimonials-section {
 }
 
 .testimonial-slide {
-    display: none; /* Controlled by JS */
+    display: none;
     text-align: center;
     padding: 40px;
-    background: var(--card-bg-light); /* Adjusted for dark mode */
+    background: var(--card-bg-light);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     animation: fadein 0.8s ease-in-out;
@@ -890,7 +956,7 @@ body.dark-mode .testimonial-slide {
     margin-bottom: 25px;
     font-weight: 500;
     font-style: italic;
-    color: var(--text-color-light); /* Adjusted for dark mode */
+    color: var(--text-color-light);
 }
 body.dark-mode .testimonial-text {
     color: var(--text-color-dark);
@@ -908,13 +974,12 @@ body.dark-mode .testimonial-text {
 .testimonial-author-name {
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
 }
 
 .testimonial-author-role {
     font-size: 0.95rem;
-    color: var(--gray); /* Adjusted for dark mode */
-    margin-top: 5px;
+    color: var(--gray);
 }
 
 .slider-dots {
@@ -926,7 +991,7 @@ body.dark-mode .testimonial-text {
     height: 12px;
     width: 12px;
     margin: 0 5px;
-    background-color: var(--light-gray); /* Adjusted for dark mode */
+    background-color: var(--light-gray);
     border-radius: 50%;
     display: inline-block;
     transition: background-color 0.6s ease;
@@ -947,12 +1012,12 @@ body.dark-mode .dot {
 }
 
 
-/* لوحة التحكم */
+/* Dashboard Section */
 .dashboard {
     display: grid;
     grid-template-columns: 280px 1fr;
     gap: 30px;
-    background: var(--card-bg-light); /* Adjusted for dark mode */
+    background: var(--card-bg-light);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     overflow: hidden;
@@ -989,13 +1054,13 @@ body.dark-mode .dot {
 .user-info h3 {
     font-size: 1.45rem;
     margin-bottom: 5px;
-    color: white; /* Always white for sidebar */
+    color: white;
 }
 
 .user-info p {
     opacity: 0.8;
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.9); /* More readable in dark sidebar */
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .sidebar-menu {
@@ -1018,7 +1083,7 @@ body.dark-mode .dot {
     font-size: 1.1rem;
 }
 
-.sidebar-menu a:hover, 
+.sidebar-menu a:hover,
 .sidebar-menu a.active {
     background: rgba(255, 255, 255, 0.15);
     color: white;
@@ -1035,7 +1100,7 @@ body.dark-mode .dot {
 .dashboard-title {
     font-size: 2.2rem;
     margin-bottom: 30px;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
 }
 
 .stats-grid {
@@ -1046,12 +1111,12 @@ body.dark-mode .dot {
 }
 
 .stat-card {
-    background: var(--light); /* Adjusted for dark mode */
+    background: var(--light);
     border-radius: var(--border-radius);
     padding: 25px;
     text-align: center;
     border-left: 4px solid var(--accent);
-    box-shadow: 0 5px 15px var(--shadow-color-light); /* Adjusted for dark mode */
+    box-shadow: 0 5px 15px var(--shadow-color-light);
 }
 body.dark-mode .stat-card {
     background: #2a2a2a;
@@ -1061,21 +1126,21 @@ body.dark-mode .stat-card {
 
 .stat-card h3 {
     font-size: 1.15rem;
-    color: var(--gray); /* Adjusted for dark mode */
+    color: var(--gray);
     margin-bottom: 10px;
 }
 
 .stat-card .value {
     font-size: 2.3rem;
     font-weight: 800;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
 }
 
 .recent-bookings {
-    background: var(--light); /* Adjusted for dark mode */
+    background: var(--light);
     border-radius: var(--border-radius);
     padding: 25px;
-    box-shadow: 0 5px 15px var(--shadow-color-light); /* Adjusted for dark mode */
+    box-shadow: 0 5px 15px var(--shadow-color-light);
 }
 body.dark-mode .recent-bookings {
     background: #2a2a2a;
@@ -1086,14 +1151,14 @@ body.dark-mode .recent-bookings {
 .recent-bookings h3 {
     font-size: 1.6rem;
     margin-bottom: 25px;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
 }
 
 .booking-item {
     display: flex;
     align-items: center;
     padding: 20px;
-    border-bottom: 1px solid var(--border-color-light); /* Adjusted for dark mode */
+    border-bottom: 1px solid var(--border-color-light);
     flex-wrap: wrap;
     gap: 15px;
 }
@@ -1128,19 +1193,19 @@ body.dark-mode .booking-item {
 .booking-details h4 {
     font-size: 1.15rem;
     font-weight: 700;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
 }
 
 .booking-details p {
     font-size: 0.95rem;
-    color: var(--gray); /* Adjusted for dark mode */
+    color: var(--gray);
 }
 
 .booking-date {
     width: 200px;
     text-align: center;
     font-size: 0.95rem;
-    color: var(--gray); /* Adjusted for dark mode */
+    color: var(--gray);
 }
 
 .booking-price {
@@ -1151,7 +1216,7 @@ body.dark-mode .booking-item {
     text-align: center;
 }
 body.dark-mode .booking-price {
-    color: var(--secondary); /* Stands out in dark mode */
+    color: var(--secondary);
 }
 
 
@@ -1174,9 +1239,9 @@ body.dark-mode .booking-price {
     color: var(--gray);
 }
 
-/* إضافة سيارة */
+/* Add Car Form */
 .add-car-form {
-    background: var(--card-bg-light); /* Adjusted for dark mode */
+    background: var(--card-bg-light);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     padding: 40px;
@@ -1192,18 +1257,18 @@ body.dark-mode .booking-price {
     display: block;
     margin-bottom: 10px;
     font-weight: 700;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
     font-size: 1.1rem;
 }
 
 .form-control {
     width: 100%;
     padding: 16px 20px;
-    border: 2px solid var(--border-color-light); /* Adjusted for dark mode */
+    border: 2px solid var(--border-color-light);
     border-radius: 12px;
     font-size: 1.1rem;
     transition: var(--transition);
-    color: var(--text-color-light); /* Adjusted for dark mode */
+    color: var(--text-color-light);
 }
 body.dark-mode .form-control {
     background-color: #2a2a2a;
@@ -1233,9 +1298,9 @@ body.dark-mode .form-control:focus {
     margin-top: 30px;
 }
 
-/* فوتر */
+/* Footer */
 footer {
-    background: var(--footer-bg-light); /* Adjusted for dark mode */
+    background: var(--footer-bg-light);
     color: white;
     padding: 80px 0 30px;
 }
@@ -1273,7 +1338,7 @@ footer {
 }
 
 .footer-col ul li a {
-    color: rgba(255, 255, 255, 0.7); /* Adjusted for dark mode */
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     transition: var(--transition);
     display: block;
@@ -1294,7 +1359,7 @@ body.dark-mode .footer-col ul li a {
     display: flex;
     gap: 15px;
     margin-bottom: 20px;
-    color: rgba(255, 255, 255, 0.8); /* Adjusted for dark mode */
+    color: rgba(255, 255, 255, 0.8);
     font-size: 1.05rem;
 }
 body.dark-mode .footer-contact li {
@@ -1336,7 +1401,7 @@ body.dark-mode .footer-contact li {
     text-align: center;
     padding-top: 30px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.6); /* Adjusted for dark mode */
+    color: rgba(255, 255, 255, 0.6);
     font-size: 0.95rem;
 }
 body.dark-mode .copyright {
@@ -1366,7 +1431,7 @@ body.dark-mode .loyalty-card {
 }
 .loyalty-card:hover {
     transform: translateY(-8px) translateZ(5px);
-    box-shadow: 0 18px 45px rgba(0,0,0,0.25); /* Slightly stronger shadow on hover */
+    box-shadow: 0 18px 45px rgba(0,0,0,0.25);
 }
 body.dark-mode .loyalty-card:hover {
     box-shadow: 0 18px 45px var(--shadow-color-dark);
@@ -1460,14 +1525,14 @@ body.dark-mode .loyalty-card:hover {
 
 .loyalty-promo-section {
     padding: 80px 0;
-    background: linear-gradient(to bottom, var(--light-gray), var(--light)); /* Adjusted for dark mode */
+    background: linear-gradient(to bottom, var(--light-gray), var(--light));
 }
 body.dark-mode .loyalty-promo-section {
     background: linear-gradient(to bottom, #1e1e1e, #121212);
 }
 
 .loyalty-promo {
-    background: var(--card-bg-light); /* Adjusted for dark mode */
+    background: var(--card-bg-light);
     border-radius: var(--border-radius);
     padding: 40px;
     box-shadow: var(--box-shadow);
@@ -1478,52 +1543,52 @@ body.dark-mode .loyalty-promo-section {
 
 .loyalty-promo h3 {
     font-size: 2.1rem;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
     margin-bottom: 15px;
     font-weight: 800;
 }
 
 .loyalty-promo p {
     font-size: 1.2rem;
-    color: var(--gray); /* Adjusted for dark mode */
+    color: var(--gray);
     margin-bottom: 30px;
     line-height: 1.7;
 }
 
 /* Quiz Page Styles */
 .quiz-container {
-    background: var(--card-bg-light); /* Adjusted for dark mode */
+    background: var(--card-bg-light);
     padding: 40px;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     max-width: 700px;
-    margin: 80px auto 40px; /* Adjusted top margin */
+    margin: 80px auto 40px;
     text-align: center;
 }
 
 .quiz-container h2 {
     font-size: 2.5rem;
     margin-bottom: 30px;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
 }
 
 .quiz-question {
     margin-bottom: 30px;
-    text-align: right; /* RTL align */
+    text-align: right;
 }
 
 .quiz-question p {
     font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 15px;
-    color: var(--text-color-light); /* Adjusted for dark mode */
+    color: var(--text-color-light);
 }
 
 .quiz-options {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    text-align: right; /* RTL align */
+    text-align: right;
 }
 
 .quiz-options label {
@@ -1532,12 +1597,12 @@ body.dark-mode .loyalty-promo-section {
     gap: 10px;
     font-size: 1.1rem;
     cursor: pointer;
-    background: var(--light); /* Adjusted for dark mode */
+    background: var(--light);
     padding: 15px 20px;
     border-radius: 12px;
-    border: 1px solid var(--border-color-light); /* Adjusted for dark mode */
+    border: 1px solid var(--border-color-light);
     transition: var(--transition);
-    color: var(--text-color-light); /* Adjusted for dark mode */
+    color: var(--text-color-light);
 }
 body.dark-mode .quiz-options label {
     background: #2a2a2a;
@@ -1545,7 +1610,7 @@ body.dark-mode .quiz-options label {
     color: var(--text-color-dark);
 }
 .quiz-options label:hover {
-    background: var(--light-gray); /* Adjusted for dark mode */
+    background: var(--light-gray);
 }
 body.dark-mode .quiz-options label:hover {
     background: #333;
@@ -1553,7 +1618,7 @@ body.dark-mode .quiz-options label:hover {
 
 
 .quiz-options input[type="radio"] {
-    margin-left: 10px; /* Spacing for RTL */
+    margin-left: 10px;
     transform: scale(1.2);
     cursor: pointer;
 }
@@ -1568,10 +1633,10 @@ body.dark-mode .quiz-options label:hover {
 .quiz-results {
     margin-top: 40px;
     padding: 30px;
-    background: var(--light); /* Adjusted for dark mode */
+    background: var(--light);
     border-radius: var(--border-radius);
     text-align: center;
-    color: var(--text-color-light); /* Adjusted for dark mode */
+    color: var(--text-color-light);
 }
 body.dark-mode .quiz-results {
     background: #2a2a2a;
@@ -1582,7 +1647,7 @@ body.dark-mode .quiz-results {
 .quiz-results h3 {
     font-size: 1.8rem;
     margin-bottom: 20px;
-    color: var(--heading-color-light); /* Adjusted for dark mode */
+    color: var(--heading-color-light);
 }
 
 .quiz-results p {
@@ -1591,8 +1656,155 @@ body.dark-mode .quiz-results {
     line-height: 1.7;
 }
 
+/* Car Map Section */
+.car-map-section {
+    padding: 100px 0;
+    background-color: var(--light);
+}
+body.dark-mode .car-map-section {
+    background-color: var(--body-bg-dark);
+}
+
+/* Map Container for Leaflet */
+#mapid {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 50px auto;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    background-color: var(--card-bg-light);
+    z-index: 1;
+}
+body.dark-mode #mapid {
+    background-color: var(--card-bg-dark);
+}
+
+/* Filter buttons for map */
+.map-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+.map-filter-btn {
+    padding: 10px 25px;
+    border-radius: 12px;
+    background: var(--card-bg-light);
+    border: 2px solid var(--border-color-light);
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    color: var(--dark);
+}
+body.dark-mode .map-filter-btn {
+    background: #333;
+    border-color: #444;
+    color: var(--text-color-dark);
+}
+.map-filter-btn.active, .map-filter-btn:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Custom Leaflet Marker Icon */
+.custom-car-icon {
+    background-color: var(--primary);
+    border-radius: 50%;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    border: 2px solid white;
+    box-shadow: 0 0 0 5px rgba(46, 139, 87, 0.3);
+    transition: transform 0.2s ease;
+}
+.custom-car-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 8px rgba(46, 139, 87, 0.5);
+}
+
+/* Custom Leaflet Popup (InfoWindow) Styling */
+.leaflet-popup-content-wrapper {
+    background: var(--card-bg-light);
+    color: var(--dark);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 0;
+    text-align: right;
+    direction: rtl;
+}
+body.dark-mode .leaflet-popup-content-wrapper {
+    background: var(--card-bg-dark);
+    color: var(--text-color-dark);
+}
+
+.leaflet-popup-content {
+    margin: 0;
+    padding: 15px;
+}
+
+.leaflet-popup-tip {
+    background: var(--card-bg-light);
+    box-shadow: var(--box-shadow);
+}
+body.dark-mode .leaflet-popup-tip {
+    background: var(--card-bg-dark);
+}
+
+.leaflet-popup-close-button {
+    color: var(--dark);
+    font-size: 1.5rem;
+    top: 5px;
+    right: 5px;
+}
+body.dark-mode .leaflet-popup-close-button {
+    color: var(--text-color-dark);
+}
+
+.popup-car-details h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.popup-car-details p {
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+    color: var(--text-color-light);
+}
+body.dark-mode .popup-car-details p {
+    color: var(--text-color-dark);
+}
+
+.popup-car-details .car-img-popup {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+}
+
+.popup-car-details .btn {
+    display: block;
+    width: calc(100% - 30px);
+    margin: 15px auto 0;
+    text-align: center;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+}
+
+
 /* ------------------------------------- */
-/* التجاوبية (Responsive Design) */
+/* Responsive Design (الجوال واللابتوب) */
 /* ------------------------------------- */
 
 /* لأجهزة الكمبيوتر اللوحية والشاشات المتوسطة (أقل من 1200 بكسل) */
@@ -1605,33 +1817,33 @@ body.dark-mode .quiz-results {
     }
     .features-grid, .cars-grid {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 25px; /* تباعد أقل قليلاً */
+        gap: 25px;
     }
     .steps-container {
         flex-wrap: wrap;
-        justify-content: center; /* توسيط الخطوات عند الالتفاف */
+        justify-content: center;
         gap: 30px;
     }
     .step {
-        width: 48%; /* خطوتين في الصف */
+        width: 48%;
         padding: 30px 20px;
     }
     .steps-container:before {
-        display: none; /* إخفاء الخط الأفقي في الشاشات الصغيرة */
+        display: none;
     }
     .footer-grid {
-        grid-template-columns: repeat(2, 1fr); /* عمودين في الفوتر */
+        grid-template-columns: repeat(2, 1fr);
         gap: 30px;
     }
     .dashboard {
-        grid-template-columns: 1fr; /* عمود واحد للوحة التحكم */
+        grid-template-columns: 1fr;
     }
     .dashboard-sidebar {
         padding: 20px;
-        text-align: center; /* توسيط محتوى الشريط الجانبي */
+        text-align: center;
     }
     .user-profile {
-        justify-content: center; /* توسيط صورة المستخدم */
+        justify-content: center;
     }
     .user-info {
         text-align: center;
@@ -1646,7 +1858,7 @@ body.dark-mode .quiz-results {
         margin-bottom: 0;
     }
     .sidebar-menu a {
-        padding: 10px 15px; /* تصغير حجم روابط القائمة الجانبية */
+        padding: 10px 15px;
         font-size: 0.95rem;
     }
     .testimonial-slide {
@@ -1665,16 +1877,70 @@ body.dark-mode .quiz-results {
         font-size: 1rem;
         padding: 12px 15px;
     }
+    #mapid {
+        height: 500px; /* Reduce map height on smaller screens */
+    }
 }
 
 /* لأجهزة الكمبيوتر اللوحية الصغيرة والهواتف الكبيرة (أقل من 992 بكسل) */
 @media (max-width: 992px) {
+    /* Navbar Mobile Specific Styles */
     .nav-links {
-        display: none; /* إخفاء قائمة التنقل الرئيسية */
+        display: none; /* Hide desktop nav links */
+        position: fixed;
+        top: 0;
+        right: -300px; /* Hidden off-screen */
+        width: 280px;
+        height: 100%;
+        background-color: var(--navbar-bg-light);
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: right 0.3s ease-in-out;
+        padding: 20px;
+        flex-direction: column; /* Stack links vertically */
+        align-items: flex-start; /* Align text to the start */
+    }
+    body.dark-mode .nav-links {
+        background-color: var(--navbar-bg-dark);
+    }
+    .nav-links.open {
+        right: 0; /* Slide in */
+    }
+    .nav-links li {
+        width: 100%; /* Full width list items */
+        margin-bottom: 0; /* Remove bottom margin */
+    }
+    .nav-links li a {
+        width: 100%; /* Full width links */
+        padding: 15px 10px; /* Ample padding for touch */
+        font-size: 1.2rem;
+        border-bottom: 1px solid var(--border-color-light); /* Separator */
+    }
+    body.dark-mode .nav-links li a {
+        border-bottom-color: var(--border-color-dark);
+    }
+    .nav-links li:last-child a {
+        border-bottom: none; /* No border for the last item */
+    }
+    .nav-buttons {
+        gap: 10px; /* Reduced gap for small screens */
     }
     .mobile-toggle {
-        display: block; /* إظهار زر القائمة المتنقلة */
+        display: block; /* Show mobile menu button */
     }
+    /* Overlay for mobile menu */
+    .mobile-menu-overlay {
+        display: none; /* Controlled by JS */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 998; /* Below mobile menu, above content */
+    }
+
+
     .hero h1 {
         font-size: 3rem;
     }
@@ -1692,49 +1958,52 @@ body.dark-mode .quiz-results {
         font-size: 1rem;
     }
     .footer-grid {
-        grid-template-columns: 1fr; /* عمود واحد للفوتر */
+        grid-template-columns: 1fr;
     }
     .footer-col {
         text-align: center;
     }
     .footer-col h3:after {
         right: 50%;
-        transform: translateX(50%); /* توسيط الخط تحت العنوان */
+        transform: translateX(50%);
     }
     .social-links {
-        justify-content: center; /* توسيط أيقونات التواصل الاجتماعي */
+        justify-content: center;
     }
     .booking-item {
-        flex-direction: column; /* جعل عناصر الحجز عمودية */
-        align-items: flex-start; /* محاذاة لليسار */
-        text-align: right; /* محاذاة النص لليمين للعربية */
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: right;
     }
     .booking-car, .booking-details, .booking-date, .booking-price, .booking-status {
         width: 100%;
-        text-align: right; /* محاذاة كل عنصر لليمين */
+        text-align: right;
     }
     .booking-date, .booking-price, .booking-status {
-        text-align: right; /* النص يكون لليمين في وضع عمودي */
+        text-align: right;
     }
     .booking-car img {
-        margin-right: 15px; /* مسافة لليمين */
+        margin-right: 15px;
     }
     .loyalty-progress {
-        flex-wrap: wrap; /* السماح بعناصر التقدم بالالتفاف */
+        flex-wrap: wrap;
         justify-content: center;
         padding: 5px;
     }
     .loyalty-dot {
-        margin: 5px; /* مسافة بين النقاط الملفوفة */
-        width: 30px; /* تصغير حجم النقطة */
-        height: 30px; /* تصغير حجم النقطة */
+        margin: 5px;
+        width: 30px;
+        height: 30px;
         font-size: 0.85rem;
     }
     .loyalty-line {
-        height: 4px; /* تصغير الخط */
+        height: 4px;
     }
     .quiz-container {
-        margin: 120px auto 40px; /* Adjusted top margin for smaller screens */
+        margin: 120px auto 40px;
+    }
+    #mapid {
+        height: 400px; /* Smaller map on mobile */
     }
 }
 
@@ -1747,11 +2016,11 @@ body.dark-mode .quiz-results {
         font-size: 1.1rem;
     }
     .hero-buttons {
-        flex-direction: column; /* الأزرار تكون عمودية */
-        align-items: center; /* توسيط الأزرار */
+        flex-direction: column;
+        align-items: center;
     }
     .hero-buttons .btn {
-        width: 80%; /* جعل الأزرار تأخذ عرضًا أكبر */
+        width: 80%;
     }
     .section-title h2 {
         font-size: 2rem;
@@ -1764,13 +2033,13 @@ body.dark-mode .quiz-results {
         align-items: center;
     }
     .step {
-        width: 90%; /* خطوة واحدة في الصف */
+        width: 90%;
     }
     .form-grid {
-        grid-template-columns: 1fr; /* عمود واحد في نماذج الإضافة */
+        grid-template-columns: 1fr;
     }
     .add-car-form {
-        padding: 25px; /* تصغير البادينج */
+        padding: 25px;
     }
     .car-actions {
         flex-direction: column;
@@ -1779,18 +2048,18 @@ body.dark-mode .quiz-results {
         width: 100%;
     }
     .dashboard-content {
-        padding: 20px; /* تصغير البادينج في لوحة التحكم */
+        padding: 20px;
     }
     .stats-grid {
-        grid-template-columns: 1fr; /* عمود واحد لبطاقات الإحصائيات */
+        grid-template-columns: 1fr;
         gap: 20px;
     }
     .recent-bookings {
-        padding: 15px; /* تصغير البادينج */
+        padding: 15px;
     }
     .booking-car {
         flex-direction: column;
-        align-items: flex-end; /* محاذاة الصورة والنص لليمين */
+        align-items: flex-end;
         text-align: right;
     }
     .booking-car img {
