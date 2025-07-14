@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -20,12 +21,15 @@
                     <li><a href="index.html">الرئيسية</a></li>
                     <li><a href="cars.html">استكشف السيارات</a></li>
                     <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-                    <li><a href="dashboard-owner.html">لوحة تحكم المؤجر</a></li>
-                    <li><a href="dashboard-renter.html">لوحة تحكم المستأجر</a></li>
-                    <li><a href="add-car.html" class="active">أضف سيارتك</a></li>
+                    <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
+                    <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
+                    <li><a href="add-car.html" class="auth-link active" id="nav-add-car">أضف سيارتك</a></li>
+                    <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
                 </ul>
                 <div class="nav-buttons">
-                    <a href="landing.html" class="btn btn-primary">تسجيل دخول / جديد</a>
+                    <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
+                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
+                    <div id="nav-user-profile-placeholder"></div>
                 </div>
                 <button class="mobile-toggle">
                     <i class="fas fa-bars"></i>
@@ -36,12 +40,12 @@
 
     <section id="add-car" class="add-car-section" style="padding-top: 150px;">
         <div class="container">
-            <div class="section-title">
+            <div class="section-title" data-aos="fade-up">
                 <h2>أضف سيارتك وابدأ الربح</h2>
                 <p>املأ النموذج التالي لإضافة سيارتك إلى منصتنا والبدء في تحقيق أرباح</p>
             </div>
             
-            <div class="add-car-form">
+            <div class="add-car-form" data-aos="zoom-in">
                 <div class="form-grid">
                     <div class="form-group">
                         <label>نوع السيارة</label>
@@ -200,6 +204,12 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
