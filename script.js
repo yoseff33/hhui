@@ -13,12 +13,14 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 // تأثير التنقل عند التمرير (مشترك بين جميع الصفحات)
 window.addEventListener('scroll', function() {
     const header = document.querySelector('header');
-    if (window.scrollY > 100) {
-        header.style.padding = '10px 0';
-        header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        header.style.padding = '15px 0';
-        header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.05)';
+    if (header) { // Check if header exists
+        if (window.scrollY > 100) {
+            header.style.padding = '10px 0';
+            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+        } else {
+            header.style.padding = '15px 0';
+            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.05)';
+        }
     }
 });
 
@@ -35,9 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 overlay.style.display = isOpen ? 'block' : 'none';
                 document.body.style.overflow = isOpen ? 'hidden' : ''; // Disable scroll when menu is open
 
-                // Update the icon of the main mobile toggle button
-                if (button.closest('header')) { // Only for the button in the header
-                    button.innerHTML = isOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+                // Update the icon of the main mobile toggle button in header
+                const headerToggle = document.querySelector('header .mobile-toggle');
+                if (headerToggle) {
+                    headerToggle.innerHTML = isOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
                 }
             });
         });
@@ -46,9 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
             navLinks.classList.remove('open');
             overlay.style.display = 'none';
             document.body.style.overflow = '';
-            // Reset the main mobile toggle button icon
-            if (mobileToggleButtons[0].closest('header')) {
-                mobileToggleButtons[0].innerHTML = '<i class="fas fa-bars"></i>';
+            // Reset the main mobile toggle button icon in header
+            const headerToggle = document.querySelector('header .mobile-toggle');
+            if (headerToggle) {
+                headerToggle.innerHTML = '<i class="fas fa-bars"></i>';
             }
         });
 
@@ -59,9 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     navLinks.classList.remove('open');
                     overlay.style.display = 'none';
                     document.body.style.overflow = '';
-                    // Reset the main mobile toggle button icon
-                    if (mobileToggleButtons[0].closest('header')) {
-                        mobileToggleButtons[0].innerHTML = '<i class="fas fa-bars"></i>';
+                    // Reset the main mobile toggle button icon in header
+                    const headerToggle = document.querySelector('header .mobile-toggle');
+                    if (headerToggle) {
+                        headerToggle.innerHTML = '<i class="fas fa-bars"></i>';
                     }
                 }
             });
@@ -245,14 +250,13 @@ function updateLoyaltyCard(completedRentals) {
 
 function setupThemeToggle() {
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const mobileThemeToggleBtn = document.getElementById('mobile-theme-toggle'); // Get mobile toggle button
+    const mobileThemeToggleBtn = document.getElementById('mobile-theme-toggle');
 
     const applyTheme = (theme) => {
         document.body.classList.remove('light-mode', 'dark-mode');
         document.body.classList.add(theme + '-mode');
         localStorage.setItem('theme', theme);
 
-        // Update both desktop and mobile buttons' icons
         if (themeToggleBtn) {
             themeToggleBtn.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
         }
@@ -261,11 +265,9 @@ function setupThemeToggle() {
         }
     };
 
-    // Initialize theme based on localStorage
     const currentTheme = localStorage.getItem('theme') || 'light';
     applyTheme(currentTheme);
 
-    // Add event listeners
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
             const newTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
@@ -383,7 +385,6 @@ function setupQuiz() {
         let recommendation = "لا يمكننا تحديد سيارة مناسبة بناءً على اختياراتك.";
         let carType = "";
 
-        // Simple quiz logic
         if (answers.passengers === '5' || answers.passengers === '7') {
             if (answers.budget === 'medium' || answers.budget === 'high') {
                 recommendation = "نوصي بسيارة دفع رباعي فسيحة ومريحة لرحلاتك العائلية.";
@@ -429,22 +430,22 @@ let carMarkersLayer;
 const qassimCarsData = [
     {
         id: 'camry', type: 'سيدان', model: 'تويوتا كامري 2022', price: '85', location: 'مواقف المبنى الإداري',
-        lat: 26.348037, lng: 43.771591, // الإحداثيات من المستخدم
+        lat: 26.348037, lng: 43.771591,
         img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3'
     },
     {
         id: 'landcruiser', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2021', price: '220', location: 'كلية الهندسة',
-        lat: 26.3350, lng: 43.7685, // افتراضية
+        lat: 26.3350, lng: 43.7685,
         img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg'
     },
     {
         id: 'elantra', type: 'اقتصادية', model: 'هونداي النترا 2023', price: '75', location: 'بجوار المكتبة المركزية',
-        lat: 26.351008, lng: 43.775861, // الإحداثيات من المستخدم
+        lat: 26.351008, lng: 43.775861,
         img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp'
     },
     {
         id: 'mercedes', type: 'فاخرة', model: 'مرسيدس E-Class 2020', price: '300', location: 'المركز الثقافي',
-        lat: 26.349181, lng: 43.761351, // الإحداثيات من المستخدم
+        lat: 26.349181, lng: 43.761351,
         img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg'
     },
     {
@@ -468,14 +469,17 @@ function initMap() {
     const qassimUniversityCoords = [26.345, 43.769];
     const defaultZoom = 14;
 
-    map = L.map('mapid').setView(qassimUniversityCoords, defaultZoom);
+    // Check if map container exists and map is not already initialized
+    if (document.getElementById('mapid') && !map) {
+        map = L.map('mapid').setView(qassimUniversityCoords, defaultZoom);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-    carMarkersLayer = L.layerGroup().addTo(map);
-    renderCarsOnMap('الكل');
+        carMarkersLayer = L.layerGroup().addTo(map);
+        renderCarsOnMap('الكل');
+    }
 }
 
 function createCarIcon(carType) {
@@ -548,6 +552,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     setupQuiz();
 
+    // Check if mapid exists on current page before initializing map
     if (document.getElementById('mapid')) {
         initMap();
         setupMapFilters();
