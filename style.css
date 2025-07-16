@@ -40,7 +40,7 @@ body {
     line-height: 1.7;
     overflow-x: hidden;
     font-size: 1.05rem;
-    padding-top: 80px; /* Add padding to body to prevent content from going under fixed header */
+    padding-top: 80px; /* Default padding for desktop header height (approx 80px) */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -66,7 +66,7 @@ header {
     z-index: 1000;
     backdrop-filter: blur(10px);
     transition: var(--transition);
-    padding: 15px 0;
+    padding: 15px 0; /* Default padding for desktop header */
 }
 
 footer {
@@ -346,10 +346,13 @@ header {
     color: var(--secondary);
 }
 
+/* Default state for nav-links (desktop) */
 .nav-links {
     display: flex;
     list-style: none;
     gap: 35px;
+    margin: 0; /* Remove default margin from ul */
+    padding: 0; /* Remove default padding from ul */
 }
 
 .nav-links li a {
@@ -399,7 +402,7 @@ body.dark-mode .nav-links li a.active {
     align-items: center;
 }
 
-/* Mobile Toggle Button */
+/* Mobile Toggle Button (hidden on desktop) */
 .mobile-toggle {
     display: none; /* Hidden by default on desktop */
     background: none;
@@ -422,7 +425,7 @@ body.dark-mode .mobile-toggle {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 999;
-    display: none; /* Hidden by default */
+    display: none;
 }
 
 /* Mobile Menu Container */
@@ -438,19 +441,15 @@ body.dark-mode .mobile-toggle {
     z-index: 1000;
     transition: right 0.3s ease-in-out;
     padding: 20px;
-    display: flex; /* Changed from none to flex/block for JS to control visibility */
+    display: flex; /* Always display flex so content is stacked, but hide with right: -300px */
     flex-direction: column;
 }
 body.dark-mode .mobile-nav-menu {
     background-color: var(--navbar-bg-dark);
 }
 
-.mobile-nav-menu:not(.open) {
-    display: none; /* Hide when not open, JS will make it flex when needed */
-}
 .mobile-nav-menu.open {
     right: 0; /* Slide in */
-    display: flex; /* Ensure it's displayed when open */
 }
 
 /* Styles for links and buttons INSIDE the mobile menu */
@@ -462,6 +461,7 @@ body.dark-mode .mobile-nav-menu {
     margin-top: 30px;
     width: 100%;
     list-style: none; /* Ensure no bullet points */
+    padding: 0; /* Remove default padding for ul inside mobile menu */
 }
 
 .mobile-nav-menu .nav-links li {
@@ -1926,55 +1926,57 @@ body.dark-mode .popup-car-details p {
 
 /* لأجهزة الكمبيوتر اللوحية الصغيرة والهواتف الكبيرة (أقل من 992 بكسل) */
 @media (max-width: 992px) {
-    /* Navbar Mobile Specific Styles */
-    .nav-links {
-        display: none; /* Hidden on desktop, will be explicitly shown by JS when menu is open */
+    body {
+        padding-top: 70px; /* Adjust padding for smaller header on mobile */
+    }
+    header {
+        padding: 10px 0; /* Smaller header on mobile */
+    }
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    .logo-text {
+        font-size: 1.5rem;
+    }
+    .mobile-toggle {
+        display: block; /* Show mobile menu button */
+        font-size: 1.6rem; /* Adjust size */
+    }
+
+    /* Mobile Nav Menu specific positioning and display */
+    .nav-links { /* This is the mobile slide-in menu container in this media query */
+        display: none; /* Hidden by default */
         position: fixed;
         top: 0;
-        right: -300px; /* Hidden off-screen to the right */
-        width: 280px; /* Width of the mobile menu */
-        max-width: 80%; /* Ensure it doesn't take too much width on very small screens */
+        right: -300px; /* Off-screen */
+        width: 280px;
+        max-width: 80%;
         height: 100%;
         background-color: var(--navbar-bg-light);
         box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
         z-index: 1000;
         transition: right 0.3s ease-in-out;
         padding: 20px;
-        flex-direction: column; /* Stack links vertically */
-        align-items: flex-start; /* Align text to the start */
-        overflow-y: auto; /* Allow scrolling if content overflows */
+        flex-direction: column;
+        align-items: flex-start;
+        overflow-y: auto;
     }
     body.dark-mode .nav-links {
         background-color: var(--navbar-bg-dark);
     }
     .nav-links.open {
         right: 0;
-        display: flex; /* IMPORTANT: Show the menu content when open */
+        display: flex; /* Display when open */
     }
-    .nav-links li {
-        width: 100%;
-        margin-bottom: 0;
+
+    /* Force desktop nav-links to be hidden always */
+    .navbar > .nav-links { /* Target specifically the desktop nav-links in the navbar */
+        display: none !important;
     }
-    .nav-links li a {
-        width: 100%;
-        padding: 15px 10px;
-        font-size: 1.2rem;
-        color: var(--dark);
-        border-bottom: 1px solid var(--light-gray);
-    }
-    body.dark-mode .nav-links li a {
-        color: var(--text-color-dark);
-        border-bottom-color: var(--border-color-dark);
-    }
-    .nav-links li:last-child a {
-        border-bottom: none;
-    }
-    .nav-buttons {
-        gap: 10px;
-    }
-    .mobile-toggle {
-        display: block; /* Show mobile menu button */
-    }
+
+
     /* Overlay for mobile menu */
     .mobile-menu-overlay {
         display: none;
@@ -2057,10 +2059,10 @@ body.dark-mode .popup-car-details p {
 /* لأجهزة الكمبيوتر اللوحية الصغيرة (أقل من 768 بكسل) */
 @media (max-width: 768px) {
     body {
-        padding-top: 70px; /* Adjust padding for smaller header on mobile */
+        padding-top: 70px;
     }
     header {
-        padding: 10px 0; /* Smaller header on mobile */
+        padding: 10px 0;
     }
     .logo-icon {
         width: 40px;
