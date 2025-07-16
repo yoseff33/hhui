@@ -410,7 +410,7 @@ body.dark-mode .nav-links li a.active {
     font-size: 1.8rem;
     color: var(--primary);
     cursor: pointer;
-    z-index: 1001;
+    z-index: 1001; /* Ensure it's above other elements if menu is open */
 }
 body.dark-mode .mobile-toggle {
     color: var(--text-color-dark);
@@ -428,51 +428,54 @@ body.dark-mode .mobile-toggle {
     display: none;
 }
 
-/* Mobile Menu Container */
+/* Mobile Nav Menu Container - Appears from TOP with full width */
 .mobile-nav-menu {
     position: fixed;
-    top: 0;
-    right: -100%; /* Initially off-screen to the right, using % for responsiveness */
-    width: 100%; /* Full width of the screen */
-    max-width: 320px; /* Max width to ensure it looks good on tablets in portrait */
-    height: 100%;
-    background-color: var(--navbar-bg-light);
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+    top: -100%; /* Initially off-screen (top) */
+    left: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height of the viewport */
+    background-color: var(--navbar-bg-light); /* Match header background */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    transition: right 0.3s ease-in-out;
+    transition: top 0.3s ease-in-out; /* Transition from top */
     padding: 20px;
-    display: flex; /* Always display flex so content is stacked, but hide with right: -100% */
+    display: flex; /* Always display flex so content is stacked */
     flex-direction: column;
+    justify-content: flex-start; /* Align content to top */
+    align-items: center; /* Center horizontally */
+    overflow-y: auto; /* Allow scrolling if content overflows */
 }
 body.dark-mode .mobile-nav-menu {
     background-color: var(--navbar-bg-dark);
 }
 
 .mobile-nav-menu.open {
-    right: 0; /* Slide in */
+    top: 0; /* Slide in from top */
 }
 
 /* Styles for links and buttons INSIDE the mobile menu */
 .mobile-nav-menu .nav-links {
     display: flex; /* Ensure links are displayed when menu is open */
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center; /* Center links horizontally */
     gap: 15px;
-    margin-top: 30px;
+    margin-top: 50px; /* Space from top controls/logo */
     width: 100%;
     list-style: none;
     padding: 0;
 }
 
 .mobile-nav-menu .nav-links li {
-    width: 100%;
+    width: 100%; /* Full width for clickable area */
+    text-align: center; /* Center link text */
     margin-bottom: 0;
 }
 
 .mobile-nav-menu .nav-links li a {
-    width: 100%;
-    padding: 12px 0;
-    font-size: 1.2rem;
+    display: block; /* Make the whole area clickable */
+    padding: 15px 0; /* More padding for easier tapping */
+    font-size: 1.4rem; /* Larger font for readability */
     color: var(--dark);
     border-bottom: 1px solid var(--light-gray);
 }
@@ -489,40 +492,45 @@ body.dark-mode .mobile-nav-menu .nav-links li a {
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-top: 30px;
-    align-items: flex-start;
-    gap: 10px;
+    margin-top: 40px; /* Space after links */
+    align-items: center; /* Center buttons */
+    gap: 15px;
 }
 .mobile-nav-menu .nav-buttons .btn {
-    width: 100%;
+    width: 80%; /* Buttons take most of the width */
+    max-width: 250px; /* Max width for buttons */
     margin-bottom: 0;
 }
 .mobile-nav-menu .theme-toggle {
     width: auto;
-    text-align: right;
-    margin-top: 10px;
-    margin-left: 0;
+    text-align: center; /* Center the icon */
+    margin: 10px 0; /* Adjust margin */
 }
 
 
 /* Links visibility based on login status */
-.nav-links .auth-link { /* These are for desktop nav-links */
-    display: none;
+/* These rules target the actual links within the primary .nav-links for mobile menu */
+.nav-links .auth-link {
+    display: none; /* Hidden by default for desktop AND mobile menu */
 }
-.mobile-nav-menu .nav-links .auth-link { /* These are for mobile nav-links */
-    display: none; /* Hidden by default in mobile menu too, controlled by JS */
+.mobile-nav-menu .nav-links .auth-link.show-mobile { /* Use a specific class to SHOW auth links on mobile */
+    display: block; /* Show as block for vertical stacking */
 }
+
+
 .nav-buttons .guest-only { /* For desktop guest button */
     display: flex;
 }
 .nav-buttons #nav-user-profile-placeholder { /* For desktop user profile */
     display: none;
 }
-.mobile-nav-menu .nav-buttons .guest-only { /* For mobile guest button */
-    display: flex;
+
+/* Guest/User buttons specific for mobile menu. These are now directly within .mobile-nav-menu .nav-buttons */
+.mobile-nav-menu .nav-buttons .guest-only {
+    display: none; /* Initially hidden, JS will control */
 }
-.mobile-nav-menu .nav-buttons #mobile-nav-user-profile-placeholder { /* For mobile user profile */
-    display: none;
+.mobile-nav-menu .nav-buttons #mobile-nav-user-profile-placeholder {
+    display: none; /* Initially hidden, JS will control */
 }
 
 
@@ -1940,35 +1948,39 @@ body.dark-mode .popup-car-details p {
     .logo-text {
         font-size: 1.5rem;
     }
+    /* Mobile Toggle Button */
     .mobile-toggle {
         display: block; /* Show mobile menu button */
-        font-size: 1.6rem; /* Adjust size */
+        font-size: 1.6rem;
+        margin-left: 15px; /* Add some space from login button */
     }
 
-    /* Mobile Nav Menu specific positioning and display */
-    .nav-links { /* This is the mobile slide-in menu container in this media query */
+    /* Mobile Nav Menu Container (Full-width dropdown/overlay from top) */
+    .nav-links { /* This is the element that becomes the mobile menu */
         display: none; /* Hidden by default */
         position: fixed;
-        top: 0;
-        right: -100%; /* Off-screen (full width) */
-        width: 100%; /* Full width of the screen */
-        max-width: 320px; /* Max width to ensure it looks good on tablets in portrait */
-        height: 100%;
+        top: -100vh; /* Start completely off-screen at the top */
+        left: 0;
+        width: 100%;
+        height: 100vh; /* Full viewport height */
         background-color: var(--navbar-bg-light);
-        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         z-index: 1000;
-        transition: right 0.3s ease-in-out;
-        padding: 20px;
+        transition: top 0.3s ease-in-out; /* Transition from top */
+        padding: 80px 20px 20px; /* Padding to account for header, plus side padding */
         flex-direction: column;
-        align-items: flex-start;
-        overflow-y: auto;
+        align-items: center; /* Center items for full-width menu */
+        list-style: none; /* Remove list style */
+        gap: 20px; /* Increase gap between links */
+        justify-content: flex-start; /* Start content from top */
+        overflow-y: auto; /* Allow scrolling if content overflows */
     }
     body.dark-mode .nav-links {
         background-color: var(--navbar-bg-dark);
     }
     .nav-links.open {
-        right: 0;
-        display: flex; /* Display when open */
+        top: 0; /* Slide into view */
+        display: flex; /* Display as flex when open */
     }
 
     /* Force desktop nav-links to be hidden always */
@@ -1976,10 +1988,9 @@ body.dark-mode .popup-car-details p {
         display: none !important;
     }
 
-
     /* Overlay for mobile menu */
     .mobile-menu-overlay {
-        display: none;
+        display: none; /* Controlled by JS */
         position: fixed;
         top: 0;
         left: 0;
@@ -1987,6 +1998,46 @@ body.dark-mode .popup-car-details p {
         bottom: 0;
         background-color: rgba(0, 0, 0, 0.7);
         z-index: 998;
+    }
+
+    /* Styles for links and buttons INSIDE the full-width mobile menu */
+    .nav-links li {
+        width: 100%;
+        text-align: center; /* Center text for full-width items */
+        margin-bottom: 0;
+    }
+    .nav-links li a {
+        padding: 15px 10px; /* More padding for easier tapping */
+        font-size: 1.4rem; /* Larger font for readability */
+        color: var(--dark);
+        border-bottom: 1px solid var(--light-gray);
+    }
+    body.dark-mode .nav-links li a {
+        color: var(--text-color-dark);
+        border-bottom-color: var(--border-color-dark);
+    }
+    .nav-links li:last-child a {
+        border-bottom: none;
+    }
+
+    .nav-buttons {
+        gap: 10px; /* Reduced gap for small screens */
+    }
+
+    /* Adjust nav-buttons inside the open mobile menu */
+    .nav-links.open .nav-buttons { /* This targets the buttons when menu is open */
+        flex-direction: column;
+        width: 100%;
+        margin-top: 30px;
+        align-items: center; /* Center buttons horizontally */
+        gap: 15px;
+    }
+    .nav-links.open .nav-buttons .btn {
+        width: 80%; /* Make buttons wider */
+        max-width: 250px;
+    }
+    .nav-links.open .theme-toggle {
+        margin: 10px 0; /* Centered margin */
     }
 
 
