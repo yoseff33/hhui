@@ -28,43 +28,37 @@ window.addEventListener('scroll', function() {
 // Mobile Menu Toggle (إصلاح شامل)
 // -------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-    const mobileToggleButton = document.querySelector('.mobile-toggle'); // زر الهامبرغر في الهيدر (العنصر الوحيد المتحكم)
-    const mobileNavMenu = document.querySelector('.nav-links'); // القائمة نفسها (نفس nav-links الديسكتوب، لكن تنسيقاتها تتغير للجوال)
+    const headerMobileToggleButton = document.querySelector('header .mobile-toggle'); // زر الهامبرغر في الهيدر
+    const mobileNavMenu = document.querySelector('.nav-links'); // القائمة الجانبية نفسها (هي نفس nav-links لسطح المكتب)
     const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay'); // الطبقة الشفافة التي تغطي المحتوى
 
     // وظيفة لفتح القائمة
     const openMobileMenu = () => {
-        if (mobileNavMenu && mobileMenuOverlay && mobileToggleButton) {
+        if (mobileNavMenu && mobileMenuOverlay) {
             mobileNavMenu.classList.add('open');
             mobileMenuOverlay.style.display = 'block';
-            document.body.classList.add('no-scroll'); // منع التمرير في الخلفية
-            mobileToggleButton.innerHTML = '<i class="fas fa-times"></i>'; // تغيير الأيقونة إلى X
-            mobileToggleButton.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden'; // منع التمرير في الخلفية
+            if (headerMobileToggleButton) {
+                headerMobileToggleButton.innerHTML = '<i class="fas fa-times"></i>'; // تغيير الأيقونة إلى X
+            }
         }
     };
 
     // وظيفة لإغلاق القائمة
     const closeMobileMenu = () => {
-        if (mobileNavMenu && mobileMenuOverlay && mobileToggleButton) {
+        if (mobileNavMenu && mobileMenuOverlay) {
             mobileNavMenu.classList.remove('open');
             mobileMenuOverlay.style.display = 'none';
-            document.body.classList.remove('no-scroll'); // استعادة التمرير
-            mobileToggleButton.innerHTML = '<i class="fas fa-bars"></i>'; // تغيير الأيقونة إلى هامبرغر
-            mobileToggleButton.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = ''; // استعادة التمرير
+            if (headerMobileToggleButton) {
+                headerMobileToggleButton.innerHTML = '<i class="fas fa-bars"></i>'; // تغيير الأيقونة إلى هامبرغر
+            }
         }
     };
 
-    // الاستماع لزر الهامبرغر في الهيدر لفتح/إغلاق القائمة
-    if (mobileToggleButton) {
-        mobileToggleButton.addEventListener('click', (event) => {
-            event.stopPropagation(); // منع النقر من الانتشار إلى المستند وإغلاق القائمة فورًا
-            const isOpen = mobileNavMenu.classList.contains('open');
-            if (isOpen) {
-                closeMobileMenu();
-            } else {
-                openMobileMenu();
-            }
-        });
+    // الاستماع لزر الهامبرغر في الهيدر لفتح القائمة
+    if (headerMobileToggleButton) {
+        headerMobileToggleButton.addEventListener('click', openMobileMenu);
     }
 
     // الاستماع للنقر على الطبقة الشفافة لإغلاق القائمة
@@ -73,16 +67,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // إغلاق القائمة عند النقر على أي رابط داخلها
+    // (يجب أن تستمع لروابط التنقل الموجودة داخل القائمة)
     if (mobileNavMenu) {
-        mobileNavMenu.querySelectorAll('li a').forEach(link => {
+        mobileNavMenu.querySelectorAll('li a').forEach(link => { // Targeting 'a' tags inside 'li' inside 'nav-links'
             link.addEventListener('click', closeMobileMenu);
         });
     }
 
     // عند تغيير حجم الشاشة من الجوال إلى الديسكتوب، تأكد من إغلاق القائمة الجانبية
     window.addEventListener('resize', () => {
-        // إذا كان حجم الشاشة أكبر من breakpoint الجوال والقائمة مفتوحة
-        if (window.innerWidth > 992 && mobileNavMenu.classList.contains('open')) {
+        if (window.innerWidth > 992) { // 992px هو breakpoint الجوال في CSS
             closeMobileMenu();
         }
     });
@@ -108,23 +102,25 @@ function updateNavbarBasedOnLoginStatus() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     const userType = localStorage.getItem('userType');
 
-    // Desktop Nav Links and Buttons
-    const desktopNavLinksContainer = document.querySelector('.navbar > .nav-links');
+    // Desktop Nav Links
+    const desktopNavLinksContainer = document.querySelector('.navbar > .nav-links'); // Desktop nav-links UL
     const desktopAuthLinks = desktopNavLinksContainer ? desktopNavLinksContainer.querySelectorAll('.auth-link') : [];
     const desktopGuestButton = document.getElementById('nav-guest-button');
     const desktopUserProfilePlaceholder = document.getElementById('nav-user-profile-placeholder');
 
-    // Mobile Nav Links (these are the same nav-links elements, but controlled by mobile menu CSS)
+    // Mobile Nav Links (these are the same nav-links elements, but controlled differently)
+    const mobileNavLinksContainer = document.querySelector('.nav-links.mobile-nav-menu'); // Mobile menu UL (same as desktop nav-links but styled differently)
     const mobileAuthLinks = mobileNavLinksContainer ? mobileNavLinksContainer.querySelectorAll('.auth-link') : [];
-    const mobileGuestButtonInNavButtons = document.querySelector('.nav-buttons .guest-only'); // This button is duplicated for mobile
-    const mobileUserProfilePlaceholderInNavButtons = document.querySelector('.nav-buttons #nav-user-profile-placeholder'); // This placeholder for mobile
+    const mobileGuestButton = document.getElementById('mobile-nav-guest-button');
+    const mobileUserProfilePlaceholder = document.getElementById('mobile-nav-user-profile-placeholder');
+
 
     if (isLoggedIn) {
         // Hide guest button on desktop and mobile
         if (desktopGuestButton) desktopGuestButton.style.display = 'none';
-        if (mobileGuestButtonInNavButtons) mobileGuestButtonInNavButtons.style.display = 'none';
+        if (mobileGuestButton) mobileGuestButton.style.display = 'none';
 
-        // Show user profile placeholder on desktop
+        // Show user profile placeholder on desktop and mobile
         if (desktopUserProfilePlaceholder) {
             desktopUserProfilePlaceholder.innerHTML = `
                 <a href="#" class="btn btn-outline" onclick="logoutUser()" style="margin-right: 10px;">
@@ -137,46 +133,53 @@ function updateNavbarBasedOnLoginStatus() {
             desktopUserProfilePlaceholder.style.display = 'flex';
             desktopUserProfilePlaceholder.style.alignItems = 'center';
         }
-        
-        // No separate mobile profile placeholder needed, desktop one is conditionally displayed/hidden by CSS
-        // Mobile menu CSS will handle its display within the overall nav-links structure
-        
-        // Hide all auth links first (desktop)
-        desktopAuthLinks.forEach(link => link.style.display = 'none');
-        
-        // Then show appropriate links based on user type (desktop)
-        if (userType === 'owner') {
-            if (document.getElementById('nav-owner-dashboard')) document.getElementById('nav-owner-dashboard').style.display = 'block';
-            if (document.getElementById('nav-add-car')) document.getElementById('nav-add-car').style.display = 'block';
-        } else if (userType === 'renter') {
-            if (document.getElementById('nav-renter-dashboard')) document.getElementById('nav-renter-dashboard').style.display = 'block';
+        if (mobileUserProfilePlaceholder) {
+             mobileUserProfilePlaceholder.innerHTML = `
+                <a href="#" class="btn btn-outline" onclick="logoutUser()" style="width: 100%; margin-bottom: 10px;">
+                    <i class="fas fa-sign-out-alt"></i> خروج
+                </a>
+                <a href="${userType === 'owner' ? 'dashboard-owner.html' : 'dashboard-renter.html'}" class="btn btn-secondary" style="width: 100%;">
+                    <i class="fas fa-user-circle"></i> ملفي
+                </a>
+            `;
+            mobileUserProfilePlaceholder.style.display = 'flex';
+            mobileUserProfilePlaceholder.style.flexDirection = 'column';
+            mobileUserProfilePlaceholder.style.alignItems = 'center';
         }
 
-        // Manage visibility of auth links for mobile nav (same nav-links element, different display controlled by CSS)
-        // These links are just elements within the main .nav-links, their display in mobile view is controlled by CSS media queries
-        // and a specific class `show-mobile` which we will now remove.
-        // Instead, the CSS rules for .nav-links li a (in mobile media query) will control their display based on `auth-link` class
-        mobileAuthLinks.forEach(link => {
-            const linkId = link.id; 
+
+        // Manage visibility of auth links for desktop
+        desktopAuthLinks.forEach(link => {
+            const linkId = link.id;
             if (userType === 'owner' && (linkId === 'nav-owner-dashboard' || linkId === 'nav-add-car')) {
-                link.style.display = 'block'; // Make it visible if it's the right link type
+                link.style.display = 'block';
             } else if (userType === 'renter' && linkId === 'nav-renter-dashboard') {
                 link.style.display = 'block';
-            } else if (link.classList.contains('auth-link')) {
-                link.style.display = 'none'; // Hide other auth links
+            } else {
+                link.style.display = 'none';
+            }
+        });
+
+        // Manage visibility of auth links for mobile
+        mobileAuthLinks.forEach(link => {
+            const linkId = link.id;
+             if (userType === 'owner' && (linkId === 'mobile-nav-owner-dashboard' || linkId === 'mobile-nav-add-car')) {
+                link.style.display = 'block';
+            } else if (userType === 'renter' && linkId === 'mobile-nav-renter-dashboard') {
+                link.style.display = 'block';
+            } else {
+                link.style.display = 'none';
             }
         });
 
 
     } else {
-        // Hide user profile placeholder on desktop
+        // Hide user profile placeholder on desktop and mobile
         if (desktopGuestButton) desktopGuestButton.style.display = 'flex';
-        if (desktopUserProfilePlaceholder) desktopUserProfilePlaceholder.style.display = 'none';
-        
-        // Hide user profile placeholder on mobile (guest button will be visible instead)
-        if (mobileGuestButtonInNavButtons) mobileGuestButtonInNavButtons.style.display = 'flex';
-        if (mobileUserProfilePlaceholderInNavButtons) mobileUserProfilePlaceholderInNavButtons.style.display = 'none';
+        if (mobileGuestButton) mobileGuestButton.style.display = 'flex';
 
+        if (desktopUserProfilePlaceholder) desktopUserProfilePlaceholder.style.display = 'none';
+        if (mobileUserProfilePlaceholder) mobileUserProfilePlaceholder.style.display = 'none';
 
         // Hide all auth links on desktop and mobile
         desktopAuthLinks.forEach(link => link.style.display = 'none');
