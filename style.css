@@ -401,7 +401,7 @@ body.dark-mode .nav-links li a.active {
 
 /* Mobile Toggle Button */
 .mobile-toggle {
-    display: none;
+    display: none; /* Hidden by default on desktop */
     background: none;
     border: none;
     font-size: 1.8rem;
@@ -422,38 +422,46 @@ body.dark-mode .mobile-toggle {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 999;
-    display: none;
+    display: none; /* Hidden by default */
 }
 
 /* Mobile Menu Container */
 .mobile-nav-menu {
     position: fixed;
     top: 0;
-    right: -300px;
-    width: 280px;
+    right: -300px; /* Hidden off-screen to the right */
+    width: 280px; /* Width of the mobile menu */
+    max-width: 80%; /* Ensure it doesn't take too much width on very small screens */
     height: 100%;
-    background-color: var(--navbar-bg-light);
+    background-color: var(--navbar-bg-light); /* Match header background */
     box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     transition: right 0.3s ease-in-out;
     padding: 20px;
-    display: flex;
+    display: flex; /* Changed from none to flex/block for JS to control visibility */
     flex-direction: column;
 }
 body.dark-mode .mobile-nav-menu {
     background-color: var(--navbar-bg-dark);
 }
 
+.mobile-nav-menu:not(.open) {
+    display: none; /* Hide when not open, JS will make it flex when needed */
+}
 .mobile-nav-menu.open {
-    right: 0;
+    right: 0; /* Slide in */
+    display: flex; /* Ensure it's displayed when open */
 }
 
+/* Styles for links and buttons INSIDE the mobile menu */
 .mobile-nav-menu .nav-links {
+    display: flex; /* Ensure links are displayed when menu is open */
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
     margin-top: 30px;
     width: 100%;
+    list-style: none; /* Ensure no bullet points */
 }
 
 .mobile-nav-menu .nav-links li {
@@ -478,6 +486,7 @@ body.dark-mode .mobile-nav-menu .nav-links li a {
 }
 
 .mobile-nav-menu .nav-buttons {
+    display: flex; /* Ensure buttons are displayed */
     flex-direction: column;
     width: 100%;
     margin-top: 30px;
@@ -497,13 +506,22 @@ body.dark-mode .mobile-nav-menu .nav-links li a {
 
 
 /* Links visibility based on login status */
-.nav-links .auth-link {
+.nav-links .auth-link { /* These are for desktop nav-links */
     display: none;
 }
-.nav-buttons .guest-only {
+.mobile-nav-menu .nav-links .auth-link { /* These are for mobile nav-links */
+    display: none; /* Ensure they are hidden by default in mobile menu too */
+}
+.nav-buttons .guest-only { /* For desktop guest button */
     display: flex;
 }
-.nav-buttons #nav-user-profile-placeholder {
+.nav-buttons #nav-user-profile-placeholder { /* For desktop user profile */
+    display: none;
+}
+.mobile-nav-menu .nav-buttons .guest-only { /* For mobile guest button */
+    display: flex; /* Ensure it's visible by default in mobile menu too */
+}
+.mobile-nav-menu .nav-buttons #mobile-nav-user-profile-placeholder { /* For mobile user profile */
     display: none;
 }
 
@@ -708,6 +726,7 @@ body.dark-mode .car-card:hover {
     height: 250px;
     overflow: hidden;
     position: relative;
+    transform-style: preserve-3d;
 }
 
 .car-img img {
@@ -715,10 +734,11 @@ body.dark-mode .car-card:hover {
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s;
+    transform: translateZ(0);
 }
 
 .car-card:hover .car-img img {
-    transform: scale(1.05);
+    transform: scale(1.05) translateZ(5px);
 }
 
 .car-badge {
@@ -850,6 +870,8 @@ body.dark-mode .recently-viewed-bar {
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
+    flex-wrap: wrap;
+    padding: 0 10px;
 }
 
 .recent-car-thumb {
@@ -1132,10 +1154,10 @@ body.dark-mode .dot {
 
 .stat-card {
     background: var(--light);
+    border-left: 4px solid var(--accent);
     border-radius: var(--border-radius);
     padding: 25px;
     text-align: center;
-    border-left: 4px solid var(--accent);
     box-shadow: 0 5px 15px var(--shadow-color-light);
 }
 body.dark-mode .stat-card {
@@ -1906,12 +1928,12 @@ body.dark-mode .popup-car-details p {
 @media (max-width: 992px) {
     /* Navbar Mobile Specific Styles */
     .nav-links {
-        display: none; /* Hide desktop nav links */
+        display: none; /* Hidden on desktop, will be explicitly shown by JS when menu is open */
         position: fixed;
         top: 0;
-        right: -300px; /* Hidden off-screen */
-        width: 280px; /* Adjust width as needed */
-        max-width: 80%; /* Max width relative to viewport */
+        right: -300px; /* Hidden off-screen to the right */
+        width: 280px; /* Width of the mobile menu */
+        max-width: 80%; /* Ensure it doesn't take too much width on very small screens */
         height: 100%;
         background-color: var(--navbar-bg-light);
         box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
@@ -1927,6 +1949,7 @@ body.dark-mode .popup-car-details p {
     }
     .nav-links.open {
         right: 0;
+        display: flex; /* IMPORTANT: Show the menu content when open */
     }
     .nav-links li {
         width: 100%;
@@ -1950,7 +1973,7 @@ body.dark-mode .popup-car-details p {
         gap: 10px;
     }
     .mobile-toggle {
-        display: block;
+        display: block; /* Show mobile menu button */
     }
     /* Overlay for mobile menu */
     .mobile-menu-overlay {
@@ -2121,7 +2144,7 @@ body.dark-mode .popup-car-details p {
         font-size: 1.8rem;
     }
     .loyalty-promo p {
-        font-size: 1rem;
+        font-size: 1.0rem;
     }
     .recently-viewed-bar {
         padding: 15px 0;
