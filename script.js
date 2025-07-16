@@ -476,8 +476,7 @@ function initMap() {
     const qassimUniversityCoords = [26.345, 43.769];
     const defaultZoom = 14;
 
-    // Check if map container exists and map is not already initialized
-    // Ensure Leaflet library (L) is loaded before trying to use it
+    // Check if map container exists and Leaflet library (L) is loaded, and map is not already initialized
     if (document.getElementById('mapid') && typeof L !== 'undefined' && !map) {
         map = L.map('mapid').setView(qassimUniversityCoords, defaultZoom);
 
@@ -563,12 +562,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if mapid exists on current page before initializing map
     // Ensure Leaflet is loaded before calling initMap
     if (document.getElementById('mapid')) {
-        // Delay initMap to ensure Leaflet library is fully loaded.
-        // This is a common workaround for CDN loading issues.
+        // Add a small delay for Leaflet to ensure the script is fully loaded
         setTimeout(() => {
-            initMap();
-            setupMapFilters();
-        }, 100); // Small delay
+            if (typeof L !== 'undefined') { // Final check for Leaflet
+                initMap();
+                setupMapFilters();
+            } else {
+                console.error("Leaflet library (L) is not defined. Map initialization failed.");
+            }
+        }, 100);
     }
 });
 
