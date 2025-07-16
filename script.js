@@ -24,52 +24,58 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Mobile Menu Toggle
+// -------------------------------------
+// Mobile Menu Toggle (إصلاح شامل)
+// -------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-    const mobileToggleButtons = document.querySelectorAll('.mobile-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    const overlay = document.querySelector('.mobile-menu-overlay');
+    const headerMobileToggleButton = document.querySelector('header .mobile-toggle'); // زر الهامبرغر في الهيدر
+    const mobileNavMenu = document.querySelector('.mobile-nav-menu'); // القائمة الجانبية نفسها
+    const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay'); // الطبقة الشفافة التي تغطي المحتوى
+    const mobileNavMenuCloseButton = document.querySelector('.mobile-nav-menu .mobile-toggle'); // زر الإغلاق داخل القائمة
 
-    if (mobileToggleButtons.length > 0 && navLinks && overlay) {
-        mobileToggleButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const isOpen = navLinks.classList.toggle('open');
-                overlay.style.display = isOpen ? 'block' : 'none';
-                document.body.style.overflow = isOpen ? 'hidden' : ''; // Disable scroll when menu is open
-
-                // Update the icon of the main mobile toggle button in header
-                const headerToggle = document.querySelector('header .mobile-toggle');
-                if (headerToggle) {
-                    headerToggle.innerHTML = isOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-                }
-            });
-        });
-
-        overlay.addEventListener('click', () => {
-            navLinks.classList.remove('open');
-            overlay.style.display = 'none';
-            document.body.style.overflow = '';
-            // Reset the main mobile toggle button icon in header
-            const headerToggle = document.querySelector('header .mobile-toggle');
-            if (headerToggle) {
-                headerToggle.innerHTML = '<i class="fas fa-bars"></i>';
+    // وظيفة لفتح القائمة
+    const openMobileMenu = () => {
+        if (mobileNavMenu && mobileMenuOverlay) {
+            mobileNavMenu.classList.add('open');
+            mobileMenuOverlay.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // منع التمرير في الخلفية
+            if (headerMobileToggleButton) {
+                headerMobileToggleButton.innerHTML = '<i class="fas fa-times"></i>'; // تغيير الأيقونة إلى X
             }
-        });
+        }
+    };
 
-        // Close menu when a link is clicked
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (navLinks.classList.contains('open')) {
-                    navLinks.classList.remove('open');
-                    overlay.style.display = 'none';
-                    document.body.style.overflow = '';
-                    // Reset the main mobile toggle button icon in header
-                    const headerToggle = document.querySelector('header .mobile-toggle');
-                    if (headerToggle) {
-                        headerToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                    }
-                }
-            });
+    // وظيفة لإغلاق القائمة
+    const closeMobileMenu = () => {
+        if (mobileNavMenu && mobileMenuOverlay) {
+            mobileNavMenu.classList.remove('open');
+            mobileMenuOverlay.style.display = 'none';
+            document.body.style.overflow = ''; // استعادة التمرير
+            if (headerMobileToggleButton) {
+                headerMobileToggleButton.innerHTML = '<i class="fas fa-bars"></i>'; // تغيير الأيقونة إلى هامبرغر
+            }
+        }
+    };
+
+    // الاستماع لزر الهامبرغر في الهيدر لفتح القائمة
+    if (headerMobileToggleButton) {
+        headerMobileToggleButton.addEventListener('click', openMobileMenu);
+    }
+
+    // الاستماع لزر الإغلاق داخل القائمة
+    if (mobileNavMenuCloseButton) {
+        mobileNavMenuCloseButton.addEventListener('click', closeMobileMenu);
+    }
+
+    // الاستماع للنقر على الطبقة الشفافة لإغلاق القائمة
+    if (mobileMenuOverlay) {
+        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+    }
+
+    // إغلاق القائمة عند النقر على أي رابط داخلها
+    if (mobileNavMenu) {
+        mobileNavMenu.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
         });
     }
 });
@@ -103,7 +109,7 @@ function updateNavbarBasedOnLoginStatus() {
     const desktopGuestButton = document.getElementById('nav-guest-button');
     const desktopUserProfilePlaceholder = document.getElementById('nav-user-profile-placeholder');
 
-    // Mobile Nav Links
+    // Mobile Nav Links (these are actual links in the mobile menu)
     const mobileOwnerDashboardLink = document.getElementById('mobile-nav-owner-dashboard');
     const mobileRenterDashboardLink = document.getElementById('mobile-nav-renter-dashboard');
     const mobileAddCarLink = document.getElementById('mobile-nav-add-car');
@@ -250,7 +256,7 @@ function updateLoyaltyCard(completedRentals) {
 
 function setupThemeToggle() {
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const mobileThemeToggleBtn = document.getElementById('mobile-theme-toggle');
+    const mobileThemeToggleBtn = document.getElementById('mobile-theme-toggle'); // Get mobile toggle button
 
     const applyTheme = (theme) => {
         document.body.classList.remove('light-mode', 'dark-mode');
@@ -385,6 +391,7 @@ function setupQuiz() {
         let recommendation = "لا يمكننا تحديد سيارة مناسبة بناءً على اختياراتك.";
         let carType = "";
 
+        // Simple quiz logic
         if (answers.passengers === '5' || answers.passengers === '7') {
             if (answers.budget === 'medium' || answers.budget === 'high') {
                 recommendation = "نوصي بسيارة دفع رباعي فسيحة ومريحة لرحلاتك العائلية.";
@@ -470,7 +477,8 @@ function initMap() {
     const defaultZoom = 14;
 
     // Check if map container exists and map is not already initialized
-    if (document.getElementById('mapid') && !map) {
+    // Ensure Leaflet library (L) is loaded before trying to use it
+    if (document.getElementById('mapid') && typeof L !== 'undefined' && !map) {
         map = L.map('mapid').setView(qassimUniversityCoords, defaultZoom);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -553,9 +561,14 @@ document.addEventListener('DOMContentLoaded', () => {
     setupQuiz();
 
     // Check if mapid exists on current page before initializing map
+    // Ensure Leaflet is loaded before calling initMap
     if (document.getElementById('mapid')) {
-        initMap();
-        setupMapFilters();
+        // Delay initMap to ensure Leaflet library is fully loaded.
+        // This is a common workaround for CDN loading issues.
+        setTimeout(() => {
+            initMap();
+            setupMapFilters();
+        }, 100); // Small delay
     }
 });
 
