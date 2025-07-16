@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const headerMobileToggleButton = document.querySelector('header .mobile-toggle'); // زر الهامبرغر في الهيدر
     const mobileNavMenu = document.querySelector('.mobile-nav-menu'); // القائمة الجانبية نفسها
     const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay'); // الطبقة الشفافة التي تغطي المحتوى
-    const mobileNavMenuCloseButton = document.querySelector('.mobile-nav-menu .mobile-toggle'); // زر الإغلاق داخل القائمة
+    const mobileNavMenuCloseButton = mobileNavMenu ? mobileNavMenu.querySelector('.mobile-toggle') : null; // زر الإغلاق داخل القائمة
 
     // وظيفة لفتح القائمة
     const openMobileMenu = () => {
@@ -562,15 +562,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if mapid exists on current page before initializing map
     // Ensure Leaflet is loaded before calling initMap
     if (document.getElementById('mapid')) {
-        // Add a small delay for Leaflet to ensure the script is fully loaded
+        // Add a small delay for Leaflet to ensure the script is fully loaded.
+        // This is a common workaround for CDN loading issues, especially with SRI.
         setTimeout(() => {
             if (typeof L !== 'undefined') { // Final check for Leaflet
                 initMap();
                 setupMapFilters();
             } else {
-                console.error("Leaflet library (L) is not defined. Map initialization failed.");
+                console.error("Leaflet library (L) is not defined. Map initialization failed. Check network tab for Leaflet JS/CSS loading errors.");
             }
-        }, 100);
+        }, 100); // 100ms delay
     }
 });
 
