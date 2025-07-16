@@ -351,8 +351,8 @@ header {
     display: flex;
     list-style: none;
     gap: 35px;
-    margin: 0; /* Remove default margin from ul */
-    padding: 0; /* Remove default padding from ul */
+    margin: 0;
+    padding: 0;
 }
 
 .nav-links li a {
@@ -432,16 +432,16 @@ body.dark-mode .mobile-toggle {
 .mobile-nav-menu {
     position: fixed;
     top: 0;
-    right: -300px; /* Hidden off-screen to the right */
-    width: 280px; /* Width of the mobile menu */
-    max-width: 80%; /* Ensure it doesn't take too much width on very small screens */
+    right: -100%; /* Initially off-screen to the right, using % for responsiveness */
+    width: 100%; /* Full width of the screen */
+    max-width: 320px; /* Max width to ensure it looks good on tablets in portrait */
     height: 100%;
-    background-color: var(--navbar-bg-light); /* Match header background */
+    background-color: var(--navbar-bg-light);
     box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     transition: right 0.3s ease-in-out;
     padding: 20px;
-    display: flex; /* Always display flex so content is stacked, but hide with right: -300px */
+    display: flex; /* Always display flex so content is stacked, but hide with right: -100% */
     flex-direction: column;
 }
 body.dark-mode .mobile-nav-menu {
@@ -460,8 +460,8 @@ body.dark-mode .mobile-nav-menu {
     gap: 15px;
     margin-top: 30px;
     width: 100%;
-    list-style: none; /* Ensure no bullet points */
-    padding: 0; /* Remove default padding for ul inside mobile menu */
+    list-style: none;
+    padding: 0;
 }
 
 .mobile-nav-menu .nav-links li {
@@ -486,7 +486,7 @@ body.dark-mode .mobile-nav-menu .nav-links li a {
 }
 
 .mobile-nav-menu .nav-buttons {
-    display: flex; /* Ensure buttons are displayed */
+    display: flex;
     flex-direction: column;
     width: 100%;
     margin-top: 30px;
@@ -510,7 +510,7 @@ body.dark-mode .mobile-nav-menu .nav-links li a {
     display: none;
 }
 .mobile-nav-menu .nav-links .auth-link { /* These are for mobile nav-links */
-    display: none; /* Ensure they are hidden by default in mobile menu too */
+    display: none; /* Hidden by default in mobile menu too, controlled by JS */
 }
 .nav-buttons .guest-only { /* For desktop guest button */
     display: flex;
@@ -519,7 +519,7 @@ body.dark-mode .mobile-nav-menu .nav-links li a {
     display: none;
 }
 .mobile-nav-menu .nav-buttons .guest-only { /* For mobile guest button */
-    display: flex; /* Ensure it's visible by default in mobile menu too */
+    display: flex;
 }
 .mobile-nav-menu .nav-buttons #mobile-nav-user-profile-placeholder { /* For mobile user profile */
     display: none;
@@ -1950,9 +1950,9 @@ body.dark-mode .popup-car-details p {
         display: none; /* Hidden by default */
         position: fixed;
         top: 0;
-        right: -300px; /* Off-screen */
-        width: 280px;
-        max-width: 80%;
+        right: -100%; /* Off-screen (full width) */
+        width: 100%; /* Full width of the screen */
+        max-width: 320px; /* Max width to ensure it looks good on tablets in portrait */
         height: 100%;
         background-color: var(--navbar-bg-light);
         box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
