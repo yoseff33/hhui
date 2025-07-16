@@ -444,7 +444,7 @@ body.dark-mode .mobile-toggle {
     z-index: 1000;
     transition: right 0.3s ease-in-out; /* Transition from right */
     padding: 20px;
-    display: flex; /* Always flex for stacking content */
+    display: flex; /* Always display flex for stacking content */
     flex-direction: column;
     justify-content: flex-start; /* Align content to top */
     align-items: flex-start; /* Align contents to start (right side for RTL) */
@@ -455,7 +455,7 @@ body.dark-mode .mobile-nav-menu {
 }
 
 .mobile-nav-menu.open {
-    right: 0; /* Slide in from right */
+    right: 0; /* Slide in */
 }
 
 /* Styles for elements INSIDE the mobile menu */
@@ -506,6 +506,7 @@ body.dark-mode .mobile-nav-menu .close-btn {
 
 .mobile-nav-menu .nav-links-inner li {
     width: 100%;
+    text-align: right; /* Right-align text for RTL */
     margin-bottom: 0;
 }
 
@@ -543,10 +544,10 @@ body.dark-mode .mobile-nav-menu .nav-buttons-inner {
     width: 100%; /* Buttons take full width of container */
     margin-bottom: 0;
 }
-.mobile-nav-menu .theme-toggle {
+.mobile-nav-menu .theme-toggle { /* Theme toggle button specifically inside mobile menu */
     width: auto;
     text-align: right; /* Right align the icon */
-    margin: 10px 0;
+    margin: 10px 0; /* Adjust margin */
 }
 
 
@@ -567,18 +568,7 @@ body.dark-mode .mobile-nav-menu .nav-buttons-inner {
 .nav-buttons #nav-user-profile-placeholder { /* For desktop user profile */
     display: none;
 }
-
-/* Adjust button spacing in desktop nav-buttons */
-.navbar .nav-buttons > .btn,
-.navbar .nav-buttons > #nav-user-profile-placeholder > .btn,
-.navbar .nav-buttons > .theme-toggle {
-    margin-right: 15px; /* Add space between desktop buttons */
-}
-.navbar .nav-buttons > .btn:last-child,
-.navbar .nav-buttons > #nav-user-profile-placeholder > .btn:last-child,
-.navbar .nav-buttons > .theme-toggle:last-child { /* Fix spacing for last item */
-    margin-right: 0;
-}
+/* No separate mobile guest/profile buttons in main header, they're moved to mobile-nav-menu */
 
 
 /* Hero Section */
@@ -2020,16 +2010,16 @@ body.dark-mode .popup-car-details p {
         margin-left: 10px; /* Space after the last button */
     }
     .navbar .nav-buttons > .guest-only {
-        margin-right: 0; /* Remove right margin from guest button */
+        margin-right: 0 !important; /* Remove right margin from guest button */
     }
     .navbar .nav-buttons > #nav-user-profile-placeholder {
-        margin-right: 0;
+        margin-right: 0 !important;
     }
 
 
     /* Mobile Nav Menu Container (Slides from the side - Right) */
     .nav-links { /* This is the element that becomes the mobile menu */
-        display: flex; /* Always flex for stacking content */
+        display: none; /* Hidden by default */
         position: fixed;
         top: 0;
         right: -100%; /* Start completely off-screen to the right (use % for responsiveness) */
@@ -2051,6 +2041,7 @@ body.dark-mode .popup-car-details p {
     }
     .nav-links.open {
         right: 0; /* Slide into view */
+        display: flex; /* Display as flex when open */
     }
 
     /* Force desktop nav-links to be hidden always */
@@ -2093,7 +2084,7 @@ body.dark-mode .popup-car-details p {
     }
     
     /* Nav buttons inside mobile menu - these are from the desktop structure, just repositioned */
-    .nav-links .nav-buttons {
+    .nav-links .nav-buttons { /* This targets the actual nav-buttons group inside the mobile menu */
         flex-direction: column;
         width: 100%;
         margin-top: 30px;
@@ -2110,7 +2101,7 @@ body.dark-mode .popup-car-details p {
         margin-right: 0 !important; /* Override desktop margin */
         margin-left: 0 !important; /* Override desktop margin */
     }
-    .nav-links .theme-toggle {
+    .nav-links .nav-buttons .theme-toggle {
         width: 100%;
         text-align: right;
         margin: 0 !important; /* Remove specific desktop margins */
