@@ -28,35 +28,43 @@ window.addEventListener('scroll', function() {
 // Mobile Menu Toggle (إصلاح شامل)
 // -------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-    const headerMobileToggleButton = document.querySelector('header .mobile-toggle'); // زر الهامبرغر في الهيدر
-    const mobileNavMenu = document.querySelector('.nav-links'); // القائمة الجانبية نفسها (هي نفس nav-links لسطح المكتب)
+    const mobileToggleButton = document.querySelector('.mobile-toggle'); // زر الهامبرغر في الهيدر
+    const mobileNavMenu = document.querySelector('.nav-links'); // القائمة نفسها التي ستظهر على الجوال
     const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay'); // الطبقة الشفافة التي تغطي المحتوى
-    // زر الإغلاق داخل القائمة الجانبية هو نفسه زر الهامبرغر في الهيدر، لذا لا حاجة لتعريفه مرة أخرى.
-    // يتم التحكم في أيقونته بواسطة JS based on menu state.
 
     // وظيفة لفتح القائمة
     const openMobileMenu = () => {
-        if (mobileNavMenu && mobileMenuOverlay && headerMobileToggleButton) {
+        if (mobileNavMenu && mobileMenuOverlay && mobileToggleButton) {
             mobileNavMenu.classList.add('open');
             mobileMenuOverlay.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // منع التمرير في الخلفية
-            headerMobileToggleButton.innerHTML = '<i class="fas fa-times"></i>'; // تغيير أيقونة الهامبرغر إلى X
+            document.body.classList.add('no-scroll'); // منع التمرير في الخلفية
+            mobileToggleButton.innerHTML = '<i class="fas fa-times"></i>'; // تغيير الأيقونة إلى X
+            mobileToggleButton.setAttribute('aria-expanded', 'true');
         }
     };
 
     // وظيفة لإغلاق القائمة
     const closeMobileMenu = () => {
-        if (mobileNavMenu && mobileMenuOverlay && headerMobileToggleButton) {
+        if (mobileNavMenu && mobileMenuOverlay && mobileToggleButton) {
             mobileNavMenu.classList.remove('open');
             mobileMenuOverlay.style.display = 'none';
-            document.body.style.overflow = ''; // استعادة التمرير
-            headerMobileToggleButton.innerHTML = '<i class="fas fa-bars"></i>'; // تغيير أيقونة الهامبرغر إلى ☰
+            document.body.classList.remove('no-scroll'); // استعادة التمرير
+            mobileToggleButton.innerHTML = '<i class="fas fa-bars"></i>'; // تغيير الأيقونة إلى هامبرغر
+            mobileToggleButton.setAttribute('aria-expanded', 'false');
         }
     };
 
     // الاستماع لزر الهامبرغر في الهيدر لفتح القائمة
-    if (headerMobileToggleButton) {
-        headerMobileToggleButton.addEventListener('click', openMobileMenu);
+    if (mobileToggleButton) {
+        mobileToggleButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // منع النقر من الانتشار إلى المستند وإغلاق القائمة فورًا
+            const isOpen = mobileNavMenu.classList.contains('open');
+            if (isOpen) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
     }
 
     // الاستماع للنقر على الطبقة الشفافة لإغلاق القائمة
@@ -65,16 +73,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // إغلاق القائمة عند النقر على أي رابط داخلها
-    // (يجب أن تستمع لروابط التنقل الموجودة داخل القائمة)
     if (mobileNavMenu) {
-        mobileNavMenu.querySelectorAll('li a').forEach(link => { // Targeting 'a' tags inside 'li' inside 'nav-links'
+        mobileNavMenu.querySelectorAll('li a').forEach(link => {
             link.addEventListener('click', closeMobileMenu);
         });
     }
 
     // عند تغيير حجم الشاشة من الجوال إلى الديسكتوب، تأكد من إغلاق القائمة الجانبية
     window.addEventListener('resize', () => {
-        if (window.innerWidth > 992) { // 992px هو breakpoint الجوال في CSS
+        if (window.innerWidth > 992 && mobileNavMenu.classList.contains('open')) {
             closeMobileMenu();
         }
     });
@@ -107,18 +114,19 @@ function updateNavbarBasedOnLoginStatus() {
     const desktopUserProfilePlaceholder = document.getElementById('nav-user-profile-placeholder');
 
     // Mobile Nav Links (these are the same nav-links elements, but controlled differently)
-    const mobileNavLinksContainer = document.querySelector('.nav-links'); // Now it's the main nav-links, used as mobile menu
+    const mobileNavLinksContainer = document.querySelector('.nav-links'); // This is the UL that serves as mobile menu
     const mobileAuthLinks = mobileNavLinksContainer ? mobileNavLinksContainer.querySelectorAll('.auth-link') : [];
-    const mobileGuestButton = document.getElementById('mobile-nav-guest-button'); // Guest button inside mobile menu
-    const mobileUserProfilePlaceholder = document.getElementById('mobile-nav-user-profile-placeholder'); // User profile inside mobile menu
-
+    
+    // Check if guest button exists in the main desktop nav-buttons
+    const mobileGuestButtonInNavButtons = document.querySelector('.nav-buttons .guest-only');
+    const mobileUserProfilePlaceholderInNavButtons = document.querySelector('.nav-buttons #nav-user-profile-placeholder');
 
     if (isLoggedIn) {
-        // Hide guest button on desktop and mobile
+        // Hide guest button on desktop
         if (desktopGuestButton) desktopGuestButton.style.display = 'none';
-        if (mobileGuestButton) mobileGuestButton.style.display = 'none';
+        if (mobileGuestButtonInNavButtons) mobileGuestButtonInNavButtons.style.display = 'none'; // Also hide it if it's there on mobile
 
-        // Show user profile placeholder on desktop and mobile
+        // Show user profile placeholder on desktop and prepare it for mobile
         if (desktopUserProfilePlaceholder) {
             desktopUserProfilePlaceholder.innerHTML = `
                 <a href="#" class="btn btn-outline" onclick="logoutUser()" style="margin-right: 10px;">
@@ -131,42 +139,31 @@ function updateNavbarBasedOnLoginStatus() {
             desktopUserProfilePlaceholder.style.display = 'flex';
             desktopUserProfilePlaceholder.style.alignItems = 'center';
         }
-        if (mobileUserProfilePlaceholder) {
-             mobileUserProfilePlaceholder.innerHTML = `
-                <a href="#" class="btn btn-outline" onclick="logoutUser()" style="width: 100%; margin-bottom: 10px;">
-                    <i class="fas fa-sign-out-alt"></i> خروج
-                </a>
-                <a href="${userType === 'owner' ? 'dashboard-owner.html' : 'dashboard-renter.html'}" class="btn btn-secondary" style="width: 100%;">
-                    <i class="fas fa-user-circle"></i> ملفي
-                </a>
-            `;
-            mobileUserProfilePlaceholder.style.display = 'flex';
-            mobileUserProfilePlaceholder.style.flexDirection = 'column';
-            mobileUserProfilePlaceholder.style.alignItems = 'center';
+        // Mobile menu also uses this placeholder if it exists, no need for separate mobile-nav-user-profile-placeholder
+        // as the single desktop element is repositioned via CSS for mobile display
+        if (mobileUserProfilePlaceholderInNavButtons) mobileUserProfilePlaceholderInNavButtons.style.display = 'flex';
+        
+
+        // Hide all auth links first (desktop)
+        desktopAuthLinks.forEach(link => link.style.display = 'none');
+        
+        // Then show appropriate links based on user type (desktop)
+        if (userType === 'owner') {
+            if (document.getElementById('nav-owner-dashboard')) document.getElementById('nav-owner-dashboard').style.display = 'block';
+            if (document.getElementById('nav-add-car')) document.getElementById('nav-add-car').style.display = 'block';
+        } else if (userType === 'renter') {
+            if (document.getElementById('nav-renter-dashboard')) document.getElementById('nav-renter-dashboard').style.display = 'block';
         }
 
-
-        // Manage visibility of auth links for desktop
-        desktopAuthLinks.forEach(link => {
-            const linkId = link.id;
-            if (userType === 'owner' && (linkId === 'nav-owner-dashboard' || linkId === 'nav-add-car')) {
-                link.style.display = 'block';
-            } else if (userType === 'renter' && linkId === 'nav-renter-dashboard') {
-                link.style.display = 'block';
-            } else {
-                link.style.display = 'none';
-            }
-        });
-
-        // Manage visibility of auth links for mobile
+        // Manage visibility of auth links for mobile nav (same nav-links element, different display)
         mobileAuthLinks.forEach(link => {
-            const linkId = link.id;
-             if (userType === 'owner' && (linkId === 'mobile-nav-owner-dashboard' || linkId === 'mobile-nav-add-car')) {
-                link.classList.add('show-mobile'); // Add class to show mobile link
-            } else if (userType === 'renter' && linkId === 'mobile-nav-renter-dashboard') {
-                link.classList.add('show-mobile'); // Add class to show mobile link
-            } else {
-                link.classList.remove('show-mobile'); // Hide if not relevant
+            const linkId = link.id; // Assuming auth-link elements have unique IDs like 'nav-owner-dashboard'
+            if (userType === 'owner' && (linkId.includes('owner-dashboard') || linkId.includes('add-car'))) {
+                link.style.display = 'block'; // Make it visible in mobile menu
+            } else if (userType === 'renter' && linkId.includes('renter-dashboard')) {
+                link.style.display = 'block'; // Make it visible in mobile menu
+            } else if (link.classList.contains('auth-link')) { // Hide other auth links
+                link.style.display = 'none';
             }
         });
 
@@ -174,14 +171,15 @@ function updateNavbarBasedOnLoginStatus() {
     } else {
         // Hide user profile placeholder on desktop and mobile
         if (desktopGuestButton) desktopGuestButton.style.display = 'flex';
-        if (mobileGuestButton) mobileGuestButton.style.display = 'flex';
+        if (mobileGuestButtonInNavButtons) mobileGuestButtonInNavButtons.style.display = 'flex'; // Ensure it's visible on mobile
 
         if (desktopUserProfilePlaceholder) desktopUserProfilePlaceholder.style.display = 'none';
-        if (mobileUserProfilePlaceholder) mobileUserProfilePlaceholder.style.display = 'none';
+        if (mobileUserProfilePlaceholderInNavButtons) mobileUserProfilePlaceholderInNavButtons.style.display = 'none';
+
 
         // Hide all auth links on desktop and mobile
         desktopAuthLinks.forEach(link => link.style.display = 'none');
-        mobileAuthLinks.forEach(link => link.style.display = 'none'; link.classList.remove('show-mobile');); // Also remove show-mobile
+        mobileAuthLinks.forEach(link => link.style.display = 'none');
     }
 }
 
@@ -264,6 +262,7 @@ function setupThemeToggle() {
         if (themeToggleBtn) {
             themeToggleBtn.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
         }
+        // No separate mobile theme toggle button anymore
     };
 
     const currentTheme = localStorage.getItem('theme') || 'light';
