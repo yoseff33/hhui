@@ -432,22 +432,22 @@ body.dark-mode .mobile-toggle {
     display: none;
 }
 
-/* Mobile Nav Menu Container - Appears from TOP with full width */
+/* Mobile Nav Menu Container - Slides from the side (Right) */
 .mobile-nav-menu {
     position: fixed;
-    top: -100vh; /* Start completely off-screen at the top */
-    left: 0;
-    width: 100%; /* Full width */
-    height: 100vh; /* Full viewport height */
+    top: 0;
+    right: -300px; /* Hidden off-screen to the right */
+    width: 280px; /* Fixed width of the mobile menu */
+    height: 100%; /* Full height of the viewport */
     background-color: var(--navbar-bg-light); /* Match header background */
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    transition: top 0.3s ease-in-out; /* Transition from top */
+    transition: right 0.3s ease-in-out; /* Transition from right */
     padding: 20px;
-    display: flex; /* Always display flex so content is stacked */
+    display: flex; /* Always flex for stacking content */
     flex-direction: column;
     justify-content: flex-start; /* Align content to top */
-    align-items: center; /* Center horizontally */
+    align-items: flex-start; /* Align contents to start (right side for RTL) */
     overflow-y: auto; /* Allow scrolling if content overflows */
 }
 body.dark-mode .mobile-nav-menu {
@@ -455,31 +455,64 @@ body.dark-mode .mobile-nav-menu {
 }
 
 .mobile-nav-menu.open {
-    top: 0; /* Slide into view */
+    right: 0; /* Slide in from right */
 }
 
-/* Styles for links and buttons INSIDE the mobile menu */
-.mobile-nav-menu .nav-links-inner { /* New class for the UL inside mobile menu for better control */
+/* Styles for elements INSIDE the mobile menu */
+.mobile-nav-menu .menu-header { /* New header for mobile menu */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--light-gray);
+    margin-bottom: 20px;
+}
+body.dark-mode .mobile-nav-menu .menu-header {
+    border-bottom-color: var(--border-color-dark);
+}
+
+.mobile-nav-menu .close-btn { /* Close button inside mobile menu */
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--dark);
+    cursor: pointer;
+    order: -1; /* Place at the start in flexbox */
+}
+body.dark-mode .mobile-nav-menu .close-btn {
+    color: var(--text-color-dark);
+}
+
+
+.mobile-nav-menu .logo {
+    margin: 0; /* Override default logo margin */
+}
+.mobile-nav-menu .logo-text {
+    font-size: 1.6rem; /* Slightly smaller logo in mobile menu */
+}
+
+
+.mobile-nav-menu .nav-links-inner { /* Links list inside mobile menu */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 15px; /* Reduced gap for mobile */
-    margin-top: 50px;
+    align-items: flex-start; /* Align to the start (right) */
+    gap: 15px;
     width: 100%;
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .mobile-nav-menu .nav-links-inner li {
     width: 100%;
-    text-align: center;
     margin-bottom: 0;
 }
 
 .mobile-nav-menu .nav-links-inner li a {
     display: block;
-    padding: 15px 0;
-    font-size: 1.4rem;
+    padding: 12px 10px;
+    font-size: 1.2rem;
     color: var(--dark);
     border-bottom: 1px solid var(--light-gray);
 }
@@ -492,22 +525,27 @@ body.dark-mode .mobile-nav-menu .nav-links-inner li a {
     border-bottom: none;
 }
 
-.mobile-nav-menu .nav-buttons-inner { /* New class for buttons container inside mobile menu */
+.mobile-nav-menu .nav-buttons-inner { /* Buttons container inside mobile menu */
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-top: 40px;
-    align-items: center;
-    gap: 15px;
+    margin-top: 30px;
+    align-items: flex-start; /* Align buttons to the start (right) */
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid var(--light-gray);
 }
+body.dark-mode .mobile-nav-menu .nav-buttons-inner {
+    border-top-color: var(--border-color-dark);
+}
+
 .mobile-nav-menu .nav-buttons-inner .btn {
-    width: 80%;
-    max-width: 250px;
+    width: 100%; /* Buttons take full width of container */
     margin-bottom: 0;
 }
-.mobile-nav-menu .theme-toggle { /* Theme toggle button specifically inside mobile menu */
+.mobile-nav-menu .theme-toggle {
     width: auto;
-    text-align: center;
+    text-align: right; /* Right align the icon */
     margin: 10px 0;
 }
 
@@ -516,11 +554,11 @@ body.dark-mode .mobile-nav-menu .nav-links-inner li a {
 .nav-links .auth-link { /* Desktop nav-links */
     display: none;
 }
+.mobile-nav-menu .nav-links-inner .auth-link { /* Mobile nav-links, default hidden */
+    display: none;
+}
 .mobile-nav-menu .nav-links-inner .auth-link.show-mobile { /* Show auth links only on mobile when logged in */
     display: block;
-}
-.mobile-nav-menu .nav-links-inner .auth-link:not(.show-mobile) { /* Hide auth links on mobile if not show-mobile */
-    display: none;
 }
 
 .nav-buttons .guest-only { /* For desktop guest button */
@@ -537,16 +575,9 @@ body.dark-mode .mobile-nav-menu .nav-links-inner li a {
     margin-right: 15px; /* Add space between desktop buttons */
 }
 .navbar .nav-buttons > .btn:last-child,
-.navbar .nav-buttons > #nav-user-profile-placeholder > .btn:last-child {
-    margin-right: 0; /* No margin after the last one */
-}
-
-/* Mobile specific overrides for nav-buttons */
-.mobile-nav-menu .nav-buttons-inner .guest-only {
-    display: flex; /* Show by default in mobile menu */
-}
-.mobile-nav-menu .nav-buttons-inner #mobile-nav-user-profile-placeholder {
-    display: none; /* Hidden by default in mobile menu, JS will control */
+.navbar .nav-buttons > #nav-user-profile-placeholder > .btn:last-child,
+.navbar .nav-buttons > .theme-toggle:last-child { /* Fix spacing for last item */
+    margin-right: 0;
 }
 
 
@@ -1705,7 +1736,7 @@ body.dark-mode .quiz-options label:hover {
     color: var(--text-color-light);
 }
 body.dark-mode .quiz-results {
-    background : #2a2a2a;
+    background: #2a2a2a;
     color: var(--text-color-dark);
 }
 
@@ -1948,7 +1979,7 @@ body.dark-mode .popup-car-details p {
     }
 }
 
-/* لأجهزة الكمبيوتر اللوحية الصغيرة والهواتف الكبيرة (أقل من 992 بكسل) */
+/* لأجهزة الكمبيوتر اللوحية والشاشات الكبيرة (أقل من 992 بكسل) */
 @media (max-width: 992px) {
     body {
         padding-top: 70px; /* Adjust padding for smaller header on mobile */
@@ -1968,34 +1999,58 @@ body.dark-mode .popup-car-details p {
     .mobile-toggle {
         display: block; /* Show mobile menu button */
         font-size: 1.6rem;
-        margin-left: 15px; /* Add some space from login button */
+        margin-left: 0; /* No left margin for the toggle button in mobile header */
     }
 
-    /* Mobile Nav Menu Container (Full-width dropdown/overlay from top) */
+    /* Adjust space for nav-buttons in mobile header */
+    .navbar .nav-buttons {
+        gap: 10px; /* Reduced gap */
+        margin-left: auto; /* Push to the left */
+    }
+    .navbar .nav-buttons > .btn {
+        padding: 8px 15px; /* Smaller padding for button text */
+        font-size: 0.9rem; /* Smaller font size for buttons */
+    }
+    .navbar .nav-buttons > .theme-toggle {
+        margin-left: 10px; /* Space between theme toggle and other buttons */
+        order: 1; /* Move theme toggle to the end */
+    }
+    .navbar .mobile-toggle {
+        order: 2; /* Move toggle button to the very end */
+        margin-left: 10px; /* Space after the last button */
+    }
+    .navbar .nav-buttons > .guest-only {
+        margin-right: 0; /* Remove right margin from guest button */
+    }
+    .navbar .nav-buttons > #nav-user-profile-placeholder {
+        margin-right: 0;
+    }
+
+
+    /* Mobile Nav Menu Container (Slides from the side - Right) */
     .nav-links { /* This is the element that becomes the mobile menu */
-        display: flex; /* Always display flex so content is stacked */
+        display: flex; /* Always flex for stacking content */
         position: fixed;
-        top: -100vh; /* Start completely off-screen at the top */
-        left: 0;
-        width: 100%;
-        height: 100vh; /* Full viewport height */
+        top: 0;
+        right: -100%; /* Start completely off-screen to the right (use % for responsiveness) */
+        width: 100%; /* Full width */
+        max-width: 320px; /* Max width to ensure it looks good on tablets in portrait */
+        height: 100%; /* Full height of the viewport */
         background-color: var(--navbar-bg-light);
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
         z-index: 1000;
-        transition: top 0.3s ease-in-out; /* Transition from top */
-        padding: 80px 20px 20px; /* Padding to account for header, plus side padding */
+        transition: right 0.3s ease-in-out; /* Transition from right */
+        padding: 20px;
         flex-direction: column;
-        align-items: center; /* Center items for full-width menu */
-        list-style: none; /* Remove list style */
-        gap: 20px; /* Increase gap between links */
-        justify-content: flex-start; /* Start content from top */
+        align-items: flex-start; /* Align contents to start (right side for RTL) */
+        justify-content: flex-start;
         overflow-y: auto; /* Allow scrolling if content overflows */
     }
     body.dark-mode .nav-links {
         background-color: var(--navbar-bg-dark);
     }
     .nav-links.open {
-        top: 0; /* Slide into view */
+        right: 0; /* Slide into view */
     }
 
     /* Force desktop nav-links to be hidden always */
@@ -2016,20 +2071,50 @@ body.dark-mode .popup-car-details p {
         z-index: 998;
     }
 
-    /* Adjust nav-buttons inside the open mobile menu */
-    .nav-links.open .nav-buttons { /* This targets the buttons when menu is open */
+    /* Styles for links and buttons INSIDE the mobile menu */
+    .nav-links li { /* List items inside mobile menu */
+        width: 100%;
+        text-align: right; /* Right-align text for RTL */
+        margin-bottom: 0;
+    }
+    .nav-links li a {
+        display: block;
+        padding: 15px 10px;
+        font-size: 1.2rem;
+        color: var(--dark);
+        border-bottom: 1px solid var(--light-gray);
+    }
+    body.dark-mode .nav-links li a {
+        color: var(--text-color-dark);
+        border-bottom-color: var(--border-color-dark);
+    }
+    .nav-links li:last-child a {
+        border-bottom: none;
+    }
+    
+    /* Nav buttons inside mobile menu - these are from the desktop structure, just repositioned */
+    .nav-links .nav-buttons {
         flex-direction: column;
         width: 100%;
-        margin-top: 30px; /* Space after links */
-        align-items: center; /* Center buttons horizontally */
-        gap: 15px;
+        margin-top: 30px;
+        align-items: flex-start; /* Align to start */
+        gap: 10px;
+        border-top: 1px solid var(--light-gray);
+        padding-top: 20px;
     }
-    .nav-links.open .nav-buttons .btn {
-        width: 80%; /* Make buttons wider */
-        max-width: 250px;
+    body.dark-mode .nav-links .nav-buttons {
+        border-top-color: var(--border-color-dark);
     }
-    .nav-links.open .theme-toggle {
-        margin: 10px 0; /* Centered margin */
+    .nav-links .nav-buttons .btn {
+        width: 100%;
+        margin-right: 0 !important; /* Override desktop margin */
+        margin-left: 0 !important; /* Override desktop margin */
+    }
+    .nav-links .theme-toggle {
+        width: 100%;
+        text-align: right;
+        margin: 0 !important; /* Remove specific desktop margins */
+        padding: 10px 0; /* Add some padding */
     }
 
 
@@ -2102,10 +2187,10 @@ body.dark-mode .popup-car-details p {
 /* لأجهزة الكمبيوتر اللوحية الصغيرة (أقل من 768 بكسل) */
 @media (max-width: 768px) {
     body {
-        padding-top: 70px; /* Adjust padding for smaller header on mobile */
+        padding-top: 70px;
     }
     header {
-        padding: 10px 0; /* Smaller header on mobile */
+        padding: 10px 0;
     }
     .logo-icon {
         width: 40px;
