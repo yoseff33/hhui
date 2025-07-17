@@ -19,8 +19,6 @@
     --text-color-dark: #e0e0e0;
     --heading-color-light: var(--dark);
     --heading-color-dark: #ffffff;
-    --footer-bg-light: var(--dark);
-    --footer-bg-dark: #000;
     --navbar-bg-light: rgba(255, 255, 255, 0.98);
     --navbar-bg-dark: rgba(20, 20, 20, 0.98);
     --border-color-light: #e9ecef;
@@ -41,6 +39,7 @@ body {
     overflow-x: hidden;
     font-size: 1.05rem;
     padding-top: 80px; /* Default padding for desktop header height (approx 80px) */
+    padding-bottom: 0; /* Reset default padding-bottom */
 }
 
 body.no-scroll {
@@ -74,7 +73,9 @@ header {
 }
 
 footer {
-    background: var(--footer-bg-light);
+    background: var(--dark); /* Use --dark for footer background */
+    color: white;
+    padding: 80px 0 30px;
 }
 
 .form-control {
@@ -117,7 +118,7 @@ body.dark-mode header {
 }
 
 body.dark-mode footer {
-    background: var(--footer-bg-dark);
+    background: var(--dark); /* Keep --dark for consistency in dark mode */
 }
 
 body.dark-mode .form-control {
@@ -178,6 +179,7 @@ body.dark-mode .footer-contact li {
     cursor: pointer;
     margin-left: 20px;
     transition: var(--transition);
+    flex-shrink: 0; /* Prevent it from shrinking */
 }
 .theme-toggle:hover {
     color: var(--primary);
@@ -300,7 +302,7 @@ section {
     box-shadow: 0 18px 35px rgba(26, 60, 55, 0.2);
 }
 
-/* التنقل - Header */
+/* التنقل - Header (Desktop specific) */
 header {
     background-color: var(--navbar-bg-light);
     box-shadow: 0 5px 20px var(--shadow-color-light);
@@ -353,13 +355,13 @@ header {
 
 /* Desktop Navigation Links */
 .desktop-nav-links { /* Renamed for clarity */
-    display: flex;
+    display: flex; /* Always flex for desktop */
     list-style: none;
     gap: 35px;
     margin: 0;
     padding: 0;
-    flex-grow: 1; /* Allow links to take available space */
-    justify-content: center; /* Center links on desktop */
+    flex-grow: 1;
+    justify-content: center;
 }
 
 .desktop-nav-links li a {
@@ -407,22 +409,22 @@ body.dark-mode .desktop-nav-links li a.active {
     display: flex;
     gap: 20px;
     align-items: center;
-    flex-shrink: 0; /* Prevent buttons from shrinking */
+    flex-shrink: 0;
 }
 
-/* Mobile Toggle Button (hidden on desktop) */
-.mobile-toggle {
+/* Mobile Toggle Button (Desktop: hidden) */
+.mobile-toggle-btn { /* Renamed for clarity */
     display: none; /* Hidden by default on desktop */
     background: none;
     border: none;
     font-size: 1.8rem;
     color: var(--primary);
     cursor: pointer;
-    z-index: 1001;
-    margin-right: 0; /* Ensure no extra margin for desktop */
-    margin-left: 0; /* Ensure no extra margin for desktop */
+    z-index: 1001; /* Ensure it's above other elements if menu is open */
+    margin-left: 0; /* Reset margins for mobile layout control */
+    margin-right: 0; /* Reset margins for mobile layout control */
 }
-body.dark-mode .mobile-toggle {
+body.dark-mode .mobile-toggle-btn {
     color: var(--text-color-dark);
 }
 
@@ -438,14 +440,14 @@ body.dark-mode .mobile-toggle {
     display: none;
 }
 
-/* Mobile Nav Menu (The new, separate off-canvas menu) */
-#mobile-menu-container { /* This is the main container that slides in */
+/* Mobile Nav Menu Container (The new, separate off-canvas menu) */
+#mobile-menu-container { /* Use ID for direct control */
     position: fixed;
     top: 0;
-    right: -300px; /* Initially off-screen to the right */
+    right: -300px; /* Hidden off-screen to the right */
     width: 280px; /* Fixed width of the mobile menu */
     height: 100%; /* Full height of the viewport */
-    background-color: var(--navbar-bg-light);
+    background-color: var(--navbar-bg-light); /* Match header background */
     box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     transition: right 0.3s ease-in-out; /* Transition from right */
@@ -491,11 +493,11 @@ body.dark-mode #mobile-menu-container .close-btn {
 }
 
 
-/* Styles for links INSIDE the mobile slide-in menu */
-#mobile-menu-container .mobile-nav-links-list { /* Specific class for mobile UL */
+/* Styles for links INSIDE the mobile menu (new separate UL) */
+#mobile-menu-container .mobile-nav-list { /* Specific class for mobile UL */
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-start; /* Align to the start (right) */
     gap: 15px;
     width: 100%;
     list-style: none;
@@ -503,51 +505,51 @@ body.dark-mode #mobile-menu-container .close-btn {
     margin: 0;
 }
 
-#mobile-menu-container .mobile-nav-links-list li {
+#mobile-menu-container .mobile-nav-list li {
     width: 100%;
-    text-align: right;
+    text-align: right; /* Right-align text for RTL */
     margin-bottom: 0;
 }
 
-#mobile-menu-container .mobile-nav-links-list li a {
+#mobile-menu-container .mobile-nav-list li a {
     display: block;
     padding: 12px 10px;
     font-size: 1.2rem;
     color: var(--dark);
     border-bottom: 1px solid var(--light-gray);
 }
-body.dark-mode #mobile-menu-container .mobile-nav-links-list li a {
+body.dark-mode #mobile-menu-container .mobile-nav-list li a {
     color: var(--text-color-dark);
     border-bottom-color: var(--border-color-dark);
 }
 
-#mobile-menu-container .mobile-nav-links-list li:last-child a {
+#mobile-menu-container .mobile-nav-list li:last-child a {
     border-bottom: none;
 }
 
-/* Styles for buttons INSIDE the mobile slide-in menu */
+/* Styles for buttons INSIDE the mobile menu (new separate section) */
 #mobile-menu-container .mobile-nav-buttons-section {
     display: flex;
     flex-direction: column;
     width: 100%;
     margin-top: 30px;
-    align-items: flex-start;
+    align-items: flex-start; /* Align buttons to the start (right) */
     gap: 10px;
     padding-top: 20px;
     border-top: 1px solid var(--light-gray);
 }
-body.dark-mode #mobile-slide-menu .mobile-nav-buttons-section {
+body.dark-mode #mobile-menu-container .mobile-nav-buttons-section {
     border-top-color: var(--border-color-dark);
 }
 
 #mobile-menu-container .mobile-nav-buttons-section .btn {
-    width: 100%;
+    width: 100%; /* Buttons take full width of container */
     margin-bottom: 0;
 }
 #mobile-menu-container .mobile-nav-buttons-section .theme-toggle {
     width: auto;
-    text-align: right;
-    margin: 10px 0;
+    text-align: right; /* Right align the icon */
+    margin: 10px 0; /* Adjust margin */
 }
 
 
@@ -1071,3 +1073,1139 @@ body.dark-mode .dot {
 
 .dot.active {
     background-color: var(--primary);
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+/* Dashboard Section */
+.dashboard {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+    background: var(--card-bg-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    min-height: 600px;
+    margin-top: 40px;
+}
+
+.dashboard-sidebar {
+    background: var(--primary);
+    color: white;
+    padding: 30px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.user-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.user-info h3 {
+    font-size: 1.45rem;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.user-info p {
+    opacity: 0.8;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.sidebar-menu {
+    list-style: none;
+}
+
+.sidebar-menu li {
+    margin-bottom: 8px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 25px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    transition: var(--transition);
+    font-size: 1.1rem;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+.sidebar-menu a i {
+    font-size: 1.3rem;
+}
+
+.dashboard-content {
+    padding: 30px;
+}
+
+.dashboard-title {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    color: var(--heading-color-light);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: var(--light);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 5px 15px var(--shadow-color-light);
+}
+body.dark-mode .stat-card {
+    background: #2a2a2a;
+    box-shadow: 0 5px 15px var(--shadow-color-dark);
+}
+
+
+.stat-card h3 {
+    font-size: 1.15rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+}
+
+.stat-card .value {
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: var(--heading-color-light);
+}
+
+.recent-bookings {
+    background: var(--light);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: 0 5px 15px var(--shadow-color-light);
+}
+body.dark-mode .recent-bookings {
+    background: #2a2a2a;
+    box-shadow: 0 5px 15px var(--shadow-color-dark);
+}
+
+
+.recent-bookings h3 {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    color: var(--heading-color-light);
+}
+
+.booking-item {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color-light);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+body.dark-mode .booking-item {
+    border-bottom-color: var(--border-color-dark);
+}
+
+
+.booking-item:last-child {
+    border-bottom: none;
+}
+
+.booking-car {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1 1 250px;
+}
+
+.booking-car img {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.booking-details {
+    flex: 1;
+    min-width: 150px;
+}
+
+.booking-details h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--heading-color-light);
+}
+
+.booking-details p {
+    font-size: 0.95rem;
+    color: var(--gray);
+}
+
+.booking-date {
+    width: 200px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--gray);
+}
+
+.booking-price {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.1rem;
+    min-width: 80px;
+    text-align: center;
+}
+body.dark-mode .booking-price {
+    color: var(--secondary);
+}
+
+
+.booking-status {
+    padding: 6px 15px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    min-width: 80px;
+    text-align: center;
+}
+
+.status-active {
+    background: rgba(46, 139, 87, 0.1);
+    color: var(--accent);
+}
+
+.status-completed {
+    background: rgba(108, 117, 125, 0.1);
+    color: var(--gray);
+}
+
+/* Add Car Form */
+.add-car-form {
+    background: var(--card-bg-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: var(--heading-color-light);
+    font-size: 1.1rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid var(--border-color-light);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    transition: var(--transition);
+    color: var(--text-color-light);
+}
+body.dark-mode .form-control {
+    background-color: #2a2a2a;
+    border-color: var(--border-color-dark);
+    color: var(--text-color-dark);
+}
+
+.form-control:focus {
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.2);
+}
+body.dark-mode .form-control:focus {
+    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.4);
+}
+
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* Footer */
+footer {
+    background: var(--dark);
+    color: white;
+    padding: 80px 0 30px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.footer-col h3 {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.footer-col h3:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--secondary);
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 15px;
+}
+
+.footer-col ul li a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: var(--transition);
+    display: block;
+    padding: 5px 0;
+    font-size: 1.05rem;
+}
+body.dark-mode .footer-col ul li a {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+
+.footer-col ul li a:hover {
+    color: white;
+    transform: translateX(5px);
+}
+
+.footer-contact li {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.05rem;
+}
+body.dark-mode .footer-contact li {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+.footer-contact i {
+    color: var(--secondary);
+    font-size: 1.2rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-links a {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.social-links a:hover {
+    background: var(--secondary);
+    transform: translateY(-5px);
+    color: var(--dark);
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+}
+body.dark-mode .copyright {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+
+/* ------------------------------------- */
+/* Loyalty Card & Promo */
+/* ------------------------------------- */
+
+.loyalty-card {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+body.dark-mode .loyalty-card {
+    background: linear-gradient(135deg, var(--dark), var(--primary));
+    box-shadow: 0 15px 40px var(--shadow-color-dark);
+}
+.loyalty-card:hover {
+    transform: translateY(-8px) translateZ(5px);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+}
+body.dark-mode .loyalty-card:hover {
+    box-shadow: 0 18px 45px var(--shadow-color-dark);
+}
+
+
+.loyalty-card::before {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="%23d4af37" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>');
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    opacity: 0.1;
+    transform: rotate(15deg);
+    font-size: 10rem;
+    color: var(--secondary);
+    z-index: 1;
+}
+
+.loyalty-card-content {
+    position: relative;
+    z-index: 2;
+}
+
+.loyalty-card h3 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: var(--light);
+}
+
+.loyalty-card p {
+    font-size: 1.15rem;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.loyalty-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 8px;
+}
+
+.loyalty-dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+
+.loyalty-dot.completed {
+    background-color: var(--secondary);
+    color: var(--dark);
+    box-shadow: 0 0 0 5px rgba(212, 175, 55, 0.3);
+}
+
+.loyalty-line {
+    flex-grow: 1;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.loyalty-line-fill {
+    height: 100%;
+    background-color: var(--secondary);
+    width: 0%;
+    border-radius: 3px;
+    transition: width 0.8s ease-in-out;
+}
+
+.loyalty-reward-info {
+    font-size: 1.05rem;
+    opacity: 0.8;
+}
+
+.loyalty-promo-section {
+    padding: 80px 0;
+    background: linear-gradient(to bottom, var(--light-gray), var(--light));
+}
+body.dark-mode .loyalty-promo-section {
+    background: linear-gradient(to bottom, #1e1e1e, #121212);
+}
+
+.loyalty-promo {
+    background: var(--card-bg-light);
+    border-radius: var(--border-radius);
+    padding: 40px;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+.loyalty-promo h3 {
+    font-size: 2.1rem;
+    color: var(--heading-color-light);
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+
+.loyalty-promo p {
+    font-size: 1.2rem;
+    color: var(--gray);
+    margin-bottom: 30px;
+    line-height: 1.7;
+}
+
+/* Quiz Page Styles */
+.quiz-container {
+    background: var(--card-bg-light);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    max-width: 700px;
+    margin: 80px auto 40px;
+    text-align: center;
+}
+
+.quiz-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--heading-color-light);
+}
+
+.quiz-question {
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+.quiz-question p {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--text-color-light);
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: right;
+}
+
+.quiz-options label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    background: var(--light);
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color-light);
+    transition: var(--transition);
+    color: var(--text-color-light);
+}
+body.dark-mode .quiz-options label {
+    background: #2a2a2a;
+    border-color: #444;
+    color: var(--text-color-dark);
+}
+.quiz-options label:hover {
+    background: var(--light-gray);
+}
+body.dark-mode .quiz-options label:hover {
+    background: #333;
+}
+
+
+.quiz-options input[type="radio"] {
+    margin-left: 10px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.quiz-actions {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.quiz-results {
+    margin-top: 40px;
+    padding: 30px;
+    background: var(--light);
+    border-radius: var(--border-radius);
+    text-align: center;
+    color: var(--text-color-light);
+}
+body.dark-mode .quiz-results {
+    background : #2a2a2a;
+    color: var(--text-color-dark);
+}
+
+
+.quiz-results h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: var(--heading-color-light);
+}
+
+.quiz-results p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+/* Car Map Section */
+.car-map-section {
+    padding: 100px 0;
+    background-color: var(--light);
+}
+body.dark-mode .car-map-section {
+    background-color: var(--body-bg-dark);
+}
+
+/* Map Container for Leaflet */
+#mapid {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 50px auto;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    background-color: var(--card-bg-light);
+    z-index: 1;
+}
+body.dark-mode #mapid {
+    background-color: var(--card-bg-dark);
+}
+
+/* Filter buttons for map */
+.map-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+.map-filter-btn {
+    padding: 10px 25px;
+    border-radius: 12px;
+    background: var(--card-bg-light);
+    border: 2px solid var(--border-color-light);
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    color: var(--dark);
+}
+body.dark-mode .map-filter-btn {
+    background: #333;
+    border-color: #444;
+    color: var(--text-color-dark);
+}
+.map-filter-btn.active, .map-filter-btn:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Custom Leaflet Marker Icon */
+.custom-car-icon {
+    background-color: var(--primary);
+    border-radius: 50%;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    border: 2px solid white;
+    box-shadow: 0 0 0 5px rgba(46, 139, 87, 0.3);
+    transition: transform 0.2s ease;
+}
+.custom-car-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 8px rgba(46, 139, 87, 0.5);
+}
+
+/* Custom Leaflet Popup (InfoWindow) Styling */
+.leaflet-popup-content-wrapper {
+    background: var(--card-bg-light);
+    color: var(--dark);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 0;
+    text-align: right;
+    direction: rtl;
+}
+body.dark-mode .leaflet-popup-content-wrapper {
+    background: var(--card-bg-dark);
+    color: var(--text-color-dark);
+}
+
+.leaflet-popup-content {
+    margin: 0;
+    padding: 15px;
+}
+
+.leaflet-popup-tip {
+    background: var(--card-bg-light);
+    box-shadow: var(--box-shadow);
+}
+body.dark-mode .leaflet-popup-tip {
+    background: var(--card-bg-dark);
+}
+
+.leaflet-popup-close-button {
+    color: var(--dark);
+    font-size: 1.5rem;
+    top: 5px;
+    right: 5px;
+}
+body.dark-mode .leaflet-popup-close-button {
+    color: var(--text-color-dark);
+}
+
+.popup-car-details h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.popup-car-details p {
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+    color: var(--text-color-light);
+}
+body.dark-mode .popup-car-details p {
+    color: var(--text-color-dark);
+}
+
+.popup-car-details .car-img-popup {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+}
+
+.popup-car-details .btn {
+    display: block;
+    width: calc(100% - 30px);
+    margin: 15px auto 0;
+    text-align: center;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+}
+
+
+/* ------------------------------------- */
+/* Responsive Design (الجوال واللابتوب) */
+/* ------------------------------------- */
+
+/* لأجهزة الكمبيوتر اللوحية والشاشات المتوسطة (أقل من 1200 بكسل) */
+@media (max-width: 1200px) {
+    .hero h1 {
+        font-size: 3.8rem;
+    }
+    .hero p {
+        font-size: 1.3rem;
+    }
+    .features-grid, .cars-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+    .steps-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+    }
+    .step {
+        width: 48%;
+        padding: 30px 20px;
+    }
+    .steps-container:before {
+        display: none;
+    }
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+    .dashboard-sidebar {
+        padding: 20px;
+        text-align: center;
+    }
+    .user-profile {
+        justify-content: center;
+    }
+    .user-info {
+        text-align: center;
+    }
+    .sidebar-menu {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    .sidebar-menu li {
+        margin-bottom: 0;
+    }
+    .sidebar-menu a {
+        padding: 10px 15px;
+        font-size: 0.95rem;
+    }
+    .testimonial-slide {
+        padding: 30px;
+    }
+    .testimonial-text {
+        font-size: 1.15rem;
+    }
+    .quiz-container {
+        padding: 30px;
+    }
+    .quiz-question p {
+        font-size: 1.1rem;
+    }
+    .quiz-options label {
+        font-size: 1rem;
+        padding: 12px 15px;
+    }
+    #mapid {
+        height: 500px;
+    }
+}
+
+/* لأجهزة الكمبيوتر اللوحية والشاشات الكبيرة (أقل من 992 بكسل) */
+@media (max-width: 992px) {
+    body {
+        padding-top: 70px; /* Adjust padding for smaller header on mobile */
+    }
+    header {
+        padding: 10px 0; /* Smaller header on mobile */
+    }
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    .logo-text {
+        font-size: 1.5rem;
+    }
+    /* Mobile Toggle Button */
+    .mobile-toggle-btn { /* Renamed for clarity */
+        display: block; /* Show mobile menu button */
+        font-size: 1.6rem;
+        margin-left: 15px; /* Add some space from login button */
+    }
+
+    /* Adjust space for nav-buttons in mobile header */
+    .navbar .nav-buttons {
+        /* Make nav-buttons take full width minus logo and mobile toggle */
+        flex-grow: 1; 
+        justify-content: flex-end; /* Push content to the right (start for RTL) */
+        gap: 10px; /* Reduced gap */
+        margin-left: 15px; /* Space from logo */
+    }
+    .navbar .nav-buttons > .btn {
+        padding: 8px 15px; /* Smaller padding for button text */
+        font-size: 0.9rem; /* Smaller font size for buttons */
+    }
+    .navbar .nav-buttons > .theme-toggle {
+        margin-left: 10px; /* Space between theme toggle and other buttons */
+        order: 1; /* Move theme toggle to the end */
+    }
+    .navbar .mobile-toggle-btn { /* Make sure to use the correct class name here */
+        order: 2; /* Move toggle button to the very end */
+        margin-left: 10px; /* Space after the last button */
+    }
+    .navbar .nav-buttons > .guest-only {
+        margin-right: 0 !important; /* Remove right margin from guest button */
+    }
+    .navbar .nav-buttons > #nav-user-profile-placeholder {
+        margin-right: 0 !important;
+    }
+
+
+    /* Mobile Nav Menu Container (Slides from the side - Right) */
+    #mobile-menu-container { /* This is the main container that slides in */
+        display: flex; /* Always flex for stacking content */
+        position: fixed;
+        top: 0;
+        right: -100%; /* Start completely off-screen to the right (use % for responsiveness) */
+        width: 100%; /* Full width */
+        max-width: 320px; /* Max width to ensure it looks good on tablets in portrait */
+        height: 100%; /* Full height of the viewport */
+        background-color: var(--navbar-bg-light);
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: right 0.3s ease-in-out; /* Transition from right */
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start; /* Align contents to start (right side for RTL) */
+        justify-content: flex-start;
+        overflow-y: auto; /* Allow scrolling if content overflows */
+    }
+    body.dark-mode #mobile-menu-container {
+        background-color: var(--navbar-bg-dark);
+    }
+    #mobile-menu-container.open {
+        right: 0; /* Slide into view */
+    }
+
+    /* Force desktop nav-links to be hidden always */
+    .desktop-nav-links { /* Target specifically the desktop nav-links in the navbar */
+        display: none !important;
+    }
+
+
+    /* Overlay for mobile menu */
+    .mobile-menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 998;
+    }
+
+    /* Styles for links and buttons INSIDE the mobile menu */
+    #mobile-menu-container ul { /* List items inside mobile menu */
+        width: 100%;
+        text-align: right; /* Right-align text for RTL */
+        margin-bottom: 0;
+    }
+    #mobile-menu-container ul li a {
+        display: block;
+        padding: 15px 10px;
+        font-size: 1.2rem;
+        color: var(--dark);
+        border-bottom: 1px solid var(--light-gray);
+    }
+    body.dark-mode #mobile-menu-container ul li a {
+        color: var(--text-color-dark);
+        border-bottom-color: var(--border-color-dark);
+    }
+    #mobile-menu-container ul li:last-child a {
+        border-bottom: none;
+    }
+    
+    /* Nav buttons inside mobile menu - these are from the desktop structure, just repositioned */
+    /* They are now directly part of the .nav-links list on mobile, so they use the same flex container */
+    #mobile-menu-container .mobile-nav-buttons-section { /* This is the LI that contains the buttons */
+        width: 100%; /* Make sure it takes full width in mobile menu */
+        padding-top: 20px;
+        margin-top: 20px;
+        border-top: 1px solid var(--light-gray);
+        display: flex; /* Ensure it's a flex container */
+        flex-direction: column;
+        align-items: flex-start; /* Align to start */
+        gap: 10px;
+    }
+    body.dark-mode #mobile-menu-container .mobile-nav-buttons-section {
+        border-top-color: var(--border-color-dark);
+    }
+
+    #mobile-menu-container .mobile-nav-buttons-section .btn {
+        width: 100%;
+        margin-right: 0 !important; /* Override desktop margin */
+        margin-left: 0 !important; /* Override desktop margin */
+    }
+    #mobile-menu-container .mobile-nav-buttons-section .theme-toggle {
+        width: 100%;
+        text-align: right;
+        margin: 0 !important;
+        padding: 10px 0;
+    }
+
+
+    .hero h1 {
+        font-size: 3rem;
+    }
+    .hero p {
+        font-size: 1.2rem;
+    }
+    .section-title h2 {
+        font-size: 2.5rem;
+    }
+    .section-title p {
+        font-size: 1.1rem;
+    }
+    .btn {
+        padding: 15px 30px;
+        font-size: 1rem;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    .footer-col {
+        text-align: center;
+    }
+    .footer-col h3:after {
+        right: 50%;
+        transform: translateX(50%);
+    }
+    .social-links {
+        justify-content: center;
+    }
+    .booking-item {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: right;
+    }
+    .booking-car, .booking-details, .booking-date, .booking-price, .booking-status {
+        width: 100%;
+        text-align: right;
+    }
+    .booking-date, .booking-price, .booking-status {
+        text-align: right;
+    }
+    .booking-car img {
+        margin-right: 15px;
+    }
+    .loyalty-progress {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 5px;
+    }
+    .loyalty-dot {
+        margin: 5px;
+        width: 30px;
+        height: 30px;
+        font-size: 0.85rem;
+    }
+    .loyalty-line {
+        height: 4px;
+    }
+    .quiz-container {
+        margin: 120px auto 40px;
+    }
+    #mapid {
+        height: 400px;
+    }
+}
+
+/* لأجهزة الكمبيوتر اللوحية الصغيرة جداً (أقل من 480 بكسل) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+    .section-title p {
+        font-size: 0.95rem;
+    }
+    .btn {
+        padding: 12px 25px;
+        font-size: 0.95rem;
+    }
+    .filter-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    .car-card {
+        margin: 0 auto;
+        max-width: 300px;
+    }
+    .car-info {
+        padding: 20px;
+    }
+    .car-title, .car-price {
+        font-size: 1.5rem;
+    }
+    .feature-card {
+        padding: 30px 20px;
+    }
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+    }
+    .feature-card h3 {
+        font-size: 1.6rem;
+    }
+}
