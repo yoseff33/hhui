@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | منصة تأجير السيارات بين الأفراد</title>
+    <title>وُجْهَة | استكشف السيارات</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -17,185 +17,193 @@
                     <div class="logo-icon">و</div>
                     <div class="logo-text">وُجْهَة</div>
                 </a>
-                <ul class="nav-links desktop-nav-links"> <li><a href="index.html" class="active">الرئيسية</a></li>
-                    <li><a href="cars.html">استكشف السيارات</a></li>
+                <ul class="nav-links desktop-nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="cars.html" class="active">استكشف السيارات</a></li>
                     <li><a href="index.html#how-it-works">كيف تعمل</a></li>
                     <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
                     <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
                     <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
                     <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
                     <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
-                    <li class="nav-buttons-desktop-only"> <div class="nav-buttons">
+                    <li class="nav-buttons-desktop-only">
+                        <div class="nav-buttons">
                             <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع"><i class="fas fa-moon"></i></button>
                             <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
                             <div id="nav-user-profile-placeholder"></div>
                         </div>
                     </li>
                 </ul>
-                </nav>
+            </nav>
         </div>
     </header>
 
-    <section class="hero">
-        <div id="particles-js"></div>
-        <div class="container">
-            <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
-                <h1>حوّل سيارتك الواقعة إلى مصدر دخل مستمر</h1>
-                <p>أول منصة سعودية لتأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. انضم إلى آلاف المالكين الذين يحققون أرباحاً شهرية من سياراتهم</p>
-                <div class="hero-buttons">
-                    <a href="add-car.html" class="btn btn-primary">
-                        <i class="fas fa-car"></i> أضف سيارتك
-                    </a>
-                    <a href="cars.html" class="btn btn-secondary">
-                        <i class="fas fa-search"></i> استكشف السيارات
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="features">
+    <section id="cars" class="cars-section" style="padding-top: 150px;">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2>لماذا تختار وُجْهَة؟</h2>
-                <p>مزايا فريدة تجعلنا المنصة المثالية لتأجير السيارات بين الأفراد</p>
+                <h2>السيارات المتاحة للتأجير</h2>
+                <p>اختر من بين مجموعة متنوعة من السيارات التي يقدمها ملاك موثوقون</p>
             </div>
             
-            <div class="features-grid">
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>حماية كاملة</h3>
-                    <p>تأمين شامل ضد الحوادث والتلف والسرقة لسيارتك طوال فترة التأجير</p>
-                </div>
-                
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-icon">
-                        <i class="fas fa-tag"></i>
-                    </div>
-                    <h3>تسعير ذكي</h3>
-                    <p>نظام تسعير ديناميكي يضمن لك أفضل عائد مالي حسب الطلب والموسم</p>
-                </div>
-                
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="feature-icon">
-                        <i class="fas fa-truck"></i>
-                    </div>
-                    <h3>توصيل السيارة</h3>
-                    <p>خدمة توصيل السيارة إلى أي مكان في مدينتك خلال 60 دقيقة فقط</p>
-                </div>
-                
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-shield"></i>
-                    </div>
-                    <h3>مستأجرون موثوقون</h3>
-                    <p>نظام تقييم متقدم لضمان جودة المستأجرين وسجلهم الحافل</p>
-                </div>
-                
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>تقارير متقدمة</h3>
-                    <p>لوحة تحكم ذكية لمتابعة أرباحك وتحليل أدائك واتخاذ قرارات أفضل</p>
-                </div>
-                
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>دعم فني 24/7</h3>
-                    <p>فريق دعم فني متاح على مدار الساعة لحل أي مشكلة تواجهك</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="loyalty-promo-section">
-        <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>برنامج وُجْهَة للولاء</h2>
-                <p>اجعل كل رحلة تكسبك المزيد من المكافآت!</p>
-            </div>
-            <div class="loyalty-promo" data-aos="zoom-in">
-                <h3>تأجيرك التاسع علينا!</h3>
-                <p>استأجر 8 سيارات، واحصل على تأجيرك التاسع مجانًا بحد أقصى 159 ريال سعودي.</p>
-                <a href="dashboard-renter.html" class="btn btn-primary">
-                    <i class="fas fa-crown"></i> اعرف المزيد وابدأ بجمع النقاط!
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section class="testimonials-section">
-        <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>ماذا يقول عملاؤنا؟</h2>
-                <p>تجارب حقيقية من مستخدمي وُجْهَة السعداء</p>
-            </div>
-            <div class="testimonial-slider" data-aos="fade-up" data-aos-delay="100">
-                <div class="testimonial-slide active">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="صورة العميل أحمد" class="testimonial-author-img">
-                    <p class="testimonial-text">"وُجْهَة غيّرت طريقة تأجيري للسيارات! سهولة في الحجز، وأسعار منافسة، ودعم فني رائع. أنصح بها بشدة!"</p>
-                    <p class="testimonial-author-name">أحمد المالكي</p>
-                    <p class="testimonial-author-role">مستأجر متكرر</p>
-                </div>
-                <div class="testimonial-slide">
-                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="صورة العميل فاطمة" class="testimonial-author-img">
-                    <p class="testimonial-text">"منصة رائعة لتحويل سيارتي إلى مصدر دخل. الأمان والحماية التي توفرها وُجْهَة جعلتني أشعر بالراحة التامة."</p>
-                    <p class="testimonial-author-name">فاطمة الزهراني</p>
-                    <p class="testimonial-author-role">مؤجرة معتمدة</p>
-                </div>
-                <div class="testimonial-slide">
-                    <img src="https://randomuser.me/api/portraits/men/50.jpg" alt="صورة العميل خالد" class="testimonial-author-img">
-                    <p class="testimonial-text">"الخدمة سريعة وموثوقة، والسيارات نظيفة وفي حالة ممتازة. تجربة لا تُنسى في كل مرة."</p>
-                    <p class="testimonial-author-name">خالد الحربي</p>
-                    <p class="testimonial-author-role">مستأجر</p>
-                </div>
-                <div class="slider-dots">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <section id="how-it-works" class="how-it-works">
-        <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>كيف تعمل منصة وُجْهَة؟</h2>
-                <p>أربع خطوات بسيطة لتأجير سيارتك أو استئجار سيارة</p>
+            <div class="cars-filter" data-aos="fade-up" data-aos-delay="100">
+                <button class="filter-btn active">الكل</button>
+                <button class="filter-btn">سيدان</button>
+                <button class="filter-btn">دفع رباعي</button>
+                <button class="filter-btn">فاخرة</button>
+                <button class="filter-btn">اقتصادية</button>
             </div>
             
-            <div class="steps-container">
-                <div class="step" data-aos="fade-up" data-aos-delay="100">
-                    <div class="step-number">1</div>
-                    <h3>أضف سيارتك</h3>
-                    <p>سجل في المنصة وأضف سيارتك مع صور ومواصفات واضحة في دقائق معدودة</p>
+            <div class="cars-grid">
+                <div class="car-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="car-img">
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="تويوتا كامري">
+                        <div class="car-badge">الأكثر طلباً</div>
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header">
+                            <h3 class="car-title">تويوتا كامري 2022</h3>
+                            <div class="car-price">85 <span>ريال/اليوم</span></div>
+                        </div>
+                        <div class="car-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-car"></i> أوتوماتيك
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-gas-pump"></i> بنزين
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i> 5 ركاب
+                            </div>
+                        </div>
+                        <div class="car-location">
+                            <i class="fas fa-map-marker-alt"></i> الرياض، حي المروج
+                        </div>
+                        <div class="car-actions">
+                            <a href="#" class="btn btn-outline">
+                                <i class="far fa-heart"></i> المفضلة
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> احجز الآن
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="step" data-aos="fade-up" data-aos-delay="200">
-                    <div class="step-number">2</div>
-                    <h3>حدد المواعيد</h3>
-                    <p>حدد الأوقات المتاحة للتأجير والأسعار المناسبة لسيارتك</p>
+                <div class="car-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="car-img">
+                        <img src="https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg" alt="سيارة لاندكروزر">
+                        <div class="car-badge">خصم 20%</div>
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header">
+                            <h3 class="car-title">تويوتا لاندكروزر 2021</h3>
+                            <div class="car-price">220 <span>ريال/اليوم</span></div>
+                        </div>
+                        <div class="car-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-car"></i> أوتوماتيك
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-gas-pump"></i> بنزين
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i> 7 ركاب
+                            </div>
+                        </div>
+                        <div class="car-location">
+                            <i class="fas fa-map-marker-alt"></i> جدة، حي الصفا
+                        </div>
+                        <div class="car-actions">
+                            <a href="#" class="btn btn-outline">
+                                <i class="far fa-heart"></i> المفضلة
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> احجز الآن
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="step" data-aos="fade-up" data-aos-delay="300">
-                    <div class="step-number">3</div>
-                    <h3>قابل المستأجر</h3>
-                    <p>التقِ بالمستأجر في المكان المحدد أو استخدم خدمة التوصيل الذكي</p>
+                <div class="car-card" data-aos="fade-up" data-aos-delay="250">
+                    <div class="car-img">
+                        <img src="https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp" alt="سيارة هونداي النترا">
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header">
+                            <h3 class="car-title">هونداي النترا 2023</h3>
+                            <div class="car-price">75 <span>ريال/اليوم</span></div>
+                        </div>
+                        <div class="car-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-car"></i> أوتوماتيك
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-gas-pump"></i> بنزين
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i> 5 ركاب
+                            </div>
+                        </div>
+                        <div class="car-location">
+                            <i class="fas fa-map-marker-alt"></i> الدمام، حي الروضة
+                        </div>
+                        <div class="car-actions">
+                            <a href="#" class="btn btn-outline">
+                                <i class="far fa-heart"></i> المفضلة
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> احجز الآن
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="step" data-aos="fade-up" data-aos-delay="400">
-                    <div class="step-number">4</div>
-                    <h3>اكسب المال</h3>
-                    <p>استلم أموالك بعد انتهاء فترة التأجير بكل أمان وسهولة</p>
+                <div class="car-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="car-img">
+                        <img src="https://media.elbalad.news/2024/10/large/995/9/554.jpg" alt="سيارة مرسيدس">
+                    </div>
+                    <div class="car-info">
+                        <div class="car-header">
+                            <h3 class="car-title">مرسيدس E-Class 2020</h3>
+                            <div class="car-price">300 <span>ريال/اليوم</span></div>
+                        </div>
+                        <div class="car-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-car"></i> أوتوماتيك
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-gas-pump"></i> بنزين
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user"></i> 5 ركاب
+                            </div>
+                        </div>
+                        <div class="car-location">
+                            <i class="fas fa-map-marker-alt"></i> الرياض، حي السفارات
+                        </div>
+                        <div class="car-actions">
+                            <a href="#" class="btn btn-outline">
+                                <i class="far fa-heart"></i> المفضلة
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-calendar-check"></i> احجز الآن
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
+            <div style="text-align: center; margin-top: 50px;" data-aos="fade-up">
+                <a href="#" class="btn btn-outline">استكشف المزيد من السيارات</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="recently-viewed-bar">
+        <div class="container">
+            <h3>السيارات التي شاهدتها مؤخرًا</h3>
+            <div class="recently-viewed-cars-grid" id="recently-viewed-cars-container">
+                </div>
         </div>
     </section>
 
@@ -262,42 +270,6 @@
         </div>
     </footer>
 
-    <nav class="bottom-navbar mobile-bottom-navbar">
-        <a href="index.html" class="nav-item active">
-            <i class="fas fa-home"></i>
-            <span>الرئيسية</span>
-        </a>
-        <a href="cars.html" class="nav-item">
-            <i class="fas fa-car"></i>
-            <span>السيارات</span>
-        </a>
-        <button id="theme-toggle-mobile" class="theme-toggle nav-item" aria-label="تبديل الوضع">
-            <i class="fas fa-moon"></i>
-            <span>الوضع</span>
-        </button>
-        <a href="landing.html" class="nav-item guest-only" id="mobile-bottom-guest-button">
-            <i class="fas fa-sign-in-alt"></i>
-            <span>دخول</span>
-        </a>
-        <a href="#" class="nav-item auth-link-bottom" id="mobile-bottom-user-button">
-            <i class="fas fa-user-circle"></i>
-            <span>حسابي</span>
-        </a>
-        <a href="add-car.html" class="nav-item auth-link-bottom" data-role="owner">
-            <i class="fas fa-plus-circle"></i>
-            <span>أضف سيارة</span>
-        </a>
-        <a href="quiz.html" class="nav-item">
-            <i class="fas fa-question-circle"></i>
-            <span>اختبار</span>
-        </a>
-        <a href="qassim-map.html" class="nav-item">
-            <i class="fas fa-map-marked-alt"></i>
-            <span>الخريطة</span>
-        </a>
-    </nav>
-
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
