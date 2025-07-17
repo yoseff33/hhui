@@ -25,75 +25,86 @@ window.addEventListener('scroll', function() {
 });
 
 // -------------------------------------
-// Mobile Menu Toggle (إصلاح جذري)
+// Mobile Bottom Navbar & Login/Logout Logic
 // -------------------------------------
+
 document.addEventListener('DOMContentLoaded', () => {
-    const mobileToggleButton = document.getElementById('mobile-toggle-btn'); // زر الهامبرغر في الهيدر (تم استخدام ID)
-    const mobileMenuContainer = document.getElementById('mobile-menu-container'); // حاوية القائمة الجانبية
-    const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay'); // الطبقة الشفافة التي تغطي المحتوى
-    const mobileMenuCloseButton = document.getElementById('mobile-close-btn'); // زر الإغلاق داخل القائمة
+    // Setup desktop theme toggle (still exists)
+    setupThemeToggle();
+    // Update navbar links and buttons based on login status
+    updateNavbarBasedOnLoginStatus();
 
-    // وظيفة لفتح القائمة
-    const openMobileMenu = () => {
-        if (mobileMenuContainer && mobileMenuOverlay && mobileToggleButton) {
-            mobileMenuContainer.classList.add('open');
-            mobileMenuOverlay.style.display = 'block';
-            document.body.classList.add('no-scroll'); // منع التمرير في الخلفية
-            mobileToggleButton.innerHTML = '<i class="fas fa-times"></i>'; // تغيير الأيقونة إلى X
-            mobileToggleButton.setAttribute('aria-expanded', 'true');
-        }
-    };
-
-    // وظيفة لإغلاق القائمة
-    const closeMobileMenu = () => {
-        if (mobileMenuContainer && mobileMenuOverlay && mobileToggleButton) {
-            mobileMenuContainer.classList.remove('open');
-            mobileMenuOverlay.style.display = 'none';
-            document.body.classList.remove('no-scroll'); // استعادة التمرير
-            mobileToggleButton.innerHTML = '<i class="fas fa-bars"></i>'; // تغيير الأيقونة إلى هامبرغر
-            mobileToggleButton.setAttribute('aria-expanded', 'false');
-        }
-    };
-
-    // الاستماع لزر الهامبرغر في الهيدر لفتح/إغلاق القائمة
-    if (mobileToggleButton) {
-        mobileToggleButton.addEventListener('click', (event) => {
-            event.stopPropagation(); // منع النقر من الانتشار إلى المستند وإغلاق القائمة فورًا
-            const isOpen = mobileMenuContainer.classList.contains('open');
-            if (isOpen) {
-                closeMobileMenu();
-            } else {
-                openMobileMenu();
-            }
-        });
-    }
-
-    // الاستماع لزر الإغلاق داخل القائمة
-    if (mobileMenuCloseButton) {
-        mobileMenuCloseButton.addEventListener('click', closeMobileMenu);
-    }
-
-    // الاستماع للنقر على الطبقة الشفافة لإغلاق القائمة
-    if (mobileMenuOverlay) {
-        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
-    }
-
-    // إغلاق القائمة عند النقر على أي رابط داخلها
-    if (mobileMenuContainer) {
-        mobileMenuContainer.querySelectorAll('ul li a').forEach(link => { // Targeting 'a' tags inside 'li' inside 'ul'
-            link.addEventListener('click', closeMobileMenu);
-        });
-        mobileMenuContainer.querySelectorAll('.btn').forEach(button => { // Close also when internal buttons are clicked
-            button.addEventListener('click', closeMobileMenu);
-        });
-    }
-
-    // عند تغيير حجم الشاشة من الجوال إلى الديسكتوب، تأكد من إغلاق القائمة الجانبية
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 992 && mobileMenuContainer.classList.contains('open')) {
-            closeMobileMenu();
+    // Specific logic for mobile bottom navbar's active state
+    const bottomNavItems = document.querySelectorAll('.mobile-bottom-navbar .nav-item');
+    bottomNavItems.forEach(item => {
+        if (item.href === window.location.href) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
         }
     });
+
+    // Update login/logout status for bottom navbar as well
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const userType = localStorage.getItem('userType');
+
+    const mobileBottomNavGuestBtn = document.getElementById('mobile-bottom-guest-button');
+    const mobileBottomNavUserBtn = document.getElementById('mobile-bottom-user-button');
+
+    if (mobileBottomNavGuestBtn && mobileBottomNavUserBtn) {
+        if (isLoggedIn) {
+            mobileBottomNavGuestBtn.style.display = 'none';
+            mobileBottomNavUserBtn.style.display = 'flex'; // Show user profile button
+            if (userType === 'owner') {
+                mobileBottomNavUserBtn.href = 'dashboard-owner.html';
+            } else if (userType === 'renter') {
+                mobileBottomNavUserBtn.href = 'dashboard-renter.html';
+            }
+        } else {
+            mobileBottomNavGuestBtn.style.display = 'flex';
+            mobileBottomNavUserBtn.style.display = 'none';
+        }
+    }
+
+    // Adjust body padding-bottom based on mobile bottom navbar presence
+    function adjustBodyPadding() {
+        const mobileBottomNavbar = document.querySelector('.mobile-bottom-navbar');
+        if (mobileBottomNavbar && window.innerWidth <= 992) { // Only for mobile view
+            document.body.style.paddingBottom = mobileBottomNavbar.offsetHeight + 'px';
+        } else {
+            document.body.style.paddingBottom = '0';
+        }
+    }
+
+    adjustBodyPadding(); // Call on load
+    window.addEventListener('resize', adjustBodyPadding); // Call on resize
+
+
+    // -------------------------------------
+    // Remaining existing JS functionalities
+    // -------------------------------------
+    const userCompletedRentals = 3;
+    updateLoyaltyCard(userCompletedRentals);
+
+    renderRecentlyViewedCars();
+
+    if (document.querySelector('.testimonial-slider')) {
+        showSlides();
+        slideInterval = setInterval(showSlides, 5000);
+    }
+    
+    setupQuiz();
+
+    if (document.getElementById('mapid')) {
+        setTimeout(() => {
+            if (typeof L !== 'undefined') {
+                initMap();
+                setupMapFilters();
+            } else {
+                console.error("Leaflet library (L) is not defined. Map initialization failed. Check network tab for Leaflet JS/CSS loading errors.");
+            }
+        }, 100);
+    }
 });
 
 
@@ -109,7 +120,8 @@ document.querySelectorAll('.sidebar-menu a').forEach(link => {
 });
 
 // -------------------------------------
-// وظيفة إدارة حالة تسجيل الدخول (Front-end Simulation)
+// وظيفة إدارة حالة تسجيل الدخول (Front-end Simulation) - UPDATED
+// This now primarily manages desktop nav visibility
 // -------------------------------------
 
 function updateNavbarBasedOnLoginStatus() {
@@ -117,27 +129,25 @@ function updateNavbarBasedOnLoginStatus() {
     const userType = localStorage.getItem('userType');
 
     // Desktop Navbar elements
-    const desktopNavLinks = document.querySelector('.desktop-nav-links');
+    const desktopNavLinks = document.querySelector('.desktop-nav-links'); 
     const desktopAuthLinks = desktopNavLinks ? desktopNavLinks.querySelectorAll('.auth-link') : [];
     const desktopGuestButton = document.getElementById('nav-guest-button');
     const desktopUserProfilePlaceholder = document.getElementById('nav-user-profile-placeholder');
 
-    // Mobile Navbar elements (inside the #mobile-menu-container)
-    const mobileMenuContainer = document.getElementById('mobile-menu-container');
-    const mobileNavList = mobileMenuContainer ? mobileMenuContainer.querySelector('.mobile-nav-list') : null;
-    const mobileAuthLinks = mobileNavList ? mobileNavList.querySelectorAll('.auth-link') : [];
-    const mobileGuestButton = mobileMenuContainer ? mobileMenuContainer.querySelector('#mobile-guest-button') : null;
-    const mobileUserProfilePlaceholder = mobileMenuContainer ? mobileMenuContainer.querySelector('#mobile-user-profile-placeholder') : null;
-
+    // Bottom mobile navbar elements (managed separately in DOMContentLoaded for active state)
+    const mobileBottomNavGuestButton = document.getElementById('mobile-bottom-guest-button');
+    const mobileBottomNavUserButton = document.getElementById('mobile-bottom-user-button');
+    const mobileBottomNavAuthLinks = document.querySelectorAll('.mobile-bottom-navbar .auth-link-bottom');
 
     // Hide all auth related elements first
     if (desktopGuestButton) desktopGuestButton.style.display = 'none';
     if (desktopUserProfilePlaceholder) desktopUserProfilePlaceholder.style.display = 'none';
     desktopAuthLinks.forEach(link => link.style.display = 'none');
     
-    if (mobileGuestButton) mobileGuestButton.style.display = 'none';
-    if (mobileUserProfilePlaceholder) mobileUserProfilePlaceholder.style.display = 'none';
-    mobileAuthLinks.forEach(link => link.style.display = 'none');
+    // For mobile bottom nav
+    if (mobileBottomNavGuestButton) mobileBottomNavGuestButton.style.display = 'none';
+    if (mobileBottomNavUserButton) mobileBottomNavUserButton.style.display = 'none';
+    mobileBottomNavAuthLinks.forEach(link => link.style.display = 'none');
 
 
     if (isLoggedIn) {
@@ -153,6 +163,7 @@ function updateNavbarBasedOnLoginStatus() {
             `;
             desktopUserProfilePlaceholder.style.display = 'flex';
         }
+        
         desktopAuthLinks.forEach(link => {
             const linkHref = link.getAttribute('href');
             if (userType === 'owner') {
@@ -166,35 +177,25 @@ function updateNavbarBasedOnLoginStatus() {
             }
         });
 
-        // Mobile user profile and auth links
-        if (mobileUserProfilePlaceholder) {
-             mobileUserProfilePlaceholder.innerHTML = `
-                <a href="#" class="btn btn-outline" onclick="logoutUser()" style="width: 100%; margin-bottom: 10px;">
-                    <i class="fas fa-sign-out-alt"></i> خروج
-                </a>
-                <a href="${userType === 'owner' ? 'dashboard-owner.html' : 'dashboard-renter.html'}" class="btn btn-primary" style="width: 100%;">
-                    <i class="fas fa-user-circle"></i> ملفي
-                </a>
-            `;
-            mobileUserProfilePlaceholder.style.display = 'flex';
+        // Mobile Bottom Nav user profile and auth links
+        if (mobileBottomNavUserButton) { // Ensure button exists
+            mobileBottomNavUserButton.style.display = 'flex'; // Make the user profile button visible
+            mobileBottomNavUserButton.href = userType === 'owner' ? 'dashboard-owner.html' : 'dashboard-renter.html';
         }
-        mobileAuthLinks.forEach(link => {
-            const linkHref = link.getAttribute('href');
-            if (userType === 'owner') {
-                if (linkHref && (linkHref.includes('dashboard-owner.html') || linkHref.includes('add-car.html'))) {
-                    link.style.display = 'block';
-                }
-            } else if (userType === 'renter') {
-                if (linkHref && linkHref.includes('dashboard-renter.html')) {
-                    link.style.display = 'block';
-                }
+        // Specific bottom nav items visibility (e.g., "Add Car" for owner)
+        document.querySelectorAll('.mobile-bottom-navbar .auth-link-bottom').forEach(link => {
+            const linkDataRole = link.getAttribute('data-role'); // e.g. "owner", "renter"
+            if (linkDataRole === userType || linkDataRole === 'all') { // If link is for this user type or for all logged-in
+                link.style.display = 'flex';
+            } else {
+                link.style.display = 'none';
             }
         });
 
-
     } else { // Not logged in
         if (desktopGuestButton) desktopGuestButton.style.display = 'flex';
-        if (mobileGuestButton) mobileGuestButton.style.display = 'flex';
+        // Mobile Bottom Nav guest button
+        if (mobileBottomNavGuestButton) mobileBottomNavGuestButton.style.display = 'flex';
     }
 }
 
@@ -203,6 +204,7 @@ function loginUser(type) {
     localStorage.setItem('isLoggedIn', 'true');
     localStorage.setItem('userType', type);
     updateNavbarBasedOnLoginStatus();
+    // Redirect after updating status
     if (type === 'owner') {
         window.location.href = 'dashboard-owner.html';
     } else if (type === 'renter') {
@@ -267,23 +269,33 @@ function updateLoyaltyCard(completedRentals) {
 // -------------------------------------
 
 function setupThemeToggle() {
-    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleBtnDesktop = document.getElementById('theme-toggle-desktop'); // Desktop Only
+    const themeToggleBtnMobile = document.getElementById('theme-toggle-mobile'); // Mobile Only
 
     const applyTheme = (theme) => {
         document.body.classList.remove('light-mode', 'dark-mode');
         document.body.classList.add(theme + '-mode');
         localStorage.setItem('theme', theme);
 
-        if (themeToggleBtn) {
-            themeToggleBtn.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        if (themeToggleBtnDesktop) {
+            themeToggleBtnDesktop.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        }
+        if (themeToggleBtnMobile) {
+            themeToggleBtnMobile.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i><br>الوضع الليلي' : '<i class="fas fa-sun"></i><br>الوضع النهاري';
         }
     };
 
     const currentTheme = localStorage.getItem('theme') || 'light';
     applyTheme(currentTheme);
 
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
+    if (themeToggleBtnDesktop) {
+        themeToggleBtnDesktop.addEventListener('click', () => {
+            const newTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
+            applyTheme(newTheme);
+        });
+    }
+    if (themeToggleBtnMobile) {
+        themeToggleBtnMobile.addEventListener('click', () => {
             const newTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
             applyTheme(newTheme);
         });
