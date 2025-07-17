@@ -26,14 +26,14 @@
                     <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
                     <li><a href="quiz.html" class="active">اختبار السيارة المناسبة</a></li>
                     <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
-                    <li class="nav-buttons-desktop-only">
-                        <div class="nav-buttons">
-                            <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع"><i class="fas fa-moon"></i></button>
-                            <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
-                            <div id="nav-user-profile-placeholder"></div>
-                        </div>
-                    </li>
                 </ul>
+                <div class="nav-buttons nav-buttons-desktop-only">
+                    <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع">
+                        <i class="fas fa-moon"></i>
+                        <span>الوضع</span> </button>
+                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
+                    <div id="nav-user-profile-placeholder"></div>
+                </div>
             </nav>
         </div>
     </header>
@@ -183,10 +183,6 @@
             <i class="fas fa-car"></i>
             <span>السيارات</span>
         </a>
-        <button id="theme-toggle-mobile" class="theme-toggle nav-item" aria-label="تبديل الوضع">
-            <i class="fas fa-moon"></i>
-            <span>الوضع</span>
-        </button>
         <a href="landing.html" class="nav-item guest-only" id="mobile-bottom-guest-button">
             <i class="fas fa-sign-in-alt"></i>
             <span>دخول</span>
@@ -215,6 +211,7 @@
             once: true,
         });
     </script>
-    <script src="csr-content.js"></script> <script src="script.js"></script>
+    <script src="csr-content.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
