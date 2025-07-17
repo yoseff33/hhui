@@ -2019,7 +2019,7 @@ body.dark-mode .popup-car-details p {
 
     /* Mobile Nav Menu Container (Slides from the side - Right) */
     .nav-links { /* This is the element that becomes the mobile menu */
-        display: none; /* Hidden by default */
+        display: flex; /* Always flex for stacking content */
         position: fixed;
         top: 0;
         right: -100%; /* Start completely off-screen to the right (use % for responsiveness) */
@@ -2041,7 +2041,6 @@ body.dark-mode .popup-car-details p {
     }
     .nav-links.open {
         right: 0; /* Slide into view */
-        display: flex; /* Display as flex when open */
     }
 
     /* Force desktop nav-links to be hidden always */
