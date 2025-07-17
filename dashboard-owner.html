@@ -17,7 +17,8 @@
                     <div class="logo-icon">و</div>
                     <div class="logo-text">وُجْهَة</div>
                 </a>
-                <ul class="nav-links desktop-nav-links"> <li><a href="index.html">الرئيسية</a></li>
+                <ul class="nav-links desktop-nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
                     <li><a href="cars.html">استكشف السيارات</a></li>
                     <li><a href="index.html#how-it-works">كيف تعمل</a></li>
                     <li><a href="dashboard-owner.html" class="auth-link active" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
@@ -25,14 +26,15 @@
                     <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
                     <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
                     <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
-                    <li class="nav-buttons-desktop-only"> <div class="nav-buttons">
+                    <li class="nav-buttons-desktop-only">
+                        <div class="nav-buttons">
                             <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع"><i class="fas fa-moon"></i></button>
                             <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
                             <div id="nav-user-profile-placeholder"></div>
                         </div>
                     </li>
                 </ul>
-                </nav>
+            </nav>
         </div>
     </header>
 
@@ -67,27 +69,8 @@
                 <div class="dashboard-content">
                     <h2 class="dashboard-title">مرحبا بك، نواف!</h2>
                     
-                    <div class="stats-grid">
-                        <div class="stat-card" data-aos="zoom-in" data-aos-delay="150">
-                            <h3>إجمالي الأرباح</h3>
-                            <div class="value">8,450 ر.س</div>
+                    <div class="stats-grid" id="impact-stats-container">
                         </div>
-                        
-                        <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
-                            <h3>الحجوزات النشطة</h3>
-                            <div class="value">3</div>
-                        </div>
-                        
-                        <div class="stat-card" data-aos="zoom-in" data-aos-delay="250">
-                            <h3>عدد السيارات</h3>
-                            <div class="value">2</div>
-                        </div>
-                        
-                        <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
-                            <h3>التقييم العام</h3>
-                            <div class="value">4.8/5</div>
-                        </div>
-                    </div>
                     
                     <div class="recent-bookings" data-aos="fade-up" data-aos-delay="350">
                         <h3>الحجوزات الأخيرة لسياراتي</h3>
@@ -248,6 +231,6 @@
             once: true,
         });
     </script>
-    <script src="script.js"></script>
+    <script src="csr-content.js"></script> <script src="script.js"></script>
 </body>
 </html>
