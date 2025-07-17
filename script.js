@@ -110,27 +110,27 @@ function updateNavbarBasedOnLoginStatus() {
     const userType = localStorage.getItem('userType');
 
     // Desktop Nav Links and Buttons
-    const desktopNavLinksContainer = document.querySelector('.navbar > .nav-links'); // This is the UL for desktop
+    const desktopNavLinksContainer = document.querySelector('.navbar > .nav-links'); // Desktop nav-links UL
     const desktopAuthLinks = desktopNavLinksContainer ? desktopNavLinksContainer.querySelectorAll('.auth-link') : [];
     const desktopGuestButton = document.getElementById('nav-guest-button');
     const desktopUserProfilePlaceholder = document.getElementById('nav-user-profile-placeholder');
 
     // Mobile Nav Links (these are the same nav-links elements, but controlled by mobile menu CSS)
-    const mobileNavLinksContainer = document.querySelector('.nav-links'); // This is the UL that serves as mobile menu
-    const mobileAuthLinks = mobileNavLinksContainer ? mobileNavLinksContainer.querySelectorAll('.auth-link') : [];
-    
-    const mobileGuestButton = document.getElementById('mobile-nav-guest-button'); // Guest button inside mobile menu
-    const mobileUserProfilePlaceholder = document.getElementById('mobile-nav-user-profile-placeholder'); // User profile inside mobile menu
+    const mobileAuthLinks = document.querySelectorAll('.nav-links .auth-link'); // Select all auth-links inside the mobile menu (which is also .nav-links)
+    const mobileGuestButton = document.querySelector('.nav-links .guest-only'); // Guest button inside mobile menu
+    const mobileUserProfilePlaceholder = document.querySelector('.nav-links #nav-user-profile-placeholder'); // User profile inside mobile menu
+
 
     // Hide all auth links and user profile placeholders first
     if (desktopGuestButton) desktopGuestButton.style.display = 'none';
     if (desktopUserProfilePlaceholder) desktopUserProfilePlaceholder.style.display = 'none';
-    if (mobileGuestButton) mobileGuestButton.style.display = 'none'; // Ensure mobile guest button is hidden
-    if (mobileUserProfilePlaceholder) mobileUserProfilePlaceholder.style.display = 'none'; // Ensure mobile user profile is hidden
+    if (mobileGuestButton) mobileGuestButton.style.display = 'none';
+    if (mobileUserProfilePlaceholder) mobileUserProfilePlaceholder.style.display = 'none';
 
 
     desktopAuthLinks.forEach(link => link.style.display = 'none');
-    mobileAuthLinks.forEach(link => link.style.display = 'none'); // Hide all mobile auth links
+    mobileAuthLinks.forEach(link => link.style.display = 'none');
+
 
     if (isLoggedIn) {
         // Desktop user buttons (My Profile/Logout)
@@ -190,7 +190,7 @@ function updateNavbarBasedOnLoginStatus() {
 
     } else { // Not logged in
         if (desktopGuestButton) desktopGuestButton.style.display = 'flex';
-        if (mobileGuestButton) mobileGuestButton.style.display = 'flex'; // Show mobile guest button
+        if (mobileGuestButton) mobileGuestButton.style.display = 'flex';
     }
 }
 
