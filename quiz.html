@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | خريطة سيارات جامعة القصيم</title>
+    <title>وُجْهَة | اختبار السيارة المناسبة لي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
 </head>
 <body>
     <header>
@@ -24,8 +23,8 @@
                     <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
                     <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
                     <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
-                    <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
-                    <li><a href="qassim-map.html" class="active">خريطة جامعة القصيم</a></li>
+                    <li><a href="quiz.html" class="active">اختبار السيارة المناسبة</a></li>
+                    <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
                     <li class="nav-buttons-desktop-only"> <div class="nav-buttons">
                             <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع"><i class="fas fa-moon"></i></button>
                             <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
@@ -37,26 +36,52 @@
         </div>
     </header>
 
-    <section id="qassim-car-map-section" class="car-map-section" style="padding-top: 150px;">
+    <section id="quiz-section" style="padding-top: 150px;">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2>السيارات المتاحة داخل جامعة القصيم</h2>
-                <p>تصفح مواقع السيارات المتوفرة داخل حرم الجامعة</p>
+                <h2>اختبار السيارة المناسبة لك</h2>
+                <p>أجب عن بعض الأسئلة لنساعدك في العثور على سيارتك المثالية</p>
             </div>
             
-            <div class="map-filters" data-aos="fade-up" data-aos-delay="100">
-                <button class="map-filter-btn active" data-filter="الكل">الكل</button>
-                <button class="map-filter-btn" data-filter="سيدان">سيدان</button>
-                <button class="map-filter-btn" data-filter="دفع رباعي">دفع رباعي</button>
-                <button class="map-filter-btn" data-filter="اقتصادية">اقتصادية</button>
-                <button class="map-filter-btn" data-filter="فاخرة">فاخرة</button>
-            </div>
+            <div class="quiz-container" data-aos="zoom-in">
+                <form id="car-quiz-form">
+                    <div class="quiz-question">
+                        <p>1. كم عدد الركاب الذين سيتنقلون معك عادةً؟</p>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="passengers" value="2"> 2 ركاب أو أقل</label>
+                            <label><input type="radio" name="passengers" value="4"> 3-4 ركاب</label>
+                            <label><input type="radio" name="passengers" value="5"> 5 ركاب</label>
+                            <label><input type="radio" name="passengers" value="7"> 6-7 ركاب</label>
+                        </div>
+                    </div>
 
-            <div id="mapid" class="map-container" data-aos="zoom-in" data-aos-delay="200" style="height: 600px;">
-                </div>
-            <p style="text-align: center; color: var(--gray); margin-top: 20px; font-size: 0.9rem;">
-                <i class="fas fa-info-circle"></i> هذه الخريطة توضح المواقع التقديرية للسيارات داخل الجامعة.
-            </p>
+                    <div class="quiz-question">
+                        <p>2. ما هي ميزانيتك التقريبية لتأجير السيارة يومياً؟</p>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="budget" value="low"> أقل من 100 ريال</label>
+                            <label><input type="radio" name="budget" value="medium"> 100 - 200 ريال</label>
+                            <label><input type="radio" name="budget" value="high"> أكثر من 200 ريال</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <p>3. ما هو أسلوب القيادة الذي تفضله أو طبيعة رحلتك؟</p>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="style" value="economic"> اقتصادي وعملي (داخل المدينة)</label>
+                            <label><input type="radio" name="style" value="family"> عائلي ومريح (للسفر والرحلات الطويلة)</label>
+                            <label><input type="radio" name="style" value="sporty"> رياضي وممتع (للقيادة السريعة والترفيه)</label>
+                            <label><input type="radio" name="style" value="luxury"> فاخر وأنيق (للمناسبات الخاصة والأداء العالي)</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> احصل على توصيتي</button>
+                    </div>
+                </form>
+
+                <div id="quiz-results" class="quiz-results" style="display: none;">
+                    </div>
+            </div>
         </div>
     </section>
 
@@ -122,6 +147,7 @@
             </div>
         </div>
     </footer>
+
     <nav class="bottom-navbar mobile-bottom-navbar">
         <a href="index.html" class="nav-item">
             <i class="fas fa-home"></i>
@@ -147,16 +173,16 @@
             <i class="fas fa-plus-circle"></i>
             <span>أضف سيارة</span>
         </a>
-        <a href="quiz.html" class="nav-item">
+        <a href="quiz.html" class="nav-item active">
             <i class="fas fa-question-circle"></i>
             <span>اختبار</span>
         </a>
-        <a href="qassim-map.html" class="nav-item active">
+        <a href="qassim-map.html" class="nav-item">
             <i class="fas fa-map-marked-alt"></i>
             <span>الخريطة</span>
         </a>
     </nav>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
