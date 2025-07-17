@@ -88,7 +88,7 @@ function updateNavbarBasedOnLoginStatus() {
         }
         mobileBottomNavAuthLinks.forEach(link => {
             const linkDataRole = link.getAttribute('data-role');
-            if (linkDataRole === userType || linkDataRole === 'all') {
+            if (linkDataRole === userType || linkDataRole === 'all') { // 'all' for links visible to all logged-in users
                 link.style.display = 'flex';
             } else {
                 link.style.display = 'none';
@@ -105,6 +105,8 @@ function updateNavbarBasedOnLoginStatus() {
 function loginUser(type) {
     localStorage.setItem('isLoggedIn', 'true');
     localStorage.setItem('userType', type);
+    // يمكنك هنا تخزين اسم مستخدم وهمي لغرض العرض في التعهد
+    localStorage.setItem('userName', type === 'owner' ? 'نواف السبيعي' : 'سارة الحربي'); 
     updateNavbarBasedOnLoginStatus();
     // Redirect after updating status
     if (type === 'owner') {
@@ -117,6 +119,7 @@ function loginUser(type) {
 function logoutUser() {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userType');
+    localStorage.removeItem('userName'); // إزالة اسم المستخدم عند الخروج
     updateNavbarBasedOnLoginStatus();
     window.location.href = 'index.html';
 }
@@ -455,6 +458,77 @@ function setupMapFilters() {
     });
 }
 
+// -------------------------------------
+// وظائف المسؤولية الاجتماعية المُضافة (AI-Generated Content & Logic)
+// -------------------------------------
+
+function displayRandomCsrFact() {
+    const csrFactElement = document.getElementById('csr-fact-display');
+    if (csrFactElement && typeof csrFacts !== 'undefined' && csrFacts.length > 0) {
+        const randomIndex = Math.floor(Math.random() * csrFacts.length);
+        csrFactElement.textContent = csrFacts[randomIndex].text;
+    }
+}
+
+function setupPledgeGenerator() {
+    const pledgeForm = document.getElementById('pledge-form');
+    const pledgeResultDiv = document.getElementById('quiz-results'); // Reuse quiz-results div for pledge result
+    const userName = localStorage.getItem('userName') || 'صديقنا';
+
+    if (pledgeForm && pledgeResultDiv && typeof pledgeOptions !== 'undefined') {
+        // Populate pledge options
+        const pledgeOptionsContainer = pledgeForm.querySelector('.quiz-options');
+        if (pledgeOptionsContainer) {
+            pledgeOptionsContainer.innerHTML = ''; // Clear existing options
+            pledgeOptions.forEach(option => {
+                const label = document.createElement('label');
+                label.innerHTML = `<input type="radio" name="pledge-type" value="${option.id}"> ${option.text}`;
+                pledgeOptionsContainer.appendChild(label);
+            });
+        }
+
+        pledgeForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const selectedPledgeId = pledgeForm.querySelector('input[name="pledge-type"]:checked')?.value;
+
+            if (selectedPledgeId) {
+                const selectedPledge = pledgeOptions.find(p => p.id === selectedPledgeId);
+                if (selectedPledge) {
+                    const thankYouMessage = selectedPledge.thankYou.replace('[اسم_المستخدم]', userName);
+                    pledgeResultDiv.innerHTML = `
+                        <h3>شكرًا لالتزامك!</h3>
+                        <p>${thankYouMessage}</p>
+                        <button class="btn btn-secondary" onclick="window.location.reload()">تعهد آخر</button>
+                    `;
+                    pledgeResultDiv.style.display = 'block';
+                    pledgeForm.style.display = 'none'; // Hide form after submission
+                }
+            } else {
+                pledgeResultDiv.innerHTML = `<p style="color:var(--text-color-light);">الرجاء اختيار تعهد أولاً للمتابعة.</p>`;
+                pledgeResultDiv.style.display = 'block';
+            }
+        });
+    }
+}
+
+
+function renderImpactDashboard() {
+    const impactContainer = document.getElementById('impact-stats-container');
+    if (impactContainer && typeof impactStats !== 'undefined' && impactStats.length > 0) {
+        impactContainer.innerHTML = ''; 
+        impactStats.forEach(stat => {
+            const statCard = document.createElement('div');
+            statCard.classList.add('stat-card'); // إعادة استخدام فئة stat-card الموجودة
+            statCard.innerHTML = `
+                <h3>${stat.label}</h3>
+                <div class="value">${stat.value}${stat.unit}</div>
+                <p class="story" style="font-size:0.95rem; color: var(--gray); margin-top:10px;">${stat.story}</p>
+            `;
+            impactContainer.appendChild(statCard);
+        });
+    }
+}
+
 
 // -------------------------------------
 // عند تحميل المحتوى (DOMContentLoaded)
@@ -471,11 +545,14 @@ document.addEventListener('DOMContentLoaded', () => {
         item.classList.remove('active');
         // Add active class if href matches current page path
         // Use pathname for comparison to ignore host/protocol
-        if (item.getAttribute('href') === window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1)) {
+        const currentPath = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
+        const itemHref = item.getAttribute('href');
+
+        if (itemHref === currentPath) {
             item.classList.add('active');
         }
         // Handle index.html special case for root path
-        if (item.getAttribute('href') === 'index.html' && (window.location.pathname === '/' || window.location.pathname === '/index.html')) {
+        if (itemHref === 'index.html' && (currentPath === '' || currentPath === 'index.html')) {
             item.classList.add('active');
         }
     });
@@ -505,6 +582,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     setupQuiz();
+
+    // CSR Features Initialization
+    displayRandomCsrFact(); // For general CSR facts section
+    setupPledgeGenerator(); // For Pledge page
+    renderImpactDashboard(); // For Dashboard impact section
 
     // Check if mapid exists on current page before initializing map
     // Ensure Leaflet is loaded before calling initMap
