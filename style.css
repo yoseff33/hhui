@@ -41,10 +41,12 @@ body {
     overflow-x: hidden;
     font-size: 1.05rem;
     padding-top: 80px; /* Default padding for desktop header height (approx 80px) */
+    /* padding-bottom سيتم تعديله بواسطة JS على الجوال لتعويض الشريط السفلي */
+    padding-bottom: 0; /* Default for desktop */
 }
 
 body.no-scroll {
-    overflow: hidden; /* Disable scrolling when mobile menu is open */
+    overflow: hidden; /* Disable scrolling when mobile menu is open - no longer needed for burger */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -169,14 +171,14 @@ body.dark-mode .footer-contact li {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Toggle Button */
+/* Toggle Button - الآن يوجد زرين، واحد للديسكتوب وواحد للموبايل */
 .theme-toggle {
     background: none;
     border: none;
     color: var(--dark);
     font-size: 1.5rem;
     cursor: pointer;
-    margin-left: 20px;
+    margin-left: 20px; /* لزر الديسكتوب */
     transition: var(--transition);
 }
 .theme-toggle:hover {
@@ -187,6 +189,12 @@ body.dark-mode .theme-toggle {
 }
 body.dark-mode .theme-toggle:hover {
     color: var(--secondary);
+}
+/* إخفاء زر التبديل العلوي في الموبايل */
+@media (max-width: 992px) {
+    #theme-toggle-desktop {
+        display: none !important;
+    }
 }
 
 
@@ -300,7 +308,7 @@ section {
     box-shadow: 0 18px 35px rgba(26, 60, 55, 0.2);
 }
 
-/* التنقل */
+/* التنقل العلوي */
 header {
     background-color: var(--navbar-bg-light);
     box-shadow: 0 5px 20px var(--shadow-color-light);
@@ -406,150 +414,20 @@ body.dark-mode .nav-links li a.active {
     align-items: center;
 }
 
-/* Mobile Toggle Button (hidden on desktop) */
+/* Mobile Toggle Button (hidden - will be removed) */
 .mobile-toggle {
-    display: none; /* Hidden by default on desktop */
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    color: var(--primary);
-    cursor: pointer;
-    z-index: 1001;
-}
-body.dark-mode .mobile-toggle {
-    color: var(--text-color-dark);
+    display: none !important; /* Hidden always now */
 }
 
-/* Overlay for mobile menu */
+/* Overlay for mobile menu (hidden - will be removed) */
 .mobile-menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 999;
-    display: none;
+    display: none !important;
 }
 
-/* Mobile Nav Menu Container - Slides from the side (Right) */
+/* Mobile Nav Menu Container (hidden - will be removed) */
 .mobile-nav-menu {
-    position: fixed;
-    top: 0;
-    right: -300px; /* Hidden off-screen to the right */
-    width: 280px; /* Fixed width of the mobile menu */
-    height: 100%; /* Full height of the viewport */
-    background-color: var(--navbar-bg-light); /* Match header background */
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    transition: right 0.3s ease-in-out; /* Transition from right */
-    padding: 20px;
-    display: flex; /* Always display flex for stacking content */
-    flex-direction: column;
-    justify-content: flex-start; /* Align content to top */
-    align-items: flex-start; /* Align contents to start (right side for RTL) */
-    overflow-y: auto; /* Allow scrolling if content overflows */
+    display: none !important;
 }
-body.dark-mode .mobile-nav-menu {
-    background-color: var(--navbar-bg-dark);
-}
-
-.mobile-nav-menu.open {
-    right: 0; /* Slide in */
-}
-
-/* Styles for elements INSIDE the mobile menu */
-.mobile-nav-menu .menu-header { /* New header for mobile menu */
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--light-gray);
-    margin-bottom: 20px;
-}
-body.dark-mode .mobile-nav-menu .menu-header {
-    border-bottom-color: var(--border-color-dark);
-}
-
-.mobile-nav-menu .close-btn { /* Close button inside mobile menu */
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    color: var(--dark);
-    cursor: pointer;
-    order: -1; /* Place at the start in flexbox */
-}
-body.dark-mode .mobile-nav-menu .close-btn {
-    color: var(--text-color-dark);
-}
-
-
-.mobile-nav-menu .logo {
-    margin: 0; /* Override default logo margin */
-}
-.mobile-nav-menu .logo-text {
-    font-size: 1.6rem; /* Slightly smaller logo in mobile menu */
-}
-
-
-.mobile-nav-menu .nav-links-inner { /* Links list inside mobile menu */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align to the start (right) */
-    gap: 15px;
-    width: 100%;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.mobile-nav-menu .nav-links-inner li {
-    width: 100%;
-    text-align: right; /* Right-align text for RTL */
-    margin-bottom: 0;
-}
-
-.mobile-nav-menu .nav-links-inner li a {
-    display: block;
-    padding: 12px 10px;
-    font-size: 1.2rem;
-    color: var(--dark);
-    border-bottom: 1px solid var(--light-gray);
-}
-body.dark-mode .mobile-nav-menu .nav-links-inner li a {
-    color: var(--text-color-dark);
-    border-bottom-color: var(--border-color-dark);
-}
-
-.mobile-nav-menu .nav-links-inner li:last-child a {
-    border-bottom: none;
-}
-
-.mobile-nav-menu .nav-buttons-inner { /* Buttons container inside mobile menu */
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-top: 30px;
-    align-items: flex-start; /* Align buttons to the start (right) */
-    gap: 10px;
-    padding-top: 20px;
-    border-top: 1px solid var(--light-gray);
-}
-body.dark-mode .mobile-nav-menu .nav-buttons-inner {
-    border-top-color: var(--border-color-dark);
-}
-
-.mobile-nav-menu .nav-buttons-inner .btn {
-    width: 100%; /* Buttons take full width of container */
-    margin-bottom: 0;
-}
-.mobile-nav-menu .theme-toggle { /* Theme toggle button specifically inside mobile menu */
-    width: auto;
-    text-align: right; /* Right align the icon */
-    margin: 10px 0; /* Adjust margin */
-}
-
 
 /* Links visibility based on login status */
 .nav-links .auth-link { /* Desktop nav-links */
@@ -1454,11 +1332,6 @@ body.dark-mode .footer-contact li {
 }
 
 
-.footer-contact i {
-    color: var(--secondary);
-    font-size: 1.2rem;
-}
-
 .social-links {
     display: flex;
     gap: 15px;
@@ -1891,6 +1764,110 @@ body.dark-mode .popup-car-details p {
 
 
 /* ------------------------------------- */
+/* شريط التنقل السفلي الثابت (Fixed Bottom Navbar) */
+/* ------------------------------------- */
+.bottom-navbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--navbar-bg-light); /* يستخدم نفس لون الخلفية للناف بار العلوي */
+    box-shadow: 0 -5px 20px var(--shadow-color-light); /* ظل من الأسفل للأعلى */
+    z-index: 990; /* أقل من الهيدر العلوي */
+    display: flex;
+    justify-content: space-around; /* توزيع العناصر بالتساوي */
+    align-items: center;
+    padding: 10px 0; /* مسافة بادئة علوية وسفلية */
+    border-top-left-radius: 15px; /* حواف دائرية علوية */
+    border-top-right-radius: 15px;
+    backdrop-filter: blur(10px); /* تأثير الضبابية */
+    /* إخفاؤه افتراضيًا على الديسكتوب */
+    display: none;
+}
+
+body.dark-mode .bottom-navbar {
+    background-color: var(--navbar-bg-dark);
+    box-shadow: 0 -5px 20px var(--shadow-color-dark);
+}
+
+.bottom-navbar .nav-item {
+    display: flex;
+    flex-direction: column; /* الأيقونة والنص فوق بعضهما */
+    align-items: center;
+    text-decoration: none;
+    color: var(--gray); /* لون نصي افتراضي */
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    padding: 5px; /* مسافة بادئة للضغط */
+    flex: 1; /* لجعل العناصر تتوزع بالتساوي */
+    white-space: nowrap; /* منع التفاف النص */
+}
+
+body.dark-mode .bottom-navbar .nav-item {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.bottom-navbar .nav-item i {
+    font-size: 1.5rem; /* حجم أيقونة كبير */
+    margin-bottom: 5px; /* مسافة بين الأيقونة والنص */
+    color: var(--dark); /* لون الأيقونة */
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .bottom-navbar .nav-item i {
+    color: var(--text-color-dark);
+}
+
+
+.bottom-navbar .nav-item:hover,
+.bottom-navbar .nav-item.active {
+    color: var(--primary); /* لون عند التحديد أو التحويم */
+}
+
+body.dark-mode .bottom-navbar .nav-item:hover,
+body.dark-mode .bottom-navbar .nav-item.active {
+    color: var(--secondary);
+}
+
+.bottom-navbar .nav-item:hover i,
+.bottom-navbar .nav-item.active i {
+    color: var(--primary); /* لون الأيقونة عند التحديد أو التحويم */
+}
+body.dark-mode .bottom-navbar .nav-item:hover i,
+body.dark-mode .bottom-navbar .nav-item.active i {
+    color: var(--secondary);
+}
+
+/* إخفاء عناصر الشريط السفلي على الديسكتوب وإظهارها على الموبايل */
+@media (min-width: 993px) {
+    .bottom-navbar {
+        display: none !important; /* إخفاؤه على الديسكتوب */
+    }
+}
+@media (max-width: 992px) {
+    .bottom-navbar {
+        display: flex; /* إظهاره على الجوال */
+    }
+    /* إخفاء الروابط والأزرار العلوية على الجوال */
+    .navbar .desktop-nav-links {
+        display: none !important;
+    }
+    .navbar .nav-buttons-desktop-only {
+        display: none !important;
+    }
+    /* تعديل الهيدر ليحتوي فقط على اللوجو */
+    header .navbar {
+        justify-content: center; /* توسيط اللوجو إذا كان هو العنصر الوحيد */
+    }
+    /* تعديل padding-bottom للـ body في الموبايل */
+    body {
+        padding-bottom: 70px; /* قيمة تقديرية لارتفاع الشريط السفلي */
+    }
+}
+
+
+/* ------------------------------------- */
 /* Responsive Design (الجوال واللابتوب) */
 /* ------------------------------------- */
 
@@ -1973,6 +1950,7 @@ body.dark-mode .popup-car-details p {
 @media (max-width: 992px) {
     body {
         padding-top: 70px; /* Adjust padding for smaller header on mobile */
+        /* padding-bottom تم تعريفه الآن خصيصًا هنا، أو سيتولى JS الأمر */
     }
     header {
         padding: 10px 0; /* Smaller header on mobile */
@@ -1985,142 +1963,7 @@ body.dark-mode .popup-car-details p {
     .logo-text {
         font-size: 1.5rem;
     }
-    /* Mobile Toggle Button */
-    .mobile-toggle {
-        display: block; /* Show mobile menu button */
-        font-size: 1.6rem;
-        margin-left: 15px; /* Add some space from login button */
-    }
-
-    /* Adjust space for nav-buttons in mobile header */
-    .navbar .nav-buttons {
-        /* Make nav-buttons take full width minus logo and mobile toggle */
-        flex-grow: 1; 
-        justify-content: flex-end; /* Push content to the right (start for RTL) */
-        gap: 10px; /* Reduced gap */
-        margin-left: 15px; /* Space from logo */
-    }
-    .navbar .nav-buttons > .btn {
-        padding: 8px 15px; /* Smaller padding for button text */
-        font-size: 0.9rem; /* Smaller font size for buttons */
-    }
-    .navbar .nav-buttons > .theme-toggle {
-        margin-left: 10px; /* Space between theme toggle and other buttons */
-        order: 1; /* Move theme toggle to the end */
-    }
-    .navbar .mobile-toggle {
-        order: 2; /* Move toggle button to the very end */
-        margin-left: 10px; /* Space after the last button */
-    }
-    .navbar .nav-buttons > .guest-only {
-        margin-right: 0 !important; /* Remove right margin from guest button */
-    }
-    .navbar .nav-buttons > #nav-user-profile-placeholder {
-        margin-right: 0 !important;
-    }
-
-
-    /* Mobile Nav Menu Container (Slides from the side - Right) */
-    .nav-links { /* This is the element that becomes the mobile menu */
-        display: none; /* Hidden by default */
-        position: fixed;
-        top: 0;
-        right: -100%; /* Start completely off-screen to the right (use % for responsiveness) */
-        width: 100%; /* Full width */
-        max-width: 320px; /* Max width to ensure it looks good on tablets in portrait */
-        height: 100%; /* Full height of the viewport */
-        background-color: var(--navbar-bg-light);
-        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        transition: right 0.3s ease-in-out; /* Transition from right */
-        padding: 20px;
-        flex-direction: column;
-        align-items: flex-start; /* Align contents to start (right side for RTL) */
-        justify-content: flex-start;
-        overflow-y: auto; /* Allow scrolling if content overflows */
-    }
-    body.dark-mode .nav-links {
-        background-color: var(--navbar-bg-dark);
-    }
-    .nav-links.open {
-        right: 0; /* Slide into view */
-    }
-
-    /* Force desktop nav-links to be hidden always */
-    .navbar > .nav-links { /* Target specifically the desktop nav-links in the navbar */
-        display: none !important;
-    }
-
-
-    /* Overlay for mobile menu */
-    .mobile-menu-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.7);
-        z-index: 998;
-    }
-
-    /* Styles for links and buttons INSIDE the mobile menu */
-    .nav-links li { /* List items inside mobile menu */
-        width: 100%;
-        text-align: right; /* Right-align text for RTL */
-        margin-bottom: 0;
-    }
-    .nav-links li a {
-        display: block;
-        padding: 15px 10px;
-        font-size: 1.2rem;
-        color: var(--dark);
-        border-bottom: 1px solid var(--light-gray);
-    }
-    body.dark-mode .nav-links li a {
-        color: var(--text-color-dark);
-        border-bottom-color: var(--border-color-dark);
-    }
-    .nav-links li:last-child a {
-        border-bottom: none;
-    }
     
-    /* Nav buttons inside mobile menu - these are from the desktop structure, just repositioned */
-    /* They are now directly part of the .nav-links list on mobile, so they use the same flex container */
-    .nav-links .nav-buttons-mobile-container { /* This is the LI that contains the buttons */
-        width: 100%; /* Make sure it takes full width in mobile menu */
-        padding-top: 20px;
-        margin-top: 20px;
-        border-top: 1px solid var(--light-gray);
-        display: flex; /* Ensure it's a flex container */
-        flex-direction: column;
-        align-items: flex-start; /* Align to start */
-        gap: 10px;
-    }
-    body.dark-mode .nav-links .nav-buttons-mobile-container {
-        border-top-color: var(--border-color-dark);
-    }
-
-    .nav-links .nav-buttons-mobile-container .nav-buttons { /* This targets the actual nav-buttons group inside the LI */
-        flex-direction: column;
-        width: 100%;
-        margin-top: 0; /* Remove top margin as its parent has it */
-        align-items: flex-start;
-        gap: 10px;
-    }
-    .nav-links .nav-buttons-mobile-container .nav-buttons .btn {
-        width: 100%;
-        margin-right: 0 !important; /* Override desktop margin */
-        margin-left: 0 !important; /* Override desktop margin */
-    }
-    .nav-links .nav-buttons-mobile-container .theme-toggle {
-        width: 100%;
-        text-align: right;
-        margin: 0 !important; /* Remove specific desktop margins */
-        padding: 10px 0; /* Add some padding */
-    }
-
-
     .hero h1 {
         font-size: 3rem;
     }
