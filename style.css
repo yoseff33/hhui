@@ -19,6 +19,8 @@
     --text-color-dark: #e0e0e0;
     --heading-color-light: var(--dark);
     --heading-color-dark: #ffffff;
+    --footer-bg-light: var(--dark);
+    --footer-bg-dark: #000;
     --navbar-bg-light: rgba(255, 255, 255, 0.98);
     --navbar-bg-dark: rgba(20, 20, 20, 0.98);
     --border-color-light: #e9ecef;
@@ -29,8 +31,7 @@
 
 /* Base styles for Light Mode */
 html {
-    scroll-padding-top: 80px; /* Offset for fixed header */
-    scroll-padding-bottom: 0; /* Will be adjusted by JS for mobile bottom nav */
+    scroll-padding-top: 80px; /* Offset for fixed header when using anchor links */
 }
 
 body {
@@ -40,11 +41,10 @@ body {
     overflow-x: hidden;
     font-size: 1.05rem;
     padding-top: 80px; /* Default padding for desktop header height (approx 80px) */
-    padding-bottom: 0; /* Reset default padding-bottom */
 }
 
 body.no-scroll {
-    overflow: hidden; /* For any potential modals */
+    overflow: hidden; /* Disable scrolling when mobile menu is open */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -74,9 +74,7 @@ header {
 }
 
 footer {
-    background: var(--dark);
-    color: white;
-    padding: 80px 0 30px;
+    background: var(--footer-bg-light);
 }
 
 .form-control {
@@ -119,7 +117,7 @@ body.dark-mode header {
 }
 
 body.dark-mode footer {
-    background: var(--dark);
+    background: var(--footer-bg-dark);
 }
 
 body.dark-mode .form-control {
@@ -175,12 +173,11 @@ body.dark-mode .footer-contact li {
 .theme-toggle {
     background: none;
     border: none;
+    color: var(--dark);
     font-size: 1.5rem;
     cursor: pointer;
     margin-left: 20px;
     transition: var(--transition);
-    flex-shrink: 0;
-    color: var(--dark); /* Default desktop color */
 }
 .theme-toggle:hover {
     color: var(--primary);
@@ -303,22 +300,34 @@ section {
     box-shadow: 0 18px 35px rgba(26, 60, 55, 0.2);
 }
 
-/* التنقل - Header (Desktop specific) */
-header .navbar {
+/* التنقل */
+header {
+    background-color: var(--navbar-bg-light);
+    box-shadow: 0 5px 20px var(--shadow-color-light);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    padding: 15px 0;
+}
+
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-header .logo {
+.logo {
     display: flex;
     align-items: center;
     gap: 15px;
     text-decoration: none;
-    flex-shrink: 0;
 }
 
-header .logo-icon {
+.logo-icon {
     width: 50px;
     height: 50px;
     background: linear-gradient(135deg, var(--primary), var(--accent));
@@ -331,28 +340,26 @@ header .logo-icon {
     font-weight: bold;
 }
 
-header .logo-text {
+.logo-text {
     font-size: 1.8rem;
     font-weight: 800;
     color: var(--primary);
 }
 
-header .logo-text span {
+.logo-text span {
     color: var(--secondary);
 }
 
-/* Desktop Navigation Links */
-.desktop-nav-links {
-    display: flex; /* Always flex for desktop */
+/* Default state for desktop nav-links */
+.nav-links {
+    display: flex;
     list-style: none;
     gap: 35px;
     margin: 0;
     padding: 0;
-    flex-grow: 1;
-    justify-content: center;
 }
 
-.desktop-nav-links li a {
+.nav-links li a {
     text-decoration: none;
     color: var(--dark);
     font-weight: 700;
@@ -361,12 +368,12 @@ header .logo-text span {
     padding: 10px 0;
     transition: var(--transition);
 }
-body.dark-mode .desktop-nav-links li a {
+body.dark-mode .nav-links li a {
     color: var(--text-color-dark);
 }
 
 
-.desktop-nav-links li a:after {
+.nav-links li a:after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -378,17 +385,17 @@ body.dark-mode .desktop-nav-links li a {
     transition: var(--transition);
 }
 
-.desktop-nav-links li a:hover:after,
-.desktop-nav-links li a.active:after {
+.nav-links li a:hover:after,
+.nav-links li a.active:after {
     width: 100%;
 }
 
-.desktop-nav-links li a:hover,
-body.dark-mode .desktop-nav-links li a.active {
+.nav-links li a:hover,
+body.dark-mode .nav-links li a.active {
     color: var(--primary);
 }
-body.dark-mode .desktop-nav-links li a:hover,
-body.dark-mode .desktop-nav-links li a.active {
+body.dark-mode .nav-links li a:hover,
+body.dark-mode .nav-links li a.active {
     color: var(--secondary);
 }
 
@@ -397,13 +404,172 @@ body.dark-mode .desktop-nav-links li a.active {
     display: flex;
     gap: 20px;
     align-items: center;
-    flex-shrink: 0;
 }
 
-/* Hide mobile-only elements on desktop */
-.mobile-bottom-navbar {
-    display: none; /* Hide bottom nav on desktop */
+/* Mobile Toggle Button (hidden on desktop) */
+.mobile-toggle {
+    display: none; /* Hidden by default on desktop */
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--primary);
+    cursor: pointer;
+    z-index: 1001;
 }
+body.dark-mode .mobile-toggle {
+    color: var(--text-color-dark);
+}
+
+/* Overlay for mobile menu */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    display: none;
+}
+
+/* Mobile Nav Menu Container - Slides from the side (Right) */
+.mobile-nav-menu {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Hidden off-screen to the right */
+    width: 280px; /* Fixed width of the mobile menu */
+    height: 100%; /* Full height of the viewport */
+    background-color: var(--navbar-bg-light); /* Match header background */
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: right 0.3s ease-in-out; /* Transition from right */
+    padding: 20px;
+    display: flex; /* Always display flex for stacking content */
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to top */
+    align-items: flex-start; /* Align contents to start (right side for RTL) */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+body.dark-mode .mobile-nav-menu {
+    background-color: var(--navbar-bg-dark);
+}
+
+.mobile-nav-menu.open {
+    right: 0; /* Slide in */
+}
+
+/* Styles for elements INSIDE the mobile menu */
+.mobile-nav-menu .menu-header { /* New header for mobile menu */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--light-gray);
+    margin-bottom: 20px;
+}
+body.dark-mode .mobile-nav-menu .menu-header {
+    border-bottom-color: var(--border-color-dark);
+}
+
+.mobile-nav-menu .close-btn { /* Close button inside mobile menu */
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--dark);
+    cursor: pointer;
+    order: -1; /* Place at the start in flexbox */
+}
+body.dark-mode .mobile-nav-menu .close-btn {
+    color: var(--text-color-dark);
+}
+
+
+.mobile-nav-menu .logo {
+    margin: 0; /* Override default logo margin */
+}
+.mobile-nav-menu .logo-text {
+    font-size: 1.6rem; /* Slightly smaller logo in mobile menu */
+}
+
+
+.mobile-nav-menu .nav-links-inner { /* Links list inside mobile menu */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align to the start (right) */
+    gap: 15px;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mobile-nav-menu .nav-links-inner li {
+    width: 100%;
+    text-align: right; /* Right-align text for RTL */
+    margin-bottom: 0;
+}
+
+.mobile-nav-menu .nav-links-inner li a {
+    display: block;
+    padding: 12px 10px;
+    font-size: 1.2rem;
+    color: var(--dark);
+    border-bottom: 1px solid var(--light-gray);
+}
+body.dark-mode .mobile-nav-menu .nav-links-inner li a {
+    color: var(--text-color-dark);
+    border-bottom-color: var(--border-color-dark);
+}
+
+.mobile-nav-menu .nav-links-inner li:last-child a {
+    border-bottom: none;
+}
+
+.mobile-nav-menu .nav-buttons-inner { /* Buttons container inside mobile menu */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 30px;
+    align-items: flex-start; /* Align buttons to the start (right) */
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid var(--light-gray);
+}
+body.dark-mode .mobile-nav-menu .nav-buttons-inner {
+    border-top-color: var(--border-color-dark);
+}
+
+.mobile-nav-menu .nav-buttons-inner .btn {
+    width: 100%; /* Buttons take full width of container */
+    margin-bottom: 0;
+}
+.mobile-nav-menu .theme-toggle { /* Theme toggle button specifically inside mobile menu */
+    width: auto;
+    text-align: right; /* Right align the icon */
+    margin: 10px 0; /* Adjust margin */
+}
+
+
+/* Links visibility based on login status */
+.nav-links .auth-link { /* Desktop nav-links */
+    display: none;
+}
+.mobile-nav-menu .nav-links-inner .auth-link { /* Mobile nav-links, default hidden */
+    display: none;
+}
+.mobile-nav-menu .nav-links-inner .auth-link.show-mobile { /* Show auth links only on mobile when logged in */
+    display: block;
+}
+
+.nav-buttons .guest-only { /* For desktop guest button */
+    display: flex;
+}
+.nav-buttons #nav-user-profile-placeholder { /* For desktop user profile */
+    display: none;
+}
+/* No separate mobile guest/profile buttons in main header, they're moved to mobile-nav-menu */
+
 
 /* Hero Section */
 .hero {
@@ -1221,7 +1387,7 @@ body.dark-mode .form-control:focus {
 
 /* Footer */
 footer {
-    background: var(--dark);
+    background: var(--footer-bg-light);
     color: white;
     padding: 80px 0 30px;
 }
@@ -1803,14 +1969,13 @@ body.dark-mode .popup-car-details p {
     }
 }
 
-/* لأجهزة الجوال والتابلت (أقل من 992 بكسل) - إعادة تعريف شاملة للـ Navbar */
+/* لأجهزة الكمبيوتر اللوحية والشاشات الكبيرة (أقل من 992 بكسل) */
 @media (max-width: 992px) {
     body {
         padding-top: 70px; /* Adjust padding for smaller header on mobile */
-        padding-bottom: 60px; /* Add padding for fixed bottom navbar */
     }
     header {
-        padding: 10px 0; /* Smaller header padding on mobile */
+        padding: 10px 0; /* Smaller header on mobile */
     }
     .logo-icon {
         width: 40px;
@@ -1820,118 +1985,139 @@ body.dark-mode .popup-car-details p {
     .logo-text {
         font-size: 1.5rem;
     }
-
-    /* Hide desktop nav elements */
-    .desktop-nav-links,
-    .nav-buttons {
-        display: none;
+    /* Mobile Toggle Button */
+    .mobile-toggle {
+        display: block; /* Show mobile menu button */
+        font-size: 1.6rem;
+        margin-left: 15px; /* Add some space from login button */
     }
 
-    /* Show mobile-only elements */
-    .mobile-bottom-navbar {
-        display: flex; /* Show the bottom navbar */
+    /* Adjust space for nav-buttons in mobile header */
+    .navbar .nav-buttons {
+        /* Make nav-buttons take full width minus logo and mobile toggle */
+        flex-grow: 1; 
+        justify-content: flex-end; /* Push content to the right (start for RTL) */
+        gap: 10px; /* Reduced gap */
+        margin-left: 15px; /* Space from logo */
+    }
+    .navbar .nav-buttons > .btn {
+        padding: 8px 15px; /* Smaller padding for button text */
+        font-size: 0.9rem; /* Smaller font size for buttons */
+    }
+    .navbar .nav-buttons > .theme-toggle {
+        margin-left: 10px; /* Space between theme toggle and other buttons */
+        order: 1; /* Move theme toggle to the end */
+    }
+    .navbar .mobile-toggle {
+        order: 2; /* Move toggle button to the very end */
+        margin-left: 10px; /* Space after the last button */
+    }
+    .navbar .nav-buttons > .guest-only {
+        margin-right: 0 !important; /* Remove right margin from guest button */
+    }
+    .navbar .nav-buttons > #nav-user-profile-placeholder {
+        margin-right: 0 !important;
     }
 
-    /* Fixed Bottom Navigation Bar */
-    .mobile-bottom-navbar {
+
+    /* Mobile Nav Menu Container (Slides from the side - Right) */
+    .nav-links { /* This is the element that becomes the mobile menu */
+        display: none; /* Hidden by default */
         position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 60px; /* Height of the bottom navbar */
+        top: 0;
+        right: -100%; /* Start completely off-screen to the right (use % for responsiveness) */
+        width: 100%; /* Full width */
+        max-width: 320px; /* Max width to ensure it looks good on tablets in portrait */
+        height: 100%; /* Full height of the viewport */
         background-color: var(--navbar-bg-light);
-        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
         z-index: 1000;
-        display: flex;
-        justify-content: space-around; /* Distribute items evenly */
-        align-items: center;
-        padding: 0 10px;
+        transition: right 0.3s ease-in-out; /* Transition from right */
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start; /* Align contents to start (right side for RTL) */
+        justify-content: flex-start;
+        overflow-y: auto; /* Allow scrolling if content overflows */
     }
-    body.dark-mode .mobile-bottom-navbar {
+    body.dark-mode .nav-links {
         background-color: var(--navbar-bg-dark);
     }
+    .nav-links.open {
+        right: 0; /* Slide into view */
+    }
 
-    .mobile-bottom-navbar .nav-item {
-        display: flex;
+    /* Force desktop nav-links to be hidden always */
+    .navbar > .nav-links { /* Target specifically the desktop nav-links in the navbar */
+        display: none !important;
+    }
+
+
+    /* Overlay for mobile menu */
+    .mobile-menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 998;
+    }
+
+    /* Styles for links and buttons INSIDE the mobile menu */
+    .nav-links li { /* List items inside mobile menu */
+        width: 100%;
+        text-align: right; /* Right-align text for RTL */
+        margin-bottom: 0;
+    }
+    .nav-links li a {
+        display: block;
+        padding: 15px 10px;
+        font-size: 1.2rem;
+        color: var(--dark);
+        border-bottom: 1px solid var(--light-gray);
+    }
+    body.dark-mode .nav-links li a {
+        color: var(--text-color-dark);
+        border-bottom-color: var(--border-color-dark);
+    }
+    .nav-links li:last-child a {
+        border-bottom: none;
+    }
+    
+    /* Nav buttons inside mobile menu - these are from the desktop structure, just repositioned */
+    /* They are now directly part of the .nav-links list on mobile, so they use the same flex container */
+    .nav-links .nav-buttons-mobile-container { /* This is the LI that contains the buttons */
+        width: 100%; /* Make sure it takes full width in mobile menu */
+        padding-top: 20px;
+        margin-top: 20px;
+        border-top: 1px solid var(--light-gray);
+        display: flex; /* Ensure it's a flex container */
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        color: var(--gray);
-        font-size: 0.8rem;
-        font-weight: 600;
-        transition: var(--transition);
-        flex: 1; /* Make each item take equal space */
-        max-width: 20%; /* Limit width to prevent overcrowding on more items */
-        padding: 5px 0;
+        align-items: flex-start; /* Align to start */
+        gap: 10px;
     }
-    body.dark-mode .mobile-bottom-navbar .nav-item {
-        color: var(--text-color-dark);
+    body.dark-mode .nav-links .nav-buttons-mobile-container {
+        border-top-color: var(--border-color-dark);
     }
 
-    .mobile-bottom-navbar .nav-item i {
-        font-size: 1.4rem;
-        margin-bottom: 4px;
-        color: var(--gray); /* Icon default color */
-    }
-    body.dark-mode .mobile-bottom-navbar .nav-item i {
-        color: var(--text-color-dark);
-    }
-
-    .mobile-bottom-navbar .nav-item.active,
-    .mobile-bottom-navbar .nav-item:hover {
-        color: var(--primary); /* Text active/hover color */
-    }
-    .mobile-bottom-navbar .nav-item.active i,
-    .mobile-bottom-navbar .nav-item:hover i {
-        color: var(--primary); /* Icon active/hover color */
-    }
-    body.dark-mode .mobile-bottom-navbar .nav-item.active,
-    body.dark-mode .mobile-bottom-navbar .nav-item:hover {
-        color: var(--secondary);
-    }
-    body.dark-mode .mobile-bottom-navbar .nav-item.active i,
-    body.dark-mode .mobile-bottom-navbar .nav-item:hover i {
-        color: var(--secondary);
-    }
-
-    /* Dark mode toggle specific to bottom nav */
-    .mobile-bottom-navbar .theme-toggle {
-        display: flex; /* Ensure it's displayed */
+    .nav-links .nav-buttons-mobile-container .nav-buttons { /* This targets the actual nav-buttons group inside the LI */
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: none;
-        border: none;
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: var(--gray);
-        cursor: pointer;
-        flex: 1;
-        padding: 5px 0;
+        width: 100%;
+        margin-top: 0; /* Remove top margin as its parent has it */
+        align-items: flex-start;
+        gap: 10px;
     }
-    .mobile-bottom-navbar .theme-toggle i {
-        font-size: 1.4rem;
-        margin-bottom: 4px;
-        color: var(--gray);
+    .nav-links .nav-buttons-mobile-container .nav-buttons .btn {
+        width: 100%;
+        margin-right: 0 !important; /* Override desktop margin */
+        margin-left: 0 !important; /* Override desktop margin */
     }
-    body.dark-mode .mobile-bottom-navbar .theme-toggle {
-        color: var(--text-color-dark);
-    }
-    body.dark-mode .mobile-bottom-navbar .theme-toggle i {
-        color: var(--text-color-dark);
-    }
-    .mobile-bottom-navbar .theme-toggle:hover {
-        color: var(--primary);
-    }
-    .mobile-bottom-navbar .theme-toggle:hover i {
-        color: var(--primary);
-    }
-    body.dark-mode .mobile-bottom-navbar .theme-toggle:hover {
-        color: var(--secondary);
-    }
-    body.dark-mode .mobile-bottom-navbar .theme-toggle:hover i {
-        color: var(--secondary);
+    .nav-links .nav-buttons-mobile-container .theme-toggle {
+        width: 100%;
+        text-align: right;
+        margin: 0 !important; /* Remove specific desktop margins */
+        padding: 10px 0; /* Add some padding */
     }
 
 
@@ -2001,131 +2187,7 @@ body.dark-mode .popup-car-details p {
     }
 }
 
-/* لأجهزة الجوال الصغيرة جداً (أقل من 768 بكسل) */
-@media (max-width: 768px) {
-    body {
-        padding-top: 70px;
-        padding-bottom: 60px; /* Ensure content is above bottom navbar */
-    }
-    header {
-        padding: 10px 0;
-    }
-    .logo-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-    }
-    .logo-text {
-        font-size: 1.5rem;
-    }
-    /* Hide desktop nav elements */
-    .desktop-nav-links,
-    .nav-buttons {
-        display: none;
-    }
-    /* Ensure mobile-bottom-navbar is visible */
-    .mobile-bottom-navbar {
-        display: flex;
-    }
-
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-    .hero p {
-        font-size: 1.1rem;
-    }
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    .hero-buttons .btn {
-        width: 80%;
-    }
-    .section-title h2 {
-        font-size: 2rem;
-    }
-    .section-title p {
-        font-size: 1.1rem;
-    }
-    .steps-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    .step {
-        width: 90%;
-    }
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-    .add-car-form {
-        padding: 25px;
-    }
-    .car-actions {
-        flex-direction: column;
-    }
-    .car-actions .btn {
-        width: 100%;
-    }
-    .dashboard-content {
-        padding: 20px;
-    }
-    .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    .recent-bookings {
-        padding: 15px;
-    }
-    .booking-car {
-        flex-direction: column;
-        align-items: flex-end;
-        text-align: right;
-    }
-    .booking-car img {
-        margin-left: 0;
-        margin-bottom: 10px;
-    }
-    .booking-details {
-        text-align: right;
-    }
-    .loyalty-card h3 {
-        font-size: 1.8rem;
-    }
-    .loyalty-card p {
-        font-size: 1rem;
-    }
-    .loyalty-promo h3 {
-        font-size: 1.8rem;
-    }
-    .loyalty-promo p {
-        font-size: 1.0rem;
-    }
-    .recently-viewed-bar {
-        padding: 15px 0;
-    }
-    .recently-viewed-bar h3 {
-        font-size: 1.2rem;
-    }
-    .recent-car-thumb {
-        width: 100px;
-        height: 70px;
-    }
-    .testimonial-slide {
-        padding: 20px;
-    }
-    .testimonial-text {
-        font-size: 1rem;
-    }
-    .testimonial-author-img {
-        width: 60px;
-        height: 60px;
-    }
-    .testimonial-author-name {
-        font-size: 1rem;
-    }
-}
-
-/* للهواتف الذكية الصغيرة جداً (أقل من 480 بكسل) */
+/* لأجهزة الكمبيوتر اللوحية الصغيرة جداً (أقل من 480 بكسل) */
 @media (max-width: 480px) {
     .container {
         padding: 0 15px;
