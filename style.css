@@ -1726,7 +1726,7 @@ body.dark-mode .quiz-options label:hover {
     color: var(--text-color-light);
 }
 body.dark-mode .quiz-results {
-    background: #2a2a2a;
+    background : #2a2a2a;
     color: var(--text-color-dark);
 }
 
@@ -1989,13 +1989,16 @@ body.dark-mode .popup-car-details p {
     .mobile-toggle {
         display: block; /* Show mobile menu button */
         font-size: 1.6rem;
-        margin-left: 0; /* No left margin for the toggle button in mobile header */
+        margin-left: 15px; /* Add some space from login button */
     }
 
     /* Adjust space for nav-buttons in mobile header */
     .navbar .nav-buttons {
+        /* Make nav-buttons take full width minus logo and mobile toggle */
+        flex-grow: 1; 
+        justify-content: flex-end; /* Push content to the right (start for RTL) */
         gap: 10px; /* Reduced gap */
-        margin-left: auto; /* Push to the left */
+        margin-left: 15px; /* Space from logo */
     }
     .navbar .nav-buttons > .btn {
         padding: 8px 15px; /* Smaller padding for button text */
@@ -2019,7 +2022,7 @@ body.dark-mode .popup-car-details p {
 
     /* Mobile Nav Menu Container (Slides from the side - Right) */
     .nav-links { /* This is the element that becomes the mobile menu */
-        display: flex; /* Always flex for stacking content */
+        display: none; /* Hidden by default */
         position: fixed;
         top: 0;
         right: -100%; /* Start completely off-screen to the right (use % for responsiveness) */
@@ -2083,24 +2086,34 @@ body.dark-mode .popup-car-details p {
     }
     
     /* Nav buttons inside mobile menu - these are from the desktop structure, just repositioned */
-    .nav-links .nav-buttons { /* This targets the actual nav-buttons group inside the mobile menu */
+    /* They are now directly part of the .nav-links list on mobile, so they use the same flex container */
+    .nav-links .nav-buttons-mobile-container { /* This is the LI that contains the buttons */
+        width: 100%; /* Make sure it takes full width in mobile menu */
+        padding-top: 20px;
+        margin-top: 20px;
+        border-top: 1px solid var(--light-gray);
+        display: flex; /* Ensure it's a flex container */
         flex-direction: column;
-        width: 100%;
-        margin-top: 30px;
         align-items: flex-start; /* Align to start */
         gap: 10px;
-        border-top: 1px solid var(--light-gray);
-        padding-top: 20px;
     }
-    body.dark-mode .nav-links .nav-buttons {
+    body.dark-mode .nav-links .nav-buttons-mobile-container {
         border-top-color: var(--border-color-dark);
     }
-    .nav-links .nav-buttons .btn {
+
+    .nav-links .nav-buttons-mobile-container .nav-buttons { /* This targets the actual nav-buttons group inside the LI */
+        flex-direction: column;
+        width: 100%;
+        margin-top: 0; /* Remove top margin as its parent has it */
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .nav-links .nav-buttons-mobile-container .nav-buttons .btn {
         width: 100%;
         margin-right: 0 !important; /* Override desktop margin */
         margin-left: 0 !important; /* Override desktop margin */
     }
-    .nav-links .nav-buttons .theme-toggle {
+    .nav-links .nav-buttons-mobile-container .theme-toggle {
         width: 100%;
         text-align: right;
         margin: 0 !important; /* Remove specific desktop margins */
@@ -2174,124 +2187,7 @@ body.dark-mode .popup-car-details p {
     }
 }
 
-/* لأجهزة الكمبيوتر اللوحية الصغيرة (أقل من 768 بكسل) */
-@media (max-width: 768px) {
-    body {
-        padding-top: 70px;
-    }
-    header {
-        padding: 10px 0;
-    }
-    .logo-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-    }
-    .logo-text {
-        font-size: 1.5rem;
-    }
-    .mobile-toggle {
-        font-size: 1.6rem;
-    }
-
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-    .hero p {
-        font-size: 1.1rem;
-    }
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    .hero-buttons .btn {
-        width: 80%;
-    }
-    .section-title h2 {
-        font-size: 2rem;
-    }
-    .section-title p {
-        font-size: 1.1rem;
-    }
-    .steps-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    .step {
-        width: 90%;
-    }
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-    .add-car-form {
-        padding: 25px;
-    }
-    .car-actions {
-        flex-direction: column;
-    }
-    .car-actions .btn {
-        width: 100%;
-    }
-    .dashboard-content {
-        padding: 20px;
-    }
-    .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    .recent-bookings {
-        padding: 15px;
-    }
-    .booking-car {
-        flex-direction: column;
-        align-items: flex-end;
-        text-align: right;
-    }
-    .booking-car img {
-        margin-left: 0;
-        margin-bottom: 10px;
-    }
-    .booking-details {
-        text-align: right;
-    }
-    .loyalty-card h3 {
-        font-size: 1.8rem;
-    }
-    .loyalty-card p {
-        font-size: 1rem;
-    }
-    .loyalty-promo h3 {
-        font-size: 1.8rem;
-    }
-    .loyalty-promo p {
-        font-size: 1.0rem;
-    }
-    .recently-viewed-bar {
-        padding: 15px 0;
-    }
-    .recently-viewed-bar h3 {
-        font-size: 1.2rem;
-    }
-    .recent-car-thumb {
-        width: 100px;
-        height: 70px;
-    }
-    .testimonial-slide {
-        padding: 20px;
-    }
-    .testimonial-text {
-        font-size: 1rem;
-    }
-    .testimonial-author-img {
-        width: 60px;
-        height: 60px;
-    }
-    .testimonial-author-name {
-        font-size: 1rem;
-    }
-}
-
-/* للهواتف الذكية الصغيرة جداً (أقل من 480 بكسل) */
+/* لأجهزة الكمبيوتر اللوحية الصغيرة جداً (أقل من 480 بكسل) */
 @media (max-width: 480px) {
     .container {
         padding: 0 15px;
