@@ -174,37 +174,35 @@ function updateLoyaltyCard(completedRentals) {
 // -------------------------------------
 
 function setupThemeToggle() {
-    const themeToggleBtnDesktop = document.getElementById('theme-toggle-desktop'); // Desktop Only
-    const themeToggleBtnMobile = document.getElementById('theme-toggle-mobile'); // Mobile Only
+    // الزر الآن هو في الهيدر العلوي فقط ويُستخدم لجميع الشاشات
+    const themeToggleBtn = document.getElementById('theme-toggle-desktop'); 
 
     const applyTheme = (theme) => {
         document.body.classList.remove('light-mode', 'dark-mode');
         document.body.classList.add(theme + '-mode');
         localStorage.setItem('theme', theme);
 
-        if (themeToggleBtnDesktop) {
-            themeToggleBtnDesktop.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
-        }
-        // Update mobile theme toggle text and icon
-        if (themeToggleBtnMobile) {
-            themeToggleBtnMobile.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i><span>الوضع الليلي</span>' : '<i class="fas fa-sun"></i><span>الوضع النهاري</span>';
+        if (themeToggleBtn) {
+            // Check screen width to decide between icon only or icon with text
+            if (window.innerWidth <= 992) { // Mobile view
+                themeToggleBtn.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i><span>الوضع الليلي</span>' : '<i class="fas fa-sun"></i><span>الوضع النهاري</span>';
+            } else { // Desktop view
+                themeToggleBtn.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+            }
         }
     };
 
     const currentTheme = localStorage.getItem('theme') || 'light';
-    applyTheme(currentTheme);
+    applyTheme(currentTheme); // Apply theme on load
 
-    if (themeToggleBtnDesktop) {
-        themeToggleBtnDesktop.addEventListener('click', () => {
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
             const newTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
             applyTheme(newTheme);
         });
-    }
-    if (themeToggleBtnMobile) {
-        themeToggleBtnMobile.addEventListener('click', () => {
-            const newTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
-            applyTheme(newTheme);
-        });
+
+        // Re-apply theme on resize to switch between icon/text dynamically
+        window.addEventListener('resize', () => applyTheme(localStorage.getItem('theme') || 'light'));
     }
 }
 
@@ -472,12 +470,12 @@ function displayRandomCsrFact() {
 
 function setupPledgeGenerator() {
     const pledgeForm = document.getElementById('pledge-form');
-    const pledgeResultDiv = document.getElementById('quiz-results'); // Reuse quiz-results div for pledge result
+    const pledgeResultDiv = document.getElementById('pledge-result'); // Ensure this is the correct ID for the result display
     const userName = localStorage.getItem('userName') || 'صديقنا';
 
     if (pledgeForm && pledgeResultDiv && typeof pledgeOptions !== 'undefined') {
         // Populate pledge options
-        const pledgeOptionsContainer = pledgeForm.querySelector('.quiz-options');
+        const pledgeOptionsContainer = pledgeForm.querySelector('.quiz-options'); // Ensure this selects the correct container within the pledge form
         if (pledgeOptionsContainer) {
             pledgeOptionsContainer.innerHTML = ''; // Clear existing options
             pledgeOptions.forEach(option => {
@@ -584,9 +582,16 @@ document.addEventListener('DOMContentLoaded', () => {
     setupQuiz();
 
     // CSR Features Initialization
-    displayRandomCsrFact(); // For general CSR facts section
-    setupPledgeGenerator(); // For Pledge page
-    renderImpactDashboard(); // For Dashboard impact section
+    // تأكد من وجود العناصر في الصفحة قبل استدعاء الوظيفة
+    if (document.getElementById('csr-fact-display')) {
+        displayRandomCsrFact(); 
+    }
+    if (document.getElementById('pledge-form')) {
+        setupPledgeGenerator(); 
+    }
+    if (document.getElementById('impact-stats-container')) {
+        renderImpactDashboard(); 
+    }
 
     // Check if mapid exists on current page before initializing map
     // Ensure Leaflet is loaded before calling initMap
