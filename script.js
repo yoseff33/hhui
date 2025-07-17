@@ -28,14 +28,15 @@ window.addEventListener('scroll', function() {
 // Mobile Menu Toggle (إصلاح جذري)
 // -------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-    const mobileToggleButton = document.querySelector('.mobile-toggle'); // زر الهامبرغر في الهيدر
-    const mobileNavMenu = document.querySelector('.nav-links'); // القائمة نفسها (التي تتغير لتصبح قائمة جوال)
+    const mobileToggleButton = document.getElementById('mobile-toggle-btn'); // زر الهامبرغر في الهيدر (تم استخدام ID)
+    const mobileMenuContainer = document.getElementById('mobile-menu-container'); // حاوية القائمة الجانبية
     const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay'); // الطبقة الشفافة التي تغطي المحتوى
+    const mobileMenuCloseButton = document.getElementById('mobile-close-btn'); // زر الإغلاق داخل القائمة
 
     // وظيفة لفتح القائمة
     const openMobileMenu = () => {
-        if (mobileNavMenu && mobileMenuOverlay && mobileToggleButton) {
-            mobileNavMenu.classList.add('open');
+        if (mobileMenuContainer && mobileMenuOverlay && mobileToggleButton) {
+            mobileMenuContainer.classList.add('open');
             mobileMenuOverlay.style.display = 'block';
             document.body.classList.add('no-scroll'); // منع التمرير في الخلفية
             mobileToggleButton.innerHTML = '<i class="fas fa-times"></i>'; // تغيير الأيقونة إلى X
@@ -45,8 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // وظيفة لإغلاق القائمة
     const closeMobileMenu = () => {
-        if (mobileNavMenu && mobileMenuOverlay && mobileToggleButton) {
-            mobileNavMenu.classList.remove('open');
+        if (mobileMenuContainer && mobileMenuOverlay && mobileToggleButton) {
+            mobileMenuContainer.classList.remove('open');
             mobileMenuOverlay.style.display = 'none';
             document.body.classList.remove('no-scroll'); // استعادة التمرير
             mobileToggleButton.innerHTML = '<i class="fas fa-bars"></i>'; // تغيير الأيقونة إلى هامبرغر
@@ -58,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileToggleButton) {
         mobileToggleButton.addEventListener('click', (event) => {
             event.stopPropagation(); // منع النقر من الانتشار إلى المستند وإغلاق القائمة فورًا
-            const isOpen = mobileNavMenu.classList.contains('open');
+            const isOpen = mobileMenuContainer.classList.contains('open');
             if (isOpen) {
                 closeMobileMenu();
             } else {
@@ -67,23 +68,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // الاستماع لزر الإغلاق داخل القائمة
+    if (mobileMenuCloseButton) {
+        mobileMenuCloseButton.addEventListener('click', closeMobileMenu);
+    }
+
     // الاستماع للنقر على الطبقة الشفافة لإغلاق القائمة
     if (mobileMenuOverlay) {
         mobileMenuOverlay.addEventListener('click', closeMobileMenu);
     }
 
     // إغلاق القائمة عند النقر على أي رابط داخلها
-    // (يجب أن تستمع لروابط التنقل الموجودة داخل القائمة)
-    if (mobileNavMenu) {
-        mobileNavMenu.querySelectorAll('li a').forEach(link => {
+    if (mobileMenuContainer) {
+        mobileMenuContainer.querySelectorAll('ul li a').forEach(link => { // Targeting 'a' tags inside 'li' inside 'ul'
             link.addEventListener('click', closeMobileMenu);
+        });
+        mobileMenuContainer.querySelectorAll('.btn').forEach(button => { // Close also when internal buttons are clicked
+            button.addEventListener('click', closeMobileMenu);
         });
     }
 
     // عند تغيير حجم الشاشة من الجوال إلى الديسكتوب، تأكد من إغلاق القائمة الجانبية
     window.addEventListener('resize', () => {
-        // إذا كان حجم الشاشة أكبر من breakpoint الجوال والقائمة مفتوحة
-        if (window.innerWidth > 992 && mobileNavMenu.classList.contains('open')) {
+        if (window.innerWidth > 992 && mobileMenuContainer.classList.contains('open')) {
             closeMobileMenu();
         }
     });
@@ -109,23 +116,32 @@ function updateNavbarBasedOnLoginStatus() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     const userType = localStorage.getItem('userType');
 
-    // Desktop Nav Links and Buttons
-    const desktopNavLinks = document.querySelector('.navbar > .nav-links'); // Desktop nav-links UL
+    // Desktop Navbar elements
+    const desktopNavLinks = document.querySelector('.desktop-nav-links');
     const desktopAuthLinks = desktopNavLinks ? desktopNavLinks.querySelectorAll('.auth-link') : [];
     const desktopGuestButton = document.getElementById('nav-guest-button');
     const desktopUserProfilePlaceholder = document.getElementById('nav-user-profile-placeholder');
 
+    // Mobile Navbar elements (inside the #mobile-menu-container)
+    const mobileMenuContainer = document.getElementById('mobile-menu-container');
+    const mobileNavList = mobileMenuContainer ? mobileMenuContainer.querySelector('.mobile-nav-list') : null;
+    const mobileAuthLinks = mobileNavList ? mobileNavList.querySelectorAll('.auth-link') : [];
+    const mobileGuestButton = mobileMenuContainer ? mobileMenuContainer.querySelector('#mobile-guest-button') : null;
+    const mobileUserProfilePlaceholder = mobileMenuContainer ? mobileMenuContainer.querySelector('#mobile-user-profile-placeholder') : null;
 
-    // Hide all auth links and user profile placeholders first
+
+    // Hide all auth related elements first
     if (desktopGuestButton) desktopGuestButton.style.display = 'none';
     if (desktopUserProfilePlaceholder) desktopUserProfilePlaceholder.style.display = 'none';
-    
-    // Auth links are handled by CSS media queries, but ensure their default is hidden
     desktopAuthLinks.forEach(link => link.style.display = 'none');
+    
+    if (mobileGuestButton) mobileGuestButton.style.display = 'none';
+    if (mobileUserProfilePlaceholder) mobileUserProfilePlaceholder.style.display = 'none';
+    mobileAuthLinks.forEach(link => link.style.display = 'none');
 
 
     if (isLoggedIn) {
-        // Desktop user buttons (My Profile/Logout)
+        // Desktop user profile and auth links
         if (desktopUserProfilePlaceholder) {
             desktopUserProfilePlaceholder.innerHTML = `
                 <a href="#" class="btn btn-outline" onclick="logoutUser()" style="margin-right: 10px;">
@@ -137,8 +153,6 @@ function updateNavbarBasedOnLoginStatus() {
             `;
             desktopUserProfilePlaceholder.style.display = 'flex';
         }
-        
-        // Show appropriate auth links for desktop
         desktopAuthLinks.forEach(link => {
             const linkHref = link.getAttribute('href');
             if (userType === 'owner') {
@@ -152,9 +166,35 @@ function updateNavbarBasedOnLoginStatus() {
             }
         });
 
+        // Mobile user profile and auth links
+        if (mobileUserProfilePlaceholder) {
+             mobileUserProfilePlaceholder.innerHTML = `
+                <a href="#" class="btn btn-outline" onclick="logoutUser()" style="width: 100%; margin-bottom: 10px;">
+                    <i class="fas fa-sign-out-alt"></i> خروج
+                </a>
+                <a href="${userType === 'owner' ? 'dashboard-owner.html' : 'dashboard-renter.html'}" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-user-circle"></i> ملفي
+                </a>
+            `;
+            mobileUserProfilePlaceholder.style.display = 'flex';
+        }
+        mobileAuthLinks.forEach(link => {
+            const linkHref = link.getAttribute('href');
+            if (userType === 'owner') {
+                if (linkHref && (linkHref.includes('dashboard-owner.html') || linkHref.includes('add-car.html'))) {
+                    link.style.display = 'block';
+                }
+            } else if (userType === 'renter') {
+                if (linkHref && linkHref.includes('dashboard-renter.html')) {
+                    link.style.display = 'block';
+                }
+            }
+        });
+
 
     } else { // Not logged in
         if (desktopGuestButton) desktopGuestButton.style.display = 'flex';
+        if (mobileGuestButton) mobileGuestButton.style.display = 'flex';
     }
 }
 
