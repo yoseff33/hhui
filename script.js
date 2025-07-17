@@ -29,7 +29,7 @@ window.addEventListener('scroll', function() {
 // -------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
     const mobileToggleButton = document.querySelector('.mobile-toggle'); // زر الهامبرغر في الهيدر
-    const mobileNavMenu = document.querySelector('.nav-links'); // القائمة نفسها (التي تتغير لتصبح قائمة جوال)
+const mobileNavMenu = document.querySelector('.mobile-nav-menu');
     const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay'); // الطبقة الشفافة التي تغطي المحتوى
 
     // وظيفة لفتح القائمة
