@@ -115,11 +115,6 @@ function updateNavbarBasedOnLoginStatus() {
     const desktopGuestButton = document.getElementById('nav-guest-button');
     const desktopUserProfilePlaceholder = document.getElementById('nav-user-profile-placeholder');
 
-    // Mobile Nav Links (these are the same nav-links elements, but controlled by mobile menu CSS)
-    const mobileAuthLinks = desktopNavLinks ? desktopNavLinks.querySelectorAll('.auth-link') : []; // Same elements as desktop, but within mobile view
-    const mobileGuestButton = document.getElementById('nav-guest-button'); // Guest button (same as desktop, styling changes)
-    const mobileUserProfilePlaceholder = document.getElementById('nav-user-profile-placeholder'); // User profile (same as desktop, styling changes)
-
 
     // Hide all auth links and user profile placeholders first
     if (desktopGuestButton) desktopGuestButton.style.display = 'none';
@@ -143,26 +138,16 @@ function updateNavbarBasedOnLoginStatus() {
             desktopUserProfilePlaceholder.style.display = 'flex';
         }
         
-        // Mobile user profile is controlled by CSS based on `nav-buttons-mobile-container`
-        // We only need to ensure the correct auth links are visible.
-
-        // Show appropriate auth links for desktop and mobile
+        // Show appropriate auth links for desktop
         desktopAuthLinks.forEach(link => {
-            const linkId = link.id; 
             const linkHref = link.getAttribute('href');
-
-            // For both desktop and mobile views, we control the 'display' property
             if (userType === 'owner') {
                 if (linkHref && (linkHref.includes('dashboard-owner.html') || linkHref.includes('add-car.html'))) {
                     link.style.display = 'block'; 
-                } else if (link.classList.contains('auth-link')) {
-                    link.style.display = 'none'; 
                 }
             } else if (userType === 'renter') {
                 if (linkHref && linkHref.includes('dashboard-renter.html')) {
                     link.style.display = 'block';
-                } else if (link.classList.contains('auth-link')) {
-                    link.style.display = 'none'; 
                 }
             }
         });
@@ -369,594 +354,196 @@ function setupQuiz() {
         let carType = "";
 
         // Simple quiz logic
-        if (answers.passengers === '5' || answers.box-shadow: var(--box-shadow);
-    background-color: var(--card-bg-light);
-    z-index: 1;
-}
-body.dark-mode #mapid {
-    background-color: var(--card-bg-dark);
-}
+        if (answers.passengers === '5' || answers.passengers === '7') {
+            if (answers.budget === 'medium' || answers.budget === 'high') {
+                recommendation = "نوصي بسيارة دفع رباعي فسيحة ومريحة لرحلاتك العائلية.";
+                carType = "دفع رباعي";
+            } else {
+                recommendation = "ننصح بسيارة سيدان متوسطة الحجم، اقتصادية ومناسبة للاستخدام اليومي.";
+                carType = "سيدان";
+            }
+        } else if (answers.passengers === '2' || answers.passengers === '4') {
+            if (answers.budget === 'low') {
+                recommendation = "سيارة اقتصادية صغيرة ستكون مثالية لتنقلاتك اليومية داخل المدينة.";
+                carType = "اقتصادية";
+            } else if (answers.style === 'sporty' || answers.style === 'luxury') {
+                recommendation = "سيارة فاخرة أو رياضية ستلبي رغبتك في الأناقة والأداء العالي.";
+                carType = "فاخرة";
+            } else {
+                recommendation = "سيارة سيدان أنيقة وعملية ستكون خياراً ممتازاً لك.";
+                carType = "سيدان";
+            }
+        }
 
-/* Filter buttons for map */
-.map-filters {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 30px;
-    flex-wrap: wrap;
-}
-.map-filter-btn {
-    padding: 10px 25px;
-    border-radius: 12px;
-    background: var(--card-bg-light);
-    border: 2px solid var(--border-color-light);
-    font-weight: 700;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 1rem;
-    color: var(--dark);
-}
-body.dark-mode .map-filter-btn {
-    background: #333;
-    border-color: #444;
-    color: var(--text-color-dark);
-}
-.map-filter-btn.active, .map-filter-btn:hover {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
-
-/* Custom Leaflet Marker Icon */
-.custom-car-icon {
-    background-color: var(--primary);
-    border-radius: 50%;
-    width: 40px !important;
-    height: 40px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.2rem;
-    border: 2px solid white;
-    box-shadow: 0 0 0 5px rgba(46, 139, 87, 0.3);
-    transition: transform 0.2s ease;
-}
-.custom-car-icon:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 0 8px rgba(46, 139, 87, 0.5);
-}
-
-/* Custom Leaflet Popup (InfoWindow) Styling */
-.leaflet-popup-content-wrapper {
-    background: var(--card-bg-light);
-    color: var(--dark);
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    padding: 0;
-    text-align: right;
-    direction: rtl;
-}
-body.dark-mode .leaflet-popup-content-wrapper {
-    background: var(--card-bg-dark);
-    color: var(--text-color-dark);
-}
-
-.leaflet-popup-content {
-    margin: 0;
-    padding: 15px;
-}
-
-.leaflet-popup-tip {
-    background: var(--card-bg-light);
-    box-shadow: var(--box-shadow);
-}
-body.dark-mode .leaflet-popup-tip {
-    background: var(--card-bg-dark);
-}
-
-.leaflet-popup-close-button {
-    color: var(--dark);
-    font-size: 1.5rem;
-    top: 5px;
-    right: 5px;
-}
-body.dark-mode .leaflet-popup-close-button {
-    color: var(--text-color-dark);
-}
-
-.popup-car-details h4 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: var(--primary);
-    font-size: 1.2rem;
-}
-
-.popup-car-details p {
-    margin-bottom: 5px;
-    font-size: 0.95rem;
-    color: var(--text-color-light);
-}
-body.dark-mode .popup-car-details p {
-    color: var(--text-color-dark);
-}
-
-.popup-car-details .car-img-popup {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-radius: var(--border-radius);
-    margin-bottom: 10px;
-}
-
-.popup-car-details .btn {
-    display: block;
-    width: calc(100% - 30px);
-    margin: 15px auto 0;
-    text-align: center;
-    padding: 10px 15px;
-    font-size: 0.9rem;
+        quizResults.innerHTML = `
+            <h3>نتائج اختبارك</h3>
+            <p>${recommendation}</p>
+            <p>يمكنك استكشاف السيارات من فئة: <strong>${carType}</strong></p>
+            <a href="cars.html" class="btn btn-primary" style="margin-top:20px;">
+                <i class="fas fa-search"></i> استكشف السيارات
+            </a>
+        `;
+        quizResults.style.display = 'block';
+    });
 }
 
 
-/* ------------------------------------- */
-/* Responsive Design (الجوال واللابتوب) */
-/* ------------------------------------- */
+// -------------------------------------
+// وظائف خريطة السيارات (Leaflet Map)
+// -------------------------------------
 
-/* لأجهزة الكمبيوتر اللوحية والشاشات المتوسطة (أقل من 1200 بكسل) */
-@media (max-width: 1200px) {
-    .hero h1 {
-        font-size: 3.8rem;
-    }
-    .hero p {
-        font-size: 1.3rem;
-    }
-    .features-grid, .cars-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 25px;
-    }
-    .steps-container {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 30px;
-    }
-    .step {
-        width: 48%;
-        padding: 30px 20px;
-    }
-    .steps-container:before {
-        display: none;
-    }
-    .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
-    .dashboard {
-        grid-template-columns: 1fr;
-    }
-    .dashboard-sidebar {
-        padding: 20px;
-        text-align: center;
-    }
-    .user-profile {
-        justify-content: center;
-    }
-    .user-info {
-        text-align: center;
-    }
-    .sidebar-menu {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-    }
-    .sidebar-menu li {
-        margin-bottom: 0;
-    }
-    .sidebar-menu a {
-        padding: 10px 15px;
-        font-size: 0.95rem;
-    }
-    .testimonial-slide {
-        padding: 30px;
-    }
-    .testimonial-text {
-        font-size: 1.15rem;
-    }
-    .quiz-container {
-        padding: 30px;
-    }
-    .quiz-question p {
-        font-size: 1.1rem;
-    }
-    .quiz-options label {
-        font-size: 1rem;
-        padding: 12px 15px;
-    }
-    #mapid {
-        height: 500px;
+let map;
+let carMarkersLayer;
+
+// بيانات السيارات الافتراضية داخل جامعة القصيم (مع إحداثيات من المستخدم)
+const qassimCarsData = [
+    {
+        id: 'camry', type: 'سيدان', model: 'تويوتا كامري 2022', price: '85', location: 'مواقف المبنى الإداري',
+        lat: 26.348037, lng: 43.771591,
+        img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3'
+    },
+    {
+        id: 'landcruiser', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2021', price: '220', location: 'كلية الهندسة',
+        lat: 26.3350, lng: 43.7685,
+        img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg'
+    },
+    {
+        id: 'elantra', type: 'اقتصادية', model: 'هونداي النترا 2023', price: '75', location: 'بجوار المكتبة المركزية',
+        lat: 26.351008, lng: 43.775861,
+        img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp'
+    },
+    {
+        id: 'mercedes', type: 'فاخرة', model: 'مرسيدس E-Class 2020', price: '300', location: 'المركز الثقافي',
+        lat: 26.349181, lng: 43.761351,
+        img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg'
+    },
+    {
+        id: 'malibu', type: 'سيدان', model: 'شيفروليه ماليبو 2020', price: '90', location: 'أمام سكن الطلاب',
+        lat: 26.3400, lng: 43.7630,
+        img: 'https://cdn.motor1.com/images/mgl/zZX8w/s3/2020-chevrolet-malibu.jpg'
+    },
+    {
+        id: 'patrol', type: 'دفع رباعي', model: 'نيسان باترول 2023', price: '250', location: 'مواقف كلية العلوم',
+        lat: 26.3365, lng: 43.7645,
+        img: 'https://www.nissan-cdn.net/content/dam/Nissan/middle-east/vehicles/Patrol/Patrol-MY23/overview/2023-Nissan-Patrol-hero-desktop.webp'
+    },
+    {
+        id: 'kia-rio', type: 'اقتصادية', model: 'كيا ريو 2024', price: '65', location: 'مواقف كلية الحاسب',
+        lat: 26.3340, lng: 43.7670,
+        img: 'https://www.kia.com/content/dam/kw/vehicles/rio/2024/kia_rio_sedan_2024_01_m.jpg'
+    },
+];
+
+function initMap() {
+    const qassimUniversityCoords = [26.345, 43.769];
+    const defaultZoom = 14;
+
+    // Check if map container exists and Leaflet library (L) is loaded, and map is not already initialized
+    if (document.getElementById('mapid') && typeof L !== 'undefined' && !map) {
+        map = L.map('mapid').setView(qassimUniversityCoords, defaultZoom);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        carMarkersLayer = L.layerGroup().addTo(map);
+        renderCarsOnMap('الكل');
     }
 }
 
-/* لأجهزة الكمبيوتر اللوحية والشاشات الكبيرة (أقل من 992 بكسل) */
-@media (max-width: 992px) {
-    body {
-        padding-top: 70px; /* Adjust padding for smaller header on mobile */
-    }
-    header {
-        padding: 10px 0; /* Smaller header on mobile */
-    }
-    .logo-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-    }
-    .logo-text {
-        font-size: 1.5rem;
-    }
-    /* Mobile Toggle Button */
-    .mobile-toggle {
-        display: block; /* Show mobile menu button */
-        font-size: 1.6rem;
-        margin-left: 15px; /* Add some space from login button */
-    }
+function createCarIcon(carType) {
+    let iconClass = 'fas fa-car';
+    return L.divIcon({
+        className: 'custom-car-icon',
+        html: `<i class="${iconClass}"></i>`,
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [0, -40]
+    });
+}
 
-    /* Adjust space for nav-buttons in mobile header */
-    .navbar .nav-buttons {
-        /* Make nav-buttons take full width minus logo and mobile toggle */
-        flex-grow: 1; 
-        justify-content: flex-end; /* Push content to the right (start for RTL) */
-        gap: 10px; /* Reduced gap */
-        margin-left: 15px; /* Space from logo */
-    }
-    .navbar .nav-buttons > .btn {
-        padding: 8px 15px; /* Smaller padding for button text */
-        font-size: 0.9rem; /* Smaller font size for buttons */
-    }
-    .navbar .nav-buttons > .theme-toggle {
-        margin-left: 10px; /* Space between theme toggle and other buttons */
-        order: 1; /* Move theme toggle to the end */
-    }
-    .navbar .mobile-toggle {
-        order: 2; /* Move toggle button to the very end */
-        margin-left: 10px; /* Space after the last button */
-    }
-    .navbar .nav-buttons > .guest-only {
-        margin-right: 0 !important; /* Remove right margin from guest button */
-    }
-    .navbar .nav-buttons > #nav-user-profile-placeholder {
-        margin-right: 0 !important;
-    }
+function renderCarsOnMap(filterType = 'الكل') {
+    if (!map) return;
+    carMarkersLayer.clearLayers();
 
+    const filteredCars = filterType === 'الكل' ? qassimCarsData : qassimCarsData.filter(car => car.type === filterType);
 
-    /* Mobile Nav Menu Container (Slides from the side - Right) */
-    .nav-links { /* This is the element that becomes the mobile menu */
-        display: flex; /* Always flex for stacking content */
-        position: fixed;
-        top: 0;
-        right: -100%; /* Start completely off-screen to the right (use % for responsiveness) */
-        width: 100%; /* Full width */
-        max-width: 320px; /* Max width to ensure it looks good on tablets in portrait */
-        height: 100%; /* Full height of the viewport */
-        background-color: var(--navbar-bg-light);
-        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        transition: right 0.3s ease-in-out; /* Transition from right */
-        padding: 20px;
-        flex-direction: column;
-        align-items: flex-start; /* Align contents to start (right side for RTL) */
-        justify-content: flex-start;
-        overflow-y: auto; /* Allow scrolling if content overflows */
-    }
-    body.dark-mode .nav-links {
-        background-color: var(--navbar-bg-dark);
-    }
-    .nav-links.open {
-        right: 0; /* Slide into view */
-    }
+    filteredCars.forEach(car => {
+        const carIcon = createCarIcon(car.type);
+        const marker = L.marker([car.lat, car.lng], { icon: carIcon }).addTo(carMarkersLayer);
 
-    /* Force desktop nav-links to be hidden always */
-    .navbar > .nav-links { /* Target specifically the desktop nav-links in the navbar */
-        display: none !important;
-    }
+        const popupContent = `
+            <div class="popup-car-details">
+                <img src="${car.img}" alt="${car.model}" class="car-img-popup">
+                <h4>${car.model}</h4>
+                <p><strong>السعر:</strong> ${car.price} ريال/اليوم</p>
+                <p><strong>الموقع:</strong> ${car.location}</p>
+                <a href="#" class="btn btn-primary">احجز الآن</a>
+            </div>
+        `;
+        marker.bindPopup(popupContent);
+    });
+}
+
+function setupMapFilters() {
+    document.querySelectorAll('.map-filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const currentActive = document.querySelector('.map-filter-btn.active');
+            if (currentActive) {
+                currentActive.classList.remove('active');
+            }
+            this.classList.add('active');
+            
+            const filterType = this.dataset.filter;
+            renderCarsOnMap(filterType);
+        });
+    });
+}
 
 
-    /* Overlay for mobile menu */
-    .mobile-menu-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.7);
-        z-index: 998;
-    }
+// -------------------------------------
+// عند تحميل المحتوى (DOMContentLoaded)
+// -------------------------------------
 
-    /* Styles for links and buttons INSIDE the mobile menu */
-    .nav-links li { /* List items inside mobile menu */
-        width: 100%;
-        text-align: right; /* Right-align text for RTL */
-        margin-bottom: 0;
-    }
-    .nav-links li a {
-        display: block;
-        padding: 15px 10px;
-        font-size: 1.2rem;
-        color: var(--dark);
-        border-bottom: 1px solid var(--light-gray);
-    }
-    body.dark-mode .nav-links li a {
-        color: var(--text-color-dark);
-        border-bottom-color: var(--border-color-dark);
-    }
-    .nav-links li:last-child a {
-        border-bottom: none;
+document.addEventListener('DOMContentLoaded', () => {
+    setupThemeToggle();
+    updateNavbarBasedOnLoginStatus();
+
+    const userCompletedRentals = 3;
+    updateLoyaltyCard(userCompletedRentals);
+
+    renderRecentlyViewedCars();
+
+    if (document.querySelector('.testimonial-slider')) {
+        showSlides();
+        slideInterval = setInterval(showSlides, 5000);
     }
     
-    /* Nav buttons inside mobile menu - these are from the desktop structure, just repositioned */
-    /* They are now directly part of the .nav-links list on mobile, so they use the same flex container */
-    .nav-links .nav-buttons-mobile-container { /* This is the LI that contains the buttons */
-        width: 100%; /* Make sure it takes full width in mobile menu */
-        padding-top: 20px;
-        margin-top: 20px;
-        border-top: 1px solid var(--light-gray);
-        display: flex; /* Ensure it's a flex container */
-        flex-direction: column;
-        align-items: flex-start; /* Align to start */
-        gap: 10px;
-    }
-    body.dark-mode .nav-links .nav-buttons-mobile-container {
-        border-top-color: var(--border-color-dark);
-    }
+    setupQuiz();
 
-    .nav-links .nav-buttons-mobile-container .nav-buttons { /* This targets the actual nav-buttons group inside the LI */
-        flex-direction: column;
-        width: 100%;
-        margin-top: 0; /* Remove top margin as its parent has it */
-        align-items: flex-start;
-        gap: 10px;
+    // Check if mapid exists on current page before initializing map
+    // Ensure Leaflet is loaded before calling initMap
+    if (document.getElementById('mapid')) {
+        // Add a small delay for Leaflet to ensure the script is fully loaded.
+        // This is a common workaround for CDN loading issues, especially with SRI.
+        setTimeout(() => {
+            if (typeof L !== 'undefined') { // Final check for Leaflet
+                initMap();
+                setupMapFilters();
+            } else {
+                console.error("Leaflet library (L) is not defined. Map initialization failed. Check network tab for Leaflet JS/CSS loading errors.");
+            }
+        }, 100); // 100ms delay
     }
-    .nav-links .nav-buttons-mobile-container .nav-buttons .btn {
-        width: 100%;
-        margin-right: 0 !important; /* Override desktop margin */
-        margin-left: 0 !important; /* Override desktop margin */
-    }
-    .nav-links .nav-buttons-mobile-container .theme-toggle {
-        width: 100%;
-        text-align: right;
-        margin: 0 !important; /* Remove specific desktop margins */
-        padding: 10px 0; /* Add some padding */
-    }
+});
 
+document.addEventListener('click', (e) => {
+    if (e.target.closest('.car-card')) {
+        const carCard = e.target.closest('.car-card');
+        const carImg = carCard.querySelector('.car-img img').src;
+        const carTitle = carCard.querySelector('.car-title').textContent;
+        const carId = carTitle.replace(/\s/g, '-');
 
-    .hero h1 {
-        font-size: 3rem;
+        addCarToRecentlyViewed(carId, carImg, carTitle);
     }
-    .hero p {
-        font-size: 1.2rem;
-    }
-    .section-title h2 {
-        font-size: 2.5rem;
-    }
-    .section-title p {
-        font-size: 1.1rem;
-    }
-    .btn {
-        padding: 15px 30px;
-        font-size: 1rem;
-    }
-    .footer-grid {
-        grid-template-columns: 1fr;
-    }
-    .footer-col {
-        text-align: center;
-    }
-    .footer-col h3:after {
-        right: 50%;
-        transform: translateX(50%);
-    }
-    .social-links {
-        justify-content: center;
-    }
-    .booking-item {
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: right;
-    }
-    .booking-car, .booking-details, .booking-date, .booking-price, .booking-status {
-        width: 100%;
-        text-align: right;
-    }
-    .booking-date, .booking-price, .booking-status {
-        text-align: right;
-    }
-    .booking-car img {
-        margin-right: 15px;
-    }
-    .loyalty-progress {
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 5px;
-    }
-    .loyalty-dot {
-        margin: 5px;
-        width: 30px;
-        height: 30px;
-        font-size: 0.85rem;
-    }
-    .loyalty-line {
-        height: 4px;
-    }
-    .quiz-container {
-        margin: 120px auto 40px;
-    }
-    #mapid {
-        height: 400px;
-    }
-}
-
-/* لأجهزة الكمبيوتر اللوحية الصغيرة (أقل من 768 بكسل) */
-@media (max-width: 768px) {
-    body {
-        padding-top: 70px;
-    }
-    header {
-        padding: 10px 0;
-    }
-    .logo-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-    }
-    .logo-text {
-        font-size: 1.5rem;
-    }
-    .mobile-toggle {
-        font-size: 1.6rem;
-    }
-
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-    .hero p {
-        font-size: 1.1rem;
-    }
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    .hero-buttons .btn {
-        width: 80%;
-    }
-    .section-title h2 {
-        font-size: 2rem;
-    }
-    .section-title p {
-        font-size: 1.1rem;
-    }
-    .steps-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    .step {
-        width: 90%;
-    }
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-    .add-car-form {
-        padding: 25px;
-    }
-    .car-actions {
-        flex-direction: column;
-    }
-    .car-actions .btn {
-        width: 100%;
-    }
-    .dashboard-content {
-        padding: 20px;
-    }
-    .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    .recent-bookings {
-        padding: 15px;
-    }
-    .booking-car {
-        flex-direction: column;
-        align-items: flex-end;
-        text-align: right;
-    }
-    .booking-car img {
-        margin-left: 0;
-        margin-bottom: 10px;
-    }
-    .booking-details {
-        text-align: right;
-    }
-    .loyalty-card h3 {
-        font-size: 1.8rem;
-    }
-    .loyalty-card p {
-        font-size: 1rem;
-    }
-    .loyalty-promo h3 {
-        font-size: 1.8rem;
-    }
-    .loyalty-promo p {
-        font-size: 1.0rem;
-    }
-    .recently-viewed-bar {
-        padding: 15px 0;
-    }
-    .recently-viewed-bar h3 {
-        font-size: 1.2rem;
-    }
-    .recent-car-thumb {
-        width: 100px;
-        height: 70px;
-    }
-    .testimonial-slide {
-        padding: 20px;
-    }
-    .testimonial-text {
-        font-size: 1rem;
-    }
-    .testimonial-author-img {
-        width: 60px;
-        height: 60px;
-    }
-    .testimonial-author-name {
-        font-size: 1rem;
-    }
-}
-
-/* للهواتف الذكية الصغيرة جداً (أقل من 480 بكسل) */
-@media (max-width: 480px) {
-    .container {
-        padding: 0 15px;
-    }
-    .hero h1 {
-        font-size: 2rem;
-    }
-    .hero p {
-        font-size: 1rem;
-    }
-    .section-title h2 {
-        font-size: 1.8rem;
-    }
-    .section-title p {
-        font-size: 0.95rem;
-    }
-    .btn {
-        padding: 12px 25px;
-        font-size: 0.95rem;
-    }
-    .filter-btn {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-    .car-card {
-        margin: 0 auto;
-        max-width: 300px;
-    }
-    .car-info {
-        padding: 20px;
-    }
-    .car-title, .car-price {
-        font-size: 1.5rem;
-    }
-    .feature-card {
-        padding: 30px 20px;
-    }
-    .feature-icon {
-        width: 80px;
-        height: 80px;
-        font-size: 2rem;
-    }
-    .feature-card h3 {
-        font-size: 1.6rem;
-    }
-}
+});
