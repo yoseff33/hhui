@@ -27,6 +27,12 @@
     --border-color-dark: #333;
     --shadow-color-light: rgba(0, 0, 0, 0.08);
     --shadow-color-dark: rgba(0, 0, 0, 0.4);
+
+    /* New for CSR content cards */
+    --csr-card-bg-light: white;
+    --csr-card-bg-dark: #1e1e1e;
+    --csr-text-light: #333;
+    --csr-text-dark: #e0e0e0;
 }
 
 /* Base styles for Light Mode */
@@ -41,8 +47,7 @@ body {
     overflow-x: hidden;
     font-size: 1.05rem;
     padding-top: 80px; /* Default padding for desktop header height (approx 80px) */
-    /* padding-bottom سيتم تعديله بواسطة JS على الجوال لتعويض الشريط السفلي */
-    padding-bottom: 0; /* Default for desktop */
+    padding-bottom: 0; /* Default for desktop, adjusted by JS for mobile */
 }
 
 body.no-scroll {
@@ -53,13 +58,31 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--heading-color-light);
 }
 
-.feature-card, .car-card, .loyalty-promo, .add-car-form, .stat-card, .recent-bookings, .loyalty-card {
+.feature-card, .car-card, .loyalty-promo, .add-car-form, .stat-card, .recent-bookings, .loyalty-card,
+.quiz-container, .quiz-options label, .quiz-results { /* Added quiz elements here */
     background: var(--card-bg-light);
     box-shadow: 0 15px 40px var(--shadow-color-light);
+    color: var(--text-color-light); /* Ensure text color is light mode default */
 }
+/* Ensure text colors inside cards are always readable */
+.feature-card p,
+.car-info p,
+.car-meta .meta-item,
+.car-location,
+.quiz-question p,
+.quiz-options label {
+    color: var(--gray); /* Use gray for general text in light mode cards */
+}
+
+
 .loyalty-card {
     background: linear-gradient(135deg, var(--primary), var(--accent));
     box-shadow: 0 15px 40px var(--shadow-color-light);
+    color: white; /* Loyalty card specific text color */
+}
+/* Specific style for elements inside loyalty-card to ensure white text */
+.loyalty-card h3, .loyalty-card p, .loyalty-card span, .loyalty-card small {
+    color: white;
 }
 
 header {
@@ -103,13 +126,34 @@ body.dark-mode .car-card,
 body.dark-mode .loyalty-promo,
 body.dark-mode .add-car-form,
 body.dark-mode .stat-card,
-body.dark-mode .recent-bookings {
+body.dark-mode .recent-bookings,
+body.dark-mode .quiz-container,
+body.dark-mode .quiz-options label,
+body.dark-mode .quiz-results {
     background: var(--card-bg-dark);
     box-shadow: 0 15px 40px var(--shadow-color-dark);
+    color: var(--text-color-dark); /* Ensure text color changes for dark mode */
 }
+/* Ensure text colors inside cards are always readable in dark mode */
+body.dark-mode .feature-card p,
+body.dark-mode .car-info p,
+body.dark-mode .car-meta .meta-item,
+body.dark-mode .car-location,
+body.dark-mode .quiz-question p,
+body.dark-mode .quiz-options label {
+    color: var(--text-color-dark); /* Use dark mode text color for general text in dark mode cards */
+}
+
 body.dark-mode .loyalty-card {
     background: linear-gradient(135deg, var(--dark), var(--primary));
     box-shadow: 0 15px 40px var(--shadow-color-dark);
+}
+/* Ensure text colors inside loyalty-card remain readable in dark mode */
+body.dark-mode .loyalty-card h3,
+body.dark-mode .loyalty-card p,
+body.dark-mode .loyalty-card span,
+body.dark-mode .loyalty-card small {
+    color: white; /* Still white for contrast on the dark gradient */
 }
 
 
@@ -152,6 +196,11 @@ body.dark-mode .car-meta .meta-item,
 body.dark-mode .car-location {
     color: var(--text-color-dark);
 }
+body.dark-mode .car-meta .meta-item i, /* Ensure icons inside meta-item are visible */
+body.dark-mode .car-location i {
+    color: var(--accent); /* Keep accent color for icons */
+}
+
 
 body.dark-mode .section-title p {
     color: var(--text-color-dark);
@@ -171,28 +220,64 @@ body.dark-mode .footer-contact li {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Toggle Button - الآن يوجد زرين، واحد للديسكتوب وواحد للموبايل */
+/* Toggle Button - Now only one toggle in header */
 .theme-toggle {
     background: none;
     border: none;
-    color: var(--dark);
+    color: var(--dark); /* Default icon color */
     font-size: 1.5rem;
     cursor: pointer;
-    margin-left: 20px; /* لزر الديسكتوب */
+    margin-left: 20px;
     transition: var(--transition);
+    display: flex; /* Make it a flex container to align icon and text */
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between icon and text (if text is present) */
+    padding: 0; /* Remove default button padding */
+    order: 0; /* Default order for desktop */
 }
+.theme-toggle i {
+    font-size: 1.5rem; /* Ensure icon size is consistent */
+}
+.theme-toggle span { /* Text label for mobile theme toggle */
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: none; /* Hidden by default for desktop */
+}
+
 .theme-toggle:hover {
     color: var(--primary);
 }
 body.dark-mode .theme-toggle {
-    color: white;
+    color: white; /* Dark mode icon color */
 }
 body.dark-mode .theme-toggle:hover {
     color: var(--secondary);
 }
-/* إخفاء زر التبديل العلوي في الموبايل */
+
+/* Ensure theme toggle in header is visible on all screen sizes */
+@media (min-width: 993px) {
+    /* No specific changes needed here, default .theme-toggle applies */
+    .theme-toggle span {
+        display: none !important; /* Hide text on desktop */
+    }
+}
+
 @media (max-width: 992px) {
-    #theme-toggle-desktop {
+    .theme-toggle { /* Apply to the single theme-toggle button in the header */
+        display: flex !important; /* Ensure it's always visible and flex on mobile */
+        flex-direction: column; /* Stack icon and text */
+        gap: 0; /* Reduce gap */
+        margin-left: 10px; /* Adjust margin for mobile layout in header */
+        order: 2; /* Move it to the rightmost position in the header on mobile */
+    }
+    .theme-toggle span {
+        display: block !important; /* Show text on mobile */
+        font-size: 0.75rem; /* Smaller text on mobile to save space */
+        margin-top: 5px; /* Space between icon and text */
+    }
+    /* Hide the mobile-only theme toggle in bottom navbar, as desktop one is now universal */
+    #theme-toggle-mobile-bottom {
         display: none !important;
     }
 }
@@ -754,10 +839,6 @@ body.dark-mode .car-location {
     color: var(--text-color-dark);
 }
 
-
-.car-location i {
-    color: var(--accent);
-}
 
 .car-actions .btn {
     flex: 1;
@@ -1854,15 +1935,25 @@ body.dark-mode .bottom-navbar .nav-item.active i {
         display: none !important;
     }
     .navbar .nav-buttons-desktop-only {
-        display: none !important;
+        /*
+        display: none !important;  // No longer needed here, controlled by JS in updateNavbarBasedOnLoginStatus()
+        */
+        display: flex; /* keep it visible to contain the theme toggle */
+        gap: 10px; /* Reduced gap */
+        margin-left: auto; /* Push content to the right for RTL */
     }
-    /* تعديل الهيدر ليحتوي فقط على اللوجو */
+    .navbar .nav-buttons-desktop-only .btn {
+        padding: 8px 15px; /* Smaller padding for button text */
+        font-size: 0.9rem; /* Smaller font size for buttons */
+    }
+    /* Adjust header .navbar layout for mobile when only logo and theme toggle/auth buttons are present */
     header .navbar {
-        justify-content: center; /* توسيط اللوجو إذا كان هو العنصر الوحيد */
+        justify-content: space-between; /* Space out logo and buttons */
     }
-    /* تعديل padding-bottom للـ body في الموبايل */
+
+    /* Adjust padding-bottom for body in mobile */
     body {
-        padding-bottom: 70px; /* قيمة تقديرية لارتفاع الشريط السفلي */
+        padding-bottom: 70px; /* Approximate height of bottom navbar */
     }
 }
 
