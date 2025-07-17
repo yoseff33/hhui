@@ -17,7 +17,8 @@
                     <div class="logo-icon">و</div>
                     <div class="logo-text">وُجْهَة</div>
                 </a>
-                <ul class="nav-links desktop-nav-links"> <li><a href="index.html">الرئيسية</a></li>
+                <ul class="nav-links desktop-nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
                     <li><a href="cars.html">استكشف السيارات</a></li>
                     <li><a href="index.html#how-it-works">كيف تعمل</a></li>
                     <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
@@ -25,14 +26,15 @@
                     <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
                     <li><a href="quiz.html" class="active">اختبار السيارة المناسبة</a></li>
                     <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
-                    <li class="nav-buttons-desktop-only"> <div class="nav-buttons">
+                    <li class="nav-buttons-desktop-only">
+                        <div class="nav-buttons">
                             <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع"><i class="fas fa-moon"></i></button>
                             <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
                             <div id="nav-user-profile-placeholder"></div>
                         </div>
                     </li>
                 </ul>
-                </nav>
+            </nav>
         </div>
     </header>
 
@@ -84,6 +86,30 @@
             </div>
         </div>
     </section>
+
+    <section id="pledge-generator-section" style="padding-top: 50px; padding-bottom: 100px;">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>تعهد القيادة المسؤولة</h2>
+                <p>اختر تعهدًا لتكن جزءًا من مجتمع وُجْهَة المسؤول والآمن.</p>
+            </div>
+            <div class="quiz-container" data-aos="zoom-in">
+                <form id="pledge-form">
+                    <div class="quiz-question">
+                        <p>اختر تعهدك الشخصي:</p>
+                        <div class="quiz-options">
+                            </div>
+                    </div>
+                    <div class="quiz-actions">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-check-circle"></i> أتعهد الآن</button>
+                    </div>
+                </form>
+                <div id="pledge-result" class="quiz-results" style="display: none;">
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <footer>
         <div class="container">
@@ -189,6 +215,6 @@
             once: true,
         });
     </script>
-    <script src="script.js"></script>
+    <script src="csr-content.js"></script> <script src="script.js"></script>
 </body>
 </html>
