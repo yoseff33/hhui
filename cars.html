@@ -17,8 +17,7 @@
                     <div class="logo-icon">و</div>
                     <div class="logo-text">وُجْهَة</div>
                 </a>
-                <ul class="nav-links">
-                    <li><a href="index.html" class="active">الرئيسية</a></li>
+                <ul class="nav-links desktop-nav-links"> <li><a href="index.html" class="active">الرئيسية</a></li>
                     <li><a href="cars.html">استكشف السيارات</a></li>
                     <li><a href="index.html#how-it-works">كيف تعمل</a></li>
                     <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
@@ -26,41 +25,16 @@
                     <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
                     <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
                     <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
+                    <li class="nav-buttons-desktop-only"> <div class="nav-buttons">
+                            <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع"><i class="fas fa-moon"></i></button>
+                            <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
+                            <div id="nav-user-profile-placeholder"></div>
+                        </div>
+                    </li>
                 </ul>
-                <div class="nav-buttons">
-                    <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
-                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
-                    <div id="nav-user-profile-placeholder"></div>
-                </div>
-                <button class="mobile-toggle" aria-label="Toggle mobile menu">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </nav>
+                </nav>
         </div>
     </header>
-
-    <div class="mobile-menu-overlay"></div>
-    <div class="mobile-nav-menu">
-        <div class="nav-buttons" style="flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <button id="mobile-theme-toggle" class="theme-toggle" style="margin: 0;"><i class="fas fa-moon"></i></button>
-            <button class="mobile-toggle" aria-label="Close mobile menu" style="color: var(--dark);"><i class="fas fa-times"></i></button>
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.html">الرئيسية</a></li>
-            <li><a href="cars.html">استكشف السيارات</a></li>
-            <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-            <li><a href="dashboard-owner.html" class="auth-link" id="mobile-nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
-            <li><a href="dashboard-renter.html" class="auth-link" id="mobile-nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
-            <li><a href="add-car.html" class="auth-link" id="mobile-nav-add-car">أضف سيارتك</a></li>
-            <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
-            <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
-        </ul>
-        <div class="nav-buttons" style="flex-direction: column; width: 100%; margin-top: auto; padding-top: 20px; border-top: 1px solid var(--light-gray);">
-            <a href="landing.html" class="btn btn-primary guest-only" id="mobile-nav-guest-button" style="width: 100%;">تسجيل دخول / جديد</a>
-            <div id="mobile-nav-user-profile-placeholder" style="width: 100%; display: flex; flex-direction: column; align-items: center;"></div>
-        </div>
-    </div>
-
 
     <section class="hero">
         <div id="particles-js"></div>
@@ -287,6 +261,41 @@
             </div>
         </div>
     </footer>
+
+    <nav class="bottom-navbar mobile-bottom-navbar">
+        <a href="index.html" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </a>
+        <a href="cars.html" class="nav-item">
+            <i class="fas fa-car"></i>
+            <span>السيارات</span>
+        </a>
+        <button id="theme-toggle-mobile" class="theme-toggle nav-item" aria-label="تبديل الوضع">
+            <i class="fas fa-moon"></i>
+            <span>الوضع</span>
+        </button>
+        <a href="landing.html" class="nav-item guest-only" id="mobile-bottom-guest-button">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>دخول</span>
+        </a>
+        <a href="#" class="nav-item auth-link-bottom" id="mobile-bottom-user-button">
+            <i class="fas fa-user-circle"></i>
+            <span>حسابي</span>
+        </a>
+        <a href="add-car.html" class="nav-item auth-link-bottom" data-role="owner">
+            <i class="fas fa-plus-circle"></i>
+            <span>أضف سيارة</span>
+        </a>
+        <a href="quiz.html" class="nav-item">
+            <i class="fas fa-question-circle"></i>
+            <span>اختبار</span>
+        </a>
+        <a href="qassim-map.html" class="nav-item">
+            <i class="fas fa-map-marked-alt"></i>
+            <span>الخريطة</span>
+        </a>
+    </nav>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
