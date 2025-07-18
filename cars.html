@@ -308,5 +308,52 @@
         });
     </script>
     <script src="csr-content.js"></script> <script src="script.js"></script>
-</body>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const carId = urlParams.get('carId'); // احصل على carId من الرابط
+
+            if (carId) {
+                // قم بربط carId بالاسم الجزئي للموديل في العنوان للبحث عنه
+                // هذه خريطة بسيطة للتحويل، يجب أن تكون مطابقة لـ id في بيانات الخريطة الموجودة في script.js
+                const carIdMapToModelName = {
+                    'camry': 'تويوتا كامري 2022',
+                    'landcruiser': 'تويوتا لاندكروزر 2021',
+                    'elantra': 'هونداي النترا 2023',
+                    'mercedes': 'مرسيدس E-Class 2020',
+                    'malibu': 'شيفروليه ماليبو 2020',
+                    'patrol': 'نيسان باترول 2023',
+                    'kia-rio': 'كيا ريو 2024',
+                    // أضف المزيد هنا إذا كانت لديك سيارات أخرى في بيانات الخريطة بملف script.js
+                };
+                
+                const targetCarModel = carIdMapToModelName[carId];
+
+                if (targetCarModel) {
+                    const carCards = document.querySelectorAll('.car-card');
+                    carCards.forEach(card => {
+                        const carTitleElement = card.querySelector('.car-title');
+                        if (carTitleElement && carTitleElement.textContent.includes(targetCarModel)) {
+                            // تم العثور على بطاقة السيارة المطابقة
+                            card.classList.add('highlighted-car'); // أضف كلاس للتمييز
+                            
+                            // قم بالتمرير إلى بطاقة السيارة
+                            // offsetTop - 100 لتجنب التمرير الزائد عن رأس الصفحة الثابت
+                            window.scrollTo({
+                                top: card.offsetTop - 100, // ضبط القيمة حسب ارتفاع الهيدر الثابت
+                                behavior: 'smooth'
+                            });
+
+                            // إزالة التمييز بعد فترة قصيرة
+                            setTimeout(() => {
+                                card.classList.remove('highlighted-car');
+                            }, 3000); // إزالة التمييز بعد 3 ثوانٍ
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+    </body>
 </html>
