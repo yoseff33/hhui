@@ -249,14 +249,12 @@ body.dark-mode .footer-contact li {
     color: var(--dark); /* Default icon color */
     font-size: 1.5rem;
     cursor: pointer;
-    margin-left: 20px;
     transition: var(--transition);
     display: flex; /* Make it a flex container to align icon and text */
     align-items: center;
     justify-content: center;
     gap: 8px; /* Space between icon and text (if text is present) */
     padding: 0; /* Remove default button padding */
-    order: 0; /* Default order for desktop */
 }
 .theme-toggle i {
     font-size: 1.5rem; /* Ensure icon size is consistent */
@@ -277,32 +275,85 @@ body.dark-mode .theme-toggle:hover {
     color: var(--secondary);
 }
 
-/* Ensure theme toggle in header is visible on all screen sizes */
+/* ---------------------------------------------------- */
+/* التعديلات الجديدة على ترتيب عناصر شريط التنقل العلوي */
+/* ---------------------------------------------------- */
+
+/* للشاشات الكبيرة (الديسكتوب) - أكثر من 992 بكسل */
 @media (min-width: 993px) {
-    /* No specific changes needed here, default .theme-toggle applies */
+    .theme-toggle {
+        order: 2; /* يظهر بعد اللوجو والروابط */
+        margin-right: 20px; /* مسافة بين الروابط وزر الثيم */
+        margin-left: auto; /* يدفع زر الثيم إلى أقصى اليسار */
+    }
     .theme-toggle span {
-        display: none !important; /* Hide text on desktop */
+        display: none !important; /* إخفاء النص على الديسكتوب */
+    }
+    .navbar .desktop-nav-links {
+        order: 1; /* يظهر بعد اللوجو مباشرة */
+        margin-right: 20px; /* مسافة بين اللوجو والروابط */
+        margin-left: 0; /* إزالة أي هامش دفع تلقائي */
+    }
+    .navbar .nav-buttons {
+        order: 3; /* يظهر بعد زر الثيم (في أقصى اليسار إذا كان اللوجو على اليمين والثيم في أقصى اليسار) */
+        margin-left: 0; /* تأكد من عدم وجود هامش دفع هنا */
+    }
+    
+    header .navbar {
+        justify-content: space-between; /* اللوجو في أقصى اليمين، وباقي العناصر موزعة للداخل */
+        /* لا حاجة لـ gap هنا إذا استخدمنا margin: auto بشكل صحيح */
     }
 }
 
+/* للشاشات الصغيرة (الجوال) - 992 بكسل وأقل */
 @media (max-width: 992px) {
-    .theme-toggle { /* Apply to the single theme-toggle button in the header */
-        display: flex !important; /* Ensure it's always visible and flex on mobile */
-        flex-direction: column; /* Stack icon and text */
-        gap: 0; /* Reduce gap */
-        margin-left: 10px; /* Adjust margin for mobile layout in header */
-        order: 2; /* Move it to the rightmost position in the header on mobile */
+    .theme-toggle {
+        display: flex !important;
+        flex-direction: column;
+        gap: 0;
+        margin-right: 10px; /* مسافة بين اللوجو وزر الثيم */
+        margin-left: auto; /* يدفع زر الثيم إلى أقصى اليسار في الجوال أيضاً */
+        order: 1; /* يأتي بعد اللوجو */
     }
     .theme-toggle span {
-        display: block !important; /* Show text on mobile */
-        font-size: 0.75rem; /* Smaller text on mobile to save space */
-        margin-top: 5px; /* Space between icon and text */
+        display: block !important; /* إظهار النص على الجوال */
+        font-size: 0.75rem;
+        margin-top: 5px;
     }
-    /* Hide the mobile-only theme toggle in bottom navbar, as desktop one is now universal */
+    
+    /* إخفاء زر تسجيل الدخول/الأزرار المخصبة للزوار في الشريط العلوي على الجوال */
+    .navbar .nav-buttons .guest-only {
+        display: none !important;
+    }
+    .navbar .desktop-nav-links { /* تأكيد إخفاء الروابط الرئيسية على الجوال */
+        display: none !important;
+    }
+    .navbar .nav-buttons-desktop-only { /* لإبقاء حاوية الأزرار الرئيسية في شريط التنقل العلوي */
+        display: flex;
+        gap: 10px;
+        order: 2; /* يأتي بعد زر الثيم */
+        margin-left: 0; /* لا تدفعه هنا ليكون زر الثيم هو الأقصى يساراً */
+    }
+    .navbar .nav-buttons-desktop-only .btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+    /* إخفاء زر تبديل الثيم السفلي إذا كان موجوداً، لأن زر الشريط العلوي أصبح عالمياً */
     #theme-toggle-mobile-bottom {
         display: none !important;
     }
+
+    header .navbar {
+        justify-content: space-between; /* اللوجو على اليمين، وزر الثيم في أقصى اليسار */
+    }
+
+    body {
+        padding-bottom: 70px;
+    }
 }
+/* ---------------------------------------------------- */
+/* نهاية التعديلات على ترتيب عناصر شريط التنقل العلوي */
+/* ---------------------------------------------------- */
 
 
 /* General Styles */
@@ -431,7 +482,7 @@ header {
 
 .navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* هذا قد يتم تجاوزه في الميديا كويري */
     align-items: center;
 }
 
@@ -440,6 +491,7 @@ header {
     align-items: center;
     gap: 15px;
     text-decoration: none;
+    order: 0; /* تأكد أن اللوجو هو الأول */
 }
 
 .logo-icon {
@@ -1969,12 +2021,12 @@ body.dark-mode .bottom-navbar .nav-item.active i {
         font-size: 0.9rem; /* Smaller font size for buttons */
     }
 
-    /* ********* التعديل الجديد هنا ********* */
+    /* ********* التعديلات لزر الثيم وتسجيل الدخول في الجوال ********* */
     /* إخفاء زر تسجيل الدخول/الأزرار المخصصة للزوار في الشريط العلوي على الجوال */
     .navbar .nav-buttons .guest-only {
         display: none !important;
     }
-    /* ********* نهاية التعديل الجديد ********* */
+    /* ********* نهاية التعديلات لزر الثيم وتسجيل الدخول في الجوال ********* */
 
     /* Adjust header .navbar layout for mobile when only logo and theme toggle/auth buttons are present */
     header .navbar {
