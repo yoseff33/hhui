@@ -418,6 +418,7 @@ function createCarIcon(carType) {
     });
 }
 
+// هذا هو الجزء الذي تم تعديله في دالة renderCarsOnMap
 function renderCarsOnMap(filterType = 'الكل') {
     if (!map) return;
     carMarkersLayer.clearLayers();
@@ -434,7 +435,7 @@ function renderCarsOnMap(filterType = 'الكل') {
                 <h4>${car.model}</h4>
                 <p><strong>السعر:</strong> ${car.price} ريال/اليوم</p>
                 <p><strong>الموقع:</strong> ${car.location}</p>
-                <a href="#" class="btn btn-primary">احجز الآن</a>
+                <a href="cars.html?carId=${car.id}" class="btn btn-primary">احجز الآن</a>
             </div>
         `;
         marker.bindPopup(popupContent);
