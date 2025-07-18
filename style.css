@@ -134,6 +134,28 @@ body.dark-mode .quiz-results {
     box-shadow: 0 15px 40px var(--shadow-color-dark);
     color: var(--text-color-dark); /* Ensure text color changes for dark mode */
 }
+
+/* --- Start of added/modified code for .step cards --- */
+body.dark-mode .step {
+    background: var(--card-bg-dark); /* تغيير خلفية البطاقة في النمط الليلي */
+    box-shadow: 0 15px 40px var(--shadow-color-dark); /* تحديث الظل ليناسب النمط الليلي */
+}
+
+body.dark-mode .step h3 {
+    color: var(--heading-color-dark); /* لضمان تغيير لون العنوان داخل البطاقة */
+}
+
+body.dark-mode .step p {
+    color: var(--text-color-dark); /* لضمان تغيير لون النص داخل البطاقة */
+}
+
+body.dark-mode .step-number {
+    background: var(--secondary); /* لون خلفية رقم الخطوة في النمط الليلي */
+    color: var(--dark); /* لون نص رقم الخطوة في النمط الليلي (مثلاً #0f2925) */
+}
+/* --- End of added/modified code for .step cards --- */
+
+
 /* Ensure text colors inside cards are always readable in dark mode */
 body.dark-mode .feature-card p,
 body.dark-mode .car-info p,
@@ -928,7 +950,6 @@ body.dark-mode .how-it-works {
     z-index: 2;
     background: var(--card-bg-light);
     border-radius: var(--border-radius);
-    padding: 40px 30px;
     box-shadow: var(--box-shadow);
     width: 22%;
     text-align: center;
@@ -952,6 +973,7 @@ body.dark-mode .how-it-works {
     font-size: 1.7rem;
     margin-bottom: 20px;
     color: var(--heading-color-light);
+    font-weight: 700;
 }
 
 .step p {
