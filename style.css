@@ -307,12 +307,24 @@ body.dark-mode .theme-toggle:hover {
 
 /* للشاشات الصغيرة (الجوال) - 992 بكسل وأقل */
 @media (max-width: 992px) {
+    /* بداية التعديلات المقترحة */
+    header .container {
+        padding-left: 0; /* لإزالة المسافة البادئة من اليسار */
+        padding-right: 0; /* لإزالة المسافة البادئة من اليمين */
+    }
+
+    .navbar .logo {
+        margin-right: 15px; /* لإعطاء مسافة للوجو من حافة الشاشة اليمنى */
+        margin-left: auto; /* لإبعاد الشعار عن أي عناصر أخرى قد تأتي بعده */
+    }
+    /* نهاية التعديلات المقترحة */
+
     .theme-toggle {
         display: flex !important;
         flex-direction: column;
         gap: 0;
-        margin-right: 10px; /* مسافة بين اللوجو وزر الثيم */
-        margin-left: auto; /* يدفع زر الثيم إلى أقصى اليسار في الجوال أيضاً */
+        margin-right: 10px; /* مسافة بين اللوجو وزر الثيم (تم إزالتها في التعديل الجديد إذا أردت مساحة إضافية) */
+        margin-left: 15px; /* هامش لزر الثيم من حافة الشاشة اليسرى، إذا أردته يلامس الحافة اجعله 0 */
         order: 1; /* يأتي بعد اللوجو */
     }
     .theme-toggle span {
@@ -332,7 +344,7 @@ body.dark-mode .theme-toggle:hover {
         display: flex;
         gap: 10px;
         order: 2; /* يأتي بعد زر الثيم */
-        margin-left: 0; /* لا تدفعه هنا ليكون زر الثيم هو الأقصى يساراً */
+        /* margin-left: 0;  لا تدفعه هنا ليكون زر الثيم هو الأقصى يساراً */
     }
     .navbar .nav-buttons-desktop-only .btn {
         padding: 8px 15px;
@@ -2014,7 +2026,7 @@ body.dark-mode .bottom-navbar .nav-item.active i {
         */
         display: flex; /* keep it visible to contain the theme toggle */
         gap: 10px; /* Reduced gap */
-        margin-left: auto; /* Push content to the right for RTL */
+        /* margin-left: auto; */ /* Push content to the right for RTL - تم إزالتها للسماح لزر الثيم أن يكون أقصى اليسار */
     }
     .navbar .nav-buttons-desktop-only .btn {
         padding: 8px 15px; /* Smaller padding for button text */
