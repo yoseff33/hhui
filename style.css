@@ -1968,6 +1968,14 @@ body.dark-mode .bottom-navbar .nav-item.active i {
         padding: 8px 15px; /* Smaller padding for button text */
         font-size: 0.9rem; /* Smaller font size for buttons */
     }
+
+    /* ********* التعديل الجديد هنا ********* */
+    /* إخفاء زر تسجيل الدخول/الأزرار المخصصة للزوار في الشريط العلوي على الجوال */
+    .navbar .nav-buttons .guest-only {
+        display: none !important;
+    }
+    /* ********* نهاية التعديل الجديد ********* */
+
     /* Adjust header .navbar layout for mobile when only logo and theme toggle/auth buttons are present */
     header .navbar {
         justify-content: space-between; /* Space out logo and buttons */
@@ -2059,7 +2067,7 @@ body.dark-mode .bottom-navbar .nav-item.active i {
     }
 }
 
-/* لأجهزة الكمبيوتر اللوحية والشاشات الكبيرة (أقل من 992 بكسل) */
+/* لأجهزة الكمبيوتر اللوحية والشاشات الكبرى (أقل من 992 بكسل) */
 @media (max-width: 992px) {
     body {
         padding-top: 70px; /* Adjust padding for smaller header on mobile */
