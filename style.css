@@ -95,7 +95,7 @@ header {
     z-index: 1000;
     backdrop-filter: blur(10px);
     transition: var(--transition);
-    padding: 9px 0; /* Default padding for desktop header */
+    padding: 10px 0; /* تم ضبط الهامش الافتراضي ليكون 10px */
 }
 
 footer {
@@ -508,7 +508,7 @@ header {
     z-index: 1000;
     backdrop-filter: blur(10px);
     transition: var(--transition);
-    padding: 15px 0;
+    padding: 10px 0; /* تم ضبط الهامش الافتراضي ليكون 10px */
 }
 
 .navbar {
@@ -533,7 +533,6 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
     font-size: 1.4rem;
     font-weight: bold;
 }
