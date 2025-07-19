@@ -95,7 +95,7 @@ header {
     z-index: 1000;
     backdrop-filter: blur(10px);
     transition: var(--transition);
-    padding: 10px 0; /* تم ضبط الهامش الافتراضي ليكون 10px */
+    padding: 15px 0; /* Default padding for desktop header */
 }
 
 footer {
@@ -303,16 +303,6 @@ body.dark-mode .theme-toggle:hover {
         justify-content: space-between; /* اللوجو في أقصى اليمين، وباقي العناصر موزعة للداخل */
         /* لا حاجة لـ gap هنا إذا استخدمنا margin: auto بشكل صحيح */
     }
-
-    /* إظهار زر البوت الخاص بالديسكتوب في الشريط العلوي */
-    #desktop-chatbot-toggle {
-        display: flex !important;
-        margin-right: 10px; /* مسافة بين زر تبديل الوضع وزر اسالني */
-    }
-    /* إخفاء زر البوت الخاص بالجوال على الديسكتوب */
-    #mobile-chatbot-toggle {
-        display: none !important;
-    }
 }
 
 /* للشاشات الصغيرة (الجوال) - 992 بكسل وأقل */
@@ -371,15 +361,6 @@ body.dark-mode .theme-toggle:hover {
 
     body {
         padding-bottom: 70px;
-    }
-
-    /* إخفاء زر البوت الخاص بالديسكتوب على الجوال */
-    #desktop-chatbot-toggle {
-        display: none !important;
-    }
-    /* إظهار زر البوت الخاص بالجوال في الشريط السفلي */
-    #mobile-chatbot-toggle {
-        display: flex !important; /* تأكد من ظهور زر الدردشة في الشريط السفلي على الجوال */
     }
 }
 /* ---------------------------------------------------- */
