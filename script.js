@@ -1,631 +1,2090 @@
-// تنشيط فلتر السيارات (سيستخدم في صفحة السيارات)
-document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const currentActive = document.querySelector('.filter-btn.active');
-        if (currentActive) {
-            currentActive.classList.remove('active');
-        }
-        this.classList.add('active');
-        // في مشروع حقيقي، هنا ستتم فلترة السيارات المعروضة بناءً على الزر المختار
-    });
-});
+:root {
+    --primary: #1a3c37;
+    --secondary: #d4af37;
+    --accent: #2e8b57;
+    --light: #f8f9fa;
+    --dark: #0f2925;
+    --gray: #6c757d;
+    --light-gray: #e9ecef;
+    --box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    --transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    --border-radius: 16px;
 
-// تأثير التنقل عند التمرير (مشترك بين جميع الصفحات)
-window.addEventListener('scroll', function() {
-    const header = document.querySelector('header');
-    if (header) { // Check if header exists
-        if (window.scrollY > 100) { // When scrolled more than 100px
-            header.classList.add('scrolled'); // Add 'scrolled' class
-        } else {
-            header.classList.remove('scrolled'); // Remove 'scrolled' class
-        }
+    /* Dark Mode Variables */
+    --body-bg-light: #f8f9fa;
+    --body-bg-dark: #121212;
+    --card-bg-light: white;
+    --card-bg-dark: #1e1e1e;
+    --text-color-light: #333;
+    --text-color-dark: #e0e0e0;
+    --heading-color-light: var(--dark);
+    --heading-color-dark: #ffffff;
+    --footer-bg-light: var(--dark);
+    --footer-bg-dark: #000;
+    --navbar-bg-light: rgba(255, 255, 255, 0.98);
+    --navbar-bg-dark: rgba(20, 20, 20, 0.98);
+    --border-color-light: #e9ecef;
+    --border-color-dark: #333;
+    --shadow-color-light: rgba(0, 0, 0, 0.08);
+    --shadow-color-dark: rgba(0, 0, 0, 0.4);
+
+    /* New for CSR content cards */
+    --csr-card-bg-light: white;
+    --csr-card-bg-dark: #1e1e1e;
+    --csr-text-light: #333;
+    --csr-text-dark: #e0e0e0;
+}
+
+/* Base styles for Light Mode */
+html {
+    scroll-padding-top: 80px; /* Offset for fixed header when using anchor links */
+}
+
+body {
+    background-color: var(--body-bg-light);
+    color: var(--text-color-light);
+    line-height: 1.7;
+    overflow-x: hidden;
+    font-size: 1.05rem;
+    padding-top: 80px; /* Default padding for desktop header height (approx 80px) */
+    padding-bottom: 0; /* Default for desktop, adjusted by JS for mobile */
+}
+
+body.no-scroll {
+    overflow: hidden; /* Disable scrolling when mobile menu is open - no longer needed for burger */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--heading-color-light);
+}
+
+.feature-card, .car-card, .loyalty-promo, .add-car-form, .stat-card, .recent-bookings, .loyalty-card,
+.quiz-container, .quiz-options label, .quiz-results { /* Added quiz elements here */
+    background: var(--card-bg-light);
+    box-shadow: 0 15px 40px var(--shadow-color-light);
+    color: var(--text-color-light); /* Ensure text color is light mode default */
+}
+/* Ensure text colors inside cards are always readable */
+.feature-card p,
+.car-info p,
+.car-meta .meta-item,
+.car-location,
+.quiz-question p,
+.quiz-options label {
+    color: var(--gray); /* Use gray for general text in light mode cards */
+}
+
+
+.loyalty-card {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    box-shadow: 0 15px 40px var(--shadow-color-light);
+    color: white; /* Loyalty card specific text color */
+}
+/* Specific style for elements inside loyalty-card to ensure white text */
+.loyalty-card h3, .loyalty-card p, .loyalty-card span, .loyalty-card small {
+    color: white;
+}
+
+header {
+    background-color: var(--navbar-bg-light);
+    box-shadow: 0 5px 20px var(--shadow-color-light);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    padding: 8px 0; /* Default padding for desktop header - Adjusted to 8px */
+}
+
+/* Add a class for the scrolled state of the header */
+header.scrolled {
+    padding: 3px 0; /* Smaller padding when scrolled - Adjusted to 3px */
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+}
+body.dark-mode header.scrolled {
+    box-shadow: 0 3px 15px var(--shadow-color-dark);
+}
+
+footer {
+    background: var(--footer-bg-light);
+}
+
+.form-control {
+    border: 2px solid var(--border-color-light);
+}
+
+/* Dark Mode specific styles */
+body.dark-mode {
+    background-color: var(--body-bg-dark);
+    color: var(--text-color-dark);
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+    color: var(--heading-color-dark);
+}
+
+body.dark-mode .feature-card,
+body.dark-mode .car-card,
+body.dark-mode .loyalty-promo,
+body.dark-mode .add-car-form,
+body.dark-mode .stat-card,
+body.dark-mode .recent-bookings,
+body.dark-mode .quiz-container,
+body.dark-mode .quiz-options label,
+body.dark-mode .quiz-results {
+    background: var(--card-bg-dark);
+    box-shadow: 0 15px 40px var(--shadow-color-dark);
+    color: var(--text-color-dark); /* Ensure text color changes for dark mode */
+}
+
+/* --- Start of added/modified code for .step cards --- */
+body.dark-mode .step {
+    background: var(--card-bg-dark); /* تغيير خلفية البطاقة في النمط الليلي */
+    box-shadow: 0 15px 40px var(--shadow-color-dark); /* تحديث الظل ليناسب النمط الليلي */
+}
+
+body.dark-mode .step h3 {
+    color: var(--heading-color-dark); /* لضمان تغيير لون العنوان داخل البطاقة */
+}
+
+body.dark-mode .step p {
+    color: var(--text-color-dark); /* لضمان تغيير لون النص داخل البطاقة */
+}
+
+body.dark-mode .step-number {
+    background: var(--secondary); /* لون خلفية رقم الخطوة في النمط الليلي */
+    color: var(--dark); /* لون نص رقم الخطوة في النمط الليلي (مثلاً #0f2925) */
+}
+/* --- End of added/modified code for .step cards --- */
+
+
+/* Ensure text colors inside cards are always readable in dark mode */
+body.dark-mode .feature-card p,
+body.dark-mode .car-info p,
+body.dark-mode .car-meta .meta-item,
+body.dark-mode .car-location,
+body.dark-mode .quiz-question p,
+body.dark-mode .quiz-options label {
+    color: var(--text-color-dark); /* Use dark mode text color for general text in dark mode cards */
+}
+
+body.dark-mode .loyalty-card {
+    background: linear-gradient(135deg, var(--dark), var(--primary));
+    box-shadow: 0 15px 40px var(--shadow-color-dark);
+}
+/* Ensure text colors inside loyalty-card remain readable in dark mode */
+body.dark-mode .loyalty-card h3,
+body.dark-mode .loyalty-card p,
+body.dark-mode .loyalty-card span,
+body.dark-mode .loyalty-card small {
+    color: white; /* Still white for contrast on the dark gradient */
+}
+
+
+body.dark-mode header {
+    background-color: var(--navbar-bg-dark);
+    box-shadow: 0 5px 20px var(--shadow-color-dark);
+}
+
+body.dark-mode footer {
+    background: var(--footer-bg-dark);
+}
+
+body.dark-mode .form-control {
+    border-color: var(--border-color-dark);
+    background-color: #2a2a2a;
+    color: var(--text-color-dark);
+}
+body.dark-mode .form-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.4);
+}
+
+body.dark-mode .filter-btn {
+    background: #333;
+    border-color: #444;
+    color: var(--text-color-dark);
+}
+body.dark-mode .filter-btn.active,
+body.dark-mode .filter-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+body.dark-mode .car-price {
+    color: var(--secondary);
+}
+
+body.dark-mode .car-meta .meta-item,
+body.dark-mode .car-location {
+    color: var(--text-color-dark);
+}
+body.dark-mode .car-meta .meta-item i, /* Ensure icons inside meta-item are visible */
+body.dark-mode .car-location i {
+    color: var(--accent); /* Keep accent color for icons */
+}
+
+
+body.dark-mode .section-title p {
+    color: var(--text-color-dark);
+}
+
+body.dark-mode .copyright {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+body.dark-mode .footer-col ul li a {
+    color: rgba(255, 255, 255, 0.6);
+}
+body.dark-mode .footer-col ul li a:hover {
+    color: white;
+}
+body.dark-mode .footer-contact li {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Toggle Button - Now only one toggle in header */
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--dark); /* Default icon color */
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex; /* Make it a flex container to align icon and text */
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between icon and text (if text is present) */
+    padding: 0; /* Remove default button padding */
+}
+.theme-toggle i {
+    font-size: 1.5rem; /* Ensure icon size is consistent */
+}
+.theme-toggle span { /* Text label for mobile theme toggle */
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: none; /* Hidden by default for desktop */
+}
+
+.theme-toggle:hover {
+    color: var(--primary);
+}
+body.dark-mode .theme-toggle {
+    color: white; /* Dark mode icon color */
+}
+body.dark-mode .theme-toggle:hover {
+    color: var(--secondary);
+}
+
+/* ---------------------------------------------------- */
+/* التعديلات الجديدة على ترتيب عناصر شريط التنقل العلوي */
+/* ---------------------------------------------------- */
+
+/* للشاشات الكبيرة (الديسكتوب) - أكثر من 992 بكسل */
+@media (min-width: 993px) {
+    .theme-toggle {
+        order: 2; /* يظهر بعد اللوجو والروابط */
+        margin-right: 20px; /* مسافة بين الروابط وزر الثيم */
+        margin-left: auto; /* يدفع زر الثيم إلى أقصى اليسار */
     }
-});
-
-// -------------------------------------
-// وظيفة إدارة حالة تسجيل الدخول وتحديث أشرطة التنقل
-// -------------------------------------
-
-function updateNavbarBasedOnLoginStatus() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    const userType = localStorage.getItem('userType');
-
-    // Desktop Navbar elements (top header)
-    const desktopNavLinks = document.querySelector('.desktop-nav-links'); // Desktop main links container
-    const desktopAuthLinks = desktopNavLinks ? desktopNavLinks.querySelectorAll('.auth-link') : [];
-    const desktopGuestButton = document.getElementById('nav-guest-button');
-    const desktopUserProfilePlaceholder = document.getElementById('nav-user-profile-placeholder');
-
-    // Mobile Bottom Navbar elements
-    const mobileBottomNavGuestButton = document.getElementById('mobile-bottom-guest-button');
-    const mobileBottomNavUserButton = document.getElementById('mobile-bottom-user-button');
-    const mobileBottomNavAuthLinks = document.querySelectorAll('.mobile-bottom-navbar .auth-link-bottom');
-
-    // Hide all auth related elements first for desktop
-    if (desktopGuestButton) desktopGuestButton.style.display = 'none';
-    if (desktopUserProfilePlaceholder) desktopUserProfilePlaceholder.style.display = 'none';
-    desktopAuthLinks.forEach(link => link.style.display = 'none');
-    
-    // Hide all auth related elements first for mobile bottom nav
-    if (mobileBottomNavGuestButton) mobileBottomNavGuestButton.style.display = 'none';
-    if (mobileBottomNavUserButton) mobileBottomNavUserButton.style.display = 'none';
-    mobileBottomNavAuthLinks.forEach(link => link.style.display = 'none');
-
-
-    if (isLoggedIn) {
-        // Desktop: Show user profile and relevant auth links
-        if (desktopUserProfilePlaceholder) {
-            desktopUserProfilePlaceholder.innerHTML = `
-                <a href="#" class="btn btn-outline" onclick="logoutUser()" style="margin-right: 10px;">
-                    <i class="fas fa-sign-out-alt"></i> خروج
-                </a>
-                <a href="${userType === 'owner' ? 'dashboard-owner.html' : 'dashboard-renter.html'}" class="btn btn-secondary">
-                    <i class="fas fa-user-circle"></i> ملفي
-                </a>
-            `;
-            desktopUserProfilePlaceholder.style.display = 'flex';
-        }
-        
-        desktopAuthLinks.forEach(link => {
-            const linkHref = link.getAttribute('href');
-            if (userType === 'owner') {
-                if (linkHref && (linkHref.includes('dashboard-owner.html') || linkHref.includes('add-car.html'))) {
-                    link.style.display = 'block';
-                }
-            } else if (userType === 'renter') {
-                if (linkHref && linkHref.includes('dashboard-renter.html')) {
-                    link.style.display = 'block';
-                }
-            }
-        });
-
-        // Mobile Bottom Nav: Show user profile button and specific auth links
-        if (mobileBottomNavUserButton) {
-            mobileBottomNavUserButton.style.display = 'flex';
-            mobileBottomNavUserButton.href = userType === 'owner' ? 'dashboard-owner.html' : 'dashboard-renter.html';
-        }
-        mobileBottomNavAuthLinks.forEach(link => {
-            const linkDataRole = link.getAttribute('data-role');
-            if (linkDataRole === userType || linkDataRole === 'all') { // 'all' for links visible to all logged-in users
-                link.style.display = 'flex';
-            } else {
-                link.style.display = 'none';
-            }
-        });
-
-    } else { // Not logged in
-        if (desktopGuestButton) desktopGuestButton.style.display = 'flex';
-        if (mobileBottomNavGuestButton) mobileBottomNavGuestButton.style.display = 'flex';
+    .theme-toggle span {
+        display: none !important; /* إخفاء النص على الديسكتوب */
     }
-}
-
-
-function loginUser(type) {
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('userType', type);
-    // يمكنك هنا تخزين اسم مستخدم وهمي لغرض العرض في التعهد
-    localStorage.setItem('userName', type === 'owner' ? 'نواف السبيعي' : 'سارة الحربي'); 
-    updateNavbarBasedOnLoginStatus();
-    // Redirect after updating status
-    if (type === 'owner') {
-        window.location.href = 'dashboard-owner.html';
-    } else if (type === 'renter') {
-        window.location.href = 'dashboard-renter.html';
+    .navbar .desktop-nav-links {
+        order: 1; /* يظهر بعد اللوجو مباشرة */
+        margin-right: 20px; /* مسافة بين اللوجو والروابط */
+        margin-left: 0; /* إزالة أي هامش دفع تلقائي */
     }
-}
-
-function logoutUser() {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userType');
-    localStorage.removeItem('userName'); // إزالة اسم المستخدم عند الخروج
-    updateNavbarBasedOnLoginStatus();
-    window.location.href = 'index.html';
-}
-
-// -------------------------------------
-// وظيفة تحديث بطاقة الولاء (Loyalty Card)
-// -------------------------------------
-
-function updateLoyaltyCard(completedRentals) {
-    const totalRentalsNeeded = 8;
-    const progressPercentage = (completedRentals / totalRentalsNeeded) * 100;
-
-    const progressBarFill = document.querySelector('.loyalty-line-fill');
-    const loyaltyDots = document.querySelectorAll('.loyalty-dot');
-    const currentRentalsText = document.getElementById('current-rentals-count');
-    const remainingRentalsText = document.getElementById('remaining-rentals-count');
-
-
-    if (progressBarFill) {
-        progressBarFill.style.width = `${progressPercentage}%`;
-    }
-
-    loyaltyDots.forEach((dot, index) => {
-        if (index < completedRentals) {
-            dot.classList.add('completed');
-        } else {
-            dot.classList.remove('completed');
-        }
-        dot.textContent = index + 1;
-    });
-
-    if (currentRentalsText) {
-        currentRentalsText.textContent = completedRentals;
-    }
-    if (remainingRentalsText) {
-        remainingRentalsText.textContent = totalRentalsNeeded - completedRentals;
-    }
-
-    if (completedRentals >= totalRentalsNeeded) {
-        if (remainingRentalsText) {
-            remainingRentalsText.textContent = '0';
-        }
-        const rewardInfo = document.querySelector('.loyalty-reward-info small');
-        if (rewardInfo) {
-            rewardInfo.textContent = 'تهانينا! تأجيرك المجاني بانتظرك!';
-        }
-    }
-}
-
-// -------------------------------------
-// الواجهة الليلية/النهارية (Dark/Light Mode Toggle)
-// -------------------------------------
-
-function setupThemeToggle() {
-    // الزر الآن هو في الهيدر العلوي فقط ويُستخدم لجميع الشاشات
-    const themeToggleBtn = document.getElementById('theme-toggle-desktop'); 
-
-    const applyTheme = (theme) => {
-        document.body.classList.remove('light-mode', 'dark-mode');
-        document.body.classList.add(theme + '-mode');
-        localStorage.setItem('theme', theme);
-
-        if (themeToggleBtn) {
-            // Check screen width to decide between icon only or icon with text
-            if (window.innerWidth <= 992) { // Mobile view
-                themeToggleBtn.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i><span>الوضع الليلي</span>' : '<i class="fas fa-sun"></i><span>الوضع النهاري</span>';
-            } else { // Desktop view
-                themeToggleBtn.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
-            }
-        }
-    };
-
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    applyTheme(currentTheme); // Apply theme on load
-
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
-            const newTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
-            applyTheme(newTheme);
-        });
-
-        // Re-apply theme on resize to switch between icon/text dynamically
-        window.addEventListener('resize', () => applyTheme(localStorage.getItem('theme') || 'light'));
-    }
-}
-
-
-// -------------------------------------
-// شريط "آخر مشاهدة للسيارات" (Recently Viewed Cars Bar)
-// -------------------------------------
-
-const RECENTLY_VIEWED_KEY = 'recentlyViewedCars';
-const MAX_RECENTLY_VIEWED = 5;
-
-function addCarToRecentlyViewed(carId, carImg, carTitle) {
-    let recentlyViewed = JSON.parse(localStorage.getItem(RECENTLY_VIEWED_KEY)) || [];
-
-    recentlyViewed = recentlyViewed.filter(car => car.id !== carId);
-
-    recentlyViewed.unshift({ id: carId, img: carImg, title: carTitle });
-
-    if (recentlyViewed.length > MAX_RECENTLY_VIEWED) {
-        recentlyViewed = recentlyViewed.slice(0, MAX_RECENTLY_VIEWED);
-    }
-
-    localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(recentlyViewed));
-    renderRecentlyViewedCars();
-}
-
-function renderRecentlyViewedCars() {
-    const recentlyViewed = JSON.parse(localStorage.getItem(RECENTLY_VIEWED_KEY)) || [];
-    const container = document.getElementById('recently-viewed-cars-container');
-
-    if (container) {
-        if (recentlyViewed.length === 0) {
-            container.innerHTML = '<p style="color:var(--gray);">لا توجد سيارات تم عرضها مؤخرًا.</p>';
-        } else {
-            container.innerHTML = '';
-            recentlyViewed.forEach(car => {
-                const carLink = document.createElement('a');
-                carLink.href = '#';
-                carLink.classList.add('recent-car-thumb');
-                carLink.innerHTML = `<img src="${car.img}" alt="${car.title}">`;
-                container.appendChild(carLink);
-            });
-        }
-    }
-}
-
-
-// -------------------------------------
-// شهادات العملاء كـ "سلايدر" تفاعلي (Interactive Testimonial Slider)
-// -------------------------------------
-let slideIndex = 0;
-let slideInterval;
-
-function showSlides() {
-    const slides = document.querySelectorAll('.testimonial-slide');
-    const dots = document.querySelectorAll('.dot');
-    if (slides.length === 0) return;
-
-    slides.forEach(slide => slide.style.display = 'none');
-    dots.forEach(dot => dot.classList.remove('active'));
-
-    slideIndex++;
-    if (slideIndex > slides.length) {
-        slideIndex = 1;
-    }
-
-    slides[slideIndex - 1].style.display = 'block';
-    dots[slideIndex - 1].classList.add('active');
-}
-
-function currentSlide(n) {
-    clearInterval(slideInterval); // Stop auto-slide when manual navigation
-    slideIndex = n;
-    const slides = document.querySelectorAll('.testimonial-slide');
-    const dots = document.querySelectorAll('.dot');
-    if (slides.length === 0) return;
-
-    slides.forEach(slide => slide.style.display = 'none');
-    dots.forEach(dot => dot.classList.remove('active'));
-
-    slides[slideIndex - 1].style.display = 'block';
-    dots[slideIndex - 1].classList.add('active');
-    
-    slideInterval = setInterval(showSlides, 5000); // Restart auto-slide after manual navigation
-}
-
-
-// -------------------------------------
-// أداة "اختبار السيارة المناسبة لي" (Which Car Suits Me Quiz)
-// -------------------------------------
-function setupQuiz() {
-    const quizForm = document.getElementById('car-quiz-form');
-    const quizResults = document.getElementById('quiz-results');
-    if (!quizForm || !quizResults) return;
-
-    quizForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(quizForm);
-        const answers = {};
-        for (let [key, value] of formData.entries()) {
-            answers[key] = value;
-        }
-
-        let recommendation = "لا يمكننا تحديد سيارة مناسبة بناءً على اختياراتك.";
-        let carType = "";
-
-        // Simple quiz logic
-        if (answers.passengers === '5' || answers.passengers === '7') {
-            if (answers.budget === 'medium' || answers.budget === 'high') {
-                recommendation = "نوصي بسيارة دفع رباعي فسيحة ومريحة لرحلاتك العائلية.";
-                carType = "دفع رباعي";
-            } else {
-                recommendation = "ننصح بسيارة سيدان متوسطة الحجم، اقتصادية ومناسبة للاستخدام اليومي.";
-                carType = "سيدان";
-            }
-        } else if (answers.passengers === '2' || answers.passengers === '4') {
-            if (answers.budget === 'low') {
-                recommendation = "سيارة اقتصادية صغيرة ستكون مثالية لتنقلاتك اليومية داخل المدينة.";
-                carType = "اقتصادية";
-            } else if (answers.style === 'sporty' || answers.style === 'luxury') {
-                recommendation = "سيارة فاخرة أو رياضية ستلبي رغبتك في الأناقة والأداء العالي.";
-                carType = "فاخرة";
-            } else {
-                recommendation = "سيارة سيدان أنيقة وعملية ستكون خياراً ممتازاً لك.";
-                carType = "سيدان";
-            }
-        }
-
-        quizResults.innerHTML = `
-            <h3>نتائج اختبارك</h3>
-            <p>${recommendation}</p>
-            <p>يمكنك استكشاف السيارات من فئة: <strong>${carType}</strong></p>
-            <a href="cars.html" class="btn btn-primary" style="margin-top:20px;">
-                <i class="fas fa-search"></i> استكشف السيارات
-            </a>
-        `;
-        quizResults.style.display = 'block';
-    });
-}
-
-
-// -------------------------------------
-// وظائف خريطة السيارات (Leaflet Map)
-// -------------------------------------
-
-let map;
-let carMarkersLayer;
-
-// بيانات السيارات الافتراضية داخل جامعة القصيم (مع إحداثيات من المستخدم)
-const qassimCarsData = [
-    {
-        id: 'camry', type: 'سيدان', model: 'تويوتا كامري 2022', price: '85', location: 'مواقف المبنى الإداري',
-        lat: 26.348037, lng: 43.771591,
-        img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3'
-    },
-    {
-        id: 'landcruiser', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2021', price: '220', location: 'كلية الهندسة',
-        lat: 26.3350, lng: 43.7685,
-        img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg'
-    },
-    {
-        id: 'elantra', type: 'اقتصادية', model: 'هونداي النترا 2023', price: '75', location: 'بجوار المكتبة المركزية',
-        lat: 26.351008, lng: 43.775861,
-        img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp'
-    },
-    {
-        id: 'mercedes', type: 'فاخرة', model: 'مرسيدس E-Class 2020', price: '300', location: 'المركز الثقافي',
-        lat: 26.349181, lng: 43.761351,
-        img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg'
-    },
-    {
-        id: 'malibu', type: 'سيدان', model: 'شيفروليه ماليبو 2020', price: '90', location: 'أمام سكن الطلاب',
-        lat: 26.3400, lng: 43.7630,
-        img: 'https://cdn.motor1.com/images/mgl/zZX8w/s3/2020-chevrolet-malibu.jpg'
-    },
-    {
-        id: 'patrol', type: 'دفع رباعي', model: 'نيسان باترول 2023', price: '250', location: 'مواقف كلية العلوم',
-        lat: 26.3365, lng: 43.7645,
-        img: 'https://www.nissan-cdn.net/content/dam/Nissan/middle-east/vehicles/Patrol/Patrol-MY23/overview/2023-Nissan-Patrol-hero-desktop.webp'
-    },
-    {
-        id: 'kia-rio', type: 'اقتصادية', model: 'كيا ريو 2024', price: '65', location: 'مواقف كلية الحاسب',
-        lat: 26.3340, lng: 43.7670,
-        img: 'https://www.kia.com/content/dam/kw/vehicles/rio/2024/kia_rio_sedan_2024_01_m.jpg'
-    },
-];
-
-function initMap() {
-    const qassimUniversityCoords = [26.345, 43.769];
-    const defaultZoom = 14;
-
-    // Check if map container exists and Leaflet library (L) is loaded, and map is not already initialized
-    if (document.getElementById('mapid') && typeof L !== 'undefined' && !map) {
-        map = L.map('mapid').setView(qassimUniversityCoords, defaultZoom);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        carMarkersLayer = L.layerGroup().addTo(map);
-        renderCarsOnMap('الكل');
-    }
-}
-
-function createCarIcon(carType) {
-    let iconClass = 'fas fa-car';
-    return L.divIcon({
-        className: 'custom-car-icon',
-        html: `<i class="${iconClass}"></i>`,
-        iconSize: [40, 40],
-        iconAnchor: [20, 40],
-        popupAnchor: [0, -40]
-    });
-}
-
-// هذا هو الجزء الذي تم تعديله في دالة renderCarsOnMap
-function renderCarsOnMap(filterType = 'الكل') {
-    if (!map) return;
-    carMarkersLayer.clearLayers();
-
-    const filteredCars = filterType === 'الكل' ? qassimCarsData : qassimCarsData.filter(car => car.type === filterType);
-
-    filteredCars.forEach(car => {
-        const carIcon = createCarIcon(car.type);
-        const marker = L.marker([car.lat, car.lng], { icon: carIcon }).addTo(carMarkersLayer);
-
-        const popupContent = `
-            <div class="popup-car-details">
-                <img src="${car.img}" alt="${car.model}" class="car-img-popup">
-                <h4>${car.model}</h4>
-                <p><strong>السعر:</strong> ${car.price} ريال/اليوم</p>
-                <p><strong>الموقع:</strong> ${car.location}</p>
-                <a href="cars.html?carId=${car.id}" class="btn btn-primary">احجز الآن</a>
-            </div>
-        `;
-        marker.bindPopup(popupContent);
-    });
-}
-
-function setupMapFilters() {
-    document.querySelectorAll('.map-filter-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const currentActive = document.querySelector('.map-filter-btn.active');
-            if (currentActive) {
-                currentActive.classList.remove('active');
-            }
-            this.classList.add('active');
-            
-            const filterType = this.dataset.filter;
-            renderCarsOnMap(filterType);
-        });
-    });
-}
-
-// -------------------------------------
-// وظائف المسؤولية الاجتماعية المُضافة (AI-Generated Content & Logic)
-// -------------------------------------
-
-function displayRandomCsrFact() {
-    const csrFactElement = document.getElementById('csr-fact-display');
-    if (csrFactElement && typeof csrFacts !== 'undefined' && csrFacts.length > 0) {
-        const randomIndex = Math.floor(Math.random() * csrFacts.length);
-        csrFactElement.textContent = csrFacts[randomIndex].text;
-    }
-}
-
-function setupPledgeGenerator() {
-    const pledgeForm = document.getElementById('pledge-form');
-    const pledgeResultDiv = document.getElementById('pledge-result'); // Ensure this is the correct ID for the result display
-    const userName = localStorage.getItem('userName') || 'صديقنا';
-
-    if (pledgeForm && pledgeResultDiv && typeof pledgeOptions !== 'undefined') {
-        // Populate pledge options
-        const pledgeOptionsContainer = pledgeForm.querySelector('.quiz-options'); // Ensure this selects the correct container within the pledge form
-        if (pledgeOptionsContainer) {
-            pledgeOptionsContainer.innerHTML = ''; // Clear existing options
-            pledgeOptions.forEach(option => {
-                const label = document.createElement('label');
-                label.innerHTML = `<input type="radio" name="pledge-type" value="${option.id}"> ${option.text}`;
-                pledgeOptionsContainer.appendChild(label);
-            });
-        }
-
-        pledgeForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const selectedPledgeId = pledgeForm.querySelector('input[name="pledge-type"]:checked')?.value;
-
-            if (selectedPledgeId) {
-                const selectedPledge = pledgeOptions.find(p => p.id === selectedPledgeId);
-                if (selectedPledge) {
-                    const thankYouMessage = selectedPledge.thankYou.replace('[اسم_المستخدم]', userName);
-                    pledgeResultDiv.innerHTML = `
-                        <h3>شكرًا لالتزامك!</h3>
-                        <p>${thankYouMessage}</p>
-                        <button class="btn btn-secondary" onclick="window.location.reload()">تعهد آخر</button>
-                    `;
-                    pledgeResultDiv.style.display = 'block';
-                    pledgeForm.style.display = 'none'; // Hide form after submission
-                }
-            } else {
-                pledgeResultDiv.innerHTML = `<p style="color:var(--text-color-light);">الرجاء اختيار تعهد أولاً للمتابعة.</p>`;
-                pledgeResultDiv.style.display = 'block';
-            }
-        });
-    }
-}
-
-
-function renderImpactDashboard() {
-    const impactContainer = document.getElementById('impact-stats-container');
-    if (impactContainer && typeof impactStats !== 'undefined' && impactStats.length > 0) {
-        impactContainer.innerHTML = ''; 
-        impactStats.forEach(stat => {
-            const statCard = document.createElement('div');
-            statCard.classList.add('stat-card'); // إعادة استخدام فئة stat-card الموجودة
-            statCard.innerHTML = `
-                <h3>${stat.label}</h3>
-                <div class="value">${stat.value}${stat.unit}</div>
-                <p class="story" style="font-size:0.95rem; color: var(--gray); margin-top:10px;">${stat.story}</p>
-            `;
-            impactContainer.appendChild(statCard);
-        });
-    }
-}
-
-
-// -------------------------------------
-// عند تحميل المحتوى (DOMContentLoaded)
-// -------------------------------------
-
-document.addEventListener('DOMContentLoaded', () => {
-    setupThemeToggle();
-    updateNavbarBasedOnLoginStatus();
-
-    // Specific logic for mobile bottom navbar's active state
-    const bottomNavItems = document.querySelectorAll('.mobile-bottom-navbar .nav-item');
-    bottomNavItems.forEach(item => {
-        // Remove active class from all items first
-        item.classList.remove('active');
-        // Add active class if href matches current page path
-        // Use pathname for comparison to ignore host/protocol
-        const currentPath = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
-        const itemHref = item.getAttribute('href');
-
-        if (itemHref === currentPath) {
-            item.classList.add('active');
-        }
-        // Handle index.html special case for root path
-        if (itemHref === 'index.html' && (currentPath === '' || currentPath === 'index.html')) {
-            item.classList.add('active');
-        }
-    });
-
-    // Adjust body padding-bottom based on mobile bottom navbar presence
-    function adjustBodyPadding() {
-        const mobileBottomNavbar = document.querySelector('.mobile-bottom-navbar');
-        if (mobileBottomNavbar && window.innerWidth <= 992) { // Only for mobile view
-            document.body.style.paddingBottom = mobileBottomNavbar.offsetHeight + 'px';
-        } else {
-            document.body.style.paddingBottom = '0';
-        }
-    }
-
-    adjustBodyPadding(); // Call on load
-    window.addEventListener('resize', adjustBodyPadding); // Call on resize
-
-
-    const userCompletedRentals = 3;
-    updateLoyaltyCard(userCompletedRentals);
-
-    renderRecentlyViewedCars();
-
-    if (document.querySelector('.testimonial-slider')) {
-        showSlides();
-        slideInterval = setInterval(showSlides, 5000);
+    .navbar .nav-buttons {
+        order: 3; /* يظهر بعد زر الثيم (في أقصى اليسار إذا كان اللوجو على اليمين والثيم في أقصى اليسار) */
+        margin-left: 0; /* تأكد من عدم وجود هامش دفع هنا */
     }
     
-    setupQuiz();
-
-    // CSR Features Initialization
-    // تأكد من وجود العناصر في الصفحة قبل استدعاء الوظيفة
-    if (document.getElementById('csr-fact-display')) {
-        displayRandomCsrFact(); 
-    }
-    if (document.getElementById('pledge-form')) {
-        setupPledgeGenerator(); 
-    }
-    if (document.getElementById('impact-stats-container')) {
-        renderImpactDashboard(); 
+    header .navbar {
+        justify-content: space-between; /* اللوجو في أقصى اليمين، وباقي العناصر موزعة للداخل */
+        /* لا حاجة لـ gap هنا إذا استخدمنا margin: auto بشكل صحيح */
     }
 
-    // Check if mapid exists on current page before initializing map
-    // Ensure Leaflet is loaded before calling initMap
-    if (document.getElementById('mapid')) {
-        // Add a small delay for Leaflet to ensure the script is fully loaded.
-        // This is a common workaround for CDN loading issues, especially with SRI.
-        setTimeout(() => {
-            if (typeof L !== 'undefined') { // Final check for Leaflet
-                initMap();
-                setupMapFilters();
-            } else {
-                console.error("Leaflet library (L) is not defined. Map initialization failed. Check network tab for Leaflet JS/CSS loading errors.");
-            }
-        }, 100); // 100ms delay
+    /* إظهار زر البوت الخاص بالديسكتوب في الشريط العلوي */
+    #desktop-chatbot-toggle {
+        display: flex !important;
+        margin-right: 10px; /* مسافة بين زر تبديل الوضع وزر اسالني */
     }
-});
-
-// تنشيط القائمة الجانبية (سيستخدم في صفحات لوحات التحكم)
-document.querySelectorAll('.sidebar-menu a').forEach(link => {
-    link.addEventListener('click', function(e) {
-        const currentActive = document.querySelector('.sidebar-menu a.active');
-        if (currentActive) {
-            currentActive.classList.remove('active');
-        }
-        this.classList.add('active');
-    });
-});
-
-document.addEventListener('click', (e) => {
-    if (e.target.closest('.car-card')) {
-        const carCard = e.target.closest('.car-card');
-        const carImg = carCard.querySelector('.car-img img').src;
-        const carTitle = carCard.querySelector('.car-title').textContent;
-        const carId = carTitle.replace(/\s/g, '-');
-
-        addCarToRecentlyViewed(carId, carImg, carTitle);
+    /* إخفاء زر البوت الخاص بالجوال على الديسكتوب */
+    #mobile-chatbot-toggle {
+        display: none !important;
     }
-});
+
+    /* Adjust padding for desktop buttons */
+    .navbar .nav-buttons .btn {
+        padding: 8px 20px; /* Adjusted padding for desktop buttons to shrink them more */
+        font-size: 0.9rem; /* Adjusted font size to shrink them more */
+    }
+}
+
+/* للشاشات الصغيرة (الجوال) - 992 بكسل وأقل */
+@media (max-width: 992px) {
+    /* بداية التعديلات المقترحة */
+    header .container {
+        padding-left: 0; /* لإزالة المسافة البادئة من اليسار */
+        padding-right: 0; /* لإزالة المسافة البادئة من اليمين */
+    }
+
+    .navbar .logo {
+        margin-right: 15px; /* لإعطاء مسافة للوجو من حافة الشاشة اليمنى */
+        margin-left: auto; /* لإبعاد الشعار عن أي عناصر أخرى قد تأتي بعده */
+    }
+    /* نهاية التعديلات المقترحة */
+
+    .theme-toggle {
+        display: flex !important;
+        flex-direction: column;
+        gap: 0;
+        margin-right: 10px; /* مسافة بين اللوجو وزر الثيم (تم إزالتها في التعديل الجديد إذا أردت مساحة إضافية) */
+        margin-left: 15px; /* هامش لزر الثيم من حافة الشاشة اليسرى، إذا أردته يلامس الحافة اجعله 0 */
+        order: 1; /* يأتي بعد اللوجو */
+    }
+    .theme-toggle span {
+        display: block !important; /* إظهار النص على الجوال */
+        font-size: 0.75rem;
+        margin-top: 5px;
+    }
+    
+    /* إخفاء زر تسجيل الدخول/الأزرار المخصبة للزوار في الشريط العلوي على الجوال */
+    .navbar .nav-buttons .guest-only {
+        display: none !important;
+    }
+    .navbar .desktop-nav-links { /* تأكيد إخفاء الروابط الرئيسية على الجوال */
+        display: none !important;
+    }
+    .navbar .nav-buttons-desktop-only { /* لإبقاء حاوية الأزرار الرئيسية في شريط التنقل العلوي */
+        display: flex;
+        gap: 10px;
+        order: 2; /* يأتي بعد زر الثيم */
+        /* margin-left: 0;  لا تدفعه هنا ليكون زر الثيم هو الأقصى يساراً */
+    }
+    .navbar .nav-buttons-desktop-only .btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+    /* إخفاء زر تبديل الثيم السفلي إذا كان موجوداً، لأن زر الشريط العلوي أصبح عالمياً */
+    #theme-toggle-mobile-bottom {
+        display: none !important;
+    }
+
+    header .navbar {
+        justify-content: space-between; /* اللوجو على اليمين، وزر الثيم في أقصى اليسار */
+    }
+
+    body {
+        padding-bottom: 70px;
+    }
+
+    /* إخفاء زر البوت الخاص بالديسكتوب على الجوال */
+    #desktop-chatbot-toggle {
+        display: none !important;
+    }
+    /* إظهار زر البوت الخاص بالجوال في الشريط السفلي */
+    #mobile-chatbot-toggle {
+        display: flex !important; /* تأكد من ظهور زر الدردشة في الشريط السفلي على الجوال */
+    }
+}
+/* ---------------------------------------------------- */
+/* نهاية التعديلات على ترتيب عناصر شريط التنقل العلوي */
+/* ---------------------------------------------------- */
+
+
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Tajawal', sans-serif;
+}
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section {
+    padding: 100px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title h2 {
+    font-size: 3rem;
+    color: var(--heading-color-light);
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+    font-weight: 900;
+}
+
+.section-title h2:after {
+    content: "";
+    position: absolute;
+    bottom: -15px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 100px;
+    height: 5px;
+    background: var(--secondary);
+    border-radius: 3px;
+}
+
+.section-title p {
+    color: var(--gray);
+    max-width: 700px;
+    margin: 25px auto 0;
+    font-size: 1.25rem;
+    line-height: 1.8;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 40px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.15rem;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    outline: none;
+    gap: 12px;
+    box-shadow: var(--box-shadow);
+}
+
+.btn i {
+    font-size: 1.2rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 18px 35px rgba(26, 60, 55, 0.4);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: var(--dark);
+    font-weight: 800;
+}
+
+.btn-secondary:hover {
+    background: #c9a22e;
+    transform: translateY(-7px);
+    box-shadow: 0 18px 35px rgba(212, 175, 55, 0.4);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-7px);
+    box-shadow: 0 18px 35px rgba(26, 60, 55, 0.2);
+}
+
+/* التنقل العلوي */
+header {
+    background-color: var(--navbar-bg-light);
+    box-shadow: 0 5px 20px var(--shadow-color-light);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    padding: 8px 0; /* Updated from 15px 0 to 8px 0 */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between; /* هذا قد يتم تجاوزه في الميديا كويري */
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    order: 0; /* تأكد أن اللوجو هو الأول */
+}
+
+.logo-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.logo-text span {
+    color: var(--secondary);
+}
+
+/* Default state for desktop nav-links */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 35px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 700;
+    font-size: 1.1rem;
+    position: relative;
+    padding: 10px 0;
+    transition: var(--transition);
+}
+body.dark-mode .nav-links li a {
+    color: var(--text-color-dark);
+}
+
+
+.nav-links li a:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 3px;
+    background: var(--secondary);
+    border-radius: 3px;
+    transition: var(--transition);
+}
+
+.nav-links li a:hover:after,
+.nav-links li a.active:after {
+    width: 100%;
+}
+
+.nav-links li a:hover,
+body.dark-mode .nav-links li a.active {
+    color: var(--primary);
+}
+body.dark-mode .nav-links li a:hover,
+body.dark-mode .nav-links li a.active {
+    color: var(--secondary);
+}
+
+
+.nav-buttons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Mobile Toggle Button (hidden - will be removed) */
+.mobile-toggle {
+    display: none !important; /* Hidden always now */
+}
+
+/* Overlay for mobile menu (hidden - will be removed) */
+.mobile-menu-overlay {
+    display: none !important;
+}
+
+/* Mobile Nav Menu Container (hidden - will be removed) */
+.mobile-nav-menu {
+    display: none !important;
+}
+
+/* Links visibility based on login status */
+.nav-links .auth-link { /* Desktop nav-links */
+    display: none;
+}
+.mobile-nav-menu .nav-links-inner .auth-link { /* Mobile nav-links, default hidden */
+    display: none;
+}
+.mobile-nav-menu .nav-links-inner .auth-link.show-mobile { /* Show auth links only on mobile when logged in */
+    display: block;
+}
+
+.nav-buttons .guest-only { /* For desktop guest button */
+    display: flex;
+}
+.nav-buttons #nav-user-profile-placeholder { /* For desktop user profile */
+    display: none;
+}
+/* No separate mobile guest/profile buttons in main header, they're moved to mobile-nav-menu */
+
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(105deg, rgba(15, 41, 37, 0.92) 0%, rgba(26, 60, 55, 0.88) 100%), url('https://www.almowaten.net/wp-content/uploads/2022/10/Ff0vop3XkAACLm8-877x492.jpg') no-repeat center center/cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    color: white;
+    padding-top: 100px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Particles effect container */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.hero:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to top, var(--light), transparent);
+    z-index: 1;
+}
+body.dark-mode .hero:before {
+    background: linear-gradient(to top, var(--dark), transparent);
+}
+
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 750px;
+}
+
+.hero h1 {
+    font-size: 4.2rem;
+    line-height: 1.2;
+    margin-bottom: 30px;
+    font-weight: 800;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    color: white;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 45px;
+    opacity: 0.9;
+    line-height: 1.8;
+    color: white;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+/* Features Section */
+.features {
+    position: relative;
+    z-index: 10;
+    margin-top: -100px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.feature-card {
+    background: var(--card-bg-light);
+    border-radius: var(--border-radius);
+    padding: 40px 30px;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    text-align: center;
+    border-bottom: 4px solid transparent;
+    transform-style: preserve-3d;
+}
+
+.feature-card:hover {
+    transform: translateY(-20px) translateZ(10px);
+    box-shadow: 0 20px 50px var(--shadow-color-light);
+    border-bottom-color: var(--secondary);
+}
+body.dark-mode .feature-card:hover {
+    box-shadow: 0 20px 50px var(--shadow-color-dark);
+}
+
+
+.feature-icon {
+    width: 100px;
+    height: 100px;
+    background: rgba(46, 139, 87, 0.1);
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    font-size: 2.5rem;
+    color: var(--accent);
+    transform-style: preserve-3d;
+    transform: translateZ(20px);
+}
+
+.feature-card h3 {
+    font-size: 1.9rem;
+    margin-bottom: 20px;
+    color: var(--heading-color-light);
+    font-weight: 700;
+}
+
+.feature-card p {
+    color: var(--gray);
+    line-height: 1.8;
+    font-size: 1.15rem;
+}
+
+/* Cars Section */
+.cars-section {
+    background: var(--light);
+}
+body.dark-mode .cars-section {
+    background: var(--body-bg-dark);
+}
+
+.cars-filter {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 12px 28px;
+    border-radius: 12px;
+    background: var(--card-bg-light);
+    border: 2px solid var(--border-color-light);
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1.05rem;
+    color: var(--dark);
+}
+body.dark-mode .filter-btn {
+    background: #333;
+    border-color: #444;
+    color: var(--text-color-dark);
+}
+
+
+.filter-btn.active, .filter-btn:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+
+.cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 35px;
+    margin-top: 30px;
+}
+
+.car-card {
+    background: var(--card-bg-light);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.car-card:hover {
+    transform: translateY(-12px) translateZ(8px);
+    box-shadow: 0 18px 45px var(--shadow-color-light);
+}
+body.dark-mode .car-card:hover {
+    box-shadow: 0 18px 45px var(--shadow-color-dark);
+}
+
+
+.car-img {
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.car-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+    transform: translateZ(0);
+}
+
+.car-card:hover .car-img img {
+    transform: scale(1.05) translateZ(5px);
+}
+
+.car-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--secondary);
+    color: var(--dark);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-weight: 700;
+    z-index: 2;
+}
+
+.car-info {
+    padding: 30px;
+}
+
+.car-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.car-title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--heading-color-light);
+}
+
+.car-price {
+    color: var(--primary);
+    font-weight: 800;
+    font-size: 1.7rem;
+}
+body.dark-mode .car-price {
+    color: var(--secondary);
+}
+
+
+.car-price span {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--gray);
+}
+
+.car-meta {
+    display: flex;
+    margin: 20px 0;
+    padding: 15px 0;
+    border-top: 1px solid var(--border-color-light);
+    border-bottom: 1px solid var(--border-color-light);
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+body.dark-mode .car-meta {
+    border-top-color: var(--border-color-dark);
+    border-bottom-color: var(--border-color-dark);
+}
+
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    color: var(--gray);
+    gap: 8px;
+    font-size: 1.05rem;
+}
+body.dark-mode .meta-item {
+    color: var(--text-color-dark);
+}
+
+
+.meta-item i {
+    color: var(--accent);
+    font-size: 1.25rem;
+}
+
+.car-location {
+    display: flex;
+    align-items: center;
+    color: var(--gray);
+    margin-bottom: 20px;
+    gap: 8px;
+    font-size: 1.05rem;
+}
+body.dark-mode .car-location {
+    color: var(--text-color-dark);
+}
+
+
+.car-actions .btn {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    padding: 14px 25px;
+    font-size: 1rem;
+}
+
+/* Recently Viewed Cars Bar */
+.recently-viewed-bar {
+    background: var(--card-bg-light);
+    border-top: 1px solid var(--border-color-light);
+    padding: 20px 0;
+    margin-top: 50px;
+    box-shadow: 0 -5px 15px var(--shadow-color-light);
+    text-align: center;
+}
+body.dark-mode .recently-viewed-bar {
+    background: var(--card-bg-dark);
+    border-top-color: var(--border-color-dark);
+    box-shadow: 0 -5px 15px var(--shadow-color-dark);
+}
+
+.recently-viewed-bar h3 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    color: var(--heading-color-light);
+}
+
+.recently-viewed-cars-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 0 10px;
+}
+
+.recent-car-thumb {
+    width: 120px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+.recent-car-thumb:hover {
+    transform: translateY(-5px);
+}
+.recent-car-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* How It Works Section */
+.how-it-works {
+    background: linear-gradient(to bottom, var(--light-gray), var(--light));
+}
+body.dark-mode .how-it-works {
+    background: linear-gradient(to bottom, #1e1e1e, #121212);
+}
+
+
+.steps-container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 50px;
+}
+
+.steps-container:before {
+    content: "";
+    position: absolute;
+    top: 60px;
+    right: 10%;
+    left: 10%;
+    height: 3px;
+    background: var(--accent);
+    z-index: 1;
+}
+
+.step {
+    position: relative;
+    z-index: 2;
+    background: var(--card-bg-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    width: 22%;
+    text-align: center;
+}
+
+.step-number {
+    width: 65px;
+    height: 65px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 auto 25px;
+}
+
+.step h3 {
+    font-size: 1.7rem;
+    margin-bottom: 20px;
+    color: var(--heading-color-light);
+    font-weight: 700;
+}
+
+.step p {
+    color: var(--gray);
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+/* Testimonial Slider */
+.testimonials-section {
+    background: var(--body-bg-light);
+    padding: 100px 0;
+}
+body.dark-mode .testimonials-section {
+    background: var(--body-bg-dark);
+}
+
+.testimonial-slider {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.testimonial-slide {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    background: var(--card-bg-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    animation: fadein 0.8s ease-in-out;
+}
+body.dark-mode .testimonial-slide {
+    background: var(--card-bg-dark);
+    box-shadow: 0 15px 40px var(--shadow-color-dark);
+}
+
+
+.testimonial-slide.active {
+    display: block;
+}
+
+.testimonial-text {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--text-color-light);
+}
+body.dark-mode .testimonial-text {
+    color: var(--text-color-dark);
+}
+
+.testimonial-author-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid var(--secondary);
+}
+
+.testimonial-author-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--heading-color-light);
+}
+
+.testimonial-author-role {
+    font-size: 0.95rem;
+    color: var(--gray);
+}
+
+.slider-dots {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: var(--light-gray);
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+    cursor: pointer;
+}
+body.dark-mode .dot {
+    background-color: #555;
+}
+
+
+.dot.active {
+    background-color: var(--primary);
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+/* Dashboard Section */
+.dashboard {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+    background: var(--card-bg-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    min-height: 600px;
+    margin-top: 40px;
+}
+
+.dashboard-sidebar {
+    background: var(--primary);
+    color: white;
+    padding: 30px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.user-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.user-info h3 {
+    font-size: 1.45rem;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.user-info p {
+    opacity: 0.8;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.sidebar-menu {
+    list-style: none;
+}
+
+.sidebar-menu li {
+    margin-bottom: 8px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 25px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    transition: var(--transition);
+    font-size: 1.1rem;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+.sidebar-menu a i {
+    font-size: 1.3rem;
+}
+
+.dashboard-content {
+    padding: 30px;
+}
+
+.dashboard-title {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    color: var(--heading-color-light);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: var(--light);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 5px 15px var(--shadow-color-light);
+}
+body.dark-mode .stat-card {
+    background: #2a2a2a;
+    box-shadow: 0 5px 15px var(--shadow-color-dark);
+}
+
+
+.stat-card h3 {
+    font-size: 1.15rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+}
+
+.stat-card .value {
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: var(--heading-color-light);
+}
+
+.recent-bookings {
+    background: var(--light);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: 0 5px 15px var(--shadow-color-light);
+}
+body.dark-mode .recent-bookings {
+    background: #2a2a2a;
+    box-shadow: 0 5px 15px var(--shadow-color-dark);
+}
+
+
+.recent-bookings h3 {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    color: var(--heading-color-light);
+}
+
+.booking-item {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color-light);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+body.dark-mode .booking-item {
+    border-bottom-color: var(--border-color-dark);
+}
+
+
+.booking-item:last-child {
+    border-bottom: none;
+}
+
+.booking-car {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1 1 250px;
+}
+
+.booking-car img {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.booking-details {
+    flex: 1;
+    min-width: 150px;
+}
+
+.booking-details h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--heading-color-light);
+}
+
+.booking-details p {
+    font-size: 0.95rem;
+    color: var(--gray);
+}
+
+.booking-date {
+    width: 200px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--gray);
+}
+
+.booking-price {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.1rem;
+    min-width: 80px;
+    text-align: center;
+}
+body.dark-mode .booking-price {
+    color: var(--secondary);
+}
+
+
+.booking-status {
+    padding: 6px 15px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    min-width: 80px;
+    text-align: center;
+}
+
+.status-active {
+    background: rgba(46, 139, 87, 0.1);
+    color: var(--accent);
+}
+
+.status-completed {
+    background: rgba(108, 117, 125, 0.1);
+    color: var(--gray);
+}
+
+/* Add Car Form */
+.add-car-form {
+    background: var(--card-bg-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: var(--heading-color-light);
+    font-size: 1.1rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid var(--border-color-light);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    transition: var(--transition);
+    color: var(--text-color-light);
+}
+body.dark-mode .form-control {
+    background-color: #2a2a2a;
+    border-color: var(--border-color-dark);
+    color: var(--text-color-dark);
+}
+
+.form-control:focus {
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.2);
+}
+body.dark-mode .form-control:focus {
+    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.4);
+}
+
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* Footer */
+footer {
+    background: var(--footer-bg-light);
+    color: white;
+    padding: 80px 0 30px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.footer-col h3 {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.footer-col h3:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--secondary);
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 15px;
+}
+
+.footer-col ul li a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: var(--transition);
+    display: block;
+    padding: 5px 0;
+    font-size: 1.05rem;
+}
+body.dark-mode .footer-col ul li a {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+
+.footer-col ul li a:hover {
+    color: white;
+    transform: translateX(5px);
+}
+
+.footer-contact li {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.05rem;
+}
+body.dark-mode .footer-contact li {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-links a {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.social-links a:hover {
+    background: var(--secondary);
+    transform: translateY(-5px);
+    color: var(--dark);
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+}
+body.dark-mode .copyright {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+
+/* ------------------------------------- */
+/* Loyalty Card & Promo */
+/* ------------------------------------- */
+
+.loyalty-card {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+body.dark-mode .loyalty-card {
+    background: linear-gradient(135deg, var(--dark), var(--primary));
+    box-shadow: 0 15px 40px var(--shadow-color-dark);
+}
+.loyalty-card:hover {
+    transform: translateY(-8px) translateZ(5px);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+}
+body.dark-mode .loyalty-card:hover {
+    box-shadow: 0 18px 45px var(--shadow-color-dark);
+}
+
+
+.loyalty-card::before {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="%23d4af37" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>');
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    opacity: 0.1;
+    transform: rotate(15deg);
+    font-size: 10rem;
+    color: var(--secondary);
+    z-index: 1;
+}
+
+.loyalty-card-content {
+    position: relative;
+    z-index: 2;
+}
+
+.loyalty-card h3 {
+    font-size: 2.1rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: var(--light);
+}
+
+.loyalty-card p {
+    font-size: 1.15rem;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.loyalty-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 8px;
+}
+
+.loyalty-dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+
+.loyalty-dot.completed {
+    background-color: var(--secondary);
+    color: var(--dark);
+    box-shadow: 0 0 0 5px rgba(212, 175, 55, 0.3);
+}
+
+.loyalty-line {
+    flex-grow: 1;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.loyalty-line-fill {
+    height: 100%;
+    background-color: var(--secondary);
+    width: 0%;
+    border-radius: 3px;
+    transition: width 0.8s ease-in-out;
+}
+
+.loyalty-reward-info {
+    font-size: 1.05rem;
+    opacity: 0.8;
+}
+
+.loyalty-promo-section {
+    padding: 80px 0;
+    background: linear-gradient(to bottom, var(--light-gray), var(--light));
+}
+body.dark-mode .loyalty-promo-section {
+    background: linear-gradient(to bottom, #1e1e1e, #121212);
+}
+
+.loyalty-promo {
+    background: var(--card-bg-light);
+    border-radius: var(--border-radius);
+    padding: 40px;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+.loyalty-promo h3 {
+    font-size: 2.1rem;
+    color: var(--heading-color-light);
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+
+.loyalty-promo p {
+    font-size: 1.2rem;
+    color: var(--gray);
+    margin-bottom: 30px;
+    line-height: 1.7;
+}
+
+/* Quiz Page Styles */
+.quiz-container {
+    background: var(--card-bg-light);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    max-width: 700px;
+    margin: 80px auto 40px;
+    text-align: center;
+}
+
+.quiz-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--heading-color-light);
+}
+
+.quiz-question {
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+.quiz-question p {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--text-color-light);
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: right;
+}
+
+.quiz-options label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    background: var(--light);
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color-light);
+    transition: var(--transition);
+    color: var(--text-color-light);
+}
+body.dark-mode .quiz-options label {
+    background: #2a2a2a;
+    border-color: #444;
+    color: var(--text-color-dark);
+}
+.quiz-options label:hover {
+    background: var(--light-gray);
+}
+body.dark-mode .quiz-options label:hover {
+    background: #333;
+}
+
+
+.quiz-options input[type="radio"] {
+    margin-left: 10px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.quiz-actions {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.quiz-results {
+    margin-top: 40px;
+    padding: 30px;
+    background: var(--light);
+    border-radius: var(--border-radius);
+    text-align: center;
+    color: var(--text-color-light);
+}
+body.dark-mode .quiz-results {
+    background : #2a2a2a;
+    color: var(--text-color-dark);
+}
+
+
+.quiz-results h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: var(--heading-color-light);
+}
+
+.quiz-results p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+/* Car Map Section */
+.car-map-section {
+    padding: 100px 0;
+    background-color: var(--light);
+}
+body.dark-mode .car-map-section {
+    background-color: var(--body-bg-dark);
+}
+
+/* Map Container for Leaflet */
+#mapid {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 50px auto;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    background-color: var(--card-bg-light);
+    z-index: 1;
+}
+body.dark-mode #mapid {
+    background-color: var(--card-bg-dark);
+}
+
+/* Filter buttons for map */
+.map-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+.map-filter-btn {
+    padding: 10px 25px;
+    border-radius: 12px;
+    background: var(--card-bg-light);
+    border: 2px solid var(--border-color-light);
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    color: var(--dark);
+}
+body.dark-mode .map-filter-btn {
+    background: #333;
+    border-color: #444;
+    color: var(--text-color-dark);
+}
+.map-filter-btn.active, .map-filter-btn:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Custom Leaflet Marker Icon */
+.custom-car-icon {
+    background-color: var(--primary);
+    border-radius: 50%;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    border: 2px solid white;
+    box-shadow: 0 0 0 5px rgba(46, 139, 87, 0.3);
+    transition: transform 0.2s ease;
+}
+.custom-car-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 8px rgba(46, 139, 87, 0.5);
+}
+
+/* Custom Leaflet Popup (InfoWindow) Styling */
+.leaflet-popup-content-wrapper {
+    background: var(--card-bg-light);
+    color: var(--dark);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 0;
+    text-align: right;
+    direction: rtl;
+}
+body.dark-mode .leaflet-popup-content-wrapper {
+    background: var(--card-bg-dark);
+    color: var(--text-color-dark);
+}
+
+.leaflet-popup-content {
+    margin: 0;
+    padding: 15px;
+}
+
+.leaflet-popup-tip {
+    background: var(--card-bg-light);
+    box-shadow: var(--box-shadow);
+}
+body.dark-mode .leaflet-popup-tip {
+    background: var(--card-bg-dark);
+}
+
+.leaflet-popup-close-button {
+    color: var(--dark);
+    font-size: 1.5rem;
+    top: 5px;
+    right: 5px;
+}
+body.dark-mode .leaflet-popup-close-button {
+    color: var(--text-color-dark);
+}
+
+.popup-car-details h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.popup-car-details p {
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+    color: var(--text-color-light);
+}
+body.dark-mode .popup-car-details p {
+    color: var(--text-color-dark);
+}
+
+.popup-car-details .car-img-popup {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+}
+
+.popup-car-details .btn {
+    display: block;
+    width: calc(100% - 30px);
+    margin: 15px auto 0;
+    text-align: center;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+}
+
+
+/* ------------------------------------- */
+/* شريط التنقل السفلي الثابت (Fixed Bottom Navbar) */
+/* ------------------------------------- */
+.bottom-navbar {
+    position: fixed;
+    bottom: 90px; /* Adjusted to be above the chatbot */
+    left: 0;
+    right: 0;
+    background-color: var(--navbar-bg-light); /* يستخدم نفس لون الخلفية للناف بار العلوي */
+    box-shadow: 0 -5px 20px var(--shadow-color-light); /* ظل من الأسفل للأعلى */
+    z-index: 990; /* أقل من الهيدر العلوي */
+    display: flex;
+    justify-content: space-around; /* توزيع العناصر بالتساوي */
+    align-items: center;
+    padding: 10px 0; /* مسافة بادئة علوية وسفلية */
+    border-top-left-radius: 15px; /* حواف دائرية علوية */
+    border-top-right-radius: 15px;
+    backdrop-filter: blur(10px); /* تأثير الضبابية */
+    /* إخفاؤه افتراضيًا على الديسكتوب */
+    display: none;
+}
+
+body.dark-mode .bottom-navbar {
+    background-color: var(--navbar-bg-dark);
+    box-shadow: 0 -5px 20px var(--shadow-color-dark);
+}
+
+.bottom-navbar .nav-item {
+    display: flex;
+    flex-direction: column; /* الأيقونة والنص فوق بعضهما */
+    align-items: center;
+    text-decoration: none;
+    color: var(--gray); /* لون نصي افتراضي */
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    padding: 5px; /* مسافة بادئة للضغط */
+    flex: 1; /* لجعل العناصر تتوزع بالتساوي */
+    white-space: nowrap; /* منع التفاف النص */
+}
+
+body.dark-mode .bottom-navbar .nav-item {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.bottom-navbar .nav-item i {
+    font-size: 1.5rem; /* حجم أيقونة كبير */
+    margin-bottom: 5px; /* مسافة بين الأيقونة والنص */
+    color: var(--dark); /* لون الأيقونة */
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .bottom-navbar .nav-item i {
+    color: var(--text-color-dark);
+}
+
+
+.bottom-navbar .nav-item:hover,
+.bottom-navbar .nav-item.active {
+    color: var(--primary); /* لون عند التحديد أو التحويم */
+}
+
+body.dark-mode .bottom-navbar .nav-item:hover,
+body.dark-mode .bottom-navbar .nav-item.active {
+    color: var(--secondary);
+}
+
+.bottom-navbar .nav-item:hover i,
+.bottom-navbar .nav-item.active i {
+    color: var(--primary); /* لون الأيقونة عند التحديد أو التحويم */
+}
+body.dark-mode .bottom-navbar .nav-item:hover i,
+body.dark-mode .bottom-navbar .nav-item.active i {
+    color: var(--secondary);
+}
+
+/* إخفاء عناصر الشريط السفلي على الديسكتوب وإظهارها على الموبايل */
+@media (min-width: 993px) {
+    .bottom-navbar {
+        display: none !important; /* إخفاؤه على الديسكتوب */
+    }
+}
+@media (max-width: 992px) {
+    .bottom-navbar {
+        display: flex; /* إظهاره على الجوال */
+    }
+    /* إخفاء الروابط والأزرار العلوية على الجوال */
+    .navbar .desktop-nav-links {
+        display: none !important;
+    }
+    .navbar .nav-buttons-desktop-only {
+        /*
+        display: none !important;  // No longer needed here, controlled by JS in updateNavbarBasedOnLoginStatus()
+        */
+        display: flex; /* keep it visible to contain the theme toggle */
+        gap: 10px; /* Reduced gap */
+        /* margin-left: auto; */ /* Push content to the right for RTL - تم إزالتها للسماح لزر الثيم أن يكون أقصى اليسار */
+    }
+    .navbar .nav-buttons-desktop-only .btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+    /* إخفاء زر تبديل الثيم السفلي إذا كان موجوداً، لأن زر الشريط العلوي أصبح عالمياً */
+    #theme-toggle-mobile-bottom {
+        display: none !important;
+    }
+
+    header .navbar {
+        justify-content: space-between; /* اللوجو على اليمين، وزر الثيم في أقصى اليسار */
+    }
+
+    body {
+        padding-bottom: 70px;
+    }
+
+    /* إخفاء زر البوت الخاص بالديسكتوب على الجوال */
+    #desktop-chatbot-toggle {
+        display: none !important;
+    }
+    /* إظهار زر البوت الخاص بالجوال في الشريط السفلي */
+    #mobile-chatbot-toggle {
+        display: flex !important; /* تأكد من ظهور زر الدردشة في الشريط السفلي على الجوال */
+    }
+}
