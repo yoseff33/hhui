@@ -2482,3 +2482,61 @@ body.dark-mode .chatbot-footer input:focus {
         font-size: 1rem;
     }
 }
+
+/* New styles for suggested questions */
+.suggested-questions-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: flex-end; /* Align buttons to the right for RTL */
+}
+
+.suggested-question-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0; /* Prevent button from shrinking */
+    text-align: right; /* Ensure text aligns right within button */
+}
+body.dark-mode .suggested-question-btn {
+    background: var(--accent);
+}
+
+.suggested-question-btn:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+}
+body.dark-mode .suggested-question-btn:hover {
+    background: var(--primary);
+}
+
+
+.whatsapp-link-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 25px;
+    border-radius: var(--border-radius);
+    background: #25d366; /* WhatsApp green */
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.whatsapp-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
