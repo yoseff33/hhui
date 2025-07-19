@@ -29,12 +29,15 @@
                     <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
                 </ul>
                 
-                <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع">
-                    <i class="fas fa-moon"></i>
-                    <span>الوضع</span>
-                </button>
-
                 <div class="nav-buttons nav-buttons-desktop-only">
+                    <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع">
+                        <i class="fas fa-moon"></i>
+                        <span>الوضع</span>
+                    </button>
+                    <button id="desktop-chatbot-toggle" class="btn btn-outline" style="display: none;">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>اسالني</span>
+                    </button>
                     <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
                     <div id="nav-user-profile-placeholder"></div>
                 </div>
@@ -318,7 +321,27 @@
             <i class="fas fa-map-marked-alt"></i>
             <span>الخريطة</span>
         </a>
+        <a href="#" class="nav-item" id="mobile-chatbot-toggle">
+            <i class="fas fa-comment-dots"></i>
+            <span>الدردشة</span>
+        </a>
     </nav>
+
+    <div id="chatbot-popup" class="chatbot-popup">
+        <div class="chatbot-header">
+            <h3>اسالني</h3>
+            <button id="chatbot-close-btn" class="close-btn">&times;</button>
+        </div>
+        <div class="chatbot-body" id="chatbot-body">
+            <div class="bot-message">
+                مرحباً بك! أنا مساعد وُجْهَة، كيف يمكنني مساعدتك اليوم؟
+            </div>
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" id="chatbot-input" placeholder="اكتب رسالتك هنا...">
+            <button id="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -434,5 +457,6 @@
     </script>
     <script src="csr-content.js"></script>
     <script src="script.js"></script>
+    <script src="chatbot.js"></script>
 </body>
 </html>
