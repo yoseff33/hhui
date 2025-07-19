@@ -95,16 +95,7 @@ header {
     z-index: 1000;
     backdrop-filter: blur(10px);
     transition: var(--transition);
-    padding: 10px 0; /* Default padding for desktop header - Adjusted to 10px */
-}
-
-/* Add a class for the scrolled state of the header */
-header.scrolled {
-    padding: 5px 0; /* Smaller padding when scrolled */
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
-}
-body.dark-mode header.scrolled {
-    box-shadow: 0 3px 15px var(--shadow-color-dark);
+    padding: 15px 0; /* Default padding for desktop header */
 }
 
 footer {
@@ -322,12 +313,6 @@ body.dark-mode .theme-toggle:hover {
     #mobile-chatbot-toggle {
         display: none !important;
     }
-
-    /* Adjust padding for desktop buttons */
-    .navbar .nav-buttons .btn {
-        padding: 10px 25px; /* Adjust padding for desktop buttons */
-        font-size: 0.95rem; /* Slightly smaller font size */
-    }
 }
 
 /* للشاشات الصغيرة (الجوال) - 992 بكسل وأقل */
@@ -523,7 +508,7 @@ header {
     z-index: 1000;
     backdrop-filter: blur(10px);
     transition: var(--transition);
-    padding: 10px 0; /* Updated from 15px 0 to 10px 0 */
+    padding: 15px 0;
 }
 
 .navbar {
@@ -1969,7 +1954,7 @@ body.dark-mode .popup-car-details p {
 /* ------------------------------------- */
 .bottom-navbar {
     position: fixed;
-    bottom: 90px; /* Adjusted to be above the chatbot */
+    bottom: 0;
     left: 0;
     right: 0;
     background-color: var(--navbar-bg-light); /* يستخدم نفس لون الخلفية للناف بار العلوي */
