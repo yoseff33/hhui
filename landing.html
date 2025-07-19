@@ -99,6 +99,23 @@
             </a>
         </div>
     </div>
+
+    <div id="chatbot-popup" class="chatbot-popup">
+        <div class="chatbot-header">
+            <h3>اسالني</h3>
+            <button id="chatbot-close-btn" class="close-btn">&times;</button>
+        </div>
+        <div class="chatbot-body" id="chatbot-body">
+            <div class="bot-message">
+                مرحباً بك! أنا مساعد وُجْهَة، كيف يمكنني مساعدتك اليوم؟
+            </div>
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" id="chatbot-input" placeholder="اكتب رسالتك هنا...">
+            <button id="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
@@ -106,5 +123,6 @@
         });
     </script>
     <script src="script.js"></script>
+    <script src="chatbot.js"></script>
 </body>
 </html>
