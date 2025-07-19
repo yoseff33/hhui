@@ -14,12 +14,10 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 window.addEventListener('scroll', function() {
     const header = document.querySelector('header');
     if (header) { // Check if header exists
-        if (window.scrollY > 100) {
-            header.style.padding = '10px 0';
-            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+        if (window.scrollY > 100) { // When scrolled more than 100px
+            header.classList.add('scrolled'); // Add 'scrolled' class
         } else {
-            header.style.padding = '15px 0';
-            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.05)';
+            header.classList.remove('scrolled'); // Remove 'scrolled' class
         }
     }
 });
