@@ -95,7 +95,7 @@ header {
     z-index: 1000;
     backdrop-filter: blur(10px);
     transition: var(--transition);
-    padding: 12px 0; /* Default padding for desktop header */
+    padding: 9px 0; /* Default padding for desktop header */
 }
 
 footer {
