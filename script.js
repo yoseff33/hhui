@@ -15,11 +15,11 @@ window.addEventListener('scroll', function() {
     const header = document.querySelector('header');
     if (header) { // Check if header exists
         if (window.scrollY > 100) {
-            header.style.padding = '0px 0'; // الشريط يصبح صفراً (رفيع جداً) عند التمرير للأسفل
-            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)'; // ظل أخف
+            header.style.padding = '10px 0';
+            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
         } else {
-            header.style.padding = '10px 0'; // الشريط يعود إلى 10px افتراضياً عند العودة للأعلى
-            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.05)'; // استعادة الظل الأصلي
+            header.style.padding = '15px 0';
+            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.05)';
         }
     }
 });
