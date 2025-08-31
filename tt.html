@@ -1,153 +1,139 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التقنية الكهربية - مشروع الطالبة الجوهرة عيد الشلاحي</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-        }
-        .section-icon {
-            filter: drop-shadow(0 4px 8px rgba(99, 102, 241, 0.2));
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التقنية الكهربية - مشروع الطالبة الجوهرة عيد الشلاحي</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Tajawal', sans-serif; }
+    .section-icon { filter: drop-shadow(0 4px 8px rgba(99, 102, 241, 0.2)); }
+
+    /* إعداد خاص للطباعة */
+    @media print {
+      body {
+        background: white !important;
+        font-size: 12px;
+      }
+      header, footer {
+        background: none !important;
+        color: black !important;
+        text-align: center;
+      }
+      .grid, .md\:grid-cols-3, .md\:grid-cols-2 {
+        display: block !important;
+      }
+      .grid > div {
+        margin-bottom: 10px;
+        page-break-inside: avoid;
+      }
+      img {
+        max-height: 120px !important;
+        object-fit: cover;
+      }
+      section {
+        margin-bottom: 10px !important;
+        padding: 0 !important;
+      }
+      h1, h2, h3 {
+        margin: 5px 0 !important;
+      }
+      .shadow-md, .shadow-lg, .hover\:shadow-xl {
+        box-shadow: none !important;
+      }
+      .p-8, .py-12, .px-6 {
+        padding: 10px !important;
+      }
+    }
+  </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
 
-    <!-- Header Section -->
-    <header class="bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg">
-        <div class="container mx-auto px-6 py-12 text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-3">عالم التقنية الكهربية</h1>
-            <p class="text-xl font-light">إعداد الطالبة: الجوهرة عيد الشلاحي</p>
-            <p class="text-lg font-light mt-1">الصف: ثاني متوسط</p>
+  <!-- Header -->
+  <header class="bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg p-4">
+    <h1 class="text-3xl font-bold">عالم التقنية الكهربية</h1>
+    <p>إعداد الطالبة: الجوهرة عيد الشلاحي</p>
+    <p>الصف: ثاني متوسط</p>
+  </header>
+
+  <!-- Main -->
+  <main class="container mx-auto px-4 py-6">
+    <section class="text-center mb-6">
+      <h2 class="text-xl font-bold text-indigo-600">ما هي الكهرباء؟</h2>
+      <p>
+        الكهرباء هي حركة الإلكترونات عبر مادة موصلة مثل النحاس. هذه الحركة تولد الطاقة التي تدير عالمنا.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-center text-indigo-600">مفاهيم أساسية</h2>
+      <div>
+        <div class="bg-white rounded-md p-4 mb-3">
+          <h3 class="font-bold">الدائرة الكهربائية</h3>
+          <p>مسار مغلق من مصدر طاقة وأسلاك ومكون يستهلك الطاقة.</p>
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="container mx-auto px-6 py-12">
-
-        <!-- Introduction -->
-        <section class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-indigo-600 mb-4">ما هي الكهرباء؟</h2>
-            <p class="max-w-3xl mx-auto text-lg text-slate-600 leading-relaxed">
-                مرحباً بكِ في عالم الكهرباء المدهش! الكهرباء هي طاقة قوية نستخدمها كل يوم في حياتنا، من إضاءة غرفتنا إلى تشغيل هواتفنا الذكية. ببساطة، الكهرباء هي حركة جزيئات صغيرة جداً تسمى "الإلكترونات" عبر مادة موصلة مثل أسلاك النحاس. هذه الحركة هي ما يولد الطاقة التي تدير عالمنا.
-            </p>
-        </section>
-
-        <!-- Key Concepts -->
-        <section class="mb-20">
-            <h2 class="text-3xl font-bold text-center text-indigo-600 mb-10">مفاهيم أساسية في الكهرباء</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Card 1: Electric Circuit -->
-                <div class="bg-white rounded-xl shadow-md p-8 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                    <div class="flex items-center justify-center h-16 w-16 mb-6 rounded-full bg-purple-100 text-purple-600 section-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3">الدائرة الكهربائية</h3>
-                    <p class="text-slate-600">
-                        لكي تعمل الكهرباء، يجب أن تسير في مسار مغلق يسمى الدائرة. تتكون الدائرة البسيطة من مصدر للطاقة (مثل البطارية)، أسلاك، ومكون يستهلك الطاقة (مثل المصباح).
-                    </p>
-                </div>
-
-                <!-- Card 2: Conductors & Insulators -->
-                <div class="bg-white rounded-xl shadow-md p-8 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                    <div class="flex items-center justify-center h-16 w-16 mb-6 rounded-full bg-green-100 text-green-600 section-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3">الموصلات والعوازل</h3>
-                    <p class="text-slate-600">
-                        المواد الموصلة (مثل المعادن) تسمح للكهرباء بالمرورور خلالها بسهولة. أما المواد العازلة (مثل البلاستيك والخشب) فتمنع مرور الكهرباء وتستخدم لحمايتنا.
-                    </p>
-                </div>
-                
-                <!-- Card 3: Electrical Safety -->
-                <div class="bg-white rounded-xl shadow-md p-8 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                   <div class="flex items-center justify-center h-16 w-16 mb-6 rounded-full bg-red-100 text-red-600 section-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3">السلامة الكهربائية</h3>
-                    <p class="text-slate-600">
-                        الكهرباء مفيدة لكنها خطيرة. لا تلمس الأسلاك المكشوفة، ولا تستخدم الأجهزة الكهربائية بأيدٍ مبللة، وابتعد عن وضع أي شيء في مقابس الكهرباء.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- AC/DC Section -->
-        <section class="mb-20">
-            <h2 class="text-3xl font-bold text-center text-indigo-600 mb-10">نوعان من الكهرباء</h2>
-            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="bg-white rounded-xl shadow-md p-8">
-                    <h3 class="text-2xl font-bold mb-4">التيار المستمر (DC)</h3>
-                    <p class="text-slate-600 mb-4">يسير في اتجاه واحد فقط، مثل الماء في النهر. هو نوع الكهرباء الذي نجده في البطاريات ويشغل أجهزتنا المحمولة كالهواتف والساعات الذكية.</p>
-                </div>
-                <div class="bg-white rounded-xl shadow-md p-8">
-                    <h3 class="text-2xl font-bold mb-4">التيار المتردد (AC)</h3>
-                    <p class="text-slate-600 mb-4">يغير اتجاهه ذهاباً وإياباً بسرعة كبيرة. هذا هو نوع الكهرباء الذي يصل إلى منازلنا عبر المقابس ويشغل الأجهزة الكبيرة كالتلفاز والثلاجة.</p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Fun Facts Section -->
-        <section class="mb-20">
-             <div class="bg-indigo-50 rounded-xl p-8 max-w-4xl mx-auto border-l-4 border-indigo-500">
-                <h2 class="text-3xl font-bold text-indigo-600 mb-6 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                    </svg>
-                    هل تعلم؟
-                </h2>
-                <ul class="space-y-3 text-slate-700 list-disc list-inside">
-                    <li>الكهرباء تنتقل بسرعة الضوء تقريباً (حوالي 300 ألف كيلومتر في الثانية).</li>
-                    <li>شرارة واحدة من الكهرباء الساكنة يمكن أن تصل قوتها إلى 3,000 فولت.</li>
-                    <li>بعض الكائنات الحية، مثل ثعبان البحر الكهربائي، يمكنها توليد الكهرباء للدفاع عن نفسها.</li>
-                    <li>أول سيارة كهربائية تم اختراعها قبل أكثر من 100 عام!</li>
-                </ul>
-             </div>
-        </section>
-
-        <!-- Applications Section -->
-        <section>
-            <h2 class="text-3xl font-bold text-center text-indigo-600 mb-10">الكهرباء في حياتنا اليومية</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <img src="https://source.unsplash.com/600x400/?home,appliances,modern,kitchen" alt="أجهزة منزلية" class="rounded-lg shadow-md mb-4 w-full h-48 object-cover bg-slate-200">
-                    <h3 class="text-xl font-bold">في المنزل</h3>
-                    <p class="text-slate-600">تضيء المصابيح، وتشغل التلفاز والثلاجة والمكيف.</p>
-                </div>
-                <div class="text-center">
-                    <img src="https://cdn.al-ain.com/lg/images/2021/4/30/143-132938-simply-what-internet-things-interconnected-world-2.jpeg" alt="اتصالات" class="rounded-lg shadow-md mb-4 w-full h-48 object-cover bg-slate-200">
-                    <h3 class="text-xl font-bold">في الاتصالات</h3>
-                    <p class="text-slate-600">تشغل هواتفنا الذكية، أجهزة الكمبيوتر، والإنترنت.</p>
-                </div>
-                <div class="text-center">
-                    <img src="https://www.assayyarat.com/wp-content/uploads/2023/10/%D8%A7%D9%84%D9%82%D8%B7%D8%A7%D8%B1-%D8%A7%D9%84%D9%87%D9%8A%D8%AF%D8%B1%D9%88%D8%AC%D9%8A%D9%86%D9%8A-640x360.jpg" alt="نقل ومواصلات" class="rounded-lg shadow-md mb-4 w-full h-48 object-cover bg-slate-200">
-                    <h3 class="text-xl font-bold">في النقل</h3>
-                    <p class="text-slate-600">تشغل القطارات السريعة والسيارات الكهربائية الحديثة.</p>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-slate-800 text-white mt-16">
-        <div class="container mx-auto px-6 py-8 text-center">
-            <p class="text-lg">التقنية الكهربية عالم واسع وممتع، وهذه كانت مجرد بداية لاستكشافه.</p>
-            <p class="mt-2 text-slate-400">مشروع مادة المهارات الرقمية | بإشراف المعلمة الفاضلة</p>
+        <div class="bg-white rounded-md p-4 mb-3">
+          <h3 class="font-bold">الموصلات والعوازل</h3>
+          <p>الموصلات تسمح بمرور الكهرباء، أما العوازل فتمنع مرورها وتحمي الإنسان.</p>
         </div>
-    </footer>
+        <div class="bg-white rounded-md p-4 mb-3">
+          <h3 class="font-bold">السلامة الكهربائية</h3>
+          <p>لا تلمس الأسلاك المكشوفة ولا تستخدم الأجهزة بأيدٍ مبللة.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-center text-indigo-600">نوعان من الكهرباء</h2>
+      <div>
+        <div class="bg-white rounded-md p-4 mb-3">
+          <h3 class="font-bold">التيار المستمر (DC)</h3>
+          <p>يسير في اتجاه واحد فقط مثل البطاريات.</p>
+        </div>
+        <div class="bg-white rounded-md p-4 mb-3">
+          <h3 class="font-bold">التيار المتردد (AC)</h3>
+          <p>يغير اتجاهه ذهاباً وإياباً ويصل إلى منازلنا عبر المقابس.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-indigo-600">هل تعلم؟</h2>
+      <ul class="list-disc list-inside">
+        <li>الكهرباء تنتقل بسرعة الضوء تقريباً.</li>
+        <li>شرارة الكهرباء الساكنة تصل إلى 3000 فولت.</li>
+        <li>ثعبان البحر الكهربائي يولد كهرباء للدفاع عن نفسه.</li>
+        <li>أول سيارة كهربائية اختُرعت قبل أكثر من 100 عام.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-center text-indigo-600">الكهرباء في حياتنا اليومية</h2>
+      <div>
+        <div class="p-2">
+          <h3 class="font-bold">في المنزل</h3>
+          <p>تشغيل المصابيح، التلفاز، والثلاجة.</p>
+        </div>
+        <div class="p-2">
+          <h3 class="font-bold">في الاتصالات</h3>
+          <p>تشغيل الهواتف، الحواسيب، والإنترنت.</p>
+        </div>
+        <div class="p-2">
+          <h3 class="font-bold">في النقل</h3>
+          <p>تشغيل القطارات والسيارات الكهربائية.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center mt-4">
+    <p>التقنية الكهربية عالم واسع وممتع</p>
+    <p>مشروع مادة المهارات الرقمية</p>
+  </footer>
 
 </body>
 </html>
