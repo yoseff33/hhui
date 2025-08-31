@@ -2,138 +2,171 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>التقنية الكهربية - مشروع الطالبة الجوهرة عيد الشلاحي</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Tajawal', sans-serif; }
-    .section-icon { filter: drop-shadow(0 4px 8px rgba(99, 102, 241, 0.2)); }
+  <title>مطوية الكهرباء للطباعة</title>
 
-    /* إعداد خاص للطباعة */
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #ffe6f0;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      text-align: center;
+      padding: 15px;
+      background: #f3e8ff;
+      border-bottom: 3px solid #d63384;
+    }
+
+    header h1 {
+      color: #d63384;
+      font-size: 26px;
+      margin: 0;
+    }
+
+    header p {
+      color: #6a1b9a;
+      margin: 5px 0 0;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 10px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border: 2px solid #f8bbd0;
+      min-height: 120px;
+      position: relative;
+    }
+
+    .box h2 {
+      color: #c2185b;
+      font-size: 18px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    ul {
+      padding-right: 15px;
+      list-style-type: "🌸 ";
+      margin: 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    .highlight {
+      background: #fce4ec;
+      border-left: 5px solid #ff80ab;
+      padding: 8px;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #880e4f;
+    }
+
+    /* للطباعة */
     @media print {
       body {
-        background: white !important;
-        font-size: 12px;
+        background: white;
+        margin: 0;
+        padding: 0;
       }
-      header, footer {
-        background: none !important;
-        color: black !important;
-        text-align: center;
+      .grid {
+        max-width: 100%;
+        gap: 5px;
       }
-      .grid, .md\:grid-cols-3, .md\:grid-cols-2 {
-        display: block !important;
+      .box {
+        border: 1px solid #f8bbd0;
+        box-shadow: none;
+        padding: 10px;
+        min-height: 110px;
       }
-      .grid > div {
-        margin-bottom: 10px;
-        page-break-inside: avoid;
-      }
-      img {
-        max-height: 120px !important;
-        object-fit: cover;
-      }
-      section {
-        margin-bottom: 10px !important;
-        padding: 0 !important;
-      }
-      h1, h2, h3 {
-        margin: 5px 0 !important;
-      }
-      .shadow-md, .shadow-lg, .hover\:shadow-xl {
-        box-shadow: none !important;
-      }
-      .p-8, .py-12, .px-6 {
-        padding: 10px !important;
+      header {
+        background: none;
+        border-bottom: none;
+        color: #c2185b;
       }
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body>
 
-  <!-- Header -->
-  <header class="bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg p-4">
-    <h1 class="text-3xl font-bold">عالم التقنية الكهربية</h1>
-    <p>إعداد الطالبة: الجوهرة عيد الشلاحي</p>
-    <p>الصف: ثاني متوسط</p>
+  <header>
+    <h1><i class="fas fa-bolt"></i> عالم التقنية الكهربية <i class="fas fa-bolt"></i></h1>
+    <p>إعداد الطالبة: الجوهرة عيد الشلاحي | الصف: ثاني متوسط</p>
   </header>
 
-  <!-- Main -->
-  <main class="container mx-auto px-4 py-6">
-    <section class="text-center mb-6">
-      <h2 class="text-xl font-bold text-indigo-600">ما هي الكهرباء؟</h2>
-      <p>
-        الكهرباء هي حركة الإلكترونات عبر مادة موصلة مثل النحاس. هذه الحركة تولد الطاقة التي تدير عالمنا.
-      </p>
-    </section>
+  <div class="grid">
+    <div class="box">
+      <h2><i class="fas fa-lightbulb"></i> ما هي الكهرباء؟</h2>
+      <p>الكهرباء هي حركة الإلكترونات عبر مادة موصلة مثل النحاس. هذه الحركة تولد الطاقة التي تدير عالمنا.</p>
+    </div>
 
-    <section>
-      <h2 class="text-xl font-bold text-center text-indigo-600">مفاهيم أساسية</h2>
-      <div>
-        <div class="bg-white rounded-md p-4 mb-3">
-          <h3 class="font-bold">الدائرة الكهربائية</h3>
-          <p>مسار مغلق من مصدر طاقة وأسلاك ومكون يستهلك الطاقة.</p>
-        </div>
-        <div class="bg-white rounded-md p-4 mb-3">
-          <h3 class="font-bold">الموصلات والعوازل</h3>
-          <p>الموصلات تسمح بمرور الكهرباء، أما العوازل فتمنع مرورها وتحمي الإنسان.</p>
-        </div>
-        <div class="bg-white rounded-md p-4 mb-3">
-          <h3 class="font-bold">السلامة الكهربائية</h3>
-          <p>لا تلمس الأسلاك المكشوفة ولا تستخدم الأجهزة بأيدٍ مبللة.</p>
-        </div>
-      </div>
-    </section>
+    <div class="box">
+      <h2><i class="fas fa-sitemap"></i> مفاهيم أساسية</h2>
+      <ul>
+        <li><b>الدائرة الكهربائية:</b> مسار مغلق من مصدر طاقة وأسلاك ومكون يستهلك الطاقة.</li>
+        <li><b>الموصلات والعوازل:</b> الموصلات تسمح بمرور الكهرباء، أما العوازل فتحمي الإنسان.</li>
+      </ul>
+    </div>
 
-    <section>
-      <h2 class="text-xl font-bold text-center text-indigo-600">نوعان من الكهرباء</h2>
-      <div>
-        <div class="bg-white rounded-md p-4 mb-3">
-          <h3 class="font-bold">التيار المستمر (DC)</h3>
-          <p>يسير في اتجاه واحد فقط مثل البطاريات.</p>
-        </div>
-        <div class="bg-white rounded-md p-4 mb-3">
-          <h3 class="font-bold">التيار المتردد (AC)</h3>
-          <p>يغير اتجاهه ذهاباً وإياباً ويصل إلى منازلنا عبر المقابس.</p>
-        </div>
-      </div>
-    </section>
+    <div class="box">
+      <h2><i class="fas fa-shield-alt"></i> السلامة الكهربائية</h2>
+      <ul>
+        <li>لا تلمسي الأسلاك المكشوفة.</li>
+        <li>لا تستخدمي الأجهزة بأيدٍ مبللة.</li>
+      </ul>
+    </div>
 
-    <section>
-      <h2 class="text-xl font-bold text-indigo-600">هل تعلم؟</h2>
-      <ul class="list-disc list-inside">
+    <div class="box">
+      <h2><i class="fas fa-battery-full"></i> نوعان من الكهرباء</h2>
+      <ul>
+        <li><b>التيار المستمر (DC):</b> يسير في اتجاه واحد مثل البطاريات.</li>
+        <li><b>التيار المتردد (AC):</b> يغير اتجاهه ويصل إلى منازلنا.</li>
+      </ul>
+    </div>
+
+    <div class="box highlight">
+      <h2><i class="fas fa-question-circle"></i> هل تعلمين؟</h2>
+      <ul>
         <li>الكهرباء تنتقل بسرعة الضوء تقريباً.</li>
         <li>شرارة الكهرباء الساكنة تصل إلى 3000 فولت.</li>
-        <li>ثعبان البحر الكهربائي يولد كهرباء للدفاع عن نفسه.</li>
+        <li>ثعبان البحر يولد كهرباء للدفاع عن نفسه.</li>
         <li>أول سيارة كهربائية اختُرعت قبل أكثر من 100 عام.</li>
       </ul>
-    </section>
+    </div>
 
-    <section>
-      <h2 class="text-xl font-bold text-center text-indigo-600">الكهرباء في حياتنا اليومية</h2>
-      <div>
-        <div class="p-2">
-          <h3 class="font-bold">في المنزل</h3>
-          <p>تشغيل المصابيح، التلفاز، والثلاجة.</p>
-        </div>
-        <div class="p-2">
-          <h3 class="font-bold">في الاتصالات</h3>
-          <p>تشغيل الهواتف، الحواسيب، والإنترنت.</p>
-        </div>
-        <div class="p-2">
-          <h3 class="font-bold">في النقل</h3>
-          <p>تشغيل القطارات والسيارات الكهربائية.</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="text-center mt-4">
-    <p>التقنية الكهربية عالم واسع وممتع</p>
-    <p>مشروع مادة المهارات الرقمية</p>
-  </footer>
+    <div class="box">
+      <h2><i class="fas fa-plug"></i> الكهرباء في حياتنا اليومية</h2>
+      <ul>
+        <li><b>في المنزل:</b> تشغيل المصابيح، التلفاز، والثلاجة.</li>
+        <li><b>في الاتصالات:</b> تشغيل الهواتف والحواسيب.</li>
+        <li><b>في النقل:</b> تشغيل القطارات والسيارات الكهربائية.</li>
+      </ul>
+    </div>
+  </div>
 
 </body>
 </html>
