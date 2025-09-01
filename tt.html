@@ -2,170 +2,152 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>مطوية الكهرباء للطباعة</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-
+  <title>بحث عن الأماكن الأثرية داخل السعودية</title>
+  <!-- خطوط Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <!-- مكتبة رموز -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     body {
-      font-family: 'Tajawal', sans-serif;
-      background: #ffe6f0;
-      margin: 0;
-      padding: 0;
-      color: #333;
+      font-family: 'Cairo', sans-serif;
+      margin: 30px;
+      line-height: 1.6;
+      background: #fff0f5; /* وردي فاتح */
+      color: #4a2c49;
     }
-
-    header {
+    h1, h2 {
       text-align: center;
-      padding: 15px;
-      background: #f3e8ff;
-      border-bottom: 3px solid #d63384;
+      color: #d63384; /* وردي غامق */
+      margin-bottom: 10px;
     }
-
-    header h1 {
-      color: #d63384;
-      font-size: 26px;
+    h1 {
+      font-family: 'Amiri', serif;
+    }
+    .info {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 18px;
+      color: #a64ca6;
+    }
+    p {
+      text-align: justify;
       margin: 0;
     }
-
-    header p {
-      color: #6a1b9a;
-      margin: 5px 0 0;
-      font-size: 14px;
-    }
-
     .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      padding: 10px;
-      max-width: 800px;
-      margin: auto;
-    }
-
-    .box {
-      background: #fff;
-      border-radius: 12px;
-      padding: 12px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      border: 2px solid #f8bbd0;
-      min-height: 120px;
-      position: relative;
-    }
-
-    .box h2 {
-      color: #c2185b;
-      font-size: 18px;
-      margin-bottom: 8px;
       display: flex;
-      align-items: center;
-      gap: 8px;
+      flex-wrap: wrap;
+      gap: 20px;
       justify-content: center;
     }
-
-    ul {
-      padding-right: 15px;
-      list-style-type: "🌸 ";
-      margin: 0;
+    .place {
+      flex: 1 1 calc(50% - 20px);
+      max-width: calc(50% - 20px);
+      border: 2px solid #f0c3d2;
+      padding: 12px 15px;
+      border-radius: 12px;
+      background: #ffe6f0;
+      box-sizing: border-box;
     }
-
-    li {
-      margin: 4px 0;
+    .place img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin: 10px 0;
     }
-
-    .highlight {
-      background: #fce4ec;
-      border-left: 5px solid #ff80ab;
-      padding: 8px;
-      border-radius: 8px;
-      font-weight: bold;
-      color: #880e4f;
+    .place h3 {
+      color: #c7007e;
+      margin-bottom: 8px;
+      font-size: 18px;
     }
-
-    /* للطباعة */
+    .icon {
+      color: #ff66b2;
+      margin-left: 5px;
+    }
     @media print {
       body {
-        background: white;
-        margin: 0;
-        padding: 0;
+        background: #fff;
       }
-      .grid {
-        max-width: 100%;
-        gap: 5px;
+      .place {
+        page-break-inside: avoid;
       }
-      .box {
-        border: 1px solid #f8bbd0;
-        box-shadow: none;
-        padding: 10px;
-        min-height: 110px;
-      }
-      header {
-        background: none;
-        border-bottom: none;
-        color: #c2185b;
-      }
+    }
+    @page {
+      size: A4;
+      margin: 20mm;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 16px;
+      color: #a64ca6;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1><i class="fas fa-bolt"></i> عالم التقنية الكهربية <i class="fas fa-bolt"></i></h1>
-    <p>إعداد الطالبة: الجوهرة عيد الشلاحي | الصف: ثاني متوسط</p>
-  </header>
+  <h1>بحث عن الأماكن الأثرية داخل السعودية</h1>
+  <div class="info">
+    إعداد الطالبة: الجوهرة عيد المطيري<br>
+    الصف: ثاني متوسط
+  </div>
+
+  <h2><i class="fa-solid fa-book icon"></i> مقدمة</h2>
+  <p>
+    المملكة العربية السعودية تزخر بالعديد من الأماكن الأثرية التي تعكس حضارتها العريقة وتاريخها الطويل. 
+    هذه المواقع تحكي قصص أجدادنا وحضاراتهم المتعاقبة، وتستحق الدراسة والزيارة للحفاظ على تراثنا الوطني.
+  </p>
+
+  <h2><i class="fa-solid fa-map-location-dot icon"></i> أهم الأماكن الأثرية</h2>
 
   <div class="grid">
-    <div class="box">
-      <h2><i class="fas fa-lightbulb"></i> ما هي الكهرباء؟</h2>
-      <p>الكهرباء هي حركة الإلكترونات عبر مادة موصلة مثل النحاس. هذه الحركة تولد الطاقة التي تدير عالمنا.</p>
+
+    <div class="place">
+      <h3><i class="fa-solid fa-landmark icon"></i> جدة التاريخية</h3>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHGPic5h_u_OBatFjrTZ5JeOOqiDCQBeyYSw&s" alt="جدة التاريخية">
+      <p>
+        تقع على ساحل البحر الأحمر، وتشتهر ببيوتها المبنية من الحجر المرجاني وأسواقها القديمة مثل سوق العلوي. 
+        المدينة تعكس تاريخ التجارة البحرية في السعودية بشكل واضح وتعتبر من أبرز المواقع التراثية.
+      </p>
     </div>
 
-    <div class="box">
-      <h2><i class="fas fa-sitemap"></i> مفاهيم أساسية</h2>
-      <ul>
-        <li><b>الدائرة الكهربائية:</b> مسار مغلق من مصدر طاقة وأسلاك ومكون يستهلك الطاقة.</li>
-        <li><b>الموصلات والعوازل:</b> الموصلات تسمح بمرور الكهرباء، أما العوازل فتحمي الإنسان.</li>
-      </ul>
+    <div class="place">
+      <h3><i class="fa-solid fa-landmark icon"></i> الدرعية التاريخية</h3>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe3UxjTwpyzvgLIJKlEjO2AYdrlqPj-NMvuw&s" alt="الدرعية">
+      <p>
+        كانت عاصمة الدولة السعودية الأولى، وتحتوي على حي الطريف التاريخي المبني من الطين والحجر. 
+        الدرعية تعتبر رمزاً للحضارة السعودية وأحد أهم المواقع التراثية في المملكة.
+      </p>
     </div>
 
-    <div class="box">
-      <h2><i class="fas fa-shield-alt"></i> السلامة الكهربائية</h2>
-      <ul>
-        <li>لا تلمسي الأسلاك المكشوفة.</li>
-        <li>لا تستخدمي الأجهزة بأيدٍ مبللة.</li>
-      </ul>
+    <div class="place">
+      <h3><i class="fa-solid fa-landmark icon"></i> قرية الفاو</h3>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxGFVlloONc8z7hqjdCyjhu5Om0xGKfSjPxg&usqp=CAU" alt="قرية الفاو">
+      <p>
+        كانت عاصمة مملكة كندة القديمة، وتحتوي على العديد من النقوش والمباني التاريخية التي تعود لآلاف السنين. 
+        الفاو تظهر تطور الحضارة في المنطقة وتعتبر من أهم المواقع الأثرية في السعودية.
+      </p>
     </div>
 
-    <div class="box">
-      <h2><i class="fas fa-battery-full"></i> نوعان من الكهرباء</h2>
-      <ul>
-        <li><b>التيار المستمر (DC):</b> يسير في اتجاه واحد مثل البطاريات.</li>
-        <li><b>التيار المتردد (AC):</b> يغير اتجاهه ويصل إلى منازلنا.</li>
-      </ul>
+    <div class="place">
+      <h3><i class="fa-solid fa-landmark icon"></i> مدائن صالح (الحِجر)</h3>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1MenMyBZ-YB4gClUzF3jKA48Q_rD96wkApA&s" alt="مدائن صالح">
+      <p>
+        تقع في العلا شمال غرب المملكة، وهي أول موقع سعودي يُدرج في قائمة التراث العالمي لليونسكو. 
+        تضم مقابر صخرية رائعة ونقوشاً قديمة تعود لحضارة الأنباط، وتعتبر من أبرز المواقع التاريخية في السعودية.
+      </p>
     </div>
 
-    <div class="box highlight">
-      <h2><i class="fas fa-question-circle"></i> هل تعلمين؟</h2>
-      <ul>
-        <li>الكهرباء تنتقل بسرعة الضوء تقريباً.</li>
-        <li>شرارة الكهرباء الساكنة تصل إلى 3000 فولت.</li>
-        <li>ثعبان البحر يولد كهرباء للدفاع عن نفسه.</li>
-        <li>أول سيارة كهربائية اختُرعت قبل أكثر من 100 عام.</li>
-      </ul>
-    </div>
+  </div>
 
-    <div class="box">
-      <h2><i class="fas fa-plug"></i> الكهرباء في حياتنا اليومية</h2>
-      <ul>
-        <li><b>في المنزل:</b> تشغيل المصابيح، التلفاز، والثلاجة.</li>
-        <li><b>في الاتصالات:</b> تشغيل الهواتف والحواسيب.</li>
-        <li><b>في النقل:</b> تشغيل القطارات والسيارات الكهربائية.</li>
-      </ul>
-    </div>
+  <h2><i class="fa-solid fa-flag icon"></i> الخاتمة</h2>
+  <p>
+    إن الأماكن الأثرية في المملكة السعودية ليست مجرد مبانٍ قديمة، بل هي كنوز تاريخية تحكي قصص أجيال مضت. 
+    الحفاظ عليها واجب وطني لتعريف الأجيال القادمة بتاريخ بلادنا العريق.
+  </p>
+
+  <div class="footer">
+    © 2025 — بحث الجوهرة عيد المطيري
   </div>
 
 </body>
