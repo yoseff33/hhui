@@ -10,12 +10,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Clean Tech (Primary: #00A896 Teal/Green, Background: #F7F8FC Soft Gray, Text: #2C3E50 Dark Slate) -->
-    <!-- Application Structure Plan: تم تصميم التطبيق كهيكل تفاعلي قائم على علامات التبويب (Tabs) بدلاً من مستند خطي. هذا يسمح للمستخدم (صاحب النظام المحتمل) بالقفز مباشرة إلى القسم الذي يهمه. الأقسام هي: "نظرة عامة" (للانطباع الأول)، "كيف يعمل؟" (الجزء التفاعلي الرئيسي لمحاكاة التجربة)، "الإعداد التقني" (للتفاصيل الفنية)، و "الأمان والدعم" (لبناء الثقة). تم اختيار هذا الهيكل لأنه يعكس رحلة المستخدم في تقييم المنتج: من الفهم العام، إلى التجربة العملية، ثم التفاصيل الفنية، وأخيراً عوامل الثقة. محاكاة الدردشة هي العنصر الأكثر أهمية لجعل الدليل حياً ومفهوماً. -->
+    <!-- Application Structure Plan: تم تصميم التطبيق كهيكل تفاعلي قائم على علامات التبويب (Tabs). تم إضافة علامة تبويب جديدة "هندسة النظام" لتحويل خريطة العقد المعقدة إلى هيكل بصري واضح يعزز فهم المالك لطريقة عمل النظام الداخلية، وهي خطوة حاسمة لتحويل دليل التنظيم الداخلي إلى جزء من الواجهة التفاعلية. تم تقسيم العقد إلى مجموعات منطقية وعرضها في شكل بطاقات متسلسلة. -->
     <!-- Visualization & Content Choices: 
-        - نظرة عامة: تم تحويل المميزات إلى بطاقات مرئية (Grid Layout) بدلاً من جدول، لأنها أكثر جاذبية بصرياً. تم تحويل إحصائيات الأداء إلى مخطط بياني شريطي (Bar Chart) باستخدام Chart.js لإبراز قدرات النظام بشكل فوري ومقنع (الهدف: إعلام وإقناع).
-        - كيف يعمل؟: تم تحويل سير العمل النصي إلى محاكاة دردشة تفاعلية (HTML/CSS/JS). هذا يسمح للمستخدم بتجربة النظام بدلاً من قراءته (الهدف: تنظيم وتوضيح العلاقة). هذا هو الخيار الأفضل لأنه يوضح التسلسل الزمني والتفاعل بشكل لا يمكن للنص وحده تحقيقه.
-        - الإعداد التقني: تم استخدام قوائم وأيقونات للمتطلبات، وكتل أكواد برمجية مع زر نسخ (JS) لسهولة الاستخدام، وأكورديون (JS show/hide) لمشاكل وإصلاحها للحفاظ على واجهة نظيفة (الهدف: تنظيم المعلومات).
-        - كل الخيارات تتجنب SVG/Mermaid وتعتمد على HTML/CSS/JS و Canvas (عبر Chart.js) كما هو مطلوب. -->
+        - هندسة النظام: تم استخدام بطاقات HTML/CSS/Tailwind لتمثيل كل مجموعة عقد، مع أسهم بصرية (Unicode/Tailwind) لتمثيل التدفق. هذا يعطي نظرة عامة منظمة (Flowchart-like) دون استخدام SVG أو Plotly، مما يحقق الهدف المطلوب من التحليل البصري للهيكل.
+        - المحاكاة والرسوم البيانية: تم الحفاظ عليها لكونها أفضل وسيلة لتوضيح سير العمل والأداء. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -74,6 +72,19 @@
         .copy-btn:hover {
             background-color: #5d687b;
         }
+        .node-group {
+            border: 2px solid #00A896;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 168, 150, 0.1);
+        }
+        .node-arrow {
+            text-align: center;
+            padding: 0.5rem 0;
+            font-size: 2rem;
+            color: #2C3E50;
+        }
     </style>
 </head>
 <body class="text-[#2C3E50]">
@@ -88,11 +99,13 @@
         <nav id="tabs" class="flex flex-wrap justify-center gap-3 md:gap-6 mb-12 border-b border-gray-200">
             <button data-tab="overview" class="tab-button active text-base md:text-lg font-bold py-2 px-6 rounded-t-xl hover:bg-gray-100 border-transparent hover:border-gray-300">نظرة عامة</button>
             <button data-tab="workflow" class="tab-button text-base md:text-lg font-bold py-2 px-6 rounded-t-xl border-transparent hover:bg-gray-100 hover:border-gray-300">كيف يعمل؟</button>
+            <button data-tab="architecture" class="tab-button text-base md:text-lg font-bold py-2 px-6 rounded-t-xl border-transparent hover:bg-gray-100 hover:border-gray-300">هندسة النظام</button>
             <button data-tab="setup" class="tab-button text-base md:text-lg font-bold py-2 px-6 rounded-t-xl border-transparent hover:bg-gray-100 hover:border-gray-300">الإعداد التقني</button>
             <button data-tab="security" class="tab-button text-base md:text-lg font-bold py-2 px-6 rounded-t-xl border-transparent hover:bg-gray-100 hover:border-gray-300">الأمان والدعم</button>
         </nav>
 
         <main id="tab-content">
+            <!-- OVERVIEW CONTENT -->
             <div id="overview-content" class="tab-pane active">
                 <section class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
                     <h2 class="text-3xl font-bold text-[#00A896] mb-4">🎯 نظرة عامة على النظام</h2>
@@ -149,6 +162,7 @@
                 </section>
             </div>
 
+            <!-- WORKFLOW CONTENT -->
             <div id="workflow-content" class="tab-pane hidden">
                 <div class="text-center mb-8">
                     <p class="text-lg text-gray-600 leading-loose">
@@ -195,6 +209,142 @@
                 </div>
             </div>
 
+            <!-- ARCHITECTURE CONTENT (NEW SECTION) -->
+            <div id="architecture-content" class="tab-pane hidden">
+                <section class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+                    <h2 class="text-3xl font-bold text-[#00A896] mb-4">🗂️ هندسة النظام (خريطة العقد)</h2>
+                    <p class="text-lg text-gray-600 leading-loose mb-8">
+                        هذا القسم يوضح البنية الداخلية للنظام (Workflow) والمقسمة إلى مجموعات عقد ووظيفية. فهم هذا التدفق يساعد المالك على تحديد مكان أي مشكلة أو إضافة ميزة جديدة في المستقبل.
+                    </p>
+
+                    <div class="space-y-8">
+                        <!-- المجموعة 1: استقبال الرسائل -->
+                        <div class="node-group">
+                            <h3 class="text-2xl font-bold text-[#00A896] mb-3 border-b pb-2">🔰 المجموعة 1: استقبال الرسائل (البداية)</h3>
+                            <p class="text-gray-700 mb-4">مسؤولة عن استقبال رسالة العميل وتجهيزها للمعالجة.</p>
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-around text-center">
+                                <div class="bg-gray-100 p-3 rounded-lg shadow-inner flex-1 mx-2 mb-2 md:mb-0">
+                                    <p class="font-semibold">📍 Webhook</p>
+                                    <p class="text-sm text-gray-500">نقطة الدخول من Whapi.cloud</p>
+                                </div>
+                                <span class="text-3xl font-extrabold text-gray-400 hidden md:block">➔</span>
+                                <span class="text-3xl font-extrabold text-gray-400 block md:hidden">↓</span>
+                                <div class="bg-gray-100 p-3 rounded-lg shadow-inner flex-1 mx-2">
+                                    <p class="font-semibold">🧩 إعداد Session ID</p>
+                                    <p class="text-sm text-gray-500">إنشاء جلسة ومنع الحلقات اللانهائية</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="node-arrow">
+                            <p class="text-sm text-gray-500">تدفق الرسالة</p>
+                            <span>⬇️</span>
+                        </div>
+
+                        <!-- المجموعة 2: المعالجة الرئيسية -->
+                        <div class="node-group">
+                            <h3 class="text-2xl font-bold text-[#00A896] mb-3 border-b pb-2">🔰 المجموعة 2: المعالجة الرئيسية والذكاء الاصطناعي</h3>
+                            <p class="text-gray-700 mb-4">مسؤولة عن تحليل نية العميل وجلب كافة البيانات اللازمة وتوليد الرد.</p>
+                            
+                            <div class="flex flex-wrap items-stretch justify-center gap-4">
+                                <div class="bg-indigo-100 p-3 rounded-lg shadow-md flex-1 min-w-[150px]">
+                                    <p class="font-semibold text-center">معالجة المحادثة</p>
+                                    <p class="text-xs text-gray-600 text-center">تحديد النية</p>
+                                </div>
+                                <span class="text-3xl font-extrabold text-gray-400 hidden lg:block">→</span>
+
+                                <div class="flex flex-col space-y-2 bg-yellow-100 p-3 rounded-lg shadow-md flex-1 min-w-[150px]">
+                                    <p class="font-semibold text-center">جلب البيانات (متوازي)</p>
+                                    <p class="text-xs text-gray-600 text-center">get_products, get_available_codes, get_orders</p>
+                                </div>
+                                
+                                <span class="text-3xl font-extrabold text-gray-400 hidden lg:block">→</span>
+                                <div class="bg-pink-100 p-3 rounded-lg shadow-md flex-1 min-w-[150px]">
+                                    <p class="font-semibold text-center">AI Agent</p>
+                                    <p class="text-xs text-gray-600 text-center">توليد الردود (Gemini)</p>
+                                </div>
+                                <span class="text-3xl font-extrabold text-gray-400 hidden lg:block">→</span>
+                                <div class="bg-gray-200 p-3 rounded-lg shadow-md flex-1 min-w-[150px]">
+                                    <p class="font-semibold text-center">🔄 تنظيف الرد</p>
+                                    <p class="text-xs text-gray-600 text-center">تجهيز الإخراج</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="node-arrow">
+                            <p class="text-sm text-gray-500">إرسال للتفرع الشرطي</p>
+                            <span>⬇️</span>
+                        </div>
+
+                        <!-- المجموعة 3: التفرعات الشرطية -->
+                        <div class="node-group">
+                            <h3 class="text-2xl font-bold text-[#00A896] mb-3 border-b pb-2">🔰 المجموعة 3: التفرعات الشرطية (قلب النظام)</h3>
+                            <p class="text-gray-700 mb-4">تستخدم عقد **IF** لتوجيه التدفق بناءً على حالة العميل (ماذا يحتاج البوت ليطلب منه).</p>
+                            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                                <div class="col-span-1 bg-green-100 p-3 rounded-lg shadow-md text-center">IF: Ask Name</div>
+                                <div class="col-span-1 bg-green-100 p-3 rounded-lg shadow-md text-center">IF: Ask Product</div>
+                                <div class="col-span-1 bg-green-100 p-3 rounded-lg shadow-md text-center">IF: Ask Payment</div>
+                                <div class="col-span-1 bg-green-100 p-3 rounded-lg shadow-md text-center">IF: Send Codes</div>
+                                <div class="col-span-1 bg-green-100 p-3 rounded-lg shadow-md text-center">IF: Confirm Purchase</div>
+                            </div>
+                        </div>
+                        
+                        <div class="node-arrow">
+                            <p class="text-sm text-gray-500">إجراءات التنفيذ</p>
+                            <span>⬇️</span>
+                        </div>
+
+                        <!-- المجموعة 4: معالجات التنفيذ (أمثلة) -->
+                        <div class="node-group">
+                            <h3 class="text-2xl font-bold text-[#00A896] mb-3 border-b pb-2">🔰 المجموعة 4: معالجات التنفيذ (الحفظ والإرسال)</h3>
+                            <p class="text-gray-700 mb-4">يتم هنا تنفيذ الوظائف الحرجة مثل حفظ الطلبات وسحب الأكواد وإرسال الإشعارات.</p>
+                            <div class="flex flex-col space-y-4">
+                                <div class="border border-gray-300 p-3 rounded-lg bg-red-50/50">
+                                    <p class="font-bold text-lg text-red-700">عند تفعيل (IF: Confirm Purchase):</p>
+                                    <div class="flex items-center justify-between text-sm mt-2 text-gray-700">
+                                        <span>تحضير تأكيد الشراء</span> <span class="text-xl text-gray-400">→</span> 
+                                        <span>Save Order (Google Sheets)</span> <span class="text-xl text-gray-400">→</span> 
+                                        <span>إشعار المالك</span> <span class="text-xl text-gray-400">→</span> 
+                                        <span>HTTP Request (للعميل)</span>
+                                    </div>
+                                </div>
+                                <div class="border border-gray-300 p-3 rounded-lg bg-green-50/50">
+                                    <p class="font-bold text-lg text-green-700">عند تفعيل (IF: Send Codes):</p>
+                                    <div class="flex items-center justify-between text-sm mt-2 text-gray-700">
+                                        <span>send_codes_function</span> <span class="text-xl text-gray-400">→</span> 
+                                        <span>Save Order (تحديث)</span> <span class="text-xl text-gray-400">→</span> 
+                                        <span>HTTP Request (الأكواد)</span>
+                                    </div>
+                                </div>
+                                 <div class="border border-gray-300 p-3 rounded-lg bg-blue-50/50">
+                                    <p class="font-bold text-lg text-blue-700">لأوامر المالك:</p>
+                                    <div class="flex items-center justify-center text-sm mt-2 text-gray-700">
+                                        <span>owner_management</span> <span class="text-xl text-gray-400 mx-4">→</span> 
+                                        <span>HTTP Request (رد المالك)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="node-arrow">
+                            <p class="text-sm text-gray-500">الإرسال النهائي</p>
+                            <span>⬇️</span>
+                        </div>
+                        
+                        <!-- المجموعة 6: الإرسال النهائي -->
+                        <div class="node-group bg-gray-100">
+                            <h3 class="text-2xl font-bold text-[#00A896] mb-3 border-b pb-2">🔰 المجموعة 6: الإرسال النهائي</h3>
+                            <div class="text-center bg-gray-200 p-4 rounded-lg shadow-inner">
+                                <p class="font-semibold text-xl">HTTP Request</p>
+                                <p class="text-sm text-gray-600 mt-1">يرسل جميع الردود النهائية إلى Whapi.cloud (نهاية التدفق)</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+
+            <!-- SETUP CONTENT -->
             <div id="setup-content" class="tab-pane hidden">
                 <section class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
                     <h2 class="text-3xl font-bold text-[#00A896] mb-6">⚙️ الإعدادات والتكوينات الفنية</h2>
@@ -263,6 +413,7 @@
                 </section>
             </div>
 
+            <!-- SECURITY CONTENT -->
             <div id="security-content" class="tab-pane hidden">
                 <section class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
                     <h2 class="text-3xl font-bold text-[#00A896] mb-6">🔒 الأمان والخصوصية</h2>
