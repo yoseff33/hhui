@@ -3,773 +3,492 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دليل نظام بيع الأكواد عبر واتساب</title>
+    <title>لوحة تحكم نظام DAN المتكاملة</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Clean Tech (Primary: #00A896 Teal/Green, Background: #F7F8FC Soft Gray, Text: #2C3E50 Dark Slate) -->
-    <!-- Application Structure Plan: تم تصميم التطبيق كهيكل تفاعلي قائم على علامات التبويب (Tabs). تم إضافة علامة تبويب جديدة "هندسة النظام" لتحويل خريطة العقد المعقدة إلى هيكل بصري واضح يعزز فهم المالك لطريقة عمل النظام الداخلية، وهي خطوة حاسمة لتحويل دليل التنظيم الداخلي إلى جزء من الواجهة التفاعلية. تم تقسيم العقد إلى مجموعات منطقية وعرضها في شكل بطاقات متسلسلة. -->
-    <!-- Visualization & Content Choices: 
-        - هندسة النظام: تم استخدام بطاقات HTML/CSS/Tailwind لتمثيل كل مجموعة عقد، مع أسهم بصرية (Unicode/Tailwind) لتمثيل التدفق. هذا يعطي نظرة عامة منظمة (Flowchart-like) دون استخدام SVG أو Plotly، مما يحقق الهدف المطلوب من التحليل البصري للهيكل.
-        - المحاكاة والرسوم البيانية: تم الحفاظ عليها لكونها أفضل وسيلة لتوضيح سير العمل والأداء. -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <!-- Chosen Palette: Calm Tech -->
+    <!-- Application Structure Plan: تم توسيع بنية التطبيق إلى واجهة بخمسة تبويبات (Overview, Workflow, Setup, Commands, Troubleshooting) لاستيعاب التفاصيل الجديدة. تم اختيار هذا الهيكل لتنظيم المحتوى الذي يدمج التسويق، التشغيل، والميزات النفسية، مما يضمن أن المستخدم يمكنه التنقل مباشرة إلى مهمته (مثلاً: "كيف أضيف رقمي؟" أو "ما هي الأوامر؟") دون تصفح كل شيء. تم تصميم لوحة الأوامر كقسم تفاعلي منفصل لتسهيل الوصول للمعلومات التشغيلية اليومية. -->
+    <!-- Visualization & Content Choices: تم تحويل سير العمل (الآن 4 مراحل و15 خطوة) إلى مخطط تدفق بصري هرمي (HTML/CSS) لتحسين الوضوح. تم استخدام القوائم المنسدلة (Accordions) بكثافة في قسم "الميزات الفريدة" و"الإعداد" لإدارة كثافة النص وعرض التفاصيل عند الطلب (Show/Hide/Toggle). تم عرض المحادثة النموذجية في بطاقات ثابتة لتقديم حالة استخدام واضحة. تم استخدام HTML/CSS لتنظيم جميع البيانات الجديدة لعدم وجود بيانات كمية تتطلب Chart.js. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Tajawal', sans-serif;
-            background-color: #F7F8FC; /* Soft off-white */
-            color: #2C3E50; /* Dark Slate Gray */
+            background-color: #f8f7f4;
+            color: #4a4a4a;
         }
-        .tab-button.active {
-            border-color: #00A896;
-            background-color: #00A896;
-            color: #ffffff;
+        .tab-active {
+            border-color: #8c7b72;
+            color: #8c7b72;
+            background-color: #efeae6;
         }
-        .tab-button {
-            transition: all 0.3s ease;
-            color: #2C3E50;
-            border-bottom-width: 3px;
-            padding-bottom: 0.75rem;
+        .tab-inactive {
+            border-color: transparent;
+            color: #7f8c8d;
         }
-        .chat-bubble {
-            max-width: 75%;
-            padding: 10px 14px;
-            border-radius: 18px;
-            word-wrap: break-word;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        .content-active {
+            display: block;
         }
-        .chat-bubble.user {
-            background-color: #DCF8C6; /* Light green */
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
+        .content-inactive {
+            display: none;
         }
-        .chat-bubble.bot {
-            background-color: #FFFFFF;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
         }
-        .code-block {
-            background-color: #2d3748;
-            color: #e2e8f0;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            position: relative;
-            font-size: 0.9rem;
+        .workflow-step {
+            transition: all 0.3s ease-in-out;
         }
-        .copy-btn {
-            position: absolute;
-            top: 0.5rem;
-            left: 0.5rem;
-            background-color: #4a5568;
+        .workflow-node {
+            background-color: #8c7b72;
             color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: background-color 0.2s;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 700;
         }
-        .copy-btn:hover {
-            background-color: #5d687b;
+        .workflow-phase {
+            color: #6a5a51;
+            border-bottom: 2px solid #d1c7c1;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
         }
-        .node-group {
-            border: 2px solid #00A896;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            background-color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0, 168, 150, 0.1);
+        .command-card {
+            transition: all 0.2s ease-in-out;
         }
-        .node-arrow {
-            text-align: center;
-            padding: 0.5rem 0;
-            font-size: 2rem;
-            color: #2C3E50;
+        .command-card:hover {
+            transform: scale(1.03);
+            border-color: #a4968d;
         }
     </style>
 </head>
-<body class="text-[#2C3E50]">
-
-    <div class="container mx-auto p-4 md:p-10 max-w-7xl">
-
-        <header class="text-center mb-10 pt-4">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-[#00A896] tracking-tight">📘 دليل النظام الشامل</h1>
-            <p class="text-xl text-gray-500 mt-2">نظام بيع الأكواد والاشتراكات عبر واتساب</p>
+<body class="antialiased">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-7xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-[#6a5a51]">📚 الكتيب الإرشادي الشامل لنظام DAN - نظام بيع الأكواد المتكامل</h1>
+            <p class="mt-2 text-lg text-gray-600">لوحة تحكم تفاعلية لفهم وتشغيل نظامك الذكي بكفاءة عالية.</p>
         </header>
 
-        <nav id="tabs" class="flex flex-wrap justify-center gap-3 md:gap-6 mb-12 border-b border-gray-200">
-            <button data-tab="overview" class="tab-button active text-base md:text-lg font-bold py-2 px-6 rounded-t-xl hover:bg-gray-100 border-transparent hover:border-gray-300">نظرة عامة</button>
-            <button data-tab="workflow" class="tab-button text-base md:text-lg font-bold py-2 px-6 rounded-t-xl border-transparent hover:bg-gray-100 hover:border-gray-300">كيف يعمل؟</button>
-            <button data-tab="architecture" class="tab-button text-base md:text-lg font-bold py-2 px-6 rounded-t-xl border-transparent hover:bg-gray-100 hover:border-gray-300">هندسة النظام</button>
-            <button data-tab="setup" class="tab-button text-base md:text-lg font-bold py-2 px-6 rounded-t-xl border-transparent hover:bg-gray-100 hover:border-gray-300">الإعداد التقني</button>
-            <button data-tab="security" class="tab-button text-base md:text-lg font-bold py-2 px-6 rounded-t-xl border-transparent hover:bg-gray-100 hover:border-gray-300">الأمان والدعم</button>
-        </nav>
+        <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-2xl p-4 sm:p-8">
+            <!-- Tabs Navigation -->
+            <nav class="flex flex-wrap justify-center border-b-2 border-gray-200 mb-8">
+                <button data-tab="overview" class="tab-button text-sm sm:text-base font-semibold py-3 px-3 sm:px-6 border-b-4 transition-colors duration-300 tab-active">الرئيسية والميزات</button>
+                <button data-tab="workflow" class="tab-button text-sm sm:text-base font-semibold py-3 px-3 sm:px-6 border-b-4 transition-colors duration-300 tab-inactive">سير العمل</button>
+                <button data-tab="setup" class="tab-button text-sm sm:text-base font-semibold py-3 px-3 sm:px-6 border-b-4 transition-colors duration-300 tab-inactive">التشغيل والربط</button>
+                <button data-tab="commands" class="tab-button text-sm sm:text-base font-semibold py-3 px-3 sm:px-6 border-b-4 transition-colors duration-300 tab-inactive">أوامر التاجر</button>
+                <button data-tab="troubleshooting" class="tab-button text-sm sm:text-base font-semibold py-3 px-3 sm:px-6 border-b-4 transition-colors duration-300 tab-inactive">استكشاف الأخطاء</button>
+            </nav>
 
-        <main id="tab-content">
-            <!-- OVERVIEW CONTENT -->
-            <div id="overview-content" class="tab-pane active">
-                <section class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-                    <h2 class="text-3xl font-bold text-[#00A896] mb-4">🎯 نظرة عامة على النظام</h2>
-                    <p class="text-lg text-gray-600 leading-loose">
-                        نظام ذكي ومتكامل مصمم لأتمتة عملية بيع الأكواد والاشتراكات بشكل كامل عبر تطبيق **واتساب**. يهدف هذا النظام إلى توفير تجربة شراء فورية ومريحة للعملاء، بينما يمنح المالك أدوات قوية لإدارة المخزون والمبيعات والحصول على إحصائيات حية، كل ذلك عبر أوامر بسيطة في الدردشة.
+            <!-- Tabs Content -->
+            <main>
+                <!-- Overview Tab -->
+                <div id="overview" class="tab-content content-active">
+                    <h2 class="text-2xl font-bold text-[#6a5a51] mb-4">🎯 مقدمة: لماذا DAN هو الأفضل في السوق؟</h2>
+                    <p class="text-gray-600 mb-6 border-r-4 border-[#8c7b72] pr-4 bg-gray-50 p-3 rounded-lg">
+                        **DAN ليس مجرد بوت عادي!** إنه نظام متكامل ذكي يجمع بين الذكاء الاصطناعي المتقدم، إدارة المخزون الذكية، التسويق التلقائي، وتقنيات نفسية لزيادة المبيعات (وهم الخصم). نظام DAN هو مساعد بيع ذكي يتفاعل كإنسان ويتسوق كخبير.
                     </p>
-                </section>
 
-                <section class="mt-12">
-                    <h2 class="text-3xl font-bold text-center text-[#00A896] mb-8">📋 المميزات والقدرات الكاملة</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-                            <span class="text-4xl text-[#00A896] block mb-3">💬</span>
-                            <h3 class="font-bold text-xl mb-3 border-b pb-2">✅ المميزات الأساسية</h3>
-                            <ul class="list-none text-gray-700 space-y-2">
-                                <li class="flex items-center"><span class="ml-2 text-green-500">✓</span> بيع الأكواد تلقائياً عبر واتساب</li>
-                                <li class="flex items-center"><span class="ml-2 text-green-500">✓</span> دعم 4 منتجات رئيسية (يوتيوب، نتفليكس، سبوتيفاي، ستيم)</li>
-                                <li class="flex items-center"><span class="ml-2 text-green-500">✓</span> طريقتان للدفع: سلة والتحويل البنكي</li>
-                                <li class="flex items-center"><span class="ml-2 text-green-500">✓</span> تخزين البيانات في Google Sheets</li>
-                                <li class="flex items-center"><span class="ml-2 text-green-500">✓</span> لهجة سعودية ودية في جميع الردود</li>
-                            </ul>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-                            <span class="text-4xl text-[#FF6384] block mb-3">📦</span>
-                            <h3 class="font-bold text-xl mb-3 border-b pb-2">📦 نظام إدارة المخزون</h3>
-                            <ul class="list-none text-gray-700 space-y-2">
-                                <li class="flex items-center"><span class="ml-2 text-green-500">✓</span> تتبع المخزون تلقائياً بعد كل عملية بيع</li>
-                                <li class="flex items-center"><span class="ml-2 text-green-500">✓</span> إشعارات منخفض المخزون (عند 5 أكواد)</li>
-                                <li class="flex items-center"><span class="ml-2 text-green-500">✓</span> تقارير المخزون الفورية عبر أمر واتساب</li>
-                                <li class="flex items-center"><span class="ml-2 text-green-500">✓</span> إضافة أكواد جديدة عبر رسالة واحدة للمالك</li>
-                            </ul>
-                        </div>
-                         <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02] md:col-span-2 lg:col-span-1">
-                            <span class="text-4xl text-[#FFC400] block mb-3">👑</span>
-                            <h3 class="font-bold text-xl mb-3 border-b pb-2">👑 نظام المالك المتكامل</h3>
-                            <ul class="list-none text-gray-700 space-y-2">
-                                <li class="flex items-center"><span class="ml-2 text-green-500">✓</span> أوامر سريعة لإضافة أكواد جماعية</li>
-                                <li class="flex items-center"><span class="ml-2 text-green-500">✓</span> استعلام فوري عن المخزون ("كم باقي كود؟")</li>
-                                <li class="flex items-center"><span class="ml-2 text-green-500">✓</span> إحصائيات يومية للمبيعات والطلبات ("الإحصائيات")</li>
-                                <li class="flex items-center"><span class="ml-2 text-green-500">✓</span> إشعارات تلقائية فورية للطلبات الجديدة</li>
-                            </ul>
-                        </div>
+                    <h3 class="text-xl font-bold text-[#6a5a51] mb-4 mt-6">🌟 مميزاتنا الفريدة (اللي عندنا مو عند غيرنا)</h3>
+                    <div id="features-accordion" class="space-y-4">
+                        <!-- Content generated by JS -->
                     </div>
-                </section>
-                
-                <section class="mt-12">
-                     <h2 class="text-3xl font-bold text-center text-[#00A896] mb-8">📊 سعة وأداء النظام</h2>
-                     <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-                        <p class="text-center text-gray-600 mb-6">يوضح المخطط البياني أدناه السعة القصوى وأداء النظام في لحظات الذروة لضمان الاستقرار.</p>
-                        <div class="chart-container relative h-[45vh] max-h-[400px] w-full max-w-3xl mx-auto">
-                            <canvas id="performanceChart"></canvas>
-                        </div>
-                     </div>
-                </section>
-            </div>
+                </div>
 
-            <!-- WORKFLOW CONTENT -->
-            <div id="workflow-content" class="tab-pane hidden">
-                <div class="text-center mb-8">
-                    <p class="text-lg text-gray-600 leading-loose">
-                        قسم محاكاة تفاعلية لفهم خط سير العمل بوضوح. اختر بين سيناريو العميل الذي يجري عملية شراء، أو أوامر المالك لإدارة النظام.
-                    </p>
+                <!-- Workflow Tab -->
+                <div id="workflow" class="tab-content content-inactive">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-[#6a5a51] mb-2">🔧 طريقة سير العمل خطوة بخطوة (15 خطوة)</h2>
+                        <p class="text-gray-600 max-w-4xl mx-auto">تتبع المسار الكامل للمعاملة من استقبال الرسالة إلى تسليم الأكواد وحملات التسويق المجدولة. انقر على كل خطوة لعرض تفاصيلها.</p>
+                    </div>
+                    <div id="workflow-container" class="space-y-6">
+                        <!-- Content generated by JS -->
+                    </div>
                 </div>
-                 <div id="workflow-tabs" class="flex justify-center gap-6 mb-8 border-b border-gray-200">
-                    <button data-workflow="customer" class="workflow-tab-button active font-bold text-lg py-3 px-6 border-b-4 border-[#00A896] text-[#00A896]">🔄 رحلة العميل</button>
-                    <button data-workflow="owner" class="workflow-tab-button font-bold text-lg py-3 px-6 border-b-4 border-transparent text-gray-500 hover:text-[#00A896] hover:border-[#00A896]">👨‍💼 أوامر المالك</button>
-                </div>
-                
-                <div id="customer-workflow" class="workflow-pane">
-                    <div class="w-full max-w-lg mx-auto bg-gray-100 border-4 border-gray-300 rounded-3xl shadow-2xl overflow-hidden">
-                        <div class="bg-[#075E54] text-white p-4 rounded-t-2xl flex items-center">
-                           <span class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-xl font-bold text-[#075E54] ml-3">🤖</span>
-                           <h3 class="font-bold text-lg">متجر الأكواد (محاكاة)</h3>
+
+                <!-- Setup Tab -->
+                <div id="setup" class="tab-content content-inactive">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-[#6a5a51] mb-2">📱 التشغيل والربط: إعداد النظام</h2>
+                        <p class="text-gray-600 max-w-4xl mx-auto">دليل البدء خطوة بخطوة لربط رقم الواتساب وتخصيص إعدادات المالك والمجموعات.</p>
+                    </div>
+                    <div id="setup-container" class="space-y-8 max-w-4xl mx-auto">
+                        <div class="bg-white rounded-lg shadow-lg p-6 border-b-4 border-[#8c7b72]">
+                            <h3 class="text-xl font-bold text-[#6a5a51] mb-3">التحضير الأولي وربط الواتساب</h3>
+                            <ul class="list-decimal list-inside space-y-2 text-gray-700">
+                                <li>📋 إنشاء جداول Google Sheets الثلاثة (المنتجات، الأكواد، الطلبات).</li>
+                                <li>🔗 ربط الخدمات: تفعيل Google Sheets API و Google Gemini AI وإعداد واتساب Business API.</li>
+                                <li>⚙️ رفع ملف Workflow: استيراد ملف JSON لـ n8n.</li>
+                                <li>✅ اشترك في **whapi.cloud** واحصل على **API Token** لربط الرقم وتفعيل الـ **Webhook**.</li>
+                            </ul>
                         </div>
-                        <div id="chat-window-customer" class="p-4 h-[50vh] min-h-96 overflow-y-auto flex flex-col-reverse gap-4">
-                           <div class="flex flex-col items-end">
-                                <div class="chat-bubble bot">
-                                    وعليكم السلام ورحمة الله! 🌹<br>أهلاً وسهلاً فيك!<br>كيف أقدر أخدمك اليوم؟
-                                </div>
-                           </div>
+
+                        <div id="config-accordion" class="space-y-4">
+                            <!-- Config details via accordion (JS) -->
                         </div>
-                        <div id="chat-controls-customer" class="p-4 border-t border-gray-300 bg-white rounded-b-2xl text-center flex flex-wrap justify-center gap-2">
-                            <!-- Controls will be injected here by JS -->
+
+                        <div class="bg-white rounded-lg shadow-lg p-6 border-b-4 border-yellow-600">
+                            <h3 class="text-xl font-bold text-[#6a5a51] mb-3">التشغيل والصيانة الدورية</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-sm">
+                                <div><p class="font-bold text-lg text-green-600">التشغيل اليومي</p><p class="text-gray-600">البوت يعمل تلقائياً $24/7$. يرسل رسائل تسويقية كل $3$ ساعات. يرسل تنبيهات للمالك عند الطلبات الجديدة.</p></div>
+                                <div><p class="font-bold text-lg text-blue-600">الصيانة الأسبوعية</p><p class="text-gray-600">مراجعة المخزون، تحديث قائمة المجموعات، مراجعة الإحصائيات.</p></div>
+                                <div><p class="font-bold text-lg text-red-600">الصيانة الشهرية</p><p class="text-gray-600">تحديث الأسعار إذا لزم، تحليل أداء الحملات التسويقية، نسخ احتياطي للبيانات.</p></div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="owner-workflow" class="workflow-pane hidden">
-                     <div class="w-full max-w-lg mx-auto bg-gray-100 border-4 border-gray-300 rounded-3xl shadow-2xl overflow-hidden">
-                        <div class="bg-[#075E54] text-white p-4 rounded-t-2xl flex items-center">
-                           <span class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-xl font-bold text-[#075E54] ml-3">👨‍💼</span>
-                           <h3 class="font-bold text-lg">لوحة تحكم المالك (محاكاة)</h3>
-                        </div>
-                        <div id="chat-window-owner" class="p-4 h-[50vh] min-h-96 overflow-y-auto flex flex-col-reverse gap-4">
-                           <!-- Chat messages will be injected here -->
-                        </div>
-                        <div id="chat-controls-owner" class="p-4 border-t border-gray-300 bg-white rounded-b-2xl text-center flex flex-wrap justify-center gap-2">
-                           <!-- Controls will be injected here by JS -->
-                        </div>
+                <!-- Commands Tab -->
+                <div id="commands" class="tab-content content-inactive">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-[#6a5a51] mb-2">👑 دليل التاجر: الأوامر الكاملة</h2>
+                        <p class="text-gray-600 max-w-4xl mx-auto">إدارة النظام بالكامل من الواتساب. استخدم هذه الأوامر مباشرة للتحكم في المخزون والتسويق والحصول على التقارير.</p>
+                    </div>
+                    <div id="commands-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Commands generated by JS -->
+                    </div>
+
+                    <h3 class="text-xl font-bold text-[#6a5a51] mb-3 mt-10">💬 طريقة عمل الشات الذكي (محادثة نموذجية)</h3>
+                    <div id="chat-example" class="space-y-4 max-w-3xl mx-auto p-4 bg-gray-100 rounded-xl shadow-inner">
+                        <!-- Chat example generated by JS -->
                     </div>
                 </div>
-            </div>
 
-            <!-- ARCHITECTURE CONTENT (NEW SECTION) -->
-            <div id="architecture-content" class="tab-pane hidden">
-                <section class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-                    <h2 class="text-3xl font-bold text-[#00A896] mb-4">🗂️ هندسة النظام (خريطة العقد)</h2>
-                    <p class="text-lg text-gray-600 leading-loose mb-8">
-                        هذا القسم يوضح البنية الداخلية للنظام (Workflow) والمقسمة إلى مجموعات عقد ووظيفية. فهم هذا التدفق يساعد المالك على تحديد مكان أي مشكلة أو إضافة ميزة جديدة في المستقبل.
-                    </p>
-
-                    <div class="space-y-8">
-                        <!-- المجموعة 1: استقبال الرسائل -->
-                        <div class="node-group">
-                            <h3 class="text-2xl font-bold text-[#00A896] mb-3 border-b pb-2">🔰 المجموعة 1: استقبال الرسائل (البداية)</h3>
-                            <p class="text-gray-700 mb-4">مسؤولة عن استقبال رسالة العميل وتجهيزها للمعالجة.</p>
-                            <div class="flex flex-col md:flex-row md:items-center md:justify-around text-center">
-                                <div class="bg-gray-100 p-3 rounded-lg shadow-inner flex-1 mx-2 mb-2 md:mb-0">
-                                    <p class="font-semibold">📍 Webhook</p>
-                                    <p class="text-sm text-gray-500">نقطة الدخول من Whapi.cloud</p>
-                                </div>
-                                <span class="text-3xl font-extrabold text-gray-400 hidden md:block">➔</span>
-                                <span class="text-3xl font-extrabold text-gray-400 block md:hidden">↓</span>
-                                <div class="bg-gray-100 p-3 rounded-lg shadow-inner flex-1 mx-2">
-                                    <p class="font-semibold">🧩 إعداد Session ID</p>
-                                    <p class="text-sm text-gray-500">إنشاء جلسة ومنع الحلقات اللانهائية</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="node-arrow">
-                            <p class="text-sm text-gray-500">تدفق الرسالة</p>
-                            <span>⬇️</span>
-                        </div>
-
-                        <!-- المجموعة 2: المعالجة الرئيسية -->
-                        <div class="node-group">
-                            <h3 class="text-2xl font-bold text-[#00A896] mb-3 border-b pb-2">🔰 المجموعة 2: المعالجة الرئيسية والذكاء الاصطناعي</h3>
-                            <p class="text-gray-700 mb-4">مسؤولة عن تحليل نية العميل وجلب كافة البيانات اللازمة وتوليد الرد.</p>
-                            
-                            <div class="flex flex-wrap items-stretch justify-center gap-4">
-                                <div class="bg-indigo-100 p-3 rounded-lg shadow-md flex-1 min-w-[150px]">
-                                    <p class="font-semibold text-center">معالجة المحادثة</p>
-                                    <p class="text-xs text-gray-600 text-center">تحديد النية</p>
-                                </div>
-                                <span class="text-3xl font-extrabold text-gray-400 hidden lg:block">→</span>
-
-                                <div class="flex flex-col space-y-2 bg-yellow-100 p-3 rounded-lg shadow-md flex-1 min-w-[150px]">
-                                    <p class="font-semibold text-center">جلب البيانات (متوازي)</p>
-                                    <p class="text-xs text-gray-600 text-center">get_products, get_available_codes, get_orders</p>
-                                </div>
-                                
-                                <span class="text-3xl font-extrabold text-gray-400 hidden lg:block">→</span>
-                                <div class="bg-pink-100 p-3 rounded-lg shadow-md flex-1 min-w-[150px]">
-                                    <p class="font-semibold text-center">AI Agent</p>
-                                    <p class="text-xs text-gray-600 text-center">توليد الردود (Gemini)</p>
-                                </div>
-                                <span class="text-3xl font-extrabold text-gray-400 hidden lg:block">→</span>
-                                <div class="bg-gray-200 p-3 rounded-lg shadow-md flex-1 min-w-[150px]">
-                                    <p class="font-semibold text-center">🔄 تنظيف الرد</p>
-                                    <p class="text-xs text-gray-600 text-center">تجهيز الإخراج</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="node-arrow">
-                            <p class="text-sm text-gray-500">إرسال للتفرع الشرطي</p>
-                            <span>⬇️</span>
-                        </div>
-
-                        <!-- المجموعة 3: التفرعات الشرطية -->
-                        <div class="node-group">
-                            <h3 class="text-2xl font-bold text-[#00A896] mb-3 border-b pb-2">🔰 المجموعة 3: التفرعات الشرطية (قلب النظام)</h3>
-                            <p class="text-gray-700 mb-4">تستخدم عقد **IF** لتوجيه التدفق بناءً على حالة العميل (ماذا يحتاج البوت ليطلب منه).</p>
-                            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                                <div class="col-span-1 bg-green-100 p-3 rounded-lg shadow-md text-center">IF: Ask Name</div>
-                                <div class="col-span-1 bg-green-100 p-3 rounded-lg shadow-md text-center">IF: Ask Product</div>
-                                <div class="col-span-1 bg-green-100 p-3 rounded-lg shadow-md text-center">IF: Ask Payment</div>
-                                <div class="col-span-1 bg-green-100 p-3 rounded-lg shadow-md text-center">IF: Send Codes</div>
-                                <div class="col-span-1 bg-green-100 p-3 rounded-lg shadow-md text-center">IF: Confirm Purchase</div>
-                            </div>
-                        </div>
-                        
-                        <div class="node-arrow">
-                            <p class="text-sm text-gray-500">إجراءات التنفيذ</p>
-                            <span>⬇️</span>
-                        </div>
-
-                        <!-- المجموعة 4: معالجات التنفيذ (أمثلة) -->
-                        <div class="node-group">
-                            <h3 class="text-2xl font-bold text-[#00A896] mb-3 border-b pb-2">🔰 المجموعة 4: معالجات التنفيذ (الحفظ والإرسال)</h3>
-                            <p class="text-gray-700 mb-4">يتم هنا تنفيذ الوظائف الحرجة مثل حفظ الطلبات وسحب الأكواد وإرسال الإشعارات.</p>
-                            <div class="flex flex-col space-y-4">
-                                <div class="border border-gray-300 p-3 rounded-lg bg-red-50/50">
-                                    <p class="font-bold text-lg text-red-700">عند تفعيل (IF: Confirm Purchase):</p>
-                                    <div class="flex items-center justify-between text-sm mt-2 text-gray-700">
-                                        <span>تحضير تأكيد الشراء</span> <span class="text-xl text-gray-400">→</span> 
-                                        <span>Save Order (Google Sheets)</span> <span class="text-xl text-gray-400">→</span> 
-                                        <span>إشعار المالك</span> <span class="text-xl text-gray-400">→</span> 
-                                        <span>HTTP Request (للعميل)</span>
-                                    </div>
-                                </div>
-                                <div class="border border-gray-300 p-3 rounded-lg bg-green-50/50">
-                                    <p class="font-bold text-lg text-green-700">عند تفعيل (IF: Send Codes):</p>
-                                    <div class="flex items-center justify-between text-sm mt-2 text-gray-700">
-                                        <span>send_codes_function</span> <span class="text-xl text-gray-400">→</span> 
-                                        <span>Save Order (تحديث)</span> <span class="text-xl text-gray-400">→</span> 
-                                        <span>HTTP Request (الأكواد)</span>
-                                    </div>
-                                </div>
-                                 <div class="border border-gray-300 p-3 rounded-lg bg-blue-50/50">
-                                    <p class="font-bold text-lg text-blue-700">لأوامر المالك:</p>
-                                    <div class="flex items-center justify-center text-sm mt-2 text-gray-700">
-                                        <span>owner_management</span> <span class="text-xl text-gray-400 mx-4">→</span> 
-                                        <span>HTTP Request (رد المالك)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="node-arrow">
-                            <p class="text-sm text-gray-500">الإرسال النهائي</p>
-                            <span>⬇️</span>
-                        </div>
-                        
-                        <!-- المجموعة 6: الإرسال النهائي -->
-                        <div class="node-group bg-gray-100">
-                            <h3 class="text-2xl font-bold text-[#00A896] mb-3 border-b pb-2">🔰 المجموعة 6: الإرسال النهائي</h3>
-                            <div class="text-center bg-gray-200 p-4 rounded-lg shadow-inner">
-                                <p class="font-semibold text-xl">HTTP Request</p>
-                                <p class="text-sm text-gray-600 mt-1">يرسل جميع الردود النهائية إلى Whapi.cloud (نهاية التدفق)</p>
-                            </div>
-                        </div>
-
+                <!-- Troubleshooting Tab -->
+                <div id="troubleshooting" class="tab-content content-inactive">
+                     <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-[#6a5a51] mb-2">🛠️ استكشاف الأخطاء وإصلاحها</h2>
+                        <p class="text-gray-600 max-w-4xl mx-auto">قائمة بأكثر المشاكل شيوعًا وحلولها السريعة والفعالة لضمان استقرار النظام.</p>
                     </div>
-                </section>
-            </div>
-
-            <!-- SETUP CONTENT -->
-            <div id="setup-content" class="tab-pane hidden">
-                <section class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-                    <h2 class="text-3xl font-bold text-[#00A896] mb-6">⚙️ الإعدادات والتكوينات الفنية</h2>
-                    <p class="text-lg text-gray-600 mb-8">
-                        هذا القسم يوضح المتطلبات الأساسية للنظام وخطوات التكوين الضرورية لتشغيل البوت بنجاح.
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <div>
-                            <h3 class="text-2xl font-semibold mb-4 text-[#00A896]">✅ المتطلبات الأساسية</h3>
-                            <ul class="space-y-4">
-                                <li class="flex items-center text-lg"><span class="ml-3 text-red-500 text-3xl">💻</span> حساب n8n (منصة التشغيل الآلي)</li>
-                                <li class="flex items-center text-lg"><span class="ml-3 text-blue-500 text-3xl">📱</span> حساب Whapi.cloud (بوابة واتساب API)</li>
-                                <li class="flex items-center text-lg"><span class="ml-3 text-yellow-600 text-3xl">📂</span> حساب Google Sheets (قاعدة البيانات)</li>
-                                <li class="flex items-center text-lg"><span class="ml-3 text-indigo-500 text-3xl">✨</span> حساب Google Gemini (للذكاء الاصطناعي)</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-semibold mb-4 text-[#00A896]">🛠️ التكوينات المطلوبة</h3>
-                            <div class="mb-6">
-                                <h4 class="font-bold text-xl">1. تحديث بيانات المالك:</h4>
-                                <p class="text-sm text-gray-600 mb-2">يجب تغيير هذا الرقم لضمان وصول أوامر وإشعارات الإدارة إليك.</p>
-                                <div class="code-block" dir="ltr">
-                                    <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
-                                    <pre><code>const OWNER_PHONE = "966500000000";</code></pre>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-xl">2. تحديث بيانات الدفع:</h4>
-                                <ul class="list-disc pr-5 text-gray-700 space-y-1 mt-2">
-                                   <li>**رابط سلة:** تحديث رابط الدفع المباشر.</li>
-                                   <li>**البيانات البنكية:** تحديث البنك، الاسم، ورقم IBAN للمالك.</li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div id="troubleshooting-container" class="space-y-4 max-w-4xl mx-auto">
+                        <!-- Troubleshooting content generated by JS -->
                     </div>
-                </section>
-                
-                <section class="mt-12">
-                    <h2 class="text-3xl font-bold text-center text-[#00A896] mb-8">🤔 استكشاف الأخطاء وإصلاحها</h2>
-                    <div class="space-y-4">
-                        <div class="accordion-item bg-white rounded-xl shadow-lg border border-gray-100">
-                            <button class="accordion-header w-full text-right p-4 font-semibold text-xl flex justify-between items-center hover:bg-gray-50 transition-colors">
-                                <span>مشكلة: البوت لا يرد على الرسائل</span>
-                                <span class="transform transition-transform duration-300 text-[#00A896] text-2xl">▼</span>
-                            </button>
-                            <div class="accordion-content hidden p-4 border-t border-gray-200">
-                                <ul class="list-disc pr-6 text-gray-700 space-y-2">
-                                    <li>تحقق من اتصال **Whapi.cloud** وتأكد من تفعيل **Webhook**.</li>
-                                    <li>تأكد من صحة بيانات المصادقة (API Keys) في n8n.</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="accordion-item bg-white rounded-xl shadow-lg border border-gray-100">
-                            <button class="accordion-header w-full text-right p-4 font-semibold text-xl flex justify-between items-center hover:bg-gray-50 transition-colors">
-                                <span>مشكلة: الأكواد لا ترسل بعد تأكيد الدفع</span>
-                                <span class="transform transition-transform duration-300 text-[#00A896] text-2xl">▼</span>
-                            </button>
-                            <div class="accordion-content hidden p-4 border-t border-gray-200">
-                                <ul class="list-disc pr-6 text-gray-700 space-y-2">
-                                    <li>تحقق من وجود أكواد متاحة في جدول **المخزون** على Google Sheets.</li>
-                                    <li>تأكد من صحة تنسيق الأكواد وأنها جاهزة للسحب.</li>
-                                </ul>
-                            </div>
-                        </div>
+                     <div class="mt-8 text-center text-gray-500">
+                        <p>📞 **للدعم الفني:** راجع سجلات n8n، تحقق من اتصال APIs، وتأكد من صحة البيانات في الجداول.</p>
                     </div>
-                </section>
-            </div>
-
-            <!-- SECURITY CONTENT -->
-            <div id="security-content" class="tab-pane hidden">
-                <section class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-                    <h2 class="text-3xl font-bold text-[#00A896] mb-6">🔒 الأمان والخصوصية</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <div>
-                            <h3 class="text-2xl font-semibold mb-4 text-blue-600">🛡️ إجراءات الأمان المتبعة</h3>
-                             <ul class="space-y-3 text-lg text-gray-700">
-                                <li class="flex items-start"><span class="ml-3 text-blue-500 text-2xl pt-1">✓</span><span>فصل الجلسات لكل عميل لمنع أي تداخل في الطلبات.</span></li>
-                                <li class="flex items-start"><span class="ml-3 text-blue-500 text-2xl pt-1">✓</span><span>تخزين بيانات الدفع والأكواد بشكل آمن ومحمي.</span></li>
-                                <li class="flex items-start"><span class="ml-3 text-blue-500 text-2xl pt-1">✓</span><span>تحقق صارم من هوية المالك للوصول إلى أوامر الإدارة.</span></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-semibold mb-4 text-red-600">📊 البيانات التي يتم حمايتها</h3>
-                             <ul class="space-y-3 text-lg text-gray-700">
-                                <li class="flex items-start"><span class="ml-3 text-red-500 text-xl pt-1">●</span> أرقام العملاء وسجلات الطلبات.</li>
-                                <li class="flex items-start"><span class="ml-3 text-red-500 text-xl pt-1">●</span> الأكواد المتاحة والمباعة.</li>
-                                <li class="flex items-start"><span class="ml-3 text-red-500 text-xl pt-1">●</span> تفاصيل بيانات التحويل البنكي.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-                <section class="mt-12 bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-                    <h2 class="text-3xl font-bold text-[#00A896] mb-4">📞 دعم وصيانة النظام</h2>
-                    <p class="text-lg text-gray-700 leading-loose">
-                        يتم تقديم الدعم والصيانة عبر مراجعة سجلات التنفيذ في **n8n** بشكل دوري. لضمان أفضل أداء مستمر، يوصى بمراقبة استخدام الذكاء الاصطناعي، وتحسين صياغة استجابات البوت، وتحديث قائمة المنتجات والأسعار بشكل منتظم لتبقى البيانات دقيقة وفعالة.
-                    </p>
-                </section>
-            </div>
-        </main>
+                </div>
+            </main>
+        </div>
+         <footer class="text-center mt-8 text-sm text-gray-500">
+            <p>نظام DAN ليس نظام بيع - إنه شريك ذكي في نمو متجرك! آخر تحديث: 2024.</p>
+        </footer>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const tabs = document.querySelectorAll('.tab-button');
-            const tabPanes = document.querySelectorAll('.tab-pane');
+<script>
+document.addEventListener('DOMContentLoaded', function () {
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    tabs.forEach(item => {
-                        item.classList.remove('active', 'bg-[#00A896]', 'text-white', 'border-[#00A896]');
-                        item.classList.add('border-transparent');
-                    });
-                    tab.classList.add('active', 'bg-[#00A896]', 'text-white', 'border-[#00A896]');
-                    tab.classList.remove('border-transparent');
-
-                    const target = tab.getAttribute('data-tab');
-                    tabPanes.forEach(pane => {
-                        if (pane.id === `${target}-content`) {
-                            pane.classList.remove('hidden');
-                        } else {
-                            pane.classList.add('hidden');
-                        }
-                    });
-                });
-            });
-
-            const performanceData = {
-                labels: ['مستخدم متزامن', 'كود في الرسالة', 'طلبات في الدقيقة'],
-                datasets: [{
-                    label: 'سعة النظام',
-                    data: [200, 200, 10],
-                    backgroundColor: ['#00A896', '#3498DB', '#FF6384'],
-                    borderColor: ['#ffffff'],
-                    borderWidth: 2,
-                    borderRadius: 5,
-                }]
-            };
-
-            const performanceChartCtx = document.getElementById('performanceChart').getContext('2d');
-            new Chart(performanceChartCtx, {
-                type: 'bar',
-                data: performanceData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    indexAxis: 'y',
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            rtl: true,
-                            bodyFont: {
-                                family: 'Tajawal'
-                            },
-                            titleFont: {
-                                family: 'Tajawal'
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            grid: {
-                                display: false 
-                            },
-                            ticks: {
-                                font: {
-                                    family: 'Tajawal'
-                                }
-                            }
-                        },
-                        y: {
-                           grid: {
-                                display: false 
-                           },
-                           ticks: {
-                                font: {
-                                    family: 'Tajawal',
-                                    size: 14
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            const accordions = document.querySelectorAll('.accordion-item');
-            accordions.forEach(item => {
-                const header = item.querySelector('.accordion-header');
-                const content = item.querySelector('.accordion-content');
-                const icon = header.querySelector('span:last-child');
-                header.addEventListener('click', () => {
-                    content.classList.toggle('hidden');
-                    icon.classList.toggle('rotate-180');
-                });
-            });
-
-            const workflowTabs = document.querySelectorAll('.workflow-tab-button');
-            const workflowPanes = document.querySelectorAll('.workflow-pane');
-            workflowTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    workflowTabs.forEach(item => {
-                        item.classList.remove('active', 'border-[#00A896]', 'text-[#00A896]');
-                        item.classList.add('border-transparent', 'text-gray-500');
-                    });
-                    tab.classList.add('active', 'border-[#00A896]', 'text-[#00A896]');
-                    tab.classList.remove('border-transparent', 'text-gray-500');
-
-                    const target = tab.getAttribute('data-workflow');
-                    workflowPanes.forEach(pane => {
-                        if (pane.id === `${target}-workflow`) {
-                            pane.classList.remove('hidden');
-                        } else {
-                            pane.classList.add('hidden');
-                        }
-                    });
-                });
-            });
-            
-            initCustomerChat();
-            initOwnerChat();
-
-        });
-
-        function copyCode(button) {
-            const codeBlock = button.nextElementSibling;
-            const text = codeBlock.textContent || codeBlock.innerText;
-            
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            
-            button.textContent = 'تم النسخ!';
-            setTimeout(() => {
-                button.textContent = 'نسخ';
-            }, 2000);
+    // --- Data Structures ---
+    const workflowPhases = [
+        {
+            name: 'المرحلة ١: بدء المحادثة',
+            steps: [
+                { id: '١', what: 'العميل يرسل رسالة على الواتساب', result: '📱 الرسالة تصل لـ Webhook' },
+                { id: '٢', what: 'النظام يمنع التكرار (Anti-Spam)', result: '🛡️ لا رسائل مزعجة' },
+                { id: '٣', what: 'يتم تحديد رقم الجلسة (Session ID)', result: '🔐 كل عميل له محادثة مستقلة' },
+                { id: '٤', what: 'تحليل إذا كانت رسالة مالك أو عميل', result: '👑 تمييز تلقائي' }
+            ]
+        },
+        {
+            name: 'المرحلة ٢: المعالجة الذكية',
+            steps: [
+                { id: '٥', what: 'جلب البيانات من جداول Google Sheets', result: '📊 المنتجات، الأكواد، الطلبات' },
+                { id: '٦', what: 'الذكاء الاصطناعي يحلل نية العميل', result: '🧠 فهم طلب العميل بدقة' },
+                { id: '٧', what: 'تحديد الإجراء التالي تلقائياً', result: '🎯 سؤال الاسم، المنتج، إلخ' }
+            ]
+        },
+        {
+            name: 'المرحلة ٣: تدفق البيع',
+            steps: [
+                { id: '٨', what: 'توجيه المحادثة حسب المرحلة', result: '🔄 أسئلة ذكية متتابعة' },
+                { id: '٩', what: 'تطبيق وهم الخصم تلقائياً', result: '💰 "وفرت ٩ ريالات!"' },
+                { id: '١٠', what: 'تحضير بيانات الطلب', result: '📦 تجهيز المعلومات النهائية' },
+                { id: '١١', what: 'حفظ الطلب في Google Sheets', result: '💾 سجل دائم للطلبات' },
+                { id: '١٢', what: 'إرسال الأكواد للعميل', result: '🎁 تسليم فوري' }
+            ]
+        },
+        {
+            name: 'المرحلة ٤: التسويق الذكي',
+            steps: [
+                { id: '١٣', what: 'جدولة رسائل تسويقية تلقائية', result: '⏰ كل ٣ ساعات' },
+                { id: '١٤', what: 'توليد رسائل تسويقية بإبداع', result: '🎨 كل رسالة مختلفة' },
+                { id: '١٥', what: 'إرسال جماعي للمجموعات', result: '📢 وصول لأكبر جمهور' }
+            ]
         }
+    ];
 
-        const customerChatWindow = document.getElementById('chat-window-customer');
-        const customerControls = document.getElementById('chat-controls-customer');
-        let customerStep = 0;
-
-        const customerFlow = [
-            { type: 'user', text: 'السلام عليكم', actionText: 'إرسال "السلام عليكم"' },
-            { type: 'bot', text: '💫 ممتاز!<br>عندنا هالمنتجات الحلوة:<br><br>📺 يوتيوب بريميوم<br>🎬 نتفليكس<br>🎵 سبوتيفاي<br>🎮 ستيم<br><br>وش المنتج اللي يهمك؟', actionText: 'اسمي أحمد' },
-            { type: 'user', text: 'يوتيوب', options: ['يوتيوب', 'نتفليكس', 'سبوتيفاي', 'ستيم'] },
-            { type: 'bot', text: '🔢 كم كود تحتاج؟<br>(1، 2، 3، إلخ...) - الحد الأقصى 20 كود' },
-            { type: 'user', text: '2', options: ['1', '2', '5'] },
-            { type: 'bot', text: '💳 طريقة الدفع:<br><br>🛒 سلة<br>🏦 تحويل بنكي<br><br>اختاري الطريقة اللي تناسبك' },
-            { type: 'user', text: 'تحويل بنكي', options: ['سلة', 'تحويل بنكي'] },
-            { type: 'bot', text: '🏦 تم تأكيد طلبك بنجاح!<br><br>👤 الاسم: أحمد<br>📦 المنتج: يوتيوب بريميوم<br>🔢 الكمية: 2<br>💳 طريقة الدفع: تحويل بنكي<br><br>📋 بيانات التحويل:<br>البنك: الراجحي<br>الاسم: محمد أحمد<br>IBAN: SA03 ...<br><br>📤 بعد التحويل، أرسلي صورة الإيصال هنا!', actionText: 'إرسال إيصال الدفع' },
-            { type: 'bot', text: '✅ تم تأكيد طلبك بنجاح!<br><br>🛍️ المنتج: يوتيوب بريميوم<br>🔢 الكمية: 2<br><br>🔑 كود 1: YT001<br>🔑 كود 2: YT002<br><br>💫 استمتع بخدمتك!', actionText: "محاكاة تأكيد الدفع وإرسال الأكواد" },
-            { type: 'system', text: 'انتهت المحادثة. يمكنك إعادة البدء.', actionText: 'إعادة البدء' }
-        ];
-
-        function initCustomerChat() {
-            customerStep = 0;
-            customerChatWindow.innerHTML = `<div class="flex flex-col items-end">
-                                <div class="chat-bubble bot">
-                                    وعليكم السلام ورحمة الله! 🌹<br>أهلاً وسهلاً فيك!<br>كيف أقدر أخدمك اليوم؟
-                                </div>
-                           </div>`;
-            renderCustomerControls();
+    const uniqueFeatures = [
+        {
+            title: '١. التسويق الذكي التلقائي 🎪',
+            items: [
+                { feature: 'التسويق في المجموعات', description: 'يرد تلقائياً على استفسارات "برامج بلس"', benefit: '✅ جذب عملاء جدد بدون مجهود' },
+                { feature: 'الجدولة الذكية', description: 'يرسل رسائل تسويقية كل ٣ ساعات', benefit: '✅ استمرارية التسويق ٢٤/٧' },
+                { feature: 'التسويق الفوري', description: 'أمر "سوق الآن" يطلق حملة فورية', benefit: '✅ تفعيل التسويق وقت الذروة' }
+            ]
+        },
+        {
+            title: '٢. تقنيات البيع النفسي 🧠',
+            items: [
+                { feature: 'وهم الخصم', description: 'يعرض سعر ٢٩ ريال ويبيعه بـ ٢٠ ريال', benefit: '✅ زيادة الإقناع ٤٠٪' },
+                { feature: 'مقارنة الأسعار', description: '"نتفليكس بسعر ٥٩ ريال وعندنا ٢٠ ريال!"', benefit: '✅ إبراز التوفير' },
+                { feature: 'ندرة وقتية', description: '"العرض اليوم فقط!"', benefit: '✅ تحفيز الشراء الفوري' }
+            ]
+        },
+        {
+            title: '٣. الإدارة الذكية 📊',
+            items: [
+                { feature: 'التحكم عن بعد', description: 'المالك يدير كل شيء من الواتساب', benefit: '✅ إدارة من أي مكان' },
+                { feature: 'تقارير فورية', description: 'إحصائيات المبيعات والمخزون', benefit: '✅ قرارات مدروسة' },
+                { feature: 'تنبيهات المخزون', description: 'إشعارات عندما يقل المخزون عن ٥', benefit: '✅ عدم ضياع فرص بيع' }
+            ]
+        },
+        {
+            title: '٤. الحماية والاستقرار 🛡️',
+            items: [
+                { feature: 'منع التكرار', description: 'نظام مضاد للسبام يمنع الحلقات اللانهائية', benefit: '✅ استقرار النظام' },
+                { feature: 'نسخ احتياطي', description: 'كل البيانات محفوظة في Google Sheets', benefit: '✅ عدم فقدان البيانات' },
+                { feature: 'تحديث ذاتي', description: 'الأكواد تباع من الأول للأحدث', benefit: '✅ إدارة ذكية للمخزون' }
+            ]
         }
+    ];
 
-        function renderCustomerControls() {
-            customerControls.innerHTML = '';
-            const currentStepData = customerFlow[customerStep];
-            
-            if (currentStepData.type === 'system') {
-                const button = document.createElement('button');
-                button.className = 'bg-[#00A896] hover:bg-[#008070] text-white font-bold py-2 px-6 rounded-full transition-colors';
-                button.textContent = currentStepData.actionText;
-                button.onclick = initCustomerChat;
-                customerControls.appendChild(button);
-                return;
-            }
+    const merchantCommands = [
+        { command: 'سوق الآن', purpose: 'إطلاق حملة تسويقية فورية', example: '`سوق الآن`', type: 'أساسية', icon: '🚀' },
+        { command: 'عرض المخزون', purpose: 'عرض كميات الأكواد المتاحة', example: '`عرض المخزون`', type: 'أساسية', icon: '📦' },
+        { command: 'الإحصائيات', purpose: 'تقرير المبيعات والطلبات', example: '`الإحصائيات`', type: 'أساسية', icon: '📊' },
+        { command: 'أضف الأكواد التالية', purpose: 'إضافة أكواد جديدة للمخزون', example: '`أضف الأكواد التالية: code1 code2`', type: 'أكواد', icon: '➕' },
+        { command: 'مخزون [المنتج]', purpose: 'استعلام عن مخزون منتج معين', example: '`مخزون يوتيوب`', type: 'أكواد', icon: '🔎' },
+        { command: 'نعم', purpose: 'تأكيد استلام الدفع', example: '`نعم`', type: 'متقدمة', icon: '✅' },
+        { command: 'لا', purpose: 'عدم تأكيد الدفع', example: '`لا`', type: 'متقدمة', icon: '❌' }
+    ];
 
-            if (currentStepData.options) {
-                currentStepData.options.forEach(option => {
-                    const button = document.createElement('button');
-                    button.className = 'bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-full transition-colors';
-                    button.textContent = option;
-                    button.onclick = () => handleCustomerInteraction(option);
-                    customerControls.appendChild(button);
-                });
+    const troubleshootingData = [
+        { problem: 'البوت لا يرد', solution: 'تحقق من اتصال الـ Webhook' },
+        { problem: 'الأكواد لا ترسل', solution: 'تأكد من وجود أكواد في الجدول' },
+        { problem: 'الرسائل التسويقية لا ترسل', solution: 'تحقق من معرفات المجموعات' },
+        { problem: 'الخصم لا يظهر', solution: 'راجع إعدادات الأسعار في الكود' }
+    ];
+
+    const chatExample = [
+        { role: 'user', text: 'السلام عليكم' },
+        { role: 'bot', text: 'وعليكم السلام ورحمة الله! 🌹 أهلاً وسهلاً فيك! كيف أقدر أخدمك اليوم؟' },
+        { role: 'user', text: 'أبي كود يوتيوب' },
+        { role: 'bot', text: '💫 ممتاز! عندنا هالمنتجات الحلوة: 📺 يوتيوب بريميوم، 🎬 نتفليكس، 🎵 سبوتيفاي، 🎮 ستيم. وشنو المنتج اللي يهمك؟' },
+        { role: 'user', text: 'يوتيوب' },
+        { role: 'bot', text: '🔢 كم كود تحتاج؟ (١، ٢، ٣، إلخ...) - الحد الأقصى ٢٠ كود' },
+        { role: 'user', text: '١' },
+        { role: 'bot', text: '💳 طريقة الدفع: 🛒 سلة، 🏦 تحويل بنكي. اختاري الطريقة اللي تناسبك' },
+        { role: 'user', text: 'سلة' },
+        { role: 'bot', text: '💰 *عرض خاص!* 💰 ✅ السعر الأصلي: ٢٩ ريال 🎯 السعر الخاص: ٢٠ ريال 💎 وفرت: ٩ ريالات! 🛒 تم تأكيد طلبك بنجاح! 👤 الاسم: [الاسم] 📦 المنتج: يوتيوب بريميوم 🔢 الكمية: ١ 💳 طريقة الدفع: سلة 📎 رابط الدفع: https://salla.sa/... بعد اكتمال الدفع راح تصلك الأكواد تلقائياً! 💫' }
+    ];
+
+    // --- Utility Functions ---
+
+    function setupAccordionToggle(accordionEl) {
+        const toggle = accordionEl.querySelector('.accordion-toggle');
+        const content = accordionEl.querySelector('.accordion-content');
+        const arrow = toggle.querySelector('.arrow-icon');
+        toggle.addEventListener('click', () => {
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                arrow.classList.remove('rotate-180');
             } else {
-                const button = document.createElement('button');
-                button.className = 'bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-2 px-6 rounded-full transition-colors';
-                button.textContent = currentStepData.actionText;
-                button.onclick = () => handleCustomerInteraction(currentStepData.text);
-                customerControls.appendChild(button);
+                content.style.maxHeight = content.scrollHeight + 20 + "px";
+                arrow.classList.add('rotate-180');
             }
-        }
-        
-        function handleCustomerInteraction(userText) {
-            if (customerStep >= customerFlow.length) return;
+        });
+    }
 
-            const userMessageDiv = document.createElement('div');
-            userMessageDiv.className = 'flex flex-col items-start';
-            userMessageDiv.innerHTML = `<div class="chat-bubble user">${userText}</div>`;
-            customerChatWindow.prepend(userMessageDiv);
-            
-            customerStep++;
+    function createFeaturesAccordion(data) {
+        const container = document.getElementById('features-accordion');
+        data.forEach(group => {
+            const accordionEl = document.createElement('div');
+            accordionEl.className = 'bg-white rounded-lg shadow-md border-t-4 border-[#a4968d]';
+            accordionEl.innerHTML = `
+                <button class="accordion-toggle w-full flex justify-between items-center p-4 text-xl font-bold text-[#6a5a51]">
+                    <span>${group.title}</span>
+                    <span class="arrow-icon text-2xl text-[#8c7b72] transform transition-transform duration-300">▼</span>
+                </button>
+                <div class="accordion-content px-4 pb-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${group.items.map(item => `
+                            <div class="p-3 bg-gray-50 rounded-md border-r-4 border-green-500">
+                                <h4 class="font-semibold text-gray-800">${item.feature}</h4>
+                                <p class="text-sm text-gray-600 my-1">${item.description}</p>
+                                <p class="text-xs font-medium text-green-700">${item.benefit}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            setupAccordionToggle(accordionEl);
+            container.appendChild(accordionEl);
+        });
+    }
 
-            setTimeout(() => {
-                if (customerStep >= customerFlow.length) {
-                    renderCustomerControls();
-                    return;
-                }
-                const botStepData = customerFlow[customerStep];
-                if (botStepData.type === 'bot' || botStepData.type === 'system') {
-                    const botMessageDiv = document.createElement('div');
-                    botMessageDiv.className = 'flex flex-col items-end';
-                    botMessageDiv.innerHTML = `<div class="chat-bubble bot">${botStepData.text}</div>`;
-                    customerChatWindow.prepend(botMessageDiv);
-                }
-                customerStep++;
-                renderCustomerControls();
-                customerChatWindow.scrollTop = 0; 
-            }, 1000);
-        }
+    function createWorkflow() {
+        const container = document.getElementById('workflow-container');
+        workflowPhases.forEach(phase => {
+            const phaseTitle = document.createElement('h3');
+            phaseTitle.className = 'text-2xl font-bold workflow-phase mt-6';
+            phaseTitle.textContent = phase.name;
+            container.appendChild(phaseTitle);
 
-        const ownerChatWindow = document.getElementById('chat-window-owner');
-        const ownerControls = document.getElementById('chat-controls-owner');
-        let ownerStep = 0;
+            phase.steps.forEach(step => {
+                const stepEl = document.createElement('div');
+                stepEl.className = `workflow-step bg-[#efeae6] p-4 rounded-lg shadow-md cursor-pointer relative mb-4`;
+                stepEl.innerHTML = `
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center">
+                            <span class="workflow-node ml-4">${step.id}</span>
+                            <div class="flex flex-col">
+                                <h4 class="text-lg font-semibold text-[#6a5a51]">${step.what}</h4>
+                                <p class="text-xs text-gray-500 mt-1">النتيجة المتوقعة: ${step.result}</p>
+                            </div>
+                        </div>
+                        <span class="arrow-icon text-2xl text-[#8c7b72] transform transition-transform duration-300 pt-1">▼</span>
+                    </div>
+                    <div class="workflow-details mt-4 pr-16 text-sm text-gray-700 hidden border-t border-[#d1c7c1] pt-3">
+                        <p class="font-bold">الوصف:</p>
+                        <p>تتم هذه الخطوة لـ **${step.what}** وينتج عنها **${step.result}**.</p>
+                    </div>
+                `;
+                stepEl.addEventListener('click', () => {
+                    const details = stepEl.querySelector('.workflow-details');
+                    const arrow = stepEl.querySelector('.arrow-icon');
+                    details.classList.toggle('hidden');
+                    arrow.classList.toggle('rotate-180');
+                });
+                container.appendChild(stepEl);
+            });
+        });
+    }
 
-        const ownerFlow = [
-            { 
-                type: 'user', 
-                text: 'أضف الأكواد التالية: YT001 YT002 NF001 SP001', 
-                actionText: 'إضافة أكواد جديدة' 
-            },
-            { 
-                type: 'bot', 
-                text: '✅ تم استلام 4 كود جديد بنجاح!<br>سيتم إضافتها للمخزون المتاح.' 
-            },
-            { 
-                type: 'user', 
-                text: 'عرض المخزون', 
-                actionText: 'الاستعلام عن المخزون' 
-            },
-            { 
-                type: 'bot', 
-                text: '📊 تقرير المخزون الحالي:<br><br>🎬 يوتيوب: 15 كود<br>📺 نتفليكس: 8 أكواد<br>🎵 سبوتيفاي: 12 كود<br>🎮 ستيم: 20 كود<br><br>💡 لإضافة أكواد جديدة: أضف الأكواد التالية: كود1 كود2 ...' 
-            },
-            { 
-                type: 'user', 
-                text: 'الإحصائيات', 
-                actionText: 'عرض الإحصائيات' 
+    function createSetupAccordion() {
+        const container = document.getElementById('config-accordion');
+        const configData = [
+            {
+                title: 'تعديل إعدادات رقم المالك (OWNER_PHONE)',
+                code: `// غير هذا الرقم لرقم المالك الحقيقي\nconst OWNER_PHONE = "966500000000"; // ← ضع رقمك هنا`,
+                location: 'في عقدة "🧩 إعداد Session ID"',
+                note: 'ضروري لتمييز أوامر الإدارة عن رسائل العملاء.'
             },
             {
-                 type: 'bot', 
-                 text: '📈 إحصائيات اليوم:<br><br>🛒 إجمالي الطلبات: 12 طلب<br>💰 إجمالي المبيعات: 480 ريال<br>🎬 يوتيوب: 5 طلبات<br>📺 نتفليكس: 4 طلبات<br>🎵 سبوتيفاي: 3 طلبات'
-            },
-            {
-                type: 'system',
-                text: 'انتهت المحادثة. يمكنك إعادة البدء.',
-                actionText: 'إعادة البدء'
+                title: 'إعداد معرفات المجموعات (groupIds)',
+                code: `const groupIds = [\n  "1234567890-1234567890@g.us", // ← مجموعة ١\n  "0987654321-0987654321@g.us" // ← مجموعة ٢\n];`,
+                location: 'في عقدة "تحضير رسائل المجموعات"',
+                note: 'تستخدم لإطلاق الحملات التسويقية الجماعية. احصل على المعرف من سجلات n8n بعد إرسال رسالة للمجموعة.'
             }
         ];
 
-        function initOwnerChat() {
-            ownerStep = 0;
-            ownerChatWindow.innerHTML = `<div class="flex flex-col items-end">
-                                <div class="chat-bubble bot">
-                                    أهلاً بك أيها المالك. اختر الأمر الذي تريد تنفيذه.
-                                </div>
-                           </div>`;
-            renderOwnerControls();
-        }
+        configData.forEach(item => {
+            const accordionEl = document.createElement('div');
+            accordionEl.className = 'bg-white rounded-lg shadow-md border-t-4 border-[#a4968d]';
+            accordionEl.innerHTML = `
+                <button class="accordion-toggle w-full flex justify-between items-center p-4 text-lg font-semibold text-[#6a5a51]">
+                    <span>${item.title}</span>
+                    <span class="arrow-icon text-2xl text-[#8c7b72] transform transition-transform duration-300">▼</span>
+                </button>
+                <div class="accordion-content px-4 pb-4">
+                    <p class="text-sm text-gray-600 mb-2">**الموقع:** ${item.location}</p>
+                    <pre class="bg-gray-800 text-green-400 p-3 rounded-md text-sm whitespace-pre-wrap">${item.code}</pre>
+                    <p class="text-sm text-red-500 mt-2">**ملاحظة هامة:** ${item.note}</p>
+                </div>
+            `;
+            setupAccordionToggle(accordionEl);
+            container.appendChild(accordionEl);
+        });
+    }
 
-        function renderOwnerControls() {
-            ownerControls.innerHTML = '';
+    function createCommands() {
+        const container = document.getElementById('commands-container');
+        merchantCommands.forEach(cmd => {
+            const cardEl = document.createElement('div');
+            cardEl.className = 'command-card bg-white border-2 border-transparent rounded-xl shadow-lg p-6 flex flex-col hover:shadow-xl';
+            cardEl.innerHTML = `
+                <div class="flex items-center mb-3">
+                    <span class="text-2xl mr-2">${cmd.icon}</span>
+                    <h3 class="text-xl font-bold text-[#6a5a51]">${cmd.command.replace(/\[.*\]/, '<span class="text-sm text-blue-500"> [...]</span>')}</h3>
+                </div>
+                <p class="text-gray-600 text-sm mb-3 flex-grow">${cmd.purpose}</p>
+                <div class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-md text-left w-full">${cmd.example}</div>
+            `;
+            container.appendChild(cardEl);
+        });
+    }
+
+    function createChatExample() {
+        const container = document.getElementById('chat-example');
+        chatExample.forEach(msg => {
+            const msgEl = document.createElement('div');
+            const roleClass = msg.role === 'user' ? 'bg-[#8c7b72] text-white self-start' : 'bg-[#efeae6] text-[#6a5a51] self-end';
+            const roleIcon = msg.role === 'user' ? '👤 العميل:' : '🤖 البوت:';
+            const alignClass = msg.role === 'user' ? 'float-right' : 'float-left';
+
+            msgEl.className = `p-3 max-w-[85%] rounded-lg shadow-md ${roleClass} clear-both mb-4 ${alignClass}`;
+            msgEl.innerHTML = `<span class="font-bold">${roleIcon}</span> ${msg.text}`;
+            container.appendChild(msgEl);
             
-            const buttonsContainer = document.createElement('div');
-            buttonsContainer.className = 'flex flex-wrap justify-center gap-2';
+            const clearer = document.createElement('div');
+            clearer.className = 'clear-both';
+            container.appendChild(clearer);
+        });
+    }
 
-            if (ownerStep >= ownerFlow.length) {
-                 const button = document.createElement('button');
-                 button.className = 'bg-[#00A896] hover:bg-[#008070] text-white font-bold py-2 px-6 rounded-full transition-colors';
-                 button.textContent = 'إعادة البدء';
-                 button.onclick = initOwnerChat;
-                 ownerControls.appendChild(button);
-                 return;
-            }
+    function createTroubleshooting() {
+        const container = document.getElementById('troubleshooting-container');
+        troubleshootingData.forEach(item => {
+            const el = document.createElement('div');
+            el.className = 'py-3 bg-white rounded-lg shadow-md p-4';
+            el.innerHTML = `
+                <p class="font-bold text-lg text-red-700">المشكلة: ${item.problem}</p>
+                <p class="mt-1 text-base text-green-700 border-t pt-2 mt-2"><strong>🛠️ الحل:</strong> ${item.solution}</p>
+            `;
+            container.appendChild(el);
+        });
+    }
 
-            for(let i = 0; i < ownerFlow.length; i++){
-                if (ownerFlow[i].type === 'user') {
-                    const button = document.createElement('button');
-                    button.className = 'bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-full transition-colors';
-                    button.textContent = ownerFlow[i].actionText;
-                    button.onclick = () => handleOwnerInteraction(i);
-                    buttonsContainer.appendChild(button);
+    // --- Initialization ---
+
+    createFeaturesAccordion(uniqueFeatures);
+    createWorkflow();
+    createSetupAccordion();
+    createCommands();
+    createChatExample();
+    createTroubleshooting();
+
+    const tabs = document.querySelectorAll('.tab-button');
+    const contents = document.querySelectorAll('.tab-content');
+    
+    // Initial tab setup
+    contents.forEach(content => {
+        if (content.id !== 'overview') {
+            content.classList.remove('content-active');
+            content.classList.add('content-inactive');
+        }
+    });
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.dataset.tab;
+            
+            tabs.forEach(t => {
+                t.classList.remove('tab-active');
+                t.classList.add('tab-inactive');
+            });
+            tab.classList.remove('tab-inactive');
+            tab.classList.add('tab-active');
+            
+            contents.forEach(content => {
+                if (content.id === target) {
+                    content.classList.remove('content-inactive');
+                    content.classList.add('content-active');
+                } else {
+                    content.classList.remove('content-active');
+                    content.classList.add('content-inactive');
                 }
-            }
-            ownerControls.appendChild(buttonsContainer);
-        }
-
-        function handleOwnerInteraction(stepIndex) {
-            ownerStep = stepIndex;
-            const userStepData = ownerFlow[ownerStep];
-            const userMessageDiv = document.createElement('div');
-            userMessageDiv.className = 'flex flex-col items-start';
-            userMessageDiv.innerHTML = `<div class="chat-bubble user">${userStepData.text}</div>`;
-            ownerChatWindow.prepend(userMessageDiv);
-            
-            ownerStep++;
-            const botStepData = ownerFlow[ownerStep];
-
-            setTimeout(() => {
-                const botMessageDiv = document.createElement('div');
-                botMessageDiv.className = 'flex flex-col items-end';
-                botMessageDiv.innerHTML = `<div class="chat-bubble bot">${botStepData.text}</div>`;
-                ownerChatWindow.prepend(botMessageDiv);
-                ownerStep++; 
-                renderOwnerControls();
-                ownerChatWindow.scrollTop = 0;
-            }, 1000);
-        }
-
-    </script>
+            });
+        });
+    });
+});
+</script>
 </body>
 </html>
