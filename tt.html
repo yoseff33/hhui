@@ -1,233 +1,631 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>إعلان iPhone 17</title>
-
-  <!-- خط عربي خفيف مع بدائل نظامية -->
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --brand:#ffcf99;            /* توهج ذهبي لطيف */
-      --bg-dark:#0b0b0f;          /* خلفية داكنة */
-      --glass:rgba(255,255,255,0.06);
-      --border:rgba(255,255,255,0.18);
-      --text:#ffffff;
-      --muted:#d6d6d6;
-      --accent:#ff8a3d;
-      --radius:22px;
-      --shadow: 0 20px 50px rgba(0,0,0,.45);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      background: var(--bg-dark) center/cover no-repeat fixed;
-      color:var(--text);
-      font-family: "Tajawal", system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans Arabic", "Geeza Pro", sans-serif;
-    }
-
-    /* مساحة العمل 9:16 لسهولة الحفظ كصورة */
-    .stage-wrap{
-      min-height:100dvh;
-      display:grid;
-      place-items:center;
-      padding:24px;
-    }
-    /* عنصر الإعلان نفسه؛ سنحفظه كصورة */
-    #ad{
-      width: min(92vw, 1080px);
-      aspect-ratio: 9 / 16;
-      position:relative;
-      border-radius: calc(var(--radius) + 8px);
-      overflow:hidden;
-      box-shadow: var(--shadow);
-      background:
-        radial-gradient(1200px 1200px at 70% 80%, rgba(255,138,61,.25), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.85)),
-        url("https://drive.google.com/uc?id=JAoo7ECMPC8lHAyn0&export=download") center/cover no-repeat;
-      isolation:isolate;
-    }
-
-    /* طبقة خطوط توهج خفيفة لإبراز الخلفية */
-    .glow{
-      position:absolute; inset:0; pointer-events:none;
-      background:
-        radial-gradient(600px 200px at 20% 18%, rgba(255,207,153,.22), transparent 60%),
-        radial-gradient(700px 260px at 80% 62%, rgba(255,138,61,.15), transparent 60%);
-      mix-blend-mode:screen;
-      filter: blur(0.2px);
-    }
-
-    /* بطاقة المحتوى */
-    .panel{
-      position:absolute; inset:24px;
-      display:flex; flex-direction:column;
-      gap:18px;
-    }
-
-    .pill{
-      align-self:flex-start;
-      padding:8px 14px;
-      border-radius:999px;
-      backdrop-filter: blur(8px);
-      background: var(--glass);
-      border:1px solid var(--border);
-      font-weight:600;
-      letter-spacing:.3px;
-    }
-
-    .title{
-      margin:6px 0 0;
-      font-weight:800;
-      font-size: clamp(36px, 5.6vw, 72px);
-      line-height:1.05;
-      text-shadow: 0 6px 28px rgba(0,0,0,.45);
-    }
-    .subtitle{
-      margin:0;
-      font-weight:600;
-      font-size: clamp(18px, 2.6vw, 28px);
-      color:var(--muted);
-    }
-
-    .price{
-      margin-top:8px;
-      display:flex; align-items:center; gap:10px;
-      font-size: clamp(18px, 2.6vw, 28px);
-      font-weight:600;
-    }
-    .price .dot{width:8px;height:8px;border-radius:50%;background:var(--accent); box-shadow:0 0 16px var(--accent)}
-
-    .cta{
-      margin-top:auto;
-      display:flex; gap:12px; flex-wrap:wrap;
-    }
-    .btn{
-      appearance:none; border:0; cursor:pointer;
-      padding:14px 18px; border-radius:14px;
-      font-weight:700; font-size:18px;
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
-      transition: transform .12s ease, opacity .2s ease;
-    }
-    .btn:hover{ transform: translateY(-2px) }
-    .btn:active{ transform: translateY(0) scale(.98) }
-
-    .btn-primary{
-      background: linear-gradient(135deg, var(--accent), #ffa85f);
-      color:#111;
-    }
-    .btn-ghost{
-      background: var(--glass);
-      border:1px solid var(--border);
-      color:var(--text);
-    }
-
-    .footnote{
-      margin-top:8px;
-      font-size:14px;
-      color:#c8c8c8;
-      letter-spacing:.2px;
-    }
-
-    /* شارة الهاتف */
-    .phone{
-      margin-inline-start:auto;
-      padding:10px 14px;
-      border-radius:999px;
-      background: rgba(0,0,0,.45);
-      border:1px solid var(--border);
-      display:flex; align-items:center; gap:8px;
-      font-weight:700;
-    }
-    .phone a{ color:#fff; text-decoration:none }
-    .phone a:hover{ text-decoration:underline }
-
-    /* زر التحميل خارج الإعلان لأداء أفضل */
-    .toolbar{
-      position:fixed; inset-inline:24px; bottom:24px;
-      display:flex; justify-content:center;
-      z-index:9999;
-    }
-    .download{
-      padding:12px 18px; border-radius:12px; border:0; cursor:pointer;
-      font-weight:700;
-      background:#222; color:#fff;
-      border:1px solid #3a3a3a;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
-
-    /* تحسين التباين عند الحفظ */
-    @media (prefers-color-scheme: dark){
-      body{ background-color:#000 }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروع عن الغلاف الجوي</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --secondary: #34a853;
+            --accent: #fbbc05;
+            --dark: #202124;
+            --light: #f8f9fa;
+            --sky-blue: #87ceeb;
+            --deep-blue: #1e3a8a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            line-height: 1.7;
+            color: var(--dark);
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            min-height: 100vh;
+            direction: rtl;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* أنماط الرأس */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--deep-blue));
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,192C1248,192,1344,128,1392,96L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* أنماط المحتوى الرئيسي */
+        .main-content {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            margin: 2rem auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .main-content:hover {
+            transform: translateY(-5px);
+        }
+        
+        section {
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        section:nth-child(2) { animation-delay: 0.2s; }
+        section:nth-child(3) { animation-delay: 0.4s; }
+        section:nth-child(4) { animation-delay: 0.6s; }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--accent);
+            font-size: 2rem;
+            display: inline-block;
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.15rem;
+            text-align: justify;
+        }
+        
+        /* أنماط طبقات الغلاف الجوي */
+        .atmosphere-layers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .layer-card {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
+            border-radius: 12px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+            border-right: 5px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .layer-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .layer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .layer-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .layer-card h3 i {
+            margin-left: 10px;
+            color: var(--accent);
+        }
+        
+        /* أنماط رسم الغلاف الجوي */
+        .atmosphere-diagram {
+            width: 100%;
+            max-width: 900px;
+            margin: 3rem auto;
+            position: relative;
+            height: 500px;
+            background: linear-gradient(to top, #87CEEB, #1E90FF, #4A6FA5, #2C3E50, #1A1A2E);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 2px solid white;
+        }
+        
+        .layer-diagram {
+            position: absolute;
+            width: 100%;
+            right: 0;
+            border-top: 2px dashed rgba(255, 255, 255, 0.7);
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .layer-diagram:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding-right: 30px;
+        }
+        
+        .layer-diagram .layer-name {
+            font-size: 1.2rem;
+        }
+        
+        .layer-diagram .layer-height {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .exosphere { top: 0; height: 20%; background: rgba(26, 26, 46, 0.6); }
+        .thermosphere { top: 20%; height: 20%; background: rgba(44, 62, 80, 0.6); }
+        .mesosphere { top: 40%; height: 20%; background: rgba(74, 111, 165, 0.6); }
+        .stratosphere { top: 60%; height: 20%; background: rgba(30, 144, 255, 0.6); }
+        .troposphere { top: 80%; height: 20%; background: rgba(135, 206, 235, 0.6); }
+        
+        /* أنماط المعلومات الشخصية */
+        .personal-info {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .personal-info::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        }
+        
+        .personal-info h2 {
+            color: white;
+            border-bottom: 3px solid var(--accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .info-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .info-item h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .info-item h3 i {
+            margin-left: 8px;
+        }
+        
+        /* أنماط زر الطباعة */
+        .print-section {
+            text-align: center;
+            margin: 2.5rem 0;
+        }
+        
+        .print-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 14px 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        .print-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+        
+        .print-btn i {
+            margin-right: 10px;
+        }
+        
+        /* أنماط التذييل */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        /* تأثيرات التمرير السلس */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* أنماط الطباعة */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+                font-size: 12pt;
+                line-height: 1.5;
+            }
+            
+            .container {
+                width: 100%;
+                max-width: none;
+                padding: 0;
+            }
+            
+            header {
+                background: white !important;
+                color: black !important;
+                padding: 1rem 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            header::before {
+                display: none;
+            }
+            
+            .main-content {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .print-btn, footer {
+                display: none;
+            }
+            
+            .atmosphere-diagram {
+                height: 350px;
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+            
+            .layer-diagram {
+                border-top: 1px solid #ccc;
+            }
+            
+            h2 {
+                color: black;
+                border-bottom: 1px solid #ccc;
+            }
+            
+            .personal-info {
+                background: #f0f0f0 !important;
+                color: black;
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+            
+            .personal-info::before {
+                display: none;
+            }
+            
+            .info-item {
+                background: white;
+                border: 1px solid #ddd;
+            }
+        }
+        
+        /* أنماط الاستجابة للهواتف */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            header p {
+                font-size: 1.1rem;
+            }
+            
+            .atmosphere-diagram {
+                height: 400px;
+            }
+            
+            .layer-diagram .layer-name {
+                font-size: 1rem;
+            }
+            
+            .atmosphere-layers {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            .atmosphere-diagram {
+                height: 350px;
+            }
+            
+            .layer-diagram {
+                padding: 8px 15px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .layer-diagram .layer-height {
+                margin-top: 5px;
+                align-self: flex-end;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .main-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
-  <div class="stage-wrap">
-    <!-- هذا هو العنصر الذي سيتم حفظه كصورة -->
-    <section id="ad" aria-label="إعلان iPhone 17">
-      <div class="glow" aria-hidden="true"></div>
-
-      <div class="panel">
-        <span class="pill">iPhone 17</span>
-
-        <h1 class="title">وصل عندنا ..!</h1>
-        <p class="subtitle">بأقساط تبدأ من <b>170 ريال</b> فقط -- أول قسط بعد شهر</p>
-
-        <div class="price"><span class="dot"></span> عروض مرنة + ضمان معتمد</div>
-
-        <div class="cta">
-          <a class="btn btn-primary" href="tel:+966533774766" rel="nofollow">اتصل الآن ‎+966533774766‎</a>
-          <a class="btn btn-ghost" href="https://wa.me/966533774766" target="_blank" rel="noopener">تواصل واتساب</a>
-
-          <!-- استبدلت الإيموجي بـ أيقونة واتساب: -->
-          <div class="phone" title="رقم التواصل">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/WhatsApp.svg/1024px-WhatsApp.svg.png" alt="واتساب" style="width:20px;height:20px;"> <a href="tel:+966533774766">+966533774766</a>
-          </div>
+    <header>
+        <div class="container">
+            <h1>مشروع عن الغلاف الجوي</h1>
+            <p>رحلة استكشافية عبر طبقات الغلاف الجوي وأهميته للحياة على كوكب الأرض</p>
         </div>
+    </header>
 
-        <div class="footnote">* تطبق الشروط والأحكام</div>
-      </div>
-    </section>
-  </div>
+    <div class="container">
+        <main class="main-content">
+            <section class="introduction">
+                <h2><i class="fas fa-globe-americas"></i> مقدمة عن الغلاف الجوي</h2>
+                <p>الغلاف الجوي هو طبقة من الغازات التي تحيط بكوكب الأرض، وتتمسك به بفعل الجاذبية الأرضية. وهو يحمي الحياة على الأرض بامتصاصه الأشعة فوق البنفسجية الشمسية، وتعديل درجات الحرارة على سطح الأرض، وتوفير الغازات الضرورية للتنفس.</p>
+                <p>يتكون الغلاف الجوي من عدة طبقات تختلف في خصائصها ووظائفها، وكل طبقة تلعب دوراً مهماً في الحفاظ على توازن النظام البيئي للأرض. بدون الغلاف الجوي، ستكون الحياة على الأرض مستحيلة بسبب التعرض المباشر للإشعاع الشمسي وتقلبات درجات الحرارة القاسية.</p>
+            </section>
 
-  <!-- زر تنزيل الإعلان كصورة PNG -->
-  <div class="toolbar">
-    <button class="download" id="saveBtn">حفظ الإعلان كصورة (PNG)</button>
-  </div>
+            <section class="atmosphere-diagram">
+                <div class="layer-diagram exosphere">
+                    <span class="layer-name">الإكسوسفير</span>
+                    <span class="layer-height">600 - 10000 كم</span>
+                </div>
+                <div class="layer-diagram thermosphere">
+                    <span class="layer-name">الثيرموسفير</span>
+                    <span class="layer-height">85 - 600 كم</span>
+                </div>
+                <div class="layer-diagram mesosphere">
+                    <span class="layer-name">الميزوسفير</span>
+                    <span class="layer-height">50 - 85 كم</span>
+                </div>
+                <div class="layer-diagram stratosphere">
+                    <span class="layer-name">الستراتوسفير</span>
+                    <span class="layer-height">12 - 50 كم</span>
+                </div>
+                <div class="layer-diagram troposphere">
+                    <span class="layer-name">التروبوسفير</span>
+                    <span class="layer-height">0 - 12 كم</span>
+                </div>
+            </section>
 
-  <!-- html2canvas لالتقاط العنصر كصورة -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', function(){
-      const btn = document.getElementById('saveBtn');
-      btn.addEventListener('click', async () => {
-        btn.disabled = true; btn.textContent = 'جاري التحضير...';
-        const node = document.getElementById('ad');
+            <section class="atmosphere-layers">
+                <h2><i class="fas fa-layer-group"></i> طبقات الغلاف الجوي</h2>
+                
+                <div class="layer-card">
+                    <h3><i class="fas fa-cloud"></i> التروبوسفير (Troposphere)</h3>
+                    <p>هي الطبقة الأقرب إلى سطح الأرض وتمتد من سطح الأرض إلى ارتفاع حوالي 8-15 كيلومتر. تحتوي على حوالي 75% من كتلة الغلاف الجوي وتحدث فيها معظم الظواهر الجوية مثل السحب والأمطار والرياح. تتناقص درجة الحرارة في هذه الطبقة مع الارتفاع.</p>
+                </div>
+                
+                <div class="layer-card">
+                    <h3><i class="fas fa-sun"></i> الستراتوسفير (Stratosphere)</h3>
+                    <p>تمتد من نهاية التروبوسفير إلى ارتفاع حوالي 50 كيلومتر. تحتوي على طبقة الأوزون التي تمتص معظم الأشعة فوق البنفسجية الضارة من الشمس. تزداد درجة الحرارة في هذه الطبقة مع الارتفاع بسبب امتصاص الأشعة فوق البنفسجية.</p>
+                </div>
+                
+                <div class="layer-card">
+                    <h3><i class="fas fa-star"></i> الميزوسفير (Mesosphere)</h3>
+                    <p>تمتد من نهاية الستراتوسفير إلى ارتفاع حوالي 85 كيلومتر. في هذه الطبقة تحترق معظم النيازك والشهب قبل وصولها إلى سطح الأرض. تتناقص درجة الحرارة في هذه الطبقة مع الارتفاع لتصل إلى أدنى درجة حرارة في الغلاف الجوي.</p>
+                </div>
+                
+                <div class="layer-card">
+                    <h3><i class="fas fa-bolt"></i> الثيرموسفير (Thermosphere)</h3>
+                    <p>تمتد من نهاية الميزوسفير إلى ارتفاع حوالي 600 كيلومتر. في هذه الطبقة ترتفع درجة الحرارة بشكل كبير مع الارتفاع بسبب امتصاص الأشعة السينية والأشعة فوق البنفسجية عالية الطاقة. تحتوي على الأيونوسفير التي تساعد في انعكاس موجات الراديو.</p>
+                </div>
+                
+                <div class="layer-card">
+                    <h3><i class="fas fa-space-shuttle"></i> الإكسوسفير (Exosphere)</h3>
+                    <p>هي الطبقة الخارجية للغلاف الجوي وتمتد من نهاية الثيرموسفير إلى الفضاء الخارجي. في هذه الطبقة تكون جزيئات الغاز متباعدة جداً ويمكن أن تهرب إلى الفضاء. لا يوجد حد علوي محدد لهذه الطبقة.</p>
+                </div>
+            </section>
 
-        // تصدير بدقة عالية
-        const canvas = await html2canvas(node, {
-          scale: 2,               // يمكنك رفعها إلى 3 لنتيجة أعلى
-          logging: false,
-          useCORS: true,
-          backgroundColor: null   // يُبقي الخلفية كما هي
+            <section class="personal-info">
+                <h2><i class="fas fa-user-graduate"></i> معلومات المشروع</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <h3><i class="fas fa-user"></i> إعداد الطالبة</h3>
+                        <p>الجوهرة عيد دليم الشلاحي</p>
+                    </div>
+                    <div class="info-item">
+                        <h3><i class="fas fa-graduation-cap"></i> الصف</h3>
+                        <p>ثاني متوسط</p>
+                    </div>
+                    <div class="info-item">
+                        <h3><i class="fas fa-chalkboard-teacher"></i> اسم الأستاذة</h3>
+                        <p>أسماء المطيري</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="print-section">
+                <button class="print-btn" onclick="window.print()">
+                    <i class="fas fa-print"></i> طباعة المشروع
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>مشروع عن الغلاف الجوي - جميع الحقوق محفوظة &copy; 2023</p>
+        </div>
+    </footer>
+
+    <script>
+        // إضافة تأثيرات تفاعلية متقدمة
+        document.addEventListener('DOMContentLoaded', function() {
+            // تأثيرات التمرير السلس للروابط الداخلية
+            const links = document.querySelectorAll('a[href^="#"]');
+            for (const link of links) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
+            
+            // تأثيرات تفاعلية على طبقات الغلاف الجوي
+            const layers = document.querySelectorAll('.layer-diagram');
+            layers.forEach(layer => {
+                layer.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.zIndex = '10';
+                    this.style.paddingRight = '35px';
+                });
+                
+                layer.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '1';
+                    this.style.paddingRight = '20px';
+                });
+            });
+            
+            // تأثيرات تفاعلية على بطاقات الطبقات
+            const layerCards = document.querySelectorAll('.layer-card');
+            layerCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const icon = this.querySelector('h3 i');
+                    icon.style.transform = 'rotate(15deg) scale(1.2)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    const icon = this.querySelector('h3 i');
+                    icon.style.transform = 'rotate(0) scale(1)';
+                });
+            });
+            
+            // تأثيرات ظهور العناصر عند التمرير
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // مراقبة العناصر لإضافة تأثيرات الظهور
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                observer.observe(section);
+            });
         });
-
-        const url = canvas.toDataURL('image/png');
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'iphone17-ad-1080x1920.png';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        btn.disabled = false; btn.textContent = 'حفظ الإعلان كصورة (PNG)';
-      });
-    });
-  </script>
+    </script>
 </body>
 </html>
