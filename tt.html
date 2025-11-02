@@ -1,494 +1,233 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم نظام DAN المتكاملة</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-    <!-- Chosen Palette: Calm Tech -->
-    <!-- Application Structure Plan: تم توسيع بنية التطبيق إلى واجهة بخمسة تبويبات (Overview, Workflow, Setup, Commands, Troubleshooting) لاستيعاب التفاصيل الجديدة. تم اختيار هذا الهيكل لتنظيم المحتوى الذي يدمج التسويق، التشغيل، والميزات النفسية، مما يضمن أن المستخدم يمكنه التنقل مباشرة إلى مهمته (مثلاً: "كيف أضيف رقمي؟" أو "ما هي الأوامر؟") دون تصفح كل شيء. تم تصميم لوحة الأوامر كقسم تفاعلي منفصل لتسهيل الوصول للمعلومات التشغيلية اليومية. -->
-    <!-- Visualization & Content Choices: تم تحويل سير العمل (الآن 4 مراحل و15 خطوة) إلى مخطط تدفق بصري هرمي (HTML/CSS) لتحسين الوضوح. تم استخدام القوائم المنسدلة (Accordions) بكثافة في قسم "الميزات الفريدة" و"الإعداد" لإدارة كثافة النص وعرض التفاصيل عند الطلب (Show/Hide/Toggle). تم عرض المحادثة النموذجية في بطاقات ثابتة لتقديم حالة استخدام واضحة. تم استخدام HTML/CSS لتنظيم جميع البيانات الجديدة لعدم وجود بيانات كمية تتطلب Chart.js. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: #f8f7f4;
-            color: #4a4a4a;
-        }
-        .tab-active {
-            border-color: #8c7b72;
-            color: #8c7b72;
-            background-color: #efeae6;
-        }
-        .tab-inactive {
-            border-color: transparent;
-            color: #7f8c8d;
-        }
-        .content-active {
-            display: block;
-        }
-        .content-inactive {
-            display: none;
-        }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-in-out;
-        }
-        .workflow-step {
-            transition: all 0.3s ease-in-out;
-        }
-        .workflow-node {
-            background-color: #8c7b72;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            font-weight: 700;
-        }
-        .workflow-phase {
-            color: #6a5a51;
-            border-bottom: 2px solid #d1c7c1;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .command-card {
-            transition: all 0.2s ease-in-out;
-        }
-        .command-card:hover {
-            transform: scale(1.03);
-            border-color: #a4968d;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>إعلان iPhone 17</title>
+
+  <!-- خط عربي خفيف مع بدائل نظامية -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --brand:#ffcf99;            /* توهج ذهبي لطيف */
+      --bg-dark:#0b0b0f;          /* خلفية داكنة */
+      --glass:rgba(255,255,255,0.06);
+      --border:rgba(255,255,255,0.18);
+      --text:#ffffff;
+      --muted:#d6d6d6;
+      --accent:#ff8a3d;
+      --radius:22px;
+      --shadow: 0 20px 50px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: var(--bg-dark) center/cover no-repeat fixed;
+      color:var(--text);
+      font-family: "Tajawal", system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans Arabic", "Geeza Pro", sans-serif;
+    }
+
+    /* مساحة العمل 9:16 لسهولة الحفظ كصورة */
+    .stage-wrap{
+      min-height:100dvh;
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+    /* عنصر الإعلان نفسه؛ سنحفظه كصورة */
+    #ad{
+      width: min(92vw, 1080px);
+      aspect-ratio: 9 / 16;
+      position:relative;
+      border-radius: calc(var(--radius) + 8px);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      background:
+        radial-gradient(1200px 1200px at 70% 80%, rgba(255,138,61,.25), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.85)),
+        url("https://drive.google.com/uc?id=JAoo7ECMPC8lHAyn0&export=download") center/cover no-repeat;
+      isolation:isolate;
+    }
+
+    /* طبقة خطوط توهج خفيفة لإبراز الخلفية */
+    .glow{
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(600px 200px at 20% 18%, rgba(255,207,153,.22), transparent 60%),
+        radial-gradient(700px 260px at 80% 62%, rgba(255,138,61,.15), transparent 60%);
+      mix-blend-mode:screen;
+      filter: blur(0.2px);
+    }
+
+    /* بطاقة المحتوى */
+    .panel{
+      position:absolute; inset:24px;
+      display:flex; flex-direction:column;
+      gap:18px;
+    }
+
+    .pill{
+      align-self:flex-start;
+      padding:8px 14px;
+      border-radius:999px;
+      backdrop-filter: blur(8px);
+      background: var(--glass);
+      border:1px solid var(--border);
+      font-weight:600;
+      letter-spacing:.3px;
+    }
+
+    .title{
+      margin:6px 0 0;
+      font-weight:800;
+      font-size: clamp(36px, 5.6vw, 72px);
+      line-height:1.05;
+      text-shadow: 0 6px 28px rgba(0,0,0,.45);
+    }
+    .subtitle{
+      margin:0;
+      font-weight:600;
+      font-size: clamp(18px, 2.6vw, 28px);
+      color:var(--muted);
+    }
+
+    .price{
+      margin-top:8px;
+      display:flex; align-items:center; gap:10px;
+      font-size: clamp(18px, 2.6vw, 28px);
+      font-weight:600;
+    }
+    .price .dot{width:8px;height:8px;border-radius:50%;background:var(--accent); box-shadow:0 0 16px var(--accent)}
+
+    .cta{
+      margin-top:auto;
+      display:flex; gap:12px; flex-wrap:wrap;
+    }
+    .btn{
+      appearance:none; border:0; cursor:pointer;
+      padding:14px 18px; border-radius:14px;
+      font-weight:700; font-size:18px;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      transition: transform .12s ease, opacity .2s ease;
+    }
+    .btn:hover{ transform: translateY(-2px) }
+    .btn:active{ transform: translateY(0) scale(.98) }
+
+    .btn-primary{
+      background: linear-gradient(135deg, var(--accent), #ffa85f);
+      color:#111;
+    }
+    .btn-ghost{
+      background: var(--glass);
+      border:1px solid var(--border);
+      color:var(--text);
+    }
+
+    .footnote{
+      margin-top:8px;
+      font-size:14px;
+      color:#c8c8c8;
+      letter-spacing:.2px;
+    }
+
+    /* شارة الهاتف */
+    .phone{
+      margin-inline-start:auto;
+      padding:10px 14px;
+      border-radius:999px;
+      background: rgba(0,0,0,.45);
+      border:1px solid var(--border);
+      display:flex; align-items:center; gap:8px;
+      font-weight:700;
+    }
+    .phone a{ color:#fff; text-decoration:none }
+    .phone a:hover{ text-decoration:underline }
+
+    /* زر التحميل خارج الإعلان لأداء أفضل */
+    .toolbar{
+      position:fixed; inset-inline:24px; bottom:24px;
+      display:flex; justify-content:center;
+      z-index:9999;
+    }
+    .download{
+      padding:12px 18px; border-radius:12px; border:0; cursor:pointer;
+      font-weight:700;
+      background:#222; color:#fff;
+      border:1px solid #3a3a3a;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    /* تحسين التباين عند الحفظ */
+    @media (prefers-color-scheme: dark){
+      body{ background-color:#000 }
+    }
+  </style>
 </head>
-<body class="antialiased">
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-7xl">
-        <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-[#6a5a51]">📚 الكتيب الإرشادي الشامل لنظام DAN - نظام بيع الأكواد المتكامل</h1>
-            <p class="mt-2 text-lg text-gray-600">لوحة تحكم تفاعلية لفهم وتشغيل نظامك الذكي بكفاءة عالية.</p>
-        </header>
+<body>
 
-        <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-2xl p-4 sm:p-8">
-            <!-- Tabs Navigation -->
-            <nav class="flex flex-wrap justify-center border-b-2 border-gray-200 mb-8">
-                <button data-tab="overview" class="tab-button text-sm sm:text-base font-semibold py-3 px-3 sm:px-6 border-b-4 transition-colors duration-300 tab-active">الرئيسية والميزات</button>
-                <button data-tab="workflow" class="tab-button text-sm sm:text-base font-semibold py-3 px-3 sm:px-6 border-b-4 transition-colors duration-300 tab-inactive">سير العمل</button>
-                <button data-tab="setup" class="tab-button text-sm sm:text-base font-semibold py-3 px-3 sm:px-6 border-b-4 transition-colors duration-300 tab-inactive">التشغيل والربط</button>
-                <button data-tab="commands" class="tab-button text-sm sm:text-base font-semibold py-3 px-3 sm:px-6 border-b-4 transition-colors duration-300 tab-inactive">أوامر التاجر</button>
-                <button data-tab="troubleshooting" class="tab-button text-sm sm:text-base font-semibold py-3 px-3 sm:px-6 border-b-4 transition-colors duration-300 tab-inactive">استكشاف الأخطاء</button>
-            </nav>
+  <div class="stage-wrap">
+    <!-- هذا هو العنصر الذي سيتم حفظه كصورة -->
+    <section id="ad" aria-label="إعلان iPhone 17">
+      <div class="glow" aria-hidden="true"></div>
 
-            <!-- Tabs Content -->
-            <main>
-                <!-- Overview Tab -->
-                <div id="overview" class="tab-content content-active">
-                    <h2 class="text-2xl font-bold text-[#6a5a51] mb-4">🎯 مقدمة: لماذا DAN هو الأفضل في السوق؟</h2>
-                    <p class="text-gray-600 mb-6 border-r-4 border-[#8c7b72] pr-4 bg-gray-50 p-3 rounded-lg">
-                        **DAN ليس مجرد بوت عادي!** إنه نظام متكامل ذكي يجمع بين الذكاء الاصطناعي المتقدم، إدارة المخزون الذكية، التسويق التلقائي، وتقنيات نفسية لزيادة المبيعات (وهم الخصم). نظام DAN هو مساعد بيع ذكي يتفاعل كإنسان ويتسوق كخبير.
-                    </p>
+      <div class="panel">
+        <span class="pill">iPhone 17</span>
 
-                    <h3 class="text-xl font-bold text-[#6a5a51] mb-4 mt-6">🌟 مميزاتنا الفريدة (اللي عندنا مو عند غيرنا)</h3>
-                    <div id="features-accordion" class="space-y-4">
-                        <!-- Content generated by JS -->
-                    </div>
-                </div>
+        <h1 class="title">وصل عندنا ..!</h1>
+        <p class="subtitle">بأقساط تبدأ من <b>170 ريال</b> فقط — أول قسط بعد شهر</p>
 
-                <!-- Workflow Tab -->
-                <div id="workflow" class="tab-content content-inactive">
-                    <div class="text-center mb-6">
-                        <h2 class="text-2xl font-bold text-[#6a5a51] mb-2">🔧 طريقة سير العمل خطوة بخطوة (15 خطوة)</h2>
-                        <p class="text-gray-600 max-w-4xl mx-auto">تتبع المسار الكامل للمعاملة من استقبال الرسالة إلى تسليم الأكواد وحملات التسويق المجدولة. انقر على كل خطوة لعرض تفاصيلها.</p>
-                    </div>
-                    <div id="workflow-container" class="space-y-6">
-                        <!-- Content generated by JS -->
-                    </div>
-                </div>
+        <div class="price"><span class="dot"></span> عروض مرنة + ضمان معتمد</div>
 
-                <!-- Setup Tab -->
-                <div id="setup" class="tab-content content-inactive">
-                    <div class="text-center mb-6">
-                        <h2 class="text-2xl font-bold text-[#6a5a51] mb-2">📱 التشغيل والربط: إعداد النظام</h2>
-                        <p class="text-gray-600 max-w-4xl mx-auto">دليل البدء خطوة بخطوة لربط رقم الواتساب وتخصيص إعدادات المالك والمجموعات.</p>
-                    </div>
-                    <div id="setup-container" class="space-y-8 max-w-4xl mx-auto">
-                        <div class="bg-white rounded-lg shadow-lg p-6 border-b-4 border-[#8c7b72]">
-                            <h3 class="text-xl font-bold text-[#6a5a51] mb-3">التحضير الأولي وربط الواتساب</h3>
-                            <ul class="list-decimal list-inside space-y-2 text-gray-700">
-                                <li>📋 إنشاء جداول Google Sheets الثلاثة (المنتجات، الأكواد، الطلبات).</li>
-                                <li>🔗 ربط الخدمات: تفعيل Google Sheets API و Google Gemini AI وإعداد واتساب Business API.</li>
-                                <li>⚙️ رفع ملف Workflow: استيراد ملف JSON لـ n8n.</li>
-                                <li>✅ اشترك في **whapi.cloud** واحصل على **API Token** لربط الرقم وتفعيل الـ **Webhook**.</li>
-                            </ul>
-                        </div>
+        <div class="cta">
+          <a class="btn btn-primary" href="tel:+966533774766" rel="nofollow">اتصل الآن ‎+966533774766‎</a>
+          <a class="btn btn-ghost" href="https://wa.me/966533774766" target="_blank" rel="noopener">تواصل واتساب</a>
 
-                        <div id="config-accordion" class="space-y-4">
-                            <!-- Config details via accordion (JS) -->
-                        </div>
-
-                        <div class="bg-white rounded-lg shadow-lg p-6 border-b-4 border-yellow-600">
-                            <h3 class="text-xl font-bold text-[#6a5a51] mb-3">التشغيل والصيانة الدورية</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-sm">
-                                <div><p class="font-bold text-lg text-green-600">التشغيل اليومي</p><p class="text-gray-600">البوت يعمل تلقائياً $24/7$. يرسل رسائل تسويقية كل $3$ ساعات. يرسل تنبيهات للمالك عند الطلبات الجديدة.</p></div>
-                                <div><p class="font-bold text-lg text-blue-600">الصيانة الأسبوعية</p><p class="text-gray-600">مراجعة المخزون، تحديث قائمة المجموعات، مراجعة الإحصائيات.</p></div>
-                                <div><p class="font-bold text-lg text-red-600">الصيانة الشهرية</p><p class="text-gray-600">تحديث الأسعار إذا لزم، تحليل أداء الحملات التسويقية، نسخ احتياطي للبيانات.</p></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Commands Tab -->
-                <div id="commands" class="tab-content content-inactive">
-                    <div class="text-center mb-6">
-                        <h2 class="text-2xl font-bold text-[#6a5a51] mb-2">👑 دليل التاجر: الأوامر الكاملة</h2>
-                        <p class="text-gray-600 max-w-4xl mx-auto">إدارة النظام بالكامل من الواتساب. استخدم هذه الأوامر مباشرة للتحكم في المخزون والتسويق والحصول على التقارير.</p>
-                    </div>
-                    <div id="commands-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Commands generated by JS -->
-                    </div>
-
-                    <h3 class="text-xl font-bold text-[#6a5a51] mb-3 mt-10">💬 طريقة عمل الشات الذكي (محادثة نموذجية)</h3>
-                    <div id="chat-example" class="space-y-4 max-w-3xl mx-auto p-4 bg-gray-100 rounded-xl shadow-inner">
-                        <!-- Chat example generated by JS -->
-                    </div>
-                </div>
-
-                <!-- Troubleshooting Tab -->
-                <div id="troubleshooting" class="tab-content content-inactive">
-                     <div class="text-center mb-6">
-                        <h2 class="text-2xl font-bold text-[#6a5a51] mb-2">🛠️ استكشاف الأخطاء وإصلاحها</h2>
-                        <p class="text-gray-600 max-w-4xl mx-auto">قائمة بأكثر المشاكل شيوعًا وحلولها السريعة والفعالة لضمان استقرار النظام.</p>
-                    </div>
-                    <div id="troubleshooting-container" class="space-y-4 max-w-4xl mx-auto">
-                        <!-- Troubleshooting content generated by JS -->
-                    </div>
-                     <div class="mt-8 text-center text-gray-500">
-                        <p>📞 **للدعم الفني:** راجع سجلات n8n، تحقق من اتصال APIs، وتأكد من صحة البيانات في الجداول.</p>
-                    </div>
-                </div>
-            </main>
+          <!-- استبدلت الإيموجي بـ أيقونة واتساب: -->
+          <div class="phone" title="رقم التواصل">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/WhatsApp.svg/1024px-WhatsApp.svg.png" alt="واتساب" style="width:20px;height:20px;"> <a href="tel:+966533774766">+966533774766</a>
+          </div>
         </div>
-         <footer class="text-center mt-8 text-sm text-gray-500">
-            <p>نظام DAN ليس نظام بيع - إنه شريك ذكي في نمو متجرك! آخر تحديث: 2024.</p>
-        </footer>
-    </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
+        <div class="footnote">* تطبق الشروط والأحكام</div>
+      </div>
+    </section>
+  </div>
 
-    // --- Data Structures ---
-    const workflowPhases = [
-        {
-            name: 'المرحلة ١: بدء المحادثة',
-            steps: [
-                { id: '١', what: 'العميل يرسل رسالة على الواتساب', result: '📱 الرسالة تصل لـ Webhook' },
-                { id: '٢', what: 'النظام يمنع التكرار (Anti-Spam)', result: '🛡️ لا رسائل مزعجة' },
-                { id: '٣', what: 'يتم تحديد رقم الجلسة (Session ID)', result: '🔐 كل عميل له محادثة مستقلة' },
-                { id: '٤', what: 'تحليل إذا كانت رسالة مالك أو عميل', result: '👑 تمييز تلقائي' }
-            ]
-        },
-        {
-            name: 'المرحلة ٢: المعالجة الذكية',
-            steps: [
-                { id: '٥', what: 'جلب البيانات من جداول Google Sheets', result: '📊 المنتجات، الأكواد، الطلبات' },
-                { id: '٦', what: 'الذكاء الاصطناعي يحلل نية العميل', result: '🧠 فهم طلب العميل بدقة' },
-                { id: '٧', what: 'تحديد الإجراء التالي تلقائياً', result: '🎯 سؤال الاسم، المنتج، إلخ' }
-            ]
-        },
-        {
-            name: 'المرحلة ٣: تدفق البيع',
-            steps: [
-                { id: '٨', what: 'توجيه المحادثة حسب المرحلة', result: '🔄 أسئلة ذكية متتابعة' },
-                { id: '٩', what: 'تطبيق وهم الخصم تلقائياً', result: '💰 "وفرت ٩ ريالات!"' },
-                { id: '١٠', what: 'تحضير بيانات الطلب', result: '📦 تجهيز المعلومات النهائية' },
-                { id: '١١', what: 'حفظ الطلب في Google Sheets', result: '💾 سجل دائم للطلبات' },
-                { id: '١٢', what: 'إرسال الأكواد للعميل', result: '🎁 تسليم فوري' }
-            ]
-        },
-        {
-            name: 'المرحلة ٤: التسويق الذكي',
-            steps: [
-                { id: '١٣', what: 'جدولة رسائل تسويقية تلقائية', result: '⏰ كل ٣ ساعات' },
-                { id: '١٤', what: 'توليد رسائل تسويقية بإبداع', result: '🎨 كل رسالة مختلفة' },
-                { id: '١٥', what: 'إرسال جماعي للمجموعات', result: '📢 وصول لأكبر جمهور' }
-            ]
-        }
-    ];
+  <!-- زر تنزيل الإعلان كصورة PNG -->
+  <div class="toolbar">
+    <button class="download" id="saveBtn">حفظ الإعلان كصورة (PNG)</button>
+  </div>
 
-    const uniqueFeatures = [
-        {
-            title: '١. التسويق الذكي التلقائي 🎪',
-            items: [
-                { feature: 'التسويق في المجموعات', description: 'يرد تلقائياً على استفسارات "برامج بلس"', benefit: '✅ جذب عملاء جدد بدون مجهود' },
-                { feature: 'الجدولة الذكية', description: 'يرسل رسائل تسويقية كل ٣ ساعات', benefit: '✅ استمرارية التسويق ٢٤/٧' },
-                { feature: 'التسويق الفوري', description: 'أمر "سوق الآن" يطلق حملة فورية', benefit: '✅ تفعيل التسويق وقت الذروة' }
-            ]
-        },
-        {
-            title: '٢. تقنيات البيع النفسي 🧠',
-            items: [
-                { feature: 'وهم الخصم', description: 'يعرض سعر ٢٩ ريال ويبيعه بـ ٢٠ ريال', benefit: '✅ زيادة الإقناع ٤٠٪' },
-                { feature: 'مقارنة الأسعار', description: '"نتفليكس بسعر ٥٩ ريال وعندنا ٢٠ ريال!"', benefit: '✅ إبراز التوفير' },
-                { feature: 'ندرة وقتية', description: '"العرض اليوم فقط!"', benefit: '✅ تحفيز الشراء الفوري' }
-            ]
-        },
-        {
-            title: '٣. الإدارة الذكية 📊',
-            items: [
-                { feature: 'التحكم عن بعد', description: 'المالك يدير كل شيء من الواتساب', benefit: '✅ إدارة من أي مكان' },
-                { feature: 'تقارير فورية', description: 'إحصائيات المبيعات والمخزون', benefit: '✅ قرارات مدروسة' },
-                { feature: 'تنبيهات المخزون', description: 'إشعارات عندما يقل المخزون عن ٥', benefit: '✅ عدم ضياع فرص بيع' }
-            ]
-        },
-        {
-            title: '٤. الحماية والاستقرار 🛡️',
-            items: [
-                { feature: 'منع التكرار', description: 'نظام مضاد للسبام يمنع الحلقات اللانهائية', benefit: '✅ استقرار النظام' },
-                { feature: 'نسخ احتياطي', description: 'كل البيانات محفوظة في Google Sheets', benefit: '✅ عدم فقدان البيانات' },
-                { feature: 'تحديث ذاتي', description: 'الأكواد تباع من الأول للأحدث', benefit: '✅ إدارة ذكية للمخزون' }
-            ]
-        }
-    ];
+  <!-- html2canvas لالتقاط العنصر كصورة -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function(){
+      const btn = document.getElementById('saveBtn');
+      btn.addEventListener('click', async () => {
+        btn.disabled = true; btn.textContent = 'جاري التحضير...';
+        const node = document.getElementById('ad');
 
-    const merchantCommands = [
-        { command: 'سوق الآن', purpose: 'إطلاق حملة تسويقية فورية', example: '`سوق الآن`', type: 'أساسية', icon: '🚀' },
-        { command: 'عرض المخزون', purpose: 'عرض كميات الأكواد المتاحة', example: '`عرض المخزون`', type: 'أساسية', icon: '📦' },
-        { command: 'الإحصائيات', purpose: 'تقرير المبيعات والطلبات', example: '`الإحصائيات`', type: 'أساسية', icon: '📊' },
-        { command: 'أضف الأكواد التالية', purpose: 'إضافة أكواد جديدة للمخزون', example: '`أضف الأكواد التالية: code1 code2`', type: 'أكواد', icon: '➕' },
-        { command: 'مخزون [المنتج]', purpose: 'استعلام عن مخزون منتج معين', example: '`مخزون يوتيوب`', type: 'أكواد', icon: '🔎' },
-        { command: 'نعم', purpose: 'تأكيد استلام الدفع', example: '`نعم`', type: 'متقدمة', icon: '✅' },
-        { command: 'لا', purpose: 'عدم تأكيد الدفع', example: '`لا`', type: 'متقدمة', icon: '❌' }
-    ];
-
-    const troubleshootingData = [
-        { problem: 'البوت لا يرد', solution: 'تحقق من اتصال الـ Webhook' },
-        { problem: 'الأكواد لا ترسل', solution: 'تأكد من وجود أكواد في الجدول' },
-        { problem: 'الرسائل التسويقية لا ترسل', solution: 'تحقق من معرفات المجموعات' },
-        { problem: 'الخصم لا يظهر', solution: 'راجع إعدادات الأسعار في الكود' }
-    ];
-
-    const chatExample = [
-        { role: 'user', text: 'السلام عليكم' },
-        { role: 'bot', text: 'وعليكم السلام ورحمة الله! 🌹 أهلاً وسهلاً فيك! كيف أقدر أخدمك اليوم؟' },
-        { role: 'user', text: 'أبي كود يوتيوب' },
-        { role: 'bot', text: '💫 ممتاز! عندنا هالمنتجات الحلوة: 📺 يوتيوب بريميوم، 🎬 نتفليكس، 🎵 سبوتيفاي، 🎮 ستيم. وشنو المنتج اللي يهمك؟' },
-        { role: 'user', text: 'يوتيوب' },
-        { role: 'bot', text: '🔢 كم كود تحتاج؟ (١، ٢، ٣، إلخ...) - الحد الأقصى ٢٠ كود' },
-        { role: 'user', text: '١' },
-        { role: 'bot', text: '💳 طريقة الدفع: 🛒 سلة، 🏦 تحويل بنكي. اختاري الطريقة اللي تناسبك' },
-        { role: 'user', text: 'سلة' },
-        { role: 'bot', text: '💰 *عرض خاص!* 💰 ✅ السعر الأصلي: ٢٩ ريال 🎯 السعر الخاص: ٢٠ ريال 💎 وفرت: ٩ ريالات! 🛒 تم تأكيد طلبك بنجاح! 👤 الاسم: [الاسم] 📦 المنتج: يوتيوب بريميوم 🔢 الكمية: ١ 💳 طريقة الدفع: سلة 📎 رابط الدفع: https://salla.sa/... بعد اكتمال الدفع راح تصلك الأكواد تلقائياً! 💫' }
-    ];
-
-    // --- Utility Functions ---
-
-    function setupAccordionToggle(accordionEl) {
-        const toggle = accordionEl.querySelector('.accordion-toggle');
-        const content = accordionEl.querySelector('.accordion-content');
-        const arrow = toggle.querySelector('.arrow-icon');
-        toggle.addEventListener('click', () => {
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-                arrow.classList.remove('rotate-180');
-            } else {
-                content.style.maxHeight = content.scrollHeight + 20 + "px";
-                arrow.classList.add('rotate-180');
-            }
+        // تصدير بدقة عالية
+        const canvas = await html2canvas(node, {
+          scale: 2,               // يمكنك رفعها إلى 3 لنتيجة أعلى
+          logging: false,
+          useCORS: true,
+          backgroundColor: null   // يُبقي الخلفية كما هي
         });
-    }
 
-    function createFeaturesAccordion(data) {
-        const container = document.getElementById('features-accordion');
-        data.forEach(group => {
-            const accordionEl = document.createElement('div');
-            accordionEl.className = 'bg-white rounded-lg shadow-md border-t-4 border-[#a4968d]';
-            accordionEl.innerHTML = `
-                <button class="accordion-toggle w-full flex justify-between items-center p-4 text-xl font-bold text-[#6a5a51]">
-                    <span>${group.title}</span>
-                    <span class="arrow-icon text-2xl text-[#8c7b72] transform transition-transform duration-300">▼</span>
-                </button>
-                <div class="accordion-content px-4 pb-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        ${group.items.map(item => `
-                            <div class="p-3 bg-gray-50 rounded-md border-r-4 border-green-500">
-                                <h4 class="font-semibold text-gray-800">${item.feature}</h4>
-                                <p class="text-sm text-gray-600 my-1">${item.description}</p>
-                                <p class="text-xs font-medium text-green-700">${item.benefit}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-            setupAccordionToggle(accordionEl);
-            container.appendChild(accordionEl);
-        });
-    }
-
-    function createWorkflow() {
-        const container = document.getElementById('workflow-container');
-        workflowPhases.forEach(phase => {
-            const phaseTitle = document.createElement('h3');
-            phaseTitle.className = 'text-2xl font-bold workflow-phase mt-6';
-            phaseTitle.textContent = phase.name;
-            container.appendChild(phaseTitle);
-
-            phase.steps.forEach(step => {
-                const stepEl = document.createElement('div');
-                stepEl.className = `workflow-step bg-[#efeae6] p-4 rounded-lg shadow-md cursor-pointer relative mb-4`;
-                stepEl.innerHTML = `
-                    <div class="flex items-start justify-between">
-                        <div class="flex items-center">
-                            <span class="workflow-node ml-4">${step.id}</span>
-                            <div class="flex flex-col">
-                                <h4 class="text-lg font-semibold text-[#6a5a51]">${step.what}</h4>
-                                <p class="text-xs text-gray-500 mt-1">النتيجة المتوقعة: ${step.result}</p>
-                            </div>
-                        </div>
-                        <span class="arrow-icon text-2xl text-[#8c7b72] transform transition-transform duration-300 pt-1">▼</span>
-                    </div>
-                    <div class="workflow-details mt-4 pr-16 text-sm text-gray-700 hidden border-t border-[#d1c7c1] pt-3">
-                        <p class="font-bold">الوصف:</p>
-                        <p>تتم هذه الخطوة لـ **${step.what}** وينتج عنها **${step.result}**.</p>
-                    </div>
-                `;
-                stepEl.addEventListener('click', () => {
-                    const details = stepEl.querySelector('.workflow-details');
-                    const arrow = stepEl.querySelector('.arrow-icon');
-                    details.classList.toggle('hidden');
-                    arrow.classList.toggle('rotate-180');
-                });
-                container.appendChild(stepEl);
-            });
-        });
-    }
-
-    function createSetupAccordion() {
-        const container = document.getElementById('config-accordion');
-        const configData = [
-            {
-                title: 'تعديل إعدادات رقم المالك (OWNER_PHONE)',
-                code: `// غير هذا الرقم لرقم المالك الحقيقي\nconst OWNER_PHONE = "966500000000"; // ← ضع رقمك هنا`,
-                location: 'في عقدة "🧩 إعداد Session ID"',
-                note: 'ضروري لتمييز أوامر الإدارة عن رسائل العملاء.'
-            },
-            {
-                title: 'إعداد معرفات المجموعات (groupIds)',
-                code: `const groupIds = [\n  "1234567890-1234567890@g.us", // ← مجموعة ١\n  "0987654321-0987654321@g.us" // ← مجموعة ٢\n];`,
-                location: 'في عقدة "تحضير رسائل المجموعات"',
-                note: 'تستخدم لإطلاق الحملات التسويقية الجماعية. احصل على المعرف من سجلات n8n بعد إرسال رسالة للمجموعة.'
-            }
-        ];
-
-        configData.forEach(item => {
-            const accordionEl = document.createElement('div');
-            accordionEl.className = 'bg-white rounded-lg shadow-md border-t-4 border-[#a4968d]';
-            accordionEl.innerHTML = `
-                <button class="accordion-toggle w-full flex justify-between items-center p-4 text-lg font-semibold text-[#6a5a51]">
-                    <span>${item.title}</span>
-                    <span class="arrow-icon text-2xl text-[#8c7b72] transform transition-transform duration-300">▼</span>
-                </button>
-                <div class="accordion-content px-4 pb-4">
-                    <p class="text-sm text-gray-600 mb-2">**الموقع:** ${item.location}</p>
-                    <pre class="bg-gray-800 text-green-400 p-3 rounded-md text-sm whitespace-pre-wrap">${item.code}</pre>
-                    <p class="text-sm text-red-500 mt-2">**ملاحظة هامة:** ${item.note}</p>
-                </div>
-            `;
-            setupAccordionToggle(accordionEl);
-            container.appendChild(accordionEl);
-        });
-    }
-
-    function createCommands() {
-        const container = document.getElementById('commands-container');
-        merchantCommands.forEach(cmd => {
-            const cardEl = document.createElement('div');
-            cardEl.className = 'command-card bg-white border-2 border-transparent rounded-xl shadow-lg p-6 flex flex-col hover:shadow-xl';
-            cardEl.innerHTML = `
-                <div class="flex items-center mb-3">
-                    <span class="text-2xl mr-2">${cmd.icon}</span>
-                    <h3 class="text-xl font-bold text-[#6a5a51]">${cmd.command.replace(/\[.*\]/, '<span class="text-sm text-blue-500"> [...]</span>')}</h3>
-                </div>
-                <p class="text-gray-600 text-sm mb-3 flex-grow">${cmd.purpose}</p>
-                <div class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-md text-left w-full">${cmd.example}</div>
-            `;
-            container.appendChild(cardEl);
-        });
-    }
-
-    function createChatExample() {
-        const container = document.getElementById('chat-example');
-        chatExample.forEach(msg => {
-            const msgEl = document.createElement('div');
-            const roleClass = msg.role === 'user' ? 'bg-[#8c7b72] text-white self-start' : 'bg-[#efeae6] text-[#6a5a51] self-end';
-            const roleIcon = msg.role === 'user' ? '👤 العميل:' : '🤖 البوت:';
-            const alignClass = msg.role === 'user' ? 'float-right' : 'float-left';
-
-            msgEl.className = `p-3 max-w-[85%] rounded-lg shadow-md ${roleClass} clear-both mb-4 ${alignClass}`;
-            msgEl.innerHTML = `<span class="font-bold">${roleIcon}</span> ${msg.text}`;
-            container.appendChild(msgEl);
-            
-            const clearer = document.createElement('div');
-            clearer.className = 'clear-both';
-            container.appendChild(clearer);
-        });
-    }
-
-    function createTroubleshooting() {
-        const container = document.getElementById('troubleshooting-container');
-        troubleshootingData.forEach(item => {
-            const el = document.createElement('div');
-            el.className = 'py-3 bg-white rounded-lg shadow-md p-4';
-            el.innerHTML = `
-                <p class="font-bold text-lg text-red-700">المشكلة: ${item.problem}</p>
-                <p class="mt-1 text-base text-green-700 border-t pt-2 mt-2"><strong>🛠️ الحل:</strong> ${item.solution}</p>
-            `;
-            container.appendChild(el);
-        });
-    }
-
-    // --- Initialization ---
-
-    createFeaturesAccordion(uniqueFeatures);
-    createWorkflow();
-    createSetupAccordion();
-    createCommands();
-    createChatExample();
-    createTroubleshooting();
-
-    const tabs = document.querySelectorAll('.tab-button');
-    const contents = document.querySelectorAll('.tab-content');
-    
-    // Initial tab setup
-    contents.forEach(content => {
-        if (content.id !== 'overview') {
-            content.classList.remove('content-active');
-            content.classList.add('content-inactive');
-        }
+        const url = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'iphone17-ad-1080x1920.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        btn.disabled = false; btn.textContent = 'حفظ الإعلان كصورة (PNG)';
+      });
     });
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const target = tab.dataset.tab;
-            
-            tabs.forEach(t => {
-                t.classList.remove('tab-active');
-                t.classList.add('tab-inactive');
-            });
-            tab.classList.remove('tab-inactive');
-            tab.classList.add('tab-active');
-            
-            contents.forEach(content => {
-                if (content.id === target) {
-                    content.classList.remove('content-inactive');
-                    content.classList.add('content-active');
-                } else {
-                    content.classList.remove('content-active');
-                    content.classList.add('content-inactive');
-                }
-            });
-        });
-    });
-});
-</script>
+  </script>
 </body>
 </html>
