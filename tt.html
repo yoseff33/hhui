@@ -2,443 +2,318 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الإطار التحليلي في التنمية الاجتماعية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>عرض الماجستير - النسخة النهائية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #0f2027; /* كحلي غامق */
-            --secondary-color: #203a43; /* تدريج */
-            --accent-color: #c0a16b; /* ذهبي مطفي */
-            --text-color: #ece9e6;
-            --bg-color: #f7f7f7;
-            --slide-bg: #ffffff;
+            --bg-color: #0f2027; /* كحلي ملكي */
+            --accent: #d4af37;   /* ذهبي لامع */
+            --text: #ffffff;     /* أبيض صافي */
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
+            background-color: #000;
             font-family: 'Cairo', sans-serif;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
             height: 100vh;
             overflow: hidden;
-            color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
+            user-select: none;
         }
 
-        /* حاوية العرض */
-        .presentation-container {
-            width: 90%;
-            max-width: 1200px;
-            height: 85vh;
-            background-color: var(--slide-bg);
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
+        /* حاوية الشريحة */
+        .slide-container {
+            width: 100vw; /* عرض كامل */
+            height: 100vh; /* طول كامل */
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 60px; /* هوامش جانبية مريحة */
+            text-align: center;
+            position: relative;
         }
 
-        /* شريط التقدم */
-        .progress-bar {
-            height: 5px;
-            background-color: #eee;
-            width: 100%;
+        /* إطار ذهبي نحيف */
+        .border-frame {
             position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 10;
-        }
-        .progress-fill {
-            height: 100%;
-            background-color: var(--accent-color);
-            width: 0%;
-            transition: width 0.3s ease;
+            top: 20px; left: 20px; right: 20px; bottom: 20px;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            border-radius: 20px;
+            pointer-events: none;
         }
 
-        /* الشرائح */
+        /* العناوين */
+        h1 {
+            color: var(--accent);
+            font-size: clamp(2.2rem, 5vw, 4.5rem); /* خط كبير */
+            margin-bottom: 30px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            line-height: 1.2;
+        }
+
+        /* النصوص والمحتوى */
+        .content-box {
+            width: 100%;
+            max-width: 1100px;
+            text-align: right; /* المحتوى يمين */
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            font-size: clamp(1.6rem, 3vw, 2.5rem); /* خط عريض للقراءة */
+            color: var(--text);
+            margin-bottom: 25px;
+            line-height: 1.6;
+            position: relative;
+            padding-right: 40px;
+        }
+
+        li::before {
+            content: "▪";
+            color: var(--accent);
+            position: absolute;
+            right: 0;
+            font-size: 1.2em;
+            top: -5px;
+        }
+
+        /* أسماء الطلاب */
+        .names-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 40px;
+            width: 90%;
+        }
+        .name-card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-right: 4px solid var(--accent);
+            text-align: center;
+        }
+
+        /* التحكم في الشرائح */
         .slide {
             display: none;
+            width: 100%;
             height: 100%;
-            padding: 40px 60px;
             flex-direction: column;
             justify-content: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease-in-out;
-            background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23f0f0f0" fill-opacity="0.4"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+            align-items: center;
         }
 
         .slide.active {
             display: flex;
-            opacity: 1;
-            transform: translateY(0);
         }
 
-        /* تصميم النصوص */
-        h1 {
-            color: var(--secondary-color);
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            border-bottom: 3px solid var(--accent-color);
-            padding-bottom: 10px;
-            width: fit-content;
-        }
-
-        h2 {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-        }
-
-        h3 {
-            color: var(--accent-color);
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-
-        p, li {
-            font-size: 1.4rem;
-            line-height: 1.8;
-            color: #555;
-            margin-bottom: 15px;
-        }
-
-        ul {
-            list-style-type: none;
-            padding-right: 0;
-        }
-
-        ul li {
-            position: relative;
-            padding-right: 30px;
-            margin-bottom: 15px;
-        }
-
-        ul li::before {
-            content: "•";
-            color: var(--accent-color);
-            font-weight: bold;
-            font-size: 2rem;
-            position: absolute;
-            right: 0;
-            top: -5px;
-        }
-
-        /* تنسيق خاص للشريحة الأولى */
-        .title-slide {
-            text-align: center;
-            align-items: center;
-            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
-        }
-        
-        .title-slide h1 {
-            font-size: 4rem;
-            border-bottom: none;
-            color: var(--primary-color);
-        }
-
-        .team-box {
-            margin-top: 40px;
-            background: rgba(255,255,255,0.9);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 1px solid var(--accent-color);
-        }
-        
-        .team-member {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--secondary-color);
-            margin: 5px 0;
-        }
-
-        /* تنسيق البطاقات للمفاهيم */
-        .concept-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            width: 100%;
-        }
-
-        .concept-card {
-            background: #fff;
-            padding: 20px;
-            border-right: 5px solid var(--accent-color);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-        }
-
-        .concept-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        /* أدوات التحكم */
-        .controls {
+        /* رقم الشريحة */
+        .slide-num {
             position: absolute;
             bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            z-index: 100;
+            left: 40px;
+            color: rgba(255,255,255,0.4);
+            font-size: 1.2rem;
+            font-weight: bold;
         }
 
-        .btn {
-            background-color: var(--primary-color);
+        /* رسالة التوجيه - تختفي بعد الضغط */
+        #hint {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.95);
             color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            font-family: 'Cairo', sans-serif;
-            border-radius: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
             cursor: pointer;
-            transition: background 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-
-        .btn:hover {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        .slide-number {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            font-size: 1.2rem;
-            color: #888;
-        }
-
-        /* تنسيق المراجع */
-        .ref-list li {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            border-bottom: 1px dashed #ddd;
-            padding-bottom: 5px;
-        }
-
     </style>
 </head>
-<body>
+<body onclick="nextSlide()">
 
-    <div class="presentation-container">
-        <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+    <div id="hint">
+        <h2 style="color:var(--accent); margin-bottom: 20px;">جاهز للتصوير؟ 📸</h2>
+        <p style="font-size: 1.5rem; margin-bottom: 10px;">1. اقلب جوالك بالعرض.</p>
+        <p style="font-size: 1.5rem; margin-bottom: 30px;">2. اضغط عشان تقلب الشريحة.</p>
+        <div style="padding: 10px 30px; border: 1px solid white; border-radius: 50px;">اضغط هنا للبدء</div>
+    </div>
 
-        <div class="slide title-slide active">
-            <h3>عرض تقديمي لمرحلة الماجستير</h3>
+    <div class="slide-container">
+        <div class="border-frame"></div>
+
+        <div class="slide active">
+            <h3 style="color:#fff; opacity:0.8; font-size:1.8rem; margin-bottom:10px;">عرض تقديمي لمرحلة الماجستير</h3>
             <h1>الإطار التحليلي في التنمية الاجتماعية</h1>
-            <div class="team-box">
-                <p style="color: #666; margin-bottom: 10px;">إعداد الطلاب المبدعين:</p>
-                <div class="team-member">عبدالله رجاء الظفيري</div>
-                <div class="team-member">عبدالله سالم السهلي</div>
-                <div class="team-member">عبدالله عيد المطيري</div>
-                <div class="team-member">عبدالله عبدالمحسن الشمري</div>
+            <div class="names-grid">
+                <div class="name-card">عبدالله رجاء الظفيري</div>
+                <div class="name-card">عبدالله سالم السهلي</div>
+                <div class="name-card">عبدالله عيد المطيري</div>
+                <div class="name-card">عبدالله عبدالمحسن الشمري</div>
             </div>
+            <div class="slide-num">1 / 11</div>
         </div>
 
         <div class="slide">
-            <h2>المقدمة: لماذا الإطار التحليلي؟</h2>
-            <div class="concept-grid">
-                <div class="concept-card">
-                    <h3>أداة محورية</h3>
-                    <p>يمثّل الإطار التحليلي منظارًا منهجيًا يساعد على قراءة الواقع التنموي بعمق بعيدًا عن الاكتفاء بالوصف السطحي.</p>
-                </div>
-                <div class="concept-card">
-                    <h3>الأهمية الجوهرية</h3>
-                    <p>يكمن دوره في كشف الفجوات الاجتماعية وتحليل جذورها داخل البنى المؤسسية وعلاقات القوة السائدة.</p>
-                </div>
-                <div class="concept-card">
-                    <h3>الهدف الحديث</h3>
-                    <p>ينسجم مع الاتجاهات التي تدعو لتمكين الفئات المهمشة وتعزيز مشاركتها بفاعلية.</p>
-                </div>
+            <h1>المقدمة</h1>
+            <div class="content-box">
+                <ul>
+                    <li>يمثّل الإطار التحليلي منظارًا منهجيًا يساعد على قراءة الواقع التنموي بعمق.</li>
+                    <li>تكمن أهميته في كشف الفجوات الاجتماعية وتحليل جذورها داخل البنى المؤسسية.</li>
+                    <li>يهدف لتمكين الفئات المهمّشة وتعزيز مشاركتها الفاعلة.</li>
+                </ul>
             </div>
+            <div class="slide-num">2 / 11</div>
         </div>
 
         <div class="slide">
-            <h2>المحور الأول: ماهية الإطار التحليلي</h2>
-            <p style="font-size: 1.6rem; color: var(--primary-color);">"مجموعة مترابطة من المفاهيم والأدوات التي تنظّم عملية تحليل الواقع التنموي."</p>
-            <br>
-            <h3>وظائف الإطار الأساسية:</h3>
-            <ul>
-                <li><strong>قراءة الواقع بصورة منهجية:</strong> عبر تصنيف المتغيرات المؤثّرة في التنمية وتحديد أبعادها (الاجتماعية، الاقتصادية، السياسية).</li>
-                <li><strong>تحديد الفجوات التنموية:</strong> مقارنة الوضع القائم بالوضع المرغوب للكشف عن مظاهر الخلل المعيقة للعدالة.</li>
-            </ul>
-        </div>
-
-        <div class="slide">
-            <h2>تابع: وظائف الإطار التحليلي</h2>
-            <br>
-            <div class="concept-grid">
-                <div class="concept-card">
-                    <h3>التحليل البنيوي للمشكلات</h3>
-                    <p>التركيز على الأسباب الهيكلية والمؤسسية العميقة بدلاً من الاكتفاء بمعالجة المظاهر السطحية للمشكلة.</p>
-                </div>
-                <div class="concept-card">
-                    <h3>اقتراح التدخلات</h3>
-                    <p>بناء حلول وتدخلات مبنية على الأدلة والبيانات، مما يعزز استدامة البرامج التنموية وفاعليتها.</p>
-                </div>
+            <h1>المحور الأول: الإطار التحليلي</h1>
+            <div class="content-box">
+                <p style="color:var(--accent); font-size:1.8rem; margin-bottom:30px; font-weight:bold;">التعريف: مجموعة مترابطة من المفاهيم والأدوات التي تنظّم عملية التحليل.</p>
+                <ul>
+                    <li><strong>قراءة الواقع بمنهجية:</strong> تصنيف المتغيرات (اجتماعية، اقتصادية، سياسية).</li>
+                    <li><strong>تحديد الفجوات التنموية:</strong> مقارنة الوضع القائم بالوضع المرغوب.</li>
+                </ul>
             </div>
+            <div class="slide-num">3 / 11</div>
         </div>
 
         <div class="slide">
-            <h2>المحور الثاني: الاتجاهات النظرية العربية</h2>
-            <p>تعتمد الأدبيات العربية حول التنمية على تيارين رئيسيين:</p>
-            <br>
-            <div style="background: #f0f4f8; padding: 25px; border-radius: 10px; border-right: 5px solid var(--secondary-color);">
-                <h3>1. الاتجاه الوظيفي الكلاسيكي</h3>
-                <p><strong>النماذج:</strong> نظرية التحديث ومراحل النمو.</p>
-                <p><strong>الرؤية:</strong> يرى أن التنمية هي انتقال من المجتمع التقليدي نحو الحديث.</p>
-                <p><strong>التركيز:</strong> المتغيرات الاجتماعية والمؤسساتية التي تواكب هذا الانتقال.</p>
+            <h1>تابع: وظائف الإطار التحليلي</h1>
+            <div class="content-box">
+                <ul>
+                    <li><strong>التحليل البنيوي للمشكلات:</strong> التركيز على الأسباب الهيكلية والمؤسسية بدلاً من المظاهر.</li>
+                    <li><strong>اقتراح التدخلات:</strong> بناء حلول مبنية على الأدلة والبيانات لتعزيز استدامة البرامج.</li>
+                </ul>
             </div>
+            <div class="slide-num">4 / 11</div>
         </div>
 
         <div class="slide">
-            <h2>تابع: الاتجاهات النظرية العربية</h2>
-            <div style="background: #fff8e1; padding: 25px; border-radius: 10px; border-right: 5px solid var(--accent-color);">
-                <h3>2. الاتجاه البنيوي النقدي</h3>
-                <p><strong>المنظّرون:</strong> عبد المولى والحسيني.</p>
-                <p><strong>الرؤية:</strong> التخلف ليس مجرد نقص بالموارد، بل نتاج علاقات القوة والهيمنة داخل النظام العالمي والمحلي.</p>
+            <h1>المحور الثاني: الاتجاهات النظرية</h1>
+            <div class="content-box">
+                <h2 style="color:var(--accent); font-size:2rem; margin-bottom:20px;">1. الاتجاه الوظيفي الكلاسيكي (التحديث)</h2>
+                <ul>
+                    <li>يرى أن التنمية هي انتقال تدريجي من المجتمع التقليدي نحو المجتمع الحديث.</li>
+                    <li>يركز على المتغيرات الاجتماعية والمؤسساتية التي تواكب هذا الانتقال.</li>
+                </ul>
             </div>
-            <br>
-            <p style="text-align: center; font-weight: bold; color: var(--primary-color);">
-                💡 التميز المعاصر: يدمج الإطار التحليلي بين المقاربتين لفهم المتغيرات وتحليل الجذور الهيكلية.
-            </p>
+            <div class="slide-num">5 / 11</div>
         </div>
 
         <div class="slide">
-            <h2>تطبيقات: أولاً - تحليل الأسباب الهيكلية</h2>
-            <p>يساعد الإطار التحليلي في الكشف عن العوامل التي تعيد إنتاج اللامساواة:</p>
-            <ul>
-                <li><strong>توزيع الأدوار الاجتماعية:</strong> تحليل الأدوار النمطية داخل الأسرة والمجتمع.</li>
-                <li><strong>التفاوت في الوصول:</strong> فجوات الوصول للموارد الاقتصادية والمعرفية.</li>
-                <li><strong>علاقات القوة:</strong> الآليات التي تحد من المشاركة الفعلية للفئات الأضعف في صنع القرار.</li>
-            </ul>
-        </div>
-
-        <div class="slide">
-            <h2>تطبيقات: ثانياً - تصميم برامج تمكين مستدامة</h2>
-            <p>نقل التنمية من كونها "خدمة" إلى "عملية تشاركية" عبر:</p>
-            <div class="concept-grid">
-                <div class="concept-card">
-                    <h3>كشف المخفي</h3>
-                    <p>تحديد أنماط عدم المساواة الخفية في المجتمع.</p>
-                </div>
-                <div class="concept-card">
-                    <h3>تحليل القوة</h3>
-                    <p>فهم ديناميكيات القوة التي تعيق المشاركة المجتمعية.</p>
-                </div>
-                <div class="concept-card">
-                    <h3>إعادة التوزيع</h3>
-                    <p>بناء تدخلات تعيد توزيع الفرص والموارد لتعزيز الاستقلالية.</p>
+            <h1>تابع: الاتجاهات النظرية</h1>
+            <div class="content-box">
+                <h2 style="color:var(--accent); font-size:2rem; margin-bottom:20px;">2. الاتجاه البنيوي النقدي (عبد المولى)</h2>
+                <ul>
+                    <li>التخلف ليس مجرد نقص بالموارد، بل هو نتاج علاقات القوة والهيمنة.</li>
+                </ul>
+                <div style="margin-top:30px; padding:20px; background:rgba(212,175,55,0.15); border-radius:10px;">
+                    <p style="color:#fff; font-size:1.6rem;">💡 <strong>الإطار المعاصر:</strong> يدمج المقاربتين لفهم المتغيرات وتحليل الجذور الهيكلية.</p>
                 </div>
             </div>
+            <div class="slide-num">6 / 11</div>
         </div>
 
         <div class="slide">
-            <h2>ثالثاً: أمثلة على الأطر التحليلية التطبيقية</h2>
-            <br>
-            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <div style="flex: 1; background: var(--primary-color); color: white; padding: 30px; border-radius: 15px;">
-                    <h3 style="color: var(--accent-color);">1. إطار تحليل النوع الاجتماعي</h3>
-                    <p style="color: #ddd;">يركز على كشف التفاوتات بين الجنسين في الوصول للموارد والمشاركة في صنع القرار.</p>
+            <h1>تطبيقات: تحليل الأسباب الهيكلية</h1>
+            <div class="content-box">
+                <p style="font-size:1.7rem; color:#ccc; margin-bottom:20px;">يكشف الإطار عن العوامل التي تعيد إنتاج اللامساواة:</p>
+                <ul>
+                    <li>توزيع الأدوار الاجتماعية داخل الأسرة والمجتمع.</li>
+                    <li>التفاوت في الوصول للموارد الاقتصادية والمعرفية.</li>
+                    <li>علاقات القوة التي تحدّ من المشاركة في صنع القرار.</li>
+                </ul>
+            </div>
+            <div class="slide-num">7 / 11</div>
+        </div>
+
+        <div class="slide">
+            <h1>تطبيقات: برامج تمكين مستدامة</h1>
+            <div class="content-box">
+                <p style="font-size:1.7rem; color:#ccc; margin-bottom:20px;">نقل التنمية من "خدمة" إلى "عملية تشاركية" عبر:</p>
+                <ul>
+                    <li>تحديد أنماط عدم المساواة الخفية.</li>
+                    <li>تحليل ديناميكيات القوة التي تعيق المشاركة.</li>
+                    <li>بناء تدخلات تعيد توزيع الفرص لتعزيز الاستقلالية.</li>
+                </ul>
+            </div>
+            <div class="slide-num">8 / 11</div>
+        </div>
+
+        <div class="slide">
+            <h1>أمثلة على الأطر التحليلية</h1>
+            <div class="content-box">
+                <div style="margin-bottom:30px;">
+                    <strong style="color:var(--accent); font-size:1.8rem; display:block; margin-bottom:5px;">1. إطار تحليل النوع الاجتماعي</strong>
+                    <span style="font-size:1.6rem; color:#fff;">يركّز على كشف التفاوتات بين الجنسين في الوصول للموارد.</span>
                 </div>
-                <div style="flex: 1; background: var(--secondary-color); color: white; padding: 30px; border-radius: 15px;">
-                    <h3 style="color: var(--accent-color);">2. نهج العلاقات الاجتماعية</h3>
-                    <p style="color: #ddd;">يحلل الروابط بين الأفراد والمؤسسات لكشف أنماط التمييز واللاتكافؤ داخل المجتمع.</p>
+                <div>
+                    <strong style="color:var(--accent); font-size:1.8rem; display:block; margin-bottom:5px;">2. نهج العلاقات الاجتماعية</strong>
+                    <span style="font-size:1.6rem; color:#fff;">يحلل الروابط بين الأفراد والمؤسسات لكشف أنماط التمييز.</span>
                 </div>
             </div>
+            <div class="slide-num">9 / 11</div>
         </div>
 
         <div class="slide">
-            <h2>الخاتمة</h2>
-            <p>يشكّل الإطار التحليلي أداة حيوية لتعزيز فاعلية البرامج التنموية من خلال:</p>
-            <ul>
-                <li>تقديم قراءة معمّقة للواقع وتحديد الفجوات.</li>
-                <li>تحليل الأسباب الهيكلية التي تعيد إنتاج التخلف.</li>
-                <li>بناء تدخلات تستهدف تمكين الفئات الهشّة وتحقيق العدالة الاجتماعية.</li>
-            </ul>
-            <p style="text-align: center; margin-top: 20px; font-weight: bold; color: var(--accent-color);">
-                "بما ينسجم مع الرؤية العربية للتنمية"
-            </p>
+            <h1>الخاتمة</h1>
+            <div class="content-box">
+                <ul>
+                    <li>الإطار التحليلي أداة حيوية لتعزيز فاعلية البرامج التنموية.</li>
+                    <li>يقدم قراءة معمّقة للواقع ويحدد الفجوات الهيكلية.</li>
+                    <li>يسهم في بناء تدخلات للتمكين والعدالة الاجتماعية وفق الرؤية العربية.</li>
+                </ul>
+            </div>
+            <div class="slide-num">10 / 11</div>
         </div>
 
         <div class="slide">
-            <h2>المراجع والمصادر</h2>
-            <ul class="ref-list">
-                <li>الحسيني، السيد محمد، وآخرون. <em>دراسات في التنمية الاجتماعية.</em></li>
-                <li>السروجي، طلعت مصطفى. <em>التنمية الاجتماعية: المثال والواقع.</em></li>
-                <li>عبد المولى، محمود. <em>العالم الثالث ونموّ التخلف.</em></li>
-                <li>درويش، أحمد عبد الرؤوف. <em>قضايا التنمية في الدول النامية: مقدمة في سوسيولوجيا التنمية.</em></li>
-                <li>جرار، أماني غازي. <em>التنمية المستدامة وقضايا النوع الاجتماعي: المنظور التربوي الجندري.</em></li>
-            </ul>
+            <h1>المراجع والمصادر</h1>
+            <div class="content-box">
+                <ol style="font-size:1.4rem; line-height:1.8; color:#ddd; padding-right:30px;">
+                    <li style="font-size:1.4rem; margin-bottom:15px;">الحسيني، السيد محمد، وآخرون. دراسات في التنمية الاجتماعية.</li>
+                    <li style="font-size:1.4rem; margin-bottom:15px;">السروجي، طلعت مصطفى. التنمية الاجتماعية: المثال والواقع.</li>
+                    <li style="font-size:1.4rem; margin-bottom:15px;">عبد المولى، محمود. العالم الثالث ونموّ التخلف.</li>
+                    <li style="font-size:1.4rem; margin-bottom:15px;">درويش، أحمد عبد الرؤوف. قضايا التنمية في الدول النامية.</li>
+                    <li style="font-size:1.4rem; margin-bottom:15px;">جرار، أماني غازي. التنمية المستدامة وقضايا النوع الاجتماعي.</li>
+                </ol>
+            </div>
+            <div class="slide-num">11 / 11</div>
         </div>
 
-        <div class="controls">
-            <button class="btn" onclick="prevSlide()">السابق</button>
-            <button class="btn" onclick="nextSlide()">التالي</button>
-        </div>
-
-        <div class="slide-number">شريحة <span id="current-slide">1</span> من <span id="total-slides">11</span></div>
     </div>
 
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-        const progressFill = document.getElementById('progress');
-        const currentSlideEl = document.getElementById('current-slide');
-        const totalSlidesEl = document.getElementById('total-slides');
-
-        totalSlidesEl.textContent = slides.length;
-
-        function updateSlide() {
-            slides.forEach((slide, index) => {
-                slide.classList.remove('active');
-                if (index === currentSlide) {
-                    slide.classList.add('active');
-                }
-            });
-            
-            // تحديث شريط التقدم
-            const progress = ((currentSlide + 1) / slides.length) * 100;
-            progressFill.style.width = `${progress}%`;
-
-            // تحديث رقم الشريحة
-            currentSlideEl.textContent = currentSlide + 1;
-        }
+        const hint = document.getElementById('hint');
 
         function nextSlide() {
-            if (currentSlide < slides.length - 1) {
-                currentSlide++;
-                updateSlide();
+            // إخفاء التعليمات عند أول ضغطة
+            if (hint.style.display !== 'none') {
+                hint.style.display = 'none';
+                return;
             }
+
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
         }
-
-        function prevSlide() {
-            if (currentSlide > 0) {
-                currentSlide--;
-                updateSlide();
-            }
-        }
-
-        // التحكم بالكيبورد
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') nextSlide(); // لأن الاتجاه RTL
-            if (e.key === 'ArrowRight') prevSlide();
-        });
-
-        // التشغيل الأولي
-        updateSlide();
     </script>
 </body>
 </html>
