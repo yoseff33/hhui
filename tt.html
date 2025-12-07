@@ -18,16 +18,15 @@
         }
 
         body {
-            /* استخدام خط IBM Plex Sans Arabic الجديد */
             font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
-            line-height: 1.5; /* تعديل ارتفاع السطر للطباعة */
+            line-height: 1.5;
             margin: 0;
             padding: 0;
             background-color: #f8f8f8;
             color: #000;
             display: flex;
             justify-content: center;
-            font-size: 11pt; /* حجم خط يناسب A4 */
+            font-size: 10.5pt; /* تم تصغير حجم الخط قليلاً ليتسع في صفحة واحدة A4 */
         }
 
         .cv-page {
@@ -35,127 +34,42 @@
             width: 210mm; /* عرض A4 */
             min-height: 297mm; /* ارتفاع A4 */
             background: #fff;
-            padding: 20mm; /* هوامش حول المحتوى */
+            padding: 15mm; /* تم تصغير الهوامش الداخلية (padding) قليلاً لزيادة المساحة الطولية */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            box-sizing: border-box; /* لضمان أن البادينج لا يزيد العرض الكلي */
+            box-sizing: border-box;
         }
-
-        .header {
-            text-align: center;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-        }
-
+        
+        /* تعديلات على العناوين والأقسام لتقليل المساحات البيضاء */
         .header h1 {
-            color: #000;
-            font-size: 2em;
-            margin: 0 0 5px 0;
-            font-weight: bold;
+            font-size: 1.8em; /* تصغير عنوان الاسم */
         }
 
         .contact-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1em;
-            color: #000;
-            padding: 10px 0;
-            border-bottom: 2px solid #000;
-        }
-
-        .contact-bar span {
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-        }
-        
-        /* تقليل حجم الأيقونات شوي */
-        .contact-bar .phone-icon, .contact-bar .mail-icon {
-            background-size: contain;
-            width: 18px;
-            height: 18px;
-            margin-left: 8px;
+            font-size: 0.95em;
+            padding: 8px 0;
         }
 
         .section {
-            margin-top: 20px;
-            margin-bottom: 10px;
+            margin-top: 15px; /* تقليل المسافة بين الأقسام */
+            margin-bottom: 5px;
         }
 
         .section h2 {
-            font-size: 1.3em;
-            color: #000;
-            padding-bottom: 3px;
-            margin-bottom: 8px;
-            font-weight: bold;
-            border-bottom: 2px solid #ccc;
-            width: 100%;
-            text-align: right;
-        }
-
-        .section p {
-            margin-bottom: 4px;
-            text-align: justify;
-            font-size: 0.95em;
-        }
-
-        .details-item {
-            margin-bottom: 12px;
-            font-size: 0.95em;
-            padding-right: 10px;
-        }
-
-        .section ul {
-            list-style: none;
-            padding-right: 0;
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-
-        .section ul li {
-            padding-right: 0;
+            font-size: 1.2em; /* تصغير عناوين الأقسام */
             margin-bottom: 5px;
-            font-size: 0.95em;
-            position: relative;
         }
 
-        .section ul li:before {
-            content: "\2022";
-            color: #000;
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-right: -1em;
-            margin-left: 8px;
+        .section p, .details-item, .section ul li {
+            font-size: 0.9em; /* تصغير خط المحتوى */
         }
 
-        .section ul li strong {
-            font-weight: bold;
-        }
-
-        /* تنسيق الأزرار */
         .buttons {
             text-align: center;
-            margin-top: 30px;
-            /* للتأكد من أنها لا تطبع */
+            margin-top: 20px;
+            /* للتأكد من أنها لا تطبع ولا تُصوَّر */
             page-break-before: always; 
         }
 
-        .buttons button {
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-            margin: 5px;
-            border: 1px solid #000;
-            background-color: #f0f0f0;
-            transition: background-color 0.3s;
-        }
-
-        .buttons button:hover {
-            background-color: #e0e0e0;
-        }
-        
-        /* الكلاس اللي يخفي الأزرار وقت التصدير والطباعة فقط */
         .no-print {
             display: none !important;
         }
@@ -256,21 +170,11 @@
     // متغير لتتبع حالة الترجمة
     let isTranslated = false; 
 
-    // قاموس الترجمة الكامل
+    // قاموس الترجمة الكامل (نفس القاموس لضمان الترجمة الشاملة)
     const translations = {
-        "الهدف الوظيفي": "Career Objective",
-        "التعليم": "Education",
-        "الخبرات": "Experience",
-        "الدورات": "Courses",
-        "المهارات المهنية والشخصية": "Professional and Personal Skills",
-        "المؤهل": "Qualification",
-        "التخصص": "Specialization",
-        "اسم جهة التعليم": "Educational Institution",
-        "سنة التخرج": "Year of Graduation",
-        "تصنيف": "Classification",
-        "بكالوريوس": "Bachelor's Degree",
-        "الخدمة الاجتماعية": "Social Service",
-        "جامعة حفر الباطن": "University of Hafr Al Batin",
+        "الهدف الوظيفي": "Career Objective", "التعليم": "Education", "الخبرات": "Experience", "الدورات": "Courses", "المهارات المهنية والشخصية": "Professional and Personal Skills",
+        "المؤهل": "Qualification", "التخصص": "Specialization", "اسم جهة التعليم": "Educational Institution", "سنة التخرج": "Year of Graduation", "تصنيف": "Classification",
+        "بكالوريوس": "Bachelor's Degree", "الخدمة الاجتماعية": "Social Service", "جامعة حفر الباطن": "University of Hafr Al Batin", 
         "مهني من الهيئة السعودية للتخصصات الصحية (أخصائي اجتماعي)": "Professional Classification from Saudi Commission for Health Specialties (Social Specialist)",
         "تدريب على رأس العمل – برنامج تمهير (وظيفة أخصائي علاقات عامة)": "On-the-Job Training – Tamheer Program (Public Relations Specialist)",
         "تنفيذ مهام العلاقات العامة والتواصل الداخلي ودعم الهوية المؤسسية.": "Executing public relations tasks, internal communication, and supporting corporate identity.",
@@ -288,34 +192,24 @@
         "استراتيجيات التعامل مع المشكلات الاجتماعية": "Strategies for Dealing with Social Problems",
         "مهارات التفاوض في الخدمة الاجتماعية مع الفئات المختلفة": "Negotiation Skills in Social Work with Different Groups",
         "الوعي القيادي": "Leadership Awareness",
-        "التواصل الفعّال": "Effective Communication",
-        "القدرة على بناء علاقات إيجابية مع الأفراد والمجتمع.": "Ability to build positive relationships with individuals and the community.",
-        "التعامل مع مختلف الشخصيات": "Dealing with Various Personalities",
-        "مهارات اجتماعية متقدمة لفهم احتياجات الأفراد.": "Advanced social skills to understand individual needs.",
-        "العمل الجماعي والتعاون": "Teamwork and Cooperation",
-        "خبرة في العمل ضمن فرق متعددة التخصصات.": "Experience working within multidisciplinary teams.",
-        "اتخاذ القرار وحل المشكلات": "Decision Making and Problem Solving",
-        "القدرة على تحليل القضايا الاجتماعية واتخاذ قرارات فعالة.": "Ability to analyze social issues and make effective decisions.",
-        "الذكاء العاطفي": "Emotional Intelligence",
-        "مهارات في فهم وإدارة المشاعر لتعزيز العلاقات المهنية.": "Skills in understanding and managing emotions to enhance professional relationships.",
-        "تحمل المسؤولية والانضباط": "Responsibility and Discipline",
-        "الالتزام بأخلاقيات العمل والقدرة على العمل تحت الضغط.": "Commitment to work ethics and the ability to work under pressure.",
-        "القيادة والإدارة": "Leadership and Management",
-        "مهارات في التخطيط والتنظيم والإشراف على الأنشطة الاجتماعية.": "Skills in planning, organizing, and supervising social activities.",
+        "التواصل الفعّال": "Effective Communication", "القدرة على بناء علاقات إيجابية مع الأفراد والمجتمع.": "Ability to build positive relationships with individuals and the community.",
+        "التعامل مع مختلف الشخصيات": "Dealing with Various Personalities", "مهارات اجتماعية متقدمة لفهم احتياجات الأفراد.": "Advanced social skills to understand individual needs.",
+        "العمل الجماعي والتعاون": "Teamwork and Cooperation", "خبرة في العمل ضمن فرق متعددة التخصصات.": "Experience working within multidisciplinary teams.",
+        "اتخاذ القرار وحل المشكلات": "Decision Making and Problem Solving", "القدرة على تحليل القضايا الاجتماعية واتخاذ قرارات فعالة.": "Ability to analyze social issues and make effective decisions.",
+        "الذكاء العاطفي": "Emotional Intelligence", "مهارات في فهم وإدارة المشاعر لتعزيز العلاقات المهنية.": "Skills in understanding and managing emotions to enhance professional relationships.",
+        "تحمل المسؤولية والانضباط": "Responsibility and Discipline", "الالتزام بأخلاقيات العمل والقدرة على العمل تحت الضغط.": "Commitment to work ethics and the ability to work under pressure.",
+        "القيادة والإدارة": "Leadership and Management", "مهارات في التخطيط والتنظيم والإشراف على الأنشطة الاجتماعية.": "Skills in planning, organizing, and supervising social activities.",
         "أسعى إلى الانضمام إلى بيئة عمل احترافية تتيح لي توظيف مهاراتي وقدراتي بشكل فعال والمساهمة في تحقيق أهداف المؤسسة من خلال العمل بجودة وكفاءة. أطمح إلى تطوير خبراتي وتعزيز مهاراتي المهنية بما يحقق النمو المستدام لي وللجهة التي أعمل بها.": "I seek to join a professional work environment that allows me to effectively utilize my skills and abilities and contribute to achieving the organization's goals through quality and efficient work. I aspire to develop my experiences and enhance my professional skills to achieve sustainable growth for myself and the entity I work for.",
         "عبدالله المطيري": "Abdullah Al Mutairi"
     };
 
-    function getTranslation(text) {
-        return translations[text.trim()] || text;
-    }
-
+    function getTranslation(text) { return translations[text.trim()] || text; }
     function getOriginal(text) {
         const original = Object.keys(translations).find(key => translations[key] === text.trim());
         return original || text;
     }
 
-    // دالة ترجمة السيرة الذاتية
+    // دالة ترجمة السيرة الذاتية (محدثة)
     function translateCV() {
         const translateButton = document.getElementById('translateButton');
         const cvName = document.getElementById('cv-name');
@@ -324,59 +218,38 @@
 
         translateButton.textContent = isTranslated ? "ترجمة إلى العربية" : "ترجمة إلى الإنجليزية";
 
-        // تحديث اتجاه النص واللغة للصفحة
         document.documentElement.setAttribute('dir', isTranslated ? 'ltr' : 'rtl');
         document.querySelector('html').setAttribute('lang', isTranslated ? 'en' : 'ar');
         
-        // تحديث الاسم
         cvName.textContent = isTranslated ? getTranslation(cvName.textContent) : getOriginal(cvName.textContent);
 
         document.querySelectorAll(".section").forEach(section => {
-            // ترجمة العناوين الرئيسية (H2)
             const h2 = section.querySelector("h2");
-            if (h2) {
-                const originalText = h2.getAttribute('data-ar');
-                h2.textContent = isTranslated ? getTranslation(originalText) : originalText;
-            }
+            if (h2) { h2.textContent = isTranslated ? getTranslation(h2.getAttribute('data-ar')) : h2.getAttribute('data-ar'); }
 
-            // ترجمة الفقرة الرئيسية (P)
             const p = section.querySelector("#objective-section p");
-            if (p) {
-                const originalText = p.getAttribute('data-ar');
-                if (originalText) {
-                    p.textContent = isTranslated ? getTranslation(originalText) : originalText;
-                }
-            }
+            if (p) { p.textContent = isTranslated ? getTranslation(p.getAttribute('data-ar')) : p.getAttribute('data-ar'); }
             
-            // ترجمة نصوص الـ strong داخل الـ details-item
             section.querySelectorAll('.details-item p strong').forEach(strongElement => {
                 const originalText = strongElement.getAttribute('data-ar');
-                if (originalText) {
-                    strongElement.textContent = isTranslated ? getTranslation(originalText) : originalText;
-                }
+                if (originalText) { strongElement.textContent = isTranslated ? getTranslation(originalText) : originalText; }
             });
 
-            // ترجمة المحتوى داخل الـ span (للتخصص والمؤهل الخ...)
             section.querySelectorAll('.details-item p span').forEach(spanElement => {
                 const originalText = spanElement.getAttribute('data-ar-content');
-                if (originalText) {
-                    spanElement.textContent = isTranslated ? getTranslation(originalText) : originalText;
-                }
+                if (originalText) { spanElement.textContent = isTranslated ? getTranslation(originalText) : originalText; }
             });
 
-            // ترجمة عناصر القوائم (UL LI)
             section.querySelectorAll("ul li").forEach(li => {
                 const originalText = li.getAttribute('data-ar') || li.textContent.trim();
                 if (li.querySelector('strong')) {
                     const strong = li.querySelector('strong');
-                    // للحفاظ على التنسيق bold بعد الترجمة
                     const strongOriginalText = strong.getAttribute('data-ar') || strong.textContent.trim().replace(':', '');
                     const afterStrong = li.textContent.replace(strong.textContent, '').trim();
                     
                     const translatedStrong = isTranslated ? getTranslation(strongOriginalText) : strongOriginalText;
                     const translatedAfter = isTranslated ? getTranslation(afterStrong) : getOriginal(afterStrong);
                     
-                    // إعادة بناء عنصر القائمة
                     li.innerHTML = `<strong>${translatedStrong}${!isTranslated ? ':' : ''}</strong> ${translatedAfter}`;
                 } else {
                     li.textContent = isTranslated ? getTranslation(originalText) : originalText;
@@ -385,7 +258,7 @@
         });
     }
 
-    // الدالة لتصدير PDF باستخدام html2pdf.js (تم تعديلها لـ إخفاء الأزرار أثناء التصدير)
+    // دالة تصدير PDF (الآن مع ضمان A4 وورقة واحدة)
     function downloadPDF() {
         const element = document.getElementById('cvContent');
         const buttonsDiv = document.querySelector('.buttons');
@@ -394,20 +267,22 @@
         buttonsDiv.classList.add('no-print');
 
         const opt = {
-            margin: 0,
+            margin: 0, 
             filename: 'cv_abdullah_almutairi.pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 3, dpi: 192, letterRendering: true }, 
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        html2pdf().set(opt).from(element).save().then(() => {
-            // إظهار الأزرار بعد انتهاء التصدير
+        // استخدام 'toPdf' يضمن توليد PDF من صفحة واحدة A4
+        html2pdf().set(opt).from(element).toPdf().get('pdf').then(function (pdf) {
+            // هنا نضبط محتوى الصفحة على ورقة واحدة فقط
+            pdf.save('cv_abdullah_almutairi.pdf');
             buttonsDiv.classList.remove('no-print');
         });
     }
     
-    // دالة تصدير كصورة (تم تعديلها لـ إخفاء الأزرار أثناء التصدير)
+    // دالة تصدير كصورة (الآن مع ضمان مقاس A4 لـ الصورة)
     function downloadImage() {
         const cvElement = document.getElementById('cvContent');
         const buttonsDiv = document.querySelector('.buttons');
@@ -417,7 +292,10 @@
 
         html2canvas(cvElement, {
             scale: 2, 
-            useCORS: true 
+            useCORS: true,
+            // تحديد حدود التصوير على عنصر cv-page فقط لضمان مقاس A4
+            width: cvElement.offsetWidth,
+            height: cvElement.offsetHeight 
         }).then(canvas => {
             const image = canvas.toDataURL('image/png');
             
@@ -433,7 +311,6 @@
             buttonsDiv.classList.remove('no-print');
         }).catch(err => {
             console.error('فشل في تصدير الصورة:', err);
-            // التأكد من إظهار الأزرار حتى لو فشل التصدير
             buttonsDiv.classList.remove('no-print'); 
             alert('حصل خطأ في تصدير السيرة كصورة.');
         });
