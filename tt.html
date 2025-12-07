@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>السيرة الذاتية - عبدالله المطيري</title>
     <style>
-        /* الأسلوب العام والخطوط (استخدام خطوط رسمية وواضحة) */
+        /* الأسلوب العام والخطوط (استخدام خط ATC) */
         body {
-            font-family: 'Simplified Arabic', 'Droid Arabic Kufi', Tahoma, Arial, sans-serif; 
+            font-family: 'ATC', Tahoma, Arial, sans-serif; 
             line-height: 1.5;
             margin: 0;
             padding: 20px;
@@ -54,9 +54,23 @@
             align-items: center;
             font-weight: bold; /* معلومات الاتصال بالخط الغامق */
         }
-        /* الأيقونات (باستخدام رموز Unicode بدلاً من صور) */
-        .contact-bar .phone-icon:before { content: "\260E"; margin-left: 8px; font-size: 1.2em; color: #000; }
-        .contact-bar .mail-icon:before { content: "\2709"; margin-left: 8px; font-size: 1.2em; color: #000; }
+
+        /* إضافة الأيقونات الجديدة الخاصة بالبريد والهاتف */
+        .contact-bar .phone-icon {
+            background-image: url('path-to-phone-icon.png'); /* استبدل 'path-to-phone-icon.png' برابط صورة الأيقونة */
+            background-size: contain;
+            width: 20px;
+            height: 20px;
+            margin-left: 8px;
+        }
+
+        .contact-bar .mail-icon {
+            background-image: url('path-to-mail-icon.png'); /* استبدل 'path-to-mail-icon.png' برابط صورة الأيقونة */
+            background-size: contain;
+            width: 20px;
+            height: 20px;
+            margin-left: 8px;
+        }
 
         /* 2. الأقسام الفرعية */
         .section {
@@ -131,7 +145,7 @@
     <div class="header">
         <h1>عبدالله المطيري</h1>
         <div class="contact-bar">
-            <span><span class="phone-icon"></span> 0533774766</span>
+            <span><span class="phone-icon"></span> 0506992404</span>
             <span><span class="mail-icon"></span> bb77tn@gmail.com</span>
         </div>
     </div>
