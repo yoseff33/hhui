@@ -5,27 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>السيرة الذاتية - عبدالله المطيري</title>
     <style>
-        /* الأسلوب العام والخطوط (استخدام خط ATC) */
+        /* استخدام خط ATC */
+        @import url('https://fonts.googleapis.com/css2?family=ATC&display=swap');
+
         body {
-            font-family: 'ATC', Tahoma, Arial, sans-serif; 
-            line-height: 1.5;
+            font-family: 'ATC', Tahoma, Arial, sans-serif;
+            line-height: 1.4;
             margin: 0;
             padding: 20px;
             background-color: #fff;
             color: #000;
             display: flex;
             justify-content: center;
+            font-size: 12px;
         }
 
         .cv-container {
             width: 100%;
             max-width: 800px;
             background: #fff;
-            padding: 30px 50px; /* تخطيط الصفحة: هوامش واسعة */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); /* ظل خفيف */
+            padding: 30px 50px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         }
 
-        /* 1. الرأس ومعلومات الاتصال (نفس توزيع الصورة) */
         .header {
             text-align: center;
             padding-bottom: 5px;
@@ -34,7 +36,7 @@
 
         .header h1 {
             color: #000;
-            font-size: 2.5em; /* تكبير الاسم */
+            font-size: 2.2em;
             margin: 0 0 5px 0;
             font-weight: bold;
         }
@@ -46,18 +48,17 @@
             font-size: 1.1em;
             color: #000;
             padding: 10px 0;
-            border-bottom: 2px solid #000; /* خط فاصل أسود واضح */
+            border-bottom: 2px solid #000;
         }
-        
+
         .contact-bar span {
             display: flex;
             align-items: center;
-            font-weight: bold; /* معلومات الاتصال بالخط الغامق */
+            font-weight: bold;
         }
 
-        /* إضافة الأيقونات الجديدة الخاصة بالبريد والهاتف */
         .contact-bar .phone-icon {
-            background-image: url('path-to-phone-icon.png'); /* استبدل 'path-to-phone-icon.png' برابط صورة الأيقونة */
+            background-image: url('https://img.icons8.com/ios/452/phone.png');
             background-size: contain;
             width: 20px;
             height: 20px;
@@ -65,14 +66,13 @@
         }
 
         .contact-bar .mail-icon {
-            background-image: url('path-to-mail-icon.png'); /* استبدل 'path-to-mail-icon.png' برابط صورة الأيقونة */
+            background-image: url('https://img.icons8.com/ios/452/email.png');
             background-size: contain;
             width: 20px;
             height: 20px;
             margin-left: 8px;
         }
 
-        /* 2. الأقسام الفرعية */
         .section {
             margin-top: 25px;
             margin-bottom: 15px;
@@ -84,31 +84,23 @@
             padding-bottom: 3px;
             margin-bottom: 10px;
             font-weight: bold;
-            border-bottom: 2px solid #ccc; /* خط فاصل رمادي فاتح تحت العنوان (أقرب للصورة) */
+            border-bottom: 2px solid #ccc;
             width: 100%;
             text-align: right;
         }
-        
-        /* تنسيق فقرات الوصف */
+
         .section p {
             margin-bottom: 5px;
             text-align: justify;
             font-size: 0.95em;
         }
 
-        /* تنسيق الأقسام الفرعية داخل التعليم والخبرات */
         .details-item {
             margin-bottom: 15px;
             font-size: 0.95em;
-            padding-right: 10px; /* إزاحة للداخل */
+            padding-right: 10px;
         }
-        
-        .details-item p {
-            margin: 0;
-            padding: 0;
-        }
-        
-        /* النقاط البنط العريض (المهارات/الدورات) */
+
         .section ul {
             list-style: none;
             padding-right: 0;
@@ -123,7 +115,7 @@
         }
 
         .section ul li:before {
-            content: "\2022"; /* نقطة كبيرة */
+            content: "\2022";
             color: #000;
             font-weight: bold;
             display: inline-block;
@@ -131,21 +123,65 @@
             margin-right: -1em;
             margin-left: 8px;
         }
-        
+
         .section ul li strong {
             font-weight: bold;
         }
-        
+
+        /* تنسيق المطبوعات للطباعة */
+        @media print {
+            body {
+                font-size: 10px;
+            }
+
+            .cv-container {
+                width: 100%;
+                max-width: 100%;
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .contact-bar {
+                font-size: 0.9em;
+            }
+
+            .section h2 {
+                font-size: 1.1em;
+            }
+
+            .section p,
+            .details-item,
+            .section ul li {
+                font-size: 0.85em;
+            }
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 5px;
+        }
+
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
-<div class="cv-container">
+<div class="cv-container" id="cvContent">
 
     <div class="header">
         <h1>عبدالله المطيري</h1>
         <div class="contact-bar">
-            <span><span class="phone-icon"></span> 0506992404</span>
+            <span><span class="phone-icon"></span> 0533774766</span>
             <span><span class="mail-icon"></span> bb77tn@gmail.com</span>
         </div>
     </div>
@@ -168,7 +204,6 @@
 
     <div class="section">
         <h2>الخبرات</h2>
-        
         <div class="details-item">
             <p><strong>تدريب على رأس العمل – برنامج تمهير (وظيفة أخصائي علاقات عامة)</strong></p>
             <ul>
@@ -220,7 +255,63 @@
         </ul>
     </div>
 
+    <div class="buttons">
+        <button onclick="window.print()">طباعة السيرة الذاتية</button>
+        <button onclick="downloadPDF()">تصدير إلى PDF</button>
+        <button onclick="translateCV()">ترجمة إلى الإنجليزية</button>
+    </div>
+
 </div>
+
+<script>
+    function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.html(document.querySelector("#cvContent"), {
+            callback: function (doc) {
+                doc.save("cv.pdf");
+            },
+            margin: 10,
+            x: 10,
+            y: 10
+        });
+    }
+
+    function translateCV() {
+        const sections = document.querySelectorAll(".section");
+        sections.forEach(section => {
+            const header = section.querySelector("h2");
+            const paragraph = section.querySelector("p");
+            if (header) {
+                header.textContent = translateToEnglish(header.textContent);
+            }
+            if (paragraph) {
+                paragraph.textContent = translateToEnglish(paragraph.textContent);
+            }
+            const listItems = section.querySelectorAll("ul li");
+            listItems.forEach(item => {
+                item.textContent = translateToEnglish(item.textContent);
+            });
+        });
+    }
+
+    function translateToEnglish(text) {
+        const translations = {
+            "الهدف الوظيفي": "Career Objective",
+            "التعليم": "Education",
+            "المؤهل": "Qualification",
+            "التخصص": "Specialization",
+            "اسم جهة التعليم": "Educational Institution",
+            "سنة التخرج": "Year of Graduation",
+            "تصنيف": "Classification",
+            "الخبرات": "Experience",
+            "الدورات": "Courses",
+            "المهارات المهنية والشخصية": "Professional and Personal Skills",
+        };
+
+        return translations[text] || text;
+    }
+</script>
 
 </body>
 </html>
