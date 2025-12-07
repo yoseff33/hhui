@@ -155,7 +155,7 @@
             background-color: #e0e0e0;
         }
         
-        /* إخفاء الأزرار عند الطباعة والتصدير */
+        /* الكلاس اللي يخفي الأزرار وقت التصدير والطباعة فقط */
         .no-print {
             display: none !important;
         }
@@ -245,7 +245,7 @@
     
 </div>
 
-<div class="buttons no-print">
+<div class="buttons">
     <button onclick="window.print()">طباعة السيرة الذاتية</button>
     <button onclick="downloadPDF()">تصدير إلى PDF</button>
     <button onclick="downloadImage()">تصدير كصورة</button> 
@@ -256,7 +256,7 @@
     // متغير لتتبع حالة الترجمة
     let isTranslated = false; 
 
-    // قاموس الترجمة الكامل (نفس اللي قبل بس تأكدنا من تغطية كل شيء)
+    // قاموس الترجمة الكامل
     const translations = {
         "الهدف الوظيفي": "Career Objective",
         "التعليم": "Education",
@@ -315,7 +315,7 @@
         return original || text;
     }
 
-    // دالة ترجمة السيرة الذاتية (محدثة لضمان ترجمة كل شيء)
+    // دالة ترجمة السيرة الذاتية
     function translateCV() {
         const translateButton = document.getElementById('translateButton');
         const cvName = document.getElementById('cv-name');
@@ -385,29 +385,35 @@
         });
     }
 
-    // الدالة الجديدة والمحدثة لتصدير PDF باستخدام html2pdf.js
+    // الدالة لتصدير PDF باستخدام html2pdf.js (تم تعديلها لـ إخفاء الأزرار أثناء التصدير)
     function downloadPDF() {
         const element = document.getElementById('cvContent');
+        const buttonsDiv = document.querySelector('.buttons');
         
-        // خيارات التصدير لـ A4 بدقة عالية مع ضبط الهوامش
+        // إخفاء الأزرار قبل التصدير
+        buttonsDiv.classList.add('no-print');
+
         const opt = {
             margin: 0,
             filename: 'cv_abdullah_almutairi.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 3, dpi: 192, letterRendering: true }, // زيادة scale لرفع الجودة
+            html2canvas: { scale: 3, dpi: 192, letterRendering: true }, 
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        // استدعاء المكتبة
-        html2pdf().set(opt).from(element).save();
+        html2pdf().set(opt).from(element).save().then(() => {
+            // إظهار الأزرار بعد انتهاء التصدير
+            buttonsDiv.classList.remove('no-print');
+        });
     }
     
-    // دالة تصدير كصورة (نفس الدالة اللي قبل)
+    // دالة تصدير كصورة (تم تعديلها لـ إخفاء الأزرار أثناء التصدير)
     function downloadImage() {
         const cvElement = document.getElementById('cvContent');
         const buttonsDiv = document.querySelector('.buttons');
 
-        buttonsDiv.classList.add('no-print'); // إخفاء الأزرار قبل أخذ الصورة
+        // إخفاء الأزرار قبل أخذ الصورة
+        buttonsDiv.classList.add('no-print'); 
 
         html2canvas(cvElement, {
             scale: 2, 
@@ -423,10 +429,12 @@
             link.click();
             document.body.removeChild(link);
 
-            buttonsDiv.classList.remove('no-print'); // إظهار الأزرار مرة أخرى
+            // إظهار الأزرار مرة أخرى
+            buttonsDiv.classList.remove('no-print');
         }).catch(err => {
             console.error('فشل في تصدير الصورة:', err);
-            buttonsDiv.classList.remove('no-print');
+            // التأكد من إظهار الأزرار حتى لو فشل التصدير
+            buttonsDiv.classList.remove('no-print'); 
             alert('حصل خطأ في تصدير السيرة كصورة.');
         });
     }
