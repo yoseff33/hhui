@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>السيرة الذاتية - عبدالله المطيري</title>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
-        /* تعريف حجم A4 والهوامش لضمان طباعة صحيحة (مهمة لـ PDF العادي من المتصفح) */
+        /* تعريف حجم A4 والهوامش لضمان طباعة صحيحة */
         @page {
             size: A4;
             margin: 0;
@@ -25,110 +24,47 @@
             color: #000;
             display: flex;
             justify-content: center;
-            flex-direction: column; /* لترتيب CV والأزرار عمودياً */
-            align-items: center;
-            font-size: 10.5pt; /* حجم خط مثالي للتوسع في A4 */
+            font-size: 10.5pt; /* تم تصغير حجم الخط */
         }
 
         .cv-page {
-            /* لضمان أن الحاوية تكون بحجم A4 تماماً (210mm x 297mm) */
-            width: 210mm; /* عرض A4 */
-            min-height: 297mm; /* ارتفاع A4 */
+            width: 210mm;
+            min-height: 297mm;
             background: #fff;
-            padding: 15mm; /* هوامش داخلية مخفضة */
+            padding: 15mm;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            box-sizing: border-box; /* للتأكد من أن padding لا يزيد الحجم عن 210mm */
-            overflow: hidden; /* لمنع أي محتوى زائد من الظهور */
+            box-sizing: border-box;
         }
-        
-        /* التنسيق العام */
+
         .header h1 {
-            font-size: 1.8em; 
-            margin-bottom: 5px;
+            font-size: 1.8em; /* تصغير عنوان الاسم */
         }
 
         .contact-bar {
-            font-size: 0.9em;
-            padding: 5px 0 10px 0;
-            border-bottom: 2px solid #000;
-            margin-bottom: 10px;
+            font-size: 0.95em;
+            padding: 8px 0;
         }
 
-        .contact-bar span {
-            margin-left: 20px;
-            display: inline-flex;
-            align-items: center;
-        }
-        
-        .contact-bar span:last-child {
-            margin-left: 0;
-        }
-
-        /* تعديلات على العناوين والأقسام لتقليل المساحات البيضاء */
         .section {
-            margin-top: 10px; /* تقليل المسافة بين الأقسام */
-            margin-bottom: 0;
+            margin-top: 15px;
+            margin-bottom: 5px;
         }
 
         .section h2 {
-            font-size: 1.2em; /* تصغير عناوين الأقسام */
+            font-size: 1.2em;
             margin-bottom: 5px;
-            padding-bottom: 2px;
-            border-bottom: 1px solid #ddd;
         }
 
         .section p, .details-item, .section ul li {
-            font-size: 0.9em; /* تصغير خط المحتوى */
-            margin-top: 2px;
-            margin-bottom: 2px;
+            font-size: 0.9em;
         }
 
-        .details-item {
-            margin-bottom: 8px;
-        }
-        
-        .details-item p {
-            margin: 1px 0;
-        }
-        
-        .section ul {
-            list-style-type: none;
-            padding-right: 15px;
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-        
-        .section ul li {
-            position: relative;
-            padding-right: 15px;
-        }
-        
-        .section ul li::before {
-            content: '•';
-            position: absolute;
-            right: 0;
-            color: #000;
-            font-weight: bold;
-        }
-
-        /* تنسيق الأزرار (Buttons) */
         .buttons {
             text-align: center;
-            margin: 20px 0;
-            /* لمنع طباعة أو تصوير الأزرار */
-            page-break-after: always; 
-        }
-        
-        .buttons button {
-            padding: 10px 20px;
-            margin: 0 5px;
-            cursor: pointer;
-            border: 1px solid #000;
-            background-color: #eee;
-            font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
+            margin-top: 20px;
+            page-break-before: always;
         }
 
-        /* الكلاس المستخدم لإخفاء الأزرار عند التصدير */
         .no-print {
             display: none !important;
         }
@@ -137,260 +73,134 @@
 <body>
 
 <div class="cv-page" id="cvContent">
-
     <div class="header">
-        <h1 id="cv-name" data-ar="عبدالله المطيري">عبدالله المطيري</h1>
+        <h1 id="cv-name">عبدالله المطيري</h1>
         <div class="contact-bar">
-            <span id="cv-phone"> 0533774766</span>
-            <span id="cv-email"> bb77tn@gmail.com</span>
+            <span id="cv-phone"><span class="phone-icon" style="background-image: url('https://img.icons8.com/ios/452/phone.png');"></span> 0533774766</span>
+            <span id="cv-email"><span class="mail-icon" style="background-image: url('https://img.icons8.com/ios/452/email.png');"></span> bb77tn@gmail.com</span>
         </div>
     </div>
 
     <div class="section" id="objective-section">
         <h2 data-ar="الهدف الوظيفي">الهدف الوظيفي</h2>
-        <p data-ar="أسعى إلى الانضمام إلى بيئة عمل احترافية تتيح لي توظيف مهاراتي وقدراتي بشكل فعال والمساهمة في تحقيق أهداف المؤسسة من خلال العمل بجودة وكفاءة. أطمح إلى تطوير خبراتي وتعزيز مهاراتي المهنية بما يحقق النمو المستدام لي وللجهة التي أعمل بها.">أسعى إلى الانضمام إلى بيئة عمل احترافية تتيح لي توظيف مهاراتي وقدراتي بشكل فعال والمساهمة في تحقيق أهداف المؤسسة من خلال العمل بجودة وكفاءة. أطمح إلى تطوير خبراتي وتعزيز مهاراتي المهنية بما يحقق النمو المستدام لي وللجهة التي أعمل بها.</p>
+        <p data-ar="أسعى إلى الانضمام إلى بيئة عمل احترافية تتيح لي توظيف مهاراتي وقدراتي بشكل فعال.">أسعى إلى الانضمام إلى بيئة عمل احترافية تتيح لي توظيف مهاراتي وقدراتي بشكل فعال.</p>
     </div>
 
     <div class="section" id="education-section">
         <h2 data-ar="التعليم">التعليم</h2>
         <div class="details-item">
-            <p>
-                <strong data-ar="المؤهل">المؤهل:</strong> 
-                <span data-ar-content="بكالوريوس">بكالوريوس</span>
-                <span style="float: left;" data-ar-content-2="2022">2022</span>
-            </p>
-            <p>
-                <strong data-ar="التخصص">التخصص:</strong> 
-                <span data-ar-content="الخدمة الاجتماعية">الخدمة الاجتماعية</span>
-            </p>
-            <p>
-                <strong data-ar="اسم جهة التعليم">اسم جهة التعليم:</strong> 
-                <span data-ar-content="جامعة حفر الباطن">جامعة حفر الباطن</span>
-            </p>
-            <p>
-                <strong data-ar="تصنيف">تصنيف:</strong> 
-                <span data-ar-content="مهني من الهيئة السعودية للتخصصات الصحية (أخصائي اجتماعي)">مهني من الهيئة السعودية للتخصصات الصحية (أخصائي اجتماعي)</span>
-            </p>
+            <p><strong data-ar="المؤهل">المؤهل:</strong> <span data-ar-content="بكالوريوس">بكالوريوس</span></p>
+            <p><strong data-ar="التخصص">التخصص:</strong> <span data-ar-content="الخدمة الاجتماعية">الخدمة الاجتماعية</span></p>
+            <p><strong data-ar="سنة التخرج">سنة التخرج:</strong> <span data-ar-content="2022">2022</span></p>
         </div>
     </div>
 
     <div class="section" id="experience-section">
         <h2 data-ar="الخبرات">الخبرات</h2>
-        
         <div class="details-item">
-            <p><strong data-ar-title="تدريب على رأس العمل – برنامج تمهير (وظيفة أخصائي علاقات عامة)">تدريب على رأس العمل – برنامج تمهير (وظيفة أخصائي علاقات عامة)</strong></p>
+            <p><strong data-ar="تدريب على رأس العمل – برنامج تمهير">تدريب على رأس العمل – برنامج تمهير</strong></p>
             <ul>
-                <li data-ar="تنفيذ مهام العلاقات العامة والتواصل الداخلي ودعم الهوية المؤسسية.">تنفيذ مهام العلاقات العامة والتواصل الداخلي ودعم الهوية المؤسسية.</li>
-                <li data-ar="المساهمة في تنسيق الأنشطة والفعاليات داخل المنشأة.">المساهمة في تنسيق الأنشطة والفعاليات داخل المنشأة.</li>
-                <li data-ar="إعداد تقارير مختصرة ومتابعة سير مهام البرنامج.">إعداد تقارير مختصرة ومتابعة سير مهام البرنامج.</li>
-            </ul>
-        </div>
-        
-        <div class="details-item">
-            <p><strong data-ar-title="تدريب تعاوني مشروع تخرج - مركز التأهيل الشامل">تدريب تعاوني مشروع تخرج - مركز التأهيل الشامل</strong></p>
-            <ul>
-                <li data-ar="المساهمة في برامج التأهيل والدعم الاجتماعي.">المساهمة في برامج التأهيل والدعم الاجتماعي.</li>
-                <li data-ar="إجراء التقييمات وإدارة الحالات العلاجية.">إجراء التقييمات وإدارة الحالات العلاجية.</li>
-            </ul>
-        </div>
-        
-        <div class="details-item">
-            <p><strong data-ar-title="التطوع الصحي - مديرية الشؤون الصحية (80 ساعة)">التطوع الصحي - مديرية الشؤون الصحية (80 ساعة)</strong></p>
-            <ul>
-                <li data-ar="تم تقديم الدعم الاجتماعي والتوعوي للمراجعين.">تم تقديم الدعم الاجتماعي والتوعوي للمراجعين.</li>
+                <li data-ar="تنفيذ مهام العلاقات العامة...">تنفيذ مهام العلاقات العامة.</li>
+                <li data-ar="المساهمة في تنسيق الأنشطة...">المساهمة في تنسيق الأنشطة.</li>
             </ul>
         </div>
     </div>
 
-    <div class="section" id="courses-section">
-        <h2 data-ar="الدورات">الدورات</h2>
-        <ul>
-            <li data-ar="دورة معالجة نصوص وإدخال بيانات (6 أشهر)">دورة معالجة نصوص وإدخال بيانات (6 أشهر)</li>
-            <li data-ar="دورة اللغة الإنجليزية في جنوب إفريقيا (3 أشهر)">دورة اللغة الإنجليزية في جنوب إفريقيا (3 أشهر)</li>
-            <li data-ar="تدريب الأخصائيين الاجتماعيين في مجالات (الخدمة الاجتماعية - علم الاجتماع - علم النفس)">تدريب الأخصائيين الاجتماعيين في مجالات (الخدمة الاجتماعية - علم الاجتماع - علم النفس)</li>
-            <li data-ar="التدخل في الأزمات الشخصية والاجتماعية وكيفية إدارة الضغوط">التدخل في الأزمات الشخصية والاجتماعية وكيفية إدارة الضغوط</li>
-            <li data-ar="استراتيجيات التعامل مع المشكلات الاجتماعية">استراتيجيات التعامل مع المشكلات الاجتماعية</li>
-            <li data-ar="مهارات التفاوض في الخدمة الاجتماعية مع الفئات المختلفة">مهارات التفاوض في الخدمة الاجتماعية مع الفئات المختلفة</li>
-            <li data-ar="الوعي القيادي">الوعي القيادي</li>
-        </ul>
+    <div class="buttons">
+        <button onclick="window.print()">طباعة السيرة الذاتية</button>
+        <button onclick="downloadPDF()">تصدير إلى PDF</button>
+        <button onclick="downloadImage()">تصدير كصورة</button>
+        <button id="translateButton" onclick="translateCV()">ترجمة إلى الإنجليزية</button>
     </div>
-
-    <div class="section" id="skills-section">
-        <h2 data-ar="المهارات المهنية والشخصية">المهارات المهنية والشخصية</h2>
-        <ul>
-            <li data-ar-title="التواصل الفعّال" data-ar-content="القدرة على بناء علاقات إيجابية مع الأفراد والمجتمع."><strong>التواصل الفعّال:</strong> القدرة على بناء علاقات إيجابية مع الأفراد والمجتمع.</li>
-            <li data-ar-title="التعامل مع مختلف الشخصيات" data-ar-content="مهارات اجتماعية متقدمة لفهم احتياجات الأفراد."><strong>التعامل مع مختلف الشخصيات:</strong> مهارات اجتماعية متقدمة لفهم احتياجات الأفراد.</li>
-            <li data-ar-title="العمل الجماعي والتعاون" data-ar-content="خبرة في العمل ضمن فرق متعددة التخصصات."><strong>العمل الجماعي والتعاون:</strong> خبرة في العمل ضمن فرق متعددة التخصصات.</li>
-            <li data-ar-title="اتخاذ القرار وحل المشكلات" data-ar-content="القدرة على تحليل القضايا الاجتماعية واتخاذ قرارات فعالة."><strong>اتخاذ القرار وحل المشكلات:</strong> القدرة على تحليل القضايا الاجتماعية واتخاذ قرارات فعالة.</li>
-            <li data-ar-title="الذكاء العاطفي" data-ar-content="مهارات في فهم وإدارة المشاعر لتعزيز العلاقات المهنية."><strong>الذكاء العاطفي:</strong> مهارات في فهم وإدارة المشاعر لتعزيز العلاقات المهنية.</li>
-            <li data-ar-title="تحمل المسؤولية والانضباط" data-ar-content="الالتزام بأخلاقيات العمل والقدرة على العمل تحت الضغط."><strong>تحمل المسؤولية والانضباط:</strong> الالتزام بأخلاقيات العمل والقدرة على العمل تحت الضغط.</li>
-            <li data-ar-title="القيادة والإدارة" data-ar-content="مهارات في التخطيط والتنظيم والإشراف على الأنشطة الاجتماعية."><strong>القيادة والإدارة:</strong> مهارات في التخطيط والتنظيم والإشراف على الأنشطة الاجتماعية.</li>
-        </ul>
-    </div>
-    
-</div>
-
-<div class="buttons">
-    <button onclick="window.print()">🖨️ طباعة السيرة الذاتية</button>
-    <button onclick="downloadPDF()">📄 تصدير إلى PDF</button>
-    <button onclick="downloadImage()">🖼️ تصدير كصورة</button> 
-    <button id="translateButton" onclick="translateCV()">🌐 ترجمة إلى الإنجليزية</button>
 </div>
 
 <script>
-    // متغير لتتبع حالة الترجمة
-    let isTranslated = false; 
-
-    // قاموس الترجمة الكامل
+    // قاموس الترجمات مع إضافة النصوص بالكامل
     const translations = {
-        "عبدالله المطيري": "Abdullah Al Mutairi",
-        "الهدف الوظيفي": "Career Objective", "التعليم": "Education", "الخبرات": "Experience", "الدورات": "Courses", "المهارات المهنية والشخصية": "Professional and Personal Skills",
-        "المؤهل": "Qualification", "التخصص": "Specialization", "اسم جهة التعليم": "Educational Institution", "تصنيف": "Classification", "سنة التخرج": "Year of Graduation",
-        "بكالوريوس": "Bachelor's Degree", "الخدمة الاجتماعية": "Social Service", "جامعة حفر الباطن": "University of Hafr Al Batin", "2022": "2022",
-        "مهني من الهيئة السعودية للتخصصات الصحية (أخصائي اجتماعي)": "Professional Classification from Saudi Commission for Health Specialties (Social Specialist)",
-        "أسعى إلى الانضمام إلى بيئة عمل احترافية تتيح لي توظيف مهاراتي وقدراتي بشكل فعال والمساهمة في تحقيق أهداف المؤسسة من خلال العمل بجودة وكفاءة. أطمح إلى تطوير خبراتي وتعزيز مهاراتي المهنية بما يحقق النمو المستدام لي وللجهة التي أعمل بها.": "I seek to join a professional work environment that allows me to effectively utilize my skills and abilities and contribute to achieving the organization's goals through quality and efficient work. I aspire to develop my experiences and enhance my professional skills to achieve sustainable growth for myself and the entity I work for.",
-        "تدريب على رأس العمل – برنامج تمهير (وظيفة أخصائي علاقات عامة)": "On-the-Job Training – Tamheer Program (Public Relations Specialist)",
-        "تنفيذ مهام العلاقات العامة والتواصل الداخلي ودعم الهوية المؤسسية.": "Executing public relations tasks, internal communication, and supporting corporate identity.",
-        "المساهمة في تنسيق الأنشطة والفعاليات داخل المنشأة.": "Contributing to the coordination of activities and events within the facility.",
-        "إعداد تقارير مختصرة ومتابعة سير مهام البرنامج.": "Preparing brief reports and following up on program tasks.",
-        "تدريب تعاوني مشروع تخرج - مركز التأهيل الشامل": "Cooperative Training Graduation Project - Comprehensive Rehabilitation Center",
-        "المساهمة في برامج التأهيل والدعم الاجتماعي.": "Contributing to rehabilitation and social support programs.",
-        "إجراء التقييمات وإدارة الحالات العلاجية.": "Conducting assessments and managing therapeutic cases.",
-        "التطوع الصحي - مديرية الشؤون الصحية (80 ساعة)": "Health Volunteering - Directorate of Health Affairs (80 hours)",
-        "تم تقديم الدعم الاجتماعي والتوعوي للمراجعين.": "Provided social and awareness support to patients/visitors.",
-        "دورة معالجة نصوص وإدخال بيانات (6 أشهر)": "Text Processing and Data Entry Course (6 months)",
-        "دورة اللغة الإنجليزية في جنوب إفريقيا (3 أشهر)": "English Language Course in South Africa (3 months)",
-        "تدريب الأخصائيين الاجتماعيين في مجالات (الخدمة الاجتماعية - علم الاجتماع - علم النفس)": "Training for Social Specialists in (Social Service - Sociology - Psychology)",
-        "التدخل في الأزمات الشخصية والاجتماعية وكيفية إدارة الضغوط": "Intervening in Personal and Social Crises and Stress Management",
-        "استراتيجيات التعامل مع المشكلات الاجتماعية": "Strategies for Dealing with Social Problems",
-        "مهارات التفاوض في الخدمة الاجتماعية مع الفئات المختلفة": "Negotiation Skills in Social Work with Different Groups",
-        "الوعي القيادي": "Leadership Awareness",
-        // ترجمة المهارات (النص قبل وبعد النقطتين)
-        "التواصل الفعّال": "Effective Communication", "القدرة على بناء علاقات إيجابية مع الأفراد والمجتمع.": "Ability to build positive relationships with individuals and the community.",
-        "التعامل مع مختلف الشخصيات": "Dealing with Various Personalities", "مهارات اجتماعية متقدمة لفهم احتياجات الأفراد.": "Advanced social skills to understand individual needs.",
-        "العمل الجماعي والتعاون": "Teamwork and Cooperation", "خبرة في العمل ضمن فرق متعددة التخصصات.": "Experience working within multidisciplinary teams.",
-        "اتخاذ القرار وحل المشكلات": "Decision Making and Problem Solving", "القدرة على تحليل القضايا الاجتماعية واتخاذ قرارات فعالة.": "Ability to analyze social issues and make effective decisions.",
-        "الذكاء العاطفي": "Emotional Intelligence", "مهارات في فهم وإدارة المشاعر لتعزيز العلاقات المهنية.": "Skills in understanding and managing emotions to enhance professional relationships.",
-        "تحمل المسؤولية والانضباط": "Responsibility and Discipline", "الالتزام بأخلاقيات العمل والقدرة على العمل تحت الضغط.": "Commitment to work ethics and the ability to work under pressure.",
-        "القيادة والإدارة": "Leadership and Management", "مهارات في التخطيط والتنظيم والإشراف على الأنشطة الاجتماعية.": "Skills in planning, organizing, and supervising social activities."
+        "الهدف الوظيفي": "Career Objective",
+        "أسعى إلى الانضمام إلى بيئة عمل احترافية تتيح لي توظيف مهاراتي وقدراتي بشكل فعال.": "I seek to join a professional work environment that allows me to effectively utilize my skills and abilities.",
+        "التعليم": "Education",
+        "المؤهل": "Qualification",
+        "بكالوريوس": "Bachelor's Degree",
+        "التخصص": "Specialization",
+        "الخدمة الاجتماعية": "Social Service",
+        "سنة التخرج": "Year of Graduation",
+        "2022": "2022",
+        "الخبرات": "Experience",
+        "تدريب على رأس العمل – برنامج تمهير": "On-the-job Training – Tamheer Program",
+        "تنفيذ مهام العلاقات العامة...": "Executing public relations tasks.",
+        "المساهمة في تنسيق الأنشطة...": "Contributing to the coordination of activities."
     };
 
-    function getTranslation(text) { return translations[text.trim()] || text; }
-    function getOriginal(text) {
-        const original = Object.keys(translations).find(key => translations[key] === text.trim());
-        return original || text;
+    let isTranslated = false;
+
+    // دالة الترجمة
+    function getTranslation(text) { 
+        return translations[text.trim()] || text; 
     }
 
-    // دالة ترجمة السيرة الذاتية (مُحسَّنة للتعامل الشامل مع كل الـ Tags)
     function translateCV() {
         const translateButton = document.getElementById('translateButton');
         const cvName = document.getElementById('cv-name');
         
         isTranslated = !isTranslated; 
-
-        translateButton.textContent = isTranslated ? "🌐 ترجمة إلى العربية" : "🌐 ترجمة إلى الإنجليزية";
-
+        translateButton.textContent = isTranslated ? "ترجمة إلى العربية" : "ترجمة إلى الإنجليزية";
         document.documentElement.setAttribute('dir', isTranslated ? 'ltr' : 'rtl');
         document.querySelector('html').setAttribute('lang', isTranslated ? 'en' : 'ar');
         
-        // 1. ترجمة الاسم (H1)
-        const nameOriginal = cvName.getAttribute('data-ar');
-        cvName.textContent = isTranslated ? getTranslation(nameOriginal) : nameOriginal;
+        // ترجمة النصوص في السيرة الذاتية
+        cvName.textContent = isTranslated ? getTranslation(cvName.textContent) : getTranslation(cvName.textContent);
 
         document.querySelectorAll(".section").forEach(section => {
-            // 2. ترجمة عناوين الأقسام (H2)
             const h2 = section.querySelector("h2");
-            if (h2) { h2.textContent = isTranslated ? getTranslation(h2.getAttribute('data-ar')) : h2.getAttribute('data-ar'); }
+            h2.textContent = isTranslated ? getTranslation(h2.getAttribute('data-ar')) : h2.getAttribute('data-ar');
 
-            // 3. ترجمة الهدف الوظيفي (P)
-            const pObjective = section.querySelector("#objective-section p");
-            if (pObjective) { pObjective.textContent = isTranslated ? getTranslation(pObjective.getAttribute('data-ar')) : pObjective.getAttribute('data-ar'); }
-            
-            // 4. ترجمة تفاصيل التعليم (Strong & Span)
-            section.querySelectorAll('.details-item p strong').forEach(strongElement => {
-                const originalText = strongElement.getAttribute('data-ar');
-                if (originalText) { strongElement.textContent = isTranslated ? getTranslation(originalText) + (originalText.endsWith(':') ? '' : ':') : originalText; }
-            });
-
-            section.querySelectorAll('.details-item p span[data-ar-content]').forEach(spanElement => {
-                const originalText = spanElement.getAttribute('data-ar-content');
-                if (originalText) { spanElement.textContent = isTranslated ? getTranslation(originalText) : originalText; }
-            });
-
-            // 5. ترجمة عناوين الخبرات (Strong Titles)
-            section.querySelectorAll('.details-item p strong[data-ar-title]').forEach(strongTitle => {
-                const originalText = strongTitle.getAttribute('data-ar-title');
-                if (originalText) { strongTitle.textContent = isTranslated ? getTranslation(originalText) : originalText; }
-            });
-
-            // 6. ترجمة محتوى القوائم (Li & Skills)
-            section.querySelectorAll("#courses-section ul li, #experience-section ul li").forEach(li => {
-                const originalText = li.getAttribute('data-ar');
-                if (originalText) { li.textContent = isTranslated ? getTranslation(originalText) : originalText; }
-            });
-
-            // 7. ترجمة مهارات (Li Strong: Content)
-            section.querySelectorAll("#skills-section ul li").forEach(li => {
-                const titleOriginal = li.getAttribute('data-ar-title');
-                const contentOriginal = li.getAttribute('data-ar-content');
-                
-                const translatedTitle = isTranslated ? getTranslation(titleOriginal) : titleOriginal;
-                const translatedContent = isTranslated ? getTranslation(contentOriginal) : contentOriginal;
-                
-                li.innerHTML = `<strong>${translatedTitle}${!isTranslated ? ':' : ''}</strong> ${translatedContent}`;
-            });
+            const p = section.querySelector("p");
+            if (p) { 
+                p.textContent = isTranslated ? getTranslation(p.getAttribute('data-ar')) : p.getAttribute('data-ar'); 
+            }
         });
     }
 
-    // دالة تصدير PDF (مُحسَّنة لـ A4 وورقة واحدة)
+    // دالة تصدير PDF
     function downloadPDF() {
         const element = document.getElementById('cvContent');
         const buttonsDiv = document.querySelector('.buttons');
         
-        // إخفاء الأزرار قبل التصدير
         buttonsDiv.classList.add('no-print');
 
         const opt = {
-            margin: 0, // لا هوامش
-            filename: isTranslated ? 'cv_abdullah_almutairi_en.pdf' : 'cv_abdullah_almutairi_ar.pdf',
+            margin: 0, 
+            filename: 'cv_abdullah_almutairi.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 3, dpi: 192, letterRendering: true, useCORS: true }, 
+            html2canvas: { scale: 3, dpi: 192, letterRendering: true }, 
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        // استخدام 'toPdf' يضمن توليد PDF من صفحة واحدة A4
         html2pdf().set(opt).from(element).toPdf().get('pdf').then(function (pdf) {
-            pdf.save(opt.filename);
+            pdf.save('cv_abdullah_almutairi.pdf');
             buttonsDiv.classList.remove('no-print');
         });
     }
-    
-    // دالة تصدير كصورة (مُحسَّنة لضمان مقاس A4 لـ الصورة)
+
+    // دالة تصدير كصورة
     function downloadImage() {
         const cvElement = document.getElementById('cvContent');
         const buttonsDiv = document.querySelector('.buttons');
 
-        // إخفاء الأزرار قبل أخذ الصورة
         buttonsDiv.classList.add('no-print'); 
 
         html2canvas(cvElement, {
-            scale: 2.5, // لزيادة دقة الصورة
-            useCORS: true,
-            // تحديد حدود التصوير على عنصر cv-page فقط لضمان مقاس A4
-            width: cvElement.offsetWidth,
-            height: cvElement.offsetHeight 
+            scale: 2, 
+            useCORS: true
         }).then(canvas => {
             const image = canvas.toDataURL('image/png');
-            
             const link = document.createElement('a');
             link.href = image;
-            link.download = isTranslated ? 'cv_abdullah_almutairi_en.png' : 'cv_abdullah_almutairi_ar.png';
-            
+            link.download = 'cv_abdullah_almutairi.png';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-
-            // إظهار الأزرار مرة أخرى
             buttonsDiv.classList.remove('no-print');
         }).catch(err => {
             console.error('فشل في تصدير الصورة:', err);
