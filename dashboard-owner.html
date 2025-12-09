@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        /* تنسيقات خاصة للميزات الجديدة */
         .smart-widget {
             background: white;
             border-radius: 12px;
@@ -67,6 +66,14 @@
             align-items: center;
             gap: 10px;
         }
+        .risk-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 5px;
+        }
         .mojaz-badge {
             background: linear-gradient(45deg, #2980b9, #3498db);
             color: white;
@@ -74,13 +81,14 @@
             border-radius: 4px;
             font-size: 0.7rem;
         }
-        .family-fleet-badge {
-            background: #6f42c1;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-right: 10px;
+        .pledge-box {
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            border: 1px solid #e0e0e0;
+            border-right: 5px solid var(--secondary);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
         }
     </style>
 </head>
@@ -113,7 +121,7 @@
                             <h3>نواف السبيعي</h3>
                             <p>
                                 <i class="fas fa-check-circle" style="color: #4cd137;"></i> موثق
-                                <span class="family-fleet-badge"><i class="fas fa-users"></i> أسطول عائلي</span>
+                                <span style="display:block; font-size:0.8rem; opacity:0.8; margin-top:5px;"><i class="fas fa-users"></i> أسطول عائلي</span>
                             </p>
                         </div>
                     </div>
@@ -128,6 +136,22 @@
 
                 <div class="dashboard-content">
                     
+                    <div class="smart-widget" style="border-right: 4px solid #6f42c1; background: linear-gradient(to left, #fff, #f3e5f5);">
+                        <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap:wrap; gap:15px;">
+                            <div>
+                                <h3 style="color: #4a148c; margin-bottom: 5px;"><i class="fas fa-flag"></i> فرصة حكومية: موكب ضيوف إكسبو</h3>
+                                <p style="font-size: 0.9rem; color: #555; max-width: 500px;">
+                                    تم اختيار سيارتك (تويوتا لاندكروزر) لمطابقتها المواصفات المطلوبة لتشكيل موكب رسمي لوفد دبلوماسي.
+                                </p>
+                                <div style="margin-top: 10px;">
+                                    <span class="risk-badge" style="background: #e1bee7; color: #4a148c;">المدة: 3 أيام</span>
+                                    <span class="risk-badge" style="background: #e1bee7; color: #4a148c;">العائد: 3,000 ر.س (مضمون)</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" style="background: #4a148c; border: none; font-size:0.9rem;">قبول الانضمام</button>
+                        </div>
+                    </div>
+
                     <div class="vacation-mode-switch">
                         <div>
                             <strong><i class="fas fa-plane-departure"></i> وضع الإجازة</strong>
@@ -145,6 +169,20 @@
                         <div style="display: flex; gap: 10px; margin-top: 15px;">
                             <input type="text" class="form-control" placeholder="أدخل رقم الهوية للتحقق..." style="margin-bottom: 0;">
                             <button class="btn btn-primary" onclick="alert('✅ السجل نظيف: المستأجر غير محظور ولا يوجد تعاميم أمنية.')">فحص</button>
+                        </div>
+                    </div>
+
+                    <div class="pledge-box" id="owner-pledge-section">
+                        <h3><i class="fas fa-wrench"></i> تعهد جاهزية المركبة</h3>
+                        <p style="margin-bottom: 15px; color: #666;">لضمان سلامة المستأجرين وتجنب المسؤولية، يرجى تأكيد فحص السيارة المتاحة حالياً.</p>
+                        <form id="owner-pledge-form">
+                            <label style="display:block; margin-bottom:10px; cursor:pointer;">
+                                <input type="checkbox" required> أتعهد بأن السيارة سليمة ميكانيكياً وأن التأمين ساري المفعول.
+                            </label>
+                            <button type="submit" class="btn btn-primary" style="padding: 10px 25px;">تأكيد الجاهزية</button>
+                        </form>
+                        <div id="owner-success-msg" style="display:none; margin-top:15px; padding:15px; background:#e8f5e9; border-radius:8px; color:#2e8b57;">
+                            <strong><i class="fas fa-check"></i> شكراً نواف!</strong> تم توثيق جاهزية المركبة بنجاح.
                         </div>
                     </div>
 
@@ -196,16 +234,6 @@
                         </div>
                     </div>
 
-                    <div class="smart-widget">
-                        <div style="display: flex; justify-content: space-between;">
-                            <h3><i class="fas fa-fire"></i> خريطة الطلب الحرارية</h3>
-                            <span style="color: var(--gray);">الرياض - حي النرجس (طلب مرتفع جداً)</span>
-                        </div>
-                        <div style="height: 200px; background: #eee; border-radius: 8px; margin-top: 10px; display: flex; align-items: center; justify-content: center; color: #777;">
-                            [خريطة تفاعلية توضح المناطق الأكثر طلباً لتوجيه سيارتك لها]
-                        </div>
-                    </div>
-
                     <div style="text-align: center; margin-top: 30px;">
                         <button class="btn" style="background: #e74c3c; color: white; width: 100%;">
                             <i class="fas fa-car-crash"></i> الإبلاغ عن حادث (ربط فوري مع "تقدير")
@@ -218,6 +246,13 @@
     </section>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script> AOS.init(); </script>
+    <script>
+        AOS.init();
+        document.getElementById('owner-pledge-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.style.display = 'none';
+            document.getElementById('owner-success-msg').style.display = 'block';
+        });
+    </script>
 </body>
 </html>
