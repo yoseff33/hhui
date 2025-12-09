@@ -3,71 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | مستقبل التنقل المستدام</title>
+    <title>وُجْهَة | أمان الطريق يجمعنا</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        /* تنسيق الأيقونات (بديل صور الأشخاص) */
-        .testimonial-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: rgba(46, 139, 87, 0.1);
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin: 0 auto 15px;
-            border: 3px solid var(--secondary);
-        }
-        /* تنسيق قسم الرؤية الجديد */
-        .vision-section {
-            background: linear-gradient(135deg, var(--dark), var(--primary));
+        /* شريط الإحصائيات الحية */
+        .live-stats-bar {
+            background: var(--dark);
             color: white;
-            position: relative;
+            padding: 15px 0;
             overflow: hidden;
-            padding: 80px 0;
+            white-space: nowrap;
+            border-bottom: 3px solid var(--secondary);
         }
-        .vision-section::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://www.vision2030.gov.sa/media/calj2q2n/vision-2030-logo.svg') no-repeat center center;
-            background-size: contain;
-            opacity: 0.05;
+        .stats-ticker {
+            display: inline-block;
+            animation: ticker 25s linear infinite;
         }
-        .vision-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+        @keyframes ticker {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .stat-item { display: inline-block; margin: 0 30px; font-size: 1.1rem; }
+        .stat-item i { color: var(--secondary); margin-left: 8px; }
+
+        /* تنسيق قسم الأمان الجديد */
+        .security-quote-section {
+            background: #f8f9fa;
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .security-quote-box {
+            max-width: 900px;
+            margin: 0 auto;
             position: relative;
-            z-index: 2;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+            border-right: 6px solid var(--primary);
         }
-        .vision-card {
+        .quote-icon {
+            font-size: 3rem;
+            color: #eee;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        
+        /* تنسيق بطاقات الرؤية */
+        .vision-card-new {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             padding: 30px;
             border-radius: 16px;
-            backdrop-filter: blur(10px);
             transition: transform 0.3s;
+            height: 100%;
         }
-        .vision-card:hover {
-            transform: translateY(-10px);
+        .vision-card-new:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.1);
             border-color: var(--secondary);
         }
-        .vision-card h3 {
-            color: var(--secondary);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+
+        /* تنسيق الشعارات */
+        .partners-logos {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            align-items: center;
         }
-        .vision-card p {
-            color: rgba(255,255,255,0.9);
-            font-size: 1.1rem;
-            line-height: 1.6;
+        .partner-img {
+            height: 60px;
+            width: auto;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            object-fit: contain;
         }
+        .partner-img:hover { filter: grayscale(0%); opacity: 1; transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -82,12 +101,12 @@
                 <ul class="nav-links desktop-nav-links">
                     <li><a href="index.html" class="active">الرئيسية</a></li>
                     <li><a href="cars.html">استكشف السيارات</a></li>
-                    <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-                    <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
-                    <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
+                    <li><a href="index.html#how-it-works">رحلة الأمان</a></li>
+                    <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة المؤجر</a></li>
+                    <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة المستأجر</a></li>
                     <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
-                    <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
-                    <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
+                    <li><a href="quiz.html">اختبار السيارة</a></li>
+                    <li><a href="qassim-map.html">خريطة الرياض</a></li>
                 </ul>
                 
                 <div class="nav-buttons nav-buttons-desktop-only">
@@ -110,41 +129,55 @@
         <div id="particles-js"></div>
         <div class="container">
             <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
-                <h1>وُجْهَة.. نقلب موازين التنقل 🇸🇦</h1>
-                <p>أول منصة وطنية مستدامة تعيد تعريف "ملكية السيارة". نحول الأصول المهدرة إلى اقتصاد تشاركي آمن، لخدمة المواطن اليوم، واستيعاب ملايين الزوار غداً.. بنية تحتية رقمية تليق بمستقبل المملكة.</p>
+                <h1>وُجْهَة.. أمان الطريق يجمعنا 🇸🇦</h1>
+                <p>منصة سعودية بمعايير عالمية، تغطي احتياجات التنقل اليومية وتواكب الأحداث الكبرى برؤية 2030. نستخدم أحدث التقنيات لنضمن تجربة آمنة وموثقة للجميع.</p>
                 <div class="hero-buttons">
                     <a href="add-car.html" class="btn btn-primary">
-                        <i class="fas fa-chart-line"></i> استثمر سيارتك
+                        <i class="fas fa-key"></i> تمكين الأصول (شارك سيارتك)
                     </a>
                     <a href="cars.html" class="btn btn-secondary">
-                        <i class="fas fa-search"></i> ابدأ رحلتك
+                        <i class="fas fa-search"></i> تنقل بلا حدود (احجز رحلتك)
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="vision-section">
+    <div class="live-stats-bar">
+        <div class="container">
+            <div class="stats-ticker">
+                <span class="stat-item"><i class="fas fa-check-circle"></i> عمليات موثقة عبر نفاذ 100%</span>
+                <span class="stat-item"><i class="fas fa-car"></i> تغطية شاملة لجميع مدن المملكة</span>
+                <span class="stat-item"><i class="fas fa-shield-alt"></i> ربط أمني مباشر مع الجهات المعنية</span>
+                <span class="stat-item"><i class="fas fa-users"></i> مجتمع موثوق للمواطن والمقيم والزائر</span>
+            </div>
+        </div>
+    </div>
+
+    <section class="vision-section" style="background: linear-gradient(135deg, var(--dark), #0f2925); color: white; padding: 80px 0;">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2 style="color: white;">رؤية لا تتوقف عند حدث</h2>
-                <p style="color: rgba(255,255,255,0.8);">حلولنا صُممت لتبقى وتنمو مع نمو المملكة</p>
+                <h2 style="color: white;">بنية رقمية تخدم الوطن</h2>
+                <p style="color: rgba(255,255,255,0.8);">وُجْهَة ليست مجرد تطبيق، بل هي حل مستدام لرفع جودة الحياة</p>
             </div>
-            <div class="vision-grid">
-                <div class="vision-card" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-leaf" style="font-size: 2rem; color: var(--secondary); margin-bottom: 20px;"></i>
-                    <h3>استدامة الموارد</h3>
-                    <p>بدلاً من استيراد آلاف السيارات لأحداث مؤقتة ثم تكديسها، نحن نفعّل أسطول المملكة الحالي. حل ذكي يقلل الهدر ويدعم الاقتصاد الدائري بشكل دائم.</p>
+            
+            <div class="features-grid"> 
+                <div class="vision-card-new" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-coins" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px;"></i>
+                    <h3 style="color: white;">للمواطن</h3>
+                    <p style="color: #ccc; font-size: 1.1rem;">مصدر دخل إضافي محمي وموثق. حول أصولك المتوقفة إلى استثمار ناجح بكل أمان.</p>
                 </div>
-                <div class="vision-card" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-network-wired" style="font-size: 2rem; color: var(--secondary); margin-bottom: 20px;"></i>
-                    <h3>بنية تحتية مرنة</h3>
-                    <p>نظامنا مصمم للتعامل مع ذروة الطلب في إكسبو وكأس العالم، والعمل بكفاءة في الأيام العادية. نحن العمود الفقري الجديد للمواصلات.</p>
+                
+                <div class="vision-card-new" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-user-check" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px;"></i>
+                    <h3 style="color: white;">للمستخدم</h3>
+                    <p style="color: #ccc; font-size: 1.1rem;">خيارات تنقل متنوعة وآمنة في كل مدينة وحي. سهولة في الوصول وموثوقية في التعامل.</p>
                 </div>
-                <div class="vision-card" data-aos="fade-up" data-aos-delay="300">
-                    <i class="fas fa-shield-halved" style="font-size: 2rem; color: var(--secondary); margin-bottom: 20px;"></i>
-                    <h3>أمن مجتمعي ذكي</h3>
-                    <p>تقنياتنا في التحقق (عبر نفاذ) والمراقبة الميدانية تجعل من كل عملية تأجير عملية موثقة أمنياً، مما يرفع مستوى الأمان العام في الطرقات بشكل مستمر.</p>
+                
+                <div class="vision-card-new" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-globe-asia" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px;"></i>
+                    <h3 style="color: white;">للوطن</h3>
+                    <p style="color: #ccc; font-size: 1.1rem;">جاهزية تامة لاستيعاب النمو السكاني والزوار في الأحداث العالمية الكبرى بكفاءة عالية.</p>
                 </div>
             </div>
         </div>
@@ -153,90 +186,53 @@
     <section class="features">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2>نظام بيئي متكامل</h2>
-                <p>لسنا مجرد تطبيق، نحن منظومة أمنية واقتصادية</p>
+                <h2>حلولنا الشاملة</h2>
+                <p>صممت لخدمة الجميع بمعايير وطنية</p>
             </div>
             
             <div class="features-grid">
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="feature-icon">
-                        <i class="fas fa-fingerprint"></i>
-                    </div>
-                    <h3>الهوية الرقمية الموحدة</h3>
-                    <p>الربط المباشر مع الهوية الوطنية للتحقق من الأهلية والقدرة الائتمانية والسجل المروري.</p>
+                    <div class="feature-icon"><i class="fas fa-fingerprint"></i></div>
+                    <h3>تجربة مستخدم عالمية</h3>
+                    <p>واجهة سهلة وتوثيق فوري يخدم الجميع، سواء كنت مواطناً، مقيماً، أو زائراً، بهوية وطنية أو رقم حدود.</p>
                 </div>
                 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-icon">
-                        <i class="fas fa-satellite-dish"></i>
-                    </div>
-                    <h3>إدارة الأسطول الميداني</h3>
-                    <p>تقنيات IoT لتتبع الأصول وضمان عدم خروجها عن النطاقات المسموحة، حمايةً للمالك وللأمن العام.</p>
+                    <div class="feature-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <h3>تنقل بلا حدود</h3>
+                    <p>استلم سيارتك في الرياض وسلمها في جدة. حل مثالي لسفرياتك الداخلية أو تنقلاتك اليومية المرنة.</p>
                 </div>
                 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="feature-icon">
-                        <i class="fas fa-coins"></i>
-                    </div>
-                    <h3>تعزيز دخل الفرد</h3>
-                    <p>تمكين المواطنين من تحويل سياراتهم المتوقفة إلى مصدر دخل إضافي آمن ومستدام.</p>
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>تمكين الأصول</h3>
+                    <p>لا توقف سيارتك وتخسر قيمتها. شاركها مع مجتمع موثوق وحولها إلى أصل رابح تحت مظلة أمنية.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="testimonials-section">
+    <section class="security-quote-section">
         <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>أثرنا في الواقع</h2>
-                <p>نماذج لمستفيدين من المنظومة</p>
-            </div>
-            <div class="testimonial-slider" data-aos="fade-up" data-aos-delay="100">
-                <div class="testimonial-slide active">
-                    <div class="testimonial-icon"><i class="fas fa-user-tie"></i></div>
-                    <p class="testimonial-text">"وُجْهَة حولت سيارتي الثانية من عبء مالي إلى أصل استثماري يغطي مصاريفه ويزيد. النظام يحميني قانونياً ومادياً."</p>
-                    <p class="testimonial-author-name">مستثمر في الاقتصاد التشاركي</p>
-                    <p class="testimonial-author-role">شريك وُجْهَة</p>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-icon"><i class="fas fa-briefcase"></i></div>
-                    <p class="testimonial-text">"في رحلات العمل، أحتاج سيارة موثوقة فور وصولي وبدون إجراءات ورقية معقدة. وُجْهَة وفرت لي هذا بأمان تام."</p>
-                    <p class="testimonial-author-name">مستخدم دائم</p>
-                    <p class="testimonial-author-role">قطاع الأعمال</p>
-                </div>
-                <div class="slider-dots">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                </div>
+            <div class="security-quote-box" data-aos="zoom-in">
+                <i class="fas fa-quote-right quote-icon"></i>
+                <h3 style="color: var(--primary); margin-bottom: 20px; font-weight: 800;">ميثاق وُجْهَة الأمني</h3>
+                <p style="font-size: 1.3rem; line-height: 1.8; color: var(--text-color-light); font-weight: 500;">
+                    "سواء كنت صاحب السيارة أو قائدها، <strong>نفاذ</strong> هو الحكم، و <strong>أبشر</strong> هو الضامن.<br>
+                    في وُجْهَة، لا نتعامل مع المجهولين. كل عملية موثقة، كل طرف معروف، وكل حق محفوظ."
+                </p>
             </div>
         </div>
     </section>
 
-    <section id="how-it-works" class="how-it-works">
+    <section style="padding: 60px 0; background: white; text-align: center;">
         <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>رحلة المستخدم الآمنة</h2>
-                <p>معايير قياسية في كل خطوة</p>
-            </div>
-            
-            <div class="steps-container">
-                <div class="step" data-aos="fade-up" data-aos-delay="100">
-                    <div class="step-number">1</div>
-                    <h3>التوثيق السيادي</h3>
-                    <p>بوابة دخول موحدة عبر نفاذ لضمان موثوقية كافة الأطراف.</p>
-                </div>
-                
-                <div class="step" data-aos="fade-up" data-aos-delay="200">
-                    <div class="step-number">2</div>
-                    <h3>التعاقد الذكي</h3>
-                    <p>عقود إلكترونية فورية مرتبطة بأنظمة التفويض، تحفظ الحقوق وتحدد المسؤوليات.</p>
-                </div>
-                
-                <div class="step" data-aos="fade-up" data-aos-delay="300">
-                    <div class="step-number">3</div>
-                    <h3>الاستلام والمتابعة</h3>
-                    <p>استلام السيارة ودعم فني وأمني متواصل طوال فترة الرحلة.</p>
-                </div>
+            <h3 style="color: var(--gray); margin-bottom: 40px; font-weight: 700;">منظومة تكاملية مع</h3>
+            <div class="partners-logos" data-aos="fade-up">
+                <img src="https://www.zarkachat.com/wp-content/uploads/2020/04/absherr.jpg" alt="أبشر" class="partner-img">
+                <img src="https://nafath.sa/images/logo.png" alt="نفاذ" class="partner-img">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/bb/4a/93/bb4a9376-f7fc-8a7a-73f6-8835ee3d8668/AppIcon-0-0-1x_U007emarketing-0-7-0-0-sRGB-0-85-220.png/1200x630wa.png" alt="نجم" class="partner-img" style="border-radius: 10px;">
+                <img src="https://www.elm.sa/Style%20Library/Elm/Images/logo.png" alt="تم - علم" class="partner-img">
             </div>
         </div>
     </section>
@@ -247,35 +243,20 @@
                 <div class="footer-col">
                     <h3>عن وُجْهَة</h3>
                     <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
-                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. نسعى لتحويل السيارات الواقعة إلى أصول منتجة.
+                        منصة وطنية للابتكار في التنقل الآمن. نعمل تحت مظلة التشريعات المحلية لتحقيق رؤية 2030 في الاقتصاد التشاركي.
                     </p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
                 
                 <div class="footer-col">
-                    <h3>روابط سريعة</h3>
+                    <h3>روابط هامة</h3>
                     <ul>
                         <li><a href="index.html">الرئيسية</a></li>
-                        <li><a href="cars.html">استكشف السيارات</a></li>
-                        <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-                        <li><a href="#">المدونة</a></li>
-                        <li><a href="https://wa.me/966565464718">اتصل بنا</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>للأفراد</h3>
-                    <ul>
-                        <li><a href="dashboard-renter.html">تسجيل كمستأجر</a></li>
-                        <li><a href="cars.html">البحث عن سيارة</a></li>
-                        <li><a href="rental-terms.html">شروط الاستئجار</a></li>
-                        <li><a href="faq.html">الأسئلة الشائعة</a></li>
-                        <li><a href="user-guide.html">دليل المستخدم</a></li>
+                        <li><a href="rental-terms.html">اتفاقية مستوى الخدمة</a></li>
+                        <li><a href="https://wa.me/966565464718">بلاغات الطوارئ</a></li>
                     </ul>
                 </div>
                 
@@ -284,7 +265,7 @@
                     <ul class="footer-contact">
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>القصيم بريدة حي الاسكان</span>
+                            <span>الرياض، واجهة روشن (مقر الهاكاثون)</span>
                         </li>
                         <li>
                             <i class="fas fa-phone"></i>
@@ -292,14 +273,14 @@
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <span><a href="mailto:q_p@outlook.cl">q_p@outlook.cl</a></span>
+                            <span>security@wujha.sa</span>
                         </li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | تم التطوير بكل ❤️ في المملكة العربية السعودية</p>
+                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | صنع في السعودية 🇸🇦</p>
             </div>
         </div>
     </footer>
@@ -338,7 +319,7 @@
         </div>
         <div class="chatbot-body" id="chatbot-body">
             <div class="bot-message">
-                حياك الله! أنا مساعد وُجْهَة الذكي. كيف أقدر أخدمك اليوم؟
+                حياك الله! أنا مساعد وُجْهَة الذكي. كيف أقدر أساعدك في إجراءات الأمان أو التوثيق؟
             </div>
         </div>
         <div class="chatbot-footer">
