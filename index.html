@@ -9,18 +9,15 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        /* === إعدادات عامة === */
+        /* === إعدادات الألوان الأساسية === */
         :root {
-            /* تأكد ان هذي المتغيرات موجودة في ملف style.css الأساسي، أو عرفها هنا اذا تبي */
-            --primary: #0f2925; 
-            --secondary: #cfb165; /* لون ذهبي */
+            --primary: #0f2925; /* الأخضر الداكن */
+            --secondary: #cfb165;
             --dark: #1a1a1a;
         }
 
         /* === إصلاح تأثير الهيدر عند التمرير === */
-        header {
-            transition: all 0.4s ease-in-out;
-        }
+        header { transition: all 0.4s ease-in-out; }
         header.scrolled {
             padding: 10px 0 !important;
             background-color: rgba(255, 255, 255, 0.98);
@@ -51,74 +48,110 @@
         .stat-item { display: inline-block; margin: 0 30px; font-size: 1.1rem; }
         .stat-item i { color: var(--secondary); margin-left: 8px; }
 
-        /* === توحيد تنسيق البطاقات (الرؤية + الميثاق + الحلول) === */
+        /* =========================================
+           1. تنسيق قسم الرؤية (بنية رقمية)
+           ========================================= */
+        /* الوضع الافتراضي (النهاري): خلفية فاتحة وحدود خضراء داكنة */
+        .vision-section {
+            background: #ffffff; /* خلفية القسم بيضاء */
+            padding: 80px 0; /* نفس المقاسات */
+            transition: background 0.3s ease;
+        }
+
+        .vision-card-new {
+            background: #ffffff;
+            border: 2px solid var(--primary); /* الحد أخضر داكن */
+            padding: 30px; /* نفس المقاسات بالضبط */
+            border-radius: 16px;
+            transition: transform 0.3s, background 0.3s;
+            height: 100%;
+            color: var(--primary); /* النص أخضر داكن */
+        }
         
-        /* تنسيق الأقسام الخلفية (نجعلها بيضاء أو رمادية فاتحة جداً) */
-        .vision-section,
-        .security-quote-section,
-        .features {
-            padding: 80px 0;
-            background-color: #ffffff; /* توحيد الخلفية */
+        .vision-card-new h3 { color: var(--primary); margin-bottom: 10px; }
+        .vision-card-new p { color: #555; font-size: 1.1rem; }
+        .vision-card-new i { color: var(--primary); font-size: 2.5rem; margin-bottom: 20px; }
+
+        .vision-card-new:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(15, 41, 37, 0.1);
         }
 
-        /* تنسيق الشبكة للبطاقات */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+        /* الوضع الليلي للرؤية (Dark Mode) */
+        body.dark-mode .vision-section {
+            background: linear-gradient(135deg, var(--dark), #0f2925); /* يرجع غامق في الليل */
         }
+        body.dark-mode .vision-section h2, 
+        body.dark-mode .vision-section p {
+            color: white !important;
+        }
+        body.dark-mode .vision-card-new {
+            background: rgba(255,255,255,0.05); /* شفاف غامق */
+            border: 1px solid rgba(255,255,255,0.1); /* حدود شفافة */
+            color: white;
+        }
+        body.dark-mode .vision-card-new h3,
+        body.dark-mode .vision-card-new p { color: #ccc; }
+        body.dark-mode .vision-card-new i { color: var(--secondary); }
 
-        /* الستايل الموحد للبطاقة (يطبق على كلاسات متعددة) */
-        .vision-card-new,
-        .feature-card,
-        .security-quote-box {
-            background: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* الظل الناعم */
+
+        /* =========================================
+           2. تنسيق قسم الميثاق الأمني
+           ========================================= */
+        /* الوضع الافتراضي (النهاري) */
+        .security-quote-section {
+            background: #f8f9fa;
+            padding: 60px 0;
             text-align: center;
-            transition: transform 0.3s ease;
-            border: 1px solid #eee;
-            position: relative;
-            height: 100%; /* لتوحيد الارتفاع */
-            color: #333; /* لون النص الافتراضي */
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s ease;
         }
 
-        /* استثناء خاص لصندوق الميثاق عشان يجي في النص */
         .security-quote-box {
             max-width: 900px;
             margin: 0 auto;
-            border-right: 6px solid var(--secondary); /* تمييز بسيط للميثاق */
+            position: relative;
+            padding: 50px; /* نفس المقاسات */
+            
+            /* التعديل هنا: خلفية بيضاء وحدود خضراء */
+            background: #ffffff;
+            border: 2px solid var(--primary); 
+            border-right: 6px solid var(--primary); /* تمييز يمين الصندوق */
+            
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+            color: var(--primary);
         }
 
-        /* تأثير الحركة عند المرور */
-        .vision-card-new:hover,
-        .feature-card:hover,
-        .security-quote-box:hover {
-            transform: translateY(-10px);
-            border-color: var(--secondary);
-        }
-
-        /* تنسيق الأيقونات داخل البطاقات */
-        .feature-icon,
-        .vision-card-new i {
-            font-size: 2.5rem;
-            color: var(--secondary);
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-
-        /* أيقونة الاقتباس الكبيرة في الخلفية */
+        .security-quote-box h3 { color: var(--primary); font-weight: 800; margin-bottom: 25px; }
+        .security-quote-box p { font-size: 1.4rem; line-height: 1.8; color: #333; font-weight: 500; }
+        
         .quote-icon {
             font-size: 4rem;
-            color: rgba(0,0,0,0.05); /* لون باهت جداً */
+            color: rgba(15, 41, 37, 0.1); /* لون أيقونة الاقتباس أخضر باهت */
             position: absolute;
             top: 20px;
             right: 20px;
         }
 
-        /* تنسيق قسم الشركاء (داكن مع شعارات بيضاء) */
+        /* الوضع الليلي للميثاق (Dark Mode) */
+        body.dark-mode .security-quote-section {
+            background: #111;
+            border-color: #222;
+        }
+        body.dark-mode .security-quote-box {
+            background: linear-gradient(135deg, var(--primary), #0f2925); /* يرجع متدرج غامق */
+            border: none;
+            border-right: 6px solid var(--secondary);
+            color: white;
+        }
+        body.dark-mode .security-quote-box h3 { color: var(--secondary); text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        body.dark-mode .security-quote-box p { color: white; }
+        body.dark-mode .quote-icon { color: rgba(255,255,255,0.1); }
+
+
+        /* تنسيق قسم الشركاء */
         .partners-section {
             padding: 60px 0;
             background: #1a1a1a;
@@ -144,22 +177,6 @@
             filter: grayscale(0%) brightness(100%);
             opacity: 1; 
             transform: scale(1.1); 
-        }
-
-        /* تنسيق العناوين داخل الأقسام */
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-weight: 800;
-        }
-        .section-title p {
-            color: #666;
-            font-size: 1.1rem;
         }
     </style>
 </head>
@@ -226,7 +243,7 @@
                 <span class="stat-item"><i class="fas fa-users"></i> مجتمع موثوق للمواطن والمقيم والزائر</span>
             </div>
         </div>
-    </section>
+    </div>
 
     <section class="vision-section">
         <div class="container">
@@ -290,8 +307,8 @@
         <div class="container">
             <div class="security-quote-box" data-aos="zoom-in">
                 <i class="fas fa-quote-right quote-icon"></i>
-                <h3 style="color: var(--secondary); margin-bottom: 25px; font-weight: 800;">ميثاق وُجْهَة الأمني</h3>
-                <p style="font-size: 1.3rem; line-height: 1.8; color: #444; font-weight: 500;">
+                <h3>ميثاق وُجْهَة الأمني</h3>
+                <p>
                     "سواء كنت صاحب السيارة أو قائدها، <strong>نفاذ</strong> هو الحكم، و <strong>أبشر</strong> هو الضامن.<br>
                     في وُجْهَة، لا نتعامل مع المجهولين. كل عملية موثقة، كل طرف معروف، وكل حق محفوظ."
                 </p>
@@ -407,13 +424,16 @@
     <script>
         AOS.init({ once: true });
 
+        // كود تشغيل تأثير الهيدر المدمج (لضمان عمله)
         window.addEventListener('scroll', function() {
             var header = document.querySelector('header');
             if(header) {
+                // إذا نزلنا أكثر من 50 بكسل، نضيف كلاس 'scrolled'
                 header.classList.toggle('scrolled', window.scrollY > 50);
             }
         });
 
+        // تشغيل البارتكلز
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
