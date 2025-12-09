@@ -8,6 +8,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* تنسيقات خاصة بمؤشر الثقة */
+        .trust-score-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trust-badge {
+            background-color: #2ecc71;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .auth-status-badge {
+            background: rgba(46, 139, 87, 0.1);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            border: 1px solid var(--primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -25,7 +52,7 @@
                     <li><a href="dashboard-renter.html" class="auth-link active" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
                     <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
                     <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
-                    <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
+                    <li><a href="qassim-map.html">خريطة الرياض</a></li>
                 </ul>
                 <div class="nav-buttons nav-buttons-desktop-only">
                     <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع">
@@ -35,7 +62,7 @@
                         <i class="fas fa-comment-dots"></i>
                         <span>اسالني</span>
                     </button>
-                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
+                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">دخول آمن (نفاذ)</a>
                     <div id="nav-user-profile-placeholder"></div>
                 </div>
             </nav>
@@ -45,96 +72,129 @@
     <section id="dashboard-renter" class="dashboard-section" style="padding-top: 150px;">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2>لوحة تحكم المستأجر</h2>
-                <p>إدارة حجوزاتك وعرض سياراتك المفضلة</p>
+                <h2>حسابي وتفاوضي</h2>
+                <p>إدارة رحلاتك الآمنة ومتابعة نقاط الولاء</p>
             </div>
             
             <div class="dashboard" data-aos="fade-up" data-aos-delay="100">
                 <div class="dashboard-sidebar">
                     <div class="user-profile">
-                        <div class="user-avatar">س</div>
+                        <div class="user-avatar" style="background-color: var(--primary);">م</div>
                         <div class="user-info">
-                            <h3>سليمان الجربوع</h3>
-                            <p>مستأجر معتمد</p>
+                            <h3>محمد العتيبي</h3>
+                            <p><i class="fas fa-check-circle" style="color: #2ecc71;"></i> هوية موثقة (نفاذ)</p>
                         </div>
                     </div>
                     
                     <ul class="sidebar-menu">
-                        <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> نظرة عامة</a></li>
-                        <li><a href="#"><i class="fas fa-calendar-check"></i> حجوزاتي</a></li>
-                        <li><a href="#"><i class="fas fa-heart"></i> السيارات المفضلة</a></li>
-                        <li><a href="#"><i class="fas fa-comment-dots"></i> تقييماتي</a></li>
+                        <li><a href="#" class="active"><i class="fas fa-columns"></i> لوحة التحكم</a></li>
+                        <li><a href="#"><i class="fas fa-route"></i> رحلاتي الحالية</a></li>
+                        <li><a href="#"><i class="fas fa-file-signature"></i> التفاويض النشطة</a></li>
+                        <li><a href="#"><i class="fas fa-history"></i> السجل السابق</a></li>
                         <li><a href="#"><i class="fas fa-cog"></i> الإعدادات</a></li>
-                        <li><a href="#"><i class="fas fa-question-circle"></i> الدعم</a></li>
                     </ul>
                 </div>
                 
                 <div class="dashboard-content">
-                    <h2 class="dashboard-title">مرحبا بك، سليمان!</h2>
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; border-right: 4px solid #2ecc71; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <strong><i class="fas fa-shield-alt"></i> حالة الحساب:</strong>
+                            <span style="color: var(--dark);"> مؤهل للتأجير الفوري (سجل مروري سليم).</span>
+                        </div>
+                        <div class="trust-score-container">
+                            <span style="font-size: 0.9rem;">مؤشر الثقة:</span>
+                            <span class="trust-badge">98/100</span>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>الرحلات المكتملة</h3>
+                            <div class="value" id="current-rentals-count">3</div>
+                            <p class="story">رحلات آمنة</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>التفويض الحالي</h3>
+                            <div class="value" style="color: var(--primary);">1</div>
+                            <p class="story">نشط عبر أبشر</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>المتبقي للمكافأة</h3>
+                            <div class="value" id="remaining-rentals-count" style="color: var(--secondary);">5</div>
+                            <p class="story">رحلات</p>
+                        </div>
+                    </div>
                     
-                    <div class="loyalty-card" data-aos="zoom-in" data-aos-delay="150">
+                    <div class="loyalty-card" data-aos="zoom-in" data-aos-delay="200">
                         <div class="loyalty-card-content">
-                            <h3>بطاقة وُجْهَة للولاء</h3>
-                            <p>أنت على بعد <span id="remaining-rentals-count">5</span> حجوزات من تأجيرك المجاني!</p>
+                            <h3>برنامج ولاء "وُجْهَة"</h3>
+                            <p>أكمل 8 رحلات آمنة واحصل على رحلة مجانية!</p>
+                            
                             <div class="loyalty-progress">
-                                <div class="loyalty-dot">1</div>
-                                <div class="loyalty-dot">2</div>
-                                <div class="loyalty-dot">3</div>
+                                <div class="loyalty-dot completed">1</div>
+                                <div class="loyalty-line">
+                                    <div class="loyalty-line-fill" style="width: 37.5%;"></div>
+                                </div>
+                                <div class="loyalty-dot completed">2</div>
+                                <div class="loyalty-line"><div class="loyalty-line-fill"></div></div>
+                                <div class="loyalty-dot completed">3</div>
+                                <div class="loyalty-line"><div class="loyalty-line-fill"></div></div>
                                 <div class="loyalty-dot">4</div>
+                                <div class="loyalty-line"><div class="loyalty-line-fill"></div></div>
                                 <div class="loyalty-dot">5</div>
+                                <div class="loyalty-line"><div class="loyalty-line-fill"></div></div>
                                 <div class="loyalty-dot">6</div>
+                                <div class="loyalty-line"><div class="loyalty-line-fill"></div></div>
                                 <div class="loyalty-dot">7</div>
-                                <div class="loyalty-dot">8</div>
+                                <div class="loyalty-line"><div class="loyalty-line-fill"></div></div>
+                                <div class="loyalty-dot"><i class="fas fa-gift"></i></div>
                             </div>
-                            <div class="loyalty-line">
-                                <div class="loyalty-line-fill"></div>
-                            </div>
+                            
                             <div class="loyalty-reward-info">
-                                <span>أتممت <span id="current-rentals-count">3</span> من 8 حجوزات مؤهلة.</span>
-                                <br>
-                                <small>التأجير التاسع مجاني بحد أقصى 159 ريال سعودي.</small>
+                                <small>ملاحظة: الالتزام بقواعد المرور يسرع حصولك على نقاط إضافية</small>
                             </div>
                         </div>
                     </div>
 
-                    <div class="stats-grid" id="impact-stats-container">
-                        </div>
-                    
-                    <div class="recent-bookings" data-aos="fade-up" data-aos-delay="400">
-                        <h3>حجوزاتي الأخيرة</h3>
-                        <div class="booking-item">
-                            <div class="booking-car">
-                                <img src="https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp" alt="هونداي النترا">
-                                <div class="booking-details">
-                                    <h4>هونداي النترا 2023</h4>
-                                    <p>المالك: خالد عبدالله</p>
-                                </div>
-                            </div>
-                            <div class="booking-date">
-                                <p>1 - 5 ديسمبر</p>
-                                <p>5 أيام</p>
-                            </div>
-                            <div class="booking-price">375 ر.س</div>
-                            <div class="booking-status status-active">قادمة</div>
-                        </div>
-                        
+                    <div class="recent-bookings" data-aos="fade-up" data-aos-delay="300">
+                        <h3>الرحلة الحالية</h3>
                         <div class="booking-item">
                             <div class="booking-car">
                                 <img src="https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="تويوتا كامري">
                                 <div class="booking-details">
                                     <h4>تويوتا كامري 2022</h4>
                                     <p>المالك: يوسف المطيري</p>
+                                    <div class="auth-status-badge">
+                                        <i class="fas fa-fingerprint"></i> مفوضة إلكترونياً
+                                    </div>
                                 </div>
                             </div>
                             <div class="booking-date">
-                                <p>5 - 8 نوفمبر</p>
-                                <p>4 أيام</p>
+                                <p>الاستلام: واجهة الرياض P4</p>
+                                <p style="font-size: 0.85rem; color: var(--gray);">التسليم: غداً 10:00 م</p>
                             </div>
-                            <div class="booking-price">340 ر.س</div>
-                            <div class="booking-status status-completed">مكتملة</div>
+                            <div class="booking-price">
+                                <button class="btn btn-primary" style="padding: 8px 15px; font-size: 0.9rem;">
+                                    <i class="fas fa-key"></i> المفتاح الرقمي
+                                </button>
+                            </div>
                         </div>
-                        
                     </div>
+
+                    <div style="margin-top: 30px; background: white; padding: 25px; border-radius: 16px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
+                        <h3 style="margin-bottom: 15px;">تعهد السلامة المرورية</h3>
+                        <form id="pledge-form">
+                            <p style="margin-bottom: 15px; color: var(--gray);">اختر تعهدك لهذه الرحلة لرفع نقاط الثقة:</p>
+                            <div class="quiz-options">
+                                <label><input type="radio" name="pledge-type" value="speed"> أتعهد بالالتزام بالسرعة المحددة</label>
+                                <label><input type="radio" name="pledge-type" value="phone"> أتعهد بعدم استخدام الجوال أثناء القيادة</label>
+                                <label><input type="radio" name="pledge-type" value="belt"> أتعهد بربط حزام الأمان لي وللركاب</label>
+                            </div>
+                            <button type="submit" class="btn btn-secondary" style="margin-top: 15px; width: 100%;">تأكيد التعهد</button>
+                        </form>
+                        <div id="pledge-result" style="display: none; text-align: center; color: var(--primary); font-weight: bold; margin-top: 15px;"></div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -146,13 +206,11 @@
                 <div class="footer-col">
                     <h3>عن وُجْهَة</h3>
                     <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
-                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. نسعى لتحويل السيارات الواقعة إلى أصول منتجة.
+                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان. نمكن زوار المملكة من التنقل الذكي.
                     </p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
                 
@@ -162,18 +220,16 @@
                         <li><a href="index.html">الرئيسية</a></li>
                         <li><a href="cars.html">استكشف السيارات</a></li>
                         <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-                        <li><a href="#">المدونة</a></li>
-                        <li><a href="https://wa.me/966565464718">اتصل بنا</a></li>
+                        <li><a href="https://wa.me/966565464718">الدعم الفني</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-col">
                     <h3>للأفراد</h3>
                     <ul>
-                        <li><a href="dashboard-renter.html">تسجيل كمستأجر</a></li>
+                        <li><a href="dashboard-renter.html">لوحة المستأجر</a></li>
                         <li><a href="cars.html">البحث عن سيارة</a></li>
                         <li><a href="rental-terms.html">شروط الاستئجار</a></li>
-                        <li><a href="faq.html">الأسئلة الشائعة</a></li>
                         <li><a href="user-guide.html">دليل المستخدم</a></li>
                     </ul>
                 </div>
@@ -183,7 +239,7 @@
                     <ul class="footer-contact">
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>القصيم بريدة حي الاسكان</span>
+                            <span>الرياض، واجهة روشن (مقر الهاكاثون)</span>
                         </li>
                         <li>
                             <i class="fas fa-phone"></i>
@@ -191,14 +247,14 @@
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <span><a href="mailto:q_p@outlook.cl">q_p@outlook.cl</a></span>
+                            <span>contact@wujha.sa</span>
                         </li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | تم التطوير بكل ❤️ في المملكة العربية السعودية</p>
+                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | صنع في السعودية 🇸🇦</p>
             </div>
         </div>
     </footer>
@@ -224,43 +280,37 @@
             <i class="fas fa-plus-circle"></i>
             <span>أضف سيارة</span>
         </a>
-        <a href="quiz.html" class="nav-item">
-            <i class="fas fa-question-circle"></i>
-            <span>اختبار</span>
-        </a>
         <a href="qassim-map.html" class="nav-item">
             <i class="fas fa-map-marked-alt"></i>
             <span>الخريطة</span>
         </a>
         <a href="#" class="nav-item" id="mobile-chatbot-toggle">
             <i class="fas fa-comment-dots"></i>
-            <span>الدردشة</span>
+            <span>المساعد</span>
         </a>
     </nav>
 
     <div id="chatbot-popup" class="chatbot-popup">
         <div class="chatbot-header">
-            <h3>اسالني</h3>
+            <h3>المساعد الأمني</h3>
             <button id="chatbot-close-btn" class="close-btn">&times;</button>
         </div>
         <div class="chatbot-body" id="chatbot-body">
             <div class="bot-message">
-                مرحباً بك! أنا مساعد وُجْهَة، كيف يمكنني مساعدتك اليوم؟
+                أهلاً محمد. نتمنى لك رحلة آمنة. لا تنس ربط حزام الأمان. كيف أقدر أساعدك؟
             </div>
         </div>
         <div class="chatbot-footer">
-            <input type="text" id="chatbot-input" placeholder="اكتب رسالتك هنا...">
+            <input type="text" id="chatbot-input" placeholder="اكتب سؤالك...">
             <button id="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({
-            once: true,
-        });
+        AOS.init({ once: true });
     </script>
-    <script src="csr-content.js"></script>
+    <script src="csr-content.js"></script> 
     <script src="script.js"></script>
     <script src="chatbot.js"></script>
 </body>
