@@ -3,11 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | منصة تأجير السيارات بين الأفراد</title>
+    <title>وُجْهَة | مستقبل التنقل الآمن</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* تنسيق إضافي للأيقونات بديل الصور */
+        .testimonial-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(46, 139, 87, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 15px;
+            border: 3px solid var(--secondary);
+        }
+        /* تنسيق قسم الرؤية الجديد */
+        .vision-section {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .vision-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.vision2030.gov.sa/media/calj2q2n/vision-2030-logo.svg') no-repeat center center;
+            background-size: contain;
+            opacity: 0.05;
+        }
+        .vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            position: relative;
+            z-index: 2;
+        }
+        .vision-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+        .vision-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+        }
+        .vision-card h3 {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .vision-card p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -26,7 +86,7 @@
                     <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
                     <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
                     <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
-                    <li><a href="qassim-map.html">خريطة مواقع السيارات </a></li>
+                    <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
                 </ul>
                 
                 <div class="nav-buttons nav-buttons-desktop-only">
@@ -38,7 +98,7 @@
                         <i class="fas fa-comment-dots"></i>
                         <span>اسالني</span>
                     </button>
-                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
+                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">دخول عبر نفاذ</a>
                     <div id="nav-user-profile-placeholder"></div>
                 </div>
             </nav>
@@ -49,16 +109,41 @@
         <div id="particles-js"></div>
         <div class="container">
             <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
-                <h1>وقفتها خسارة وشغّلتها تجارة ! </h1>
-                <p>منصتك السعودية الأولى لتأجير السيارات بين الأفراد
-سجّل سيارتك بخطوات بسيطة وخلك من اللي يربحون دخل شهري وهم مرتاحين </p>
+                <h1>وُجْهَة.. أمان وتراحيب لضيوف العالم 🇸🇦</h1>
+                <p>المنصة الوطنية الآمنة لتأجير السيارات. نُسخّر تقنيات "أبشر" والذكاء الاصطناعي لخدمة زوار المملكة في إكسبو 2030 وكأس العالم.. أجر واستأجر وأنت متطمن.</p>
                 <div class="hero-buttons">
                     <a href="add-car.html" class="btn btn-primary">
-                        <i class="fas fa-car"></i> أضف سيارتك
+                        <i class="fas fa-shield-alt"></i> وثق سيارتك
                     </a>
                     <a href="cars.html" class="btn btn-secondary">
-                        <i class="fas fa-search"></i> استكشف السيارات
+                        <i class="fas fa-search"></i> سيارات موثقة
                     </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="vision-section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2 style="color: white;">مستعدون للمستقبل.. ورؤية 2030</h2>
+                <p style="color: rgba(255,255,255,0.8);">حلول تقنية أمنية تواكب الأحداث العالمية الكبرى في المملكة</p>
+            </div>
+            <div class="vision-grid">
+                <div class="vision-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-fingerprint" style="font-size: 2rem; color: var(--secondary); margin-bottom: 20px;"></i>
+                    <h3>أمان عبر "نفاذ" وأبشر</h3>
+                    <p>لا مجال للاحتيال. نتحقق من هوية المؤجر والمستأجر، ونربط الزوار الأجانب عبر "رقم الحدود" مباشرة مع أنظمة وزارة الداخلية.</p>
+                </div>
+                <div class="vision-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-globe-asia" style="font-size: 2rem; color: var(--secondary); margin-bottom: 20px;"></i>
+                    <h3>لأجل إكسبو وكأس العالم</h3>
+                    <p>نغطي العجز في المواصلات عبر تمكين المواطنين من تأجير سياراتهم للزوار بطريقة نظامية، آمنة، ومراقبة ميدانياً.</p>
+                </div>
+                <div class="vision-card" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-file-contract" style="font-size: 2rem; color: var(--secondary); margin-bottom: 20px;"></i>
+                    <h3>تفويض فوري ذكي</h3>
+                    <p>وداعاً للمخالفات المسجلة بالخطأ. نظامنا يصدر تفويض قيادة إلكتروني فوري يحمي حق مالك السيارة وينقل المسؤولية للمستأجر.</p>
                 </div>
             </div>
         </div>
@@ -68,7 +153,7 @@
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2>ليش تختار وُجْهَة؟</h2>
-                <p>مزايا فريدة تجعلنا المنصة المثالية لتأجير السيارات بين الأفراد</p>
+                <p>مزايا فريدة تجمع بين الاقتصاد التشاركي والأمن الرقمي</p>
             </div>
             
             <div class="features-grid">
@@ -76,65 +161,25 @@
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>حماية كاملة</h3>
-                    <p>تأمين شامل ضد الحوادث والتلف والسرقة لسيارتك طوال فترة التأجير</p>
+                    <h3>حماية أمنية</h3>
+                    <p>تحقق من الهوية والسجل الجنائي والائتماني قبل إتمام أي عملية تأجير</p>
                 </div>
                 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="feature-icon">
-                        <i class="fas fa-tag"></i>
+                        <i class="fas fa-map-marked-alt"></i>
                     </div>
-                    <h3>تسعير ذكي</h3>
-                    <p>نظام تسعير ديناميكي يضمن لك أفضل عائد مالي حسب الطلب والموسم</p>
+                    <h3>تتبع ميداني (IoT)</h3>
+                    <p>مراقبة حية لموقع السيارة وتنبيهات فورية عند الخروج من المناطق المسموحة</p>
                 </div>
                 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="feature-icon">
-                        <i class="fas fa-truck"></i>
+                        <i class="fas fa-brain"></i>
                     </div>
-                    <h3>توصيل السيارة</h3>
-                    <p>خدمة توصيل السيارة إلى أي مكان في مدينتك خلال 60 دقيقة فقط</p>
+                    <h3>ذكاء اصطناعي</h3>
+                    <p>تحليل سلوك المستأجرين وتقييم المخاطر لضمان راحة بالك</p>
                 </div>
-                
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-shield"></i>
-                    </div>
-                    <h3>مستأجرون موثوقون</h3>
-                    <p>نظام تقييم متقدم لضمان جودة المستأجرين وسجلهم الحافل</p>
-                </div>
-                
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>تقارير متقدمة</h3>
-                    <p>لوحة تحكم ذكية لمتابعة أرباحك وتحليل أدائك واتخاذ قرارات أفضل</p>
-                </div>
-                
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>دعم فني 24/7</h3>
-                    <p>فريق دعم فني متاح على مدار الساعة لحل أي مشكلة تواجهك</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="loyalty-promo-section">
-        <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>برنامج وُجْهَة للولاء</h2>
-                <p>اجعل كل رحلة تكسبك المزيد من المكافآت!</p>
-            </div>
-            <div class="loyalty-promo" data-aos="zoom-in">
-                <h3>تأجيرك التاسع علينا!</h3>
-                <p>استأجر 8 سيارات، واحصل على تأجيرك التاسع مجانًا بحد أقصى 159 ريال سعودي.</p>
-                <a href="dashboard-renter.html" class="btn btn-primary">
-                    <i class="fas fa-crown"></i> اعرف المزيد وابدأ بجمع النقاط!
-                </a>
             </div>
         </div>
     </section>
@@ -142,95 +187,58 @@
     <section class="testimonials-section">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2>وش يقولون عننا ؟</h2>
-                <p>تجارب حقيقية من مستخدمي وُجْهَة السعداء</p>
+                <h2>مجتمع وُجْهَة الآمن</h2>
+                <p>تجارب موثقة من مواطنين وزوار</p>
             </div>
             <div class="testimonial-slider" data-aos="fade-up" data-aos-delay="100">
                 <div class="testimonial-slide active">
-
-                    
-                    <p class="testimonial-text">"وُجْهَة غيّرت طريقة تأجيري للسيارات! سهولة في الحجز، وأسعار منافسة، ودعم فني رائع. أنصح بها بشدة!"</p>
-                    <p class="testimonial-author-name">أحمد المالكي</p>
-                    <p class="testimonial-author-role">مستأجر متكرر</p>
+                    <div class="testimonial-icon"><i class="fas fa-user-check"></i></div>
+                    <p class="testimonial-text">"بصراحة كنت خايف أأجر سيارتي، لكن مع نظام التحقق والربط مع أبشر، صرت مرتاح وعارف مين يسوق سيارتي بالضبط."</p>
+                    <p class="testimonial-author-name">مواطن موثق</p>
+                    <p class="testimonial-author-role">الرياض</p>
                 </div>
                 <div class="testimonial-slide">
-
-                    
-                    <p class="testimonial-text">"منصة رائعة لتحويل سيارتي إلى مصدر دخل. الأمان والحماية التي توفرها وُجْهَة جعلتني أشعر بالراحة التامة."</p>
-                    <p class="testimonial-author-name">فاطمة الزهراني</p>
-                    <p class="testimonial-author-role">مؤجرة معتمدة</p>
-                </div>
-                <div class="testimonial-slide">
-
-                    
-                    <p class="testimonial-text">"الخدمة سريعة وموثوقة، والسيارات نظيفة وفي حالة ممتازة. تجربة لا تُنسى في كل مرة."</p>
-                    <p class="testimonial-author-name">خالد الحربي</p>
-                    <p class="testimonial-author-role">مستأجر</p>
+                    <div class="testimonial-icon"><i class="fas fa-passport"></i></div>
+                    <p class="testimonial-text">"وصلت المطار واستأجرت سيارة من مواطن سعودي باستخدام رقم الحدود في دقائق. تجربة آمنة ورائعة."</p>
+                    <p class="testimonial-author-name">زائر دولي</p>
+                    <p class="testimonial-author-role">زائر إكسبو (تجريبي)</p>
                 </div>
                 <div class="slider-dots">
                     <span class="dot" onclick="currentSlide(1)"></span>
                     <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
                 </div>
             </div>
         </div>
     </section>
-
 
     <section id="how-it-works" class="how-it-works">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2>كيف تعمل منصة وُجْهَة؟</h2>
-                <p>أربع خطوات بسيطة لتأجير سيارتك أو استئجار سيارة</p>
+                <p>رحلة آمنة تبدأ بالتحقق وتنتهي بالرضا</p>
             </div>
             
             <div class="steps-container">
                 <div class="step" data-aos="fade-up" data-aos-delay="100">
                     <div class="step-number">1</div>
-                    <h3>أضف سيارتك</h3>
-                    <p>سجل في المنصة وأضف سيارتك مع صور ومواصفات واضحة في دقائق معدودة</p>
+                    <h3>التوثيق عبر نفاذ</h3>
+                    <p>سجل دخولك وتحقق من هويتك أو رقم الحدود لضمان بيئة موثوقة</p>
                 </div>
                 
                 <div class="step" data-aos="fade-up" data-aos-delay="200">
                     <div class="step-number">2</div>
-                    <h3>حدد المواعيد</h3>
-                    <p>حدد الأوقات المتاحة للتأجير والأسعار المناسبة لسيارتك</p>
+                    <h3>أضف أو اختر</h3>
+                    <p>اعرض سيارتك مع تحديد النطاق الجغرافي، أو اختر سيارة تناسبك</p>
                 </div>
                 
                 <div class="step" data-aos="fade-up" data-aos-delay="300">
                     <div class="step-number">3</div>
-                    <h3>قابل المستأجر</h3>
-                    <p>التقِ بالمستأجر في المكان المحدد أو استخدم خدمة التوصيل الذكي</p>
-                </div>
-                
-                <div class="step" data-aos="fade-up" data-aos-delay="400">
-                    <div class="step-number">4</div>
-                    <h3>اكسب المال</h3>
-                    <p>استلم أموالك بعد انتهاء فترة التأجير بكل أمان وسهولة</p>
+                    <h3>التفويض والاستلام</h3>
+                    <p>إصدار تفويض قيادة تلقائي واستلام السيارة عبر الرمز الآمن</p>
                 </div>
             </div>
         </div>
     </section>
-
-    <section id="csr-interactive-content" class="loyalty-promo-section">
-        <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>وُجْهَة والمجتمع: أثرنا وإرشاداتنا</h2>
-                <p>اكتشف كيف نساهم في مجتمع أفضل وكيف يمكنك أن تكون جزءًا من ذلك.</p>
-            </div>
-            <div class="loyalty-promo" data-aos="zoom-in">
-                <h3>حقيقة اليوم عن الاستدامة</h3>
-                <p id="csr-fact-display">تحميل حقيقة ...</p>
-                <a href="#" class="btn btn-primary" onclick="displayRandomCsrFact(); return false;">
-                    <i class="fas fa-sync-alt"></i> حقيقة أخرى
-                </a>
-                <p style="margin-top: 20px; font-size: 1.1rem; color: var(--gray);">
-                    <i class="fas fa-lightbulb"></i> هذه الحقائق والإحصائيات تم توليدها وصياغتها باستخدام تقنيات الذكاء الاصطناعي التوليدي لزيادة الوعي.
-                </p>
-            </div>
-        </div>
-    </section>
-
 
     <footer>
         <div class="container">
@@ -238,35 +246,20 @@
                 <div class="footer-col">
                     <h3>عن وُجْهَة</h3>
                     <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
-                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. نسعى لتحويل السيارات الواقعة إلى أصول منتجة.
+                        منصة وطنية للابتكار في حلول التنقل الآمن. نعمل تحت مظلة التشريعات المحلية لتحقيق رؤية 2030 في الاقتصاد التشاركي الآمن.
                     </p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
                 
                 <div class="footer-col">
-                    <h3>روابط سريعة</h3>
+                    <h3>روابط هامة</h3>
                     <ul>
                         <li><a href="index.html">الرئيسية</a></li>
-                        <li><a href="cars.html">استكشف السيارات</a></li>
-                        <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-                        <li><a href="#">المدونة</a></li>
-                        <li><a href="https://wa.me/966565464718">اتصل بنا</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>للأفراد</h3>
-                    <ul>
-                        <li><a href="dashboard-renter.html">تسجيل كمستأجر</a></li>
-                        <li><a href="cars.html">البحث عن سيارة</a></li>
-                        <li><a href="rental-terms.html">شروط الاستئجار</a></li>
+                        <li><a href="rental-terms.html">شروط الاستخدام والأمان</a></li>
                         <li><a href="faq.html">الأسئلة الشائعة</a></li>
-                        <li><a href="user-guide.html">دليل المستخدم</a></li>
                     </ul>
                 </div>
                 
@@ -275,22 +268,18 @@
                     <ul class="footer-contact">
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>القصيم بريدة حي الاسكان</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <span>+966 56 546 4718</span>
+                            <span>الرياض، واجهة روشن (مقر الهاكاثون)</span>
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <span><a href="mailto:q_p@outlook.cl">q_p@outlook.cl</a></span>
+                            <span>contact@wujha.sa</span>
                         </li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | تم التطوير بكل ❤️ في المملكة العربية السعودية</p>
+                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | تم التطوير في هاكاثون أبشر طويق 🇸🇦</p>
             </div>
         </div>
     </footer>
@@ -306,19 +295,11 @@
         </a>
         <a href="landing.html" class="nav-item guest-only" id="mobile-bottom-guest-button">
             <i class="fas fa-sign-in-alt"></i>
-            <span>دخول</span>
+            <span>نفاذ</span>
         </a>
         <a href="#" class="nav-item auth-link-bottom" id="mobile-bottom-user-button">
             <i class="fas fa-user-circle"></i>
             <span>حسابي</span>
-        </a>
-        <a href="add-car.html" class="nav-item auth-link-bottom" data-role="owner">
-            <i class="fas fa-plus-circle"></i>
-            <span>أضف سيارة</span>
-        </a>
-        <a href="quiz.html" class="nav-item">
-            <i class="fas fa-question-circle"></i>
-            <span>اختبار</span>
         </a>
         <a href="qassim-map.html" class="nav-item">
             <i class="fas fa-map-marked-alt"></i>
@@ -326,22 +307,22 @@
         </a>
         <a href="#" class="nav-item" id="mobile-chatbot-toggle">
             <i class="fas fa-comment-dots"></i>
-            <span>الدردشة</span>
+            <span>المساعد</span>
         </a>
     </nav>
 
     <div id="chatbot-popup" class="chatbot-popup">
         <div class="chatbot-header">
-            <h3>اسالني</h3>
+            <h3>المساعد الأمني</h3>
             <button id="chatbot-close-btn" class="close-btn">&times;</button>
         </div>
         <div class="chatbot-body" id="chatbot-body">
             <div class="bot-message">
-                مرحباً بك! أنا مساعد وُجْهَة، كيف يمكنني مساعدتك اليوم؟
+                حياك الله! أنا مساعد وُجْهَة الذكي. كيف أقدر أخدمك في إجراءات الأمان أو التأجير؟
             </div>
         </div>
         <div class="chatbot-footer">
-            <input type="text" id="chatbot-input" placeholder="اكتب رسالتك هنا...">
+            <input type="text" id="chatbot-input" placeholder="اكتب سؤالك...">
             <button id="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
@@ -354,106 +335,17 @@
         });
         particlesJS("particles-js", {
             "particles": {
-                "number": {
-                    "value": 80,
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
-                },
-                "color": {
-                    "value": "#ffffff"
-                },
-                "shape": {
-                    "type": "circle",
-                    "stroke": {
-                        "width": 0,
-                        "color": "#000000"
-                    },
-                    "polygon": {
-                        "nb_sides": 5
-                    },
-                },
-                "opacity": {
-                    "value": 0.5,
-                    "random": false,
-                    "anim": {
-                        "enable": false,
-                        "speed": 1,
-                        "opacity_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "size": {
-                    "value": 3,
-                    "random": true,
-                    "anim": {
-                        "enable": false,
-                        "speed": 40,
-                        "size_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#ffffff",
-                    "opacity": 0.4,
-                    "width": 1
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 6,
-                    "direction": "none",
-                    "random": false,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false,
-                    "attract": {
-                        "enable": false,
-                        "rotateX": 600,
-                        "rotateY": 1200
-                    }
-                }
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#ffffff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5 },
+                "size": { "value": 3 },
+                "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 },
+                "move": { "enable": true, "speed": 6 }
             },
             "interactivity": {
                 "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": true,
-                        "mode": "grab"
-                    },
-                    "onclick": {
-                        "enable": true,
-                        "mode": "push"
-                    },
-                    "resize": true
-                },
-                "modes": {
-                    "grab": {
-                        "distance": 140,
-                        "line_linked": {
-                            "opacity": 1
-                        }
-                    },
-                    "bubble": {
-                        "distance": 400,
-                        "size": 40,
-                        "duration": 2,
-                        "opacity": 8,
-                        "speed": 3
-                    },
-                    "repulse": {
-                        "distance": 200,
-                        "duration": 0.4
-                    },
-                    "push": {
-                        "particles_nb": 4
-                    },
-                    "remove": {
-                        "particles_nb": 2
-                    }
-                }
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }
             },
             "retina_detect": true
         });
