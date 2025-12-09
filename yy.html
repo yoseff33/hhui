@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مخطط النظام الكامل - منصة وجهة</title>
+    <style>
+        :root {
+            --primary: #1b4332; /* الأخضر الداكن للهوية */
+            --secondary: #d4af37; /* الذهبي */
+            --bg: #f8f9fa;
+            --line-color: #95a5a6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+        }
+
+        h1 { color: var(--primary); margin-bottom: 40px; }
+
+        /* تنسيق شبكة المخطط */
+        .flow-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        /* الخطوط الرابطة */
+        .connector {
+            width: 2px;
+            background-color: var(--line-color);
+            height: 30px;
+        }
+
+        .branch-line {
+            display: flex;
+            justify-content: space-around;
+            width: 80%;
+            border-top: 2px solid var(--line-color);
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        /* خطوط عمودية صغيرة تنزل من التفريع */
+        .branch-line::before, .branch-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 2px;
+            height: 20px;
+            background-color: var(--line-color);
+        }
+        .branch-line::before { left: 0; }
+        .branch-line::after { right: 0; }
+
+        /* منطقة المسارات */
+        .tracks {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            gap: 20px;
+        }
+
+        .track {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255,255,255,0.5);
+            border-radius: 10px;
+            padding: 10px;
+            border: 1px dashed #ccc;
+        }
+
+        .track-title {
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-decoration: underline;
+        }
+
+        /* الصناديق */
+        .box {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 15px;
+            width: 220px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .box:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .box h4 { margin: 0 0 5px 0; font-size: 1rem; }
+        .box p { margin: 0; font-size: 0.8rem; color: #7f8c8d; }
+        .box:hover p { color: #ecf0f1; }
+
+        /* أشكال مختلفة */
+        .box.decision {
+            border-color: var(--secondary);
+            border-radius: 25px; /* شكل بيضاوي للقرارات */
+        }
+
+        .box.system {
+            border-style: dashed; /* للعمليات الخلفية */
+            background-color: #e8f5e9;
+        }
+
+        /* التفاصيل المنبثقة */
+        .details-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            z-index: 100;
+            width: 300px;
+            border-right: 5px solid var(--secondary);
+        }
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>مخطط النظام الكامل (شاشات + عمليات) - وجهة</h1>
+
+        <div class="flow-wrapper">
+            <div class="box" onclick="showDetails('الصفحة الرئيسية', 'تعرض خدمات المنصة، زر تسجيل الدخول، وشعار الهوية (شاشة landing.html)')">
+                <h4>الصفحة الرئيسية (Landing)</h4>
+                <p>نقطة الدخول</p>
+            </div>
+            
+            <div class="connector"></div>
+            
+            <div class="box decision" onclick="showDetails('التحقق من المستخدم', 'يتم التحقق من بيانات الدخول وتوجيه المستخدم حسب نوعه (FR1)')">
+                <h4>تسجيل / دخول</h4>
+                <p>تحديد الصلاحية</p>
+            </div>
+
+            <div class="branch-line"></div>
+
+            <div class="tracks">
+                <div class="track">
+                    <div class="track-title">مسار المؤجر (Owner)</div>
+                    
+                    [span_0](start_span)<div class="box" onclick="showDetails('لوحة تحكم المؤجر', 'تعرض ملخص الأرباح، والسيارات المؤجرة حالياً (dashboard-owner.html)[span_0](end_span)')">
+                        <h4>لوحة التحكم (Dashboard)</h4>
+                        <p>إدارة الأعمال</p>
+                    </div>
+
+                    <div class="connector"></div>
+
+                    <div class="box" onclick="showDetails('إضافة سيارة', 'نموذج لرفع الصور، تحديد السعر، والموديل. يتطلب 5 صور على الأقل (FR2)')">
+                        <h4>إضافة سيارة جديدة</h4>
+                        <p>إدخال البيانات</p>
+                    </div>
+
+                    <div class="connector"></div>
+
+                    <div class="box system" onclick="showDetails('نظام التسعير الذكي', 'خوارزمية تقترح السعر بناءً على الموديل والطلب (ميزة تنافسية)')">
+                        <h4>معالجة: التسعير الذكي</h4>
+                        <p>System Process</p>
+                    </div>
+
+                    <div class="connector"></div>
+
+                    <div class="box" onclick="showDetails('تقرير الأرباح', 'عرض الدخل الشهري والسنوي من التأجير (FR5)')">
+                        <h4>عرض الأرباح والحجوزات</h4>
+                        <p>التقارير</p>
+                    </div>
+                </div>
+
+                <div class="track">
+                    <div class="track-title">مسار المستأجر (Renter)</div>
+
+                    [span_1](start_span)<div class="box" onclick="showDetails('بحث السيارات', 'البحث مع الفلاتر (نوع، سعر، مدينة) + الخريطة التفاعلية (cars.html)[span_1](end_span)')">
+                        <h4>البحث والتصفية</h4>
+                        <p>عرض الخيارات</p>
+                    </div>
+
+                    <div class="connector"></div>
+
+                    <div class="box decision" onclick="showDetails('أداة اتخاذ القرار', 'أداة (اختبار السيارة المناسبة لي) تساعد المحتار في الاختيار (FR7)')">
+                        <h4>اختبار: السيارة المناسبة؟</h4>
+                        <p>دعم القرار</p>
+                    </div>
+
+                    <div class="connector"></div>
+
+                    <div class="box" onclick="showDetails('تفاصيل السيارة والحجز', 'عرض الصور كاملة، تحديد مدة الحجز، والتحقق من التوفر (FR4)')">
+                        <h4>طلب الحجز</h4>
+                        <p>إدخال التواريخ</p>
+                    </div>
+
+                    <div class="connector"></div>
+
+                    [span_2](start_span)<div class="box system" onclick="showDetails('بوابة الدفع', 'معالجة المدفوعات بشكل آمن وإصدار PaymentToken[span_2](end_span)')">
+                        <h4>معالجة الدفع</h4>
+                        <p>External API</p>
+                    </div>
+
+                    <div class="connector"></div>
+
+                    [span_3](start_span)<div class="box" onclick="showDetails('ما بعد الخدمة', 'إضافة نقاط لبطاقة الولاء (Loyalty) + تقييم السيارة (Review)[span_3](end_span)')">
+                        <h4>الولاء والتقييم</h4>
+                        <p>اكتمال العملية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" onclick="closeDetails()"></div>
+    <div class="details-modal" id="modal">
+        <h3 id="modal-title">العنوان</h3>
+        <p id="modal-desc">التفاصيل هنا...</p>
+        <button onclick="closeDetails()" style="background:var(--primary); color:white; border:none; padding:5px 15px; cursor:pointer;">إغلاق</button>
+    </div>
+
+    <script>
+        function showDetails(title, desc) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('modal').style.display = 'block';
+            document.querySelector('.overlay').style.display = 'block';
+        }
+
+        function closeDetails() {
+            document.getElementById('modal').style.display = 'none';
+            document.querySelector('.overlay').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
