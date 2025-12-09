@@ -14,6 +14,7 @@
             --brand-dark-teal: #0f2925; /* الزيتي الغامق */
             --brand-gold: #c5a065;      /* الذهبي الفخم */
             --brand-dark-bg: #1a1a1a;   /* الأسود الفاتح */
+            --light-bg: #f8f9fa;        /* خلفية فاتحة */
         }
 
         /* === إصلاح تأثير الهيدر عند التمرير === */
@@ -78,12 +79,12 @@
 
         /* === توحيد: قسم الميثاق الأمني === */
         .security-quote-section {
-            background: #f8f9fa; /* خلفية فاتحة للنهار */
+            background: var(--light-bg); /* خلفية فاتحة للنهار */
             padding: 60px 0;
             text-align: center;
             border-top: 1px solid #eee;
             border-bottom: 1px solid #eee;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         /* إصلاح الخلفية في الوضع الليلي */
@@ -119,33 +120,88 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        /* تنسيق قسم الشركاء */
+        /* =========================================
+           تحديث: قسم الشركاء (الشريط المتحرك)
+           ========================================= */
         .partners-section {
-            padding: 60px 0;
-            background: var(--brand-dark-bg);
+            padding: 40px 0; /* تقليل الارتفاع قليلاً */
+            background: var(--light-bg); /* خلفية فاتحة بدل الرمادي الداكن */
             text-align: center;
             position: relative;
+            overflow: hidden; /* مهم جداً لإخفاء الشريط خارج الحدود */
+            transition: background-color 0.3s ease;
         }
-        .partners-logos {
+        
+        /* دعم الوضع الليلي للخلفية */
+        body.dark-mode .partners-section {
+            background: var(--brand-dark-bg);
+        }
+
+        /* عنوان القسم */
+        .partners-heading {
+            color: var(--brand-dark-teal); /* لون داكن للخلفية الفاتحة */
+            margin-bottom: 30px;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+        body.dark-mode .partners-heading {
+            color: white; /* لون أبيض للوضع الليلي */
+        }
+
+        /* حاوية الشريط المتحرك */
+        .partners-scroller {
+            width: 100%;
+            overflow: hidden;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); /* تأثير تلاشي في الأطراف */
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        /* المسار الذي يتحرك بداخله الصور */
+        .partners-track {
             display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
             align-items: center;
+            gap: 50px; /* المسافة بين الشعارات */
+            width: max-content; /* عرض يتسع لكل الصور */
+            animation: scroll-ticker 35s linear infinite; /* سرعة الحركة ونوعها */
         }
+        
+        /* تعريف حركة الشريط */
+        @keyframes scroll-ticker {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                /* يتحرك بمقدار نصف العرض الإجمالي لأننا كررنا الصور */
+                transform: translateX(calc(-50% - 25px)); /* -50% من العرض + نصف الـ gap */
+            }
+        }
+
+        /* عند وضع الماوس يتوقف الشريط */
+        .partners-track:hover {
+            animation-play-state: paused;
+        }
+
+        /* تنسيق صور الشعارات */
         .partner-img {
-            height: 65px;
+            height: 60px; /* ارتفاع موحد */
             width: auto;
-            filter: grayscale(100%) brightness(200%); /* شعار أبيض */
-            opacity: 0.7;
+            /* تعديل الفلاتر لتناسب الخلفية الفاتحة */
+            filter: grayscale(100%) opacity(0.6); 
             transition: all 0.3s ease;
             object-fit: contain;
+            pointer-events: auto; /* لضمان عمل الهوفر */
         }
+        
+        /* في الوضع الليلي نزيد سطوع الصور الرمادية */
+        body.dark-mode .partner-img {
+             filter: grayscale(100%) brightness(150%) opacity(0.7);
+        }
+
         .partner-img:hover { 
-            filter: grayscale(0%) brightness(100%); 
-            opacity: 1; 
+            filter: grayscale(0%) opacity(1) brightness(100%); /* إظهار الألوان الطبيعية */
             transform: scale(1.1); 
         }
+
     </style>
 </head>
 <body>
@@ -286,12 +342,20 @@
 
     <section class="partners-section">
         <div class="container">
-            <h3 style="color: white; margin-bottom: 40px; font-weight: 700;">منظومة تكاملية مع</h3>
-            <div class="partners-logos" data-aos="fade-up">
-                <img src="https://www.zarkachat.com/wp-content/uploads/2020/04/absherr.jpg" alt="أبشر" class="partner-img">
-                <img src="https://kss.sa/wp-content/uploads/2022/05/kss-sa-241-450x176.png?v=1652731492" alt="نفاذ" class="partner-img">
-                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/bb/4a/93/bb4a9376-f7fc-8a7a-73f6-8835ee3d8668/AppIcon-0-0-1x_U007emarketing-0-7-0-0-sRGB-0-85-220.png/1200x630wa.png" alt="نجم" class="partner-img" style="border-radius: 10px;">
-                <img src="https://khdmatsaudi.com/wp-content/uploads/2021/03/%D8%A8%D9%88%D8%A7%D8%A8%D8%A9-%D8%AA%D9%85-%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AF%D8%A7%D8%AE%D9%84%D9%8A%D8%A9-1442-%D8%AA%D8%B3%D8%AC%D9%8A%D9%84-%D8%A7%D9%84%D8%AF%D8%AE%D9%88%D9%84-Tamm-login.jpg" alt="بوابة تم" class="partner-img">
+            <h3 class="partners-heading" data-aos="fade-up">منظومة تكاملية مع</h3>
+            
+            <div class="partners-scroller" data-aos="fade-up" data-aos-delay="100">
+                <div class="partners-track">
+                    <img src="https://www.zarkachat.com/wp-content/uploads/2020/04/absherr.jpg" alt="أبشر" class="partner-img">
+                    <img src="https://kss.sa/wp-content/uploads/2022/05/kss-sa-241-450x176.png?v=1652731492" alt="نفاذ" class="partner-img">
+                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/bb/4a/93/bb4a9376-f7fc-8a7a-73f6-8835ee3d8668/AppIcon-0-0-1x_U007emarketing-0-7-0-0-sRGB-0-85-220.png/1200x630wa.png" alt="نجم" class="partner-img" style="border-radius: 10px;">
+                    <img src="https://khdmatsaudi.com/wp-content/uploads/2021/03/%D8%A8%D9%88%D8%A7%D8%A8%D8%A9-%D8%AA%D9%85-%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AF%D8%A7%D8%AE%D9%84%D9%8A%D8%A9-1442-%D8%AA%D8%B3%D8%AC%D9%8A%D9%84-%D8%A7%D9%84%D8%AF%D8%AE%D9%88%D9%84-Tamm-login.jpg" alt="بوابة تم" class="partner-img">
+
+                    <img src="https://www.zarkachat.com/wp-content/uploads/2020/04/absherr.jpg" alt="أبشر" class="partner-img">
+                    <img src="https://kss.sa/wp-content/uploads/2022/05/kss-sa-241-450x176.png?v=1652731492" alt="نفاذ" class="partner-img">
+                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/bb/4a/93/bb4a9376-f7fc-8a7a-73f6-8835ee3d8668/AppIcon-0-0-1x_U007emarketing-0-7-0-0-sRGB-0-85-220.png/1200x630wa.png" alt="نجم" class="partner-img" style="border-radius: 10px;">
+                    <img src="https://khdmatsaudi.com/wp-content/uploads/2021/03/%D8%A8%D9%88%D8%A7%D8%A8%D8%A9-%D8%AA%D9%85-%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AF%D8%A7%D8%AE%D9%84%D9%8A%D8%A9-1442-%D8%AA%D8%B3%D8%AC%D9%8A%D9%84-%D8%A7%D9%84%D8%AF%D8%AE%D9%88%D9%84-Tamm-login.jpg" alt="بوابة تم" class="partner-img">
+                </div>
             </div>
         </div>
     </section>
