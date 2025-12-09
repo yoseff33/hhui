@@ -9,22 +9,17 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        /* === إعدادات الألوان الأساسية === */
-        :root {
-            --primary: #0f2925; /* الأخضر الداكن */
-            --secondary: #cfb165;
-            --dark: #1a1a1a;
-        }
-
         /* === إصلاح تأثير الهيدر عند التمرير === */
-        header { transition: all 0.4s ease-in-out; }
+        header {
+            transition: all 0.4s ease-in-out; /* تنعيم الحركة */
+        }
         header.scrolled {
-            padding: 10px 0 !important;
-            background-color: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1) !important;
+            padding: 10px 0 !important; /* تقليل الارتفاع */
+            background-color: rgba(255, 255, 255, 0.98); /* تأكيد الخلفية */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1) !important; /* إضافة ظل */
         }
         body.dark-mode header.scrolled {
-            background-color: rgba(20, 20, 20, 0.98);
+            background-color: rgba(20, 20, 20, 0.98); /* خلفية داكنة في الوضع الليلي */
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5) !important;
         }
 
@@ -48,110 +43,49 @@
         .stat-item { display: inline-block; margin: 0 30px; font-size: 1.1rem; }
         .stat-item i { color: var(--secondary); margin-left: 8px; }
 
-        /* =========================================
-           1. تنسيق قسم الرؤية (بنية رقمية)
-           ========================================= */
-        /* الوضع الافتراضي (النهاري): خلفية فاتحة وحدود خضراء داكنة */
-        .vision-section {
-            background: #ffffff; /* خلفية القسم بيضاء */
-            padding: 80px 0; /* نفس المقاسات */
-            transition: background 0.3s ease;
-        }
-
-        .vision-card-new {
-            background: #ffffff;
-            border: 2px solid var(--primary); /* الحد أخضر داكن */
-            padding: 30px; /* نفس المقاسات بالضبط */
-            border-radius: 16px;
-            transition: transform 0.3s, background 0.3s;
-            height: 100%;
-            color: var(--primary); /* النص أخضر داكن */
-        }
-        
-        .vision-card-new h3 { color: var(--primary); margin-bottom: 10px; }
-        .vision-card-new p { color: #555; font-size: 1.1rem; }
-        .vision-card-new i { color: var(--primary); font-size: 2.5rem; margin-bottom: 20px; }
-
-        .vision-card-new:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(15, 41, 37, 0.1);
-        }
-
-        /* الوضع الليلي للرؤية (Dark Mode) */
-        body.dark-mode .vision-section {
-            background: linear-gradient(135deg, var(--dark), #0f2925); /* يرجع غامق في الليل */
-        }
-        body.dark-mode .vision-section h2, 
-        body.dark-mode .vision-section p {
-            color: white !important;
-        }
-        body.dark-mode .vision-card-new {
-            background: rgba(255,255,255,0.05); /* شفاف غامق */
-            border: 1px solid rgba(255,255,255,0.1); /* حدود شفافة */
-            color: white;
-        }
-        body.dark-mode .vision-card-new h3,
-        body.dark-mode .vision-card-new p { color: #ccc; }
-        body.dark-mode .vision-card-new i { color: var(--secondary); }
-
-
-        /* =========================================
-           2. تنسيق قسم الميثاق الأمني
-           ========================================= */
-        /* الوضع الافتراضي (النهاري) */
+        /* تنسيق قسم الأمان (داكن) */
         .security-quote-section {
             background: #f8f9fa;
             padding: 60px 0;
             text-align: center;
             border-top: 1px solid #eee;
             border-bottom: 1px solid #eee;
-            transition: background 0.3s ease;
         }
-
         .security-quote-box {
             max-width: 900px;
             margin: 0 auto;
             position: relative;
-            padding: 50px; /* نفس المقاسات */
-            
-            /* التعديل هنا: خلفية بيضاء وحدود خضراء */
-            background: #ffffff;
-            border: 2px solid var(--primary); 
-            border-right: 6px solid var(--primary); /* تمييز يمين الصندوق */
-            
+            padding: 50px;
+            background: linear-gradient(135deg, var(--primary), #0f2925); 
             border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
-            color: var(--primary);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            border-right: 6px solid var(--secondary);
+            color: white;
         }
-
-        .security-quote-box h3 { color: var(--primary); font-weight: 800; margin-bottom: 25px; }
-        .security-quote-box p { font-size: 1.4rem; line-height: 1.8; color: #333; font-weight: 500; }
-        
         .quote-icon {
             font-size: 4rem;
-            color: rgba(15, 41, 37, 0.1); /* لون أيقونة الاقتباس أخضر باهت */
+            color: rgba(255,255,255,0.1);
             position: absolute;
             top: 20px;
             right: 20px;
         }
-
-        /* الوضع الليلي للميثاق (Dark Mode) */
-        body.dark-mode .security-quote-section {
-            background: #111;
-            border-color: #222;
+        
+        /* تنسيق بطاقات الرؤية */
+        .vision-card-new {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 16px;
+            transition: transform 0.3s;
+            height: 100%;
         }
-        body.dark-mode .security-quote-box {
-            background: linear-gradient(135deg, var(--primary), #0f2925); /* يرجع متدرج غامق */
-            border: none;
-            border-right: 6px solid var(--secondary);
-            color: white;
+        .vision-card-new:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.1);
+            border-color: var(--secondary);
         }
-        body.dark-mode .security-quote-box h3 { color: var(--secondary); text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        body.dark-mode .security-quote-box p { color: white; }
-        body.dark-mode .quote-icon { color: rgba(255,255,255,0.1); }
 
-
-        /* تنسيق قسم الشركاء */
+        /* تنسيق قسم الشركاء (داكن مع شعارات بيضاء) */
         .partners-section {
             padding: 60px 0;
             background: #1a1a1a;
@@ -168,13 +102,13 @@
         .partner-img {
             height: 65px;
             width: auto;
-            filter: grayscale(100%) brightness(200%);
+            filter: grayscale(100%) brightness(200%); /* شعار أبيض */
             opacity: 0.7;
             transition: all 0.3s ease;
             object-fit: contain;
         }
         .partner-img:hover { 
-            filter: grayscale(0%) brightness(100%);
+            filter: grayscale(0%) brightness(100%); /* ألوان طبيعية */
             opacity: 1; 
             transform: scale(1.1); 
         }
@@ -245,30 +179,30 @@
         </div>
     </div>
 
-    <section class="vision-section">
+    <section class="vision-section" style="background: linear-gradient(135deg, var(--dark), #0f2925); color: white; padding: 80px 0;">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2>بنية رقمية تخدم الوطن</h2>
-                <p>وُجْهَة ليست مجرد تطبيق، بل هي حل مستدام لرفع جودة الحياة</p>
+                <h2 style="color: white;">بنية رقمية تخدم الوطن</h2>
+                <p style="color: rgba(255,255,255,0.8);">وُجْهَة ليست مجرد تطبيق، بل هي حل مستدام لرفع جودة الحياة</p>
             </div>
             
             <div class="features-grid"> 
                 <div class="vision-card-new" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-coins"></i>
-                    <h3>للمواطن</h3>
-                    <p>مصدر دخل إضافي محمي وموثق. حول أصولك المتوقفة إلى استثمار ناجح بكل أمان.</p>
+                    <i class="fas fa-coins" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px;"></i>
+                    <h3 style="color: white;">للمواطن</h3>
+                    <p style="color: #ccc; font-size: 1.1rem;">مصدر دخل إضافي محمي وموثق. حول أصولك المتوقفة إلى استثمار ناجح بكل أمان.</p>
                 </div>
                 
                 <div class="vision-card-new" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-user-check"></i>
-                    <h3>للمستخدم</h3>
-                    <p>خيارات تنقل متنوعة وآمنة في كل مدينة وحي. سهولة في الوصول وموثوقية في التعامل.</p>
+                    <i class="fas fa-user-check" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px;"></i>
+                    <h3 style="color: white;">للمستخدم</h3>
+                    <p style="color: #ccc; font-size: 1.1rem;">خيارات تنقل متنوعة وآمنة في كل مدينة وحي. سهولة في الوصول وموثوقية في التعامل.</p>
                 </div>
                 
                 <div class="vision-card-new" data-aos="fade-up" data-aos-delay="300">
-                    <i class="fas fa-globe-asia"></i>
-                    <h3>للوطن</h3>
-                    <p>جاهزية تامة لاستيعاب النمو السكاني والزوار في الأحداث العالمية الكبرى بكفاءة عالية.</p>
+                    <i class="fas fa-globe-asia" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px;"></i>
+                    <h3 style="color: white;">للوطن</h3>
+                    <p style="color: #ccc; font-size: 1.1rem;">جاهزية تامة لاستيعاب النمو السكاني والزوار في الأحداث العالمية الكبرى بكفاءة عالية.</p>
                 </div>
             </div>
         </div>
@@ -307,8 +241,8 @@
         <div class="container">
             <div class="security-quote-box" data-aos="zoom-in">
                 <i class="fas fa-quote-right quote-icon"></i>
-                <h3>ميثاق وُجْهَة الأمني</h3>
-                <p>
+                <h3 style="color: var(--secondary); margin-bottom: 25px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">ميثاق وُجْهَة الأمني</h3>
+                <p style="font-size: 1.4rem; line-height: 1.8; color: white; font-weight: 500;">
                     "سواء كنت صاحب السيارة أو قائدها، <strong>نفاذ</strong> هو الحكم، و <strong>أبشر</strong> هو الضامن.<br>
                     في وُجْهَة، لا نتعامل مع المجهولين. كل عملية موثقة، كل طرف معروف، وكل حق محفوظ."
                 </p>
