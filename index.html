@@ -9,6 +9,20 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
+        /* === إصلاح تأثير الهيدر عند التمرير === */
+        header {
+            transition: all 0.4s ease-in-out; /* تنعيم الحركة */
+        }
+        header.scrolled {
+            padding: 10px 0 !important; /* تقليل الارتفاع */
+            background-color: rgba(255, 255, 255, 0.98); /* تأكيد الخلفية */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1) !important; /* إضافة ظل */
+        }
+        body.dark-mode header.scrolled {
+            background-color: rgba(20, 20, 20, 0.98); /* خلفية داكنة في الوضع الليلي */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5) !important;
+        }
+
         /* شريط الإحصائيات الحية */
         .live-stats-bar {
             background: var(--dark);
@@ -20,7 +34,7 @@
         }
         .stats-ticker {
             display: inline-block;
-            animation: ticker 25s linear infinite;
+            animation: ticker 30s linear infinite;
         }
         @keyframes ticker {
             0% { transform: translateX(-100%); }
@@ -29,44 +43,32 @@
         .stat-item { display: inline-block; margin: 0 30px; font-size: 1.1rem; }
         .stat-item i { color: var(--secondary); margin-left: 8px; }
 
-        /* تنسيق قسم الأمان الجديد */
+        /* تنسيق قسم الأمان (داكن) */
         .security-quote-section {
-            background: var(--light); /* تعديل ليدعم الوضع الليلي */
+            background: #f8f9fa;
             padding: 60px 0;
             text-align: center;
-            border-top: 1px solid var(--border-color-light);
-            border-bottom: 1px solid var(--border-color-light);
-            transition: background 0.3s ease;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
         }
-        body.dark-mode .security-quote-section {
-            background: var(--body-bg-dark);
-            border-color: var(--border-color-dark);
-        }
-
         .security-quote-box {
             max-width: 900px;
             margin: 0 auto;
             position: relative;
-            padding: 40px;
-            background: var(--card-bg-light);
+            padding: 50px;
+            background: linear-gradient(135deg, var(--primary), #0f2925); 
             border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
-            border-right: 6px solid var(--primary);
-            transition: background 0.3s ease;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            border-right: 6px solid var(--secondary);
+            color: white;
         }
-        body.dark-mode .security-quote-box {
-            background: var(--card-bg-dark);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-        
         .quote-icon {
-            font-size: 3rem;
-            color: #eee;
+            font-size: 4rem;
+            color: rgba(255,255,255,0.1);
             position: absolute;
             top: 20px;
             right: 20px;
         }
-        body.dark-mode .quote-icon { color: #333; }
         
         /* تنسيق بطاقات الرؤية */
         .vision-card-new {
@@ -83,19 +85,13 @@
             border-color: var(--secondary);
         }
 
-        /* تنسيق قسم الشركاء - التعديل الجديد */
+        /* تنسيق قسم الشركاء (داكن مع شعارات بيضاء) */
         .partners-section {
             padding: 60px 0;
-            background: white; /* الوضع النهاري */
+            background: #1a1a1a;
             text-align: center;
-            transition: background 0.3s ease;
+            position: relative;
         }
-        body.dark-mode .partners-section {
-            background: #121212; /* الوضع الليلي */
-            border-top: 1px solid #333;
-        }
-
-        /* تنسيق الشعارات */
         .partners-logos {
             display: flex;
             justify-content: center;
@@ -106,22 +102,15 @@
         .partner-img {
             height: 65px;
             width: auto;
-            filter: grayscale(100%);
+            filter: grayscale(100%) brightness(200%); /* شعار أبيض */
             opacity: 0.7;
             transition: all 0.3s ease;
             object-fit: contain;
         }
-        
-        /* خدعة ذكية: في الوضع الليلي، نعكس ألوان الشعارات عشان تصير بيضاء وواضحة */
-        body.dark-mode .partner-img {
-            filter: grayscale(100%) invert(1) brightness(2); 
-            opacity: 0.8;
-        }
-
         .partner-img:hover { 
-            filter: grayscale(0%) invert(0) brightness(1) !important; /* إرجاع الألوان الأصلية عند التحويم */
+            filter: grayscale(0%) brightness(100%); /* ألوان طبيعية */
             opacity: 1; 
-            transform: scale(1.05); 
+            transform: scale(1.1); 
         }
     </style>
 </head>
@@ -252,8 +241,8 @@
         <div class="container">
             <div class="security-quote-box" data-aos="zoom-in">
                 <i class="fas fa-quote-right quote-icon"></i>
-                <h3 style="color: var(--primary); margin-bottom: 20px; font-weight: 800;">ميثاق وُجْهَة الأمني</h3>
-                <p style="font-size: 1.3rem; line-height: 1.8; color: var(--text-color-light); font-weight: 500;">
+                <h3 style="color: var(--secondary); margin-bottom: 25px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">ميثاق وُجْهَة الأمني</h3>
+                <p style="font-size: 1.4rem; line-height: 1.8; color: white; font-weight: 500;">
                     "سواء كنت صاحب السيارة أو قائدها، <strong>نفاذ</strong> هو الحكم، و <strong>أبشر</strong> هو الضامن.<br>
                     في وُجْهَة، لا نتعامل مع المجهولين. كل عملية موثقة، كل طرف معروف، وكل حق محفوظ."
                 </p>
@@ -263,14 +252,11 @@
 
     <section class="partners-section">
         <div class="container">
-            <h3 style="color: var(--gray); margin-bottom: 40px; font-weight: 700;">منظومة تكاملية مع</h3>
+            <h3 style="color: white; margin-bottom: 40px; font-weight: 700;">منظومة تكاملية مع</h3>
             <div class="partners-logos" data-aos="fade-up">
                 <img src="https://www.zarkachat.com/wp-content/uploads/2020/04/absherr.jpg" alt="أبشر" class="partner-img">
-                
                 <img src="https://kss.sa/wp-content/uploads/2022/05/kss-sa-241-450x176.png?v=1652731492" alt="نفاذ" class="partner-img">
-                
                 <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/bb/4a/93/bb4a9376-f7fc-8a7a-73f6-8835ee3d8668/AppIcon-0-0-1x_U007emarketing-0-7-0-0-sRGB-0-85-220.png/1200x630wa.png" alt="نجم" class="partner-img" style="border-radius: 10px;">
-                
                 <img src="https://khdmatsaudi.com/wp-content/uploads/2021/03/%D8%A8%D9%88%D8%A7%D8%A8%D8%A9-%D8%AA%D9%85-%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AF%D8%A7%D8%AE%D9%84%D9%8A%D8%A9-1442-%D8%AA%D8%B3%D8%AC%D9%8A%D9%84-%D8%A7%D9%84%D8%AF%D8%AE%D9%88%D9%84-Tamm-login.jpg" alt="بوابة تم" class="partner-img">
             </div>
         </div>
@@ -370,9 +356,18 @@
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({
-            once: true,
+        AOS.init({ once: true });
+
+        // كود تشغيل تأثير الهيدر المدمج (لضمان عمله)
+        window.addEventListener('scroll', function() {
+            var header = document.querySelector('header');
+            if(header) {
+                // إذا نزلنا أكثر من 50 بكسل، نضيف كلاس 'scrolled'
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            }
         });
+
+        // تشغيل البارتكلز
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
