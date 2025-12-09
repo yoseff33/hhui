@@ -3,124 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | تسجيل الدخول</title>
+    <title>وُجْهَة | الدخول الموحد (نفاذ)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        /* إضافة بعض التنسيقات الخاصة لهذه الصفحة فقط */
-        .choice-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        /* تنسيق صفحة الدخول الموحد */
+        .login-wrapper {
             background: linear-gradient(105deg, rgba(15, 41, 37, 0.95) 0%, rgba(26, 60, 55, 0.9) 100%), url('https://www.almowaten.net/wp-content/uploads/2022/10/Ff0vop3XkAACLm8-877x492.jpg') no-repeat center center/cover;
-            background-size: cover;
-            color: white;
-            text-align: center;
-            flex-direction: column;
-            gap: 40px;
-            padding: 20px;
-        }
-        .choice-container h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            font-weight: 800;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            line-height: 1.2;
-        }
-        .choice-container p {
-            font-size: 1.3rem;
-            margin-bottom: 50px;
-            max-width: 600px;
-            line-height: 1.8;
-            opacity: 0.9;
-        }
-        .choice-buttons {
+            min-height: 100vh;
             display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
+            align-items: center;
             justify-content: center;
+            padding: 120px 20px 50px; /* مسافة للهيدر */
+        }
+
+        .nafath-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
             width: 100%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.5s ease-out;
         }
-        .choice-buttons .btn {
-            padding: 20px 45px;
-            font-size: 1.3rem;
-            min-width: 200px;
-            flex-grow: 1;
-            max-width: 300px;
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
-        /* لتجاوبية أفضل لهذه الصفحة */
-        @media (max-width: 768px) {
-            .choice-container h1 {
-                font-size: 2.5rem;
-            }
-            .choice-container p {
-                font-size: 1rem;
-                padding: 0 20px;
-                margin-bottom: 30px;
-            }
-            .choice-buttons {
-                flex-direction: column;
-                width: 70%;
-                margin: 0 auto;
-            }
-            .choice-buttons .btn {
-                width: 100%;
-                max-width: none;
-                padding: 18px 30px;
-                font-size: 1.15rem;
-            }
+
+        .nafath-logo {
+            width: 120px;
+            margin-bottom: 20px;
         }
-        @media (max-width: 480px) {
-            .choice-container h1 {
-                font-size: 2rem;
-            }
-            .choice-container p {
-                font-size: 0.9rem;
-            }
-            .choice-buttons {
-                width: 90%;
-            }
+
+        .login-step {
+            display: none; /* إخفاء الخطوات افتراضياً */
         }
+        .login-step.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: right;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+        .nafath-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            text-align: center; /* لكتابة الهوية */
+            transition: 0.3s;
+        }
+        .nafath-input:focus {
+            border-color: #00ab6b; /* لون نفاذ الأخضر */
+            outline: none;
+        }
+
+        .nafath-btn {
+            background-color: #00ab6b;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .nafath-btn:hover {
+            background-color: #008f59;
+        }
+
+        /* تنسيق رقم التحقق */
+        .verification-number {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #00ab6b;
+            margin: 20px 0;
+            letter-spacing: 5px;
+        }
+        .timer {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        /* تنسيق اختيار الدور */
+        .role-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .role-owner {
+            background: var(--primary);
+            color: white;
+        }
+        .role-renter {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        .role-owner:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .role-renter:hover { background: var(--light-gray); }
+
     </style>
 </head>
 <body>
-    <div class="choice-container">
-        <h1>مرحبًا بك في وُجْهَة!</h1>
-        <p>الرجاء اختيار نوع الحساب الذي تريد تسجيل الدخول إليه أو التسجيل به.</p>
-        <div class="choice-buttons">
-            <a href="#" class="btn btn-secondary" onclick="loginUser('owner')">
-                <i class="fas fa-car-alt"></i> أنا مؤجر
-            </a>
-            <a href="#" class="btn btn-primary" onclick="loginUser('renter')">
-                <i class="fas fa-key"></i> أنا مستأجر
-            </a>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">و</div>
+                    <div class="logo-text">وُجْهَة</div>
+                </a>
+                <ul class="nav-links desktop-nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="cars.html">استكشف السيارات</a></li>
+                    <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+                    <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
+                    <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
+                    <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
+                    <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
+                    <li><a href="qassim-map.html">خريطة الرياض</a></li>
+                </ul>
+                <div class="nav-buttons nav-buttons-desktop-only">
+                    <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع">
+                        <i class="fas fa-moon"></i>
+                        <span>الوضع</span> </button>
+                    </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="login-wrapper">
+        <div class="nafath-card">
+            <div style="margin-bottom: 20px;">
+                <img src="https://nafath.sa/images/logo.png" alt="نفاذ" style="height: 50px; object-fit: contain;">
+                <p style="color: #666; font-size: 0.9rem; margin-top: 10px;">بوابة النفاذ الوطني الموحد</p>
+            </div>
+
+            <div id="step-1" class="login-step active">
+                <h3 style="margin-bottom: 20px; color: var(--dark);">تسجيل الدخول</h3>
+                <div class="input-group">
+                    <label>رقم الهوية الوطنية / الإقامة</label>
+                    <input type="number" class="nafath-input" placeholder="أدخل رقم الهوية" id="national-id">
+                </div>
+                <button class="nafath-btn" onclick="startNafathVerification()">تسجيل الدخول</button>
+            </div>
+
+            <div id="step-2" class="login-step">
+                <h3 style="color: var(--dark);">التحقق عبر تطبيق نفاذ</h3>
+                <p style="color: #666; margin: 15px 0;">الرجاء فتح تطبيق نفاذ وتأكيد الطلب باختيار الرقم:</p>
+                <div class="verification-number" id="random-code">45</div>
+                <div class="timer">
+                    <i class="fas fa-spinner fa-spin"></i> بانتظار الموافقة...
+                </div>
+            </div>
+
+            <div id="step-3" class="login-step">
+                <div style="color: #00ab6b; font-size: 3rem; margin-bottom: 10px;">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 style="margin-bottom: 10px;">تم التوثيق بنجاح</h3>
+                <p style="margin-bottom: 25px; color: #666;">مرحباً بك، <strong>نواف السبيعي</strong></p>
+                
+                <p style="margin-bottom: 15px; font-size: 0.95rem;">لغرض العرض التجريبي، اختر نوع الحساب:</p>
+                
+                <a href="#" class="role-btn role-owner" onclick="loginUser('owner')">
+                    <i class="fas fa-car"></i> الدخول كـ (مؤجر)
+                </a>
+                <a href="#" class="role-btn role-renter" onclick="loginUser('renter')">
+                    <i class="fas fa-user"></i> الدخول كـ (مستأجر)
+                </a>
+            </div>
         </div>
     </div>
 
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>عن وُجْهَة</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
+                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان. نمكن زوار المملكة من التنقل الذكي.
+                    </p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="cars.html">استكشف السيارات</a></li>
+                        <li><a href="index.html#how-it-works">كيف تعمل</a></li>
+                        <li><a href="https://wa.me/966565464718">الدعم الفني</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>للأفراد</h3>
+                    <ul>
+                        <li><a href="dashboard-renter.html">لوحة المستأجر</a></li>
+                        <li><a href="cars.html">البحث عن سيارة</a></li>
+                        <li><a href="rental-terms.html">شروط الاستئجار</a></li>
+                        <li><a href="user-guide.html">دليل المستخدم</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>تواصل معنا</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>الرياض، واجهة روشن (مقر الهاكاثون)</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+966 56 546 4718</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>contact@wujha.sa</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | صنع في السعودية 🇸🇦</p>
+            </div>
+        </div>
+    </footer>
+
+    <nav class="bottom-navbar mobile-bottom-navbar">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </a>
+        <a href="cars.html" class="nav-item">
+            <i class="fas fa-car"></i>
+            <span>السيارات</span>
+        </a>
+        <a href="landing.html" class="nav-item active guest-only" id="mobile-bottom-guest-button">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>دخول</span>
+        </a>
+        <a href="#" class="nav-item auth-link-bottom" id="mobile-bottom-user-button">
+            <i class="fas fa-user-circle"></i>
+            <span>حسابي</span>
+        </a>
+        <a href="qassim-map.html" class="nav-item">
+            <i class="fas fa-map-marked-alt"></i>
+            <span>الخريطة</span>
+        </a>
+        <a href="#" class="nav-item" id="mobile-chatbot-toggle">
+            <i class="fas fa-comment-dots"></i>
+            <span>المساعد</span>
+        </a>
+    </nav>
+
     <div id="chatbot-popup" class="chatbot-popup">
         <div class="chatbot-header">
-            <h3>اسالني</h3>
+            <h3>المساعد الأمني</h3>
             <button id="chatbot-close-btn" class="close-btn">&times;</button>
         </div>
         <div class="chatbot-body" id="chatbot-body">
             <div class="bot-message">
-                مرحباً بك! أنا مساعد وُجْهَة، كيف يمكنني مساعدتك اليوم؟
+                مرحباً بك في بوابة الدخول الآمن. هل تواجه مشكلة في تسجيل الدخول عبر نفاذ؟
             </div>
         </div>
         <div class="chatbot-footer">
-            <input type="text" id="chatbot-input" placeholder="اكتب رسالتك هنا...">
+            <input type="text" id="chatbot-input" placeholder="اكتب سؤالك...">
             <button id="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
     
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({
-            once: true,
-        });
+        AOS.init({ once: true });
+
+        // سكربت محاكاة نفاذ
+        function startNafathVerification() {
+            const idInput = document.getElementById('national-id');
+            if(idInput.value.length < 5) {
+                alert('الرجاء إدخال رقم هوية صحيح (للتجربة اكتب أي رقم)');
+                return;
+            }
+
+            // الانتقال للخطوة 2 (رقم التحقق)
+            document.getElementById('step-1').classList.remove('active');
+            document.getElementById('step-2').classList.add('active');
+
+            // توليد رقم عشوائي
+            const randomNum = Math.floor(Math.random() * 90) + 10;
+            document.getElementById('random-code').innerText = randomNum;
+
+            // محاكاة الانتظار (3 ثواني) ثم الانتقال للنجاح
+            setTimeout(() => {
+                document.getElementById('step-2').classList.remove('active');
+                document.getElementById('step-3').classList.add('active');
+            }, 3000);
+        }
     </script>
     <script src="script.js"></script>
     <script src="chatbot.js"></script>
