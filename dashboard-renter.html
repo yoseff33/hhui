@@ -3,37 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | لوحة تحكم المستأجر</title>
+    <title>وُجْهَة | لوحة المستأجر (سارة)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        /* تنسيقات خاصة بمؤشر الثقة */
-        .trust-score-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .trust-badge {
-            background-color: #2ecc71;
+        .trust-score-card {
+            background: linear-gradient(135deg, var(--primary), #0f2925);
             color: white;
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: bold;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
         }
-        .auth-status-badge {
-            background: rgba(46, 139, 87, 0.1);
-            color: var(--primary);
-            padding: 5px 10px;
+        .trust-score-card h3 { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 10px; }
+        .score-big { font-size: 3rem; font-weight: 800; color: var(--secondary); }
+        .pledge-section {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-top: 30px;
+            border: 1px solid #eee;
+        }
+        .pledge-options label {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
             border-radius: 8px;
-            font-size: 0.85rem;
-            border: 1px solid var(--primary);
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
+            cursor: pointer;
+            transition: 0.2s;
         }
+        .pledge-options label:hover { background: #e9ecef; }
     </style>
 </head>
 <body>
@@ -46,153 +51,101 @@
                 </a>
                 <ul class="nav-links desktop-nav-links">
                     <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="cars.html">استكشف السيارات</a></li>
-                    <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-                    <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
-                    <li><a href="dashboard-renter.html" class="auth-link active" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
-                    <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
-                    <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
-                    <li><a href="qassim-map.html">خريطة الرياض</a></li>
+                    <li><a href="dashboard-renter.html" class="active">لوحة المستأجر</a></li>
                 </ul>
-                <div class="nav-buttons nav-buttons-desktop-only">
-                    <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع">
-                        <i class="fas fa-moon"></i>
-                        <span>الوضع</span> </button>
-                    <button id="desktop-chatbot-toggle" class="btn btn-outline" style="display: none;">
-                        <i class="fas fa-comment-dots"></i>
-                        <span>اسالني</span>
-                    </button>
-                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">دخول آمن (نفاذ)</a>
-                    <div id="nav-user-profile-placeholder"></div>
+                <div class="nav-buttons">
+                    <button class="btn btn-outline" onclick="window.location.href='index.html'"><i class="fas fa-sign-out-alt"></i> خروج</button>
                 </div>
             </nav>
         </div>
     </header>
 
-    <section id="dashboard-renter" class="dashboard-section" style="padding-top: 150px;">
+    <section class="dashboard-section" style="padding-top: 120px;">
         <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>حسابي وتفاوضي</h2>
-                <p>إدارة رحلاتك الآمنة ومتابعة نقاط الولاء</p>
-            </div>
-            
-            <div class="dashboard" data-aos="fade-up" data-aos-delay="100">
+            <div class="dashboard" data-aos="fade-up">
                 <div class="dashboard-sidebar">
                     <div class="user-profile">
-                        <div class="user-avatar" style="background-color: var(--primary);">م</div>
+                        <div class="user-avatar" style="background: #e91e63; color: white;">س</div>
                         <div class="user-info">
-                            <h3>محمد العتيبي</h3>
-                            <p><i class="fas fa-check-circle" style="color: #2ecc71;"></i> هوية موثقة (نفاذ)</p>
+                            <h3>سارة الحربي</h3>
+                            <p><i class="fas fa-check-circle" style="color: #4cd137;"></i> هوية موثقة (نفاذ)</p>
                         </div>
                     </div>
-                    
                     <ul class="sidebar-menu">
-                        <li><a href="#" class="active"><i class="fas fa-columns"></i> لوحة التحكم</a></li>
-                        <li><a href="#"><i class="fas fa-route"></i> رحلاتي الحالية</a></li>
-                        <li><a href="#"><i class="fas fa-file-signature"></i> التفاويض النشطة</a></li>
-                        <li><a href="#"><i class="fas fa-history"></i> السجل السابق</a></li>
+                        <li><a href="#" class="active"><i class="fas fa-home"></i> حسابي</a></li>
+                        <li><a href="#"><i class="fas fa-history"></i> رحلاتي السابقة</a></li>
+                        <li><a href="#"><i class="fas fa-ticket-alt"></i> المخالفات</a></li>
                         <li><a href="#"><i class="fas fa-cog"></i> الإعدادات</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="dashboard-content">
-                    <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; border-right: 4px solid #2ecc71; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between;">
-                        <div>
-                            <strong><i class="fas fa-shield-alt"></i> حالة الحساب:</strong>
-                            <span style="color: var(--dark);"> مؤهل للتأجير الفوري (سجل مروري سليم).</span>
-                        </div>
-                        <div class="trust-score-container">
-                            <span style="font-size: 0.9rem;">مؤشر الثقة:</span>
-                            <span class="trust-badge">98/100</span>
-                        </div>
+                    
+                    <div class="trust-score-card">
+                        <i class="fas fa-medal" style="position: absolute; top: 20px; right: 20px; font-size: 3rem; opacity: 0.1;"></i>
+                        <h3>مؤشر الثقة والقيادة الآمنة</h3>
+                        <div class="score-big">98/100</div>
+                        <p>ممتاز يا سارة! سجلك المروري يمنحك خصومات إضافية.</p>
                     </div>
 
                     <div class="stats-grid">
                         <div class="stat-card">
                             <h3>الرحلات المكتملة</h3>
-                            <div class="value" id="current-rentals-count">3</div>
-                            <p class="story">رحلات آمنة</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>التفويض الحالي</h3>
-                            <div class="value" style="color: var(--primary);">1</div>
-                            <p class="story">نشط عبر أبشر</p>
+                            <div class="value">5</div>
                         </div>
                         <div class="stat-card">
                             <h3>المتبقي للمكافأة</h3>
-                            <div class="value" id="remaining-rentals-count" style="color: var(--secondary);">5</div>
-                            <p class="story">رحلات</p>
+                            <div class="value" style="color: var(--secondary);">3</div>
                         </div>
-                    </div>
-                    
-                    <div class="loyalty-card" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="loyalty-card-content">
-                            <h3>برنامج ولاء "وُجْهَة"</h3>
-                            <p>أكمل 8 رحلات آمنة واحصل على رحلة مجانية!</p>
-                            
-                            <div class="loyalty-progress">
-                                <div class="loyalty-dot completed">1</div>
-                                <div class="loyalty-line">
-                                    <div class="loyalty-line-fill" style="width: 37.5%;"></div>
-                                </div>
-                                <div class="loyalty-dot completed">2</div>
-                                <div class="loyalty-line"><div class="loyalty-line-fill"></div></div>
-                                <div class="loyalty-dot completed">3</div>
-                                <div class="loyalty-line"><div class="loyalty-line-fill"></div></div>
-                                <div class="loyalty-dot">4</div>
-                                <div class="loyalty-line"><div class="loyalty-line-fill"></div></div>
-                                <div class="loyalty-dot">5</div>
-                                <div class="loyalty-line"><div class="loyalty-line-fill"></div></div>
-                                <div class="loyalty-dot">6</div>
-                                <div class="loyalty-line"><div class="loyalty-line-fill"></div></div>
-                                <div class="loyalty-dot">7</div>
-                                <div class="loyalty-line"><div class="loyalty-line-fill"></div></div>
-                                <div class="loyalty-dot"><i class="fas fa-gift"></i></div>
-                            </div>
-                            
-                            <div class="loyalty-reward-info">
-                                <small>ملاحظة: الالتزام بقواعد المرور يسرع حصولك على نقاط إضافية</small>
-                            </div>
+                        <div class="stat-card">
+                            <h3>الحالة الأمنية</h3>
+                            <div class="value" style="font-size: 1.2rem; color: green;">مصرح بالقيادة</div>
                         </div>
                     </div>
 
-                    <div class="recent-bookings" data-aos="fade-up" data-aos-delay="300">
-                        <h3>الرحلة الحالية</h3>
-                        <div class="booking-item">
+                    <h3 style="margin-top: 30px;">الرحلة الحالية</h3>
+                    <div class="recent-bookings">
+                        <div class="booking-item" style="background: #fdfdfd;">
                             <div class="booking-car">
-                                <img src="https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="تويوتا كامري">
+                                <img src="https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp" alt="النترا">
                                 <div class="booking-details">
-                                    <h4>تويوتا كامري 2022</h4>
-                                    <p>المالك: يوسف المطيري</p>
-                                    <div class="auth-status-badge">
-                                        <i class="fas fa-fingerprint"></i> مفوضة إلكترونياً
-                                    </div>
+                                    <h4>هونداي النترا 2023</h4>
+                                    <p>المالك: محمد (تقييم 5 نجوم)</p>
+                                    <span style="color: var(--primary); font-size: 0.9rem;">
+                                        <i class="fas fa-fingerprint"></i> تم التفويض عبر أبشر
+                                    </span>
                                 </div>
-                            </div>
-                            <div class="booking-date">
-                                <p>الاستلام: واجهة الرياض P4</p>
-                                <p style="font-size: 0.85rem; color: var(--gray);">التسليم: غداً 10:00 م</p>
                             </div>
                             <div class="booking-price">
-                                <button class="btn btn-primary" style="padding: 8px 15px; font-size: 0.9rem;">
-                                    <i class="fas fa-key"></i> المفتاح الرقمي
-                                </button>
+                                <button class="btn btn-primary">عرض المفتاح الرقمي</button>
                             </div>
                         </div>
                     </div>
 
-                    <div style="margin-top: 30px; background: white; padding: 25px; border-radius: 16px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
-                        <h3 style="margin-bottom: 15px;">تعهد السلامة المرورية</h3>
-                        <form id="pledge-form">
-                            <p style="margin-bottom: 15px; color: var(--gray);">اختر تعهدك لهذه الرحلة لرفع نقاط الثقة:</p>
-                            <div class="quiz-options">
-                                <label><input type="radio" name="pledge-type" value="speed"> أتعهد بالالتزام بالسرعة المحددة</label>
-                                <label><input type="radio" name="pledge-type" value="phone"> أتعهد بعدم استخدام الجوال أثناء القيادة</label>
-                                <label><input type="radio" name="pledge-type" value="belt"> أتعهد بربط حزام الأمان لي وللركاب</label>
+                    <div class="pledge-section" id="renter-pledge-section">
+                        <h3><i class="fas fa-hand-holding-heart"></i> تعهد القيادة الآمنة</h3>
+                        <p style="color: #666; margin-bottom: 15px;">للحفاظ على مؤشر الثقة العالي، يرجى الالتزام بالتعهد التالي قبل بدء الرحلة:</p>
+                        
+                        <form id="renter-pledge-form">
+                            <div class="pledge-options">
+                                <label>
+                                    <input type="radio" name="pledge" value="speed" required> أتعهد بالالتزام بالسرعة النظامية للطريق.
+                                </label>
+                                <label>
+                                    <input type="radio" name="pledge" value="phone"> أتعهد بعدم استخدام الجوال أثناء القيادة.
+                                </label>
+                                <label>
+                                    <input type="radio" name="pledge" value="belt"> أتعهد بربط حزام الأمان لي وللمرافقين.
+                                </label>
                             </div>
-                            <button type="submit" class="btn btn-secondary" style="margin-top: 15px; width: 100%;">تأكيد التعهد</button>
+                            <button type="submit" class="btn btn-secondary" style="width: 100%; margin-top: 15px;">تأكيد التعهد</button>
                         </form>
-                        <div id="pledge-result" style="display: none; text-align: center; color: var(--primary); font-weight: bold; margin-top: 15px;"></div>
+
+                        <div id="renter-success-msg" style="display:none; margin-top:15px; text-align:center; padding:20px; background:#e0f2f1; border-radius:10px; color:#00695c;">
+                            <div style="font-size: 2rem; margin-bottom: 10px;"><i class="fas fa-check-circle"></i></div>
+                            <strong>شكراً سارة!</strong>
+                            <p>تم تسجيل تعهدك بنجاح. نتمنى لك رحلة آمنة وسعيدة.</p>
+                        </div>
                     </div>
 
                 </div>
@@ -200,118 +153,15 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>عن وُجْهَة</h3>
-                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
-                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان. نمكن زوار المملكة من التنقل الذكي.
-                    </p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>روابط سريعة</h3>
-                    <ul>
-                        <li><a href="index.html">الرئيسية</a></li>
-                        <li><a href="cars.html">استكشف السيارات</a></li>
-                        <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-                        <li><a href="https://wa.me/966565464718">الدعم الفني</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>للأفراد</h3>
-                    <ul>
-                        <li><a href="dashboard-renter.html">لوحة المستأجر</a></li>
-                        <li><a href="cars.html">البحث عن سيارة</a></li>
-                        <li><a href="rental-terms.html">شروط الاستئجار</a></li>
-                        <li><a href="user-guide.html">دليل المستخدم</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>تواصل معنا</h3>
-                    <ul class="footer-contact">
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>الرياض، واجهة روشن (مقر الهاكاثون)</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <span>+966 56 546 4718</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <span>contact@wujha.sa</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | صنع في السعودية 🇸🇦</p>
-            </div>
-        </div>
-    </footer>
-
-    <nav class="bottom-navbar mobile-bottom-navbar">
-        <a href="index.html" class="nav-item">
-            <i class="fas fa-home"></i>
-            <span>الرئيسية</span>
-        </a>
-        <a href="cars.html" class="nav-item">
-            <i class="fas fa-car"></i>
-            <span>السيارات</span>
-        </a>
-        <a href="landing.html" class="nav-item guest-only" id="mobile-bottom-guest-button">
-            <i class="fas fa-sign-in-alt"></i>
-            <span>دخول</span>
-        </a>
-        <a href="dashboard-renter.html" class="nav-item active auth-link-bottom" id="mobile-bottom-user-button">
-            <i class="fas fa-user-circle"></i>
-            <span>حسابي</span>
-        </a>
-        <a href="add-car.html" class="nav-item auth-link-bottom" data-role="owner">
-            <i class="fas fa-plus-circle"></i>
-            <span>أضف سيارة</span>
-        </a>
-        <a href="qassim-map.html" class="nav-item">
-            <i class="fas fa-map-marked-alt"></i>
-            <span>الخريطة</span>
-        </a>
-        <a href="#" class="nav-item" id="mobile-chatbot-toggle">
-            <i class="fas fa-comment-dots"></i>
-            <span>المساعد</span>
-        </a>
-    </nav>
-
-    <div id="chatbot-popup" class="chatbot-popup">
-        <div class="chatbot-header">
-            <h3>المساعد الأمني</h3>
-            <button id="chatbot-close-btn" class="close-btn">&times;</button>
-        </div>
-        <div class="chatbot-body" id="chatbot-body">
-            <div class="bot-message">
-                أهلاً محمد. نتمنى لك رحلة آمنة. لا تنس ربط حزام الأمان. كيف أقدر أساعدك؟
-            </div>
-        </div>
-        <div class="chatbot-footer">
-            <input type="text" id="chatbot-input" placeholder="اكتب سؤالك...">
-            <button id="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ once: true });
+        AOS.init();
+        // منطق التعهد الخاص بسارة
+        document.getElementById('renter-pledge-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.style.display = 'none';
+            document.getElementById('renter-success-msg').style.display = 'block';
+        });
     </script>
-    <script src="csr-content.js"></script> 
-    <script src="script.js"></script>
-    <script src="chatbot.js"></script>
 </body>
 </html>
