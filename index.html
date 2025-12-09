@@ -52,7 +52,6 @@
 
         /* === توحيد: قسم الرؤية (بنية رقمية) === */
         .vision-section {
-            /* التدرج الموحد الجديد */
             background: linear-gradient(135deg, var(--brand-dark-teal) 0%, var(--brand-dark-bg) 100%) !important;
             color: white;
             padding: 80px 0;
@@ -79,14 +78,22 @@
 
         /* === توحيد: قسم الميثاق الأمني === */
         .security-quote-section {
-            background: #f8f9fa; /* خلفية فاتحة للقسم عشان يبرز الصندوق */
+            background: #f8f9fa; /* خلفية فاتحة للنهار */
             padding: 60px 0;
             text-align: center;
             border-top: 1px solid #eee;
             border-bottom: 1px solid #eee;
+            transition: background-color 0.3s ease;
         }
+
+        /* إصلاح الخلفية في الوضع الليلي */
+        body.dark-mode .security-quote-section {
+            background-color: var(--brand-dark-bg) !important; /* تقلب غامق بالليل */
+            border-color: #333 !important;
+        }
+
         .security-quote-box {
-            /* نفس تدرج قسم الرؤية بالضبط لتوحيد الهوية */
+            /* نفس تدرج قسم الرؤية لتوحيد الهوية */
             background: linear-gradient(135deg, var(--brand-dark-teal) 0%, var(--brand-dark-bg) 100%);
             max-width: 900px;
             margin: 0 auto;
@@ -112,7 +119,7 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        /* تنسيق قسم الشركاء (داكن مع شعارات بيضاء) */
+        /* تنسيق قسم الشركاء */
         .partners-section {
             padding: 60px 0;
             background: var(--brand-dark-bg);
@@ -135,7 +142,7 @@
             object-fit: contain;
         }
         .partner-img:hover { 
-            filter: grayscale(0%) brightness(100%); /* ألوان طبيعية */
+            filter: grayscale(0%) brightness(100%); 
             opacity: 1; 
             transform: scale(1.1); 
         }
