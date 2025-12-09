@@ -9,36 +9,56 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        .trust-score-card {
-            background: linear-gradient(135deg, var(--primary), #0f2925);
+        .accessibility-toggle {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .wallet-card {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
             color: white;
             padding: 20px;
-            border-radius: 16px;
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
-        .trust-score-card h3 { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 10px; }
-        .score-big { font-size: 3rem; font-weight: 800; color: var(--secondary); }
-        .pledge-section {
-            background: white;
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-top: 30px;
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .action-btn {
+            padding: 15px;
             border: 1px solid #eee;
-        }
-        .pledge-options label {
-            display: block;
-            padding: 10px;
-            margin: 5px 0;
-            background: #f8f9fa;
             border-radius: 8px;
+            background: white;
+            text-align: center;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
         }
-        .pledge-options label:hover { background: #e9ecef; }
+        .action-btn:hover { border-color: var(--primary); background: #f9f9f9; }
+        .action-btn i { font-size: 1.5rem; margin-bottom: 10px; display: block; color: var(--primary); }
+        
+        /* تنسيق التعهد الجديد */
+        .mandatory-pledge label {
+            display: block;
+            background: #fff;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .mandatory-pledge input[type="checkbox"] { transform: scale(1.2); margin-left: 10px; }
     </style>
 </head>
 <body>
@@ -54,7 +74,7 @@
                     <li><a href="dashboard-renter.html" class="active">لوحة المستأجر</a></li>
                 </ul>
                 <div class="nav-buttons">
-                    <button class="btn btn-outline" onclick="window.location.href='index.html'"><i class="fas fa-sign-out-alt"></i> خروج</button>
+                    <button class="btn btn-outline" onclick="window.location.href='index.html'">خروج</button>
                 </div>
             </nav>
         </div>
@@ -68,84 +88,93 @@
                         <div class="user-avatar" style="background: #e91e63; color: white;">س</div>
                         <div class="user-info">
                             <h3>سارة الحربي</h3>
-                            <p><i class="fas fa-check-circle" style="color: #4cd137;"></i> هوية موثقة (نفاذ)</p>
+                            <p><i class="fas fa-check-circle" style="color: #4cd137;"></i> نفاذ + أبشر</p>
                         </div>
                     </div>
                     <ul class="sidebar-menu">
                         <li><a href="#" class="active"><i class="fas fa-home"></i> حسابي</a></li>
-                        <li><a href="#"><i class="fas fa-history"></i> رحلاتي السابقة</a></li>
-                        <li><a href="#"><i class="fas fa-ticket-alt"></i> المخالفات</a></li>
-                        <li><a href="#"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                        <li><a href="#"><i class="fas fa-wallet"></i> المحفظة ونقاط الولاء</a></li>
+                        <li><a href="#"><i class="fas fa-calendar-check"></i> تقويم الفعاليات</a></li>
+                        <li><a href="#"><i class="fas fa-history"></i> السجل والشهادات</a></li>
                     </ul>
                 </div>
 
                 <div class="dashboard-content">
                     
-                    <div class="trust-score-card">
-                        <i class="fas fa-medal" style="position: absolute; top: 20px; right: 20px; font-size: 3rem; opacity: 0.1;"></i>
-                        <h3>مؤشر الثقة والقيادة الآمنة</h3>
-                        <div class="score-big">98/100</div>
-                        <p>ممتاز يا سارة! سجلك المروري يمنحك خصومات إضافية.</p>
+                    <div class="accessibility-toggle">
+                        <span><i class="fas fa-wheelchair"></i> <strong>وضع "ذوي الهمم":</strong> تصفية السيارات المجهزة والمريحة.</span>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
                     </div>
 
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <h3>الرحلات المكتملة</h3>
-                            <div class="value">5</div>
+                    <div class="wallet-card">
+                        <div>
+                            <h3>المحفظة الذكية</h3>
+                            <p style="margin: 0; opacity: 0.9;">رصيد النقاط: <strong>450 نقطة</strong></p>
+                            <small>قابلة للاستبدال مع "قطاف" أو "أميال الفرسان"</small>
                         </div>
-                        <div class="stat-card">
-                            <h3>المتبقي للمكافأة</h3>
-                            <div class="value" style="color: var(--secondary);">3</div>
-                        </div>
-                        <div class="stat-card">
-                            <h3>الحالة الأمنية</h3>
-                            <div class="value" style="font-size: 1.2rem; color: green;">مصرح بالقيادة</div>
-                        </div>
+                        <div style="font-size: 2rem;"><i class="fas fa-coins"></i></div>
                     </div>
 
-                    <h3 style="margin-top: 30px;">الرحلة الحالية</h3>
-                    <div class="recent-bookings">
-                        <div class="booking-item" style="background: #fdfdfd;">
-                            <div class="booking-car">
-                                <img src="https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp" alt="النترا">
-                                <div class="booking-details">
-                                    <h4>هونداي النترا 2023</h4>
-                                    <p>المالك: محمد (تقييم 5 نجوم)</p>
-                                    <span style="color: var(--primary); font-size: 0.9rem;">
-                                        <i class="fas fa-fingerprint"></i> تم التفويض عبر أبشر
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="booking-price">
-                                <button class="btn btn-primary">عرض المفتاح الرقمي</button>
+                    <div class="loyalty-card" style="margin-bottom: 25px;">
+                        <div class="loyalty-card-content">
+                            <h3>مكافأة السائق المثالي</h3>
+                            <p>رحلتين متبقية للحصول على "شهادة شكر" وخصم 50%!</p>
+                            <div class="loyalty-progress">
+                                <div class="loyalty-dot completed">1</div>
+                                <div class="loyalty-dot completed">2</div>
+                                <div class="loyalty-dot completed">3</div>
+                                <div class="loyalty-dot">4</div>
+                                <div class="loyalty-dot">5</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="pledge-section" id="renter-pledge-section">
-                        <h3><i class="fas fa-hand-holding-heart"></i> تعهد القيادة الآمنة</h3>
-                        <p style="color: #666; margin-bottom: 15px;">للحفاظ على مؤشر الثقة العالي، يرجى الالتزام بالتعهد التالي قبل بدء الرحلة:</p>
+                    <div class="smart-widget">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3>الرحلة النشطة: هونداي النترا</h3>
+                            <span style="color: green; font-weight: bold;"><i class="fas fa-link"></i> تفويض أبشر نشط</span>
+                        </div>
                         
-                        <form id="renter-pledge-form">
-                            <div class="pledge-options">
-                                <label>
-                                    <input type="radio" name="pledge" value="speed" required> أتعهد بالالتزام بالسرعة النظامية للطريق.
-                                </label>
-                                <label>
-                                    <input type="radio" name="pledge" value="phone"> أتعهد بعدم استخدام الجوال أثناء القيادة.
-                                </label>
-                                <label>
-                                    <input type="radio" name="pledge" value="belt"> أتعهد بربط حزام الأمان لي وللمرافقين.
-                                </label>
+                        <div class="action-grid">
+                            <div class="action-btn" onclick="alert('تم تمديد التفويض وتحديث التأمين بنجاح ✅')">
+                                <i class="fas fa-clock"></i> تمديد التفويض
                             </div>
-                            <button type="submit" class="btn btn-secondary" style="width: 100%; margin-top: 15px;">تأكيد التعهد</button>
-                        </form>
-
-                        <div id="renter-success-msg" style="display:none; margin-top:15px; text-align:center; padding:20px; background:#e0f2f1; border-radius:10px; color:#00695c;">
-                            <div style="font-size: 2rem; margin-bottom: 10px;"><i class="fas fa-check-circle"></i></div>
-                            <strong>شكراً سارة!</strong>
-                            <p>تم تسجيل تعهدك بنجاح. نتمنى لك رحلة آمنة وسعيدة.</p>
+                            <div class="action-btn" onclick="alert('تم تغيير وجهة التسليم إلى الدمام ✅')">
+                                <i class="fas fa-map-signs"></i> تسليم مدينة أخرى
+                            </div>
+                            <div class="action-btn" onclick="document.getElementById('end-trip-modal').style.display='block'">
+                                <i class="fas fa-camera"></i> إنهاء الرحلة
+                            </div>
+                            <div class="action-btn" onclick="alert('تم إرسال تنبيه للمالك بخصوص المفقودات 🔔')">
+                                <i class="fas fa-box-open"></i> نسيت شي؟
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="smart-widget">
+                        <h3><i class="fas fa-calendar-star"></i> سيارات تناسب وجهتك</h3>
+                        <p style="color: #666; font-size: 0.9rem;">بناءً على تقويم "موسم الرياض" اليوم:</p>
+                        <div style="display: flex; gap: 10px; margin-top: 10px;">
+                            <span class="risk-badge risk-low" style="background: #f8f9fa; border: 1px solid #ddd; color: #333;">حفل غنائي (سيدان فاخرة)</span>
+                            <span class="risk-badge risk-low" style="background: #f8f9fa; border: 1px solid #ddd; color: #333;">بوليفارد وورلد (SUV عائلية)</span>
+                        </div>
+                    </div>
+
+                    <div class="pledge-section" style="border: 2px solid var(--primary);">
+                        <h3 style="color: var(--primary);"><i class="fas fa-hand-paper"></i> التعهد الأمني الملزم</h3>
+                        <p style="color: #d35400; font-size: 0.9rem;">يجب الموافقة على كافة البنود أدناه لبدء تشغيل السيارة:</p>
+                        
+                        <form id="mandatory-pledge-form" class="mandatory-pledge">
+                            <label><input type="checkbox" required> أتعهد بالالتزام بالسرعة النظامية وعدم استخدام الجوال.</label>
+                            <label><input type="checkbox" required> أتعهد بربط حزام الأمان لجميع الركاب.</label>
+                            <label><input type="checkbox" required> أتعهد بالمحافظة على نظافة السيارة (سيتم فحصها بالذكاء الاصطناعي).</label>
+                            <label><input type="checkbox" required> أقر بأن التفويض ساري طوال مدة الحجز وأتحمل المسؤولية.</label>
+                            
+                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">تأكيد وبدء الرحلة</button>
+                        </form>
                     </div>
 
                 </div>
@@ -153,15 +182,52 @@
         </div>
     </section>
 
+    <div id="end-trip-modal" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index: 1000;">
+        <div style="background:white; max-width:500px; margin: 100px auto; padding:30px; border-radius:15px; text-align:center;">
+            <h3><i class="fas fa-robot"></i> الفحص الذكي للإرجاع</h3>
+            <p>يرجى تصوير السيارة من الداخل. الذكاء الاصطناعي سيحلل النظافة والأضرار.</p>
+            <div style="background:#eee; height:150px; border-radius:10px; display:flex; align-items:center; justify-content:center; margin:20px 0; cursor:pointer;" onclick="simulateAIAnalysis()">
+                <div id="upload-placeholder"><i class="fas fa-camera" style="font-size:2rem;"></i><br>اضغط للالتقاط</div>
+                <div id="ai-loading" style="display:none;"><i class="fas fa-spinner fa-spin fa-2x"></i><br>جاري التحليل...</div>
+            </div>
+            <div id="ai-result" style="display:none; margin-top:15px;"></div>
+            <button class="btn btn-outline" onclick="document.getElementById('end-trip-modal').style.display='none'">إلغاء</button>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
-        // منطق التعهد الخاص بسارة
-        document.getElementById('renter-pledge-form').addEventListener('submit', function(e) {
+        
+        // التحقق من التعهد
+        document.getElementById('mandatory-pledge-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            this.style.display = 'none';
-            document.getElementById('renter-success-msg').style.display = 'block';
+            alert('شكراً سارة! تم تفعيل المفتاح الرقمي وبدء التغطية التأمينية. رحلة آمنة! 🚗');
+            this.style.opacity = '0.5';
+            this.querySelector('button').innerText = 'تم التوثيق';
+            this.querySelector('button').disabled = true;
         });
+
+        // محاكاة الذكاء الاصطناعي للنظافة
+        function simulateAIAnalysis() {
+            document.getElementById('upload-placeholder').style.display = 'none';
+            document.getElementById('ai-loading').style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('ai-loading').style.display = 'none';
+                // سيناريو: السيارة وسخة
+                const resultDiv = document.getElementById('ai-result');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `
+                    <div style="color:red; font-weight:bold; margin-bottom:10px;">
+                        <i class="fas fa-times-circle"></i> تنبيه: السيارة غير نظيفة!
+                    </div>
+                    <p style="font-size:0.9rem;">رصد الذكاء الاصطناعي نفايات في المقعد الخلفي. 
+                    <strong>لن يتم إلغاء التفويض</strong> حتى تنظيف السيارة أو دفع رسوم تنظيف (50 ريال).</p>
+                    <button class="btn btn-secondary btn-sm">دفع الرسوم وإنهاء</button>
+                `;
+            }, 2500);
+        }
     </script>
 </body>
 </html>
