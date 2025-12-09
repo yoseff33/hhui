@@ -3,11 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | لوحة تحكم المؤجر</title>
+    <title>وُجْهَة | لوحة تحكم المؤجر الآمنة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* تنسيقات إضافية خاصة بالمخاطر والتقييم */
+        .risk-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .risk-low { background: rgba(46, 139, 87, 0.15); color: #2e8b57; }
+        .risk-medium { background: rgba(255, 193, 7, 0.15); color: #d4a017; }
+        .risk-high { background: rgba(220, 53, 69, 0.15); color: #dc3545; }
+
+        .renter-rating {
+            color: #f1c40f;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .security-alert-box {
+            background: linear-gradient(to left, #f8f9fa, #e9ecef);
+            border-right: 4px solid var(--secondary);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .ai-indicator {
+            font-size: 0.8rem;
+            background: var(--dark);
+            color: var(--secondary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -25,7 +65,7 @@
                     <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
                     <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
                     <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
-                    <li><a href="qassim-map.html">خريطة جامعة القصيم</a></li>
+                    <li><a href="qassim-map.html">خريطة السيارات</a></li>
                 </ul>
                 <div class="nav-buttons nav-buttons-desktop-only">
                     <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع">
@@ -35,7 +75,7 @@
                         <i class="fas fa-comment-dots"></i>
                         <span>اسالني</span>
                     </button>
-                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
+                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">دخول آمن (نفاذ)</a>
                     <div id="nav-user-profile-placeholder"></div>
                 </div>
             </nav>
@@ -45,8 +85,8 @@
     <section id="dashboard-owner" class="dashboard-section" style="padding-top: 150px;">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2>لوحة تحكم المؤجر</h2>
-                <p>إدارة سياراتك وحجوزاتك وأرباحك من مكان واحد</p>
+                <h2>إدارة الأسطول والمخاطر</h2>
+                <p>متابعة أداء سياراتك، تقييم المستأجرين، ومراقبة الحالة الأمنية</p>
             </div>
             
             <div class="dashboard" data-aos="fade-up" data-aos-delay="100">
@@ -54,44 +94,79 @@
                     <div class="user-profile">
                         <div class="user-avatar">ن</div>
                         <div class="user-info">
-                            <h3>يوسف المطيري</h3>
-                            <p>مالك معتمد</p>
+                            <h3>نواف السبيعي</h3>
+                            <p>شريك موثق (نفاذ)</p>
                         </div>
                     </div>
                     
                     <ul class="sidebar-menu">
-                        <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
-                        <li><a href="#"><i class="fas fa-car"></i> سياراتي</a></li>
-                        <li><a href="#"><i class="fas fa-calendar-alt"></i> الحجوزات</a></li>
-                        <li><a href="#"><i class="fas fa-wallet"></i> الأرباح</a></li>
-                        <li><a href="#"><i class="fas fa-star"></i> التقييمات</a></li>
+                        <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> نظرة عامة</a></li>
+                        <li><a href="#"><i class="fas fa-car"></i> إدارة السيارات</a></li>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i> تقارير المخاطر <span class="ai-indicator">AI</span></a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> العقود والتفاويض</a></li>
+                        <li><a href="#"><i class="fas fa-wallet"></i> المحفظة</a></li>
                         <li><a href="#"><i class="fas fa-cog"></i> الإعدادات</a></li>
-                        <li><a href="#"><i class="fas fa-question-circle"></i> الدعم</a></li>
                     </ul>
                 </div>
                 
                 <div class="dashboard-content">
-                    <h2 class="dashboard-title">مرحبا بك، يوسف!</h2>
-                    
-                    <div class="stats-grid" id="impact-stats-container">
+                    <div class="security-alert-box">
+                        <div>
+                            <strong><i class="fas fa-check-circle" style="color: green;"></i> الحالة الأمنية للأسطول:</strong>
+                            <span>مستقرة - جميع السيارات داخل النطاق الجغرافي المسموح.</span>
                         </div>
+                        <button class="btn btn-outline" style="padding: 5px 15px; font-size: 0.9rem;">تحديث الموقع</button>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>إجمالي الأرباح</h3>
+                            <div class="value">4,550 <span style="font-size: 1rem;">ر.س</span></div>
+                            <p class="story">هذا الشهر</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>مؤشر الأمان <span class="ai-indicator">AI</span></h3>
+                            <div class="value" style="color: #2e8b57;">98%</div>
+                            <p class="story">مخاطر منخفضة جداً</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>الحوادث / البلاغات</h3>
+                            <div class="value" style="color: var(--primary);">0</div>
+                            <p class="story">سجل نظيف ولله الحمد</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>تقييمك كمالك</h3>
+                            <div class="value">4.9 <i class="fas fa-star" style="color: gold; font-size: 1.5rem;"></i></div>
+                            <p class="story">من 15 عملية تأجير</p>
+                        </div>
+                    </div>
                     
                     <div class="recent-bookings" data-aos="fade-up" data-aos-delay="350">
-                        <h3>الحجوزات الأخيرة لسياراتي</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3>طلبات الحجز وتقييم المخاطر</h3>
+                            <span style="font-size: 0.9rem; color: var(--gray);">مدعوم ببيانات المرور وتقدير</span>
+                        </div>
+
                         <div class="booking-item">
                             <div class="booking-car">
                                 <img src="https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="تويوتا كامري">
                                 <div class="booking-details">
                                     <h4>تويوتا كامري 2022</h4>
-                                    <p>محمد العتيبي (المستأجر)</p>
+                                    <p>محمد العتيبي (زائر إكسبو)</p>
+                                    <div class="renter-rating">
+                                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                        <span style="color: var(--gray); font-size: 0.8rem;">(سائق ممتاز ونظيف)</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="booking-date">
-                                <p>15 - 20 نوفمبر</p>
-                                <p>5 أيام</p>
+                                <p style="font-weight: bold;">تحليل المخاطر (AI):</p>
+                                <span class="risk-badge risk-low"><i class="fas fa-shield-alt"></i> آمن جداً (99%)</span>
+                                <p style="font-size: 0.8rem; margin-top: 5px;">سجل مروري خالي من الحوادث</p>
                             </div>
-                            <div class="booking-price">425 ر.س</div>
-                            <div class="booking-status status-active">نشطة</div>
+                            <div class="booking-price">
+                                <div class="booking-status status-active">حجز مؤكد</div>
+                            </div>
                         </div>
                         
                         <div class="booking-item">
@@ -99,31 +174,43 @@
                                 <img src="https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg" alt="تويوتا لاندكروزر">
                                 <div class="booking-details">
                                     <h4>تويوتا لاندكروزر 2021</h4>
-                                    <p>فهد القحطاني (المستأجر)</p>
+                                    <p>فهد القحطاني</p>
+                                    <div class="renter-rating">
+                                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
+                                        <span style="color: var(--gray); font-size: 0.8rem;">(جيد جداً)</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="booking-date">
-                                <p>10 - 12 نوفمبر</p>
-                                <p>3 أيام</p>
+                                <p style="font-weight: bold;">تحليل المخاطر (AI):</p>
+                                <span class="risk-badge risk-medium"><i class="fas fa-exclamation-triangle"></i> متوسط (تحذير)</span>
+                                <p style="font-size: 0.8rem; margin-top: 5px;">تنبيه: يوجد مخالفات سرعة سابقة</p>
                             </div>
-                            <div class="booking-price">660 ر.س</div>
-                            <div class="booking-status status-completed">مكتملة</div>
+                            <div class="booking-price">
+                                <div class="booking-status status-completed">مكتملة</div>
+                            </div>
                         </div>
                         
                         <div class="booking-item">
                             <div class="booking-car">
-                                <img src="https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="تويوتا كامري">
+                                <img src="https://media.elbalad.news/2024/10/large/995/9/554.jpg" alt="مرسيدس">
                                 <div class="booking-details">
-                                    <h4>تويوتا كامري 2022</h4>
-                                    <p>سارة الحربي (المستأجر)</p>
+                                    <h4>مرسيدس E-Class</h4>
+                                    <p>جون سميث (سائح دولي)</p>
+                                    <div class="renter-rating">
+                                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                        <span style="color: var(--gray); font-size: 0.8rem;">(عميل جديد)</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="booking-date">
-                                <p>5 - 8 نوفمبر</p>
-                                <p>4 أيام</p>
+                                <p style="font-weight: bold;">تحليل المخاطر (AI):</p>
+                                <span class="risk-badge risk-low"><i class="fas fa-passport"></i> موثق (رقم الحدود)</span>
+                                <p style="font-size: 0.8rem; margin-top: 5px;">تم التحقق من الرخصة الدولية</p>
                             </div>
-                            <div class="booking-price">340 ر.س</div>
-                            <div class="booking-status status-completed">مكتملة</div>
+                            <div class="booking-price">
+                                <div class="booking-status status-active">بانتظار الموافقة</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -137,13 +224,11 @@
                 <div class="footer-col">
                     <h3>عن وُجْهَة</h3>
                     <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
-                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. نسعى لتحويل السيارات الواقعة إلى أصول منتجة.
+                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان. نمكن زوار المملكة من التنقل الذكي.
                     </p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
                 
@@ -153,18 +238,16 @@
                         <li><a href="index.html">الرئيسية</a></li>
                         <li><a href="cars.html">استكشف السيارات</a></li>
                         <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-                        <li><a href="#">المدونة</a></li>
-                        <li><a href="https://wa.me/966565464718">اتصل بنا</a></li>
+                        <li><a href="https://wa.me/966565464718">الدعم الفني</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-col">
                     <h3>للأفراد</h3>
                     <ul>
-                        <li><a href="dashboard-renter.html">تسجيل كمستأجر</a></li>
+                        <li><a href="dashboard-renter.html">لوحة المستأجر</a></li>
                         <li><a href="cars.html">البحث عن سيارة</a></li>
                         <li><a href="rental-terms.html">شروط الاستئجار</a></li>
-                        <li><a href="faq.html">الأسئلة الشائعة</a></li>
                         <li><a href="user-guide.html">دليل المستخدم</a></li>
                     </ul>
                 </div>
@@ -174,7 +257,7 @@
                     <ul class="footer-contact">
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>القصيم بريدة حي الاسكان</span>
+                            <span>الرياض، واجهة روشن (مقر الهاكاثون)</span>
                         </li>
                         <li>
                             <i class="fas fa-phone"></i>
@@ -182,14 +265,14 @@
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <span><a href="mailto:q_p@outlook.cl">q_p@outlook.cl</a></span>
+                            <span>contact@wujha.sa</span>
                         </li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | تم التطوير بكل ❤️ في المملكة العربية السعودية</p>
+                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | صنع في السعودية 🇸🇦</p>
             </div>
         </div>
     </footer>
@@ -215,41 +298,35 @@
             <i class="fas fa-plus-circle"></i>
             <span>أضف سيارة</span>
         </a>
-        <a href="quiz.html" class="nav-item">
-            <i class="fas fa-question-circle"></i>
-            <span>اختبار</span>
-        </a>
         <a href="qassim-map.html" class="nav-item">
             <i class="fas fa-map-marked-alt"></i>
             <span>الخريطة</span>
         </a>
         <a href="#" class="nav-item" id="mobile-chatbot-toggle">
             <i class="fas fa-comment-dots"></i>
-            <span>الدردشة</span>
+            <span>المساعد</span>
         </a>
     </nav>
 
     <div id="chatbot-popup" class="chatbot-popup">
         <div class="chatbot-header">
-            <h3>اسالني</h3>
+            <h3>المساعد الأمني</h3>
             <button id="chatbot-close-btn" class="close-btn">&times;</button>
         </div>
         <div class="chatbot-body" id="chatbot-body">
             <div class="bot-message">
-                مرحباً بك! أنا مساعد وُجْهَة، كيف يمكنني مساعدتك اليوم؟
+                أهلاً نواف. تقريرك الأمني اليوم ممتاز. هل تود مراجعة طلب الحجز الجديد من "جون سميث"؟
             </div>
         </div>
         <div class="chatbot-footer">
-            <input type="text" id="chatbot-input" placeholder="اكتب رسالتك هنا...">
+            <input type="text" id="chatbot-input" placeholder="اكتب ردك...">
             <button id="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({
-            once: true,
-        });
+        AOS.init({ once: true });
     </script>
     <script src="csr-content.js"></script>
     <script src="script.js"></script>
