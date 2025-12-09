@@ -355,22 +355,22 @@ let carMarkersLayer;
 const qassimCarsData = [
     {
         id: 'camry', type: 'سيدان', model: 'تويوتا كامري 2022', price: '85', location: 'مواقف المبنى الإداري',
-        lat: 28.2320397, , lng: 45.9252863,
+        lat: 26.348037, lng: 43.771591,
         img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3'
     },
     {
         id: 'landcruiser', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2021', price: '220', location: 'كلية الهندسة',
-        lat: 28.2330015, lng: 45.9258084,
+        lat: 26.3350, lng: 43.7685,
         img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg'
     },
     {
         id: 'elantra', type: 'اقتصادية', model: 'هونداي النترا 2023', price: '75', location: 'بجوار المكتبة المركزية',
-        lat: 28.2333544, lng: 45.9261487,
+        lat: 26.351008, lng: 43.775861,
         img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp'
     },
     {
         id: 'mercedes', type: 'فاخرة', model: 'مرسيدس E-Class 2020', price: '300', location: 'المركز الثقافي',
-        lat: 28.2329362, lng: 45.9263857,
+        lat: 26.349181, lng: 43.761351,
         img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg'
     },
     {
