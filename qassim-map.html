@@ -3,12 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | خريطة سيارات  </title>
+    <title>وُجْهَة | خريطة أسطول الرياض</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <style>
+        /* تنسيق خاص للخريطة */
+        #mapid {
+            height: 600px;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+        .map-overlay-info {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .live-indicator {
+            width: 12px;
+            height: 12px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -26,7 +58,7 @@
                     <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
                     <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
                     <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
-                    <li><a href="qassim-map.html" class="active">خريطة مواقع السيارات</a></li>
+                    <li><a href="qassim-map.html" class="active">خريطة الرياض</a></li>
                 </ul>
                 <div class="nav-buttons nav-buttons-desktop-only">
                     <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع">
@@ -36,32 +68,39 @@
                         <i class="fas fa-comment-dots"></i>
                         <span>اسالني</span>
                     </button>
-                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
+                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">دخول آمن (نفاذ)</a>
                     <div id="nav-user-profile-placeholder"></div>
                 </div>
             </nav>
         </div>
     </header>
 
-    <section id="qassim-car-map-section" class="car-map-section" style="padding-top: 150px;">
+    <section id="riyadh-car-map-section" class="car-map-section" style="padding-top: 150px;">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2>السيارات المتاحة   </h2>
-                <p>تصفح مواقع السيارات المتوفرة   </p>
+                <h2>الأسطول الحي في الرياض</h2>
+                <p>تغطية شاملة لمواقع السيارات المتاحة حول منطقة المؤتمر والأحياء الحيوية</p>
             </div>
             
+            <div class="map-overlay-info" data-aos="fade-up" data-aos-delay="50">
+                <div class="live-indicator"></div>
+                <div>
+                    <strong>التتبع المباشر (IoT):</strong>
+                    <span style="color: var(--gray);"> يتم تحديث مواقع السيارات وحالتها الأمنية لحظياً.</span>
+                </div>
+            </div>
+
             <div class="map-filters" data-aos="fade-up" data-aos-delay="100">
                 <button class="map-filter-btn active" data-filter="الكل">الكل</button>
                 <button class="map-filter-btn" data-filter="سيدان">سيدان</button>
                 <button class="map-filter-btn" data-filter="دفع رباعي">دفع رباعي</button>
-                <button class="map-filter-btn" data-filter="اقتصادية">اقتصادية</button>
                 <button class="map-filter-btn" data-filter="فاخرة">فاخرة</button>
             </div>
 
-            <div id="mapid" class="map-container" data-aos="zoom-in" data-aos-delay="200" style="height: 600px;">
-                </div>
+            <div id="mapid" data-aos="zoom-in" data-aos-delay="200"></div>
+            
             <p style="text-align: center; color: var(--gray); margin-top: 20px; font-size: 0.9rem;">
-                <i class="fas fa-info-circle"></i> هذه الخريطة توضح المواقع التقديرية للسيارات داخل الجامعة.
+                <i class="fas fa-shield-alt"></i> جميع المركبات الظاهرة في الخريطة تم التحقق من أصحابها وجاهزة للتفويض الفوري.
             </p>
         </div>
     </section>
@@ -72,13 +111,11 @@
                 <div class="footer-col">
                     <h3>عن وُجْهَة</h3>
                     <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
-                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. نسعى لتحويل السيارات الواقعة إلى أصول منتجة.
+                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان. نمكن زوار المملكة من التنقل الذكي.
                     </p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
                 
@@ -88,18 +125,16 @@
                         <li><a href="index.html">الرئيسية</a></li>
                         <li><a href="cars.html">استكشف السيارات</a></li>
                         <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-                        <li><a href="#">المدونة</a></li>
-                        <li><a href="https://wa.me/966565464718">اتصل بنا</a></li>
+                        <li><a href="https://wa.me/966565464718">الدعم الفني</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-col">
                     <h3>للأفراد</h3>
                     <ul>
-                        <li><a href="dashboard-renter.html">تسجيل كمستأجر</a></li>
+                        <li><a href="dashboard-renter.html">لوحة المستأجر</a></li>
                         <li><a href="cars.html">البحث عن سيارة</a></li>
                         <li><a href="rental-terms.html">شروط الاستئجار</a></li>
-                        <li><a href="faq.html">الأسئلة الشائعة</a></li>
                         <li><a href="user-guide.html">دليل المستخدم</a></li>
                     </ul>
                 </div>
@@ -109,7 +144,7 @@
                     <ul class="footer-contact">
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>القصيم بريدة حي الاسكان</span>
+                            <span>الرياض، واجهة روشن (مقر الهاكاثون)</span>
                         </li>
                         <li>
                             <i class="fas fa-phone"></i>
@@ -117,17 +152,18 @@
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <span><a href="mailto:q_p@outlook.cl">q_p@outlook.cl</a></span>
+                            <span>contact@wujha.sa</span>
                         </li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | تم التطوير بكل ❤️ في المملكة العربية السعودية</p>
+                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | صنع في السعودية 🇸🇦</p>
             </div>
         </div>
     </footer>
+
     <nav class="bottom-navbar mobile-bottom-navbar">
         <a href="index.html" class="nav-item">
             <i class="fas fa-home"></i>
@@ -145,49 +181,206 @@
             <i class="fas fa-user-circle"></i>
             <span>حسابي</span>
         </a>
-        <a href="add-car.html" class="nav-item auth-link-bottom" data-role="owner">
-            <i class="fas fa-plus-circle"></i>
-            <span>أضف سيارة</span>
-        </a>
-        <a href="quiz.html" class="nav-item">
-            <i class="fas fa-question-circle"></i>
-            <span>اختبار</span>
-        </a>
         <a href="qassim-map.html" class="nav-item active">
             <i class="fas fa-map-marked-alt"></i>
             <span>الخريطة</span>
         </a>
         <a href="#" class="nav-item" id="mobile-chatbot-toggle">
             <i class="fas fa-comment-dots"></i>
-            <span>الدردشة</span>
+            <span>المساعد</span>
         </a>
     </nav>
-
-    <div id="chatbot-popup" class="chatbot-popup">
-        <div class="chatbot-header">
-            <h3>اسالني</h3>
-            <button id="chatbot-close-btn" class="close-btn">&times;</button>
-        </div>
-        <div class="chatbot-body" id="chatbot-body">
-            <div class="bot-message">
-                مرحباً بك! أنا مساعد وُجْهَة، كيف يمكنني مساعدتك اليوم؟
-            </div>
-        </div>
-        <div class="chatbot-footer">
-            <input type="text" id="chatbot-input" placeholder="اكتب رسالتك هنا...">
-            <button id="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({
-            once: true,
-        });
+        AOS.init({ once: true });
     </script>
     <script src="csr-content.js"></script>
-    <script src="script.js"></script>
     <script src="chatbot.js"></script>
+    
+    <script>
+        // دالة تهيئة الشريط العلوي (من script.js الأصلي)
+        function updateNavbarBasedOnLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const userType = localStorage.getItem('userType');
+            const desktopNavLinks = document.querySelector('.desktop-nav-links');
+            const desktopAuthLinks = desktopNavLinks ? desktopNavLinks.querySelectorAll('.auth-link') : [];
+            const desktopGuestButton = document.getElementById('nav-guest-button');
+            const desktopUserProfilePlaceholder = document.getElementById('nav-user-profile-placeholder');
+
+            if (desktopGuestButton) desktopGuestButton.style.display = 'none';
+            if (desktopUserProfilePlaceholder) desktopUserProfilePlaceholder.style.display = 'none';
+            desktopAuthLinks.forEach(link => link.style.display = 'none');
+
+            if (isLoggedIn) {
+                if (desktopUserProfilePlaceholder) {
+                    desktopUserProfilePlaceholder.innerHTML = `
+                        <a href="#" class="btn btn-outline" onclick="logoutUser()" style="margin-right: 10px;">
+                            <i class="fas fa-sign-out-alt"></i> خروج
+                        </a>
+                        <a href="${userType === 'owner' ? 'dashboard-owner.html' : 'dashboard-renter.html'}" class="btn btn-secondary">
+                            <i class="fas fa-user-circle"></i> ملفي
+                        </a>
+                    `;
+                    desktopUserProfilePlaceholder.style.display = 'flex';
+                }
+                desktopAuthLinks.forEach(link => {
+                    const linkHref = link.getAttribute('href');
+                    if (userType === 'owner' && linkHref && (linkHref.includes('dashboard-owner.html') || linkHref.includes('add-car.html'))) {
+                        link.style.display = 'block';
+                    } else if (userType === 'renter' && linkHref && linkHref.includes('dashboard-renter.html')) {
+                        link.style.display = 'block';
+                    }
+                });
+            } else {
+                if (desktopGuestButton) desktopGuestButton.style.display = 'flex';
+            }
+        }
+
+        function logoutUser() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userType');
+            window.location.href = 'index.html';
+        }
+
+        // --- إعدادات خريطة الرياض ---
+        let map;
+        let carMarkersLayer;
+
+        // إحداثيات الرياض (مركز المؤتمر - واجهة الرياض)
+        const riyadhCenter = [24.8607, 46.7231]; 
+
+        // بيانات السيارات المحدثة لمواقع الرياض
+        const riyadhCarsData = [
+            {
+                id: 'camry', type: 'سيدان', model: 'تويوتا كامري 2023', price: '90', 
+                location: 'مواقف واجهة الرياض P4',
+                lat: 24.8620, lng: 46.7240, // داخل الواجهة
+                img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3'
+            },
+            {
+                id: 'landcruiser', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2022', price: '250', 
+                location: 'فندق فيرمونت - البوابة',
+                lat: 24.8580, lng: 46.7200, // قريب من الواجهة
+                img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg'
+            },
+            {
+                id: 'mercedes', type: 'فاخرة', model: 'مرسيدس S-Class', price: '450', 
+                location: 'صالة الطيران الخاص - مطار الملك خالد',
+                lat: 24.9350, lng: 46.7000, // المطار
+                img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg'
+            },
+            {
+                id: 'elantra', type: 'اقتصادية', model: 'هونداي النترا 2023', price: '70', 
+                location: 'حي قرطبة - شارع التخصصي',
+                lat: 24.8300, lng: 46.7350,
+                img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp'
+            },
+            {
+                id: 'patrol', type: 'دفع رباعي', model: 'نيسان باترول بلاتينيوم', price: '300', 
+                location: 'مواقف بوليفارد الرياض',
+                lat: 24.7670, lng: 46.6050,
+                img: 'https://www.nissan-cdn.net/content/dam/Nissan/middle-east/vehicles/Patrol/Patrol-MY23/overview/2023-Nissan-Patrol-hero-desktop.webp'
+            },
+            {
+                id: 'lucid', type: 'فاخرة', model: 'لوسيد آير (Lucid Air)', price: '600', 
+                location: 'مركز الملك عبدالله المالي (KAFD)',
+                lat: 24.7600, lng: 46.6350,
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' // صورة تقريبية
+            }
+        ];
+
+        function initRiyadhMap() {
+            if (document.getElementById('mapid') && typeof L !== 'undefined') {
+                // إنشاء الخريطة وتحديد المركز والزوم
+                map = L.map('mapid').setView(riyadhCenter, 12);
+
+                // طبقة الخريطة (الستايل)
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                carMarkersLayer = L.layerGroup().addTo(map);
+                renderCarsOnMap('الكل');
+            }
+        }
+
+        function createCarIcon(carType) {
+            // ألوان مختلفة حسب النوع
+            let color = '#1a3c37'; // Default primary
+            if (carType === 'فاخرة') color = '#d4af37'; // Gold
+            else if (carType === 'اقتصادية') color = '#2e8b57'; // Accent green
+
+            return L.divIcon({
+                className: 'custom-car-icon',
+                html: `<i class="fas fa-car" style="color:white; line-height:36px;"></i>`,
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+                popupAnchor: [0, -40],
+                // إضافة ستايل مباشر للأيقونة هنا لضمان ظهوره
+                bgPos: [0, 0] 
+            });
+        }
+
+        // إضافة ستايل للأيقونات عبر JS (للتأكيد)
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .custom-car-icon {
+                background-color: var(--primary);
+                border-radius: 50%;
+                text-align: center;
+                border: 2px solid white;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+                transition: transform 0.2s;
+            }
+            .custom-car-icon:hover {
+                transform: scale(1.15);
+                z-index: 1000 !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+
+        function renderCarsOnMap(filterType) {
+            carMarkersLayer.clearLayers();
+            const filtered = filterType === 'الكل' ? riyadhCarsData : riyadhCarsData.filter(c => c.type === filterType);
+
+            filtered.forEach(car => {
+                const marker = L.marker([car.lat, car.lng], { icon: createCarIcon(car.type) }).addTo(carMarkersLayer);
+                
+                const popupContent = `
+                    <div class="popup-car-details" style="text-align:right;">
+                        <img src="${car.img}" style="width:100%; height:120px; object-fit:cover; border-radius:8px; margin-bottom:8px;">
+                        <h4 style="color:var(--primary); margin:0;">${car.model}</h4>
+                        <div style="font-size:0.9rem; color:#666; margin:5px 0;">
+                            <i class="fas fa-map-pin"></i> ${car.location}
+                        </div>
+                        <div style="font-weight:bold; color:var(--secondary); margin-bottom:10px;">
+                            ${car.price} ريال/يوم
+                        </div>
+                        <a href="cars.html?carId=${car.id}" class="btn btn-primary" style="display:block; text-align:center; padding:8px; font-size:0.9rem;">
+                            حجز فوري (تفاويض)
+                        </a>
+                    </div>
+                `;
+                marker.bindPopup(popupContent);
+            });
+        }
+
+        document.querySelectorAll('.map-filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.map-filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderCarsOnMap(this.dataset.filter);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateNavbarBasedOnLoginStatus();
+            // تأخير بسيط لضمان تحميل المكتبة
+            setTimeout(initRiyadhMap, 500);
+        });
+    </script>
 </body>
 </html>
