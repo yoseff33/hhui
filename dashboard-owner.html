@@ -3,37 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | لوحة المؤجر (نواف)</title>
+    <title>وُجْهَة | إدارة الأسطول الذكي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        .dashboard-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        .pledge-box {
-            background: linear-gradient(135deg, #fff, #f8f9fa);
-            border: 1px solid #e0e0e0;
-            border-right: 5px solid var(--secondary);
-            padding: 25px;
+        /* تنسيقات خاصة للميزات الجديدة */
+        .smart-widget {
+            background: white;
             border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
         }
-        .risk-badge {
-            padding: 5px 12px;
+        .vacation-mode-switch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(26px); }
+        
+        .iot-alert {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .mojaz-badge {
+            background: linear-gradient(45deg, #2980b9, #3498db);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+        .family-fleet-badge {
+            background: #6f42c1;
+            color: white;
+            padding: 5px 10px;
             border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: bold;
+            margin-right: 10px;
         }
-        .risk-low { background: #e8f5e9; color: #2e8b57; }
-        .risk-medium { background: #fff3cd; color: #856404; }
     </style>
 </head>
 <body>
@@ -49,7 +97,7 @@
                     <li><a href="dashboard-owner.html" class="active">لوحة المؤجر</a></li>
                 </ul>
                 <div class="nav-buttons">
-                    <button class="btn btn-outline" onclick="window.location.href='index.html'"><i class="fas fa-sign-out-alt"></i> خروج</button>
+                    <button class="btn btn-outline" onclick="window.location.href='index.html'">خروج</button>
                 </div>
             </nav>
         </div>
@@ -63,74 +111,105 @@
                         <div class="user-avatar" style="background: var(--secondary); color: var(--dark);">ن</div>
                         <div class="user-info">
                             <h3>نواف السبيعي</h3>
-                            <p><i class="fas fa-check-circle" style="color: #4cd137;"></i> مالك موثق (نفاذ)</p>
+                            <p>
+                                <i class="fas fa-check-circle" style="color: #4cd137;"></i> موثق
+                                <span class="family-fleet-badge"><i class="fas fa-users"></i> أسطول عائلي</span>
+                            </p>
                         </div>
                     </div>
                     <ul class="sidebar-menu">
-                        <li><a href="#" class="active"><i class="fas fa-chart-pie"></i> ملخص الأسطول</a></li>
-                        <li><a href="#"><i class="fas fa-car"></i> سياراتي (3)</a></li>
-                        <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> الأرباح</a></li>
-                        <li><a href="#"><i class="fas fa-shield-alt"></i> الأمان والمخاطر</a></li>
+                        <li><a href="#" class="active"><i class="fas fa-chart-line"></i> نظرة عامة</a></li>
+                        <li><a href="#"><i class="fas fa-car"></i> إدارة السيارات (3)</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> أرشيف العقود</a></li>
+                        <li><a href="#"><i class="fas fa-wrench"></i> الصيانة (IoT)</a></li>
+                        <li><a href="#"><i class="fas fa-map-marked-alt"></i> خريطة الطلب</a></li>
                     </ul>
                 </div>
 
                 <div class="dashboard-content">
-                    <div class="dashboard-card-header">
-                        <h2>نظرة عامة على الأسطول</h2>
-                        <span style="color: var(--gray);">تحديث: قبل 5 دقائق</span>
+                    
+                    <div class="vacation-mode-switch">
+                        <div>
+                            <strong><i class="fas fa-plane-departure"></i> وضع الإجازة</strong>
+                            <p style="font-size: 0.9rem; color: #666; margin: 0;">إيقاف استقبال جميع الطلبات مؤقتاً بضغطة واحدة.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <br>
+
+                    <div class="smart-widget" style="border-right: 4px solid #e74c3c;">
+                        <h3><i class="fas fa-user-shield"></i> التحقق الأمني (القائمة السوداء)</h3>
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <input type="text" class="form-control" placeholder="أدخل رقم الهوية للتحقق..." style="margin-bottom: 0;">
+                            <button class="btn btn-primary" onclick="alert('✅ السجل نظيف: المستأجر غير محظور ولا يوجد تعاميم أمنية.')">فحص</button>
+                        </div>
                     </div>
 
                     <div class="stats-grid">
                         <div class="stat-card">
-                            <h3>الأرباح هذا الشهر</h3>
+                            <h3>الأرباح الحالية</h3>
                             <div class="value">8,450 <small>ر.س</small></div>
-                            <p class="story" style="color: green;"><i class="fas fa-arrow-up"></i> 12% عن الشهر الماضي</p>
+                        </div>
+                        <div class="stat-card" style="background: #f0f7ff;">
+                            <h3>توقعات الشهر القادم <i class="fas fa-magic" style="color: var(--secondary);"></i></h3>
+                            <div class="value" style="color: var(--primary);">12,200 <small>ر.س</small></div>
+                            <p class="story">بناءً على حجوزات موسم الرياض</p>
                         </div>
                         <div class="stat-card">
-                            <h3>حالة الأسطول</h3>
-                            <div class="value">3 <small>سيارات</small></div>
-                            <p class="story">2 مؤجرة | 1 متاحة</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>سجل الحوادث</h3>
-                            <div class="value" style="color: var(--primary);">0</div>
-                            <p class="story">سجل نظيف (الحمدلله)</p>
+                            <h3>حالة "موجز"</h3>
+                            <div class="value" style="font-size: 1.2rem;">ممتازة</div>
+                            <span class="mojaz-badge">تم الربط</span>
                         </div>
                     </div>
 
-                    <div class="pledge-box" id="owner-pledge-section">
-                        <h3><i class="fas fa-wrench"></i> تعهد جاهزية المركبة</h3>
-                        <p style="margin-bottom: 15px; color: #666;">لضمان سلامة المستأجرين وتجنب المسؤولية، يرجى تأكيد فحص السيارة المتاحة حالياً.</p>
-                        <form id="owner-pledge-form">
-                            <label style="display:block; margin-bottom:10px; cursor:pointer;">
-                                <input type="checkbox" required> أتعهد بأن السيارة (تويوتا لاندكروزر) سليمة ميكانيكياً وأن التأمين ساري المفعول.
-                            </label>
-                            <button type="submit" class="btn btn-primary" style="padding: 10px 25px;">تأكيد الجاهزية</button>
-                        </form>
-                        <div id="owner-success-msg" style="display:none; margin-top:15px; padding:15px; background:#e8f5e9; border-radius:8px; color:#2e8b57;">
-                            <strong><i class="fas fa-check"></i> شكراً نواف!</strong> تم توثيق جاهزية المركبة في النظام بنجاح.
-                        </div>
-                    </div>
-
-                    <h3 style="margin-bottom: 20px;">طلبات الحجز الواردة</h3>
+                    <h3 style="margin: 30px 0 15px;">تنبيهات الأسطول الذكي (IoT)</h3>
                     <div class="recent-bookings">
                         <div class="booking-item">
                             <div class="booking-car">
-                                <img src="https://media.elbalad.news/2024/10/large/995/9/554.jpg" alt="سيارة">
+                                <img src="https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg" alt="لاندكروزر">
                                 <div class="booking-details">
-                                    <h4>مرسيدس E-Class</h4>
-                                    <p>طالب الحجز: <strong>جون سميث</strong> (زائر)</p>
-                                    <span class="risk-badge risk-low"><i class="fas fa-shield-alt"></i> سجل أمني نظيف</span>
+                                    <h4>تويوتا لاندكروزر (سيارة الوالد)</h4>
+                                    <div class="iot-alert">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        تنبيه: حساس الزيت يشير إلى ضرورة التغيير خلال 500 كم.
+                                    </div>
                                 </div>
                             </div>
-                            <div class="booking-date">
-                                <p>12 - 15 ديسمبر</p>
-                                <small>فترة إكسبو</small>
-                            </div>
                             <div class="booking-price">
-                                <button class="btn btn-primary" style="font-size: 0.9rem;">قبول وتفويض</button>
+                                <button class="btn btn-outline" style="font-size: 0.8rem;">حجز موعد صيانة</button>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="smart-widget" style="margin-top: 20px;">
+                        <h3><i class="fas fa-sliders-h"></i> تخصيص شروط التأجير</h3>
+                        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" checked> <strong>فلتر العائلات فقط:</strong> (التحقق عبر التابعين في أبشر)
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox"> <strong>تسليم في مدينة أخرى:</strong> (الرياض -> الدمام)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="smart-widget">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h3><i class="fas fa-fire"></i> خريطة الطلب الحرارية</h3>
+                            <span style="color: var(--gray);">الرياض - حي النرجس (طلب مرتفع جداً)</span>
+                        </div>
+                        <div style="height: 200px; background: #eee; border-radius: 8px; margin-top: 10px; display: flex; align-items: center; justify-content: center; color: #777;">
+                            [خريطة تفاعلية توضح المناطق الأكثر طلباً لتوجيه سيارتك لها]
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button class="btn" style="background: #e74c3c; color: white; width: 100%;">
+                            <i class="fas fa-car-crash"></i> الإبلاغ عن حادث (ربط فوري مع "تقدير")
+                        </button>
                     </div>
 
                 </div>
@@ -139,14 +218,6 @@
     </section>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init();
-        // منطق التعهد الخاص بنواف
-        document.getElementById('owner-pledge-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            this.style.display = 'none';
-            document.getElementById('owner-success-msg').style.display = 'block';
-        });
-    </script>
+    <script> AOS.init(); </script>
 </body>
 </html>
