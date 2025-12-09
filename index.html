@@ -9,17 +9,25 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
+        /* === إعدادات عامة === */
+        :root {
+            /* تأكد ان هذي المتغيرات موجودة في ملف style.css الأساسي، أو عرفها هنا اذا تبي */
+            --primary: #0f2925; 
+            --secondary: #cfb165; /* لون ذهبي */
+            --dark: #1a1a1a;
+        }
+
         /* === إصلاح تأثير الهيدر عند التمرير === */
         header {
-            transition: all 0.4s ease-in-out; /* تنعيم الحركة */
+            transition: all 0.4s ease-in-out;
         }
         header.scrolled {
-            padding: 10px 0 !important; /* تقليل الارتفاع */
-            background-color: rgba(255, 255, 255, 0.98); /* تأكيد الخلفية */
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1) !important; /* إضافة ظل */
+            padding: 10px 0 !important;
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1) !important;
         }
         body.dark-mode header.scrolled {
-            background-color: rgba(20, 20, 20, 0.98); /* خلفية داكنة في الوضع الليلي */
+            background-color: rgba(20, 20, 20, 0.98);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5) !important;
         }
 
@@ -43,46 +51,71 @@
         .stat-item { display: inline-block; margin: 0 30px; font-size: 1.1rem; }
         .stat-item i { color: var(--secondary); margin-left: 8px; }
 
-        /* تنسيق قسم الأمان (داكن) */
-        .security-quote-section {
-            background: #f8f9fa;
-            padding: 60px 0;
-            text-align: center;
-            border-top: 1px solid #eee;
-            border-bottom: 1px solid #eee;
+        /* === توحيد تنسيق البطاقات (الرؤية + الميثاق + الحلول) === */
+        
+        /* تنسيق الأقسام الخلفية (نجعلها بيضاء أو رمادية فاتحة جداً) */
+        .vision-section,
+        .security-quote-section,
+        .features {
+            padding: 80px 0;
+            background-color: #ffffff; /* توحيد الخلفية */
         }
+
+        /* تنسيق الشبكة للبطاقات */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        /* الستايل الموحد للبطاقة (يطبق على كلاسات متعددة) */
+        .vision-card-new,
+        .feature-card,
+        .security-quote-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* الظل الناعم */
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid #eee;
+            position: relative;
+            height: 100%; /* لتوحيد الارتفاع */
+            color: #333; /* لون النص الافتراضي */
+        }
+
+        /* استثناء خاص لصندوق الميثاق عشان يجي في النص */
         .security-quote-box {
             max-width: 900px;
             margin: 0 auto;
-            position: relative;
-            padding: 50px;
-            background: linear-gradient(135deg, var(--primary), #0f2925); 
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            border-right: 6px solid var(--secondary);
-            color: white;
+            border-right: 6px solid var(--secondary); /* تمييز بسيط للميثاق */
         }
+
+        /* تأثير الحركة عند المرور */
+        .vision-card-new:hover,
+        .feature-card:hover,
+        .security-quote-box:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+        }
+
+        /* تنسيق الأيقونات داخل البطاقات */
+        .feature-icon,
+        .vision-card-new i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        /* أيقونة الاقتباس الكبيرة في الخلفية */
         .quote-icon {
             font-size: 4rem;
-            color: rgba(255,255,255,0.1);
+            color: rgba(0,0,0,0.05); /* لون باهت جداً */
             position: absolute;
             top: 20px;
             right: 20px;
-        }
-        
-        /* تنسيق بطاقات الرؤية */
-        .vision-card-new {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 30px;
-            border-radius: 16px;
-            transition: transform 0.3s;
-            height: 100%;
-        }
-        .vision-card-new:hover {
-            transform: translateY(-5px);
-            background: rgba(255,255,255,0.1);
-            border-color: var(--secondary);
         }
 
         /* تنسيق قسم الشركاء (داكن مع شعارات بيضاء) */
@@ -102,15 +135,31 @@
         .partner-img {
             height: 65px;
             width: auto;
-            filter: grayscale(100%) brightness(200%); /* شعار أبيض */
+            filter: grayscale(100%) brightness(200%);
             opacity: 0.7;
             transition: all 0.3s ease;
             object-fit: contain;
         }
         .partner-img:hover { 
-            filter: grayscale(0%) brightness(100%); /* ألوان طبيعية */
+            filter: grayscale(0%) brightness(100%);
             opacity: 1; 
             transform: scale(1.1); 
+        }
+
+        /* تنسيق العناوين داخل الأقسام */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+        .section-title p {
+            color: #666;
+            font-size: 1.1rem;
         }
     </style>
 </head>
@@ -177,32 +226,32 @@
                 <span class="stat-item"><i class="fas fa-users"></i> مجتمع موثوق للمواطن والمقيم والزائر</span>
             </div>
         </div>
-    </div>
+    </section>
 
-    <section class="vision-section" style="background: linear-gradient(135deg, var(--dark), #0f2925); color: white; padding: 80px 0;">
+    <section class="vision-section">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2 style="color: white;">بنية رقمية تخدم الوطن</h2>
-                <p style="color: rgba(255,255,255,0.8);">وُجْهَة ليست مجرد تطبيق، بل هي حل مستدام لرفع جودة الحياة</p>
+                <h2>بنية رقمية تخدم الوطن</h2>
+                <p>وُجْهَة ليست مجرد تطبيق، بل هي حل مستدام لرفع جودة الحياة</p>
             </div>
             
             <div class="features-grid"> 
                 <div class="vision-card-new" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-coins" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px;"></i>
-                    <h3 style="color: white;">للمواطن</h3>
-                    <p style="color: #ccc; font-size: 1.1rem;">مصدر دخل إضافي محمي وموثق. حول أصولك المتوقفة إلى استثمار ناجح بكل أمان.</p>
+                    <i class="fas fa-coins"></i>
+                    <h3>للمواطن</h3>
+                    <p>مصدر دخل إضافي محمي وموثق. حول أصولك المتوقفة إلى استثمار ناجح بكل أمان.</p>
                 </div>
                 
                 <div class="vision-card-new" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-user-check" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px;"></i>
-                    <h3 style="color: white;">للمستخدم</h3>
-                    <p style="color: #ccc; font-size: 1.1rem;">خيارات تنقل متنوعة وآمنة في كل مدينة وحي. سهولة في الوصول وموثوقية في التعامل.</p>
+                    <i class="fas fa-user-check"></i>
+                    <h3>للمستخدم</h3>
+                    <p>خيارات تنقل متنوعة وآمنة في كل مدينة وحي. سهولة في الوصول وموثوقية في التعامل.</p>
                 </div>
                 
                 <div class="vision-card-new" data-aos="fade-up" data-aos-delay="300">
-                    <i class="fas fa-globe-asia" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px;"></i>
-                    <h3 style="color: white;">للوطن</h3>
-                    <p style="color: #ccc; font-size: 1.1rem;">جاهزية تامة لاستيعاب النمو السكاني والزوار في الأحداث العالمية الكبرى بكفاءة عالية.</p>
+                    <i class="fas fa-globe-asia"></i>
+                    <h3>للوطن</h3>
+                    <p>جاهزية تامة لاستيعاب النمو السكاني والزوار في الأحداث العالمية الكبرى بكفاءة عالية.</p>
                 </div>
             </div>
         </div>
@@ -241,8 +290,8 @@
         <div class="container">
             <div class="security-quote-box" data-aos="zoom-in">
                 <i class="fas fa-quote-right quote-icon"></i>
-                <h3 style="color: var(--secondary); margin-bottom: 25px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">ميثاق وُجْهَة الأمني</h3>
-                <p style="font-size: 1.4rem; line-height: 1.8; color: white; font-weight: 500;">
+                <h3 style="color: var(--secondary); margin-bottom: 25px; font-weight: 800;">ميثاق وُجْهَة الأمني</h3>
+                <p style="font-size: 1.3rem; line-height: 1.8; color: #444; font-weight: 500;">
                     "سواء كنت صاحب السيارة أو قائدها، <strong>نفاذ</strong> هو الحكم، و <strong>أبشر</strong> هو الضامن.<br>
                     في وُجْهَة، لا نتعامل مع المجهولين. كل عملية موثقة، كل طرف معروف، وكل حق محفوظ."
                 </p>
@@ -358,16 +407,13 @@
     <script>
         AOS.init({ once: true });
 
-        // كود تشغيل تأثير الهيدر المدمج (لضمان عمله)
         window.addEventListener('scroll', function() {
             var header = document.querySelector('header');
             if(header) {
-                // إذا نزلنا أكثر من 50 بكسل، نضيف كلاس 'scrolled'
                 header.classList.toggle('scrolled', window.scrollY > 50);
             }
         });
 
-        // تشغيل البارتكلز
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
