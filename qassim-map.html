@@ -307,21 +307,44 @@
         let map;
         let carMarkersLayer;
 
-        // إحداثيات المدن (مراكز دقيقة)
+        // إحداثيات المدن (مراكز دقيقة - تم ضبط الرياض على قلب واجهة روشن)
         const cities = {
-            riyadh: [24.8620, 46.7240], // واجهة روشن
-            dammam: [26.4350, 50.1150], // كورنيش الدمام
-            khobar: [26.2900, 50.2100], // كورنيش الخبر
-            jeddah: [21.5500, 39.1600]  // الواجهة البحرية
+            riyadh: [24.8620, 46.7240], // سنتر واجهة روشن
+            dammam: [26.4350, 50.1150],
+            khobar: [26.2900, 50.2100],
+            jeddah: [21.5500, 39.1600] 
         };
 
-        // قاعدة بيانات السيارات (مع التقييمات)
+        // قاعدة بيانات السيارات (تم تكثيف السيارات في الرياض - واجهة روشن)
         const allCars = [
-            // --- الرياض (واجهة روشن) ---
-            { city: 'riyadh', id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', rating: 4.9, reviews: 52, loc: 'بوابة 3 - واجهة روشن', lat: 24.8630, lng: 46.7250, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
-            { city: 'riyadh', id: 'r2', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2023', price: '450', rating: 5.0, reviews: 18, loc: 'فندق فيرمونت', lat: 24.8585, lng: 46.7190, img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' },
-            { city: 'riyadh', id: 'r3', type: 'فاخرة', model: 'مرسيدس S500', price: '900', rating: 4.8, reviews: 12, loc: 'مطار الملك خالد', lat: 24.9450, lng: 46.7100, img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' },
-            { city: 'riyadh', id: 'r4', type: 'سيدان', model: 'هونداي النترا', price: '85', rating: 4.7, reviews: 89, loc: 'بوابة الأعمال', lat: 24.8250, lng: 46.7350, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
+            // --- الرياض (تجمع كثيف في واجهة روشن - تكرار ذكي لنفس السيارات) ---
+            
+            // 1. عند البوابة الرئيسية
+            { city: 'riyadh', id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', rating: 4.9, reviews: 52, loc: 'واجهة روشن - بوابة 3', lat: 24.8630, lng: 46.7250, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
+            
+            // 2. منطقة الفندق
+            { city: 'riyadh', id: 'r2', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2023', price: '450', rating: 5.0, reviews: 18, loc: 'واجهة روشن - الفندق', lat: 24.8615, lng: 46.7235, img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' },
+            
+            // 3. منطقة كبار الشخصيات VIP
+            { city: 'riyadh', id: 'r3', type: 'فاخرة', model: 'مرسيدس S500', price: '900', rating: 4.8, reviews: 12, loc: 'منطقة VIP', lat: 24.8645, lng: 46.7220, img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' },
+            
+            // 4. المواقف الخلفية
+            { city: 'riyadh', id: 'r4', type: 'سيدان', model: 'هونداي النترا', price: '85', rating: 4.7, reviews: 89, loc: 'المواقف الخلفية B', lat: 24.8600, lng: 46.7260, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
+
+            // --- تكرار السيارات لزيادة الكثافة في نفس المنطقة ---
+            
+            // 5. كامري أخرى عند مواقف السينما
+            { city: 'riyadh', id: 'r5', type: 'سيدان', model: 'تويوتا كامري 2023', price: '115', rating: 4.6, reviews: 40, loc: 'مواقف السينما', lat: 24.8625, lng: 46.7210, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
+            
+            // 6. النترا أخرى عند بوابة الأعمال
+            { city: 'riyadh', id: 'r6', type: 'سيدان', model: 'هونداي النترا', price: '80', rating: 4.5, reviews: 33, loc: 'بوابة الأعمال', lat: 24.8650, lng: 46.7280, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
+            
+            // 7. تاهو عند المدخل الرئيسي
+            { city: 'riyadh', id: 'r7', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '380', rating: 4.9, reviews: 22, loc: 'واجهة روشن - المدخل 1', lat: 24.8610, lng: 46.7245, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
+            
+            // 8. لوسيد في مواقف المطاعم
+            { city: 'riyadh', id: 'r8', type: 'فاخرة', model: 'لوسيد آير', price: '700', rating: 5.0, reviews: 4, loc: 'مواقف المطاعم', lat: 24.8660, lng: 46.7200, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
+
 
             // --- الدمام ---
             { city: 'dammam', id: 'd1', type: 'سيدان', model: 'تويوتا كامري 2023', price: '110', rating: 4.8, reviews: 30, loc: 'الشاطئ مول', lat: 26.4400, lng: 50.1100, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
@@ -338,7 +361,8 @@
 
         function initMap() {
             if (document.getElementById('mapid') && typeof L !== 'undefined') {
-                map = L.map('mapid').setView(cities.riyadh, 13);
+                // تم تعديل الزوم هنا إلى 15 ليكون أقرب للسيارات المتجمعة
+                map = L.map('mapid').setView(cities.riyadh, 15);
 
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; OpenStreetMap'
@@ -389,7 +413,9 @@
 
         function changeCity() {
             currentCity = document.getElementById('city-selector').value;
-            map.flyTo(cities[currentCity], 13, { duration: 1.5 });
+            // عند تغيير المدينة، نغير الزوم حسب المدينة
+            const zoomLevel = currentCity === 'riyadh' ? 15 : 13;
+            map.flyTo(cities[currentCity], zoomLevel, { duration: 1.5 });
             renderCars();
         }
 
@@ -456,7 +482,7 @@
                     btn.innerHTML = '<i class="fas fa-check"></i> تم العثور على مركبة!';
                     btn.style.background = '#2ecc71';
                     
-                    map.flyTo([nearest.lat, nearest.lng], 15, { duration: 1 });
+                    map.flyTo([nearest.lat, nearest.lng], 16, { duration: 1 });
                     setTimeout(() => {
                         if(nearest.marker) nearest.marker.openPopup();
                         // إرجاع الزر لحالته
