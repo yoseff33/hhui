@@ -8,19 +8,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-    
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* --- ستايلات خاصة بالخريطة والفلاتر (تجاوزنا الملف الخارجي) --- */
-        
-        /* 1. حاوية الفلاتر العلوية (الشريط الجديد) */
+        /* --- الحاوية المركزية (هذا هو التعديل الجديد) --- */
+        .centered-map-layout {
+            max-width: 900px; /* عرض متوسط ومناسب */
+            margin: 0 auto;   /* توسيط في منتصف الشاشة */
+            position: relative;
+        }
+
+        /* 1. تنسيق شريط الفلاتر */
         .top-filter-bar {
             background: #ffffff;
             border: 1px solid #e0e0e0;
             border-radius: 16px;
             padding: 15px 20px;
-            margin-bottom: 20px; /* مسافة تفصلها عن الخريطة */
+            margin-bottom: 20px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.03);
             display: flex;
             align-items: center;
@@ -29,104 +33,45 @@
             gap: 15px;
         }
 
-        /* تنسيق عناصر الفلتر */
-        .tf-item {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            min-width: 150px;
-            flex: 1;
-        }
-        
-        .tf-label {
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: #666;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+        .tf-item { display: flex; flex-direction: column; gap: 5px; min-width: 140px; flex: 1; }
+        .tf-label { font-size: 0.85rem; font-weight: bold; color: #666; display: flex; align-items: center; gap: 5px; }
 
-        /* أزرار اختيار النوع (حبوب) */
-        .tf-pills {
-            display: flex;
-            gap: 5px;
-            background: #f5f5f5;
-            padding: 4px;
-            border-radius: 50px;
-            width: fit-content;
-        }
-        
-        .tf-pill {
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-            color: #555;
-        }
-        
-        .tf-pill.active {
-            background: var(--primary, #1abc9c); /* لون افتراضي لو ما تعرف */
-            color: white;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+        .tf-pills { display: flex; gap: 5px; background: #f5f5f5; padding: 4px; border-radius: 50px; width: fit-content; }
+        .tf-pill { padding: 6px 12px; border-radius: 50px; font-size: 0.8rem; cursor: pointer; transition: 0.3s; color: #555; white-space: nowrap; }
+        .tf-pill.active { background: var(--primary, #1abc9c); color: white; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        /* قائمة المدن */
-        .tf-select {
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            background: #fff;
-            font-family: 'Tajawal';
-            cursor: pointer;
-        }
+        .tf-select { padding: 8px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-family: 'Tajawal'; cursor: pointer; width: 100%; }
 
-        /* زر الموقع */
         .tf-btn {
-            background: #2c3e50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: auto; /* يدف الزر لتحت */
+            background: #2c3e50; color: white; border: none; padding: 0 20px; border-radius: 8px;
+            cursor: pointer; font-weight: bold; height: 40px; display: flex; align-items: center;
+            justify-content: center; gap: 8px; margin-top: auto; white-space: nowrap;
         }
 
-        /* 2. حاوية الخريطة (منفصلة تماماً) */
+        /* 2. حاوية الخريطة */
         .new-map-container {
             position: relative;
-            height: 550px;
+            height: 500px; /* ارتفاع مناسب */
             width: 100%;
             border-radius: 20px;
             overflow: hidden;
-            border: 2px solid #eee;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            z-index: 1; /* تأكدنا إنها تحت الفلتر */
+            border: 4px solid #fff; /* إطار أبيض جمالي */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1); /* ظل يبرز الخريطة */
+            z-index: 1;
         }
 
         #mapid { height: 100%; width: 100%; }
 
         /* تعديلات الجوال */
         @media (max-width: 768px) {
-            .top-filter-bar {
-                flex-direction: column;
-                align-items: stretch;
-            }
+            .centered-map-layout { max-width: 100%; padding: 0 10px; }
+            .top-filter-bar { flex-direction: column; align-items: stretch; }
             .tf-item { width: 100%; }
-            .tf-pills { width: 100%; justify-content: space-between; }
-            .tf-pill { flex: 1; text-align: center; }
-            .new-map-container { height: 500px; }
+            .tf-pills { width: 100%; overflow-x: auto; }
+            .new-map-container { height: 450px; }
         }
 
-        /* الوضع الليلي (مخصص للكلاسات الجديدة) */
+        /* الوضع الليلي */
         body.dark-mode .top-filter-bar { background: #2d3436; border-color: #444; }
         body.dark-mode .tf-label { color: #ccc; }
         body.dark-mode .tf-select { background: #444; color: white; border-color: #555; }
@@ -136,7 +81,7 @@
         body.dark-mode .new-map-container { border-color: #444; }
         body.dark-mode #mapid .leaflet-tile-pane { filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%); }
 
-        /* --- ستايل الأيقونات والبطاقات --- */
+        /* ستايل الأيقونات */
         .price-marker-box {
             background: white; border-radius: 30px; padding: 5px 12px;
             font-weight: bold; font-family: 'Tajawal'; font-size: 0.9rem;
@@ -147,12 +92,11 @@
         .price-marker-box:hover { transform: scale(1.1); z-index: 1000; }
         .price-marker-box.premium { background: #2c3e50; color: #f1c40f; border-color: #f1c40f; }
 
-        /* إصلاح قص البطاقة */
+        /* البطاقة المنبثقة */
         .leaflet-popup-content-wrapper { border-radius: 12px; padding: 0; overflow: hidden; }
         .leaflet-popup-content { margin: 0 !important; width: 280px !important; }
         .popup-car-card { padding: 15px; max-height: 320px; overflow-y: auto; }
         .popup-img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; }
-        
         .rating-row { display: flex; justify-content: space-between; font-size: 0.8rem; margin: 5px 0; color: #666; }
         .progress-bar { width: 80px; height: 6px; background: #eee; border-radius: 3px; overflow: hidden; }
         .progress-fill { height: 100%; background: #2ecc71; }
@@ -187,41 +131,44 @@
                 <p>اختر السيارة، شيك على تقييمها، وانطلق!</p>
             </div>
             
-            <div class="top-filter-bar" data-aos="fade-up">
-                <div class="tf-item">
-                    <span class="tf-label"><i class="fas fa-map-marker-alt"></i> المدينة</span>
-                    <select id="city-selector" class="tf-select" onchange="changeCity()">
-                        <option value="riyadh" selected>الرياض (واجهة روشن)</option>
-                        <option value="dammam">الدمام</option>
-                        <option value="khobar">الخبر</option>
-                        <option value="jeddah">جدة</option>
-                    </select>
-                </div>
-
-                <div class="tf-item">
-                    <span class="tf-label"><i class="fas fa-car"></i> الفئة</span>
-                    <div class="tf-pills">
-                        <div class="tf-pill active" onclick="filterMap('الكل', this)">الكل</div>
-                        <div class="tf-pill" onclick="filterMap('سيدان', this)">سيدان</div>
-                        <div class="tf-pill" onclick="filterMap('دفع رباعي', this)">عائلي</div>
-                        <div class="tf-pill" onclick="filterMap('فاخرة', this)">فاخرة</div>
+            <div class="centered-map-layout">
+                
+                <div class="top-filter-bar" data-aos="fade-up">
+                    <div class="tf-item">
+                        <span class="tf-label"><i class="fas fa-map-marker-alt"></i> المدينة</span>
+                        <select id="city-selector" class="tf-select" onchange="changeCity()">
+                            <option value="riyadh" selected>الرياض (واجهة روشن)</option>
+                            <option value="dammam">الدمام</option>
+                            <option value="khobar">الخبر</option>
+                            <option value="jeddah">جدة</option>
+                        </select>
                     </div>
+
+                    <div class="tf-item">
+                        <span class="tf-label"><i class="fas fa-car"></i> الفئة</span>
+                        <div class="tf-pills">
+                            <div class="tf-pill active" onclick="filterMap('الكل', this)">الكل</div>
+                            <div class="tf-pill" onclick="filterMap('سيدان', this)">سيدان</div>
+                            <div class="tf-pill" onclick="filterMap('دفع رباعي', this)">عائلي</div>
+                            <div class="tf-pill" onclick="filterMap('فاخرة', this)">فاخرة</div>
+                        </div>
+                    </div>
+
+                    <div class="tf-item">
+                        <span class="tf-label"><i class="fas fa-tag"></i> الحد الأقصى: <span id="priceValue" style="color:var(--primary, green);">1000</span> ريال</span>
+                        <input type="range" min="50" max="1000" value="1000" style="width:100%; accent-color:var(--primary, green);" oninput="updatePriceLabel(this.value); renderCars()">
+                    </div>
+
+                    <button class="tf-btn" onclick="simulateSmartLocate()" id="smart-locate-btn">
+                        <i class="fas fa-crosshairs"></i> الأقرب لي
+                    </button>
                 </div>
 
-                <div class="tf-item">
-                    <span class="tf-label"><i class="fas fa-tag"></i> الحد الأقصى: <span id="priceValue" style="color:var(--primary, green);">1000</span> ريال</span>
-                    <input type="range" min="50" max="1000" value="1000" style="width:100%; accent-color:var(--primary, green);" oninput="updatePriceLabel(this.value); renderCars()">
+                <div class="new-map-container" data-aos="zoom-in">
+                    <div id="mapid"></div>
                 </div>
 
-                <button class="tf-btn" onclick="simulateSmartLocate()" id="smart-locate-btn">
-                    <i class="fas fa-crosshairs"></i> الأقرب لي
-                </button>
-            </div>
-
-            <div class="new-map-container" data-aos="zoom-in">
-                <div id="mapid"></div>
-            </div>
-        </div>
+            </div> </div>
     </section>
 
     <nav class="bottom-navbar mobile-bottom-navbar">
@@ -235,8 +182,9 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>AOS.init({ once: true });</script>
+    
     <script>
-        // --- 1. إدارة المستخدم (مصغرة) ---
+        // إدارة المستخدم
         function updateNavbar() {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const userType = localStorage.getItem('userType');
@@ -266,7 +214,7 @@
         }
         function logout() { localStorage.clear(); location.reload(); }
         
-        // --- 2. الوضع الليلي ---
+        // الوضع الليلي
         function initTheme() {
             const themeBtn = document.getElementById('theme-toggle-desktop');
             if(localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
@@ -279,11 +227,10 @@
             }
         }
 
-        // --- 3. الخريطة (الكود المهم) ---
+        // --- الخريطة ---
         let map, carLayer, routeLine;
         const centerPoint = [24.8375090, 46.7297325]; // واجهة روشن
 
-        // البيانات (مع صورة اللوسيد الجديدة)
         const cars = [
             { id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', rating: 4.9, lat: 24.8375090, lng: 46.7297325, score: 10, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
             { id: 'r2', type: 'دفع رباعي', model: 'لاندكروزر 2023', price: '450', rating: 5.0, lat: 24.8381000, lng: 46.7292000, score: 10, img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' },
@@ -295,7 +242,7 @@
         function initMap() {
             if(!document.getElementById('mapid')) return;
             
-            map = L.map('mapid').setView(centerPoint, 17); // زوم قريب افتراضي
+            map = L.map('mapid').setView(centerPoint, 17);
             L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; CARTO', maxZoom: 20
             }).addTo(map);
@@ -303,7 +250,6 @@
             carLayer = L.layerGroup().addTo(map);
             renderCars();
             
-            // إصلاح مشكلة عدم ظهور الخريطة بشكل كامل
             setTimeout(() => { map.invalidateSize(); }, 500);
         }
 
@@ -343,12 +289,9 @@
                     icon: createIcon(c.price, c.type, c.rating >= 5) 
                 }).addTo(carLayer);
 
-                // --- الحل لمشكلة القص والزوم ---
+                // --- زوم للخارج عند الضغط ---
                 marker.on('click', () => {
-                    // 1. ارجع لورا عشان توسع الصدر (Zoom Out)
                     map.flyTo([c.lat, c.lng], 15, { duration: 1 }); 
-                    
-                    // 2. ارسم الخط
                     if(routeLine) map.removeLayer(routeLine);
                     routeLine = L.polyline([centerPoint, [c.lat, c.lng]], { color: '#34495e', dashArray: '10, 10' }).addTo(map);
                 });
@@ -372,7 +315,7 @@
 
                 marker.bindPopup(content, { 
                     autoPan: true, 
-                    autoPanPadding: [50, 50], // يمنع القص
+                    autoPanPadding: [50, 50],
                     closeButton: false 
                 });
             });
