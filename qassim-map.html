@@ -13,13 +13,21 @@
         /* --- تنسيق الخريطة والحاوية --- */
         .map-wrapper {
             position: relative;
-            height: 700px;
+            height: 700px; /* ارتفاع ثابت للشاشات الكبيرة */
             width: 100%;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 40px rgba(0,0,0,0.1);
             border: 2px solid #f0f0f0;
         }
+        
+        /* تعديل ارتفاع الخريطة للجوال */
+        @media (max-width: 768px) {
+            .map-wrapper {
+                height: 85vh; /* تأخذ معظم الشاشة في الجوال */
+            }
+        }
+
         body.dark-mode .map-wrapper { border-color: #333; }
 
         #mapid {
@@ -32,7 +40,7 @@
             filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
         }
 
-        /* --- لوحة التحكم العائمة (فخمة جداً) --- */
+        /* --- لوحة التحكم العائمة (التعديل الجديد) --- */
         .map-floating-panel {
             position: absolute;
             top: 20px;
@@ -43,9 +51,29 @@
             padding: 20px;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            z-index: 1000; /* فوق الخريطة */
+            z-index: 1000;
             transition: all 0.3s ease;
         }
+
+        /* --- إصلاح شكل اللوحة في الجوال --- */
+        @media (max-width: 768px) {
+            .map-floating-panel {
+                top: auto !important;   /* إلغاء التثبيت العلوي */
+                right: 10px !important; 
+                left: 10px !important;  /* هوامش من اليمين واليسار */
+                bottom: 20px !important; /* تثبيت في الأسفل */
+                width: auto !important; /* العرض يتكيف مع الشاشة */
+                border-radius: 20px;    /* حواف دائرية */
+                padding: 15px;          /* تقليل الحشوة */
+                box-shadow: 0 -5px 20px rgba(0,0,0,0.15); /* ظل علوي */
+            }
+            
+            /* تصغير حجم الخطوط في الجوال */
+            .panel-header h3 { font-size: 1rem; margin-bottom: 10px; }
+            .control-group { margin-bottom: 10px; }
+            .filter-tag { padding: 4px 10px; font-size: 0.75rem; }
+        }
+
         body.dark-mode .map-floating-panel {
             background: rgba(30, 30, 30, 0.95);
             color: white;
@@ -167,7 +195,8 @@
                     <div class="control-group">
                         <label>المدينة الحالية</label>
                         <select id="city-selector" class="custom-select" onchange="changeCity()">
-                            <option value="riyadh">📍 الرياض (واجهة روشن)</option>
+                            <option value="riyadh" selected>📍 الرياض (واجهة روشن)</option>
+                            <option value="qassim">📍 القصيم</option>
                             <option value="dammam">📍 الدمام</option>
                             <option value="khobar">📍 الخبر</option>
                             <option value="jeddah">📍 جدة</option>
@@ -307,44 +336,40 @@
         let map;
         let carMarkersLayer;
 
-        // إحداثيات المدن (مراكز دقيقة - تم ضبط الرياض على قلب واجهة روشن)
+        // إحداثيات المدن - تم التحديث للإحداثيات الدقيقة التي طلبتها
         const cities = {
-            riyadh: [24.8620, 46.7240], // سنتر واجهة روشن
+            riyadh: [24.8375090, 46.7297325], // واجهة روشن (الإحداثيات الجديدة)
+            qassim: [26.3260, 43.9750],       // بريدة - القصيم
             dammam: [26.4350, 50.1150],
             khobar: [26.2900, 50.2100],
             jeddah: [21.5500, 39.1600] 
         };
 
-        // قاعدة بيانات السيارات (تم تكثيف السيارات في الرياض - واجهة روشن)
+        // قاعدة بيانات السيارات 
         const allCars = [
-            // --- الرياض (تجمع كثيف في واجهة روشن - تكرار ذكي لنفس السيارات) ---
+            // --- الرياض (واجهة روشن - الإحداثيات الجديدة مع تكرار كثيف) ---
             
-            // 1. عند البوابة الرئيسية
-            { city: 'riyadh', id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', rating: 4.9, reviews: 52, loc: 'واجهة روشن - بوابة 3', lat: 24.8630, lng: 46.7250, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
+            // 1. كامري (المركز)
+            { city: 'riyadh', id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', rating: 4.9, reviews: 52, loc: 'واجهة روشن - البوابة الرئيسية', lat: 24.8375090, lng: 46.7297325, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
             
-            // 2. منطقة الفندق
-            { city: 'riyadh', id: 'r2', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2023', price: '450', rating: 5.0, reviews: 18, loc: 'واجهة روشن - الفندق', lat: 24.8615, lng: 46.7235, img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' },
+            // 2. لاندكروزر (شمال)
+            { city: 'riyadh', id: 'r2', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2023', price: '450', rating: 5.0, reviews: 18, loc: 'واجهة روشن - مواقف السينما', lat: 24.8385000, lng: 46.7299000, img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' },
             
-            // 3. منطقة كبار الشخصيات VIP
-            { city: 'riyadh', id: 'r3', type: 'فاخرة', model: 'مرسيدس S500', price: '900', rating: 4.8, reviews: 12, loc: 'منطقة VIP', lat: 24.8645, lng: 46.7220, img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' },
+            // 3. مرسيدس (جنوب)
+            { city: 'riyadh', id: 'r3', type: 'فاخرة', model: 'مرسيدس S500', price: '900', rating: 4.8, reviews: 12, loc: 'واجهة روشن - منطقة VIP', lat: 24.8365000, lng: 46.7295000, img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' },
             
-            // 4. المواقف الخلفية
-            { city: 'riyadh', id: 'r4', type: 'سيدان', model: 'هونداي النترا', price: '85', rating: 4.7, reviews: 89, loc: 'المواقف الخلفية B', lat: 24.8600, lng: 46.7260, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
+            // 4. النترا (شرق)
+            { city: 'riyadh', id: 'r4', type: 'سيدان', model: 'هونداي النترا', price: '85', rating: 4.7, reviews: 89, loc: 'المواقف الجانبية', lat: 24.8375000, lng: 46.7310000, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
 
-            // --- تكرار السيارات لزيادة الكثافة في نفس المنطقة ---
-            
-            // 5. كامري أخرى عند مواقف السينما
-            { city: 'riyadh', id: 'r5', type: 'سيدان', model: 'تويوتا كامري 2023', price: '115', rating: 4.6, reviews: 40, loc: 'مواقف السينما', lat: 24.8625, lng: 46.7210, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
-            
-            // 6. النترا أخرى عند بوابة الأعمال
-            { city: 'riyadh', id: 'r6', type: 'سيدان', model: 'هونداي النترا', price: '80', rating: 4.5, reviews: 33, loc: 'بوابة الأعمال', lat: 24.8650, lng: 46.7280, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
-            
-            // 7. تاهو عند المدخل الرئيسي
-            { city: 'riyadh', id: 'r7', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '380', rating: 4.9, reviews: 22, loc: 'واجهة روشن - المدخل 1', lat: 24.8610, lng: 46.7245, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
-            
-            // 8. لوسيد في مواقف المطاعم
-            { city: 'riyadh', id: 'r8', type: 'فاخرة', model: 'لوسيد آير', price: '700', rating: 5.0, reviews: 4, loc: 'مواقف المطاعم', lat: 24.8660, lng: 46.7200, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
+            // --- تكرار إضافي في الرياض ---
+            { city: 'riyadh', id: 'r5', type: 'سيدان', model: 'تويوتا كامري 2023', price: '115', rating: 4.6, reviews: 40, loc: 'قرب الدوار', lat: 24.8380000, lng: 46.7285000, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { city: 'riyadh', id: 'r6', type: 'سيدان', model: 'هونداي النترا', price: '80', rating: 4.5, reviews: 33, loc: 'بوابة الموظفين', lat: 24.8368000, lng: 46.7305000, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
+            { city: 'riyadh', id: 'r7', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '380', rating: 4.9, reviews: 22, loc: 'واجهة روشن - المواقف السفلية', lat: 24.8372000, lng: 46.7290000, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
+            { city: 'riyadh', id: 'r8', type: 'فاخرة', model: 'لوسيد آير', price: '700', rating: 5.0, reviews: 4, loc: 'نقطة الشحن', lat: 24.8379000, lng: 46.7302000, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
 
+            // --- القصيم (تمت إضافتها) ---
+            { city: 'qassim', id: 'q1', type: 'سيدان', model: 'تويوتا كامري', price: '100', rating: 4.7, reviews: 15, loc: 'بريدة - النخيل مول', lat: 26.3260, lng: 43.9750, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { city: 'qassim', id: 'q2', type: 'دفع رباعي', model: 'فورد اكسبدشن', price: '400', rating: 4.8, reviews: 10, loc: 'عنيزة - بوليفارد', lat: 26.0940, lng: 43.9735, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
 
             // --- الدمام ---
             { city: 'dammam', id: 'd1', type: 'سيدان', model: 'تويوتا كامري 2023', price: '110', rating: 4.8, reviews: 30, loc: 'الشاطئ مول', lat: 26.4400, lng: 50.1100, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
@@ -361,7 +386,7 @@
 
         function initMap() {
             if (document.getElementById('mapid') && typeof L !== 'undefined') {
-                // تم تعديل الزوم هنا إلى 15 ليكون أقرب للسيارات المتجمعة
+                // ضبط الخريطة الافتراضية على الرياض (واجهة روشن)
                 map = L.map('mapid').setView(cities.riyadh, 15);
 
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -408,13 +433,13 @@
         document.head.appendChild(style);
 
         // متغيرات الفلترة
-        let currentCity = 'riyadh';
+        let currentCity = 'riyadh'; // البداية بالرياض
         let currentType = 'الكل';
 
         function changeCity() {
             currentCity = document.getElementById('city-selector').value;
             // عند تغيير المدينة، نغير الزوم حسب المدينة
-            const zoomLevel = currentCity === 'riyadh' ? 15 : 13;
+            const zoomLevel = (currentCity === 'riyadh') ? 16 : 13;
             map.flyTo(cities[currentCity], zoomLevel, { duration: 1.5 });
             renderCars();
         }
@@ -492,6 +517,14 @@
                             btn.style.opacity = '1';
                         }, 3000);
                     }, 1200);
+                } else {
+                    btn.innerHTML = '<i class="fas fa-times"></i> لا توجد سيارات قريبة';
+                    btn.style.background = '#e74c3c';
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = '';
+                        btn.style.opacity = '1';
+                    }, 2000);
                 }
             }, 1500);
         }
