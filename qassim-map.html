@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* --- الحاوية المركزية (هذا هو التعديل الجديد) --- */
+        /* --- الحاوية المركزية --- */
         .centered-map-layout {
-            max-width: 900px; /* عرض متوسط ومناسب */
-            margin: 0 auto;   /* توسيط في منتصف الشاشة */
+            max-width: 900px;
+            margin: 0 auto;
             position: relative;
         }
 
@@ -51,18 +51,17 @@
         /* 2. حاوية الخريطة */
         .new-map-container {
             position: relative;
-            height: 500px; /* ارتفاع مناسب */
+            height: 500px;
             width: 100%;
             border-radius: 20px;
             overflow: hidden;
-            border: 4px solid #fff; /* إطار أبيض جمالي */
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1); /* ظل يبرز الخريطة */
+            border: 4px solid #fff;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
             z-index: 1;
         }
 
         #mapid { height: 100%; width: 100%; }
 
-        /* تعديلات الجوال */
         @media (max-width: 768px) {
             .centered-map-layout { max-width: 100%; padding: 0 10px; }
             .top-filter-bar { flex-direction: column; align-items: stretch; }
@@ -95,6 +94,15 @@
         /* البطاقة المنبثقة */
         .leaflet-popup-content-wrapper { border-radius: 12px; padding: 0; overflow: hidden; }
         .leaflet-popup-content { margin: 0 !important; width: 280px !important; }
+        /* إظهار زر الإغلاق X */
+        .leaflet-popup-close-button {
+            font-size: 20px !important;
+            color: #555 !important;
+            top: 5px !important;
+            right: 5px !important;
+            z-index: 1000;
+        }
+        
         .popup-car-card { padding: 15px; max-height: 320px; overflow-y: auto; }
         .popup-img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; }
         .rating-row { display: flex; justify-content: space-between; font-size: 0.8rem; margin: 5px 0; color: #666; }
@@ -168,7 +176,8 @@
                     <div id="mapid"></div>
                 </div>
 
-            </div> </div>
+            </div>
+        </div>
     </section>
 
     <nav class="bottom-navbar mobile-bottom-navbar">
@@ -227,109 +236,9 @@
             }
         }
 
-        // --- الخريطة ---
-        let map, carLayer, routeLine;
+        // --- الخريطة والمنطق الجديد ---
+        let map, carLayer;
         const centerPoint = [24.8375090, 46.7297325]; // واجهة روشن
 
         const cars = [
-            { id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', rating: 4.9, lat: 24.8375090, lng: 46.7297325, score: 10, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
-            { id: 'r2', type: 'دفع رباعي', model: 'لاندكروزر 2023', price: '450', rating: 5.0, lat: 24.8381000, lng: 46.7292000, score: 10, img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' },
-            { id: 'r7', type: 'فاخرة', model: 'لوسيد آير', price: '700', rating: 5.0, lat: 24.8385000, lng: 46.7298000, score: 10, img: 'https://tse1.mm.bing.net/th/id/OIP.gH5S692_GzMVWiq6ui-sdQHaEA?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3' },
-            { id: 'r4', type: 'سيدان', model: 'هونداي النترا', price: '85', rating: 4.2, lat: 24.8378000, lng: 46.7305000, score: 8, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
-            { id: 'r6', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '380', rating: 4.9, lat: 24.8365000, lng: 46.7295000, score: 9, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' }
-        ];
-
-        function initMap() {
-            if(!document.getElementById('mapid')) return;
-            
-            map = L.map('mapid').setView(centerPoint, 17);
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; CARTO', maxZoom: 20
-            }).addTo(map);
-            
-            carLayer = L.layerGroup().addTo(map);
-            renderCars();
-            
-            setTimeout(() => { map.invalidateSize(); }, 500);
-        }
-
-        let currType = 'الكل';
-        let maxP = 1000;
-
-        window.updatePriceLabel = (v) => {
-            maxP = v;
-            document.getElementById('priceValue').innerText = v;
-        }
-
-        window.filterMap = (t, el) => {
-            currType = t;
-            document.querySelectorAll('.tf-pill').forEach(p => p.classList.remove('active'));
-            el.classList.add('active');
-            renderCars();
-        }
-
-        function createIcon(price, type, isPrem) {
-            let iconHtml = '<i class="fas fa-car" style="color:#1abc9c"></i>';
-            if(type === 'فاخرة') iconHtml = '<i class="fas fa-gem" style="color:#f1c40f"></i>';
-            if(type === 'دفع رباعي') iconHtml = '<i class="fas fa-truck-pickup" style="color:#e67e22"></i>';
-            
-            return L.divIcon({
-                className: 'custom-none',
-                html: `<div class="price-marker-box ${isPrem ? 'premium' : ''}">${iconHtml} ${price} ﷼</div>`,
-                iconSize: [80, 30], iconAnchor: [40, 35], popupAnchor: [0, -35]
-            });
-        }
-
-        function renderCars() {
-            carLayer.clearLayers();
-            if(routeLine) map.removeLayer(routeLine);
-
-            cars.filter(c => (currType === 'الكل' || c.type === currType) && c.price <= maxP).forEach(c => {
-                const marker = L.marker([c.lat, c.lng], { 
-                    icon: createIcon(c.price, c.type, c.rating >= 5) 
-                }).addTo(carLayer);
-
-                // --- زوم للخارج عند الضغط ---
-                marker.on('click', () => {
-                    map.flyTo([c.lat, c.lng], 15, { duration: 1 }); 
-                    if(routeLine) map.removeLayer(routeLine);
-                    routeLine = L.polyline([centerPoint, [c.lat, c.lng]], { color: '#34495e', dashArray: '10, 10' }).addTo(map);
-                });
-
-                const content = `
-                    <div class="popup-car-card">
-                        <img src="${c.img}" class="popup-img">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <h4 style="margin:5px 0; color:#1abc9c">${c.model}</h4>
-                            <span style="background:#fff9db; padding:2px 8px; border-radius:4px; font-weight:bold; color:#f39c12">⭐ ${c.rating}</span>
-                        </div>
-                        <div style="margin:10px 0;">
-                            <div class="rating-row"><span>الميكانيكا</span><div class="progress-bar"><div class="progress-fill" style="width:${c.score*10}%"></div></div></div>
-                            <div class="rating-row"><span>النظافة</span><div class="progress-bar"><div class="progress-fill" style="width:${c.score*10}%"></div></div></div>
-                        </div>
-                        <div style="text-align:center;">
-                            <a href="cars.html" class="btn btn-primary" style="display:block; padding:8px;">حجز بـ ${c.price} ريال</a>
-                        </div>
-                    </div>
-                `;
-
-                marker.bindPopup(content, { 
-                    autoPan: true, 
-                    autoPanPadding: [50, 50],
-                    closeButton: false 
-                });
-            });
-        }
-
-        window.simulateSmartLocate = () => {
-            map.flyTo(centerPoint, 17);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initTheme();
-            updateNavbar();
-            setTimeout(initMap, 100);
-        });
-    </script>
-</body>
-</html>
+            { id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', rating: 4.9, lat: 24.8375090, lng: 46.7297325, score: 1
