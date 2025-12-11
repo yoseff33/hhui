@@ -11,66 +11,83 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* --- الحاوية المركزية --- */
-        .centered-map-layout {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-        }
+        /* --- 1. التنسيقات الأساسية --- */
+        .centered-map-layout { max-width: 900px; margin: 0 auto; position: relative; }
 
-        /* 1. تنسيق شريط الفلاتر */
         .top-filter-bar {
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 16px;
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
+            background: #ffffff; border: 1px solid #e0e0e0; border-radius: 16px;
+            padding: 12px 15px; margin-bottom: 15px; /* هوامش أقل */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); display: flex;
+            align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
         }
 
-        .tf-item { display: flex; flex-direction: column; gap: 5px; min-width: 140px; flex: 1; }
-        .tf-label { font-size: 0.85rem; font-weight: bold; color: #666; display: flex; align-items: center; gap: 5px; }
-
-        .tf-pills { display: flex; gap: 5px; background: #f5f5f5; padding: 4px; border-radius: 50px; width: fit-content; }
-        .tf-pill { padding: 6px 12px; border-radius: 50px; font-size: 0.8rem; cursor: pointer; transition: 0.3s; color: #555; white-space: nowrap; }
+        .tf-item { display: flex; flex-direction: column; gap: 4px; min-width: 130px; flex: 1; }
+        .tf-label { font-size: 0.8rem; font-weight: bold; color: #666; display: flex; align-items: center; gap: 5px; }
+        .tf-pills { display: flex; gap: 4px; background: #f5f5f5; padding: 3px; border-radius: 50px; width: fit-content; }
+        .tf-pill { padding: 5px 10px; border-radius: 50px; font-size: 0.75rem; cursor: pointer; transition: 0.3s; color: #555; white-space: nowrap; }
         .tf-pill.active { background: var(--primary, #1abc9c); color: white; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .tf-select { padding: 6px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-family: 'Tajawal'; cursor: pointer; width: 100%; font-size: 0.9rem; }
+        .tf-btn { background: #2c3e50; color: white; border: none; padding: 0 15px; border-radius: 8px; cursor: pointer; font-weight: bold; height: 38px; display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: auto; font-size: 0.9rem; white-space: nowrap; }
 
-        .tf-select { padding: 8px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-family: 'Tajawal'; cursor: pointer; width: 100%; }
-
-        .tf-btn {
-            background: #2c3e50; color: white; border: none; padding: 0 20px; border-radius: 8px;
-            cursor: pointer; font-weight: bold; height: 40px; display: flex; align-items: center;
-            justify-content: center; gap: 8px; margin-top: auto; white-space: nowrap;
-        }
-
-        /* 2. حاوية الخريطة */
+        /* --- 2. الخريطة --- */
         .new-map-container {
-            position: relative;
-            height: 500px;
-            width: 100%;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 4px solid #fff;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            z-index: 1;
+            position: relative; height: 500px; width: 100%;
+            border-radius: 20px; overflow: hidden; border: 4px solid #fff;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1); z-index: 1;
         }
-
         #mapid { height: 100%; width: 100%; }
 
         @media (max-width: 768px) {
             .centered-map-layout { max-width: 100%; padding: 0 10px; }
-            .top-filter-bar { flex-direction: column; align-items: stretch; }
+            .top-filter-bar { flex-direction: column; align-items: stretch; gap: 12px; }
             .tf-item { width: 100%; }
-            .tf-pills { width: 100%; overflow-x: auto; }
-            .new-map-container { height: 450px; }
+            .tf-pills { width: 100%; overflow-x: auto; justify-content: space-between; }
+            .new-map-container { height: 480px; }
         }
 
-        /* الوضع الليلي */
+        /* --- 3. البطاقة المصغرة (Compact Popup) --- */
+        .leaflet-popup-content-wrapper { border-radius: 12px; padding: 0; overflow: hidden; }
+        
+        /* تصغير العرض الكلي للبطاقة */
+        .leaflet-popup-content { margin: 0 !important; width: 220px !important; } 
+        
+        .popup-car-card {
+            padding: 10px;
+            /* ارتفاع أقصى صغير مناسب للجوال */
+            max-height: 260px; 
+            overflow-y: auto;
+        }
+        /* تصغير الصورة */
+        .popup-img { width: 100%; height: 90px; object-fit: cover; border-radius: 6px; margin-bottom: 5px; }
+        
+        /* تصغير النصوص */
+        .popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .popup-header h4 { margin: 0; font-size: 0.9rem; color: #1abc9c; }
+        .popup-rating { background: #fff9db; padding: 1px 6px; border-radius: 4px; font-weight: bold; color: #f39c12; font-size: 0.75rem; }
+
+        /* تصغير أشرطة التقييم */
+        .rating-row { display: flex; justify-content: space-between; font-size: 0.7rem; margin: 3px 0; color: #666; align-items: center; }
+        .progress-bar { width: 60px; height: 4px; background: #eee; border-radius: 2px; overflow: hidden; }
+        .progress-fill { height: 100%; background: #2ecc71; }
+
+        /* تصغير الزر */
+        .popup-btn { 
+            display: block; padding: 6px; font-size: 0.85rem; text-align: center; 
+            background: var(--primary, #1abc9c); color: white; border-radius: 6px; 
+            margin-top: 8px; text-decoration: none; 
+        }
+
+        /* زر الإغلاق */
+        .leaflet-popup-close-button {
+            font-size: 18px !important; color: #333 !important;
+            top: 5px !important; right: 5px !important;
+            width: 24px !important; height: 24px !important;
+            background: rgba(255,255,255,0.9); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* ستايلات الوضع الليلي والإضافات */
         body.dark-mode .top-filter-bar { background: #2d3436; border-color: #444; }
         body.dark-mode .tf-label { color: #ccc; }
         body.dark-mode .tf-select { background: #444; color: white; border-color: #555; }
@@ -80,50 +97,21 @@
         body.dark-mode .new-map-container { border-color: #444; }
         body.dark-mode #mapid .leaflet-tile-pane { filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%); }
 
-        /* ستايل الأيقونات */
         .price-marker-box {
-            background: white; border-radius: 30px; padding: 5px 12px;
-            font-weight: bold; font-family: 'Tajawal'; font-size: 0.9rem;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2); border: 2px solid white;
-            display: flex; align-items: center; gap: 5px; color: #333;
-            transition: transform 0.2s;
+            background: white; border-radius: 30px; padding: 4px 10px;
+            font-weight: bold; font-family: 'Tajawal'; font-size: 0.8rem;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2); border: 2px solid white;
+            display: flex; align-items: center; gap: 4px; color: #333; transition: transform 0.2s;
         }
         .price-marker-box:hover { transform: scale(1.1); z-index: 1000; }
         .price-marker-box.premium { background: #2c3e50; color: #f1c40f; border-color: #f1c40f; }
-
-        /* البطاقة المنبثقة */
-        .leaflet-popup-content-wrapper { border-radius: 12px; padding: 0; overflow: hidden; }
-        .leaflet-popup-content { margin: 0 !important; width: 280px !important; }
-        
-        /* زر الإغلاق */
-        .leaflet-popup-close-button {
-            font-size: 24px !important;
-            color: #333 !important;
-            top: 8px !important;
-            right: 8px !important;
-            width: 30px !important;
-            height: 30px !important;
-            background: rgba(255,255,255,0.8);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            z-index: 1000;
-        }
-        
-        .popup-car-card { padding: 15px; max-height: 320px; overflow-y: auto; }
-        .popup-img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; }
-        .rating-row { display: flex; justify-content: space-between; font-size: 0.8rem; margin: 5px 0; color: #666; }
-        .progress-bar { width: 80px; height: 6px; background: #eee; border-radius: 3px; overflow: hidden; }
-        .progress-fill { height: 100%; background: #2ecc71; }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
             <nav class="navbar">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon">و</div>
-                    <div class="logo-text">وُجْهَة</div>
-                </a>
+                <a href="index.html" class="logo"><div class="logo-icon">و</div><div class="logo-text">وُجْهَة</div></a>
                 <ul class="nav-links desktop-nav-links">
                     <li><a href="index.html">الرئيسية</a></li>
                     <li><a href="cars.html">الأسطول</a></li>
@@ -156,7 +144,6 @@
                             <option value="jeddah">جدة</option>
                         </select>
                     </div>
-
                     <div class="tf-item">
                         <span class="tf-label"><i class="fas fa-car"></i> الفئة</span>
                         <div class="tf-pills">
@@ -166,15 +153,11 @@
                             <div class="tf-pill" onclick="filterMap('فاخرة', this)">فاخرة</div>
                         </div>
                     </div>
-
                     <div class="tf-item">
                         <span class="tf-label"><i class="fas fa-tag"></i> الحد الأقصى: <span id="priceValue" style="color:var(--primary, green);">1000</span> ريال</span>
                         <input type="range" min="50" max="1000" value="1000" style="width:100%; accent-color:var(--primary, green);" oninput="updatePriceLabel(this.value); renderCars()">
                     </div>
-
-                    <button class="tf-btn" onclick="simulateSmartLocate()" id="smart-locate-btn">
-                        <i class="fas fa-crosshairs"></i> الأقرب لي
-                    </button>
+                    <button class="tf-btn" onclick="simulateSmartLocate()" id="smart-locate-btn"><i class="fas fa-crosshairs"></i> الأقرب</button>
                 </div>
 
                 <div class="new-map-container" data-aos="zoom-in">
@@ -197,7 +180,7 @@
     <script>AOS.init({ once: true });</script>
     
     <script>
-        // --- 1. إدارة المستخدم ---
+        // تحديث الناف بار
         function updateNavbar() {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const userType = localStorage.getItem('userType');
@@ -226,7 +209,6 @@
         }
         function logout() { localStorage.clear(); location.reload(); }
         
-        // --- 2. الوضع الليلي ---
         function initTheme() {
             const themeBtn = document.getElementById('theme-toggle-desktop');
             if(localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
@@ -238,7 +220,7 @@
             }
         }
 
-        // --- 3. الخريطة والمنطق المحسن ---
+        // --- الخريطة والبيانات ---
         let map, carLayer, routeLine;
         const centerPoint = [24.8375090, 46.7297325]; // واجهة روشن
 
@@ -253,22 +235,18 @@
         function initMap() {
             if(!document.getElementById('mapid')) return;
             
-            // البداية: زوم خارجي (14.5) عشان تشوف الحي
-            map = L.map('mapid').setView(centerPoint, 14.5);
-            
+            map = L.map('mapid').setView(centerPoint, 15);
             L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; CARTO', maxZoom: 20
             }).addTo(map);
-            
             carLayer = L.layerGroup().addTo(map);
             renderCars();
             
             setTimeout(() => { map.invalidateSize(); }, 500);
 
-            // حدث عند إغلاق البطاقة (الزوم للخارج)
+            // إرجاع الكاميرا عند الإغلاق
             map.on('popupclose', function() {
-                // نرجع للزوم 14.5
-                map.flyTo(centerPoint, 14.5, { duration: 1.5 });
+                map.flyTo(centerPoint, 15, { duration: 1 });
                 if(routeLine) map.removeLayer(routeLine);
             });
         }
@@ -276,11 +254,7 @@
         let currType = 'الكل';
         let maxP = 1000;
 
-        window.updatePriceLabel = (v) => {
-            maxP = v;
-            document.getElementById('priceValue').innerText = v;
-        }
-
+        window.updatePriceLabel = (v) => { maxP = v; document.getElementById('priceValue').innerText = v; }
         window.filterMap = (t, el) => {
             currType = t;
             document.querySelectorAll('.tf-pill').forEach(p => p.classList.remove('active'));
@@ -292,7 +266,6 @@
             let iconHtml = '<i class="fas fa-car" style="color:#1abc9c"></i>';
             if(type === 'فاخرة') iconHtml = '<i class="fas fa-gem" style="color:#f1c40f"></i>';
             if(type === 'دفع رباعي') iconHtml = '<i class="fas fa-truck-pickup" style="color:#e67e22"></i>';
-            
             return L.divIcon({
                 className: 'custom-none',
                 html: `<div class="price-marker-box ${isPrem ? 'premium' : ''}">${iconHtml} ${price} ﷼</div>`,
@@ -302,16 +275,14 @@
 
         function renderCars() {
             carLayer.clearLayers();
-
             cars.filter(c => (currType === 'الكل' || c.type === currType) && c.price <= maxP).forEach(c => {
-                const marker = L.marker([c.lat, c.lng], { 
-                    icon: createIcon(c.price, c.type, c.rating >= 5) 
-                }).addTo(carLayer);
+                const marker = L.marker([c.lat, c.lng], { icon: createIcon(c.price, c.type, c.rating >= 5) }).addTo(carLayer);
 
-                // حدث الضغط على السيارة (الزوم للداخل)
                 marker.on('click', () => {
-                    // نقرب مرة (Zoom 18)
-                    map.flyTo([c.lat, c.lng], 18, { duration: 1.5 });
+                    // حركة الإزاحة الذكية (تنزل السيارة تحت شوي)
+                    // 0.0025 درجة كافية لرفع الكاميرا فوق السيارة
+                    const offsetLat = c.lat + 0.0025;
+                    map.flyTo([offsetLat, c.lng], 16, { duration: 1 });
                     
                     if(routeLine) map.removeLayer(routeLine);
                     routeLine = L.polyline([centerPoint, [c.lat, c.lng]], { color: '#34495e', dashArray: '10, 10' }).addTo(map);
@@ -320,37 +291,27 @@
                 const content = `
                     <div class="popup-car-card">
                         <img src="${c.img}" class="popup-img">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <h4 style="margin:5px 0; color:#1abc9c">${c.model}</h4>
-                            <span style="background:#fff9db; padding:2px 8px; border-radius:4px; font-weight:bold; color:#f39c12">⭐ ${c.rating}</span>
+                        <div class="popup-header">
+                            <h4>${c.model}</h4>
+                            <span class="popup-rating">⭐ ${c.rating}</span>
                         </div>
-                        <div style="margin:10px 0;">
+                        <div style="margin:5px 0;">
                             <div class="rating-row"><span>الميكانيكا</span><div class="progress-bar"><div class="progress-fill" style="width:${c.score*10}%"></div></div></div>
                             <div class="rating-row"><span>النظافة</span><div class="progress-bar"><div class="progress-fill" style="width:${c.score*10}%"></div></div></div>
                         </div>
-                        <div style="text-align:center;">
-                            <a href="cars.html" class="btn btn-primary" style="display:block; padding:8px;">حجز بـ ${c.price} ريال</a>
-                        </div>
+                        <a href="cars.html" class="popup-btn">حجز بـ ${c.price} ريال</a>
                     </div>
                 `;
 
-                // إعدادات البطاقة لضمان الظهور
-                marker.bindPopup(content, { 
-                    autoPan: true, 
-                    autoPanPadding: [150, 150], // هامش كبير جداً لضمان الظهور
-                    closeButton: true 
-                });
+                // autoPanPadding صغير (20) لأن البطاقة صغيرة أصلاً
+                marker.bindPopup(content, { autoPan: true, autoPanPadding: [20, 20], closeButton: true });
             });
         }
 
-        window.simulateSmartLocate = () => {
-            map.flyTo(centerPoint, 17);
-        }
+        window.simulateSmartLocate = () => { map.flyTo(centerPoint, 16); }
 
         document.addEventListener('DOMContentLoaded', () => {
-            initTheme();
-            updateNavbar();
-            setTimeout(initMap, 100);
+            initTheme(); updateNavbar(); setTimeout(initMap, 100);
         });
     </script>
 </body>
