@@ -2541,122 +2541,28 @@ body.dark-mode .suggested-question-btn:hover {
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 /* =========================================================
-   إصلاح الهيدر والناف بار - انسخ هذا الكود في نهاية الملف
-   Fixed Header & Navbar Styles (Override)
+   وزنية "المكان المناسب": تقريب العناصر + هوامش جانبية
+   Balanced Layout: Compact + Side Margins
    ========================================================= */
 
-/* 1. تثبيت خلفية الهيدر لتكون زجاجية غامقة دائماً لقراءة أفضل */
-header {
-    background-color: rgba(15, 41, 37, 0.9) !important; /* لون زيتي غامق شفاف */
-    backdrop-filter: blur(12px) !important; /* تغبيش الخلفية */
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.15) !important; /* خط ذهبي خفيف جداً */
-    height: 80px !important; /* تثبيت الارتفاع لضمان المحاذاة */
-    display: flex;
-    align-items: center;
-    padding: 0 !important;
-}
-
-/* 2. ضبط الحاوية لصف العناصر بمسطرة وحدة */
+/* 1. تحديد عرض المحتوى عشان ما يتوسع لآخر الشاشة */
 header .container {
-    height: 100%;
+    max-width: 1150px !important; /* هذا العرض يخلي العناصر قريبة من بعض */
+    margin: 0 auto !important;    /* يسنتر الهيدر بنص الشاشة */
+    padding: 0 40px !important;   /* يعطي هامش داخلي عشان ما يلصق بالأطراف */
 }
 
-header .navbar {
-    height: 100%;
+/* 2. توزيع العناصر داخل المساحة المحددة */
+.navbar {
     display: flex !important;
+    justify-content: space-between !important; /* يوزعهم داخل الـ 1150 بكسل بس */
     align-items: center !important;
-    justify-content: space-between !important;
+    width: 100% !important;
 }
 
-/* 3. تنسيق الروابط (الرئيسية، استكشف..) لتكون بيضاء وواضحة */
+/* 3. تقليل المسافات بين الروابط نفسها (الرئيسية، استكشف...) */
 @media (min-width: 993px) {
     .navbar .nav-links {
-        display: flex !important;
-        align-items: center !important;
-        gap: 30px !important;
-        margin: 0 auto !important; /* توسيط الروابط */
-    }
-
-    .nav-links li a {
-        color: rgba(255, 255, 255, 0.9) !important; /* أبيض */
-        font-size: 1rem !important;
-        font-weight: 500 !important;
-        padding: 0 !important;
-    }
-
-    /* لون ذهبي عند مرور الماوس */
-    .nav-links li a:hover, 
-    .nav-links li a.active {
-        color: #d4af37 !important; /* ذهبي */
-    }
-    
-    /* إلغاء الخط السفلي القديم واستبداله بتأثير أنعم */
-    .nav-links li a:after {
-        background: #d4af37 !important;
-        height: 2px !important;
-        bottom: -5px !important;
-    }
-}
-
-/* 4. تنسيق الشعار (اللوجو) */
-.logo {
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-    height: 100%;
-}
-
-.logo-text {
-    color: #ffffff !important; /* النص أبيض */
-    font-size: 1.6rem !important;
-    margin: 0 !important;
-}
-
-/* 5. تنسيق الأزرار (دخول آمن + اسألني) */
-.nav-buttons {
-    display: flex !important;
-    align-items: center !important;
-    gap: 15px !important;
-    height: 100%;
-}
-
-/* زر اسألني - تعديل ليناسب الخلفية الغامقة */
-#desktop-chatbot-toggle {
-    background: rgba(255, 255, 255, 0.1) !important;
-    color: #ffffff !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    height: 45px !important;
-    border-radius: 10px !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-}
-
-#desktop-chatbot-toggle:hover {
-    background: rgba(255, 255, 255, 0.2) !important;
-    border-color: #d4af37 !important;
-}
-
-/* زر دخول نفاذ */
-.btn-primary.guest-only {
-    height: 45px !important;
-    display: flex !important;
-    align-items: center !important;
-    padding: 0 25px !important;
-    font-size: 0.95rem !important;
-}
-
-/* 6. تعديلات خاصة للجوال عشان ما يخرب */
-@media (max-width: 992px) {
-    header {
-        height: 70px !important;
-    }
-    .logo-text {
-        font-size: 1.3rem !important;
-    }
-    /* إخفاء الروابط في الجوال لأن عندك شريط سفلي */
-    .desktop-nav-links {
-        display: none !important;
+        gap: 25px !important; /* مسافة معقولة ومرتبة بين الكلمات */
     }
 }
