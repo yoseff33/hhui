@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | خريطة أسطول الرياض</title>
+    <title>وُجْهَة | تصفح السيارات على الخريطة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -18,47 +18,49 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             z-index: 1;
             transition: all 0.3s ease;
+            border: 2px solid #eee;
         }
 
         /* تنسيق الوضع الليلي للخريطة (فلتر يقلب الألوان) */
         body.dark-mode #mapid .leaflet-tile-pane {
             filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
         }
-        /* عشان ما تنقلب ألوان السيارات والبوب أب، نعكس الفلتر عليها أو نخليها طبيعية */
-        /* هنا نستهدف التايلات فقط عشان السيارات تبقى بألوانها */
+        body.dark-mode #mapid { border-color: #333; }
 
-        .map-overlay-info {
-            background: white; /* الوضع الافتراضي */
-            color: #333;
-            padding: 15px;
+        .map-search-box {
+            background: white;
+            padding: 20px;
             border-radius: 12px;
             margin-bottom: 20px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
             gap: 15px;
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: background 0.3s ease;
         }
-
-        /* تنسيق الوضع الليلي للبطاقة */
-        body.dark-mode .map-overlay-info {
-            background: #1e1e1e; /* لون داكن */
-            color: #fff;
+        body.dark-mode .map-search-box {
+            background: #1e1e1e;
             border: 1px solid #333;
         }
 
-        .live-indicator {
-            width: 12px;
-            height: 12px;
-            background-color: #e74c3c;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
+        .map-filters {
+            display: flex;
+            gap: 10px;
         }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        
+        .location-badge {
+            background: #e8f5e9;
+            color: #2e8b57;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
+        body.dark-mode .location-badge { background: #1b3a2b; color: #4cd137; }
     </style>
 </head>
 <body>
@@ -71,7 +73,8 @@
                 </a>
                 <ul class="nav-links desktop-nav-links">
                     <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="cars.html">الأسطول</a></li> <li><a href="qassim-map.html" class="active">الرصد الميداني</a></li>
+                    <li><a href="cars.html">الأسطول</a></li>
+                    <li><a href="qassim-map.html" class="active">تصفح الخريطة</a></li>
                 </ul>
                 <div class="nav-buttons nav-buttons-desktop-only">
                     <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع">
@@ -88,29 +91,30 @@
     <section id="riyadh-car-map-section" class="car-map-section" style="padding-top: 150px;">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2>الأسطول الحي في الرياض</h2>
-                <p>تغطية شاملة لمواقع السيارات المتاحة حول منطقة المؤتمر والأحياء الحيوية</p>
+                <h2>اختر سيارتك من الخريطة</h2>
+                <p>استعرض السيارات القريبة منك في واجهة روشن والأحياء المحيطة واحجزها فوراً</p>
             </div>
             
-            <div class="map-overlay-info" data-aos="fade-up" data-aos-delay="50">
-                <div class="live-indicator"></div>
-                <div>
-                    <strong>التتبع المباشر (IoT):</strong>
-                    <span style="opacity: 0.8;"> يتم تحديث مواقع السيارات وحالتها الأمنية لحظياً.</span>
+            <div class="map-search-box" data-aos="fade-up" data-aos-delay="50">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="location-badge">
+                        <i class="fas fa-location-arrow"></i>
+                        الموقع الحالي: واجهة روشن، الرياض
+                    </div>
                 </div>
-            </div>
 
-            <div class="map-filters" data-aos="fade-up" data-aos-delay="100">
-                <button class="map-filter-btn active" data-filter="الكل">الكل</button>
-                <button class="map-filter-btn" data-filter="سيدان">سيدان</button>
-                <button class="map-filter-btn" data-filter="دفع رباعي">دفع رباعي</button>
-                <button class="map-filter-btn" data-filter="فاخرة">فاخرة</button>
+                <div class="map-filters">
+                    <button class="map-filter-btn active" data-filter="الكل">الكل</button>
+                    <button class="map-filter-btn" data-filter="سيدان">سيدان</button>
+                    <button class="map-filter-btn" data-filter="دفع رباعي">دفع رباعي</button>
+                    <button class="map-filter-btn" data-filter="فاخرة">فاخرة</button>
+                </div>
             </div>
 
             <div id="mapid" data-aos="zoom-in" data-aos-delay="200"></div>
             
             <p style="text-align: center; opacity: 0.7; margin-top: 20px; font-size: 0.9rem;">
-                <i class="fas fa-shield-alt"></i> جميع المركبات الظاهرة في الخريطة تم التحقق من أصحابها وجاهزة للتفويض الفوري.
+                <i class="fas fa-info-circle"></i> الأسعار الظاهرة هي لليوم الواحد وتشمل التأمين الشامل.
             </p>
         </div>
     </section>
@@ -121,7 +125,7 @@
                 <div class="footer-col">
                     <h3>عن وُجْهَة</h3>
                     <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
-                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان. نمكن زوار المملكة من التنقل الذكي.
+                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان.
                     </p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -240,86 +244,56 @@
             window.location.href = 'index.html';
         }
 
-        // --- كود تفعيل الوضع الليلي يدوياً في هذه الصفحة (احتياط) ---
-        const themeToggleBtn = document.getElementById('theme-toggle-desktop');
-        if(themeToggleBtn) {
-            themeToggleBtn.addEventListener('click', () => {
-                document.body.classList.toggle('dark-mode');
-                const isDark = document.body.classList.contains('dark-mode');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                updateThemeIcon(isDark);
-            });
-            
-            // التحقق من الوضع المحفوظ عند التحميل
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                document.body.classList.add('dark-mode');
-                updateThemeIcon(true);
-            }
-        }
-
-        function updateThemeIcon(isDark) {
-            const icon = themeToggleBtn.querySelector('i');
-            const text = themeToggleBtn.querySelector('span');
-            if (isDark) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-                text.innerText = 'نهار';
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-                text.innerText = 'ليل';
-            }
-        }
-
-        // --- إعدادات خريطة الرياض ---
+        // --- إعدادات خريطة الرياض (واجهة روشن) ---
         let map;
         let carMarkersLayer;
 
-        const riyadhCenter = [24.8607, 46.7231]; 
+        // إحداثيات واجهة روشن (مقر الهاكاثون)
+        const roshnFront = [24.8620, 46.7240]; 
 
+        // بيانات السيارات المحدثة لمواقع واجهة روشن والمطار
         const riyadhCarsData = [
             {
-                id: 'camry', type: 'سيدان', model: 'تويوتا كامري 2023', price: '90', 
-                location: 'مواقف واجهة الرياض P4',
-                lat: 24.8620, lng: 46.7240, 
+                id: 'camry', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', 
+                location: 'واجهة روشن - بوابة 3',
+                lat: 24.8630, lng: 46.7250, 
                 img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3'
             },
             {
-                id: 'landcruiser', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2022', price: '250', 
-                location: 'فندق فيرمونت - البوابة',
-                lat: 24.8580, lng: 46.7200, 
+                id: 'landcruiser', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2023', price: '450', 
+                location: 'فندق فيرمونت الرياض',
+                lat: 24.8585, lng: 46.7190, 
                 img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg'
             },
             {
-                id: 'mercedes', type: 'فاخرة', model: 'مرسيدس S-Class', price: '450', 
-                location: 'صالة الطيران الخاص - مطار الملك خالد',
-                lat: 24.9350, lng: 46.7000, 
+                id: 'mercedes', type: 'فاخرة', model: 'مرسيدس S500', price: '900', 
+                location: 'مطار الملك خالد - الصالة 5',
+                lat: 24.9450, lng: 46.7100, 
                 img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg'
             },
             {
-                id: 'elantra', type: 'اقتصادية', model: 'هونداي النترا 2023', price: '70', 
-                location: 'حي قرطبة - شارع التخصصي',
-                lat: 24.8300, lng: 46.7350,
+                id: 'elantra', type: 'اقتصادية', model: 'هونداي النترا 2023', price: '85', 
+                location: 'بوابة الأعمال (Business Gate)',
+                lat: 24.8250, lng: 46.7350,
                 img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp'
             },
             {
-                id: 'patrol', type: 'دفع رباعي', model: 'نيسان باترول بلاتينيوم', price: '300', 
-                location: 'مواقف بوليفارد الرياض',
-                lat: 24.7670, lng: 46.6050,
-                img: 'https://www.nissan-cdn.net/content/dam/Nissan/middle-east/vehicles/Patrol/Patrol-MY23/overview/2023-Nissan-Patrol-hero-desktop.webp'
+                id: 'tahoe', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '350', 
+                location: 'جامعة الأميرة نورة',
+                lat: 24.8500, lng: 46.7100,
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' // صورة تقريبية
             },
             {
-                id: 'lucid', type: 'فاخرة', model: 'لوسيد آير (Lucid Air)', price: '600', 
-                location: 'مركز الملك عبدالله المالي (KAFD)',
-                lat: 24.7600, lng: 46.6350,
-                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' 
+                id: 'lexus', type: 'فاخرة', model: 'لكزس ES', price: '400', 
+                location: 'واجهة روشن - المواقف الخلفية',
+                lat: 24.8610, lng: 46.7220,
+                img: 'https://www.motortrend.com/uploads/sites/5/2021/05/2022-Lexus-ES-300h-F-Sport-1.jpg' 
             }
         ];
 
         function initRiyadhMap() {
             if (document.getElementById('mapid') && typeof L !== 'undefined') {
-                map = L.map('mapid').setView(riyadhCenter, 12);
+                map = L.map('mapid').setView(roshnFront, 13); // تكبير الزوم على الواجهة
 
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -331,9 +305,13 @@
         }
 
         function createCarIcon(carType) {
+            let color = 'var(--primary)';
+            if(carType === 'فاخرة') color = '#f1c40f';
+            if(carType === 'دفع رباعي') color = '#e67e22';
+
             return L.divIcon({
                 className: 'custom-car-icon',
-                html: `<i class="fas fa-car" style="color:white; line-height:36px;"></i>`,
+                html: `<i class="fas fa-car" style="color:${color}; line-height:36px; font-size:1.2rem;"></i>`,
                 iconSize: [40, 40],
                 iconAnchor: [20, 40],
                 popupAnchor: [0, -40],
@@ -344,20 +322,27 @@
         const style = document.createElement('style');
         style.innerHTML = `
             .custom-car-icon {
-                background-color: var(--primary);
+                background-color: white;
                 border-radius: 50%;
                 text-align: center;
-                border: 2px solid white;
+                border: 2px solid var(--primary);
                 box-shadow: 0 4px 10px rgba(0,0,0,0.3);
                 transition: transform 0.2s;
             }
             .custom-car-icon:hover {
                 transform: scale(1.15);
                 z-index: 1000 !important;
+                background-color: var(--primary);
+            }
+            .custom-car-icon:hover i {
+                color: white !important;
+            }
+            body.dark-mode .custom-car-icon {
+                background-color: #333;
+                border-color: #fff;
             }
         `;
         document.head.appendChild(style);
-
 
         function renderCarsOnMap(filterType) {
             carMarkersLayer.clearLayers();
@@ -371,13 +356,13 @@
                         <img src="${car.img}" style="width:100%; height:120px; object-fit:cover; border-radius:8px; margin-bottom:8px;">
                         <h4 style="color:var(--primary); margin:0;">${car.model}</h4>
                         <div style="font-size:0.9rem; color:#666; margin:5px 0;">
-                            <i class="fas fa-map-pin"></i> ${car.location}
+                            <i class="fas fa-map-marker-alt" style="color:var(--secondary);"></i> ${car.location}
                         </div>
                         <div style="font-weight:bold; color:var(--secondary); margin-bottom:10px;">
                             ${car.price} ريال/يوم
                         </div>
                         <a href="cars.html?carId=${car.id}" class="btn btn-primary" style="display:block; text-align:center; padding:8px; font-size:0.9rem;">
-                            حجز فوري (تفاويض)
+                            عرض التفاصيل
                         </a>
                     </div>
                 `;
