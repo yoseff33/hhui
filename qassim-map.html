@@ -3,103 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | تصفح الأسطول على الخريطة</title>
+    <title>وُجْهَة | الخريطة التفاعلية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     <style>
-        /* تنسيق الخريطة */
-        #mapid {
-            height: 650px;
+        /* --- تنسيق الخريطة والحاوية --- */
+        .map-wrapper {
+            position: relative;
+            height: 700px;
             width: 100%;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            z-index: 1;
-            transition: all 0.3s ease;
-            border: 2px solid #eee;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border: 2px solid #f0f0f0;
         }
+        body.dark-mode .map-wrapper { border-color: #333; }
 
-        /* الوضع الليلي للخريطة */
+        #mapid {
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+        }
+        /* فلتر الوضع الليلي للخريطة */
         body.dark-mode #mapid .leaflet-tile-pane {
             filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
         }
-        body.dark-mode #mapid { border-color: #333; }
 
-        /* صندوق البحث والتحكم */
-        .map-controls-container {
-            background: white;
+        /* --- لوحة التحكم العائمة (فخمة جداً) --- */
+        .map-floating-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 320px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            transition: background 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 1000; /* فوق الخريطة */
+            transition: all 0.3s ease;
         }
-        body.dark-mode .map-controls-container {
-            background: #1e1e1e;
-            border: 1px solid #333;
-        }
-
-        .controls-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            align-items: end;
+        body.dark-mode .map-floating-panel {
+            background: rgba(30, 30, 30, 0.95);
+            color: white;
+            border: 1px solid #444;
         }
 
-        .control-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            color: var(--dark);
-        }
-        body.dark-mode .control-group label { color: #ddd; }
+        .panel-header h3 { margin: 0 0 15px 0; font-size: 1.1rem; color: var(--primary); }
+        body.dark-mode .panel-header h3 { color: var(--secondary); }
 
+        .control-group { margin-bottom: 15px; }
+        .control-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: bold; }
+        
         .custom-select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             border: 1px solid #ddd;
-            background: #f9f9f9;
+            background: #fff;
             font-family: 'Tajawal', sans-serif;
-            font-size: 1rem;
+            cursor: pointer;
         }
-        body.dark-mode .custom-select {
-            background: #333;
-            border-color: #444;
-            color: white;
-        }
+        body.dark-mode .custom-select { background: #333; border-color: #555; color: white; }
 
-        .share-location-btn {
+        .filter-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .filter-tag {
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .filter-tag.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        body.dark-mode .filter-tag { background: #333; border-color: #555; color: #ccc; }
+        body.dark-mode .filter-tag.active { background: var(--secondary); color: var(--dark); }
+
+        .locate-btn {
+            width: 100%;
+            padding: 12px;
             background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
             border: none;
-            padding: 12px 20px;
             border-radius: 8px;
-            cursor: pointer;
             font-weight: bold;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            margin-top: 10px;
             transition: 0.3s;
         }
-        .share-location-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
-        }
-        .share-location-btn.loading {
-            opacity: 0.8;
-            pointer-events: none;
-        }
+        .locate-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3); }
 
-        .map-filters {
+        /* --- تنسيق التقييم في البوب أب --- */
+        .car-rating {
+            color: #f1c40f;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
             display: flex;
-            gap: 8px;
-            margin-top: 15px;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 5px;
+        }
+        .rating-badge {
+            background: #fff9db;
+            color: #f39c12;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
         }
     </style>
 </head>
@@ -128,46 +149,50 @@
         </div>
     </header>
 
-    <section id="riyadh-car-map-section" class="car-map-section" style="padding-top: 150px;">
+    <section id="map-section" style="padding-top: 130px; padding-bottom: 50px;">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2>شبكة وُجْهَة الوطنية</h2>
-                <p>ابحث عن السيارة الأقرب إليك في جميع مدن المملكة</p>
+                <p>تصفح السيارات المتاحة في الأحياء السكنية والمناطق الحيوية</p>
             </div>
             
-            <div class="map-controls-container" data-aos="fade-up" data-aos-delay="50">
-                <div class="controls-grid">
+            <div class="map-wrapper" data-aos="zoom-in" data-aos-delay="100">
+                <div id="mapid"></div>
+                
+                <div class="map-floating-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-sliders-h"></i> خيارات التصفية</h3>
+                    </div>
+                    
                     <div class="control-group">
-                        <label><i class="fas fa-map-marker-alt"></i> اختر المدينة</label>
+                        <label>المدينة الحالية</label>
                         <select id="city-selector" class="custom-select" onchange="changeCity()">
-                            <option value="riyadh">الرياض (واجهة روشن)</option>
-                            <option value="dammam">الدمام</option>
-                            <option value="khobar">الخبر</option>
-                            <option value="jeddah">جدة</option>
+                            <option value="riyadh">📍 الرياض (واجهة روشن)</option>
+                            <option value="dammam">📍 الدمام</option>
+                            <option value="khobar">📍 الخبر</option>
+                            <option value="jeddah">📍 جدة</option>
                         </select>
                     </div>
 
                     <div class="control-group">
-                        <label><i class="fas fa-crosshairs"></i> تحديد ذكي</label>
-                        <button class="share-location-btn" onclick="simulateShareLocation()" id="locate-btn">
-                            <i class="fas fa-location-arrow"></i> شارك موقعي للعثور على أقرب سيارة
-                        </button>
+                        <label>نوع السيارة</label>
+                        <div class="filter-tags">
+                            <span class="filter-tag active" onclick="filterMap('الكل', this)">الكل</span>
+                            <span class="filter-tag" onclick="filterMap('سيدان', this)">سيدان</span>
+                            <span class="filter-tag" onclick="filterMap('دفع رباعي', this)">عائلي</span>
+                            <span class="filter-tag" onclick="filterMap('فاخرة', this)">فاخرة</span>
+                        </div>
+                    </div>
+
+                    <button class="locate-btn" onclick="simulateSmartLocate()" id="smart-locate-btn">
+                        <i class="fas fa-crosshairs"></i> العثور على الأقرب لي
+                    </button>
+                    
+                    <div style="margin-top: 15px; font-size: 0.8rem; color: #777; text-align: center;">
+                        <i class="fas fa-wifi"></i> متصل بشبكة IoT الوطنية
                     </div>
                 </div>
-
-                <div class="map-filters">
-                    <button class="map-filter-btn active" onclick="filterMap('الكل')" id="filter-all">الكل</button>
-                    <button class="map-filter-btn" onclick="filterMap('سيدان')">سيدان</button>
-                    <button class="map-filter-btn" onclick="filterMap('دفع رباعي')">دفع رباعي</button>
-                    <button class="map-filter-btn" onclick="filterMap('فاخرة')">فاخرة</button>
-                </div>
             </div>
-
-            <div id="mapid" data-aos="zoom-in" data-aos-delay="200"></div>
-            
-            <p style="text-align: center; opacity: 0.7; margin-top: 20px; font-size: 0.9rem;">
-                <i class="fas fa-shield-alt"></i> جميع السيارات المتاحة تخضع لرقابة ميدانية ويتم تحديث مواقعها عبر IoT.
-            </p>
         </div>
     </section>
 
@@ -278,39 +303,37 @@
             window.location.href = 'index.html';
         }
 
-        // --- إعدادات الخريطة والبيانات ---
+        // --- منطق الخريطة والبيانات ---
         let map;
         let carMarkersLayer;
 
-        // إحداثيات المدن
+        // إحداثيات المدن (مراكز دقيقة)
         const cities = {
             riyadh: [24.8620, 46.7240], // واجهة روشن
-            dammam: [26.4207, 50.0888], // الدمام
-            khobar: [26.2950, 50.2070], // كورنيش الخبر
-            jeddah: [21.5433, 39.1728]  // جدة
+            dammam: [26.4350, 50.1150], // كورنيش الدمام
+            khobar: [26.2900, 50.2100], // كورنيش الخبر
+            jeddah: [21.5500, 39.1600]  // الواجهة البحرية
         };
 
-        // قاعدة بيانات السيارات (مكررة ومنوعة حسب المدن)
+        // قاعدة بيانات السيارات (مع التقييمات)
         const allCars = [
-            // --- الرياض ---
-            { city: 'riyadh', id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', loc: 'واجهة روشن - P3', lat: 24.8630, lng: 46.7250, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
-            { city: 'riyadh', id: 'r2', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2023', price: '450', loc: 'فندق فيرمونت', lat: 24.8585, lng: 46.7190, img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' },
-            { city: 'riyadh', id: 'r3', type: 'فاخرة', model: 'مرسيدس S500', price: '900', loc: 'المطار - الصالة 5', lat: 24.9450, lng: 46.7100, img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' },
-            { city: 'riyadh', id: 'r4', type: 'اقتصادية', model: 'هونداي النترا', price: '85', loc: 'بوابة الأعمال', lat: 24.8250, lng: 46.7350, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
+            // --- الرياض (واجهة روشن) ---
+            { city: 'riyadh', id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', rating: 4.9, reviews: 52, loc: 'بوابة 3 - واجهة روشن', lat: 24.8630, lng: 46.7250, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { city: 'riyadh', id: 'r2', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2023', price: '450', rating: 5.0, reviews: 18, loc: 'فندق فيرمونت', lat: 24.8585, lng: 46.7190, img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' },
+            { city: 'riyadh', id: 'r3', type: 'فاخرة', model: 'مرسيدس S500', price: '900', rating: 4.8, reviews: 12, loc: 'مطار الملك خالد', lat: 24.9450, lng: 46.7100, img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' },
+            { city: 'riyadh', id: 'r4', type: 'سيدان', model: 'هونداي النترا', price: '85', rating: 4.7, reviews: 89, loc: 'بوابة الأعمال', lat: 24.8250, lng: 46.7350, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
 
-            // --- الدمام (تكرار نفس السيارات بمواقع مختلفة) ---
-            { city: 'dammam', id: 'd1', type: 'سيدان', model: 'تويوتا كامري 2023', price: '110', loc: 'كورنيش الدمام', lat: 26.4400, lng: 50.1000, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
-            { city: 'dammam', id: 'd2', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '380', loc: 'مطار الملك فهد', lat: 26.4700, lng: 49.8000, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
-            { city: 'dammam', id: 'd3', type: 'فاخرة', model: 'لكزس ES', price: '400', loc: 'الشاطئ مول', lat: 26.4350, lng: 50.1150, img: 'https://www.motortrend.com/uploads/sites/5/2021/05/2022-Lexus-ES-300h-F-Sport-1.jpg' },
+            // --- الدمام ---
+            { city: 'dammam', id: 'd1', type: 'سيدان', model: 'تويوتا كامري 2023', price: '110', rating: 4.8, reviews: 30, loc: 'الشاطئ مول', lat: 26.4400, lng: 50.1100, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { city: 'dammam', id: 'd2', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '380', rating: 4.9, reviews: 22, loc: 'حي النزهة', lat: 26.4200, lng: 50.0900, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
 
-            // --- الخبر (تكرار) ---
-            { city: 'khobar', id: 'k1', type: 'فاخرة', model: 'مرسيدس S-Class', price: '950', loc: 'فندق الشيراتون', lat: 26.2900, lng: 50.2100, img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' },
-            { city: 'khobar', id: 'k2', type: 'سيدان', model: 'هونداي النترا', price: '80', loc: 'الراشد مول', lat: 26.2850, lng: 50.1900, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
-            { city: 'khobar', id: 'k3', type: 'دفع رباعي', model: 'تويوتا لاندكروزر', price: '460', loc: 'جسر الملك فهد', lat: 26.2000, lng: 50.2300, img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' },
+            // --- الخبر ---
+            { city: 'khobar', id: 'k1', type: 'فاخرة', model: 'مرسيدس S-Class', price: '950', rating: 5.0, reviews: 8, loc: 'فندق المريديان', lat: 26.2920, lng: 50.2120, img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' },
+            { city: 'khobar', id: 'k2', type: 'سيدان', model: 'هونداي النترا', price: '80', rating: 4.6, reviews: 45, loc: 'الظهران مول', lat: 26.3000, lng: 50.1600, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
 
-            // --- جدة (تكرار) ---
-            { city: 'jeddah', id: 'j1', type: 'سيدان', model: 'تويوتا كامري', price: '115', loc: 'مطار الملك عبدالعزيز', lat: 21.6700, lng: 39.1500, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
-            { city: 'jeddah', id: 'j2', type: 'فاخرة', model: 'لوسيد آير', price: '650', loc: 'واجهة جدة البحرية', lat: 21.5800, lng: 39.1600, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' }
+            // --- جدة ---
+            { city: 'jeddah', id: 'j1', type: 'سيدان', model: 'تويوتا كامري', price: '115', rating: 4.8, reviews: 60, loc: 'الرد سي مول', lat: 21.6200, lng: 39.1100, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { city: 'jeddah', id: 'j2', type: 'فاخرة', model: 'لوسيد آير', price: '650', rating: 5.0, reviews: 5, loc: 'الكورنيش الجديد', lat: 21.5800, lng: 39.1600, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' }
         ];
 
         function initMap() {
@@ -326,6 +349,7 @@
             }
         }
 
+        // إنشاء أيقونة السيارة (مخصص)
         function createCarIcon(carType) {
             let color = 'var(--primary)';
             if(carType === 'فاخرة') color = '#f1c40f';
@@ -340,7 +364,7 @@
             });
         }
 
-        // ستايل الأيقونات
+        // ستايل الأيقونات الديناميكي
         const style = document.createElement('style');
         style.innerHTML = `
             .custom-car-icon {
@@ -359,7 +383,7 @@
         `;
         document.head.appendChild(style);
 
-        // متغيرات الفلترة الحالية
+        // متغيرات الفلترة
         let currentCity = 'riyadh';
         let currentType = 'الكل';
 
@@ -369,18 +393,17 @@
             renderCars();
         }
 
-        function filterMap(type) {
+        function filterMap(type, element) {
             currentType = type;
-            // تحديث أزرار الفلتر
-            document.querySelectorAll('.map-filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            // تحديث كلاس الـ active
+            document.querySelectorAll('.filter-tag').forEach(btn => btn.classList.remove('active'));
+            if(element) element.classList.add('active');
             renderCars();
         }
 
         function renderCars() {
             carMarkersLayer.clearLayers();
             
-            // فلترة مزدوجة (بالمدينة والنوع)
             const filtered = allCars.filter(car => {
                 const cityMatch = car.city === currentCity;
                 const typeMatch = currentType === 'الكل' ? true : car.type === currentType;
@@ -393,7 +416,13 @@
                 const popupContent = `
                     <div class="popup-car-details" style="text-align:right;">
                         <img src="${car.img}" style="width:100%; height:120px; object-fit:cover; border-radius:8px; margin-bottom:8px;">
-                        <h4 style="color:var(--primary); margin:0;">${car.model}</h4>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h4 style="color:var(--primary); margin:0;">${car.model}</h4>
+                            <div class="rating-badge"><i class="fas fa-star"></i> ${car.rating}</div>
+                        </div>
+                        <div class="car-rating">
+                            <span style="color:#777; font-size:0.8rem;">(${car.reviews} تقييم)</span>
+                        </div>
                         <div style="font-size:0.9rem; color:#666; margin:5px 0;">
                             <i class="fas fa-map-marker-alt" style="color:var(--secondary);"></i> ${car.loc}
                         </div>
@@ -401,51 +430,44 @@
                             ${car.price} ريال/يوم
                         </div>
                         <a href="cars.html?carId=${car.id}" class="btn btn-primary" style="display:block; text-align:center; padding:8px; font-size:0.9rem;">
-                            عرض التفاصيل
+                            حجز فوري
                         </a>
                     </div>
                 `;
                 marker.bindPopup(popupContent);
-                // حفظ الماركر في الكائن للرجوع له لاحقاً (للمحاكاة)
                 car.marker = marker;
             });
         }
 
-        // --- محاكاة زر مشاركة الموقع (السيناريو الذكي) ---
-        function simulateShareLocation() {
-            const btn = document.getElementById('locate-btn');
+        // --- محاكاة العثور على الأقرب (Smart Locate) ---
+        function simulateSmartLocate() {
+            const btn = document.getElementById('smart-locate-btn');
             const originalText = btn.innerHTML;
             
-            // 1. تغيير حالة الزر
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري تحديد موقعك...';
-            btn.classList.add('loading');
+            btn.innerHTML = '<i class="fas fa-satellite-dish fa-spin"></i> جاري تحديد موقعك...';
+            btn.style.opacity = '0.8';
 
             setTimeout(() => {
-                // 2. محاكاة الانتقال للخبر (مثلاً)
-                const targetCity = 'khobar';
-                document.getElementById('city-selector').value = targetCity;
-                changeCity();
+                // محاكاة: العثور على سيارة في نفس المدينة الحالية
+                const visibleCars = allCars.filter(c => c.city === currentCity);
                 
-                btn.innerHTML = '<i class="fas fa-check"></i> تم العثور على مركبات قريبة';
-                
-                setTimeout(() => {
-                    // 3. فتح أقرب سيارة تلقائياً (سيناريو مرسوم)
-                    // نختار أول سيارة في الخبر ونفتح البوب أب حقها
-                    const nearestCar = allCars.find(c => c.city === targetCity && c.marker);
-                    if(nearestCar && nearestCar.marker) {
-                        nearestCar.marker.openPopup();
-                        map.flyTo([nearestCar.lat, nearestCar.lng], 15); // زوم قوي
-                    }
+                if (visibleCars.length > 0) {
+                    const nearest = visibleCars[0]; // نأخذ أول سيارة كمثال
+                    btn.innerHTML = '<i class="fas fa-check"></i> تم العثور على مركبة!';
+                    btn.style.background = '#2ecc71';
                     
-                    // إرجاع الزر لحالته
+                    map.flyTo([nearest.lat, nearest.lng], 15, { duration: 1 });
                     setTimeout(() => {
-                        btn.innerHTML = originalText;
-                        btn.classList.remove('loading');
-                    }, 3000);
-                    
-                }, 800); // تأخير بسيط بعد تغيير المدينة
-                
-            }, 1500); // مدة "جاري التحديد"
+                        if(nearest.marker) nearest.marker.openPopup();
+                        // إرجاع الزر لحالته
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.style.background = '';
+                            btn.style.opacity = '1';
+                        }, 3000);
+                    }, 1200);
+                }
+            }, 1500);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
