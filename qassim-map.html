@@ -1,292 +1,3 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | الخريطة التفاعلية</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-    <style>
-        /* --- تنسيق الخريطة والحاوية --- */
-        .map-wrapper {
-            position: relative;
-            height: 700px; /* ارتفاع ثابت للشاشات الكبيرة */
-            width: 100%;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            border: 2px solid #f0f0f0;
-        }
-        
-        /* تعديل ارتفاع الخريطة للجوال */
-        @media (max-width: 768px) {
-            .map-wrapper {
-                height: 85vh; /* تأخذ معظم الشاشة في الجوال */
-            }
-        }
-
-        body.dark-mode .map-wrapper { border-color: #333; }
-
-        #mapid {
-            height: 100%;
-            width: 100%;
-            z-index: 1;
-        }
-        /* فلتر الوضع الليلي للخريطة */
-        body.dark-mode #mapid .leaflet-tile-pane {
-            filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-        }
-
-        /* --- لوحة التحكم العائمة (التعديل الجديد) --- */
-        .map-floating-panel {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 320px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        /* --- إصلاح شكل اللوحة في الجوال --- */
-        @media (max-width: 768px) {
-            .map-floating-panel {
-                top: auto !important;   /* إلغاء التثبيت العلوي */
-                right: 10px !important; 
-                left: 10px !important;  /* هوامش من اليمين واليسار */
-                bottom: 20px !important; /* تثبيت في الأسفل */
-                width: auto !important; /* العرض يتكيف مع الشاشة */
-                border-radius: 20px;    /* حواف دائرية */
-                padding: 15px;          /* تقليل الحشوة */
-                box-shadow: 0 -5px 20px rgba(0,0,0,0.15); /* ظل علوي */
-            }
-            
-            /* تصغير حجم الخطوط في الجوال */
-            .panel-header h3 { font-size: 1rem; margin-bottom: 10px; }
-            .control-group { margin-bottom: 10px; }
-            .filter-tag { padding: 4px 10px; font-size: 0.75rem; }
-        }
-
-        body.dark-mode .map-floating-panel {
-            background: rgba(30, 30, 30, 0.95);
-            color: white;
-            border: 1px solid #444;
-        }
-
-        .panel-header h3 { margin: 0 0 15px 0; font-size: 1.1rem; color: var(--primary); }
-        body.dark-mode .panel-header h3 { color: var(--secondary); }
-
-        .control-group { margin-bottom: 15px; }
-        .control-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: bold; }
-        
-        .custom-select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            background: #fff;
-            font-family: 'Tajawal', sans-serif;
-            cursor: pointer;
-        }
-        body.dark-mode .custom-select { background: #333; border-color: #555; color: white; }
-
-        .filter-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .filter-tag {
-            background: #f0f0f0;
-            border: 1px solid #ddd;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .filter-tag.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        body.dark-mode .filter-tag { background: #333; border-color: #555; color: #ccc; }
-        body.dark-mode .filter-tag.active { background: var(--secondary); color: var(--dark); }
-
-        .locate-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
-        .locate-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3); }
-
-        /* --- تنسيق التقييم في البوب أب --- */
-        .car-rating {
-            color: #f1c40f;
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .rating-badge {
-            background: #fff9db;
-            color: #f39c12;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <nav class="navbar">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon">و</div>
-                    <div class="logo-text">وُجْهَة</div>
-                </a>
-                <ul class="nav-links desktop-nav-links">
-                    <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="cars.html">الأسطول</a></li>
-                    <li><a href="qassim-map.html" class="active">تصفح الخريطة</a></li>
-                </ul>
-                <div class="nav-buttons nav-buttons-desktop-only">
-                    <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع">
-                        <i class="fas fa-moon"></i>
-                        <span>الوضع</span> 
-                    </button>
-                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">دخول آمن (نفاذ)</a>
-                    <div id="nav-user-profile-placeholder"></div>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <section id="map-section" style="padding-top: 130px; padding-bottom: 50px;">
-        <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>شبكة وُجْهَة الوطنية</h2>
-                <p>تصفح السيارات المتاحة في الأحياء السكنية والمناطق الحيوية</p>
-            </div>
-            
-            <div class="map-wrapper" data-aos="zoom-in" data-aos-delay="100">
-                <div id="mapid"></div>
-                
-                <div class="map-floating-panel">
-                    <div class="panel-header">
-                        <h3><i class="fas fa-sliders-h"></i> خيارات التصفية</h3>
-                    </div>
-                    
-                    <div class="control-group">
-                        <label>المدينة الحالية</label>
-                        <select id="city-selector" class="custom-select" onchange="changeCity()">
-                            <option value="riyadh" selected>📍 الرياض (واجهة روشن)</option>
-                            <option value="qassim">📍 القصيم</option>
-                            <option value="dammam">📍 الدمام</option>
-                            <option value="khobar">📍 الخبر</option>
-                            <option value="jeddah">📍 جدة</option>
-                        </select>
-                    </div>
-
-                    <div class="control-group">
-                        <label>نوع السيارة</label>
-                        <div class="filter-tags">
-                            <span class="filter-tag active" onclick="filterMap('الكل', this)">الكل</span>
-                            <span class="filter-tag" onclick="filterMap('سيدان', this)">سيدان</span>
-                            <span class="filter-tag" onclick="filterMap('دفع رباعي', this)">عائلي</span>
-                            <span class="filter-tag" onclick="filterMap('فاخرة', this)">فاخرة</span>
-                        </div>
-                    </div>
-
-                    <button class="locate-btn" onclick="simulateSmartLocate()" id="smart-locate-btn">
-                        <i class="fas fa-crosshairs"></i> العثور على الأقرب لي
-                    </button>
-                    
-                    <div style="margin-top: 15px; font-size: 0.8rem; color: #777; text-align: center;">
-                        <i class="fas fa-wifi"></i> متصل بشبكة IoT الوطنية
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>عن وُجْهَة</h3>
-                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px;">
-                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان.
-                    </p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h3>روابط سريعة</h3>
-                    <ul>
-                        <li><a href="index.html">الرئيسية</a></li>
-                        <li><a href="cars.html">استكشف السيارات</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>تواصل معنا</h3>
-                    <ul class="footer-contact">
-                        <li><i class="fas fa-map-marker-alt"></i> الرياض، واجهة روشن</li>
-                        <li><i class="fas fa-phone"></i> +966 56 546 4718</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | صنع في السعودية 🇸🇦</p>
-            </div>
-        </div>
-    </footer>
-
-    <nav class="bottom-navbar mobile-bottom-navbar">
-        <a href="index.html" class="nav-item">
-            <i class="fas fa-home"></i><span>الرئيسية</span>
-        </a>
-        <a href="cars.html" class="nav-item">
-            <i class="fas fa-car"></i><span>السيارات</span>
-        </a>
-        <a href="landing.html" class="nav-item guest-only" id="mobile-bottom-guest-button">
-            <i class="fas fa-sign-in-alt"></i><span>دخول</span>
-        </a>
-        <a href="#" class="nav-item auth-link-bottom" id="mobile-bottom-user-button">
-            <i class="fas fa-user-circle"></i><span>حسابي</span>
-        </a>
-        <a href="qassim-map.html" class="nav-item active">
-            <i class="fas fa-map-marked-alt"></i><span>الخريطة</span>
-        </a>
-        <a href="#" class="nav-item" id="mobile-chatbot-toggle">
-            <i class="fas fa-comment-dots"></i><span>المساعد</span>
-        </a>
-    </nav>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>AOS.init({ once: true });</script>
-    <script src="csr-content.js"></script>
-    <script src="chatbot.js"></script>
-    <script src="script.js"></script>
-    
     <script>
         // دالة تهيئة الشريط العلوي
         function updateNavbarBasedOnLoginStatus() {
@@ -336,58 +47,40 @@
         let map;
         let carMarkersLayer;
 
-        // إحداثيات المدن - تم التحديث للإحداثيات الدقيقة التي طلبتها
+        // الإحداثيات اللي طلبتها بالضبط (واجهة روشن)
+        const targetLocation = [24.8375090, 46.7297325];
+
         const cities = {
-            riyadh: [24.8375090, 46.7297325], // واجهة روشن (الإحداثيات الجديدة)
-            qassim: [26.3260, 43.9750],       // بريدة - القصيم
+            riyadh: targetLocation, // المركز هو نفس النقطة
             dammam: [26.4350, 50.1150],
             khobar: [26.2900, 50.2100],
-            jeddah: [21.5500, 39.1600] 
+            jeddah: [21.5500, 39.1600]
         };
 
-        // قاعدة بيانات السيارات 
+        // قاعدة بيانات السيارات (كل سيارات الرياض حول النقطة المحددة)
+        // ملاحظة: غيرت الارقام الاخيرة في الاحداثيات تغيير بسيط عشان ما يركبون فوق بعض
         const allCars = [
-            // --- الرياض (واجهة روشن - الإحداثيات الجديدة مع تكرار كثيف) ---
+            // --- الرياض (واجهة روشن - التجمع الرئيسي) ---
+            { city: 'riyadh', id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', rating: 4.9, reviews: 52, loc: 'واجهة روشن - نقطة التجمع', lat: 24.8375090, lng: 46.7297325, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { city: 'riyadh', id: 'r2', type: 'دفع رباعي', model: 'تويوتا لاندكروزر', price: '450', rating: 5.0, reviews: 18, loc: 'واجهة روشن - المواقف', lat: 24.8376000, lng: 46.7298000, img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' },
+            { city: 'riyadh', id: 'r3', type: 'فاخرة', model: 'مرسيدس S500', price: '900', rating: 4.8, reviews: 12, loc: 'واجهة روشن - VIP', lat: 24.8374000, lng: 46.7296000, img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' },
+            { city: 'riyadh', id: 'r4', type: 'سيدان', model: 'هونداي النترا', price: '85', rating: 4.7, reviews: 89, loc: 'واجهة روشن - بوابة 2', lat: 24.8377000, lng: 46.7299000, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
             
-            // 1. كامري (المركز)
-            { city: 'riyadh', id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', rating: 4.9, reviews: 52, loc: 'واجهة روشن - البوابة الرئيسية', lat: 24.8375090, lng: 46.7297325, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
-            
-            // 2. لاندكروزر (شمال)
-            { city: 'riyadh', id: 'r2', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2023', price: '450', rating: 5.0, reviews: 18, loc: 'واجهة روشن - مواقف السينما', lat: 24.8385000, lng: 46.7299000, img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' },
-            
-            // 3. مرسيدس (جنوب)
-            { city: 'riyadh', id: 'r3', type: 'فاخرة', model: 'مرسيدس S500', price: '900', rating: 4.8, reviews: 12, loc: 'واجهة روشن - منطقة VIP', lat: 24.8365000, lng: 46.7295000, img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' },
-            
-            // 4. النترا (شرق)
-            { city: 'riyadh', id: 'r4', type: 'سيدان', model: 'هونداي النترا', price: '85', rating: 4.7, reviews: 89, loc: 'المواقف الجانبية', lat: 24.8375000, lng: 46.7310000, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
+            // تكرار إضافي قريب جداً
+            { city: 'riyadh', id: 'r5', type: 'سيدان', model: 'تويوتا كامري 2023', price: '115', rating: 4.6, reviews: 40, loc: 'واجهة روشن', lat: 24.8373000, lng: 46.7295000, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { city: 'riyadh', id: 'r6', type: 'سيدان', model: 'هونداي النترا', price: '80', rating: 4.5, reviews: 33, loc: 'واجهة روشن', lat: 24.8378000, lng: 46.7300000, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
+            { city: 'riyadh', id: 'r7', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '380', rating: 4.9, reviews: 22, loc: 'واجهة روشن', lat: 24.8372000, lng: 46.7294000, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
 
-            // --- تكرار إضافي في الرياض ---
-            { city: 'riyadh', id: 'r5', type: 'سيدان', model: 'تويوتا كامري 2023', price: '115', rating: 4.6, reviews: 40, loc: 'قرب الدوار', lat: 24.8380000, lng: 46.7285000, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
-            { city: 'riyadh', id: 'r6', type: 'سيدان', model: 'هونداي النترا', price: '80', rating: 4.5, reviews: 33, loc: 'بوابة الموظفين', lat: 24.8368000, lng: 46.7305000, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
-            { city: 'riyadh', id: 'r7', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '380', rating: 4.9, reviews: 22, loc: 'واجهة روشن - المواقف السفلية', lat: 24.8372000, lng: 46.7290000, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
-            { city: 'riyadh', id: 'r8', type: 'فاخرة', model: 'لوسيد آير', price: '700', rating: 5.0, reviews: 4, loc: 'نقطة الشحن', lat: 24.8379000, lng: 46.7302000, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
-
-            // --- القصيم (تمت إضافتها) ---
-            { city: 'qassim', id: 'q1', type: 'سيدان', model: 'تويوتا كامري', price: '100', rating: 4.7, reviews: 15, loc: 'بريدة - النخيل مول', lat: 26.3260, lng: 43.9750, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
-            { city: 'qassim', id: 'q2', type: 'دفع رباعي', model: 'فورد اكسبدشن', price: '400', rating: 4.8, reviews: 10, loc: 'عنيزة - بوليفارد', lat: 26.0940, lng: 43.9735, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
-
-            // --- الدمام ---
+            // --- باقي المدن ---
             { city: 'dammam', id: 'd1', type: 'سيدان', model: 'تويوتا كامري 2023', price: '110', rating: 4.8, reviews: 30, loc: 'الشاطئ مول', lat: 26.4400, lng: 50.1100, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
-            { city: 'dammam', id: 'd2', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '380', rating: 4.9, reviews: 22, loc: 'حي النزهة', lat: 26.4200, lng: 50.0900, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
-
-            // --- الخبر ---
             { city: 'khobar', id: 'k1', type: 'فاخرة', model: 'مرسيدس S-Class', price: '950', rating: 5.0, reviews: 8, loc: 'فندق المريديان', lat: 26.2920, lng: 50.2120, img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' },
-            { city: 'khobar', id: 'k2', type: 'سيدان', model: 'هونداي النترا', price: '80', rating: 4.6, reviews: 45, loc: 'الظهران مول', lat: 26.3000, lng: 50.1600, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
-
-            // --- جدة ---
-            { city: 'jeddah', id: 'j1', type: 'سيدان', model: 'تويوتا كامري', price: '115', rating: 4.8, reviews: 60, loc: 'الرد سي مول', lat: 21.6200, lng: 39.1100, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
-            { city: 'jeddah', id: 'j2', type: 'فاخرة', model: 'لوسيد آير', price: '650', rating: 5.0, reviews: 5, loc: 'الكورنيش الجديد', lat: 21.5800, lng: 39.1600, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' }
+            { city: 'jeddah', id: 'j1', type: 'سيدان', model: 'تويوتا كامري', price: '115', rating: 4.8, reviews: 60, loc: 'الرد سي مول', lat: 21.6200, lng: 39.1100, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' }
         ];
 
         function initMap() {
             if (document.getElementById('mapid') && typeof L !== 'undefined') {
-                // ضبط الخريطة الافتراضية على الرياض (واجهة روشن)
-                map = L.map('mapid').setView(cities.riyadh, 15);
+                // إجبار الخريطة تبدأ على إحداثيات واجهة روشن
+                map = L.map('mapid').setView(targetLocation, 17); // زوم 17 عشان يبينون قريبين
 
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; OpenStreetMap'
@@ -395,6 +88,12 @@
 
                 carMarkersLayer = L.layerGroup().addTo(map);
                 renderCars();
+                
+                // تحديث إضافي للتأكيد
+                setTimeout(() => {
+                    map.invalidateSize();
+                    map.panTo(targetLocation);
+                }, 500);
             }
         }
 
@@ -433,20 +132,19 @@
         document.head.appendChild(style);
 
         // متغيرات الفلترة
-        let currentCity = 'riyadh'; // البداية بالرياض
+        let currentCity = 'riyadh';
         let currentType = 'الكل';
 
         function changeCity() {
             currentCity = document.getElementById('city-selector').value;
-            // عند تغيير المدينة، نغير الزوم حسب المدينة
-            const zoomLevel = (currentCity === 'riyadh') ? 16 : 13;
+            // عند تغيير المدينة
+            const zoomLevel = (currentCity === 'riyadh') ? 17 : 13;
             map.flyTo(cities[currentCity], zoomLevel, { duration: 1.5 });
             renderCars();
         }
 
         function filterMap(type, element) {
             currentType = type;
-            // تحديث كلاس الـ active
             document.querySelectorAll('.filter-tag').forEach(btn => btn.classList.remove('active'));
             if(element) element.classList.add('active');
             renderCars();
@@ -470,9 +168,6 @@
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <h4 style="color:var(--primary); margin:0;">${car.model}</h4>
                             <div class="rating-badge"><i class="fas fa-star"></i> ${car.rating}</div>
-                        </div>
-                        <div class="car-rating">
-                            <span style="color:#777; font-size:0.8rem;">(${car.reviews} تقييم)</span>
                         </div>
                         <div style="font-size:0.9rem; color:#666; margin:5px 0;">
                             <i class="fas fa-map-marker-alt" style="color:var(--secondary);"></i> ${car.loc}
@@ -503,14 +198,13 @@
                 const visibleCars = allCars.filter(c => c.city === currentCity);
                 
                 if (visibleCars.length > 0) {
-                    const nearest = visibleCars[0]; // نأخذ أول سيارة كمثال
+                    const nearest = visibleCars[0]; 
                     btn.innerHTML = '<i class="fas fa-check"></i> تم العثور على مركبة!';
                     btn.style.background = '#2ecc71';
                     
-                    map.flyTo([nearest.lat, nearest.lng], 16, { duration: 1 });
+                    map.flyTo([nearest.lat, nearest.lng], 17, { duration: 1 });
                     setTimeout(() => {
                         if(nearest.marker) nearest.marker.openPopup();
-                        // إرجاع الزر لحالته
                         setTimeout(() => {
                             btn.innerHTML = originalText;
                             btn.style.background = '';
@@ -534,5 +228,3 @@
             setTimeout(initMap, 500);
         });
     </script>
-</body>
-</html>
