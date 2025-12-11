@@ -94,12 +94,18 @@
         /* البطاقة المنبثقة */
         .leaflet-popup-content-wrapper { border-radius: 12px; padding: 0; overflow: hidden; }
         .leaflet-popup-content { margin: 0 !important; width: 280px !important; }
-        /* إظهار زر الإغلاق X */
+        
+        /* زر الإغلاق */
         .leaflet-popup-close-button {
-            font-size: 20px !important;
-            color: #555 !important;
-            top: 5px !important;
-            right: 5px !important;
+            font-size: 24px !important;
+            color: #333 !important;
+            top: 8px !important;
+            right: 8px !important;
+            width: 30px !important;
+            height: 30px !important;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
             z-index: 1000;
         }
         
@@ -140,7 +146,6 @@
             </div>
             
             <div class="centered-map-layout">
-                
                 <div class="top-filter-bar" data-aos="fade-up">
                     <div class="tf-item">
                         <span class="tf-label"><i class="fas fa-map-marker-alt"></i> المدينة</span>
@@ -175,7 +180,6 @@
                 <div class="new-map-container" data-aos="zoom-in">
                     <div id="mapid"></div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -193,7 +197,7 @@
     <script>AOS.init({ once: true });</script>
     
     <script>
-        // إدارة المستخدم
+        // --- 1. إدارة المستخدم ---
         function updateNavbar() {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const userType = localStorage.getItem('userType');
@@ -205,7 +209,6 @@
             if (isLoggedIn) {
                 guestBtns.forEach(b => b.style.display = 'none');
                 if(mobileGuestBtn) mobileGuestBtn.style.display = 'none';
-                
                 if (userBtns) {
                     userBtns.innerHTML = `<a href="#" onclick="logout()" class="btn btn-outline" style="margin-right:10px">خروج</a>`;
                     userBtns.style.display = 'flex';
@@ -223,11 +226,10 @@
         }
         function logout() { localStorage.clear(); location.reload(); }
         
-        // الوضع الليلي
+        // --- 2. الوضع الليلي ---
         function initTheme() {
             const themeBtn = document.getElementById('theme-toggle-desktop');
             if(localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
-            
             if(themeBtn) {
                 themeBtn.addEventListener('click', () => {
                     document.body.classList.toggle('dark-mode');
@@ -236,9 +238,120 @@
             }
         }
 
-        // --- الخريطة والمنطق الجديد ---
-        let map, carLayer;
+        // --- 3. الخريطة والمنطق المحسن ---
+        let map, carLayer, routeLine;
         const centerPoint = [24.8375090, 46.7297325]; // واجهة روشن
 
         const cars = [
-            { id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', rating: 4.9, lat: 24.8375090, lng: 46.7297325, score: 1
+            { id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', rating: 4.9, lat: 24.8375090, lng: 46.7297325, score: 10, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { id: 'r2', type: 'دفع رباعي', model: 'لاندكروزر 2023', price: '450', rating: 5.0, lat: 24.8381000, lng: 46.7292000, score: 10, img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' },
+            { id: 'r7', type: 'فاخرة', model: 'لوسيد آير', price: '700', rating: 5.0, lat: 24.8385000, lng: 46.7298000, score: 10, img: 'https://tse1.mm.bing.net/th/id/OIP.gH5S692_GzMVWiq6ui-sdQHaEA?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { id: 'r4', type: 'سيدان', model: 'هونداي النترا', price: '85', rating: 4.2, lat: 24.8378000, lng: 46.7305000, score: 8, img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' },
+            { id: 'r6', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '380', rating: 4.9, lat: 24.8365000, lng: 46.7295000, score: 9, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' }
+        ];
+
+        function initMap() {
+            if(!document.getElementById('mapid')) return;
+            
+            // البداية: زوم خارجي (14.5) عشان تشوف الحي
+            map = L.map('mapid').setView(centerPoint, 14.5);
+            
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; CARTO', maxZoom: 20
+            }).addTo(map);
+            
+            carLayer = L.layerGroup().addTo(map);
+            renderCars();
+            
+            setTimeout(() => { map.invalidateSize(); }, 500);
+
+            // حدث عند إغلاق البطاقة (الزوم للخارج)
+            map.on('popupclose', function() {
+                // نرجع للزوم 14.5
+                map.flyTo(centerPoint, 14.5, { duration: 1.5 });
+                if(routeLine) map.removeLayer(routeLine);
+            });
+        }
+
+        let currType = 'الكل';
+        let maxP = 1000;
+
+        window.updatePriceLabel = (v) => {
+            maxP = v;
+            document.getElementById('priceValue').innerText = v;
+        }
+
+        window.filterMap = (t, el) => {
+            currType = t;
+            document.querySelectorAll('.tf-pill').forEach(p => p.classList.remove('active'));
+            el.classList.add('active');
+            renderCars();
+        }
+
+        function createIcon(price, type, isPrem) {
+            let iconHtml = '<i class="fas fa-car" style="color:#1abc9c"></i>';
+            if(type === 'فاخرة') iconHtml = '<i class="fas fa-gem" style="color:#f1c40f"></i>';
+            if(type === 'دفع رباعي') iconHtml = '<i class="fas fa-truck-pickup" style="color:#e67e22"></i>';
+            
+            return L.divIcon({
+                className: 'custom-none',
+                html: `<div class="price-marker-box ${isPrem ? 'premium' : ''}">${iconHtml} ${price} ﷼</div>`,
+                iconSize: [80, 30], iconAnchor: [40, 35], popupAnchor: [0, -35]
+            });
+        }
+
+        function renderCars() {
+            carLayer.clearLayers();
+
+            cars.filter(c => (currType === 'الكل' || c.type === currType) && c.price <= maxP).forEach(c => {
+                const marker = L.marker([c.lat, c.lng], { 
+                    icon: createIcon(c.price, c.type, c.rating >= 5) 
+                }).addTo(carLayer);
+
+                // حدث الضغط على السيارة (الزوم للداخل)
+                marker.on('click', () => {
+                    // نقرب مرة (Zoom 18)
+                    map.flyTo([c.lat, c.lng], 18, { duration: 1.5 });
+                    
+                    if(routeLine) map.removeLayer(routeLine);
+                    routeLine = L.polyline([centerPoint, [c.lat, c.lng]], { color: '#34495e', dashArray: '10, 10' }).addTo(map);
+                });
+
+                const content = `
+                    <div class="popup-car-card">
+                        <img src="${c.img}" class="popup-img">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h4 style="margin:5px 0; color:#1abc9c">${c.model}</h4>
+                            <span style="background:#fff9db; padding:2px 8px; border-radius:4px; font-weight:bold; color:#f39c12">⭐ ${c.rating}</span>
+                        </div>
+                        <div style="margin:10px 0;">
+                            <div class="rating-row"><span>الميكانيكا</span><div class="progress-bar"><div class="progress-fill" style="width:${c.score*10}%"></div></div></div>
+                            <div class="rating-row"><span>النظافة</span><div class="progress-bar"><div class="progress-fill" style="width:${c.score*10}%"></div></div></div>
+                        </div>
+                        <div style="text-align:center;">
+                            <a href="cars.html" class="btn btn-primary" style="display:block; padding:8px;">حجز بـ ${c.price} ريال</a>
+                        </div>
+                    </div>
+                `;
+
+                // إعدادات البطاقة لضمان الظهور
+                marker.bindPopup(content, { 
+                    autoPan: true, 
+                    autoPanPadding: [150, 150], // هامش كبير جداً لضمان الظهور
+                    closeButton: true 
+                });
+            });
+        }
+
+        window.simulateSmartLocate = () => {
+            map.flyTo(centerPoint, 17);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            updateNavbar();
+            setTimeout(initMap, 100);
+        });
+    </script>
+</body>
+</html>
