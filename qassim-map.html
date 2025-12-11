@@ -17,9 +17,19 @@
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             z-index: 1;
+            transition: all 0.3s ease;
         }
+
+        /* تنسيق الوضع الليلي للخريطة (فلتر يقلب الألوان) */
+        body.dark-mode #mapid .leaflet-tile-pane {
+            filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+        }
+        /* عشان ما تنقلب ألوان السيارات والبوب أب، نعكس الفلتر عليها أو نخليها طبيعية */
+        /* هنا نستهدف التايلات فقط عشان السيارات تبقى بألوانها */
+
         .map-overlay-info {
-            background: white;
+            background: white; /* الوضع الافتراضي */
+            color: #333;
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 20px;
@@ -27,7 +37,16 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            transition: background 0.3s ease, color 0.3s ease;
         }
+
+        /* تنسيق الوضع الليلي للبطاقة */
+        body.dark-mode .map-overlay-info {
+            background: #1e1e1e; /* لون داكن */
+            color: #fff;
+            border: 1px solid #333;
+        }
+
         .live-indicator {
             width: 12px;
             height: 12px;
@@ -52,21 +71,12 @@
                 </a>
                 <ul class="nav-links desktop-nav-links">
                     <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="cars.html">استكشف السيارات</a></li>
-                    <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-                    <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
-                    <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
-                    <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
-                    <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
-                    <li><a href="qassim-map.html" class="active">خريطة الرياض</a></li>
+                    <li><a href="cars.html">الأسطول</a></li> <li><a href="qassim-map.html" class="active">الرصد الميداني</a></li>
                 </ul>
                 <div class="nav-buttons nav-buttons-desktop-only">
                     <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع">
                         <i class="fas fa-moon"></i>
-                        <span>الوضع</span> </button>
-                    <button id="desktop-chatbot-toggle" class="btn btn-outline" style="display: none;">
-                        <i class="fas fa-comment-dots"></i>
-                        <span>اسالني</span>
+                        <span>الوضع</span> 
                     </button>
                     <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">دخول آمن (نفاذ)</a>
                     <div id="nav-user-profile-placeholder"></div>
@@ -86,7 +96,7 @@
                 <div class="live-indicator"></div>
                 <div>
                     <strong>التتبع المباشر (IoT):</strong>
-                    <span style="color: var(--gray);"> يتم تحديث مواقع السيارات وحالتها الأمنية لحظياً.</span>
+                    <span style="opacity: 0.8;"> يتم تحديث مواقع السيارات وحالتها الأمنية لحظياً.</span>
                 </div>
             </div>
 
@@ -99,7 +109,7 @@
 
             <div id="mapid" data-aos="zoom-in" data-aos-delay="200"></div>
             
-            <p style="text-align: center; color: var(--gray); margin-top: 20px; font-size: 0.9rem;">
+            <p style="text-align: center; opacity: 0.7; margin-top: 20px; font-size: 0.9rem;">
                 <i class="fas fa-shield-alt"></i> جميع المركبات الظاهرة في الخريطة تم التحقق من أصحابها وجاهزة للتفويض الفوري.
             </p>
         </div>
@@ -124,18 +134,7 @@
                     <ul>
                         <li><a href="index.html">الرئيسية</a></li>
                         <li><a href="cars.html">استكشف السيارات</a></li>
-                        <li><a href="index.html#how-it-works">كيف تعمل</a></li>
                         <li><a href="https://wa.me/966565464718">الدعم الفني</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>للأفراد</h3>
-                    <ul>
-                        <li><a href="dashboard-renter.html">لوحة المستأجر</a></li>
-                        <li><a href="cars.html">البحث عن سيارة</a></li>
-                        <li><a href="rental-terms.html">شروط الاستئجار</a></li>
-                        <li><a href="user-guide.html">دليل المستخدم</a></li>
                     </ul>
                 </div>
                 
@@ -149,10 +148,6 @@
                         <li>
                             <i class="fas fa-phone"></i>
                             <span>+966 56 546 4718</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <span>contact@wujha.sa</span>
                         </li>
                     </ul>
                 </div>
@@ -198,9 +193,10 @@
     </script>
     <script src="csr-content.js"></script>
     <script src="chatbot.js"></script>
+    <script src="script.js"></script>
     
     <script>
-        // دالة تهيئة الشريط العلوي (من script.js الأصلي)
+        // دالة تهيئة الشريط العلوي
         function updateNavbarBasedOnLoginStatus() {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const userType = localStorage.getItem('userType');
@@ -244,31 +240,61 @@
             window.location.href = 'index.html';
         }
 
+        // --- كود تفعيل الوضع الليلي يدوياً في هذه الصفحة (احتياط) ---
+        const themeToggleBtn = document.getElementById('theme-toggle-desktop');
+        if(themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                updateThemeIcon(isDark);
+            });
+            
+            // التحقق من الوضع المحفوظ عند التحميل
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                updateThemeIcon(true);
+            }
+        }
+
+        function updateThemeIcon(isDark) {
+            const icon = themeToggleBtn.querySelector('i');
+            const text = themeToggleBtn.querySelector('span');
+            if (isDark) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                text.innerText = 'نهار';
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                text.innerText = 'ليل';
+            }
+        }
+
         // --- إعدادات خريطة الرياض ---
         let map;
         let carMarkersLayer;
 
-        // إحداثيات الرياض (مركز المؤتمر - واجهة الرياض)
         const riyadhCenter = [24.8607, 46.7231]; 
 
-        // بيانات السيارات المحدثة لمواقع الرياض
         const riyadhCarsData = [
             {
                 id: 'camry', type: 'سيدان', model: 'تويوتا كامري 2023', price: '90', 
                 location: 'مواقف واجهة الرياض P4',
-                lat: 24.8620, lng: 46.7240, // داخل الواجهة
+                lat: 24.8620, lng: 46.7240, 
                 img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3'
             },
             {
                 id: 'landcruiser', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2022', price: '250', 
                 location: 'فندق فيرمونت - البوابة',
-                lat: 24.8580, lng: 46.7200, // قريب من الواجهة
+                lat: 24.8580, lng: 46.7200, 
                 img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg'
             },
             {
                 id: 'mercedes', type: 'فاخرة', model: 'مرسيدس S-Class', price: '450', 
                 location: 'صالة الطيران الخاص - مطار الملك خالد',
-                lat: 24.9350, lng: 46.7000, // المطار
+                lat: 24.9350, lng: 46.7000, 
                 img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg'
             },
             {
@@ -287,16 +313,14 @@
                 id: 'lucid', type: 'فاخرة', model: 'لوسيد آير (Lucid Air)', price: '600', 
                 location: 'مركز الملك عبدالله المالي (KAFD)',
                 lat: 24.7600, lng: 46.6350,
-                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' // صورة تقريبية
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' 
             }
         ];
 
         function initRiyadhMap() {
             if (document.getElementById('mapid') && typeof L !== 'undefined') {
-                // إنشاء الخريطة وتحديد المركز والزوم
                 map = L.map('mapid').setView(riyadhCenter, 12);
 
-                // طبقة الخريطة (الستايل)
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
@@ -307,23 +331,16 @@
         }
 
         function createCarIcon(carType) {
-            // ألوان مختلفة حسب النوع
-            let color = '#1a3c37'; // Default primary
-            if (carType === 'فاخرة') color = '#d4af37'; // Gold
-            else if (carType === 'اقتصادية') color = '#2e8b57'; // Accent green
-
             return L.divIcon({
                 className: 'custom-car-icon',
                 html: `<i class="fas fa-car" style="color:white; line-height:36px;"></i>`,
                 iconSize: [40, 40],
                 iconAnchor: [20, 40],
                 popupAnchor: [0, -40],
-                // إضافة ستايل مباشر للأيقونة هنا لضمان ظهوره
                 bgPos: [0, 0] 
             });
         }
 
-        // إضافة ستايل للأيقونات عبر JS (للتأكيد)
         const style = document.createElement('style');
         style.innerHTML = `
             .custom-car-icon {
@@ -378,7 +395,6 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             updateNavbarBasedOnLoginStatus();
-            // تأخير بسيط لضمان تحميل المكتبة
             setTimeout(initRiyadhMap, 500);
         });
     </script>
