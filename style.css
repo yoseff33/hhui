@@ -2541,28 +2541,133 @@ body.dark-mode .suggested-question-btn:hover {
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 /* =========================================================
-   وزنية "المكان المناسب": تقريب العناصر + هوامش جانبية
-   Balanced Layout: Compact + Side Margins
+   إصلاح الهيدر والناف بار - (نسخة ملمومة بدون فجوات)
+   Fixed Header & Navbar Styles (Compact Version)
    ========================================================= */
 
-/* 1. تحديد عرض المحتوى عشان ما يتوسع لآخر الشاشة */
-header .container {
-    max-width: 1150px !important; /* هذا العرض يخلي العناصر قريبة من بعض */
-    margin: 0 auto !important;    /* يسنتر الهيدر بنص الشاشة */
-    padding: 0 40px !important;   /* يعطي هامش داخلي عشان ما يلصق بالأطراف */
+/* 1. تثبيت خلفية الهيدر */
+header {
+    background-color: rgba(15, 41, 37, 0.95) !important; /* زدنا التعتيم شوي */
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15) !important;
+    height: 80px !important;
+    display: flex;
+    align-items: center;
+    padding: 0 !important;
 }
 
-/* 2. توزيع العناصر داخل المساحة المحددة */
-.navbar {
+/* 2. ضبط الحاوية لتقريب العناصر من بعض (هنا الحل للفجوات) */
+header .container {
+    height: 100%;
+    /* هذا السطر هو اللي بيجمعهم ويقفل الفجوات الجانبية */
+    max-width: 1050px !important; 
+    margin: 0 auto !important; /* يسنتر الهيدر بالوسط */
+    padding: 0 15px !important;
+}
+
+header .navbar {
+    height: 100%;
     display: flex !important;
-    justify-content: space-between !important; /* يوزعهم داخل الـ 1150 بكسل بس */
     align-items: center !important;
+    justify-content: space-between !important; /* بيوزعهم داخل المساحة الصغيرة بس */
     width: 100% !important;
 }
 
-/* 3. تقليل المسافات بين الروابط نفسها (الرئيسية، استكشف...) */
+/* 3. تنسيق الروابط وتقليل المسافات بينها */
 @media (min-width: 993px) {
     .navbar .nav-links {
-        gap: 25px !important; /* مسافة معقولة ومرتبة بين الكلمات */
+        display: flex !important;
+        align-items: center !important;
+        /* قللنا المسافة هنا من 30 لـ 15 عشان الكلام يقرب من بعض */
+        gap: 15px !important; 
+        margin: 0 !important;
+    }
+
+    .nav-links li a {
+        color: rgba(255, 255, 255, 0.9) !important;
+        font-size: 0.95rem !important; /* صغرنا الخط تكه عشان الزحمة */
+        font-weight: 500 !important;
+        padding: 5px 0 !important;
+        white-space: nowrap !important; /* يمنع نزول الكلام سطرين */
+    }
+
+    .nav-links li a:hover, 
+    .nav-links li a.active {
+        color: #d4af37 !important;
+    }
+    
+    .nav-links li a:after {
+        background: #d4af37 !important;
+        height: 2px !important;
+        bottom: -5px !important;
+    }
+}
+
+/* 4. تنسيق الشعار (اللوجو) */
+.logo {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    height: 100%;
+    /* نضمن ان اللوقو ما ياخذ مساحة فاضية */
+    flex-shrink: 0 !important; 
+}
+
+.logo-text {
+    color: #ffffff !important;
+    font-size: 1.5rem !important;
+    margin: 0 !important;
+}
+
+/* 5. تنسيق الأزرار */
+.nav-buttons {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important; /* قللنا المسافة بين الأزرار */
+    height: 100%;
+    flex-shrink: 0 !important;
+}
+
+#desktop-chatbot-toggle {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    height: 40px !important; /* صغرنا الزر شوي */
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    padding: 0 15px !important;
+    font-size: 0.9rem !important;
+}
+
+#desktop-chatbot-toggle:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: #d4af37 !important;
+}
+
+.btn-primary.guest-only {
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 20px !important;
+    font-size: 0.9rem !important;
+    border-radius: 8px !important;
+}
+
+/* 6. تعديلات الجوال */
+@media (max-width: 992px) {
+    header {
+        height: 70px !important;
+    }
+    header .container {
+        max-width: 100% !important; /* بالجوال نرجع العرض كامل */
+    }
+    .logo-text {
+        font-size: 1.3rem !important;
+    }
+    .desktop-nav-links {
+        display: none !important;
     }
 }
