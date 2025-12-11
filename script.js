@@ -6,14 +6,13 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
             currentActive.classList.remove('active');
         }
         this.classList.add('active');
-        // في مشروع حقيقي، هنا ستتم فلترة السيارات المعروضة بناءً على الزر المختار
     });
 });
 
-// تأثير التنقل عند التمرير (مشترك بين جميع الصفحات)
+// تأثير التنقل عند التمرير
 window.addEventListener('scroll', function() {
     const header = document.querySelector('header');
-    if (header) { // Check if header exists
+    if (header) { 
         if (window.scrollY > 100) {
             header.style.padding = '10px 0';
             header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
@@ -27,35 +26,28 @@ window.addEventListener('scroll', function() {
 // -------------------------------------
 // وظيفة إدارة حالة تسجيل الدخول وتحديث أشرطة التنقل
 // -------------------------------------
-
 function updateNavbarBasedOnLoginStatus() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     const userType = localStorage.getItem('userType');
 
-    // Desktop Navbar elements (top header)
-    const desktopNavLinks = document.querySelector('.desktop-nav-links'); // Desktop main links container
+    const desktopNavLinks = document.querySelector('.desktop-nav-links'); 
     const desktopAuthLinks = desktopNavLinks ? desktopNavLinks.querySelectorAll('.auth-link') : [];
     const desktopGuestButton = document.getElementById('nav-guest-button');
     const desktopUserProfilePlaceholder = document.getElementById('nav-user-profile-placeholder');
 
-    // Mobile Bottom Navbar elements
     const mobileBottomNavGuestButton = document.getElementById('mobile-bottom-guest-button');
     const mobileBottomNavUserButton = document.getElementById('mobile-bottom-user-button');
     const mobileBottomNavAuthLinks = document.querySelectorAll('.mobile-bottom-navbar .auth-link-bottom');
 
-    // Hide all auth related elements first for desktop
     if (desktopGuestButton) desktopGuestButton.style.display = 'none';
     if (desktopUserProfilePlaceholder) desktopUserProfilePlaceholder.style.display = 'none';
     desktopAuthLinks.forEach(link => link.style.display = 'none');
     
-    // Hide all auth related elements first for mobile bottom nav
     if (mobileBottomNavGuestButton) mobileBottomNavGuestButton.style.display = 'none';
     if (mobileBottomNavUserButton) mobileBottomNavUserButton.style.display = 'none';
     mobileBottomNavAuthLinks.forEach(link => link.style.display = 'none');
 
-
     if (isLoggedIn) {
-        // Desktop: Show user profile and relevant auth links
         if (desktopUserProfilePlaceholder) {
             desktopUserProfilePlaceholder.innerHTML = `
                 <a href="#" class="btn btn-outline" onclick="logoutUser()" style="margin-right: 10px;">
@@ -81,34 +73,30 @@ function updateNavbarBasedOnLoginStatus() {
             }
         });
 
-        // Mobile Bottom Nav: Show user profile button and specific auth links
         if (mobileBottomNavUserButton) {
             mobileBottomNavUserButton.style.display = 'flex';
             mobileBottomNavUserButton.href = userType === 'owner' ? 'dashboard-owner.html' : 'dashboard-renter.html';
         }
         mobileBottomNavAuthLinks.forEach(link => {
             const linkDataRole = link.getAttribute('data-role');
-            if (linkDataRole === userType || linkDataRole === 'all') { // 'all' for links visible to all logged-in users
+            if (linkDataRole === userType || linkDataRole === 'all') { 
                 link.style.display = 'flex';
             } else {
                 link.style.display = 'none';
             }
         });
 
-    } else { // Not logged in
+    } else { 
         if (desktopGuestButton) desktopGuestButton.style.display = 'flex';
         if (mobileBottomNavGuestButton) mobileBottomNavGuestButton.style.display = 'flex';
     }
 }
 
-
 function loginUser(type) {
     localStorage.setItem('isLoggedIn', 'true');
     localStorage.setItem('userType', type);
-    // يمكنك هنا تخزين اسم مستخدم وهمي لغرض العرض في التعهد
     localStorage.setItem('userName', type === 'owner' ? 'نواف السبيعي' : 'سارة الحربي'); 
     updateNavbarBasedOnLoginStatus();
-    // Redirect after updating status
     if (type === 'owner') {
         window.location.href = 'dashboard-owner.html';
     } else if (type === 'renter') {
@@ -119,15 +107,14 @@ function loginUser(type) {
 function logoutUser() {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userType');
-    localStorage.removeItem('userName'); // إزالة اسم المستخدم عند الخروج
+    localStorage.removeItem('userName'); 
     updateNavbarBasedOnLoginStatus();
     window.location.href = 'index.html';
 }
 
 // -------------------------------------
-// وظيفة تحديث بطاقة الولاء (Loyalty Card)
+// وظيفة تحديث بطاقة الولاء
 // -------------------------------------
-
 function updateLoyaltyCard(completedRentals) {
     const totalRentalsNeeded = 8;
     const progressPercentage = (completedRentals / totalRentalsNeeded) * 100;
@@ -136,7 +123,6 @@ function updateLoyaltyCard(completedRentals) {
     const loyaltyDots = document.querySelectorAll('.loyalty-dot');
     const currentRentalsText = document.getElementById('current-rentals-count');
     const remainingRentalsText = document.getElementById('remaining-rentals-count');
-
 
     if (progressBarFill) {
         progressBarFill.style.width = `${progressPercentage}%`;
@@ -151,30 +137,20 @@ function updateLoyaltyCard(completedRentals) {
         dot.textContent = index + 1;
     });
 
-    if (currentRentalsText) {
-        currentRentalsText.textContent = completedRentals;
-    }
-    if (remainingRentalsText) {
-        remainingRentalsText.textContent = totalRentalsNeeded - completedRentals;
-    }
+    if (currentRentalsText) currentRentalsText.textContent = completedRentals;
+    if (remainingRentalsText) remainingRentalsText.textContent = totalRentalsNeeded - completedRentals;
 
     if (completedRentals >= totalRentalsNeeded) {
-        if (remainingRentalsText) {
-            remainingRentalsText.textContent = '0';
-        }
+        if (remainingRentalsText) remainingRentalsText.textContent = '0';
         const rewardInfo = document.querySelector('.loyalty-reward-info small');
-        if (rewardInfo) {
-            rewardInfo.textContent = 'تهانينا! تأجيرك المجاني بانتظرك!';
-        }
+        if (rewardInfo) rewardInfo.textContent = 'تهانينا! تأجيرك المجاني بانتظرك!';
     }
 }
 
 // -------------------------------------
-// الواجهة الليلية/النهارية (Dark/Light Mode Toggle)
+// الواجهة الليلية/النهارية
 // -------------------------------------
-
 function setupThemeToggle() {
-    // الزر الآن هو في الهيدر العلوي فقط ويُستخدم لجميع الشاشات
     const themeToggleBtn = document.getElementById('theme-toggle-desktop'); 
 
     const applyTheme = (theme) => {
@@ -183,48 +159,39 @@ function setupThemeToggle() {
         localStorage.setItem('theme', theme);
 
         if (themeToggleBtn) {
-            // Check screen width to decide between icon only or icon with text
-            if (window.innerWidth <= 992) { // Mobile view
+            if (window.innerWidth <= 992) { 
                 themeToggleBtn.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i><span>الوضع الليلي</span>' : '<i class="fas fa-sun"></i><span>الوضع النهاري</span>';
-            } else { // Desktop view
+            } else { 
                 themeToggleBtn.innerHTML = theme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
             }
         }
     };
 
     const currentTheme = localStorage.getItem('theme') || 'light';
-    applyTheme(currentTheme); // Apply theme on load
+    applyTheme(currentTheme); 
 
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
             const newTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
             applyTheme(newTheme);
         });
-
-        // Re-apply theme on resize to switch between icon/text dynamically
         window.addEventListener('resize', () => applyTheme(localStorage.getItem('theme') || 'light'));
     }
 }
 
-
 // -------------------------------------
-// شريط "آخر مشاهدة للسيارات" (Recently Viewed Cars Bar)
+// شريط "آخر مشاهدة للسيارات"
 // -------------------------------------
-
 const RECENTLY_VIEWED_KEY = 'recentlyViewedCars';
 const MAX_RECENTLY_VIEWED = 5;
 
 function addCarToRecentlyViewed(carId, carImg, carTitle) {
     let recentlyViewed = JSON.parse(localStorage.getItem(RECENTLY_VIEWED_KEY)) || [];
-
     recentlyViewed = recentlyViewed.filter(car => car.id !== carId);
-
     recentlyViewed.unshift({ id: carId, img: carImg, title: carTitle });
-
     if (recentlyViewed.length > MAX_RECENTLY_VIEWED) {
         recentlyViewed = recentlyViewed.slice(0, MAX_RECENTLY_VIEWED);
     }
-
     localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(recentlyViewed));
     renderRecentlyViewedCars();
 }
@@ -249,9 +216,8 @@ function renderRecentlyViewedCars() {
     }
 }
 
-
 // -------------------------------------
-// شهادات العملاء كـ "سلايدر" تفاعلي (Interactive Testimonial Slider)
+// شهادات العملاء
 // -------------------------------------
 let slideIndex = 0;
 let slideInterval;
@@ -265,16 +231,14 @@ function showSlides() {
     dots.forEach(dot => dot.classList.remove('active'));
 
     slideIndex++;
-    if (slideIndex > slides.length) {
-        slideIndex = 1;
-    }
+    if (slideIndex > slides.length) slideIndex = 1;
 
     slides[slideIndex - 1].style.display = 'block';
     dots[slideIndex - 1].classList.add('active');
 }
 
 function currentSlide(n) {
-    clearInterval(slideInterval); // Stop auto-slide when manual navigation
+    clearInterval(slideInterval);
     slideIndex = n;
     const slides = document.querySelectorAll('.testimonial-slide');
     const dots = document.querySelectorAll('.dot');
@@ -286,12 +250,11 @@ function currentSlide(n) {
     slides[slideIndex - 1].style.display = 'block';
     dots[slideIndex - 1].classList.add('active');
     
-    slideInterval = setInterval(showSlides, 5000); // Restart auto-slide after manual navigation
+    slideInterval = setInterval(showSlides, 5000); 
 }
 
-
 // -------------------------------------
-// أداة "اختبار السيارة المناسبة لي" (Which Car Suits Me Quiz)
+// أداة اختبار السيارة
 // -------------------------------------
 function setupQuiz() {
     const quizForm = document.getElementById('car-quiz-form');
@@ -309,7 +272,6 @@ function setupQuiz() {
         let recommendation = "لا يمكننا تحديد سيارة مناسبة بناءً على اختياراتك.";
         let carType = "";
 
-        // Simple quiz logic
         if (answers.passengers === '5' || answers.passengers === '7') {
             if (answers.budget === 'medium' || answers.budget === 'high') {
                 recommendation = "نوصي بسيارة دفع رباعي فسيحة ومريحة لرحلاتك العائلية.";
@@ -343,124 +305,9 @@ function setupQuiz() {
     });
 }
 
-
 // -------------------------------------
-// وظائف خريطة السيارات (Leaflet Map)
+// وظائف المسؤولية الاجتماعية
 // -------------------------------------
-
-let map;
-let carMarkersLayer;
-
-// بيانات السيارات الافتراضية داخل جامعة القصيم (مع إحداثيات من المستخدم)
-const qassimCarsData = [
-    {
-        id: 'camry', type: 'سيدان', model: 'تويوتا كامري 2022', price: '85', location: 'مواقف المبنى الإداري',
-        lat: 26.348037, lng: 43.771591,
-        img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3'
-    },
-    {
-        id: 'landcruiser', type: 'دفع رباعي', model: 'تويوتا لاندكروزر 2021', price: '220', location: 'كلية الهندسة',
-        lat: 26.3350, lng: 43.7685,
-        img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg'
-    },
-    {
-        id: 'elantra', type: 'اقتصادية', model: 'هونداي النترا 2023', price: '75', location: 'بجوار المكتبة المركزية',
-        lat: 26.351008, lng: 43.775861,
-        img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp'
-    },
-    {
-        id: 'mercedes', type: 'فاخرة', model: 'مرسيدس E-Class 2020', price: '300', location: 'المركز الثقافي',
-        lat: 26.349181, lng: 43.761351,
-        img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg'
-    },
-    {
-        id: 'malibu', type: 'سيدان', model: 'شيفروليه ماليبو 2020', price: '90', location: 'أمام سكن الطلاب',
-        lat: 26.3400, lng: 43.7630,
-        img: 'https://cdn.motor1.com/images/mgl/zZX8w/s3/2020-chevrolet-malibu.jpg'
-    },
-    {
-        id: 'patrol', type: 'دفع رباعي', model: 'نيسان باترول 2023', price: '250', location: 'مواقف كلية العلوم',
-        lat: 26.3365, lng: 43.7645,
-        img: 'https://www.nissan-cdn.net/content/dam/Nissan/middle-east/vehicles/Patrol/Patrol-MY23/overview/2023-Nissan-Patrol-hero-desktop.webp'
-    },
-    {
-        id: 'kia-rio', type: 'اقتصادية', model: 'كيا ريو 2024', price: '65', location: 'مواقف كلية الحاسب',
-        lat: 26.3340, lng: 43.7670,
-        img: 'https://www.kia.com/content/dam/kw/vehicles/rio/2024/kia_rio_sedan_2024_01_m.jpg'
-    },
-];
-
-function initMap() {
-    const qassimUniversityCoords = [26.345, 43.769];
-    const defaultZoom = 14;
-
-    // Check if map container exists and Leaflet library (L) is loaded, and map is not already initialized
-    if (document.getElementById('mapid') && typeof L !== 'undefined' && !map) {
-        map = L.map('mapid').setView(qassimUniversityCoords, defaultZoom);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        carMarkersLayer = L.layerGroup().addTo(map);
-        renderCarsOnMap('الكل');
-    }
-}
-
-function createCarIcon(carType) {
-    let iconClass = 'fas fa-car';
-    return L.divIcon({
-        className: 'custom-car-icon',
-        html: `<i class="${iconClass}"></i>`,
-        iconSize: [40, 40],
-        iconAnchor: [20, 40],
-        popupAnchor: [0, -40]
-    });
-}
-
-// هذا هو الجزء الذي تم تعديله في دالة renderCarsOnMap
-function renderCarsOnMap(filterType = 'الكل') {
-    if (!map) return;
-    carMarkersLayer.clearLayers();
-
-    const filteredCars = filterType === 'الكل' ? qassimCarsData : qassimCarsData.filter(car => car.type === filterType);
-
-    filteredCars.forEach(car => {
-        const carIcon = createCarIcon(car.type);
-        const marker = L.marker([car.lat, car.lng], { icon: carIcon }).addTo(carMarkersLayer);
-
-        const popupContent = `
-            <div class="popup-car-details">
-                <img src="${car.img}" alt="${car.model}" class="car-img-popup">
-                <h4>${car.model}</h4>
-                <p><strong>السعر:</strong> ${car.price} ريال/اليوم</p>
-                <p><strong>الموقع:</strong> ${car.location}</p>
-                <a href="cars.html?carId=${car.id}" class="btn btn-primary">احجز الآن</a>
-            </div>
-        `;
-        marker.bindPopup(popupContent);
-    });
-}
-
-function setupMapFilters() {
-    document.querySelectorAll('.map-filter-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const currentActive = document.querySelector('.map-filter-btn.active');
-            if (currentActive) {
-                currentActive.classList.remove('active');
-            }
-            this.classList.add('active');
-            
-            const filterType = this.dataset.filter;
-            renderCarsOnMap(filterType);
-        });
-    });
-}
-
-// -------------------------------------
-// وظائف المسؤولية الاجتماعية المُضافة (AI-Generated Content & Logic)
-// -------------------------------------
-
 function displayRandomCsrFact() {
     const csrFactElement = document.getElementById('csr-fact-display');
     if (csrFactElement && typeof csrFacts !== 'undefined' && csrFacts.length > 0) {
@@ -471,14 +318,13 @@ function displayRandomCsrFact() {
 
 function setupPledgeGenerator() {
     const pledgeForm = document.getElementById('pledge-form');
-    const pledgeResultDiv = document.getElementById('pledge-result'); // Ensure this is the correct ID for the result display
+    const pledgeResultDiv = document.getElementById('pledge-result'); 
     const userName = localStorage.getItem('userName') || 'صديقنا';
 
     if (pledgeForm && pledgeResultDiv && typeof pledgeOptions !== 'undefined') {
-        // Populate pledge options
-        const pledgeOptionsContainer = pledgeForm.querySelector('.quiz-options'); // Ensure this selects the correct container within the pledge form
+        const pledgeOptionsContainer = pledgeForm.querySelector('.quiz-options'); 
         if (pledgeOptionsContainer) {
-            pledgeOptionsContainer.innerHTML = ''; // Clear existing options
+            pledgeOptionsContainer.innerHTML = ''; 
             pledgeOptions.forEach(option => {
                 const label = document.createElement('label');
                 label.innerHTML = `<input type="radio" name="pledge-type" value="${option.id}"> ${option.text}`;
@@ -500,7 +346,7 @@ function setupPledgeGenerator() {
                         <button class="btn btn-secondary" onclick="window.location.reload()">تعهد آخر</button>
                     `;
                     pledgeResultDiv.style.display = 'block';
-                    pledgeForm.style.display = 'none'; // Hide form after submission
+                    pledgeForm.style.display = 'none'; 
                 }
             } else {
                 pledgeResultDiv.innerHTML = `<p style="color:var(--text-color-light);">الرجاء اختيار تعهد أولاً للمتابعة.</p>`;
@@ -510,14 +356,13 @@ function setupPledgeGenerator() {
     }
 }
 
-
 function renderImpactDashboard() {
     const impactContainer = document.getElementById('impact-stats-container');
     if (impactContainer && typeof impactStats !== 'undefined' && impactStats.length > 0) {
         impactContainer.innerHTML = ''; 
         impactStats.forEach(stat => {
             const statCard = document.createElement('div');
-            statCard.classList.add('stat-card'); // إعادة استخدام فئة stat-card الموجودة
+            statCard.classList.add('stat-card'); 
             statCard.innerHTML = `
                 <h3>${stat.label}</h3>
                 <div class="value">${stat.value}${stat.unit}</div>
@@ -528,6 +373,198 @@ function renderImpactDashboard() {
     }
 }
 
+// -------------------------------------
+// وظائف الخريطة (الجديدة كلياً - واجهة روشن)
+// -------------------------------------
+
+let map;
+let carMarkersLayer;
+let currentRouteLine = null; // للمسار
+const targetLocation = [24.8375090, 46.7297325]; // واجهة روشن
+
+// بيانات السيارات المحدثة (واجهة روشن)
+const allCars = [
+    { 
+        id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', 
+        rating: 4.9, reviews: 52, lat: 24.8375090, lng: 46.7297325, 
+        scores: { mech: 10, acc: 10, clean: 9 },
+        img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' 
+    },
+    { 
+        id: 'r2', type: 'دفع رباعي', model: 'تويوتا لاندكروزر', price: '450', 
+        rating: 5.0, reviews: 18, lat: 24.8381000, lng: 46.7292000, 
+        scores: { mech: 10, acc: 10, clean: 10 },
+        img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' 
+    },
+    { 
+        id: 'r3', type: 'فاخرة', model: 'مرسيدس S500', price: '900', 
+        rating: 4.8, reviews: 12, lat: 24.8369000, lng: 46.7301000, 
+        scores: { mech: 10, acc: 9, clean: 10 }, 
+        img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' 
+    },
+    { 
+        id: 'r4', type: 'سيدان', model: 'هونداي النترا', price: '85', 
+        rating: 4.2, reviews: 89, lat: 24.8378000, lng: 46.7305000, 
+        scores: { mech: 8, acc: 7, clean: 8 },
+        img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' 
+    },
+    { id: 'r5', type: 'سيدان', model: 'تويوتا كامري 2023', price: '115', rating: 4.7, reviews: 40, lat: 24.8372000, lng: 46.7289000, scores: { mech: 9, acc: 10, clean: 8 }, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
+    { id: 'r6', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '380', rating: 4.9, reviews: 22, lat: 24.8365000, lng: 46.7295000, scores: { mech: 10, acc: 10, clean: 9 }, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
+    { id: 'r7', type: 'فاخرة', model: 'لوسيد آير', price: '700', rating: 5.0, reviews: 4, lat: 24.8385000, lng: 46.7298000, scores: { mech: 10, acc: 10, clean: 10 }, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' }
+];
+
+// تهيئة الخريطة
+function initMap() {
+    if (document.getElementById('mapid') && typeof L !== 'undefined') {
+        if(map) { map.remove(); } // إزالة أي خريطة سابقة
+        
+        map = L.map('mapid').setView(targetLocation, 17);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO',
+            maxZoom: 20
+        }).addTo(map);
+
+        carMarkersLayer = L.layerGroup().addTo(map);
+        renderCars(); 
+
+        setTimeout(() => { map.invalidateSize(); }, 500);
+    }
+}
+
+// دالة إنشاء الأيقونة (تصميم الكبسولة)
+function createPriceIcon(price, type, extraClass = '') {
+    let iconHtml = '';
+    if(type === 'فاخرة') iconHtml = '<i class="fas fa-gem" style="color:#f1c40f"></i>';
+    else if(type === 'دفع رباعي') iconHtml = '<i class="fas fa-truck-pickup" style="color:#e67e22"></i>';
+    else iconHtml = '<i class="fas fa-car" style="color:var(--primary)"></i>';
+
+    return L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div class="price-marker-box ${extraClass}">${iconHtml} ${price} ﷼</div>`,
+        iconSize: [80, 30],
+        iconAnchor: [40, 35],
+        popupAnchor: [0, -35]
+    });
+}
+
+// رسم شريط التقييم
+function getProgressBar(score) {
+    let colorClass = 'bg-success';
+    if (score < 7) colorClass = 'bg-warning';
+    if (score < 5) colorClass = 'bg-danger';
+    
+    return `
+        <div class="progress-track">
+            <div class="progress-fill ${colorClass}" style="width: ${score * 10}%"></div>
+        </div>
+        <div class="rating-score">${score}</div>
+    `;
+}
+
+// رسم المسار
+function drawRouteToCar(destLat, destLng) {
+    if(currentRouteLine) map.removeLayer(currentRouteLine);
+    
+    // من سنتر واجهة روشن (كنقطة افتراضية للمستخدم) إلى السيارة
+    const startPoint = targetLocation;
+    const endPoint = [destLat, destLng];
+
+    currentRouteLine = L.polyline([startPoint, endPoint], {
+        color: 'var(--secondary)',
+        weight: 4,
+        opacity: 0.7,
+        dashArray: '10, 10',
+        lineCap: 'round'
+    }).addTo(map);
+
+    map.fitBounds(currentRouteLine.getBounds(), { padding: [50, 50] });
+}
+
+// المتغيرات العامة للفلترة (مربوطة مع HTML)
+let currentType = 'الكل';
+let maxPrice = 1000;
+
+// تحديث السعر من السلايدر
+window.updatePriceLabel = function(val) {
+    maxPrice = parseInt(val);
+    const label = document.getElementById('priceValue');
+    if(label) label.innerText = val + ' ريال';
+}
+
+// دالة الفلترة
+window.filterMap = function(type, element) {
+    currentType = type;
+    document.querySelectorAll('.filter-tag').forEach(btn => btn.classList.remove('active'));
+    if(element) element.classList.add('active');
+    renderCars();
+}
+
+// عرض السيارات (النسخة المتطورة)
+function renderCars() {
+    if(!map || !carMarkersLayer) return;
+    
+    carMarkersLayer.clearLayers();
+    if(currentRouteLine) map.removeLayer(currentRouteLine);
+
+    const filtered = allCars.filter(car => {
+        const typeMatch = currentType === 'الكل' ? true : car.type === currentType;
+        const priceMatch = parseInt(car.price) <= maxPrice;
+        return typeMatch && priceMatch;
+    });
+
+    filtered.forEach(car => {
+        const isPremium = car.rating >= 5.0;
+        const extraClass = isPremium ? 'premium-marker' : '';
+        const marker = L.marker([car.lat, car.lng], { icon: createPriceIcon(car.price, car.type, extraClass) }).addTo(carMarkersLayer);
+        
+        // عند الضغط: رسم المسار
+        marker.on('click', function() {
+            drawRouteToCar(car.lat, car.lng);
+        });
+
+        const popupContent = `
+            <div class="popup-car-card">
+                <img src="${car.img}" class="popup-img">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                    <h4 style="margin:0; color:var(--primary);">${car.model}</h4>
+                    <span class="rating-badge"><i class="fas fa-star"></i> ${car.rating}</span>
+                </div>
+                
+                <div class="rating-bars-container">
+                    <div class="rating-row"><span class="rating-label"><i class="fas fa-wrench"></i> الميكانيكا</span>${getProgressBar(car.scores.mech)}</div>
+                    <div class="rating-row"><span class="rating-label"><i class="fas fa-shield-alt"></i> الحوادث</span>${getProgressBar(car.scores.acc)}</div>
+                    <div class="rating-row"><span class="rating-label"><i class="fas fa-sparkles"></i> النظافة</span>${getProgressBar(car.scores.clean)}</div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                    <div style="font-weight:bold; font-size:1.1rem;">${car.price} <span style="font-size:0.8rem; font-weight:normal;">ريال/يوم</span></div>
+                    <a href="cars.html?carId=${car.id}" class="btn btn-primary" style="padding:6px 15px; font-size:0.9rem;">حجز</a>
+                </div>
+            </div>
+        `;
+        marker.bindPopup(popupContent);
+    });
+}
+
+// وظيفة Smart Locate المحسنة
+window.simulateSmartLocate = function() {
+    const btn = document.getElementById('smart-locate-btn');
+    if(!btn) return;
+    
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري البحث...';
+    
+    setTimeout(() => {
+        map.flyTo(targetLocation, 17);
+        btn.innerHTML = '<i class="fas fa-check"></i> أنت هنا';
+        btn.style.background = '#2ecc71';
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = '';
+        }, 2000);
+    }, 1000);
+}
 
 // -------------------------------------
 // عند تحميل المحتوى (DOMContentLoaded)
@@ -537,86 +574,60 @@ document.addEventListener('DOMContentLoaded', () => {
     setupThemeToggle();
     updateNavbarBasedOnLoginStatus();
 
-    // Specific logic for mobile bottom navbar's active state
+    // Bottom Navbar Active State
     const bottomNavItems = document.querySelectorAll('.mobile-bottom-navbar .nav-item');
     bottomNavItems.forEach(item => {
-        // Remove active class from all items first
         item.classList.remove('active');
-        // Add active class if href matches current page path
-        // Use pathname for comparison to ignore host/protocol
         const currentPath = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
         const itemHref = item.getAttribute('href');
-
-        if (itemHref === currentPath) {
-            item.classList.add('active');
-        }
-        // Handle index.html special case for root path
-        if (itemHref === 'index.html' && (currentPath === '' || currentPath === 'index.html')) {
-            item.classList.add('active');
-        }
+        if (itemHref === currentPath) item.classList.add('active');
+        if (itemHref === 'index.html' && (currentPath === '' || currentPath === 'index.html')) item.classList.add('active');
     });
 
-    // Adjust body padding-bottom based on mobile bottom navbar presence
+    // Body padding for mobile nav
     function adjustBodyPadding() {
         const mobileBottomNavbar = document.querySelector('.mobile-bottom-navbar');
-        if (mobileBottomNavbar && window.innerWidth <= 992) { // Only for mobile view
+        if (mobileBottomNavbar && window.innerWidth <= 992) {
             document.body.style.paddingBottom = mobileBottomNavbar.offsetHeight + 'px';
         } else {
             document.body.style.paddingBottom = '0';
         }
     }
-
-    adjustBodyPadding(); // Call on load
-    window.addEventListener('resize', adjustBodyPadding); // Call on resize
-
+    adjustBodyPadding();
+    window.addEventListener('resize', adjustBodyPadding);
 
     const userCompletedRentals = 3;
     updateLoyaltyCard(userCompletedRentals);
-
     renderRecentlyViewedCars();
-
     if (document.querySelector('.testimonial-slider')) {
         showSlides();
         slideInterval = setInterval(showSlides, 5000);
     }
-    
     setupQuiz();
 
-    // CSR Features Initialization
-    // تأكد من وجود العناصر في الصفحة قبل استدعاء الوظيفة
-    if (document.getElementById('csr-fact-display')) {
-        displayRandomCsrFact(); 
-    }
-    if (document.getElementById('pledge-form')) {
-        setupPledgeGenerator(); 
-    }
-    if (document.getElementById('impact-stats-container')) {
-        renderImpactDashboard(); 
-    }
+    // CSR Features
+    if (document.getElementById('csr-fact-display')) displayRandomCsrFact(); 
+    if (document.getElementById('pledge-form')) setupPledgeGenerator(); 
+    if (document.getElementById('impact-stats-container')) renderImpactDashboard(); 
 
-    // Check if mapid exists on current page before initializing map
-    // Ensure Leaflet is loaded before calling initMap
+    // Map Initialization
     if (document.getElementById('mapid')) {
-        // Add a small delay for Leaflet to ensure the script is fully loaded.
-        // This is a common workaround for CDN loading issues, especially with SRI.
         setTimeout(() => {
-            if (typeof L !== 'undefined') { // Final check for Leaflet
+            if (typeof L !== 'undefined') {
                 initMap();
-                setupMapFilters();
+                // setupMapFilters(); // تم استبدالها بالمنطق الجديد داخل initMap و renderCars
             } else {
-                console.error("Leaflet library (L) is not defined. Map initialization failed. Check network tab for Leaflet JS/CSS loading errors.");
+                console.error("Leaflet library not loaded");
             }
-        }, 100); // 100ms delay
+        }, 100);
     }
 });
 
-// تنشيط القائمة الجانبية (سيستخدم في صفحات لوحات التحكم)
+// Sidebar Active State
 document.querySelectorAll('.sidebar-menu a').forEach(link => {
     link.addEventListener('click', function(e) {
         const currentActive = document.querySelector('.sidebar-menu a.active');
-        if (currentActive) {
-            currentActive.classList.remove('active');
-        }
+        if (currentActive) currentActive.classList.remove('active');
         this.classList.add('active');
     });
 });
@@ -627,7 +638,6 @@ document.addEventListener('click', (e) => {
         const carImg = carCard.querySelector('.car-img img').src;
         const carTitle = carCard.querySelector('.car-title').textContent;
         const carId = carTitle.replace(/\s/g, '-');
-
         addCarToRecentlyViewed(carId, carImg, carTitle);
     }
 });
