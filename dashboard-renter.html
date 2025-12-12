@@ -9,80 +9,39 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        /* تنسيقات خاصة بلوحة المستأجر */
+        /* --- تنسيقات خاصة بلوحة المستأجر (الأصلية) --- */
         .accessibility-toggle {
             background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            color: white; padding: 15px 20px; border-radius: 12px;
+            margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer; box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
         }
-        
         .wallet-card {
             background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-            color: white;
-            padding: 25px;
-            border-radius: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.2);
+            color: white; padding: 25px; border-radius: 16px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px; box-shadow: 0 8px 20px rgba(108, 92, 231, 0.2);
         }
-        
         .action-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px; margin-top: 20px;
         }
-        
         .action-btn {
-            padding: 20px;
-            border: 1px solid #eee;
-            border-radius: 12px;
-            background: white;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.02);
+            padding: 20px; border: 1px solid #eee; border-radius: 12px;
+            background: white; text-align: center; cursor: pointer;
+            transition: all 0.3s ease; box-shadow: 0 3px 10px rgba(0,0,0,0.02);
         }
-        .action-btn:hover { 
-            border-color: var(--primary); 
-            background: #f0fdf4; 
-            transform: translateY(-3px);
-        }
-        .action-btn i { 
-            font-size: 1.8rem; 
-            margin-bottom: 12px; 
-            display: block; 
-            color: var(--primary); 
-        }
+        .action-btn:hover { border-color: var(--primary); background: #f0fdf4; transform: translateY(-3px); }
+        .action-btn i { font-size: 1.8rem; margin-bottom: 12px; display: block; color: var(--primary); }
         
         .mandatory-pledge label {
-            display: flex;
-            align-items: flex-start;
-            background: #fff;
-            padding: 15px;
-            margin-bottom: 10px;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
+            display: flex; align-items: flex-start; background: #fff;
+            padding: 15px; margin-bottom: 10px; border: 1px solid #eee;
+            border-radius: 8px; cursor: pointer; transition: 0.2s;
         }
         .mandatory-pledge label:hover { background: #fafafa; border-color: #ddd; }
-        .mandatory-pledge input[type="checkbox"] { 
-            transform: scale(1.3); 
-            margin-left: 15px; 
-            margin-top: 3px; 
-        }
+        .mandatory-pledge input[type="checkbox"] { transform: scale(1.3); margin-left: 15px; margin-top: 3px; }
         
-        /* مفتاح التبديل (Toggle Switch) */
         .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
@@ -91,21 +50,47 @@
         input:checked + .slider:before { transform: translateX(24px); }
         
         .smart-widget {
-            background: white;
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            background: white; border-radius: 16px; padding: 25px;
+            margin-bottom: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);
             border: 1px solid #f0f0f0;
         }
-        
-        .risk-badge { 
-            padding: 6px 14px; 
-            border-radius: 20px; 
-            font-size: 0.85rem; 
-            font-weight: bold; 
-        }
+        .risk-badge { padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; }
         .risk-low { background: #e8f5e9; color: #2e8b57; }
+
+        /* --- [جديد] تنسيقات تأثير المسح السينمائي (AI Scan Effect) --- */
+        :root {
+            --scan-color: #3498db;
+            --scan-glow: 0 0 15px #3498db, 0 0 30px #3498db;
+        }
+        .scan-container {
+            position: relative; width: 100%; height: 200px;
+            border-radius: 12px; overflow: hidden; margin-bottom: 20px;
+            border: 2px solid var(--scan-color); background: #000;
+            display: none; /* مخفي افتراضياً */
+        }
+        .scan-image-placeholder {
+            width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            opacity: 0.6; filter: contrast(1.2) grayscale(0.2);
+        }
+        .scanner-beam {
+            position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--scan-color);
+            box-shadow: var(--scan-glow);
+            z-index: 10;
+            animation: scanMove 2s infinite ease-in-out alternate;
+        }
+        .scan-status-text {
+            position: absolute; bottom: 10px; left: 0; width: 100%;
+            text-align: center; color: var(--scan-color); font-weight: bold;
+            text-shadow: 0 0 5px black; z-index: 11; font-family: monospace;
+        }
+        @keyframes scanMove {
+            0% { top: 2%; opacity: 0.8; }
+            100% { top: 95%; opacity: 1; }
+        }
+        .inspection-widget { border: 2px solid #3498db; background: #f0f7fd; }
+        .inspection-widget.completed { border-color: #2ecc71; background: #e8f5e9; }
     </style>
 </head>
 <body>
@@ -128,8 +113,8 @@
                 </ul>
                 <div class="nav-buttons nav-buttons-desktop-only">
                     <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع">
-                        <i class="fas fa-moon"></i>
-                        <span>الوضع</span> </button>
+                        <i class="fas fa-moon"></i> <span>الوضع</span> 
+                    </button>
                     <button class="btn btn-outline" onclick="window.location.href='index.html'">خروج</button>
                 </div>
             </nav>
@@ -157,7 +142,39 @@
                 </div>
 
                 <div class="dashboard-content">
-                    
+
+                    <div id="pre-trip-inspection" class="smart-widget inspection-widget">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3 style="color: #2c3e50; margin: 0;">🤖 فحص استلام السيارة (AI)</h3>
+                            <span class="status-badge" style="background: #3498db; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem;">مطلوب للتوثيق</span>
+                        </div>
+                        
+                        <p id="pre-desc" style="color: #555; font-size: 0.9rem; margin-bottom: 20px;">
+                            صور السيارة بجوالك الآن. سيقوم النظام بتوثيق أي خدوش قديمة وحفظها.
+                        </p>
+
+                        <div class="scan-container" id="pre-scan-visual">
+                            <div class="scan-image-placeholder"></div>
+                            <div class="scanner-beam"></div>
+                            <div class="scan-status-text">جاري تحليل صورتك... <span id="scan-progress">0%</span></div>
+                        </div>
+
+                        <div id="pre-scan-result" style="display:none; background: white; padding: 15px; border-radius: 10px; border-right: 4px solid #f1c40f; margin-bottom: 20px;">
+                            <h4 style="margin: 0 0 10px; color: #f39c12;">📊 تقرير الحالة الأولي:</h4>
+                            <ul style="margin: 0; padding-right: 20px; color: #555; font-size: 0.9rem;">
+                                <li>✅ الهيكل سليم بنسبة 95%.</li>
+                                <li>⚠️ تم رصد (2) خدش سطحي بناءً على صورتك.</li>
+                            </ul>
+                            <p style="margin: 10px 0 0; font-size: 0.8rem; color: #777;">* تم حفظ التقرير لحمايتك عند التسليم.</p>
+                        </div>
+
+                        <input type="file" id="pre-file-input" accept="image/*" style="display: none;" onchange="handleImageUpload(this, 'pre')">
+                        
+                        <button id="start-pre-scan-btn" class="btn btn-primary" style="width: 100%; background: #3498db; border-color: #3498db;" onclick="document.getElementById('pre-file-input').click()">
+                            <i class="fas fa-camera"></i> رفع صورة وبدء الفحص
+                        </button>
+                    </div>
+
                     <div class="smart-widget" style="border-right: 5px solid #e74c3c; background: #fff5f5;">
                         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap:wrap;">
                             <div style="display: flex; align-items: center; gap: 20px;">
@@ -302,37 +319,35 @@
         </div>
     </section>
 
-    <div id="end-trip-modal" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index: 1000; backdrop-filter: blur(5px);">
-        <div style="background:white; width: 90%; max-width:500px; margin: 100px auto; padding:40px; border-radius:20px; text-align:center; position: relative;">
+    <div id="end-trip-modal" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index: 1000; backdrop-filter: blur(8px);">
+        <div style="background:white; width: 90%; max-width:500px; margin: 80px auto; padding:30px; border-radius:20px; text-align:center; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
             <button onclick="document.getElementById('end-trip-modal').style.display='none'" style="position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999;">&times;</button>
             
-            <h3 style="color: var(--primary); margin-bottom: 10px;"><i class="fas fa-robot"></i> الفحص الذكي للإرجاع</h3>
-            <p style="color: #666; margin-bottom: 25px;">يرجى تصوير المقاعد الداخلية. الذكاء الاصطناعي سيحلل النظافة والأضرار فورياً.</p>
+            <h3 style="color: var(--primary); margin-bottom: 10px;"><i class="fas fa-clipboard-check"></i> فحص تسليم السيارة</h3>
+            <p style="color: #666; margin-bottom: 25px; font-size: 0.9rem;">الرجاء رفع صورة حديثة للسيارة للمقارنة.</p>
             
-            <div style="background:#f8f9fa; border: 2px dashed #ccc; height:180px; border-radius:15px; display:flex; flex-direction: column; align-items:center; justify-content:center; margin:20px 0; cursor:pointer; transition: 0.3s;" onclick="simulateAIAnalysis()" onmouseover="this.style.borderColor='var(--primary)'; this.style.background='#f0fdf4';" onmouseout="this.style.borderColor='#ccc'; this.style.background='#f8f9fa';">
-                <div id="upload-placeholder">
-                    <i class="fas fa-camera" style="font-size:3rem; color: #ccc; margin-bottom: 10px;"></i>
-                    <div style="color: #777; font-weight: bold;">اضغط لالتقاط صورة</div>
-                </div>
-                <div id="ai-loading" style="display:none;">
-                    <i class="fas fa-spinner fa-spin" style="font-size:3rem; color: var(--primary); margin-bottom: 15px;"></i>
-                    <div style="font-weight: bold; color: var(--primary);">جاري تحليل الصورة...</div>
-                    <small style="color: #999;">يتم فحص (البقع، النفايات، الأضرار)</small>
-                </div>
+            <div class="scan-container" id="post-scan-visual" style="height: 220px;">
+                <div class="scan-image-placeholder"></div>
+                <div class="scanner-beam" style="background: #e74c3c; box-shadow: 0 0 15px #e74c3c, 0 0 30px #e74c3c;"></div>
+                <div class="scan-status-text" style="color: #e74c3c;">جاري مقارنة صورتك (Pixel-by-Pixel)...</div>
+            </div>
+
+            <input type="file" id="post-file-input" accept="image/*" style="display: none;" onchange="handleImageUpload(this, 'post')">
+
+            <div id="post-scan-start" style="background:#f8f9fa; border: 2px dashed #ccc; padding: 40px 20px; border-radius:15px; cursor:pointer; transition: 0.3s;" onclick="document.getElementById('post-file-input').click()">
+                <i class="fas fa-camera" style="font-size:3rem; color: #ccc; margin-bottom: 10px;"></i>
+                <div style="color: #777; font-weight: bold;">اضغط لرفع صورة التسليم</div>
             </div>
             
-            <div id="ai-result" style="display:none; margin-top:20px; text-align: right; background: #fff5f5; padding: 15px; border-radius: 10px; border-right: 4px solid #e74c3c;">
-                <div style="color:#c0392b; font-weight:bold; margin-bottom:5px; font-size: 1.1rem;">
-                    <i class="fas fa-times-circle"></i> تنبيه: السيارة غير نظيفة!
-                </div>
-                <p style="font-size:0.95rem; color: #333; line-height: 1.6;">
-                    رصدت الخوارزمية وجود نفايات في المقعد الخلفي.
-                    <br><strong>لن يتم إغلاق التفويض</strong> حتى تنظيف السيارة أو دفع رسوم التنظيف.
+            <div id="final-result-clear" style="display:none; margin-top:20px; text-align: center; background: #e8f5e9; padding: 25px; border-radius: 15px; border: 2px solid #2ecc71;">
+                <i class="fas fa-check-circle" style="font-size: 4rem; color: #2ecc71; margin-bottom: 15px;"></i>
+                <h3 style="color:#27ae60; margin: 0 0 10px;">صورك سليمة!</h3>
+                <p style="font-size:0.95rem; color: #555;">
+                    تمت مطابقة الصور ولم يرصد النظام أضرار جديدة.
                 </p>
-                <div style="margin-top: 15px; display: flex; gap: 10px;">
-                    <button class="btn btn-secondary" style="flex: 1; font-size: 0.9rem;" onclick="alert('تم خصم 50 ريال وإغلاق العقد. شكراً لك.')">دفع 50 ريال وإنهاء</button>
-                    <button class="btn btn-outline" style="flex: 1; font-size: 0.9rem;" onclick="document.getElementById('end-trip-modal').style.display='none'">سأنظفها بنفسي</button>
-                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 20px; background: #2ecc71; border-color: #2ecc71;" onclick="alert('تم إنهاء الرحلة وإعادة مبلغ التأمين. نراكم قريباً! 🌹')">
+                    إنهاء الرحلة واسترداد التأمين
+                </button>
             </div>
         </div>
     </div>
@@ -391,7 +406,77 @@
     <script>
         AOS.init({ once: true });
         
-        // التحقق من التعهد
+        // --- دالة معالجة رفع الصور ---
+        function handleImageUpload(input, type) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // 1. ضع الصورة المختارة كخلفية
+                    var containerId = (type === 'pre') ? 'pre-scan-visual' : 'post-scan-visual';
+                    var placeholder = document.querySelector('#' + containerId + ' .scan-image-placeholder');
+                    
+                    placeholder.style.backgroundImage = 'url(' + e.target.result + ')';
+                    
+                    // 2. ابدأ عملية المسح
+                    runAIScan(type);
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // --- سكربت المحاكاة والمسح ---
+        function runAIScan(type) {
+            let scanVisual, resultArea, startBtn, timer = 0;
+
+            if (type === 'pre') {
+                scanVisual = document.getElementById('pre-scan-visual');
+                resultArea = document.getElementById('pre-scan-result');
+                startBtn = document.getElementById('start-pre-scan-btn');
+                
+                startBtn.style.display = 'none'; // إخفاء الزر
+                scanVisual.style.display = 'block'; // إظهار المسح
+
+                // عداد وهمي
+                const interval = setInterval(() => {
+                    timer += 2;
+                    document.getElementById('scan-progress').innerText = timer + '%';
+                    if (timer >= 100) {
+                        clearInterval(interval);
+                        finishScan('pre');
+                    }
+                }, 50);
+
+            } else {
+                document.getElementById('post-scan-start').style.display = 'none';
+                scanVisual = document.getElementById('post-scan-visual');
+                scanVisual.style.display = 'block';
+                resultArea = document.getElementById('final-result-clear');
+
+                setTimeout(() => {
+                    finishScan('post');
+                }, 3000);
+            }
+
+            function finishScan(mode) {
+                scanVisual.style.display = 'none'; 
+                
+                if (mode === 'pre') {
+                    resultArea.style.display = 'block';
+                    const widget = document.getElementById('pre-trip-inspection');
+                    widget.classList.add('completed');
+                    widget.querySelector('h3').innerHTML = '<i class="fas fa-check-circle" style="color:#2ecc71;"></i> تم توثيق صورك بنجاح';
+                    widget.querySelector('.status-badge').style.background = '#2ecc71';
+                    widget.querySelector('.status-badge').innerText = 'تم الحفظ';
+                    document.getElementById('pre-desc').innerText = 'تم حفظ صورك في السجل الآمن. رحلة سعيدة!';
+                } else {
+                    resultArea.style.display = 'block';
+                }
+            }
+        }
+
+        // التحقق من التعهد (الكود الأصلي)
         document.getElementById('mandatory-pledge-form').addEventListener('submit', function(e) {
             e.preventDefault();
             // محاكاة تحميل بسيط
@@ -407,18 +492,6 @@
                 btn.style.borderColor = '#2ecc71';
             }, 1500);
         });
-
-        // محاكاة الذكاء الاصطناعي للنظافة
-        function simulateAIAnalysis() {
-            document.getElementById('upload-placeholder').style.display = 'none';
-            document.getElementById('ai-loading').style.display = 'block';
-            
-            setTimeout(() => {
-                document.getElementById('ai-loading').style.display = 'none';
-                // إظهار نتيجة الفحص (سيارة غير نظيفة)
-                document.getElementById('ai-result').style.display = 'block';
-            }, 2500);
-        }
     </script>
     <script src="csr-content.js"></script>
     <script src="script.js"></script>
