@@ -3,268 +3,528 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مخطط النظام الكامل - منصة وجهة</title>
+    <title>وُجْهَة | تنقل بثقة.. استثمر بأمان</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
+        /* === الألوان والهوية === */
         :root {
-            --primary: #1b4332; /* الأخضر الداكن للهوية */
-            --secondary: #d4af37; /* الذهبي */
-            --bg: #f8f9fa;
-            --line-color: #95a5a6;
+            --brand-dark-teal: #0f2925;
+            --brand-gold: #c5a065;
+            --brand-dark-bg: #1a1a1a;
+            --light-bg: #f8f9fa;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
+        /* === 1. ودجت البحث "وين وجهتك؟" (في الهيرو) === */
+        .search-widget-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px; border-radius: 20px;
+            margin-top: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 800px; margin-left: auto; margin-right: auto;
+            position: relative; z-index: 10;
+        }
+        .search-form { display: flex; gap: 15px; flex-wrap: wrap; }
+        .search-input-group { flex: 1; min-width: 200px; position: relative; }
+        .search-input-group i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--brand-gold); }
+        .search-input-group select, .search-input-group input {
+            width: 100%; padding: 15px 45px 15px 15px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 12px; background: rgba(0,0,0,0.3);
+            color: white; font-family: 'Tajawal', sans-serif; appearance: none;
+        }
+        .search-input-group select option { background: #333; color: white; }
+        .search-btn {
+            background: var(--brand-gold); color: white; border: none;
+            padding: 0 40px; border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .search-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(197, 160, 101, 0.4); }
+
+        /* === 2. المخطط الأمني (Flowchart) === */
+        .security-flow-section { background: #fff; padding: 60px 0; text-align: center; }
+        .security-flow-container { display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap; margin-top: 40px; }
+        .flow-step {
+            flex: 1; max-width: 250px; background: white; padding: 30px; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s;
+        }
+        .flow-step:hover { transform: translateY(-10px); border-color: var(--brand-gold); }
+        .flow-icon {
+            font-size: 2.5rem; color: var(--brand-dark-teal); margin-bottom: 20px;
+            height: 80px; width: 80px; background: #f8f9fa; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+        }
+        .flow-arrow { font-size: 2rem; color: #ddd; animation: slideArrow 2s infinite; }
+        @keyframes slideArrow { 0%,100% {transform: translateX(0);} 50% {transform: translateX(-10px);} }
+
+        /* === 3. استعراض السيارات (Game Style) === */
+        .cars-showcase-section {
+            background: #111; color: white; padding: 80px 0;
+            background-image: radial-gradient(circle at 50% 50%, #222 0%, #000 100%);
+        }
+        .car-game-card {
+            background: rgba(255,255,255,0.05); border: 1px solid #333;
+            border-radius: 20px; padding: 20px; transition: 0.4s; position: relative; overflow: hidden;
+        }
+        .car-game-card:hover {
+            border-color: var(--brand-gold); background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 30px rgba(197, 160, 101, 0.2);
+        }
+        .car-game-img {
+            width: 100%; height: 200px; object-fit: contain;
+            transition: 0.4s; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+        }
+        .car-game-card:hover .car-game-img { transform: scale(1.1) rotate(-2deg); }
+        /* Stats Bars */
+        .car-stats { margin-top: 20px; }
+        .stat-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.85rem; }
+        .stat-label { width: 70px; color: #aaa; }
+        .stat-bar-bg { flex: 1; height: 6px; background: #333; border-radius: 3px; overflow: hidden; }
+        .stat-bar-fill { height: 100%; border-radius: 3px; width: 0; transition: width 1s ease-out; }
+
+        /* === 4. الخط الزمني (Timeline) === */
+        .timeline-section { padding: 80px 0; background: #fdfdfd; }
+        .timeline-container { position: relative; max-width: 800px; margin: 0 auto; padding-left: 40px; border-right: 3px solid #eee; }
+        .timeline-item { position: relative; margin-bottom: 60px; opacity: 0.3; transition: 0.5s; padding-right: 40px; }
+        .timeline-item.active { opacity: 1; }
+        .timeline-dot {
+            position: absolute; right: -56px; top: 0; width: 30px; height: 30px; background: white;
+            border: 4px solid #ddd; border-radius: 50%; transition: 0.5s; z-index: 2;
+        }
+        .timeline-item.active .timeline-dot {
+            border-color: var(--brand-gold); background: var(--brand-gold);
+            box-shadow: 0 0 20px var(--brand-gold);
         }
 
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            text-align: center;
+        /* === 5. حاسبة الدخل (ROI) === */
+        .roi-section {
+            background: linear-gradient(135deg, var(--brand-dark-teal) 0%, #000 100%);
+            color: white; padding: 80px 0; text-align: center;
         }
-
-        h1 { color: var(--primary); margin-bottom: 40px; }
-
-        /* تنسيق شبكة المخطط */
-        .flow-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            position: relative;
+        .roi-container {
+            background: rgba(255,255,255,0.05); padding: 40px;
+            border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
+            max-width: 700px; margin: 0 auto;
         }
-
-        /* الخطوط الرابطة */
-        .connector {
-            width: 2px;
-            background-color: var(--line-color);
-            height: 30px;
+        input[type=range] {
+            width: 100%; height: 8px; background: #444; border-radius: 5px;
+            outline: none; -webkit-appearance: none;
         }
-
-        .branch-line {
-            display: flex;
-            justify-content: space-around;
-            width: 80%;
-            border-top: 2px solid var(--line-color);
-            position: relative;
-            margin-bottom: 20px;
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 25px; height: 25px;
+            background: var(--brand-gold); border-radius: 50%; cursor: pointer;
+            box-shadow: 0 0 15px rgba(197, 160, 101, 0.5);
         }
+        .roi-result { font-size: 2.5rem; color: var(--brand-gold); font-weight: bold; margin-top: 20px; }
+
+        /* === 6. خريطة المملكة === */
+        .coverage-map {
+            position: relative; width: 100%; height: 400px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Saudi_Arabia_location_map.svg/1072px-Saudi_Arabia_location_map.svg.png') no-repeat center;
+            background-size: contain; margin: 40px 0; opacity: 0.8;
+        }
+        .map-dot { position: absolute; width: 15px; height: 15px; background: #2ecc71; border-radius: 50%; cursor: pointer; }
+        .map-dot::after {
+            content: ''; position: absolute; width: 100%; height: 100%; background: #2ecc71; border-radius: 50%;
+            animation: pulse-map 2s infinite; opacity: 0.7;
+        }
+        .dot-label {
+            position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+            background: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;
+            white-space: nowrap; box-shadow: 0 2px 5px rgba(0,0,0,0.2); opacity: 0; transition: 0.3s;
+        }
+        .map-dot:hover .dot-label { opacity: 1; top: -35px; }
+        @keyframes pulse-map { 0% {transform: scale(1); opacity: 0.7;} 100% {transform: scale(3); opacity: 0;} }
+
+        /* باقي الستايلات القديمة */
+        .vision-section {
+            background: linear-gradient(135deg, var(--brand-dark-teal) 0%, var(--brand-dark-bg) 100%) !important;
+            color: white; padding: 80px 0;
+        }
+        .vision-card-new {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            padding: 30px; border-radius: 16px; transition: 0.3s; height: 100%;
+        }
+        .vision-card-new i { color: var(--brand-gold) !important; }
+        .vision-card-new:hover { transform: translateY(-5px); background: rgba(255,255,255,0.08); border-color: var(--brand-gold); }
         
-        /* خطوط عمودية صغيرة تنزل من التفريع */
-        .branch-line::before, .branch-line::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            width: 2px;
-            height: 20px;
-            background-color: var(--line-color);
-        }
-        .branch-line::before { left: 0; }
-        .branch-line::after { right: 0; }
-
-        /* منطقة المسارات */
-        .tracks {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            gap: 20px;
-        }
-
-        .track {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: rgba(255,255,255,0.5);
-            border-radius: 10px;
-            padding: 10px;
-            border: 1px dashed #ccc;
-        }
-
-        .track-title {
-            color: var(--secondary);
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            text-decoration: underline;
-        }
-
-        /* الصناديق */
-        .box {
-            background: white;
-            border: 2px solid var(--primary);
-            border-radius: 8px;
-            padding: 15px;
-            width: 220px;
-            margin-bottom: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-            position: relative;
-            z-index: 2;
-        }
-
-        .box:hover {
-            background-color: var(--primary);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .box h4 { margin: 0 0 5px 0; font-size: 1rem; }
-        .box p { margin: 0; font-size: 0.8rem; color: #7f8c8d; }
-        .box:hover p { color: #ecf0f1; }
-
-        /* أشكال مختلفة */
-        .box.decision {
-            border-color: var(--secondary);
-            border-radius: 25px; /* شكل بيضاوي للقرارات */
-        }
-
-        .box.system {
-            border-style: dashed; /* للعمليات الخلفية */
-            background-color: #e8f5e9;
-        }
-
-        /* التفاصيل المنبثقة */
-        .details-modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-            border-radius: 10px;
-            z-index: 100;
-            width: 300px;
-            border-right: 5px solid var(--secondary);
-        }
-        
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 99;
-        }
-
+        /* شريط الشركاء */
+        .partners-section { padding: 40px 0; background: var(--light-bg); overflow: hidden; }
+        .partners-scroller { width: 100%; overflow: hidden; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+        .partners-track { display: flex; align-items: center; gap: 50px; width: max-content; animation: scroll-ticker 35s linear infinite; }
+        @keyframes scroll-ticker { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 25px)); } }
+        .partner-img { height: 60px; width: auto; filter: grayscale(100%) opacity(0.6); transition: 0.3s; }
+        .partner-img:hover { filter: grayscale(0%) opacity(1); transform: scale(1.1); }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>مخطط النظام الكامل (شاشات + عمليات) - وجهة</h1>
-
-        <div class="flow-wrapper">
-            <div class="box" onclick="showDetails('الصفحة الرئيسية', 'تعرض خدمات المنصة، زر تسجيل الدخول، وشعار الهوية (شاشة landing.html)')">
-                <h4>الصفحة الرئيسية (Landing)</h4>
-                <p>نقطة الدخول</p>
-            </div>
-            
-            <div class="connector"></div>
-            
-            <div class="box decision" onclick="showDetails('التحقق من المستخدم', 'يتم التحقق من بيانات الدخول وتوجيه المستخدم حسب نوعه (FR1)')">
-                <h4>تسجيل / دخول</h4>
-                <p>تحديد الصلاحية</p>
-            </div>
-
-            <div class="branch-line"></div>
-
-            <div class="tracks">
-                <div class="track">
-                    <div class="track-title">مسار المؤجر (Owner)</div>
-                    
-                    [span_0](start_span)<div class="box" onclick="showDetails('لوحة تحكم المؤجر', 'تعرض ملخص الأرباح، والسيارات المؤجرة حالياً (dashboard-owner.html)[span_0](end_span)')">
-                        <h4>لوحة التحكم (Dashboard)</h4>
-                        <p>إدارة الأعمال</p>
-                    </div>
-
-                    <div class="connector"></div>
-
-                    <div class="box" onclick="showDetails('إضافة سيارة', 'نموذج لرفع الصور، تحديد السعر، والموديل. يتطلب 5 صور على الأقل (FR2)')">
-                        <h4>إضافة سيارة جديدة</h4>
-                        <p>إدخال البيانات</p>
-                    </div>
-
-                    <div class="connector"></div>
-
-                    <div class="box system" onclick="showDetails('نظام التسعير الذكي', 'خوارزمية تقترح السعر بناءً على الموديل والطلب (ميزة تنافسية)')">
-                        <h4>معالجة: التسعير الذكي</h4>
-                        <p>System Process</p>
-                    </div>
-
-                    <div class="connector"></div>
-
-                    <div class="box" onclick="showDetails('تقرير الأرباح', 'عرض الدخل الشهري والسنوي من التأجير (FR5)')">
-                        <h4>عرض الأرباح والحجوزات</h4>
-                        <p>التقارير</p>
-                    </div>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">و</div>
+                    <div class="logo-text">وُجْهَة</div>
+                </a>
+                <ul class="nav-links desktop-nav-links">
+                    <li><a href="index.html" class="active">الرئيسية</a></li>
+                    <li><a href="cars.html">استكشف السيارات</a></li>
+                    <li><a href="index.html#timeline">رحلة الأمان</a></li>
+                    <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة المؤجر</a></li>
+                    <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة المستأجر</a></li>
+                    <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
+                    <li><a href="quiz.html">اختبار السيارة</a></li>
+                    <li><a href="qassim-map.html">خرائط السيارات</a></li>
+                </ul>
+                <div class="nav-buttons nav-buttons-desktop-only">
+                    <button id="theme-toggle-desktop" class="theme-toggle"><i class="fas fa-moon"></i></button>
+                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">دخول آمن (نفاذ)</a>
+                    <div id="nav-user-profile-placeholder"></div>
                 </div>
-
-                <div class="track">
-                    <div class="track-title">مسار المستأجر (Renter)</div>
-
-                    [span_1](start_span)<div class="box" onclick="showDetails('بحث السيارات', 'البحث مع الفلاتر (نوع، سعر، مدينة) + الخريطة التفاعلية (cars.html)[span_1](end_span)')">
-                        <h4>البحث والتصفية</h4>
-                        <p>عرض الخيارات</p>
-                    </div>
-
-                    <div class="connector"></div>
-
-                    <div class="box decision" onclick="showDetails('أداة اتخاذ القرار', 'أداة (اختبار السيارة المناسبة لي) تساعد المحتار في الاختيار (FR7)')">
-                        <h4>اختبار: السيارة المناسبة؟</h4>
-                        <p>دعم القرار</p>
-                    </div>
-
-                    <div class="connector"></div>
-
-                    <div class="box" onclick="showDetails('تفاصيل السيارة والحجز', 'عرض الصور كاملة، تحديد مدة الحجز، والتحقق من التوفر (FR4)')">
-                        <h4>طلب الحجز</h4>
-                        <p>إدخال التواريخ</p>
-                    </div>
-
-                    <div class="connector"></div>
-
-                    [span_2](start_span)<div class="box system" onclick="showDetails('بوابة الدفع', 'معالجة المدفوعات بشكل آمن وإصدار PaymentToken[span_2](end_span)')">
-                        <h4>معالجة الدفع</h4>
-                        <p>External API</p>
-                    </div>
-
-                    <div class="connector"></div>
-
-                    [span_3](start_span)<div class="box" onclick="showDetails('ما بعد الخدمة', 'إضافة نقاط لبطاقة الولاء (Loyalty) + تقييم السيارة (Review)[span_3](end_span)')">
-                        <h4>الولاء والتقييم</h4>
-                        <p>اكتمال العملية</p>
-                    </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div id="particles-js"></div>
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+                <h1>وُجْهَة | تنقل بثقة.. استثمر بأمان</h1>
+                <p>أول منصة تدمج مرونة التنقل مع صرامة التوثيق الحكومي. نستخدم الذكاء الاصطناعي لسد العجز في وسائل النقل.</p>
+                
+                <div class="search-widget-container">
+                    <form class="search-form" onsubmit="event.preventDefault(); window.location.href='cars.html';">
+                        <div class="search-input-group">
+                            <label style="display:block; color:#ccc; margin-bottom:5px; font-size:0.9rem;">وش المناسبة؟</label>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <select id="destination-select">
+                                <option value="">اختر وجهتك...</option>
+                                <option value="work">🚗 مشوار عمل / دوام</option>
+                                <option value="entertainment">🎡 البوليفارد / ترفيه</option>
+                                <option value="airport">✈️ المطار / سفر</option>
+                                <option value="kashta">⛺ كشتة / بر (4x4)</option> </select>
+                        </div>
+                        <div class="search-input-group">
+                            <label style="display:block; color:#ccc; margin-bottom:5px; font-size:0.9rem;">متى؟</label>
+                            <i class="fas fa-calendar-alt"></i>
+                            <input type="date">
+                        </div>
+                        <button type="submit" class="search-btn">اعرض السيارات</button>
+                    </form>
                 </div>
+                
+                <div class="hero-buttons" style="margin-top: 30px;">
+                    <a href="add-car.html" class="btn btn-primary"><i class="fas fa-key"></i> شارك سيارتك</a>
+                    <a href="cars.html" class="btn btn-secondary"><i class="fas fa-search"></i> احجز رحلتك</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="live-stats-bar">
+        <div class="container">
+            <div class="stats-ticker">
+                <span class="stat-item"><i class="fas fa-check-circle"></i> عمليات موثقة عبر نفاذ 100%</span>
+                <span class="stat-item"><i class="fas fa-car"></i> تغطية شاملة لجميع مدن المملكة</span>
+                <span class="stat-item"><i class="fas fa-link"></i> تكامل رقمي شامل مع الأنظمة الحكومية</span> 
+                <span class="stat-item"><i class="fas fa-users"></i> مجتمع موثوق للمواطن والمقيم والزائر</span>
             </div>
         </div>
     </div>
 
-    <div class="overlay" onclick="closeDetails()"></div>
-    <div class="details-modal" id="modal">
-        <h3 id="modal-title">العنوان</h3>
-        <p id="modal-desc">التفاصيل هنا...</p>
-        <button onclick="closeDetails()" style="background:var(--primary); color:white; border:none; padding:5px 15px; cursor:pointer;">إغلاق</button>
+    <section class="vision-section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2 style="color: white;">بنية رقمية تخدم الوطن</h2>
+                <p style="color: rgba(255,255,255,0.8);">وُجْهَة ليست مجرد تطبيق، بل هي حل مستدام لرفع جودة الحياة</p>
+            </div>
+            
+            <div class="features-grid"> 
+                <div class="vision-card-new" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-coins" style="font-size: 2.5rem; margin-bottom: 20px;"></i>
+                    <h3 style="color: white;">للمواطن</h3>
+                    <p style="color: #ccc; font-size: 1.1rem;">مصدر دخل إضافي محمي وموثق. حول أصولك المتوقفة إلى استثمار ناجح بكل أمان.</p>
+                </div>
+                <div class="vision-card-new" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-user-check" style="font-size: 2.5rem; margin-bottom: 20px;"></i>
+                    <h3 style="color: white;">للمستخدم</h3>
+                    <p style="color: #ccc; font-size: 1.1rem;">خيارات تنقل متنوعة وآمنة في كل مدينة وحي. سهولة في الوصول وموثوقية في التعامل.</p>
+                </div>
+                <div class="vision-card-new" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-globe-asia" style="font-size: 2.5rem; margin-bottom: 20px;"></i>
+                    <h3 style="color: white;">للوطن</h3>
+                    <p style="color: #ccc; font-size: 1.1rem;">جاهزية تامة لاستيعاب النمو السكاني والزوار في الأحداث العالمية الكبرى بكفاءة عالية.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="security-flow-section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>دورة الأمان المتكاملة</h2>
+                <p>رحلتك محمية من البداية للنهاية عبر شركاء النجاح</p>
+            </div>
+            <div class="security-flow-container">
+                <div class="flow-step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flow-icon"><i class="fas fa-fingerprint"></i></div>
+                    <h3>1. التحقق</h3>
+                    <p>ربط مباشر مع <strong>نفاذ</strong> للتحقق من الهوية.</p>
+                </div>
+                <div class="flow-arrow"><i class="fas fa-chevron-left"></i></div>
+                <div class="flow-step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flow-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>2. التغطية</h3>
+                    <p>تأمين شامل للرحلة مربوط بـ <strong>نجم</strong>.</p>
+                </div>
+                <div class="flow-arrow"><i class="fas fa-chevron-left"></i></div>
+                <div class="flow-step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flow-icon"><i class="fas fa-file-contract"></i></div>
+                    <h3>3. التوثيق المالي</h3>
+                    <p>عقد موحد وضمان الحقوق عبر منصة <strong>وُجْهَة</strong>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cars-showcase-section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2 style="color: white;">اختر رفيق رحلتك</h2>
+                <p style="color: #aaa;">أسطول متنوع يناسب كل التضاريس والأذواق</p>
+            </div>
+            <div class="features-grid"> 
+                <div class="car-game-card" data-aos="zoom-in">
+                    <div style="background: #e74c3c; color: white; display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 10px;">الاكثر طلباً</div>
+                    <img src="https://pngimg.com/d/hyundai_PNG11226.png" class="car-game-img" alt="Car">
+                    <h3 style="margin-top: 15px;">هونداي النترا 2024</h3>
+                    <div class="car-stats">
+                        <div class="stat-row"><span class="stat-label">توفير</span><div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 95%; background: #2ecc71;"></div></div></div>
+                        <div class="stat-row"><span class="stat-label">راحة</span><div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 70%; background: #f1c40f;"></div></div></div>
+                    </div>
+                </div>
+                <div class="car-game-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div style="background: #d35400; color: white; display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 10px;">للكشتات</div>
+                    <img src="https://freepngimg.com/thumb/toyota/3-2-toyota-transparent.png" class="car-game-img" alt="Land Cruiser">
+                    <h3 style="margin-top: 15px;">لاندكروزر GXR</h3>
+                    <div class="car-stats">
+                        <div class="stat-row"><span class="stat-label">قوة</span><div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 100%; background: #e74c3c;"></div></div></div>
+                        <div class="stat-row"><span class="stat-label">أمان</span><div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 90%; background: #3498db;"></div></div></div>
+                    </div>
+                </div>
+                <div class="car-game-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div style="background: #8e44ad; color: white; display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 10px;">فخامة</div>
+                    <img src="https://purepng.com/public/uploads/large/purepng.com-bmw-x6-blue-carcarbmwvehicletransport-961524663045h0h05.png" class="car-game-img" alt="BMW">
+                    <h3 style="margin-top: 15px;">BMW X6</h3>
+                    <div class="car-stats">
+                        <div class="stat-row"><span class="stat-label">فخامة</span><div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 100%; background: #9b59b6;"></div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline-section" id="timeline">
+        <div class="container">
+            <div class="section-title">
+                <h2>كيف تبدأ رحلتك؟</h2>
+                <p>3 خطوات بسيطة تفصلك عن وجهتك</p>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline-item active">
+                    <div class="timeline-dot"></div>
+                    <h3>1. سجل دخولك بنفاذ</h3>
+                    <p>أمان لك وللمؤجر، وتوثيق فوري للعقد.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3>2. اختر سيارتك</h3>
+                    <p>من سيارات المدينة إلى سيارات الكشتات.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3>3. افتح السيارة بجوالك</h3>
+                    <p>المفتاح الرقمي يغنيك عن مقابلة المؤجر. شغل وامش!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="roi-section">
+        <div class="container">
+            <h2 style="margin-bottom: 10px;">سيارتك واقفة؟ خلها تصرف عليك!</h2>
+            <p style="color: #aaa; margin-bottom: 40px;">احسب دخلك المتوقع إذا أجرت سيارتك معنا</p>
+            <div class="roi-container">
+                <div class="slider-container">
+                    <label style="display: flex; justify-content: space-between;">
+                        <span>أيام التأجير في الشهر:</span>
+                        <span id="days-val" style="color: var(--brand-gold);">15 يوم</span>
+                    </label>
+                    <input type="range" min="1" max="30" value="15" id="days-slider">
+                </div>
+                <div class="slider-container">
+                    <label style="display: flex; justify-content: space-between;">
+                        <span>فئة السيارة:</span>
+                        <span id="car-type-val" style="color: var(--brand-gold);">سيدان متوسطة</span>
+                    </label>
+                    <input type="range" min="1" max="3" value="1" id="type-slider">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #777; margin-top: 5px;">
+                        <span>اقتصادية</span><span>فارهة/SUV</span>
+                    </div>
+                </div>
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
+                <p>دخلك الشهري المتوقع:</p>
+                <div class="roi-result"><span id="total-income">2,250</span> ر.س</div>
+                <br>
+                <a href="add-car.html" class="btn btn-primary" style="background: var(--brand-gold); border-color: var(--brand-gold);">ابدأ الاستثمار الآن</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="security-quote-section">
+        <div class="container">
+            <div class="security-quote-box" data-aos="zoom-in">
+                <i class="fas fa-quote-right quote-icon"></i>
+                <h3 class="security-title">ميثاق وُجْهَة الأمني</h3>
+                <p style="font-size: 1.4rem; line-height: 1.8; color: white; font-weight: 500;">
+                    "سواء كنت صاحب السيارة أو قائدها، <strong>نفاذ</strong> هو الحكم، و <strong>أبشر</strong> هو الضامن.<br>
+                    في وُجْهَة، لا نتعامل مع المجهولين. كل عملية موثقة، كل طرف معروف، وكل حق محفوظ."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" style="background: white;">
+        <div class="container">
+            <div class="section-title">
+                <h2>نغطي المملكة.. لأجلك</h2>
+                <p>من الرياض إلى الخبر، ومن جدة إلى أبها.. وُجْهَة معك.</p>
+            </div>
+            <div class="coverage-map">
+                <div class="map-dot" style="top: 45%; left: 55%;"><div class="dot-label">الرياض</div></div>
+                <div class="map-dot" style="top: 55%; left: 25%;"><div class="dot-label">جدة</div></div>
+                <div class="map-dot" style="top: 40%; left: 65%;"><div class="dot-label">الشرقية</div></div>
+                <div class="map-dot" style="top: 75%; left: 35%;"><div class="dot-label">أبها</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="partners-section">
+        <div class="container">
+            <h3 class="partners-heading" data-aos="fade-up">منظومة تكاملية مع</h3>
+            <div class="partners-scroller" data-aos="fade-up" data-aos-delay="100">
+                <div class="partners-track">
+                    <img src="https://www.zarkachat.com/wp-content/uploads/2020/04/absherr.jpg" alt="أبشر" class="partner-img">
+                    <img src="https://kss.sa/wp-content/uploads/2022/05/kss-sa-241-450x176.png?v=1652731492" alt="نفاذ" class="partner-img">
+                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/bb/4a/93/bb4a9376-f7fc-8a7a-73f6-8835ee3d8668/AppIcon-0-0-1x_U007emarketing-0-7-0-0-sRGB-0-85-220.png/1200x630wa.png" alt="نجم" class="partner-img" style="border-radius: 10px;">
+                    <img src="https://khdmatsaudi.com/wp-content/uploads/2021/03/%D8%A8%D9%88%D8%A7%D8%A8%D8%A9-%D8%AA%D9%85-%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AF%D8%A7%D8%AE%D9%84%D9%8A%D8%A9-1442-%D8%AA%D8%B3%D8%AC%D9%8A%D9%84-%D8%A7%D9%84%D8%AF%D8%AE%D9%88%D9%84-Tamm-login.jpg" alt="بوابة تم" class="partner-img">
+                    <img src="https://www.zarkachat.com/wp-content/uploads/2020/04/absherr.jpg" alt="أبشر" class="partner-img">
+                    <img src="https://kss.sa/wp-content/uploads/2022/05/kss-sa-241-450x176.png?v=1652731492" alt="نفاذ" class="partner-img">
+                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/bb/4a/93/bb4a9376-f7fc-8a7a-73f6-8835ee3d8668/AppIcon-0-0-1x_U007emarketing-0-7-0-0-sRGB-0-85-220.png/1200x630wa.png" alt="نجم" class="partner-img" style="border-radius: 10px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>عن وُجْهَة</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px;">منصة وطنية للابتكار في التنقل الآمن.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>روابط هامة</h3>
+                    <ul><li><a href="index.html">الرئيسية</a></li><li><a href="rental-terms.html">اتفاقية مستوى الخدمة</a></li></ul>
+                </div>
+                <div class="footer-col">
+                    <h3>تواصل معنا</h3>
+                    <ul class="footer-contact"><li><i class="fas fa-map-marker-alt"></i> الرياض، واجهة روشن</li><li><i class="fas fa-phone"></i> +966 56 546 4718</li></ul>
+                </div>
+            </div>
+            <div class="copyright"><p>© 2025 وُجْهَة. جميع الحقوق محفوظة.</p></div>
+        </div>
+    </footer>
+
+    <nav class="bottom-navbar mobile-bottom-navbar">
+        <a href="index.html" class="nav-item active"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+        <a href="cars.html" class="nav-item"><i class="fas fa-car"></i><span>السيارات</span></a>
+        <a href="landing.html" class="nav-item guest-only"><i class="fas fa-sign-in-alt"></i><span>دخول</span></a>
+        <a href="#" class="nav-item auth-link-bottom"><i class="fas fa-user-circle"></i><span>حسابي</span></a>
+        <a href="qassim-map.html" class="nav-item"><i class="fas fa-map-marked-alt"></i><span>الخريطة</span></a>
+    </nav>
+
+    <div id="chatbot-popup" class="chatbot-popup">
+        <div class="chatbot-header"><h3>المساعد الأمني</h3><button id="chatbot-close-btn" class="close-btn">&times;</button></div>
+        <div class="chatbot-body"><div class="bot-message">حياك الله! كيف أساعدك؟</div></div>
+        <div class="chatbot-footer"><input type="text" placeholder="اكتب سؤالك..."><button><i class="fas fa-paper-plane"></i></button></div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        function showDetails(title, desc) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-desc').innerText = desc;
-            document.getElementById('modal').style.display = 'block';
-            document.querySelector('.overlay').style.display = 'block';
-        }
+        AOS.init({ once: true });
 
-        function closeDetails() {
-            document.getElementById('modal').style.display = 'none';
-            document.querySelector('.overlay').style.display = 'none';
+        // تشغيل البارتكلز
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#ffffff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5 },
+                "size": { "value": 3 },
+                "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 },
+                "move": { "enable": true, "speed": 6 }
+            },
+            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } } },
+            "retina_detect": true
+        });
+
+        // هيدر سكرول
+        window.addEventListener('scroll', function() {
+            var header = document.querySelector('header');
+            if(header) { header.classList.toggle('scrolled', window.scrollY > 50); }
+        });
+
+        // حاسبة الدخل (ROI)
+        const daysSlider = document.getElementById('days-slider');
+        const typeSlider = document.getElementById('type-slider');
+        const daysVal = document.getElementById('days-val');
+        const typeVal = document.getElementById('car-type-val');
+        const totalIncome = document.getElementById('total-income');
+
+        function calculateROI() {
+            const days = parseInt(daysSlider.value);
+            const type = parseInt(typeSlider.value);
+            let dailyRate = 0; let typeName = "";
+            if (type === 1) { dailyRate = 150; typeName = "اقتصادية"; }
+            else if (type === 2) { dailyRate = 350; typeName = "سيدان متوسطة"; }
+            else { dailyRate = 800; typeName = "فارهة / SUV"; }
+            daysVal.innerText = days + " يوم";
+            typeVal.innerText = typeName;
+            let total = days * dailyRate;
+            totalIncome.innerText = total.toLocaleString();
         }
+        daysSlider.addEventListener('input', calculateROI);
+        typeSlider.addEventListener('input', calculateROI);
+
+        // التايم لاين
+        window.addEventListener('scroll', () => {
+            const items = document.querySelectorAll('.timeline-item');
+            items.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) { item.classList.add('active'); }
+            });
+        });
     </script>
-
+    <script src="csr-content.js"></script>
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
 </body>
 </html>
