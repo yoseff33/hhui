@@ -11,202 +11,194 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     
     <style>
-        /* === إعدادات الألوان الموحدة (نظام التصميم) === */
+        /* === الألوان والهوية === */
         :root {
-            /* ألوان الهوية */
             --brand-dark-teal: #0f2925;
             --brand-gold: #c5a065;
-            
-            /* المتغيرات الديناميكية (للنهاري) */
-            --bg-body: #f4f7f6;       /* خلفية الصفحة فاتحة */
-            --bg-card: #ffffff;       /* خلفية البطاقات بيضاء */
-            --text-main: #333333;     /* النص الرئيسي داكن */
-            --text-muted: #666666;    /* النص الفرعي */
-            --border-color: #e0e0e0;  /* لون الحدود */
-            --shadow-card: 0 10px 30px rgba(0,0,0,0.05); /* ظل ناعم */
+            --brand-dark-bg: #1a1a1a;
+            --light-bg: #f8f9fa;
         }
 
-        /* تخصيص الوضع الليلي */
-        body.dark-mode {
-            --bg-body: #121212;       /* خلفية الصفحة داكنة */
-            --bg-card: #1e1e1e;       /* خلفية البطاقات رمادي غامق */
-            --text-main: #f0f0f0;     /* النص الرئيسي فاتح */
-            --text-muted: #aaaaaa;    /* النص الفرعي */
-            --border-color: #333333;  /* لون الحدود */
-            --shadow-card: 0 10px 30px rgba(0,0,0,0.3); /* ظل أقوى */
-        }
-
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        /* === توحيد شكل البطاقات (Card Base Style) === */
-        /* نطبق هذا الستايل على كل الكروت لضمان التوحيد */
-        .unified-card {
-            background-color: var(--bg-card) !important;
-            border: 1px solid var(--border-color) !important;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: var(--shadow-card);
-            transition: 0.3s;
-        }
-        .unified-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--brand-gold) !important;
-        }
-        .unified-card h3 { color: var(--text-main) !important; }
-        .unified-card p { color: var(--text-muted) !important; }
-        .unified-card i { color: var(--brand-gold); } /* توحيد لون الأيقونات */
-
-        /* === الهيدر (Transparent to Solid) === */
-        header {
-            background-color: rgba(15, 41, 37, 0.2);
-            backdrop-filter: blur(5px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            height: 90px;
-            display: flex; align-items: center;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 0; position: fixed; width: 100%; top: 0; z-index: 1000;
-        }
-        header.scrolled {
-            background-color: rgba(15, 41, 37, 0.98);
-            height: 60px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border-bottom: 1px solid var(--brand-gold);
-        }
-        header .container { display: flex; justify-content: space-between; align-items: center; height: 100%; }
-        .logo-text { transition: 0.3s; font-size: 1.5rem; color: white; }
-        header.scrolled .logo-text { font-size: 1.2rem; }
-
-        /* === شريط الإحصائيات === */
+        /* === إصلاح شريط الإحصائيات (Stats Bar) === */
         .live-stats-bar {
-            background-color: var(--bg-card); /* يتبع الثيم */
-            color: var(--text-main);
-            padding: 15px 0; overflow: hidden; white-space: nowrap;
+            background-color: #111 !important;
+            color: white;
+            padding: 15px 0;
+            overflow: hidden;
+            white-space: nowrap;
             border-bottom: 3px solid var(--brand-gold);
-            position: relative; z-index: 5;
+            position: relative;
+            z-index: 5;
         }
-        body.dark-mode .live-stats-bar { background-color: #000; } /* استثناء للاسود في الليلي */
-        .stats-ticker { display: inline-block; animation: ticker 30s linear infinite; }
-        .stat-item { display: inline-block; margin: 0 40px; font-size: 1.1rem; font-weight: bold; }
-        @keyframes ticker { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .stats-ticker {
+            display: inline-block;
+            animation: ticker 30s linear infinite;
+        }
+        .stat-item {
+            display: inline-block;
+            margin: 0 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .stat-item i { color: var(--brand-gold); margin-left: 8px; }
+        @keyframes ticker {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
 
-        /* === ودجت البحث (زجاجي لأنه فوق الفيديو) === */
-        .search-widget-container {
-            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2); padding: 30px; border-radius: 20px;
-            margin-top: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            max-width: 800px; margin-left: auto; margin-right: auto; position: relative; z-index: 10;
-        }
-        .search-form { display: flex; gap: 15px; flex-wrap: wrap; }
-        .search-input-group { flex: 1; min-width: 200px; position: relative; }
-        .search-input-group i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--brand-gold); }
-        .search-input-group select, .search-input-group input {
-            width: 100%; padding: 15px 45px 15px 15px; border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 12px; background: rgba(0,0,0,0.3); color: white; font-family: 'Tajawal'; appearance: none;
-        }
-        .search-input-group select option { background: #333; color: white; }
-        .search-btn {
-            background: var(--brand-gold); color: white; border: none; padding: 0 40px; border-radius: 12px;
-            font-weight: bold; cursor: pointer; transition: 0.3s;
-        }
-        .search-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(197, 160, 101, 0.4); }
-
-        /* === الأقسام (تتبع خلفية الصفحة) === */
-        section { padding: 80px 0; background-color: var(--bg-body); transition: 0.3s; }
-        
-        /* استثناءات بسيطة لخلفيات الأقسام للتميز */
-        .section-alt { background-color: rgba(0,0,0,0.03); } /* لون مختلف قليلاً للقسم البديل */
-        body.dark-mode .section-alt { background-color: rgba(255,255,255,0.03); }
-
-        /* === المخطط الأمني === */
-        .security-flow-container { display: flex; justify-content: center; align-items: center; gap: 30px; margin-top: 40px; }
+        /* === المخطط الأمني (Flowchart) === */
+        .security-flow-section { background: #fff; padding: 60px 0; text-align: center; }
+        .security-flow-container { display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap; margin-top: 40px; }
         .flow-step {
-            /* يرث كلاس unified-card */
-            flex: 1; max-width: 280px; text-align: center;
+            flex: 1; max-width: 250px; background: white; padding: 30px; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s;
         }
+        .flow-step:hover { transform: translateY(-10px); border-color: var(--brand-gold); }
         .flow-icon {
-            font-size: 2.5rem; margin-bottom: 20px;
-            height: 80px; width: 80px; background: var(--bg-body); border-radius: 50%;
+            font-size: 2.5rem; color: var(--brand-dark-teal); margin-bottom: 20px;
+            height: 80px; width: 80px; background: #f8f9fa; border-radius: 50%;
             display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
-            border: 1px solid var(--border-color);
         }
-        .flow-arrow { font-size: 2rem; color: var(--border-color); animation: slideArrow 2s infinite; }
-        
-        /* إصلاح الجوال */
-        @media (max-width: 992px) {
-            .security-flow-container { flex-direction: column !important; }
-            .flow-step { width: 100%; max-width: 100%; }
-            .flow-arrow { margin: 15px 0; animation: slideArrowDown 2s infinite !important; transform: rotate(90deg); }
-        }
+        .flow-arrow { font-size: 2rem; color: #ddd; animation: slideArrow 2s infinite; }
         @keyframes slideArrow { 0%,100% {transform: translateX(0);} 50% {transform: translateX(-10px);} }
-        @keyframes slideArrowDown { 0%, 100% { transform: translateY(0) rotate(90deg); } 50% { transform: translateY(10px) rotate(90deg); } }
 
-        /* === استعراض السيارات (تم توحيد الألوان) === */
+        /* === استعراض السيارات (Game Style) === */
+        .cars-showcase-section {
+            background: #111; color: white; padding: 80px 0;
+            background-image: radial-gradient(circle at 50% 50%, #222 0%, #000 100%);
+        }
         .car-game-card {
-            /* يرث unified-card */
-            position: relative; overflow: hidden;
+            background: rgba(255,255,255,0.05); border: 1px solid #333;
+            border-radius: 20px; padding: 20px; transition: 0.4s; position: relative; overflow: hidden;
         }
-        .car-game-img { width: 100%; height: 200px; object-fit: contain; transition: 0.4s; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1)); }
+        .car-game-card:hover {
+            border-color: var(--brand-gold); background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 30px rgba(197, 160, 101, 0.2);
+        }
+        .car-game-img {
+            width: 100%; height: 200px; object-fit: contain;
+            transition: 0.4s; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+        }
         .car-game-card:hover .car-game-img { transform: scale(1.1) rotate(-2deg); }
+        /* Stats Bars */
         .car-stats { margin-top: 20px; }
-        .stat-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-muted); }
-        .stat-bar-bg { flex: 1; height: 6px; background: var(--border-color); border-radius: 3px; overflow: hidden; margin-right: 10px; }
-        .stat-bar-fill { height: 100%; width: 0; transition: width 1s ease-out; }
+        .stat-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.85rem; }
+        .stat-label { width: 70px; color: #aaa; }
+        .stat-bar-bg { flex: 1; height: 6px; background: #333; border-radius: 3px; overflow: hidden; }
+        .stat-bar-fill { height: 100%; border-radius: 3px; width: 0; transition: width 1s ease-out; }
 
-        /* === حاسبة الدخل (تم توحيد الألوان) === */
-        .roi-container {
-            /* يرث unified-card */
-            max-width: 700px; margin: 0 auto; text-align: center;
+        /* === الخط الزمني (Timeline) === */
+        .timeline-section { padding: 80px 0; background: #fdfdfd; }
+        .timeline-container { position: relative; max-width: 800px; margin: 0 auto; padding-left: 40px; border-right: 3px solid #eee; }
+        .timeline-item { position: relative; margin-bottom: 60px; opacity: 0.3; transition: 0.5s; padding-right: 40px; }
+        .timeline-item.active { opacity: 1; }
+        .timeline-dot {
+            position: absolute; right: -56px; top: 0; width: 30px; height: 30px; background: white;
+            border: 4px solid #ddd; border-radius: 50%; transition: 0.5s; z-index: 2;
         }
-        input[type=range] { width: 100%; height: 8px; background: var(--border-color); border-radius: 5px; outline: none; -webkit-appearance: none; }
-        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 25px; height: 25px; background: var(--brand-gold); border-radius: 50%; cursor: pointer; box-shadow: 0 0 10px rgba(197, 160, 101, 0.5); }
+        .timeline-item.active .timeline-dot {
+            border-color: var(--brand-gold); background: var(--brand-gold);
+            box-shadow: 0 0 20px var(--brand-gold);
+        }
+
+        /* === حاسبة الدخل (ROI) === */
+        .roi-section {
+            background: linear-gradient(135deg, var(--brand-dark-teal) 0%, #000 100%);
+            color: white; padding: 80px 0; text-align: center;
+        }
+        .roi-container {
+            background: rgba(255,255,255,0.05); padding: 40px;
+            border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
+            max-width: 700px; margin: 0 auto;
+        }
+        input[type=range] {
+            width: 100%; height: 8px; background: #444; border-radius: 5px;
+            outline: none; -webkit-appearance: none;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 25px; height: 25px;
+            background: var(--brand-gold); border-radius: 50%; cursor: pointer;
+            box-shadow: 0 0 15px rgba(197, 160, 101, 0.5);
+        }
         .roi-result { font-size: 2.5rem; color: var(--brand-gold); font-weight: bold; margin-top: 20px; }
 
-        /* === الخط الزمني === */
-        .timeline-container { position: relative; max-width: 800px; margin: 0 auto; padding-left: 40px; border-right: 3px solid var(--border-color); }
-        .timeline-item { position: relative; margin-bottom: 60px; opacity: 0.3; transition: 0.5s; padding-right: 40px; }
-        .timeline-item h3 { color: var(--text-main); }
-        .timeline-item p { color: var(--text-muted); }
-        .timeline-item.active { opacity: 1; }
-        .timeline-dot { position: absolute; right: -56px; top: 0; width: 30px; height: 30px; background: var(--bg-card); border: 4px solid var(--border-color); border-radius: 50%; transition: 0.5s; z-index: 2; }
-        .timeline-item.active .timeline-dot { border-color: var(--brand-gold); background: var(--brand-gold); box-shadow: 0 0 20px var(--brand-gold); }
-
-        /* === الخريطة === */
+        /* === تنسيقات الخريطة التفاعلية === */
+        .map-section-wrapper {
+            background: #fff;
+            padding: 80px 0;
+            position: relative;
+        }
+        .centered-map-layout { max-width: 1000px; margin: 0 auto; position: relative; }
         .top-filter-bar {
-            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px;
-            padding: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px;
+            background: #ffffff; border: 1px solid #e0e0e0; border-radius: 16px;
+            padding: 12px 15px; margin-bottom: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); display: flex;
+            align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
         }
-        .tf-label { color: var(--text-muted); font-size: 0.9rem; font-weight: bold; display: block; margin-bottom: 5px; }
-        .tf-select { 
-            padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); 
-            background: var(--bg-body); color: var(--text-main); width: 100%;
-        }
-        .tf-pill { 
-            padding: 8px 15px; border-radius: 50px; font-size: 0.85rem; cursor: pointer; color: var(--text-muted); 
-            background: var(--bg-body); border: 1px solid var(--border-color); transition: 0.2s;
-        }
-        .tf-pill.active { background: var(--brand-dark-teal); color: white; border-color: var(--brand-dark-teal); }
+        .tf-item { display: flex; flex-direction: column; gap: 4px; min-width: 130px; flex: 1; }
+        .tf-label { font-size: 0.8rem; font-weight: bold; color: #666; display: flex; align-items: center; gap: 5px; }
+        .tf-pills { display: flex; gap: 4px; background: #f5f5f5; padding: 3px; border-radius: 50px; width: fit-content; }
+        .tf-pill { padding: 5px 10px; border-radius: 50px; font-size: 0.75rem; cursor: pointer; transition: 0.3s; color: #555; white-space: nowrap; }
+        .tf-pill.active { background: var(--brand-dark-teal); color: white; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .tf-select { padding: 6px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-family: 'Tajawal'; cursor: pointer; width: 100%; font-size: 0.9rem; }
+        .tf-btn { background: var(--brand-dark-teal); color: white; border: none; padding: 0 15px; border-radius: 8px; cursor: pointer; font-weight: bold; height: 38px; display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: auto; font-size: 0.9rem; white-space: nowrap; }
+        
         .new-map-container {
-            position: relative; height: 500px; width: 100%; border-radius: 20px; overflow: hidden; 
-            border: 4px solid var(--bg-card); box-shadow: var(--shadow-card);
+            position: relative; height: 500px; width: 100%;
+            border-radius: 20px; overflow: hidden; border: 4px solid #fff;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1); z-index: 1;
         }
         #mapid { height: 100%; width: 100%; }
+        
+        /* تنسيقات الماركر والبوب اب للخريطة */
+        .price-marker-box {
+            background: white; border-radius: 30px; padding: 4px 10px;
+            font-weight: bold; font-family: 'Tajawal'; font-size: 0.8rem;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2); border: 2px solid white;
+            display: flex; align-items: center; gap: 4px; color: #333; transition: transform 0.2s;
+        }
+        .price-marker-box:hover { transform: scale(1.1); z-index: 1000; }
+        .price-marker-box.premium { background: #2c3e50; color: #f1c40f; border-color: #f1c40f; }
+        
+        .popup-car-card { padding: 5px; text-align: right; width: 200px; }
+        .popup-img { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
+        .rating-bars-container { margin: 8px 0; font-size: 0.75rem; }
+        .rating-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; }
+        .progress-track { flex-grow: 1; height: 4px; background: #eee; margin: 0 5px; border-radius: 2px; }
+        .progress-fill { height: 100%; background: #2ecc71; border-radius: 2px; }
 
         /* === الميثاق الأمني === */
-        .security-quote-box {
-            /* يرث unified-card */
-            text-align: center; position: relative; border-right: 6px solid var(--brand-gold) !important;
+        .security-quote-section {
+            background: var(--light-bg); padding: 60px 0; text-align: center;
+            border-top: 1px solid #eee; border-bottom: 1px solid #eee;
         }
-        .quote-icon { font-size: 4rem; color: var(--border-color); opacity: 0.3; position: absolute; top: 20px; right: 20px; }
+        .security-quote-box {
+            background: linear-gradient(135deg, var(--brand-dark-teal) 0%, var(--brand-dark-bg) 100%);
+            max-width: 900px; margin: 0 auto; position: relative; padding: 50px;
+            border-radius: 20px; box-shadow: 0 20px 50px rgba(15, 41, 37, 0.25);
+            border-right: 6px solid var(--brand-gold); color: white;
+        }
+        .quote-icon { font-size: 4rem; color: rgba(255,255,255,0.05); position: absolute; top: 20px; right: 20px; }
+        .security-title { color: var(--brand-gold); margin-bottom: 25px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+
+        /* === باقي التنسيقات (الرؤية والشركاء) === */
+        .vision-section {
+            background: linear-gradient(135deg, var(--brand-dark-teal) 0%, var(--brand-dark-bg) 100%) !important;
+            color: white; padding: 80px 0;
+        }
+        .vision-card-new {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            padding: 30px; border-radius: 16px; transition: 0.3s; height: 100%;
+        }
+        .vision-card-new i { color: var(--brand-gold) !important; }
+        .vision-card-new:hover { transform: translateY(-5px); background: rgba(255,255,255,0.08); border-color: var(--brand-gold); }
         
-        /* Map Markers & Popups */
-        .price-marker-box { background: white; border-radius: 30px; padding: 5px 12px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border: 2px solid var(--brand-dark-teal); display: flex; align-items: center; gap: 5px; color: #333; }
-        .price-marker-box.premium { background: #2c3e50; color: #f1c40f; border-color: #f1c40f; }
-        .popup-car-card { text-align: right; width: 220px; direction: rtl; font-family: 'Tajawal'; }
-        .popup-img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 8px; }
+        .partners-section { padding: 40px 0; background: var(--light-bg); overflow: hidden; }
+        .partners-scroller { width: 100%; overflow: hidden; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+        .partners-track { display: flex; align-items: center; gap: 50px; width: max-content; animation: scroll-ticker 35s linear infinite; }
+        @keyframes scroll-ticker { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 25px)); } }
+        .partner-img { height: 60px; width: auto; filter: grayscale(100%) opacity(0.6); transition: 0.3s; }
+        .partner-img:hover { filter: grayscale(0%) opacity(1); transform: scale(1.1); }
     </style>
 </head>
 <body>
@@ -228,7 +220,7 @@
                     <li><a href="qassim-map.html">خرائط السيارات</a></li>
                 </ul>
                 <div class="nav-buttons nav-buttons-desktop-only">
-                    <button id="theme-toggle-fixed" class="theme-toggle"><i class="fas fa-moon"></i></button>
+                    <button id="theme-toggle-desktop" class="theme-toggle"><i class="fas fa-moon"></i></button>
                     <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">دخول آمن (نفاذ)</a>
                     <div id="nav-user-profile-placeholder"></div>
                 </div>
@@ -236,33 +228,16 @@
         </div>
     </header>
     
-    <section class="hero" style="padding: 0; background: none;">
-        <div id="particles-js" style="background: linear-gradient(105deg, rgba(15, 41, 37, 0.95) 0%, rgba(26, 60, 55, 0.9) 100%), url('https://www.almowaten.net/wp-content/uploads/2022/10/Ff0vop3XkAACLm8-877x492.jpg') center/cover;"></div>
-        <div class="container" style="position: relative; z-index: 2; padding-top: 150px; padding-bottom: 100px;">
+    <section class="hero">
+        <div id="particles-js"></div>
+        <div class="container">
             <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
                 <h1>وُجْهَة | تنقل بثقة.. استثمر بأمان</h1>
                 <p>أول منصة تدمج مرونة التنقل مع صرامة التوثيق الحكومي. نستخدم الذكاء الاصطناعي لسد العجز في وسائل النقل.</p>
                 
-                <div class="search-widget-container">
-                    <form class="search-form" onsubmit="event.preventDefault(); window.location.href='cars.html';">
-                        <div class="search-input-group">
-                            <label style="display:block; color:#ccc; margin-bottom:5px; font-size:0.9rem;">وش المناسبة؟</label>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <select id="destination-select">
-                                <option value="">اختر وجهتك...</option>
-                                <option value="work">🚗 مشوار عمل / دوام</option>
-                                <option value="entertainment">🎡 البوليفارد / ترفيه</option>
-                                <option value="airport">✈️ المطار / سفر</option>
-                                <option value="kashta">⛺ كشتة / بر (4x4)</option> 
-                            </select>
-                        </div>
-                        <div class="search-input-group">
-                            <label style="display:block; color:#ccc; margin-bottom:5px; font-size:0.9rem;">متى؟</label>
-                            <i class="fas fa-calendar-alt"></i>
-                            <input type="date">
-                        </div>
-                        <button type="submit" class="search-btn">اعرض السيارات</button>
-                    </form>
+                <div class="hero-buttons" style="margin-top: 30px;">
+                    <a href="add-car.html" class="btn btn-primary"><i class="fas fa-key"></i> شارك سيارتك</a>
+                    <a href="cars.html" class="btn btn-secondary"><i class="fas fa-search"></i> احجز رحلتك</a>
                 </div>
             </div>
         </div>
@@ -279,57 +254,26 @@
         </div>
     </div>
 
-    <section class="vision-section">
-        <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>بنية رقمية تخدم الوطن</h2>
-                <p>وُجْهَة ليست مجرد تطبيق، بل هي حل مستدام لرفع جودة الحياة</p>
-            </div>
-            
-            <div class="features-grid"> 
-                <div class="unified-card" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-coins" style="font-size: 2.5rem; margin-bottom: 20px;"></i>
-                    <h3>للمواطن</h3>
-                    <p>مصدر دخل إضافي محمي وموثق. حول أصولك المتوقفة إلى استثمار ناجح بكل أمان.</p>
-                </div>
-                <div class="unified-card" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-user-check" style="font-size: 2.5rem; margin-bottom: 20px;"></i>
-                    <h3>للمستخدم</h3>
-                    <p>خيارات تنقل متنوعة وآمنة في كل مدينة وحي. سهولة في الوصول وموثوقية في التعامل.</p>
-                </div>
-                <div class="unified-card" data-aos="fade-up" data-aos-delay="300">
-                    <i class="fas fa-globe-asia" style="font-size: 2.5rem; margin-bottom: 20px;"></i>
-                    <h3>للوطن</h3>
-                    <p>جاهزية تامة لاستيعاب النمو السكاني والزوار في الأحداث العالمية الكبرى بكفاءة عالية.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="security-flow-section section-alt">
+    <section class="security-flow-section">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2>دورة الأمان المتكاملة</h2>
                 <p>رحلتك محمية من البداية للنهاية عبر شركاء النجاح</p>
             </div>
             <div class="security-flow-container">
-                <div class="flow-step unified-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="flow-step" data-aos="fade-up" data-aos-delay="100">
                     <div class="flow-icon"><i class="fas fa-fingerprint"></i></div>
                     <h3>1. التحقق</h3>
                     <p>ربط مباشر مع <strong>نفاذ</strong> للتحقق من الهوية.</p>
                 </div>
-                
                 <div class="flow-arrow"><i class="fas fa-chevron-left"></i></div>
-                
-                <div class="flow-step unified-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="flow-step" data-aos="fade-up" data-aos-delay="200">
                     <div class="flow-icon"><i class="fas fa-shield-alt"></i></div>
                     <h3>2. التغطية</h3>
                     <p>تأمين شامل للرحلة مربوط بـ <strong>نجم</strong>.</p>
                 </div>
-                
                 <div class="flow-arrow"><i class="fas fa-chevron-left"></i></div>
-                
-                <div class="flow-step unified-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="flow-step" data-aos="fade-up" data-aos-delay="300">
                     <div class="flow-icon"><i class="fas fa-file-contract"></i></div>
                     <h3>3. التوثيق المالي</h3>
                     <p>عقد موحد وضمان الحقوق عبر منصة <strong>وُجْهَة</strong>.</p>
@@ -405,47 +349,43 @@
         </div>
     </section>
 
-    <section class="roi-section section-alt">
+    <section class="roi-section">
         <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>سيارتك واقفة؟ خلها تصرف عليك!</h2>
-                <p>احسب دخلك المتوقع إذا أجرت سيارتك معنا</p>
-            </div>
-            
-            <div class="roi-container unified-card" data-aos="zoom-in">
+            <h2 style="margin-bottom: 10px;">سيارتك واقفة؟ خلها تصرف عليك!</h2>
+            <p style="color: #aaa; margin-bottom: 40px;">احسب دخلك المتوقع إذا أجرت سيارتك معنا</p>
+            <div class="roi-container">
                 <div class="slider-container">
-                    <label style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <label style="display: flex; justify-content: space-between;">
                         <span>أيام التأجير في الشهر:</span>
-                        <span id="days-val" style="color: var(--brand-gold); font-weight: bold;">15 يوم</span>
+                        <span id="days-val" style="color: var(--brand-gold);">15 يوم</span>
                     </label>
                     <input type="range" min="1" max="30" value="15" id="days-slider">
                 </div>
-                <br>
                 <div class="slider-container">
-                    <label style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <label style="display: flex; justify-content: space-between;">
                         <span>فئة السيارة:</span>
-                        <span id="car-type-val" style="color: var(--brand-gold); font-weight: bold;">سيدان متوسطة</span>
+                        <span id="car-type-val" style="color: var(--brand-gold);">سيدان متوسطة</span>
                     </label>
                     <input type="range" min="1" max="3" value="1" id="type-slider">
-                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-top: 5px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #777; margin-top: 5px;">
                         <span>اقتصادية</span><span>فارهة/SUV</span>
                     </div>
                 </div>
-                <hr style="border-color: var(--border-color); margin: 30px 0;">
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
                 <p>دخلك الشهري المتوقع:</p>
                 <div class="roi-result"><span id="total-income">2,250</span> ر.س</div>
                 <br>
-                <a href="add-car.html" class="btn btn-primary">ابدأ الاستثمار الآن</a>
+                <a href="add-car.html" class="btn btn-primary" style="background: var(--brand-gold); border-color: var(--brand-gold);">ابدأ الاستثمار الآن</a>
             </div>
         </div>
     </section>
 
     <section class="security-quote-section">
         <div class="container">
-            <div class="security-quote-box unified-card" data-aos="zoom-in">
+            <div class="security-quote-box" data-aos="zoom-in">
                 <i class="fas fa-quote-right quote-icon"></i>
                 <h3 class="security-title">ميثاق وُجْهَة الأمني</h3>
-                <p style="font-size: 1.4rem; line-height: 1.8; font-weight: 500;">
+                <p style="font-size: 1.4rem; line-height: 1.8; color: white; font-weight: 500;">
                     "سواء كنت صاحب السيارة أو قائدها، <strong>نفاذ</strong> هو الحكم، و <strong>أبشر</strong> هو الضامن.<br>
                     في وُجْهَة، لا نتعامل مع المجهولين. كل عملية موثقة، كل طرف معروف، وكل حق محفوظ."
                 </p>
@@ -453,14 +393,14 @@
         </div>
     </section>
 
-    <section class="cars-showcase-section section-alt">
+    <section class="cars-showcase-section">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2>أحدث المضاف للأسطول</h2>
-                <p>أسطول متنوع يناسب كل التضاريس والأذواق</p>
+                <h2 style="color: white;">أحدث المضاف للأسطول</h2>
+                <p style="color: #aaa;">أسطول متنوع يناسب كل التضاريس والأذواق</p>
             </div>
             <div class="features-grid"> 
-                <div class="car-game-card unified-card" data-aos="zoom-in">
+                <div class="car-game-card" data-aos="zoom-in">
                     <div style="background: #e74c3c; color: white; display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 10px;">الاكثر طلباً</div>
                     <img src="https://pngimg.com/d/hyundai_PNG11226.png" class="car-game-img" alt="Car">
                     <h3 style="margin-top: 15px;">هونداي النترا 2024</h3>
@@ -469,7 +409,7 @@
                         <div class="stat-row"><span class="stat-label">راحة</span><div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 70%; background: #f1c40f;"></div></div></div>
                     </div>
                 </div>
-                <div class="car-game-card unified-card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="car-game-card" data-aos="zoom-in" data-aos-delay="100">
                     <div style="background: #d35400; color: white; display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 10px;">للكشتات</div>
                     <img src="https://freepngimg.com/thumb/toyota/3-2-toyota-transparent.png" class="car-game-img" alt="Land Cruiser">
                     <h3 style="margin-top: 15px;">لاندكروزر GXR</h3>
@@ -478,13 +418,40 @@
                         <div class="stat-row"><span class="stat-label">أمان</span><div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 90%; background: #3498db;"></div></div></div>
                     </div>
                 </div>
-                <div class="car-game-card unified-card" data-aos="zoom-in" data-aos-delay="200">
+                <div class="car-game-card" data-aos="zoom-in" data-aos-delay="200">
                     <div style="background: #8e44ad; color: white; display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 10px;">فخامة</div>
                     <img src="https://purepng.com/public/uploads/large/purepng.com-bmw-x6-blue-carcarbmwvehicletransport-961524663045h0h05.png" class="car-game-img" alt="BMW">
                     <h3 style="margin-top: 15px;">BMW X6</h3>
                     <div class="car-stats">
                         <div class="stat-row"><span class="stat-label">فخامة</span><div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 100%; background: #9b59b6;"></div></div></div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="vision-section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2 style="color: white;">بنية رقمية تخدم الوطن</h2>
+                <p style="color: rgba(255,255,255,0.8);">وُجْهَة ليست مجرد تطبيق، بل هي حل مستدام لرفع جودة الحياة</p>
+            </div>
+            
+            <div class="features-grid"> 
+                <div class="vision-card-new" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-coins" style="font-size: 2.5rem; margin-bottom: 20px;"></i>
+                    <h3 style="color: white;">للمواطن</h3>
+                    <p style="color: #ccc; font-size: 1.1rem;">مصدر دخل إضافي محمي وموثق. حول أصولك المتوقفة إلى استثمار ناجح بكل أمان.</p>
+                </div>
+                <div class="vision-card-new" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-user-check" style="font-size: 2.5rem; margin-bottom: 20px;"></i>
+                    <h3 style="color: white;">للمستخدم</h3>
+                    <p style="color: #ccc; font-size: 1.1rem;">خيارات تنقل متنوعة وآمنة في كل مدينة وحي. سهولة في الوصول وموثوقية في التعامل.</p>
+                </div>
+                <div class="vision-card-new" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-globe-asia" style="font-size: 2.5rem; margin-bottom: 20px;"></i>
+                    <h3 style="color: white;">للوطن</h3>
+                    <p style="color: #ccc; font-size: 1.1rem;">جاهزية تامة لاستيعاب النمو السكاني والزوار في الأحداث العالمية الكبرى بكفاءة عالية.</p>
                 </div>
             </div>
         </div>
@@ -512,7 +479,7 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <h3>عن وُجْهَة</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 25px;">منصة وطنية للابتكار في التنقل الآمن.</p>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px;">منصة وطنية للابتكار في التنقل الآمن.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-linkedin"></i></a>
@@ -567,36 +534,12 @@
             "retina_detect": true
         });
 
-        // ================= كود الهيدر (الانكماش) والنمط الليلي =================
-        const header = document.querySelector('header');
-        const themeBtn = document.getElementById('theme-toggle-fixed');
-        const body = document.body;
-
-        // 1. حركة الهيدر
+        // هيدر سكرول
         window.addEventListener('scroll', function() {
-            if(window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+            var header = document.querySelector('header');
+            if(header) { header.classList.toggle('scrolled', window.scrollY > 50); }
         });
 
-        // 2. تفعيل الوضع الليلي (مع الحفظ)
-        if(localStorage.getItem('theme') === 'dark') {
-            body.classList.add('dark-mode');
-            if(themeBtn) themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
-        }
-
-        if(themeBtn) {
-            themeBtn.addEventListener('click', () => {
-                body.classList.toggle('dark-mode');
-                const isDark = body.classList.contains('dark-mode');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                themeBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-            });
-        }
-
-        // ================= باقي السكربتات (الحاسبة، الخريطة، التايم لاين) =================
         // حاسبة الدخل (ROI)
         const daysSlider = document.getElementById('days-slider');
         const typeSlider = document.getElementById('type-slider');
