@@ -7,6 +7,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&display=swap" rel="stylesheet">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -35,17 +36,10 @@
         
         /* ورقة العقد A4 */
         .contract-paper {
-            background: white; 
-            width: 210mm; 
-            min-height: 297mm; /* حجم A4 */
-            padding: 60px; /* زيادة الحشو عشان الكلام ما يطلع */
-            margin-bottom: 80px; 
-            position: relative;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5); 
-            border-radius: 2px;
-            color: #333; 
-            display: flex; flex-direction: column;
-            box-sizing: border-box; /* يضمن ان الحشو محسوب داخل العرض */
+            background: white; width: 210mm; min-height: 297mm; 
+            padding: 60px; margin-bottom: 80px; position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5); border-radius: 0;
+            color: #333; display: flex; flex-direction: column; box-sizing: border-box; 
         }
 
         /* العلامة المائية */
@@ -102,7 +96,7 @@
         }
         .terms-box h4 { margin: 0 0 10px; color: var(--primary); }
 
-        /* التواقيع (تم التصحيح لمنع الخروج عن الإطار) */
+        /* التواقيع */
         .signatures-area {
             display: flex; justify-content: space-between; margin-bottom: 50px; position: relative; z-index: 1; gap: 30px;
         }
@@ -110,15 +104,15 @@
             flex: 1; border: 1px dashed #ccc; padding: 15px; text-align: center;
             border-radius: 8px; position: relative; height: 140px; background: #fff;
             display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
-            overflow: hidden; /* يمنع خروج الختم */
+            overflow: hidden; 
         }
         .sig-head { position: absolute; top: 0; left: 0; width: 100%; background: #f9f9f9; padding: 8px 0; font-weight: bold; color: #555; border-radius: 8px 8px 0 0; font-size: 0.85rem; border-bottom: 1px dashed #ccc; }
 
-        /* الختم الرقمي (تم تصغير الحجم وضبط المكان) */
+        /* الختم الرقمي */
         .digital-stamp {
             position: absolute; top: 55%; left: 50%; 
-            transform: translate(-50%, -50%) rotate(-10deg) scale(0.5); /* يبدأ صغير */
-            opacity: 0; width: 110px; height: 110px; /* حجم مناسب */
+            transform: translate(-50%, -50%) rotate(-10deg) scale(0.5); 
+            opacity: 0; width: 110px; height: 110px; 
             border: 3px double; border-radius: 50%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             font-weight: bold; text-transform: uppercase; pointer-events: none; z-index: 10;
@@ -128,20 +122,19 @@
         .stamp-nafath { border-color: #27ae60; color: #27ae60; }
         .stamp-company { border-color: #2980b9; color: #2980b9; }
         
-        /* حركة الختم (تكبير ثم ثبات) */
         .stamp-effect { animation: stampIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        @keyframes stampIn { 
-            to { opacity: 1; transform: translate(-50%, -50%) rotate(-10deg) scale(1); } 
-        }
+        @keyframes stampIn { to { opacity: 1; transform: translate(-50%, -50%) rotate(-10deg) scale(1); } }
 
-        /* الفوتر */
+        /* الفوتر والشركاء */
         .contract-footer { margin-top: auto; border-top: 1px solid #ddd; padding-top: 20px; text-align: center; }
-        .partners-grid { display: flex; justify-content: center; gap: 30px; align-items: center; opacity: 0.4; filter: grayscale(100%); transition: 0.5s; margin-bottom: 20px; }
+        .partners-title { font-size: 0.8rem; color: #777; margin-bottom: 10px; }
+        .partners-grid { display: flex; justify-content: center; gap: 25px; align-items: center; opacity: 0.4; filter: grayscale(100%); transition: 0.5s; margin-bottom: 15px; flex-wrap: wrap; }
         .partners-grid.verified { opacity: 1; filter: grayscale(0%); }
-        .partner-img { height: 40px; object-fit: contain; }
+        /* تنسيق صور الشركاء لتكون متناسقة */
+        .partner-img { height: 40px; width: auto; object-fit: contain; }
 
-        /* الباركود كصورة (عشان ما يخرب) */
-        .barcode-img { height: 40px; margin-top: 10px; opacity: 0.8; }
+        /* الباركود (خط) */
+        .barcode-font { font-family: 'Libre Barcode 39 Text', cursive; font-size: 40px; color: #333; text-align: center; display: block; }
 
         /* الأزرار العائمة */
         .actions-bar {
@@ -158,7 +151,6 @@
         .btn-pdf { background: #e74c3c; color: white; }
         .btn-img { background: var(--primary); color: white; }
         .btn-close { background: #f0f0f0; color: #333; }
-        
         .hidden { display: none !important; }
     </style>
 </head>
@@ -166,7 +158,7 @@
 
     <div style="text-align: center;">
         <h1 style="color: #0f2925; margin-bottom: 10px;">عقد تأجير "وُجْهَة"</h1>
-        <p style="color: #777;">نسخة معاينة مع خيارات الحفظ (PDF / صورة)</p>
+        <p style="color: #777;">النسخة الرسمية المعتمدة (تحديث الروابط)</p>
         <button class="demo-btn" onclick="openContract()">
             <i class="fas fa-file-contract"></i> فتح العقد
         </button>
@@ -192,7 +184,7 @@
                         <div class="w-icon">و</div>
                         <div class="w-text">وُجْهَة</div>
                     </div>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Saudi_Vision_2030_logo.svg/1200px-Saudi_Vision_2030_logo.svg.png" style="height: 50px;" alt="Vision 2030">
+                    <img src="https://th.bing.com/th?id=OIF.zUqQa8o1jd%2FhZwlWH%2FI2ow&cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" style="height: 50px;" alt="Vision 2030" crossorigin="anonymous">
                 </div>
             </div>
 
@@ -264,12 +256,13 @@
             </div>
 
             <div class="contract-footer">
+                <div class="partners-title">وثيقة إلكترونية معتمدة بالربط التقني مع:</div>
                 <div class="partners-grid" id="partners-grid">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Transport_General_Authority_Logo.svg" alt="TGA" class="partner-img">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Elm_Company_Logo.svg/2560px-Elm_Company_Logo.svg.png" alt="Tamm" class="partner-img">
-                    <img src="https://nafath.sa/images/logo.png" alt="Nafath" class="partner-img">
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.wsZLumcMstGylhq--ZNISQHaE8?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="TGA" class="partner-img" crossorigin="anonymous">
+                    <img src="https://th.bing.com/th/id/R.6f1c6ad91c5ce7276e1653e5c04ebd83?rik=lFt4dQd%2fTfkkig&pid=ImgRaw&r=0" alt="Tamm" class="partner-img" crossorigin="anonymous">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.r-QVOMw552g1daSVkWP8kQHaC5?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Nafath" class="partner-img" crossorigin="anonymous">
                 </div>
-                <img src="https://bwipjs-api.metafloor.org/?bcid=code128&text=WUJHA-2025-SA&scale=2&height=10&incltext" alt="Barcode" class="barcode-img">
+                <div class="barcode-font">*WUJHA-2025-SA*</div>
             </div>
 
         </div>
@@ -327,48 +320,59 @@
             }, 1500);
         }
 
-        // دالة حفظ PDF
+        // دالة حفظ PDF (محسنة للروابط الخارجية)
         async function savePDF() {
             const element = document.getElementById('official-contract');
             const btn = document.getElementById('btn-pdf');
+            const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري...';
-            
-            // إخفاء الأزرار مؤقتاً
             document.querySelector('.actions-bar').style.display = 'none';
 
-            // تحويل الـ HTML إلى Canvas بدقة عالية
-            const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-            const imgData = canvas.toDataURL('image/jpeg', 0.9);
-
-            // إنشاء PDF
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const pageWidth = pdf.internal.pageSize.getWidth();
-            const pageHeight = pdf.internal.pageSize.getHeight();
-            
-            // ضبط الحجم لملء صفحة A4
-            pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight);
-            pdf.save('Wujha-Contract.pdf');
-
-            btn.innerHTML = '<i class="fas fa-file-pdf"></i> حفظ PDF';
-            document.querySelector('.actions-bar').style.display = 'flex';
+            try {
+                const canvas = await html2canvas(element, { 
+                    scale: 2, 
+                    useCORS: true, 
+                    allowTaint: true,
+                    scrollY: -window.scrollY
+                });
+                
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                
+                pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save('Wujha-Contract.pdf');
+                
+            } catch (err) {
+                alert("تنبيه: قد لا تظهر بعض الصور في ملف الـ PDF بسبب قيود أمنية من المصدر.");
+                console.error(err);
+            } finally {
+                btn.innerHTML = originalText;
+                document.querySelector('.actions-bar').style.display = 'flex';
+            }
         }
 
-        // دالة حفظ صورة
+        // دالة حفظ صورة (محسنة للروابط الخارجية)
         function saveImage() {
             const element = document.getElementById('official-contract');
             const btn = document.getElementById('btn-img');
+            const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري...';
-            
             document.querySelector('.actions-bar').style.display = 'none';
 
-            html2canvas(element, { scale: 2, useCORS: true }).then(canvas => {
+            html2canvas(element, { scale: 2, useCORS: true, allowTaint: true }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'Wujha-Contract.jpg';
                 link.href = canvas.toDataURL('image/jpeg', 0.9);
                 link.click();
-                btn.innerHTML = '<i class="fas fa-image"></i> حفظ صورة';
+                btn.innerHTML = originalText;
                 document.querySelector('.actions-bar').style.display = 'flex';
+            }).catch(err => {
+                 alert("تنبيه: قد لا تظهر بعض الصور بسبب قيود أمنية من المصدر.");
+                document.querySelector('.actions-bar').style.display = 'flex';
+                btn.innerHTML = originalText;
             });
         }
     </script>
