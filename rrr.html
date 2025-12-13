@@ -6,8 +6,7 @@
     <title>وُجْهَة | العقد الموحد الرسمي</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -26,7 +25,7 @@
         }
         .demo-btn:hover { transform: translateY(-3px); }
 
-        /* نافذة العقد (Modal) */
+        /* نافذة العقد */
         .contract-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85); z-index: 9999;
@@ -34,11 +33,11 @@
             padding-top: 40px; overflow-y: auto;
         }
         
-        /* ورقة العقد A4 */
+        /* ورقة العقد */
         .contract-paper {
             background: white; width: 210mm; min-height: 297mm; 
-            padding: 60px; margin-bottom: 80px; position: relative;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5); border-radius: 0;
+            padding: 50px; margin-bottom: 80px; position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5); 
             color: #333; display: flex; flex-direction: column; box-sizing: border-box; 
         }
 
@@ -67,74 +66,88 @@
             position: relative; z-index: 1;
         }
         
+        /* إصلاح شعار وجهة (منع تقطع الحروف) */
         .wujha-logo-custom {
-            display: flex; align-items: center; gap: 10px;
+            display: flex; align-items: center; gap: 8px;
             border: 1px solid #0f2925; padding: 5px 12px; border-radius: 6px;
         }
         .w-icon { 
-            background: #0f2925; color: #c5a065; width: 30px; height: 30px; 
+            background: #0f2925; color: #c5a065; width: 28px; height: 28px; 
             display: flex; align-items: center; justify-content: center; 
-            font-weight: bold; font-size: 1.1rem; border-radius: 4px; 
+            font-weight: bold; font-size: 1rem; border-radius: 4px; 
         }
-        .w-text { font-size: 1.2rem; font-weight: 800; color: #0f2925; letter-spacing: -0.5px; }
+        .w-text { 
+            font-size: 1.2rem; 
+            font-weight: 800; 
+            color: #0f2925; 
+            letter-spacing: 0; /* تم التصفير لمنع التقطع */
+            font-family: 'Tajawal', sans-serif; /* تأكيد الخط */
+        }
 
         /* البيانات */
-        .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px; position: relative; z-index: 1; }
-        .info-box { background: #fcfcfc; padding: 12px; border-radius: 6px; border: 1px solid #eee; }
-        .ib-label { display: block; font-size: 0.7rem; color: #888; margin-bottom: 4px; }
-        .ib-value { font-weight: bold; color: #000; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; position: relative; z-index: 1; }
+        .info-box { background: #fcfcfc; padding: 10px; border-radius: 4px; border: 1px solid #eee; }
+        .ib-label { display: block; font-size: 0.7rem; color: #888; margin-bottom: 3px; }
+        .ib-value { font-weight: bold; color: #000; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         /* الجدول */
-        .car-details-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 0.85rem; z-index: 1; position: relative; }
-        .car-details-table th { background: #0f2925; color: white; padding: 12px; text-align: center; font-weight: normal; border: 1px solid #0f2925; }
-        .car-details-table td { border: 1px solid #ddd; padding: 12px; text-align: center; font-weight: bold; background: #fff; color: #333; }
+        .car-details-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 0.8rem; z-index: 1; position: relative; }
+        .car-details-table th { background: #0f2925; color: white; padding: 10px; text-align: center; font-weight: normal; border: 1px solid #0f2925; }
+        .car-details-table td { border: 1px solid #ddd; padding: 10px; text-align: center; font-weight: bold; background: #fff; color: #333; }
 
         /* الشروط */
         .terms-box {
-            border-top: 1px solid #eee; padding-top: 20px;
-            font-size: 0.8rem; line-height: 1.7; margin-bottom: 40px; text-align: justify; position: relative; z-index: 1;
+            border-top: 1px solid #eee; padding-top: 15px;
+            font-size: 0.75rem; line-height: 1.6; margin-bottom: 30px; text-align: justify; position: relative; z-index: 1;
         }
-        .terms-box h4 { margin: 0 0 10px; color: var(--primary); }
+        .terms-box h4 { margin: 0 0 8px; color: var(--primary); }
 
-        /* التواقيع */
+        /* منطقة التواقيع */
         .signatures-area {
-            display: flex; justify-content: space-between; margin-bottom: 50px; position: relative; z-index: 1; gap: 30px;
+            display: flex; justify-content: space-between; margin-bottom: 40px; position: relative; z-index: 1; gap: 20px;
         }
         .sig-block {
-            flex: 1; border: 1px dashed #ccc; padding: 15px; text-align: center;
-            border-radius: 8px; position: relative; height: 140px; background: #fff;
-            display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
-            overflow: hidden; 
+            flex: 1; border: 1px dashed #ccc; padding: 0; text-align: center;
+            border-radius: 8px; position: relative; height: 130px; background: #fff;
+            display: flex; flex-direction: column;
+            overflow: visible; /* السماح بظهور الختم بالكامل */
         }
-        .sig-head { position: absolute; top: 0; left: 0; width: 100%; background: #f9f9f9; padding: 8px 0; font-weight: bold; color: #555; border-radius: 8px 8px 0 0; font-size: 0.85rem; border-bottom: 1px dashed #ccc; }
+        .sig-head { width: 100%; background: #f9f9f9; padding: 8px 0; font-weight: bold; color: #555; border-radius: 8px 8px 0 0; font-size: 0.8rem; border-bottom: 1px dashed #ccc; }
+        .sig-body { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; }
 
-        /* الختم الرقمي */
+        /* إصلاح الختم (استخدام التمركز المطلق الثابت) */
         .digital-stamp {
-            position: absolute; top: 55%; left: 50%; 
-            transform: translate(-50%, -50%) rotate(-10deg) scale(0.5); 
-            opacity: 0; width: 110px; height: 110px; 
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0; /* تمديد لكل الجهات */
+            margin: auto; /* التوسيط السحري الثابت */
+            width: 100px; height: 100px;
             border: 3px double; border-radius: 50%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             font-weight: bold; text-transform: uppercase; pointer-events: none; z-index: 10;
             background: rgba(255, 255, 255, 0.95);
-            font-size: 0.8rem; line-height: 1.2;
+            font-size: 0.75rem; line-height: 1.2;
+            opacity: 0;
+            transform: rotate(-10deg) scale(0.5); /* البداية */
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+        
+        .digital-stamp.show {
+            opacity: 1;
+            transform: rotate(-10deg) scale(1); /* النهاية الثابتة */
+        }
+
         .stamp-nafath { border-color: #27ae60; color: #27ae60; }
         .stamp-company { border-color: #2980b9; color: #2980b9; }
-        
-        .stamp-effect { animation: stampIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        @keyframes stampIn { to { opacity: 1; transform: translate(-50%, -50%) rotate(-10deg) scale(1); } }
 
         /* الفوتر والشركاء */
-        .contract-footer { margin-top: auto; border-top: 1px solid #ddd; padding-top: 20px; text-align: center; }
-        .partners-title { font-size: 0.8rem; color: #777; margin-bottom: 10px; }
-        .partners-grid { display: flex; justify-content: center; gap: 25px; align-items: center; opacity: 0.4; filter: grayscale(100%); transition: 0.5s; margin-bottom: 15px; flex-wrap: wrap; }
+        .contract-footer { margin-top: auto; border-top: 1px solid #ddd; padding-top: 15px; text-align: center; }
+        .partners-title { font-size: 0.75rem; color: #888; margin-bottom: 10px; }
+        .partners-grid { display: flex; justify-content: center; gap: 20px; align-items: center; opacity: 0.4; filter: grayscale(100%); transition: 0.5s; margin-bottom: 15px; flex-wrap: wrap; }
         .partners-grid.verified { opacity: 1; filter: grayscale(0%); }
-        /* تنسيق صور الشركاء لتكون متناسقة */
-        .partner-img { height: 40px; width: auto; object-fit: contain; }
+        .partner-img { height: 35px; width: auto; object-fit: contain; }
 
-        /* الباركود (خط) */
-        .barcode-font { font-family: 'Libre Barcode 39 Text', cursive; font-size: 40px; color: #333; text-align: center; display: block; }
+        /* الباركود كصورة (أضمن للطباعة) */
+        .barcode-img { height: 35px; opacity: 0.8; margin-top: 5px; }
 
         /* الأزرار العائمة */
         .actions-bar {
@@ -158,7 +171,7 @@
 
     <div style="text-align: center;">
         <h1 style="color: #0f2925; margin-bottom: 10px;">عقد تأجير "وُجْهَة"</h1>
-        <p style="color: #777;">النسخة الرسمية المعتمدة (تحديث الروابط)</p>
+        <p style="color: #777;">تم إصلاح تقطع الخطوط وثبات التوقيع</p>
         <button class="demo-btn" onclick="openContract()">
             <i class="fas fa-file-contract"></i> فتح العقد
         </button>
@@ -191,7 +204,7 @@
             <div class="info-grid">
                 <div class="info-box"><span class="ib-label">رقم العقد الموحد</span><span class="ib-value">WJ-2025-100293</span></div>
                 <div class="info-box"><span class="ib-label">تاريخ الإصدار</span><span class="ib-value" id="contract-date">--</span></div>
-                <div class="info-box"><span class="ib-label">مكان الإصدار</span><span class="ib-value">الرياض - المقر الرئيسي</span></div>
+                <div class="info-box"><span class="ib-label">مكان الإصدار</span><span class="ib-value">الرياض - الفرع الرئيسي</span></div>
                 <div class="info-box"><span class="ib-label">الطرف الأول (المؤجر)</span><span class="ib-value">شركة الأسطول الذكي</span></div>
                 <div class="info-box"><span class="ib-label">رقم الترخيص</span><span class="ib-value">1010992834</span></div>
                 <div class="info-box"><span class="ib-label">العنوان الوطني</span><span class="ib-value">RRRD2929 - حي العارض</span></div>
@@ -238,19 +251,23 @@
             <div class="signatures-area">
                 <div class="sig-block">
                     <div class="sig-head">الطرف الأول (المؤجر)</div>
-                    <div style="font-size: 0.8rem; color: #aaa; margin-bottom: 20px;">التوقيع الرقمي للمنشأة</div>
-                    <div id="stamp-1" class="digital-stamp stamp-company">
-                        <i class="fas fa-building" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
-                        Wujha Fleet<br><small>CONFIRMED</small>
+                    <div class="sig-body">
+                        <div style="font-size: 0.7rem; color: #aaa;">التوقيع الرقمي للمنشأة</div>
+                        <div id="stamp-1" class="digital-stamp stamp-company">
+                            <i class="fas fa-building" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
+                            Wujha Fleet<br><small>CONFIRMED</small>
+                        </div>
                     </div>
                 </div>
 
                 <div class="sig-block">
                     <div class="sig-head">الطرف الثاني (المستأجر)</div>
-                    <div id="renter-sig-text" style="font-size: 0.8rem; color: #aaa; margin-bottom: 20px;">بانتظار المصادقة...</div>
-                    <div id="stamp-2" class="digital-stamp stamp-nafath">
-                        <i class="fas fa-fingerprint" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
-                        تم التوثيق<br><small>IAM.GOV.SA</small>
+                    <div class="sig-body">
+                        <div id="renter-sig-text" style="font-size: 0.7rem; color: #aaa;">بانتظار المصادقة...</div>
+                        <div id="stamp-2" class="digital-stamp stamp-nafath">
+                            <i class="fas fa-fingerprint" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
+                            تم التوثيق<br><small>IAM.GOV.SA</small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -262,7 +279,7 @@
                     <img src="https://th.bing.com/th/id/R.6f1c6ad91c5ce7276e1653e5c04ebd83?rik=lFt4dQd%2fTfkkig&pid=ImgRaw&r=0" alt="Tamm" class="partner-img" crossorigin="anonymous">
                     <img src="https://tse3.mm.bing.net/th/id/OIP.r-QVOMw552g1daSVkWP8kQHaC5?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Nafath" class="partner-img" crossorigin="anonymous">
                 </div>
-                <div class="barcode-font">*WUJHA-2025-SA*</div>
+                <img src="https://bwipjs-api.metafloor.org/?bcid=code128&text=WUJHA-2025-SA&scale=2&height=8&incltext" alt="Barcode" class="barcode-img" crossorigin="anonymous">
             </div>
 
         </div>
@@ -300,9 +317,9 @@
             btn.style.color = '#555';
 
             setTimeout(() => {
-                document.getElementById('stamp-1').classList.add('stamp-effect');
+                document.getElementById('stamp-1').classList.add('show');
                 setTimeout(() => {
-                    document.getElementById('stamp-2').classList.add('stamp-effect');
+                    document.getElementById('stamp-2').classList.add('show');
                     
                     const renterText = document.getElementById('renter-sig-text');
                     renterText.innerText = 'تم التوثيق عبر نفاذ';
@@ -320,7 +337,7 @@
             }, 1500);
         }
 
-        // دالة حفظ PDF (محسنة للروابط الخارجية)
+        // دالة حفظ PDF
         async function savePDF() {
             const element = document.getElementById('official-contract');
             const btn = document.getElementById('btn-pdf');
@@ -346,15 +363,14 @@
                 pdf.save('Wujha-Contract.pdf');
                 
             } catch (err) {
-                alert("تنبيه: قد لا تظهر بعض الصور في ملف الـ PDF بسبب قيود أمنية من المصدر.");
-                console.error(err);
+                alert("تنبيه: قد لا تظهر بعض الصور بسبب قيود أمنية من المصدر.");
             } finally {
                 btn.innerHTML = originalText;
                 document.querySelector('.actions-bar').style.display = 'flex';
             }
         }
 
-        // دالة حفظ صورة (محسنة للروابط الخارجية)
+        // دالة حفظ صورة
         function saveImage() {
             const element = document.getElementById('official-contract');
             const btn = document.getElementById('btn-img');
