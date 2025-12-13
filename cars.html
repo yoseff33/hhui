@@ -4,133 +4,216 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>وُجْهَة | اختر سيارتك</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
     <style>
-        :root { --primary: #0f2925; --secondary: #c5a065; --bg: #f4f6f8; }
-        body { font-family: 'Tajawal', sans-serif; background: var(--bg); margin: 0; }
+        :root { --primary: #0f2925; --secondary: #c5a065; --bg: #f4f6f8; --text: #333; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg); margin: 0; color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
         
-        /* الهيدر */
-        header { background: white; padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        /* ================= الهيدر ================= */
+        header { background: white; padding: 15px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
         .container { width: 90%; max-width: 1200px; margin: 0 auto; }
-        .nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 5px; }
-        .logo span { color: var(--secondary); }
-
-        /* شبكة السيارات */
-        .cars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; margin-bottom: 50px; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; }
         
-        /* كرت السيارة */
+        .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .logo span { color: var(--secondary); }
+        .logo-icon { background: var(--primary); color: var(--secondary); width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 1.2rem; }
+
+        .nav-links { list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; }
+        .nav-links a { text-decoration: none; color: #555; font-weight: 500; transition: 0.3s; font-size: 1rem; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); font-weight: bold; }
+
+        .user-menu { display: flex; align-items: center; gap: 15px; }
+        .user-name { font-size: 0.9rem; font-weight: bold; color: var(--primary); }
+        .btn-logout { border: 1px solid #e74c3c; color: #e74c3c; background: transparent; padding: 5px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-family: 'Tajawal'; }
+        .btn-logout:hover { background: #e74c3c; color: white; }
+
+        /* ================= المحتوى (الكروت) ================= */
+        .content-section { flex: 1; padding: 40px 0; }
+        .section-title { text-align: center; margin-bottom: 40px; color: var(--primary); }
+        .section-title h2 { font-size: 2rem; margin: 0 0 10px; }
+        .section-title p { color: #777; }
+
+        .cars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        
         .car-card { 
             background: white; border-radius: 16px; overflow: hidden; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; 
-            border: 1px solid transparent;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; 
+            border: 1px solid transparent; display: flex; flex-direction: column;
         }
-        .car-card:hover { transform: translateY(-5px); border-color: var(--secondary); }
+        .car-card:hover { transform: translateY(-10px); border-color: var(--secondary); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
         
-        .car-img-box { height: 200px; overflow: hidden; position: relative; }
-        .car-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .badge { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.7); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; }
+        .car-img-box { height: 220px; overflow: hidden; position: relative; background: #eee; }
+        .car-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .car-card:hover .car-img-box img { transform: scale(1.05); }
+        .badge { position: absolute; top: 15px; right: 15px; background: rgba(15, 41, 37, 0.8); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; z-index: 2; backdrop-filter: blur(5px); }
         
-        .car-info { padding: 20px; }
-        .car-title { font-size: 1.2rem; font-weight: bold; color: var(--primary); margin: 0 0 5px; }
-        .car-year { color: #888; font-size: 0.9rem; }
+        .car-info { padding: 25px; flex: 1; display: flex; flex-direction: column; }
+        .car-title { font-size: 1.3rem; font-weight: 800; color: var(--primary); margin: 0 0 5px; }
+        .car-year { color: #888; font-size: 0.9rem; margin-bottom: 15px; }
         
-        .car-specs { display: flex; gap: 15px; margin: 15px 0; font-size: 0.85rem; color: #555; }
-        .spec { display: flex; align-items: center; gap: 5px; background: #f8f9fa; padding: 5px 10px; border-radius: 5px; }
+        .car-specs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .spec { display: flex; align-items: center; gap: 6px; background: #f8f9fa; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; color: #555; border: 1px solid #eee; }
         
-        .price-box { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
-        .price { font-size: 1.3rem; font-weight: 800; color: var(--secondary); }
+        .price-box { display: flex; justify-content: space-between; align-items: center; margin-top: auto; border-top: 1px solid #eee; padding-top: 20px; }
+        .price { font-size: 1.4rem; font-weight: 800; color: var(--secondary); }
         .price small { font-size: 0.8rem; color: #999; font-weight: normal; }
         
         .btn-book { 
-            background: var(--primary); color: white; border: none; 
-            padding: 10px 25px; border-radius: 8px; cursor: pointer; 
-            font-weight: bold; transition: 0.2s; 
+            background: linear-gradient(135deg, var(--primary), #1a4d45); color: white; border: none; 
+            padding: 12px 30px; border-radius: 50px; cursor: pointer; 
+            font-weight: bold; transition: 0.2s; font-family: 'Tajawal';
+            box-shadow: 0 5px 15px rgba(15, 41, 37, 0.2);
         }
-        .btn-book:hover { background: #0a1f1c; }
+        .btn-book:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15, 41, 37, 0.3); }
 
+        /* ================= الفوتر ================= */
+        footer { background: var(--primary); color: white; padding: 50px 0 20px; margin-top: auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        
+        .footer-col h3 { color: var(--secondary); margin-bottom: 20px; font-size: 1.2rem; }
+        .footer-col p { opacity: 0.8; line-height: 1.6; font-size: 0.9rem; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: white; text-decoration: none; opacity: 0.7; transition: 0.3s; }
+        .footer-links a:hover { opacity: 1; color: var(--secondary); }
+        
+        .copyright { border-top: 1px solid rgba(255,255,255,0.1); text-align: center; padding-top: 20px; font-size: 0.85rem; opacity: 0.6; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="container nav">
-            <div class="logo"><i class="fas fa-map-marker-alt"></i> وُجْهَة <span>CAR</span></div>
-            <div style="font-weight: bold; color: var(--primary);">مرحباً، يوسف 👋</div>
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">و</div>
+                وُجْهَة <span>CAR</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="cars.html" class="active">السيارات</a></li>
+                <li><a href="dashboard.html">لوحة التحكم</a></li>
+            </ul>
+
+            <div class="user-menu">
+                <div class="user-name"><i class="fas fa-user-circle"></i> يوسف المطيري</div>
+                <button class="btn-logout" onclick="alert('تم تسجيل الخروج')">خروج</button>
+            </div>
         </div>
     </header>
 
-    <div class="container">
-        <h2 style="margin-top: 40px; color: var(--primary);">اختر مركبتك للانطلاق 🚗</h2>
-        
-        <div class="cars-grid">
+    <section class="content-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>أسطولنا المتميز</h2>
+                <p>اختر السيارة التي تناسب وجهتك القادمة، بكل سهولة وأمان</p>
+            </div>
             
-            <div class="car-card">
-                <div class="car-img-box">
-                    <span class="badge"><i class="fas fa-star"></i> مميز</span>
-                    <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800" alt="Land Cruiser">
-                </div>
-                <div class="car-info">
-                    <h3 class="car-title">تويوتا - لاند كروزر</h3>
-                    <div class="car-year">موديل 2023 | فئة GXR</div>
-                    <div class="car-specs">
-                        <div class="spec"><i class="fas fa-gas-pump"></i> بنزين</div>
-                        <div class="spec"><i class="fas fa-chair"></i> 7 مقاعد</div>
+            <div class="cars-grid">
+                
+                <div class="car-card">
+                    <div class="car-img-box">
+                        <span class="badge"><i class="fas fa-star"></i> الأكثر طلباً</span>
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.EfvaZPq7CIfMm0BK0ebCGQHaE8?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Land Cruiser">
                     </div>
-                    <div class="price-box">
-                        <div class="price">450 <small>ر.س/يوم</small></div>
-                        <button class="btn-book" onclick="bookCar('Toyota Land Cruiser', '2023', 'ح ب ر 2030', '450', 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800')">
-                            حجز الآن
-                        </button>
+                    <div class="car-info">
+                        <h3 class="car-title">تويوتا - لاند كروزر</h3>
+                        <div class="car-year">موديل 2023 | GXR فل كامل</div>
+                        <div class="car-specs">
+                            <div class="spec"><i class="fas fa-gas-pump"></i> بنزين</div>
+                            <div class="spec"><i class="fas fa-chair"></i> 7 مقاعد</div>
+                            <div class="spec"><i class="fas fa-tachometer-alt"></i> 4x4</div>
+                        </div>
+                        <div class="price-box">
+                            <div class="price">450 <small>ر.س/يوم</small></div>
+                            <button class="btn-book" onclick="bookCar('تويوتا - لاند كروزر', '2023', 'ح ب ر 2030', '450', 'https://tse2.mm.bing.net/th/id/OIP.EfvaZPq7CIfMm0BK0ebCGQHaE8?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3')">
+                                حجز الآن
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="car-card">
-                <div class="car-img-box">
-                    <span class="badge" style="background: var(--secondary);">كهربائية</span>
-                    <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=800" alt="Lucid">
-                </div>
-                <div class="car-info">
-                    <h3 class="car-title">لوسيد - Air Pure</h3>
-                    <div class="car-year">موديل 2024 | كهرباء بالكامل</div>
-                    <div class="car-specs">
-                        <div class="spec"><i class="fas fa-charging-station"></i> كهرباء</div>
-                        <div class="spec"><i class="fas fa-snowflake"></i> باردة</div>
+                <div class="car-card">
+                    <div class="car-img-box">
+                        <span class="badge" style="background: var(--secondary);">كهربائية فاخرة</span>
+                        <img src="https://tse3.mm.bing.net/th/id/OIP.Gkml3yGhdHuvxKLWzXotzwHaEK?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Lucid">
                     </div>
-                    <div class="price-box">
-                        <div class="price">800 <small>ر.س/يوم</small></div>
-                        <button class="btn-book" onclick="bookCar('Lucid Air', '2024', 'ل و س 2030', '800', 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=800')">
-                            حجز الآن
-                        </button>
+                    <div class="car-info">
+                        <h3 class="car-title">لوسيد - Air Pure</h3>
+                        <div class="car-year">موديل 2024 | كهرباء بالكامل</div>
+                        <div class="car-specs">
+                            <div class="spec"><i class="fas fa-charging-station"></i> 800 كم</div>
+                            <div class="spec"><i class="fas fa-snowflake"></i> تكييف ذكي</div>
+                            <div class="spec"><i class="fas fa-bolt"></i> تسارع عالي</div>
+                        </div>
+                        <div class="price-box">
+                            <div class="price">800 <small>ر.س/يوم</small></div>
+                            <button class="btn-book" onclick="bookCar('لوسيد - Air Pure', '2024', 'ل و س 2030', '800', 'https://tse3.mm.bing.net/th/id/OIP.Gkml3yGhdHuvxKLWzXotzwHaEK?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3')">
+                                حجز الآن
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="car-card">
-                <div class="car-img-box">
-                    <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800" alt="Elantra">
-                </div>
-                <div class="car-info">
-                    <h3 class="car-title">هيونداي - النترا</h3>
-                    <div class="car-year">موديل 2023 | اقتصادية</div>
-                    <div class="car-specs">
-                        <div class="spec"><i class="fas fa-gas-pump"></i> موفرة</div>
-                        <div class="spec"><i class="fas fa-user"></i> 5 ركاب</div>
+                <div class="car-card">
+                    <div class="car-img-box">
+                        <span class="badge" style="background: #2ecc71;">اقتصادية</span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/2021_Hyundai_Elantra_Limited_%28United_States%29_front_view.jpg/800px-2021_Hyundai_Elantra_Limited_%28United_States%29_front_view.jpg" alt="Elantra">
                     </div>
-                    <div class="price-box">
-                        <div class="price">180 <small>ر.س/يوم</small></div>
-                        <button class="btn-book" onclick="bookCar('Hyundai Elantra', '2023', 'هـ ي و 1234', '180', 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800')">
-                            حجز الآن
-                        </button>
+                    <div class="car-info">
+                        <h3 class="car-title">هيونداي - النترا</h3>
+                        <div class="car-year">موديل 2023 | الفئة الذكية</div>
+                        <div class="car-specs">
+                            <div class="spec"><i class="fas fa-gas-pump"></i> موفرة جداً</div>
+                            <div class="spec"><i class="fas fa-user"></i> 5 ركاب</div>
+                            <div class="spec"><i class="fas fa-music"></i> بلوتوث</div>
+                        </div>
+                        <div class="price-box">
+                            <div class="price">180 <small>ر.س/يوم</small></div>
+                            <button class="btn-book" onclick="bookCar('هيونداي - النترا', '2023', 'هـ ي و 1234', '180', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/2021_Hyundai_Elantra_Limited_%28United_States%29_front_view.jpg/800px-2021_Hyundai_Elantra_Limited_%28United_States%29_front_view.jpg')">
+                                حجز الآن
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>عن وُجْهَة</h3>
+                    <p>منصة سعودية مبتكرة لتأجير السيارات، نجمع بين أحدث التقنيات وأعلى معايير الأمان لضمان رحلة مريحة وموثقة.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="cars.html">السيارات المتاحة</a></li>
+                        <li><a href="add-car.html">أجر سيارتك</a></li>
+                        <li><a href="#">الشروط والأحكام</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>تواصل معنا</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> 92000XXXX</li>
+                        <li><i class="fas fa-envelope"></i> support@wujha.sa</li>
+                        <li><i class="fas fa-map-marker-alt"></i> الرياض، المملكة العربية السعودية</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 وُجْهَة. جميع الحقوق محفوظة.
+            </div>
+        </div>
+    </footer>
 
     <script>
         // دالة حفظ البيانات والانتقال للعقد
@@ -142,11 +225,10 @@
             localStorage.setItem('wujha_car_price', price);
             localStorage.setItem('wujha_car_image', image);
             
-            // تصفير حالة التوقيع القديمة (عشان يبدأ عقد جديد)
+            // تصفير حالة التوقيع (عشان يبدأ عقد جديد)
             localStorage.setItem('wujha_contract_signed', 'false');
 
-            // الانتقال لصفحة العقد (تأكد ان اسم ملف العقد contract.html)
-            // ملاحظة: غير الاسم هنا إذا كان اسم ملف العقد مختلف
+            // الانتقال لصفحة العقد
             window.location.href = 'contract_final.html'; 
         }
     </script>
