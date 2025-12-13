@@ -3,382 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وُجْهَة | استكشف السيارات</title>
+    <title>وُجْهَة | اختر سيارتك</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root { --primary: #0f2925; --secondary: #c5a065; --bg: #f4f6f8; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg); margin: 0; }
+        
+        /* الهيدر */
+        header { background: white; padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 5px; }
+        .logo span { color: var(--secondary); }
+
+        /* شبكة السيارات */
+        .cars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; margin-bottom: 50px; }
+        
+        /* كرت السيارة */
+        .car-card { 
+            background: white; border-radius: 16px; overflow: hidden; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; 
+            border: 1px solid transparent;
+        }
+        .car-card:hover { transform: translateY(-5px); border-color: var(--secondary); }
+        
+        .car-img-box { height: 200px; overflow: hidden; position: relative; }
+        .car-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .badge { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.7); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; }
+        
+        .car-info { padding: 20px; }
+        .car-title { font-size: 1.2rem; font-weight: bold; color: var(--primary); margin: 0 0 5px; }
+        .car-year { color: #888; font-size: 0.9rem; }
+        
+        .car-specs { display: flex; gap: 15px; margin: 15px 0; font-size: 0.85rem; color: #555; }
+        .spec { display: flex; align-items: center; gap: 5px; background: #f8f9fa; padding: 5px 10px; border-radius: 5px; }
+        
+        .price-box { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
+        .price { font-size: 1.3rem; font-weight: 800; color: var(--secondary); }
+        .price small { font-size: 0.8rem; color: #999; font-weight: normal; }
+        
+        .btn-book { 
+            background: var(--primary); color: white; border: none; 
+            padding: 10px 25px; border-radius: 8px; cursor: pointer; 
+            font-weight: bold; transition: 0.2s; 
+        }
+        .btn-book:hover { background: #0a1f1c; }
+
+    </style>
 </head>
 <body>
+
     <header>
-        <div class="container">
-            <nav class="navbar">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon">و</div>
-                    <div class="logo-text">وُجْهَة</div>
-                </a>
-                <ul class="nav-links desktop-nav-links">
-                    <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="cars.html" class="active">استكشف السيارات</a></li>
-                    <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-                    <li><a href="dashboard-owner.html" class="auth-link" id="nav-owner-dashboard">لوحة تحكم المؤجر</a></li>
-                    <li><a href="dashboard-renter.html" class="auth-link" id="nav-renter-dashboard">لوحة تحكم المستأجر</a></li>
-                    <li><a href="add-car.html" class="auth-link" id="nav-add-car">أضف سيارتك</a></li>
-                    <li><a href="quiz.html">اختبار السيارة المناسبة</a></li>
-                    <li><a href="qassim-map.html">خرائط السيارات </a></li>
-                </ul>
-                <div class="nav-buttons nav-buttons-desktop-only">
-                    <button id="theme-toggle-desktop" class="theme-toggle" aria-label="تبديل الوضع">
-                        <i class="fas fa-moon"></i>
-                        <span>الوضع</span> </button>
-                    <button id="desktop-chatbot-toggle" class="btn btn-outline" style="display: none;">
-                        <i class="fas fa-comment-dots"></i>
-                        <span>اسالني</span>
-                    </button>
-                    <a href="landing.html" class="btn btn-primary guest-only" id="nav-guest-button">تسجيل دخول / جديد</a>
-                    <div id="nav-user-profile-placeholder"></div>
-                </div>
-            </nav>
+        <div class="container nav">
+            <div class="logo"><i class="fas fa-map-marker-alt"></i> وُجْهَة <span>CAR</span></div>
+            <div style="font-weight: bold; color: var(--primary);">مرحباً، يوسف 👋</div>
         </div>
     </header>
 
-    <section id="cars" class="cars-section" style="padding-top: 150px;">
-        <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>السيارات المتاحة للتأجير</h2>
-                <p>اختر من بين مجموعة متنوعة من السيارات التي يقدمها ملاك موثوقون</p>
-            </div>
+    <div class="container">
+        <h2 style="margin-top: 40px; color: var(--primary);">اختر مركبتك للانطلاق 🚗</h2>
+        
+        <div class="cars-grid">
             
-            <div class="cars-filter" data-aos="fade-up" data-aos-delay="100">
-                <button class="filter-btn active">الكل</button>
-                <button class="filter-btn">سيدان</button>
-                <button class="filter-btn">دفع رباعي</button>
-                <button class="filter-btn">فاخرة</button>
-                <button class="filter-btn">اقتصادية</button>
-            </div>
-            
-            <div class="cars-grid">
-                <div class="car-card" data-aos="fade-up" data-aos-delay="150">
-                    <div class="car-img">
-                        <img src="https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="تويوتا كامري">
-                        <div class="car-badge">الأكثر طلباً</div>
-                    </div>
-                    <div class="car-info">
-                        <div class="car-header">
-                            <h3 class="car-title">تويوتا كامري 2022</h3>
-                            <div class="car-price">85 <span>ريال/اليوم</span></div>
-                        </div>
-                        <div class="car-meta">
-                            <div class="meta-item">
-                                <i class="fas fa-car"></i> أوتوماتيك
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-gas-pump"></i> بنزين
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-user"></i> 5 ركاب
-                            </div>
-                        </div>
-                        <div class="car-location">
-                            <i class="fas fa-map-marker-alt"></i> الرياض، حي المروج
-                        </div>
-                        <div class="car-actions">
-                            <a href="#" class="btn btn-outline">
-                                <i class="far fa-heart"></i> المفضلة
-                            </a>
-                            <a href="#" class="btn btn-primary">
-                                <i class="fas fa-calendar-check"></i> احجز الآن
-                            </a>
-                        </div>
-                    </div>
+            <div class="car-card">
+                <div class="car-img-box">
+                    <span class="badge"><i class="fas fa-star"></i> مميز</span>
+                    <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800" alt="Land Cruiser">
                 </div>
-                
-                <div class="car-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="car-img">
-                        <img src="https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg" alt="سيارة لاندكروزر">
-                        <div class="car-badge">خصم 20%</div>
+                <div class="car-info">
+                    <h3 class="car-title">تويوتا - لاند كروزر</h3>
+                    <div class="car-year">موديل 2023 | فئة GXR</div>
+                    <div class="car-specs">
+                        <div class="spec"><i class="fas fa-gas-pump"></i> بنزين</div>
+                        <div class="spec"><i class="fas fa-chair"></i> 7 مقاعد</div>
                     </div>
-                    <div class="car-info">
-                        <div class="car-header">
-                            <h3 class="car-title">تويوتا لاندكروزر 2021</h3>
-                            <div class="car-price">220 <span>ريال/اليوم</span></div>
-                        </div>
-                        <div class="car-meta">
-                            <div class="meta-item">
-                                <i class="fas fa-car"></i> أوتوماتيك
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-gas-pump"></i> بنزين
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-user"></i> 7 ركاب
-                            </div>
-                        </div>
-                        <div class="car-location">
-                            <i class="fas fa-map-marker-alt"></i> جدة، حي الصفا
-                        </div>
-                        <div class="car-actions">
-                            <a href="#" class="btn btn-outline">
-                                <i class="far fa-heart"></i> المفضلة
-                            </a>
-                            <a href="#" class="btn btn-primary">
-                                <i class="fas fa-calendar-check"></i> احجز الآن
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="car-card" data-aos="fade-up" data-aos-delay="250">
-                    <div class="car-img">
-                        <img src="https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp" alt="سيارة هونداي النترا">
-                    </div>
-                    <div class="car-info">
-                        <div class="car-header">
-                            <h3 class="car-title">هونداي النترا 2023</h3>
-                            <div class="car-price">75 <span>ريال/اليوم</span></div>
-                        </div>
-                        <div class="car-meta">
-                            <div class="meta-item">
-                                <i class="fas fa-car"></i> أوتوماتيك
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-gas-pump"></i> بنزين
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-user"></i> 5 ركاب
-                            </div>
-                        </div>
-                        <div class="car-location">
-                            <i class="fas fa-map-marker-alt"></i> الدمام، حي الروضة
-                        </div>
-                        <div class="car-actions">
-                            <a href="#" class="btn btn-outline">
-                                <i class="far fa-heart"></i> المفضلة
-                            </a>
-                            <a href="#" class="btn btn-primary">
-                                <i class="fas fa-calendar-check"></i> احجز الآن
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="car-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="car-img">
-                        <img src="https://media.elbalad.news/2024/10/large/995/9/554.jpg" alt="سيارة مرسيدس">
-                    </div>
-                    <div class="car-info">
-                        <div class="car-header">
-                            <h3 class="car-title">مرسيدس E-Class 2020</h3>
-                            <div class="car-price">300 <span>ريال/اليوم</span></div>
-                        </div>
-                        <div class="car-meta">
-                            <div class="meta-item">
-                                <i class="fas fa-car"></i> أوتوماتيك
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-gas-pump"></i> بنزين
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-user"></i> 5 ركاب
-                            </div>
-                        </div>
-                        <div class="car-location">
-                            <i class="fas fa-map-marker-alt"></i> الرياض، حي السفارات
-                        </div>
-                        <div class="car-actions">
-                            <a href="#" class="btn btn-outline">
-                                <i class="far fa-heart"></i> المفضلة
-                            </a>
-                            <a href="#" class="btn btn-primary">
-                                <i class="fas fa-calendar-check"></i> احجز الآن
-                            </a>
-                        </div>
+                    <div class="price-box">
+                        <div class="price">450 <small>ر.س/يوم</small></div>
+                        <button class="btn-book" onclick="bookCar('Toyota Land Cruiser', '2023', 'ح ب ر 2030', '450', 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800')">
+                            حجز الآن
+                        </button>
                     </div>
                 </div>
             </div>
-            
-            <div style="text-align: center; margin-top: 50px;" data-aos="fade-up">
-                <a href="#" class="btn btn-outline">استكشف المزيد من السيارات</a>
-            </div>
-        </div>
-    </section>
 
-    <section class="recently-viewed-bar">
-        <div class="container">
-            <h3>السيارات التي شاهدتها مؤخرًا</h3>
-            <div class="recently-viewed-cars-grid" id="recently-viewed-cars-container">
+            <div class="car-card">
+                <div class="car-img-box">
+                    <span class="badge" style="background: var(--secondary);">كهربائية</span>
+                    <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=800" alt="Lucid">
                 </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>عن وُجْهَة</h3>
-                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 25px; line-height: 1.8;">
-                        أول منصة سعودية متخصصة في تأجير السيارات بين الأفراد بثقة وأمان وسهولة تامة. نسعى لتحويل السيارات الواقعة إلى أصول منتجة.
-                    </p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                <div class="car-info">
+                    <h3 class="car-title">لوسيد - Air Pure</h3>
+                    <div class="car-year">موديل 2024 | كهرباء بالكامل</div>
+                    <div class="car-specs">
+                        <div class="spec"><i class="fas fa-charging-station"></i> كهرباء</div>
+                        <div class="spec"><i class="fas fa-snowflake"></i> باردة</div>
+                    </div>
+                    <div class="price-box">
+                        <div class="price">800 <small>ر.س/يوم</small></div>
+                        <button class="btn-book" onclick="bookCar('Lucid Air', '2024', 'ل و س 2030', '800', 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=800')">
+                            حجز الآن
+                        </button>
                     </div>
                 </div>
-                
-                <div class="footer-col">
-                    <h3>روابط سريعة</h3>
-                    <ul>
-                        <li><a href="index.html">الرئيسية</a></li>
-                        <li><a href="cars.html">استكشف السيارات</a></li>
-                        <li><a href="index.html#how-it-works">كيف تعمل</a></li>
-                        <li><a href="#">المدونة</a></li>
-                        <li><a href="https://wa.me/966565464718">اتصل بنا</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>للأفراد</h3>
-                    <ul>
-                        <li><a href="dashboard-renter.html">تسجيل كمستأجر</a></li>
-                        <li><a href="cars.html">البحث عن سيارة</a></li>
-                        <li><a href="rental-terms.html">شروط الاستئجار</a></li>
-                        <li><a href="faq.html">الأسئلة الشائعة</a></li>
-                        <li><a href="user-guide.html">دليل المستخدم</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>تواصل معنا</h3>
-                    <ul class="footer-contact">
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>القصيم بريدة حي الاسكان</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <span>+966 56 546 4718</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <span><a href="mailto:q_p@outlook.cl">q_p@outlook.cl</a></span>
-                        </li>
-                    </ul>
-                </div>
             </div>
-            
-            <div class="copyright">
-                <p>© 2025 وُجْهَة. جميع الحقوق محفوظة. | تم التطوير بكل ❤️ في المملكة العربية السعودية</p>
-            </div>
-        </div>
-    </footer>
 
-    <nav class="bottom-navbar mobile-bottom-navbar">
-        <a href="index.html" class="nav-item">
-            <i class="fas fa-home"></i>
-            <span>الرئيسية</span>
-        </a>
-        <a href="cars.html" class="nav-item active">
-            <i class="fas fa-car"></i>
-            <span>السيارات</span>
-        </a>
-        <a href="landing.html" class="nav-item guest-only" id="mobile-bottom-guest-button">
-            <i class="fas fa-sign-in-alt"></i>
-            <span>دخول</span>
-        </a>
-        <a href="#" class="nav-item auth-link-bottom" id="mobile-bottom-user-button">
-            <i class="fas fa-user-circle"></i>
-            <span>حسابي</span>
-        </a>
-        <a href="add-car.html" class="nav-item auth-link-bottom" data-role="owner">
-            <i class="fas fa-plus-circle"></i>
-            <span>أضف سيارة</span>
-        </a>
-        <a href="quiz.html" class="nav-item">
-            <i class="fas fa-question-circle"></i>
-            <span>اختبار</span>
-        </a>
-        <a href="qassim-map.html" class="nav-item">
-            <i class="fas fa-map-marked-alt"></i>
-            <span>الخريطة</span>
-        </a>
-        <a href="#" class="nav-item" id="mobile-chatbot-toggle">
-            <i class="fas fa-comment-dots"></i>
-            <span>الدردشة</span>
-        </a>
-    </nav>
-
-    <div id="chatbot-popup" class="chatbot-popup">
-        <div class="chatbot-header">
-            <h3>اسالني</h3>
-            <button id="chatbot-close-btn" class="close-btn">&times;</button>
-        </div>
-        <div class="chatbot-body" id="chatbot-body">
-            <div class="bot-message">
-                مرحباً بك! أنا مساعد وُجْهَة، كيف يمكنني مساعدتك اليوم؟
+            <div class="car-card">
+                <div class="car-img-box">
+                    <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800" alt="Elantra">
+                </div>
+                <div class="car-info">
+                    <h3 class="car-title">هيونداي - النترا</h3>
+                    <div class="car-year">موديل 2023 | اقتصادية</div>
+                    <div class="car-specs">
+                        <div class="spec"><i class="fas fa-gas-pump"></i> موفرة</div>
+                        <div class="spec"><i class="fas fa-user"></i> 5 ركاب</div>
+                    </div>
+                    <div class="price-box">
+                        <div class="price">180 <small>ر.س/يوم</small></div>
+                        <button class="btn-book" onclick="bookCar('Hyundai Elantra', '2023', 'هـ ي و 1234', '180', 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800')">
+                            حجز الآن
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="chatbot-footer">
-            <input type="text" id="chatbot-input" placeholder="اكتب رسالتك هنا...">
-            <button id="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
+
         </div>
     </div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({
-            once: true,
-        });
+        // دالة حفظ البيانات والانتقال للعقد
+        function bookCar(name, year, plate, price, image) {
+            // حفظ البيانات في المتصفح
+            localStorage.setItem('wujha_car_name', name);
+            localStorage.setItem('wujha_car_year', year);
+            localStorage.setItem('wujha_car_plate', plate);
+            localStorage.setItem('wujha_car_price', price);
+            localStorage.setItem('wujha_car_image', image);
+            
+            // تصفير حالة التوقيع القديمة (عشان يبدأ عقد جديد)
+            localStorage.setItem('wujha_contract_signed', 'false');
+
+            // الانتقال لصفحة العقد (تأكد ان اسم ملف العقد contract.html)
+            // ملاحظة: غير الاسم هنا إذا كان اسم ملف العقد مختلف
+            window.location.href = 'contract_final.html'; 
+        }
     </script>
-    <script src="csr-content.js"></script> <script src="script.js"></script>
-    <script src="chatbot.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const carId = urlParams.get('carId'); // احصل على carId من الرابط
-
-            if (carId) {
-                // قم بربط carId بالاسم الجزئي للموديل في العنوان للبحث عنه
-                // هذه خريطة بسيطة للتحويل، يجب أن تكون مطابقة لـ id في بيانات الخريطة الموجودة في script.js
-                const carIdMapToModelName = {
-                    'camry': 'تويوتا كامري 2022',
-                    'landcruiser': 'تويوتا لاندكروزر 2021',
-                    'elantra': 'هونداي النترا 2023',
-                    'mercedes': 'مرسيدس E-Class 2020',
-                    'malibu': 'شيفروليه ماليبو 2020',
-                    'patrol': 'نيسان باترول 2023',
-                    'kia-rio': 'كيا ريو 2024',
-                    // أضف المزيد هنا إذا كانت لديك سيارات أخرى في بيانات الخريطة بملف script.js
-                };
-                
-                const targetCarModel = carIdMapToModelName[carId];
-
-                if (targetCarModel) {
-                    const carCards = document.querySelectorAll('.car-card');
-                    carCards.forEach(card => {
-                        const carTitleElement = card.querySelector('.car-title');
-                        if (carTitleElement && carTitleElement.textContent.includes(targetCarModel)) {
-                            // تم العثور على بطاقة السيارة المطابقة
-                            card.classList.add('highlighted-car'); // أضف كلاس للتمييز
-                            
-                            // قم بالتمرير إلى بطاقة السيارة
-                            // offsetTop - 100 لتجنب التمرير الزائد عن رأس الصفحة الثابت
-                            window.scrollTo({
-                                top: card.offsetTop - 100, // ضبط القيمة حسب ارتفاع الهيدر الثابت
-                                behavior: 'smooth'
-                            });
-
-                            // إزالة التمييز بعد فترة قصيرة
-                            setTimeout(() => {
-                                card.classList.remove('highlighted-car');
-                            }, 3000); // إزالة التمييز بعد 3 ثوانٍ
-                        }
-                    });
-                }
-            }
-        });
-    </script>
-    </body>
+</body>
 </html>
