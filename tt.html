@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لير للاتصالات | LER Telecom</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#0f172a',
+                        brandLight: '#1e293b',
+                        accent: '#3AB54A',
+                        accentDark: '#2f9e3e',
+                    },
+                    fontFamily: { sans: ['Tajawal', 'sans-serif'] },
+                    boxShadow: {
+                        'soft': '0 10px 40px rgba(0, 0, 0, 0.05)',
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s infinite',
+                    },
+                    keyframes: {
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f8fafc; overflow-x: hidden; scroll-behavior: smooth; }
+        
+        /* أزرار الأشهر */
+        .month-btn {
+            width: 45px; height: 45px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; cursor: pointer; transition: all 0.3s ease;
+            background: white; border: 2px solid #e2e8f0; color: #94a3b8;
+        }
+        .month-btn.active {
+            background: #3AB54A; border-color: #3AB54A;
+            color: white; transform: scale(1.1); box-shadow: 0 5px 15px rgba(58, 181, 74, 0.3);
+        }
+
+        /* زر السويتش */
+        .toggle-checkbox:checked { right: 0; border-color: #3AB54A; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #3AB54A; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <nav class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="font-black text-2xl text-brand tracking-tighter">LER <span class="text-accent">.</span></div>
+            </div>
+            <div class="flex gap-2">
+                <a href="#devices" class="hidden md:flex bg-gray-100 text-brand px-5 py-2 rounded-full font-bold text-xs hover:bg-gray-200 transition items-center gap-2">
+                    <i class="fas fa-mobile-alt"></i> الأجهزة
+                </a>
+                <button onclick="document.getElementById('calculator-section').scrollIntoView({behavior:'smooth'})" class="bg-brand text-white px-5 py-2 rounded-full font-bold text-xs hover:bg-slate-700 transition shadow-lg flex items-center gap-2">
+                    <i class="fas fa-wallet"></i> تقديم طلب
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative bg-brand text-white py-20 pb-32 overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-accent rounded-full blur-[120px] opacity-20"></div>
+
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10">
+            <div class="md:w-1/2 text-center md:text-right mb-10 md:mb-0" data-aos="fade-left">
+                <span class="bg-white/10 border border-white/20 text-accent px-3 py-1 rounded-full text-[10px] font-bold mb-4 inline-flex items-center gap-2">
+                    <i class="fas fa-check-circle"></i> معتمدين في حفر الباطن
+                </span>
+                <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+                    خاطرك بجهاز؟<br>
+                    ولا تبي <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-green-300">كاش يفك أزمتك؟</span>
+                </h1>
+                <p class="text-slate-300 text-lg mb-8 max-w-lg">حنا "لير".. نضبطك بآيفون 17 الجديد أقساط، ولا نحول رصيد تابي بحسابك كاش.. بأسرع وقت وأقل هامش.</p>
+            </div>
+            <div class="md:w-1/2 flex justify-center" data-aos="fade-right">
+                <img src="https://www.att.com/es-us/scmsassets/global/devices/phones/apple/apple-iphone-17-pro/carousel/deep-blue-2.png" class="w-72 float drop-shadow-2xl animate-float">
+            </div>
+        </div>
+    </section>
+
+    <div class="container mx-auto px-4 -mt-16 relative z-20">
+        <div class="bg-white rounded-2xl shadow-xl border-b-4 border-accent p-6 flex flex-col md:flex-row items-center justify-between gap-6 max-w-4xl mx-auto transform hover:-translate-y-1 transition duration-300">
+            <div class="flex items-center gap-4 w-full md:w-auto">
+                <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center text-red-500 animate-pulse">
+                    <i class="fas fa-chart-line text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-black text-brand text-lg">حالة السيولة اليومية</h3>
+                    <p class="text-xs text-gray-500 font-bold">تحديث مباشر من النظام 🔴</p>
+                </div>
+            </div>
+            
+            <div class="flex-1 w-full">
+                <div class="flex justify-between text-xs font-bold mb-2">
+                    <span class="text-gray-400">المبلغ المتاح للتمويل الفوري</span>
+                    <span class="text-green-600 dir-ltr" id="liquidityAmount">24,000 ريال</span>
+                </div>
+                <div class="h-4 bg-gray-100 rounded-full overflow-hidden shadow-inner relative">
+                    <div id="liquidityBar" class="h-full bg-gradient-to-r from-red-500 to-green-500 transition-all duration-1000 relative" style="width: 100%">
+                        <div class="absolute inset-0 bg-white/20 animate-[pulse_2s_infinite]"></div>
+                    </div>
+                </div>
+                <p class="text-[10px] text-gray-400 mt-1 text-left">* يتجدد الحد يومياً الساعة 12:00 ص</p>
+            </div>
+        </div>
+    </div>
+
+    <section id="calculator-section" class="py-16 bg-gray-50 relative">
+        <div class="container mx-auto px-4">
+            
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-black text-brand mb-2">حاسبة التمويل الذكية</h2>
+                <p class="text-sm text-gray-500">حط المبلغ اللي ببالك، وشوف كم يصفى لك بجيبك</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto items-start">
+                
+                <div class="lg:col-span-7" data-aos="fade-up">
+                    <div class="bg-white rounded-[2rem] shadow-soft border border-gray-100 p-6 md:p-8 relative overflow-hidden">
+                        
+                        <div class="text-center mb-8 mt-4">
+                            <label class="text-xs font-bold text-gray-400 block mb-2">كم المبلغ المطلوب؟</label>
+                            <div class="flex items-center justify-center gap-2 group">
+                                <input type="number" id="amountInput" value="2000" class="text-5xl md:text-6xl font-black text-center text-brand w-64 border-b-2 border-gray-100 focus:border-accent outline-none bg-transparent transition-colors pb-2" oninput="calculate()">
+                                <span class="text-2xl font-bold text-gray-300 mt-4">ريال</span>
+                            </div>
+                            <div id="amountError" class="text-red-500 text-xs font-bold mt-2 hidden animate-bounce">⚠️ الحد الأعلى للتمويل 5000 ريال</div>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-3xl p-6 border border-gray-100 mb-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xs font-bold text-gray-500">مدة التقسيط</span>
+                                <span class="text-sm font-black text-brand" id="monthsDisplay">4 شهور</span>
+                            </div>
+                            <div class="flex justify-between items-center gap-2">
+                                <div class="flex flex-col items-center gap-1" onclick="setDuration(4)">
+                                    <div class="month-btn active" data-val="4">4</div>
+                                    <span class="text-[10px] text-gray-400">أشهر</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1" onclick="setDuration(6)">
+                                    <div class="month-btn" data-val="6">6</div>
+                                    <span class="text-[10px] text-gray-400">أشهر</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1" onclick="setDuration(8)">
+                                    <div class="month-btn" data-val="8">8</div>
+                                    <span class="text-[10px] text-gray-400">أشهر</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1" onclick="setDuration(12)">
+                                    <div class="month-btn" data-val="12">12</div>
+                                    <span class="text-[10px] text-gray-400">شهر</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between bg-white border border-gray-100 p-4 rounded-2xl shadow-sm mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center text-lg">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-gray-700">نسدد عنك الدفعة الأولى؟</h4>
+                                    <p class="text-[11px] font-bold text-accent transition-colors" id="firstPaymentText">الدفعة: 500 ريال</p>
+                                </div>
+                            </div>
+                            <div class="relative inline-block w-12 align-middle select-none">
+                                <input type="checkbox" id="wePayToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer right-6 transition-all duration-300 shadow-sm" onchange="calculate()"/>
+                                <label for="wePayToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-200 cursor-pointer transition-all duration-300"></label>
+                            </div>
+                        </div>
+
+                        <div class="bg-brand rounded-[1.5rem] p-6 text-center text-white relative overflow-hidden group">
+                            <div class="absolute -top-10 -right-10 w-32 h-32 bg-accent/20 rounded-full blur-2xl group-hover:bg-accent/30 transition"></div>
+                            <p class="text-xs text-gray-400 font-bold mb-2 relative z-10">صافي الكاش اللي بيتحول لك 💵</p>
+                            <h2 class="text-5xl font-black text-accent mb-2 relative z-10" id="netCash">1700 ريال</h2>
+                            <p class="text-[10px] text-gray-400 relative z-10" id="resultNote">شامل خصم الرسوم فقط (أنت تسدد الدفعة)</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5" data-aos="fade-left">
+                    <div class="bg-white rounded-[2rem] shadow-soft border border-gray-100 p-8 h-full">
+                        <h3 class="text-xl font-black text-brand mb-6 flex items-center gap-2">
+                            <i class="fas fa-bolt text-yellow-400"></i>
+                            أكمل بياناتك واعتمد
+                        </h3>
+
+                        <form onsubmit="submitOrder(event)">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-xs font-bold text-gray-500 mr-1 mb-1 block">رقم الهوية</label>
+                                    <input type="number" id="q_id" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 font-bold focus:bg-white focus:border-accent outline-none transition" placeholder="مثال: 10xxxxxxxxx" required>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="text-xs font-bold text-gray-500 mr-1 mb-1 block">الميلاد (هجري)</label>
+                                        <input type="text" id="q_dob" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 font-bold focus:bg-white focus:border-accent outline-none transition text-sm" placeholder="14xx/xx/xx" required>
+                                    </div>
+                                    <div>
+                                        <label class="text-xs font-bold text-gray-500 mr-1 mb-1 block">الراتب</label>
+                                        <input type="number" id="q_salary" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 font-bold focus:bg-white focus:border-accent outline-none transition text-sm" placeholder="الراتب" required>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="text-xs font-bold text-gray-500 mr-1 mb-1 block">رقم الجوال (المربوط في أبشر)</label>
+                                    <input type="tel" id="q_mobile" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 font-bold focus:bg-white focus:border-accent outline-none transition text-left dir-ltr" placeholder="05xxxxxxxx" required>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-xs font-bold text-gray-500 mr-1 mb-1 block">جهة العمل</label>
+                                    <select id="q_sector" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 font-bold focus:bg-white focus:border-accent outline-none transition appearance-none text-sm text-gray-600">
+                                        <option>قطاع حكومي</option>
+                                        <option>قطاع خاص</option>
+                                        <option>عسكري</option>
+                                        <option>متقاعد</option>
+                                        <option>سعودة</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full mt-8 bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95 flex justify-center items-center gap-2 text-lg">
+                                <i class="fab fa-whatsapp"></i> اعتماد الطلب واتساب
+                            </button>
+                            <p class="text-[10px] text-gray-400 text-center mt-3">إرسال الطلب يعني الموافقة على الشروط</p>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="devices" class="py-16 bg-white border-t border-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10">
+                <span class="text-accent font-bold text-xs tracking-widest uppercase">New Arrivals</span>
+                <h2 class="text-3xl font-black text-brand">أحدث الأجهزة عندنا 🔥</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-slate-50 rounded-[2rem] p-6 shadow-sm border border-slate-100 text-center hover:shadow-lg transition duration-300 group" data-aos="fade-up">
+                    <img src="https://www.att.com/scmsassets/global/devices/phones/apple/apple-iphone-17-pro/defaultimage/deep-blue-hero-zoom.png" class="h-56 mx-auto mb-6 object-contain group-hover:scale-110 transition duration-500">
+                    <h3 class="text-xl font-bold text-brand">iPhone 17 Pro Max</h3>
+                    <p class="text-gray-400 text-sm mb-4">التيتانيوم الأزرق الجديد</p>
+                    <button class="w-full py-3 rounded-xl border-2 border-brand text-brand font-bold hover:bg-brand hover:text-white transition">أطلبه الآن</button>
+                </div>
+                <div class="bg-slate-50 rounded-[2rem] p-6 shadow-sm border border-slate-100 text-center hover:shadow-lg transition duration-300 group" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://static.k-tuin.com/media/catalog/product/cache/1/image/0dc2d03fe217f8c83829496872af24a0/i/p/iphone-17-pro-plata-5.jpg" class="h-56 mx-auto mb-6 object-contain group-hover:scale-110 transition duration-500">
+                    <h3 class="text-xl font-bold text-brand">iPhone 17 Pro</h3>
+                    <p class="text-gray-400 text-sm mb-4">التيتانيوم الفضي اللامع</p>
+                    <button class="w-full py-3 rounded-xl border-2 border-brand text-brand font-bold hover:bg-brand hover:text-white transition">أطلبه الآن</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-brand pt-12 pb-8 text-center text-white border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-2xl font-black mb-4">LER <span class="text-accent">.</span></div>
+            <p class="text-gray-400 text-sm max-w-md mx-auto mb-8">
+                لير للاتصالات، وجهتك الأولى في حفر الباطن للحلول المالية السريعة والأجهزة الذكية.
+            </p>
+            <p class="text-gray-600 text-xs border-t border-gray-800 pt-8">© 2025 لير للاتصالات. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        // === 1. منطق بطاقة السيولة ===
+        function updateLiquidity() {
+            const now = new Date();
+            const startAmount = 24000;
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            const totalMinutesPassed = (currentHour * 60) + currentMinute;
+            
+            // معادلة النقصان
+            let remaining = startAmount - (totalMinutesPassed * 16.5);
+            remaining = remaining - (Math.random() * 50); // عشوائية
+            if (remaining < 1000) remaining = 1000; 
+
+            // تحديث البطاقة
+            document.getElementById('liquidityAmount').innerText = Math.floor(remaining).toLocaleString() + ' ريال';
+            document.getElementById('liquidityBar').style.width = ((remaining / startAmount) * 100) + "%";
+        }
+        setInterval(updateLiquidity, 5000); // تحديث كل 5 ثواني
+        updateLiquidity();
+
+        // === 2. منطق الحاسبة ===
+        let currentMonths = 4;
+        const feeRates = { 4: 0.15, 6: 0.20, 8: 0.25, 12: 0.30 };
+        const maxAmount = 5000;
+
+        function setDuration(months) {
+            currentMonths = months;
+            document.querySelectorAll('.month-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(parseInt(btn.getAttribute('data-val')) === months) btn.classList.add('active');
+            });
+            document.getElementById('monthsDisplay').innerText = months + ' شهور';
+            calculate();
+        }
+
+        function calculate() {
+            const amountInput = document.getElementById('amountInput');
+            let amount = parseFloat(amountInput.value);
+            
+            // تحقق من الحد
+            if (amount > maxAmount) {
+                document.getElementById('amountError').classList.remove('hidden');
+                amountInput.classList.add('text-red-500');
+            } else {
+                document.getElementById('amountError').classList.add('hidden');
+                amountInput.classList.remove('text-red-500');
+            }
+            if (!amount || amount < 0) amount = 0;
+
+            let monthly = amount / currentMonths;
+            let fee = amount * feeRates[currentMonths];
+            let net = amount - fee;
+
+            const wePay = document.getElementById('wePayToggle').checked;
+            const firstPayText = document.getElementById('firstPaymentText');
+            
+            if (wePay) {
+                net = net - monthly; 
+                firstPayText.innerText = "ندفعها عنك ونخصمها";
+                firstPayText.className = "text-[11px] font-bold text-orange-500";
+                document.getElementById('resultNote').innerText = "تم خصم الرسوم + الدفعة الأولى من الكاش";
+            } else {
+                firstPayText.innerText = "الدفعة: " + Math.round(monthly) + " ريال";
+                firstPayText.className = "text-[11px] font-bold text-accent";
+                document.getElementById('resultNote').innerText = "شامل خصم الرسوم فقط (أنت تسدد الدفعة)";
+            }
+
+            document.getElementById('netCash').innerText = Math.floor(net).toLocaleString() + ' ريال';
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            const amount = document.getElementById('amountInput').value;
+            if(amount > maxAmount) {
+                alert("المبلغ تجاوز الحد (5000)"); return;
+            }
+
+            const id = document.getElementById('q_id').value;
+            const salary = document.getElementById('q_salary').value;
+            const mobile = document.getElementById('q_mobile').value;
+            const sector = document.getElementById('q_sector').value;
+            const net = document.getElementById('netCash').innerText;
+            const dpStatus = document.getElementById('wePayToggle').checked ? "عليكم (مخصومة)" : "علي (بسددها)";
+
+            const msg = `السلام عليكم 🌹\n` +
+                        `أبي تمويل سيولة:\n` +
+                        `💰 المبلغ: ${amount} ريال\n` +
+                        `📅 المدة: ${currentMonths} شهور\n` +
+                        `💵 الصافي: ${net}\n` +
+                        `📝 الدفعة: ${dpStatus}\n` +
+                        `-------------------\n` +
+                        `👤 الهوية: ${id}\n` +
+                        `🏢 الراتب: ${salary}\n` +
+                        `📱 الجوال: ${mobile}\n` +
+                        `💼 القطاع: ${sector}\n` +
+                        `-------------------\n` +
+                        `اعتمد الطلب ✅`;
+
+            window.open(`https://wa.me/966533774766?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        calculate();
+    </script>
+</body>
+</html>
