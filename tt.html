@@ -23,14 +23,14 @@
                     fontFamily: { sans: ['Tajawal', 'sans-serif'] },
                     boxShadow: {
                         'soft': '0 10px 40px rgba(0, 0, 0, 0.05)',
-                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 3s infinite',
+                        'scroll': 'scroll 60s linear infinite',
                     },
                     keyframes: {
-                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } }
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                        scroll: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(100%)' } }
                     }
                 }
             }
@@ -39,7 +39,6 @@
     <style>
         body { background-color: #f8fafc; overflow-x: hidden; scroll-behavior: smooth; }
         
-        /* أزرار الأشهر */
         .month-btn {
             width: 45px; height: 45px; border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
@@ -50,8 +49,6 @@
             background: #3AB54A; border-color: #3AB54A;
             color: white; transform: scale(1.1); box-shadow: 0 5px 15px rgba(58, 181, 74, 0.3);
         }
-
-        /* زر السويتش */
         .toggle-checkbox:checked { right: 0; border-color: #3AB54A; }
         .toggle-checkbox:checked + .toggle-label { background-color: #3AB54A; }
     </style>
@@ -64,9 +61,6 @@
                 <div class="font-black text-2xl text-brand tracking-tighter">LER <span class="text-accent">.</span></div>
             </div>
             <div class="flex gap-2">
-                <a href="#devices" class="hidden md:flex bg-gray-100 text-brand px-5 py-2 rounded-full font-bold text-xs hover:bg-gray-200 transition items-center gap-2">
-                    <i class="fas fa-mobile-alt"></i> الأجهزة
-                </a>
                 <button onclick="document.getElementById('calculator-section').scrollIntoView({behavior:'smooth'})" class="bg-brand text-white px-5 py-2 rounded-full font-bold text-xs hover:bg-slate-700 transition shadow-lg flex items-center gap-2">
                     <i class="fas fa-wallet"></i> تقديم طلب
                 </button>
@@ -95,7 +89,7 @@
         </div>
     </section>
 
-    <div class="container mx-auto px-4 -mt-16 relative z-20">
+    <div class="container mx-auto px-4 -mt-16 relative z-20 mb-12">
         <div class="bg-white rounded-2xl shadow-xl border-b-4 border-accent p-6 flex flex-col md:flex-row items-center justify-between gap-6 max-w-4xl mx-auto transform hover:-translate-y-1 transition duration-300">
             <div class="flex items-center gap-4 w-full md:w-auto">
                 <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center text-red-500 animate-pulse">
@@ -106,7 +100,6 @@
                     <p class="text-xs text-gray-500 font-bold">تحديث مباشر من النظام 🔴</p>
                 </div>
             </div>
-            
             <div class="flex-1 w-full">
                 <div class="flex justify-between text-xs font-bold mb-2">
                     <span class="text-gray-400">المبلغ المتاح للتمويل الفوري</span>
@@ -122,9 +115,31 @@
         </div>
     </div>
 
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-gray-100 divide-x-reverse">
+                <div class="counter-box" data-aos="fade-up" data-aos-delay="0">
+                    <div class="text-4xl font-black text-brand mb-1 counter" data-target="150">0</div>
+                    <p class="text-xs font-bold text-gray-500">عميل خدمناهم 🤝</p>
+                </div>
+                <div class="counter-box" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-4xl font-black text-accent mb-1 counter" data-target="98">0</div>
+                    <p class="text-xs font-bold text-gray-500">نسبة القبول % ✅</p>
+                </div>
+                <div class="counter-box" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-4xl font-black text-blue-600 mb-1 counter" data-target="15">0</div>
+                    <p class="text-xs font-bold text-gray-500">دقيقة سرعة الإنجاز ⏱️</p>
+                </div>
+                <div class="counter-box" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-4xl font-black text-yellow-500 mb-1 counter" data-target="5">0</div>
+                    <p class="text-xs font-bold text-gray-500">نجوم في معروف ⭐</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="calculator-section" class="py-16 bg-gray-50 relative">
         <div class="container mx-auto px-4">
-            
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-black text-brand mb-2">حاسبة التمويل الذكية</h2>
                 <p class="text-sm text-gray-500">حط المبلغ اللي ببالك، وشوف كم يصفى لك بجيبك</p>
@@ -249,7 +264,110 @@
         </div>
     </section>
 
-    <section id="devices" class="py-16 bg-white border-t border-gray-100">
+    <section class="py-16 bg-white overflow-hidden border-t border-gray-100">
+        <div class="text-center mb-10">
+            <h2 class="text-2xl font-black text-brand">كلام الربع عنا ❤️</h2>
+            <div class="flex justify-center gap-1 text-yellow-400 text-sm mt-2">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+        </div>
+        
+        <div class="relative w-full overflow-hidden">
+            <div class="flex animate-scroll hover:pause gap-6 px-4" style="width: max-content;">
+                
+                <div class="w-80 bg-gray-50 p-6 rounded-2xl border border-gray-100 whitespace-normal">
+                    <p class="text-sm font-bold text-gray-600 mb-3">"ياخي فكوني من زنقة، التحويل ما اخذ 10 دقايق، ثقة والله."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs">م</div>
+                        <div class="text-xs font-black text-brand">محمد الشمري</div>
+                    </div>
+                </div>
+
+                <div class="w-80 bg-gray-50 p-6 rounded-2xl border border-gray-100 whitespace-normal">
+                    <p class="text-sm font-bold text-gray-600 mb-3">"أخذت منهم آيفون 15 برو، الجهاز أصلي وتغليف المصنع، والأقساط مريحة."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-xs">خ</div>
+                        <div class="text-xs font-black text-brand">خالد الظفيري</div>
+                    </div>
+                </div>
+
+                <div class="w-80 bg-gray-50 p-6 rounded-2xl border border-gray-100 whitespace-normal">
+                    <p class="text-sm font-bold text-gray-600 mb-3">"تعامل راقي جداً وسرعة في الرد، الله يرزقكم."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-xs">س</div>
+                        <div class="text-xs font-black text-brand">سعد المطيري</div>
+                    </div>
+                </div>
+
+                <div class="w-80 bg-gray-50 p-6 rounded-2xl border border-gray-100 whitespace-normal">
+                    <p class="text-sm font-bold text-gray-600 mb-3">"أفضل محل في الحفر، مصداقية وتعاااامل ولا غلطة."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 font-bold text-xs">ف</div>
+                        <div class="text-xs font-black text-brand">فهد العنزي</div>
+                    </div>
+                </div>
+
+                <div class="w-80 bg-gray-50 p-6 rounded-2xl border border-gray-100 whitespace-normal">
+                    <p class="text-sm font-bold text-gray-600 mb-3">"الكاش وصلني بنفس اليوم، شكراً لكم على الفزعة."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-red-600 font-bold text-xs">ن</div>
+                        <div class="text-xs font-black text-brand">نايف العتيبي</div>
+                    </div>
+                </div>
+
+                <div class="w-80 bg-gray-50 p-6 rounded-2xl border border-gray-100 whitespace-normal">
+                    <p class="text-sm font-bold text-gray-600 mb-3">"طلعت جهازين منهم، كل شي تمام والأقساط ميسرة."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-xs">ع</div>
+                        <div class="text-xs font-black text-brand">عبدالله الحربي</div>
+                    </div>
+                </div>
+
+                <div class="w-80 bg-gray-50 p-6 rounded-2xl border border-gray-100 whitespace-normal">
+                    <p class="text-sm font-bold text-gray-600 mb-3">"خدمة ممتازة، وما قصروا معي الشباب."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center text-pink-600 font-bold text-xs">ر</div>
+                        <div class="text-xs font-black text-brand">ريم القحطاني</div>
+                    </div>
+                </div>
+
+                <div class="w-80 bg-gray-50 p-6 rounded-2xl border border-gray-100 whitespace-normal">
+                    <p class="text-sm font-bold text-gray-600 mb-3">"أخيراً لقيت محل يحول رصيد تابي بدون تعقيد."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 font-bold text-xs">س</div>
+                        <div class="text-xs font-black text-brand">سلطان الدوسري</div>
+                    </div>
+                </div>
+
+                <div class="w-80 bg-gray-50 p-6 rounded-2xl border border-gray-100 whitespace-normal">
+                    <p class="text-sm font-bold text-gray-600 mb-3">"أنصح بالتعامل معهم، سرعة وأمانة."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 font-bold text-xs">ت</div>
+                        <div class="text-xs font-black text-brand">تركي السبيعي</div>
+                    </div>
+                </div>
+
+                 <div class="w-80 bg-gray-50 p-6 rounded-2xl border border-gray-100 whitespace-normal">
+                    <p class="text-sm font-bold text-gray-600 mb-3">"بيض الله وجيهكم، ما قصرتوا."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs">ف</div>
+                        <div class="text-xs font-black text-brand">فيصل الرويلي</div>
+                    </div>
+                </div>
+
+                <div class="w-80 bg-gray-50 p-6 rounded-2xl border border-gray-100 whitespace-normal">
+                    <p class="text-sm font-bold text-gray-600 mb-3">"ياخي فكوني من زنقة، التحويل ما اخذ 10 دقايق، ثقة والله."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs">م</div>
+                        <div class="text-xs font-black text-brand">محمد الشمري</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="devices" class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="text-center mb-10">
                 <span class="text-accent font-bold text-xs tracking-widest uppercase">New Arrivals</span>
@@ -257,13 +375,13 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="bg-slate-50 rounded-[2rem] p-6 shadow-sm border border-slate-100 text-center hover:shadow-lg transition duration-300 group" data-aos="fade-up">
+                <div class="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 text-center hover:shadow-lg transition duration-300 group" data-aos="fade-up">
                     <img src="https://www.att.com/scmsassets/global/devices/phones/apple/apple-iphone-17-pro/defaultimage/deep-blue-hero-zoom.png" class="h-56 mx-auto mb-6 object-contain group-hover:scale-110 transition duration-500">
                     <h3 class="text-xl font-bold text-brand">iPhone 17 Pro Max</h3>
                     <p class="text-gray-400 text-sm mb-4">التيتانيوم الأزرق الجديد</p>
                     <button class="w-full py-3 rounded-xl border-2 border-brand text-brand font-bold hover:bg-brand hover:text-white transition">أطلبه الآن</button>
                 </div>
-                <div class="bg-slate-50 rounded-[2rem] p-6 shadow-sm border border-slate-100 text-center hover:shadow-lg transition duration-300 group" data-aos="fade-up" data-aos-delay="100">
+                <div class="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 text-center hover:shadow-lg transition duration-300 group" data-aos="fade-up" data-aos-delay="100">
                     <img src="https://static.k-tuin.com/media/catalog/product/cache/1/image/0dc2d03fe217f8c83829496872af24a0/i/p/iphone-17-pro-plata-5.jpg" class="h-56 mx-auto mb-6 object-contain group-hover:scale-110 transition duration-500">
                     <h3 class="text-xl font-bold text-brand">iPhone 17 Pro</h3>
                     <p class="text-gray-400 text-sm mb-4">التيتانيوم الفضي اللامع</p>
@@ -287,6 +405,38 @@
     <script>
         AOS.init();
 
+        // كود العداد (للإحصائيات الجديدة)
+        function animateCounter(el) {
+            const target = +el.getAttribute('data-target');
+            const speed = 200; 
+            const inc = target / speed;
+            
+            const updateCount = () => {
+                const count = +el.innerText;
+                if (count < target) {
+                    el.innerText = Math.ceil(count + inc);
+                    setTimeout(updateCount, 20);
+                } else {
+                    el.innerText = target + "+";
+                }
+            };
+            updateCount();
+        }
+
+        // تشغيل العداد عند الوصول للقسم
+        const counters = document.querySelectorAll('.counter');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        counters.forEach(counter => observer.observe(counter));
+
+
         // === 1. منطق بطاقة السيولة ===
         function updateLiquidity() {
             const now = new Date();
@@ -295,16 +445,14 @@
             const currentMinute = now.getMinutes();
             const totalMinutesPassed = (currentHour * 60) + currentMinute;
             
-            // معادلة النقصان
             let remaining = startAmount - (totalMinutesPassed * 16.5);
-            remaining = remaining - (Math.random() * 50); // عشوائية
+            remaining = remaining - (Math.random() * 50); 
             if (remaining < 1000) remaining = 1000; 
 
-            // تحديث البطاقة
             document.getElementById('liquidityAmount').innerText = Math.floor(remaining).toLocaleString() + ' ريال';
             document.getElementById('liquidityBar').style.width = ((remaining / startAmount) * 100) + "%";
         }
-        setInterval(updateLiquidity, 5000); // تحديث كل 5 ثواني
+        setInterval(updateLiquidity, 5000); 
         updateLiquidity();
 
         // === 2. منطق الحاسبة ===
@@ -326,7 +474,6 @@
             const amountInput = document.getElementById('amountInput');
             let amount = parseFloat(amountInput.value);
             
-            // تحقق من الحد
             if (amount > maxAmount) {
                 document.getElementById('amountError').classList.remove('hidden');
                 amountInput.classList.add('text-red-500');
