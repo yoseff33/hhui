@@ -1,0 +1,683 @@
+
+
+// ============================================
+// LER Telecom - Advanced Financing Calculator
+ 
+// Initialize AOS
+if (typeof AOS !== 'undefined') {
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100
+    });
+}
+
+// Business Logic Constants
+const INTEREST_RATES = {
+    4: 0.05,   // 5%
+    6: 0.08,   // 8%
+    8: 0.12,   // 12%
+    12: 0.17   // 17%
+};
+
+const CASH_LIQUIDITY_RATIO = 0.56; // 56%
+const WHATSAPP_NUMBER = "966533774766";
+const MIN_AMOUNT = 1000;
+const MAX_AMOUNT = 100000;
+
+// State Management
+let financingState = {
+    fullName: '',
+    mobileNumber: '',
+    amount: 5000,
+    duration: 4,
+    interestRate: 0.05,
+    noDownPayment: false,
+    valid: false
+};
+
+// DOM Elements
+const elements = {
+    form: null,
+    fullNameInput: null,
+    mobileInput: null,
+    amountInput: null,
+    durationButtons: null,
+    downpaymentToggle: null,
+    monthlyInstallment: null,
+    netCash: null,
+    breakdownAmount: null,
+    breakdownRate: null,
+    breakdownInterest: null,
+    breakdownTotal: null,
+    breakdownLiquidity: null,
+    downpaymentStatus: null,
+    downpaymentAmount: null,
+    whatsappSubmit: null
+};
+
+// Initialize Application
+document.addEventListener('DOMContentLoaded', function() {
+    initializeElements();
+    setupEventListeners();
+    calculateFinancing();
+    validateForm();
+});
+
+// Initialize DOM Elements
+function initializeElements() {
+    elements.form = document.getElementById('financingForm');
+    elements.fullNameInput = document.getElementById('fullName');
+    elements.mobileInput = document.getElementById('mobileNumber');
+    elements.amountInput = document.getElementById('amountInput');
+    elements.durationButtons = document.querySelectorAll('.duration-btn');
+    elements.downpaymentToggle = document.getElementById('downpaymentToggle');
+    elements.monthlyInstallment = document.getElementById('monthlyInstallment');
+    elements.netCash = document.getElementById('netCash');
+    elements.breakdownAmount = document.getElementById('breakdownAmount');
+    elements.breakdownRate = document.getElementById('breakdownRate');
+    elements.breakdownInterest = document.getElementById('breakdownInterest');
+    elements.breakdownTotal = document.getElementById('breakdownTotal');
+    elements.breakdownLiquidity = document.getElementById('breakdownLiquidity');
+    elements.downpaymentStatus = document.getElementById('downpaymentStatus');
+    elements.downpaymentAmount = document.getElementById('downpaymentAmount');
+    elements.whatsappSubmit = document.getElementById('whatsappSubmit');
+    
+    // Set initial state from inputs
+    if (elements.amountInput) {
+        financingState.amount = parseInt(elements.amountInput.value) || 5000;
+    }
+}
+
+// Setup Event Listeners
+function setupEventListeners() {
+    // Form Inputs
+    if (elements.fullNameInput) {
+        elements.fullNameInput.addEventListener('input', function() {
+            financingState.fullName = this.value.trim();
+            validateName();
+            validateForm();
+        });
+        
+        elements.fullNameInput.addEventListener('blur', validateName);
+    }
+    
+    if (elements.mobileInput) {
+        elements.mobileInput.addEventListener('input', function() {
+            financingState.mobileNumber = this.value.trim();
+            validateMobile();
+            validateForm();
+        });
+        
+        elements.mobileInput.addEventListener('blur', validateMobile);
+    }
+    
+    if (elements.amountInput) {
+        elements.amountInput.addEventListener('input', function() {
+            let value = parseInt(this.value) || 0;
+            
+            // Validate range
+            if (value < MIN_AMOUNT) {
+                value = MIN_AMOUNT;
+                this.value = MIN_AMOUNT;
+            } else if (value > MAX_AMOUNT) {
+                value = MAX_AMOUNT;
+                this.value = MAX_AMOUNT;
+            }
+            
+            financingState.amount = value;
+            calculateFinancing();
+            validateForm();
+        });
+    }
+    
+    // Duration Buttons
+    if (elements.durationButtons) {
+        elements.durationButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const months = parseInt(this.getAttribute('data-months'));
+                const rate = parseFloat(this.getAttribute('data-rate'));
+                
+                setDuration(months, rate, this);
+            });
+        });
+    }
+    
+    // Down Payment Toggle
+    if (elements.downpaymentToggle) {
+        elements.downpaymentToggle.addEventListener('change', function() {
+            financingState.noDownPayment = this.checked;
+            calculateFinancing();
+        });
+    }
+    
+    // WhatsApp Submit Button
+    if (elements.whatsappSubmit) {
+        elements.whatsappSubmit.addEventListener('click', submitToWhatsApp);
+    }
+}
+
+// Set Duration and Interest Rate
+function setDuration(months, rate, button) {
+    financingState.duration = months;
+    financingState.interestRate = rate;
+    
+    // Update UI
+    elements.durationButtons.forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-pressed', 'false');
+    });
+    
+    button.classList.add('active');
+    button.setAttribute('aria-pressed', 'true');
+    
+    // Update breakdown rate display
+    if (elements.breakdownRate) {
+        elements.breakdownRate.textContent = `${rate * 100}%`;
+    }
+    
+    calculateFinancing();
+}
+
+// Calculate Financing
+function calculateFinancing() {
+    const amount = financingState.amount;
+    const duration = financingState.duration;
+    const interestRate = financingState.interestRate;
+    const noDownPayment = financingState.noDownPayment;
+    
+    // 1. Calculate Total Amount with Interest
+    const interestAmount = amount * interestRate;
+    const totalAmount = amount + interestAmount;
+    
+    // 2. Calculate Monthly Installment
+    const monthlyInstallment = totalAmount / duration;
+    
+    // 3. Calculate Base Cash Liquidity (56%)
+    const baseCashLiquidity = amount * CASH_LIQUIDITY_RATIO;
+    
+    // 4. Apply Down Payment Logic
+    let netCash = baseCashLiquidity;
+    let downpaymentStatus = "✅ الدفعة الأولى: تدفعها أنت";
+    let downpaymentAmount = 0;
+    
+    if (noDownPayment) {
+        // Deduct first installment from cash
+        netCash = baseCashLiquidity - monthlyInstallment;
+        downpaymentStatus = "✅ الدفعة الأولى: دفعناها لك";
+        downpaymentAmount = monthlyInstallment;
+    }
+    
+    // Ensure net cash is not negative
+    netCash = Math.max(netCash, 0);
+    
+    // Update UI
+    updateUI({
+        monthlyInstallment,
+        netCash,
+        amount,
+        interestRate,
+        interestAmount,
+        totalAmount,
+        baseCashLiquidity,
+        downpaymentStatus,
+        downpaymentAmount,
+        noDownPayment
+    });
+}
+
+// Update UI with Calculations
+function updateUI(data) {
+    // Format numbers with thousand separators
+    const formatter = new Intl.NumberFormat('ar-SA', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+    
+    const wholeFormatter = new Intl.NumberFormat('ar-SA');
+    
+    // Monthly Installment
+    if (elements.monthlyInstallment) {
+        elements.monthlyInstallment.textContent = formatter.format(data.monthlyInstallment);
+    }
+    
+    // Net Cash
+    if (elements.netCash) {
+        elements.netCash.textContent = formatter.format(data.netCash);
+    }
+    
+    // Breakdown
+    if (elements.breakdownAmount) {
+        elements.breakdownAmount.textContent = `${wholeFormatter.format(data.amount)} ر.س`;
+    }
+    
+    if (elements.breakdownInterest) {
+        elements.breakdownInterest.textContent = `+${wholeFormatter.format(data.interestAmount)} ر.س`;
+    }
+    
+    if (elements.breakdownTotal) {
+        elements.breakdownTotal.textContent = `${wholeFormatter.format(data.totalAmount)} ر.س`;
+    }
+    
+    if (elements.breakdownLiquidity) {
+        elements.breakdownLiquidity.textContent = `${wholeFormatter.format(data.baseCashLiquidity)} ر.س`;
+    }
+    
+    if (elements.downpaymentStatus) {
+        elements.downpaymentStatus.textContent = data.downpaymentStatus;
+    }
+    
+    if (elements.downpaymentAmount) {
+        if (data.noDownPayment) {
+            elements.downpaymentAmount.textContent = `-${wholeFormatter.format(data.downpaymentAmount)} ر.س`;
+            elements.downpaymentAmount.style.color = '#ef4444';
+        } else {
+            elements.downpaymentAmount.textContent = `-0 ر.س`;
+            elements.downpaymentAmount.style.color = '#9ca3af';
+        }
+    }
+}
+
+// Validation Functions
+function validateName() {
+    const name = financingState.fullName;
+    const input = elements.fullNameInput;
+    
+    if (!input) return false;
+    
+    // Reset validation classes
+    input.classList.remove('valid', 'invalid');
+    
+    if (!name) {
+        showValidationMessage(input, 'الاسم الكامل مطلوب', false);
+        return false;
+    }
+    
+    // Check for at least 4 parts (typical Arabic name structure)
+    const nameParts = name.split(/\s+/).filter(part => part.length > 0);
+    
+    if (nameParts.length < 2) {
+        showValidationMessage(input, 'الرجاء إدخال الاسم الكامل (اسم واسم العائلة على الأقل)', false);
+        return false;
+    }
+    
+    // Check minimum length
+    if (name.length < 6) {
+        showValidationMessage(input, 'الاسم قصير جداً', false);
+        return false;
+    }
+    
+    // Check for Arabic characters
+    const arabicRegex = /^[ء-ي\s]+$/;
+    if (!arabicRegex.test(name)) {
+        showValidationMessage(input, 'الرجاء استخدام الأحرف العربية فقط', false);
+        return false;
+    }
+    
+    showValidationMessage(input, '✅ الاسم صالح', true);
+    return true;
+}
+
+function validateMobile() {
+    const mobile = financingState.mobileNumber;
+    const input = elements.mobileInput;
+    
+    if (!input) return false;
+    
+    // Reset validation classes
+    input.classList.remove('valid', 'invalid');
+    
+    if (!mobile) {
+        showValidationMessage(input, 'رقم الجوال مطلوب', false);
+        return false;
+    }
+    
+    // Saudi mobile number validation (05XXXXXXXX)
+    const saudiMobileRegex = /^05[0-9]{8}$/;
+    
+    if (!saudiMobileRegex.test(mobile)) {
+        showValidationMessage(input, 'رقم غير صالح. يجب أن يبدأ بـ 05 ويتكون من 10 أرقام', false);
+        return false;
+    }
+    
+    showValidationMessage(input, '✅ رقم الجوال صالح', true);
+    return true;
+}
+
+function validateAmount() {
+    const amount = financingState.amount;
+    
+    return amount >= MIN_AMOUNT && amount <= MAX_AMOUNT;
+}
+
+function validateForm() {
+    const isNameValid = validateName();
+    const isMobileValid = validateMobile();
+    const isAmountValid = validateAmount();
+    
+    financingState.valid = isNameValid && isMobileValid && isAmountValid;
+    
+    // Update submit button state
+    if (elements.whatsappSubmit) {
+        if (financingState.valid) {
+            elements.whatsappSubmit.disabled = false;
+            elements.whatsappSubmit.setAttribute('aria-disabled', 'false');
+            elements.whatsappSubmit.title = 'انقر لإرسال الطلب عبر واتساب';
+        } else {
+            elements.whatsappSubmit.disabled = true;
+            elements.whatsappSubmit.setAttribute('aria-disabled', 'true');
+            elements.whatsappSubmit.title = 'الرجاء إكمال جميع الحقول المطلوبة بشكل صحيح';
+        }
+    }
+    
+    return financingState.valid;
+}
+
+function showValidationMessage(input, message, isValid) {
+    // Remove existing message
+    const existingMessage = input.parentNode.querySelector('.validation-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Add validation class
+    input.classList.remove('valid', 'invalid');
+    input.classList.add(isValid ? 'valid' : 'invalid');
+    
+    // Create message element
+    const messageEl = document.createElement('div');
+    messageEl.className = `validation-message ${isValid ? 'valid' : 'invalid'}`;
+    messageEl.textContent = message;
+    
+    // Add icon
+    const icon = document.createElement('i');
+    icon.className = isValid ? 'fas fa-check-circle mr-1' : 'fas fa-exclamation-circle mr-1';
+    messageEl.prepend(icon);
+    
+    // Insert after input
+    input.parentNode.appendChild(messageEl);
+}
+
+// WhatsApp Submission
+function submitToWhatsApp() {
+    if (!validateForm()) {
+        alert('الرجاء إكمال جميع الحقول المطلوبة بشكل صحيح قبل الإرسال');
+        return;
+    }
+    
+    // Calculate final values
+    const amount = financingState.amount;
+    const duration = financingState.duration;
+    const interestRate = financingState.interestRate;
+    const totalAmount = amount + (amount * interestRate);
+    const monthlyInstallment = totalAmount / duration;
+    const baseCashLiquidity = amount * CASH_LIQUIDITY_RATIO;
+    const netCash = financingState.noDownPayment 
+        ? Math.max(baseCashLiquidity - monthlyInstallment, 0)
+        : baseCashLiquidity;
+    
+    // Format numbers
+    const formatter = new Intl.NumberFormat('ar-SA', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    });
+    
+    // Prepare WhatsApp message
+    const message = `السلام عليكم، أرغب بطلب تمويل من لير للاتصالات 📱
+--------------------------------
+👤 بيانات العميل:
+الاسم: ${financingState.fullName}
+الجوال: ${financingState.mobileNumber}
+--------------------------------
+💰 تفاصيل الطلب:
+مبلغ السلعة: ${formatter.format(amount)} ريال
+المدة: ${duration} أشهر
+القسط الشهري: ${formatter.format(monthlyInstallment)} ريال
+--------------------------------
+💵 الحسبة النهائية:
+صافي الكاش المستلم: ${formatter.format(netCash)} ريال
+حالة الدفعة الأولى: ${financingState.noDownPayment ? 'دفعها لير وتم خصمها من الكاش' : 'يدفعها العميل'}
+--------------------------------
+✅ أقر أنا العميل بصحة البيانات والموافقة على الشروط.`;
+    
+    // Encode message for WhatsApp URL
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+    
+    // Show loading state
+    const originalHTML = elements.whatsappSubmit.innerHTML;
+    elements.whatsappSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحضير...';
+    elements.whatsappSubmit.disabled = true;
+    
+    // Open WhatsApp after short delay for better UX
+    setTimeout(() => {
+        window.open(whatsappURL, '_blank');
+        
+        // Reset button state
+        setTimeout(() => {
+            elements.whatsappSubmit.innerHTML = originalHTML;
+            elements.whatsappSubmit.disabled = false;
+            
+            // Track conversion
+            trackConversion();
+        }, 1500);
+    }, 800);
+}
+
+// Conversion Tracking
+function trackConversion() {
+    // Track in localStorage
+    const conversions = parseInt(localStorage.getItem('ler_conversions') || '0');
+    localStorage.setItem('ler_conversions', (conversions + 1).toString());
+    
+    // Track in sessionStorage for current session
+    const sessionConversions = parseInt(sessionStorage.getItem('ler_session_conversions') || '0');
+    sessionStorage.setItem('ler_session_conversions', (sessionConversions + 1).toString());
+    
+    // You could add Google Analytics or Facebook Pixel here
+    console.log('Conversion tracked:', {
+        conversions: conversions + 1,
+        sessionConversions: sessionConversions + 1,
+        timestamp: new Date().toISOString()
+    });
+}
+
+// Utility Functions
+function scrollToSection(id) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+
+function selectDevice(deviceName) {
+    const message = `السلام عليكم، أود الحصول على ${deviceName} 📱\nممكن التفاصيل والأقساط؟`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+}
+
+// Accordion functionality
+function toggleAccordion(button) {
+    const content = button.nextElementSibling;
+    const icon = button.querySelector('i');
+    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+    
+    if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+        icon.style.transform = 'rotate(0deg)';
+        button.setAttribute('aria-expanded', 'false');
+    } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+        icon.style.transform = 'rotate(180deg)';
+        button.setAttribute('aria-expanded', 'true');
+    }
+}
+
+// Counter animation for stats
+function animateCounter(el) {
+    const target = parseInt(el.getAttribute('data-target'));
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+    
+    const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+            el.innerText = target + "+";
+        } else {
+            el.innerText = Math.floor(current);
+        }
+    }, 16);
+}
+
+// Initialize counters when in view
+if (document.querySelectorAll('.counter').length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    document.querySelectorAll('.counter').forEach(counter => {
+        observer.observe(counter);
+    });
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+    // Ctrl + Enter to submit form
+    if (e.ctrlKey && e.key === 'Enter' && financingState.valid) {
+        submitToWhatsApp();
+    }
+    
+    // Escape to reset form
+    if (e.key === 'Escape') {
+        if (confirm('هل تريد إعادة تعيين النموذج؟')) {
+            resetForm();
+        }
+    }
+});
+
+// Form reset function
+function resetForm() {
+    if (elements.form) {
+        elements.form.reset();
+    }
+    
+    // Reset state
+    financingState = {
+        fullName: '',
+        mobileNumber: '',
+        amount: 5000,
+        duration: 4,
+        interestRate: 0.05,
+        noDownPayment: false,
+        valid: false
+    };
+    
+    // Reset UI
+    if (elements.amountInput) {
+        elements.amountInput.value = 5000;
+    }
+    
+    if (elements.downpaymentToggle) {
+        elements.downpaymentToggle.checked = false;
+    }
+    
+    if (elements.durationButtons) {
+        elements.durationButtons.forEach(btn => {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-pressed', 'false');
+        });
+        
+        // Activate 4 months button
+        const fourMonthBtn = document.querySelector('.duration-btn[data-months="4"]');
+        if (fourMonthBtn) {
+            fourMonthBtn.classList.add('active');
+            fourMonthBtn.setAttribute('aria-pressed', 'true');
+        }
+    }
+    
+    // Recalculate
+    calculateFinancing();
+    validateForm();
+}
+
+// Performance monitoring
+if (window.performance) {
+    window.addEventListener('load', function() {
+        const perfData = window.performance.timing;
+        const loadTime = perfData.loadEventEnd - perfData.navigationStart;
+        
+        if (loadTime > 3000) {
+            console.warn('Page load time is high:', loadTime + 'ms');
+        }
+    });
+}
+
+// Error handling
+window.addEventListener('error', function(e) {
+    console.error('JavaScript Error:', e.message, 'at', e.filename, 'line', e.lineno);
+});
+
+// Service Worker Registration (optional)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('ServiceWorker registration successful:', registration.scope);
+            })
+            .catch(function(err) {
+                console.log('ServiceWorker registration failed:', err);
+            });
+    });
+}
+
+// PWA Install Prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // You could show an install button here
+    console.log('PWA install available');
+});
+
+// Print styles
+const printStyles = `
+@media print {
+    .whatsapp-float,
+    .alert-banner,
+    .nav-buttons,
+    .duration-btn,
+    .whatsapp-cta-btn,
+    .direct-whatsapp-btn,
+    .toggle-switch {
+        display: none !important;
+    }
+    
+    body {
+        background-color: white !important;
+        color: black !important;
+    }
+    
+    .calculator-card,
+    .benefits-sidebar {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+    }
+}`;
+
+// Add print styles
+const styleSheet = document.createElement("style");
+styleSheet.type = "text/css";
+styleSheet.textContent = printStyles;
+document.head.appendChild(styleSheet);
