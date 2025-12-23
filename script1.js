@@ -1,15 +1,16 @@
-
-
 // ============================================
-// LER Telecom - Advanced Financing Calculator
- 
-// Initialize AOS
-if (typeof AOS !== 'undefined') {
-    AOS.init({
-        duration: 800,
-        once: true,
-        offset: 100
-    });
+// LER Telecom - Complete JavaScript File
+// ============================================
+
+// Initialize AOS (Animate On Scroll)
+function initializeAOS() {
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+    }
 }
 
 // Business Logic Constants
@@ -56,15 +57,39 @@ const elements = {
     whatsappSubmit: null
 };
 
-// Initialize Application
+// ============================================
+// MAIN INITIALIZATION
+// ============================================
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize animations
+    initializeAOS();
+    
+    // Check if we're on the main page or blog
+    if (document.getElementById('calculator-section')) {
+        initializeCalculator();
+    }
+    
+    if (document.querySelector('.article-container')) {
+        initializeBlog();
+    }
+    
+    // Initialize common functionality
+    initializeCommon();
+});
+
+// ============================================
+// CALCULATOR FUNCTIONALITY
+// ============================================
+
+function initializeCalculator() {
     initializeElements();
     setupEventListeners();
     calculateFinancing();
     validateForm();
-});
+    initializeCounters();
+}
 
-// Initialize DOM Elements
 function initializeElements() {
     elements.form = document.getElementById('financingForm');
     elements.fullNameInput = document.getElementById('fullName');
@@ -89,7 +114,6 @@ function initializeElements() {
     }
 }
 
-// Setup Event Listeners
 function setupEventListeners() {
     // Form Inputs
     if (elements.fullNameInput) {
@@ -157,7 +181,6 @@ function setupEventListeners() {
     }
 }
 
-// Set Duration and Interest Rate
 function setDuration(months, rate, button) {
     financingState.duration = months;
     financingState.interestRate = rate;
@@ -179,7 +202,6 @@ function setDuration(months, rate, button) {
     calculateFinancing();
 }
 
-// Calculate Financing
 function calculateFinancing() {
     const amount = financingState.amount;
     const duration = financingState.duration;
@@ -226,7 +248,6 @@ function calculateFinancing() {
     });
 }
 
-// Update UI with Calculations
 function updateUI(data) {
     // Format numbers with thousand separators
     const formatter = new Intl.NumberFormat('ar-SA', {
@@ -278,7 +299,10 @@ function updateUI(data) {
     }
 }
 
-// Validation Functions
+// ============================================
+// VALIDATION FUNCTIONS
+// ============================================
+
 function validateName() {
     const name = financingState.fullName;
     const input = elements.fullNameInput;
@@ -398,7 +422,10 @@ function showValidationMessage(input, message, isValid) {
     input.parentNode.appendChild(messageEl);
 }
 
-// WhatsApp Submission
+// ============================================
+// WHATSAPP INTEGRATION
+// ============================================
+
 function submitToWhatsApp() {
     if (!validateForm()) {
         alert('الرجاء إكمال جميع الحقول المطلوبة بشكل صحيح قبل الإرسال');
@@ -464,59 +491,140 @@ function submitToWhatsApp() {
     }, 800);
 }
 
-// Conversion Tracking
-function trackConversion() {
-    // Track in localStorage
-    const conversions = parseInt(localStorage.getItem('ler_conversions') || '0');
-    localStorage.setItem('ler_conversions', (conversions + 1).toString());
-    
-    // Track in sessionStorage for current session
-    const sessionConversions = parseInt(sessionStorage.getItem('ler_session_conversions') || '0');
-    sessionStorage.setItem('ler_session_conversions', (sessionConversions + 1).toString());
-    
-    // You could add Google Analytics or Facebook Pixel here
-    console.log('Conversion tracked:', {
-        conversions: conversions + 1,
-        sessionConversions: sessionConversions + 1,
-        timestamp: new Date().toISOString()
+// ============================================
+// BLOG FUNCTIONALITY
+// ============================================
+
+function initializeBlog() {
+    // Add animation to timeline items
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    timelineItems.forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-20px)';
+        
+        setTimeout(() => {
+            item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            item.style.opacity = '1';
+            item.style.transform = 'translateX(0)';
+        }, index * 200);
     });
+    
+    // Add hover effect to problem cards
+    const problemCards = document.querySelectorAll('.problem-card');
+    problemCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px)';
+            card.style.boxShadow = '0 10px 20px rgba(239, 68, 68, 0.2)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+            card.style.boxShadow = 'none';
+        });
+    });
+    
+    // Track blog reading progress
+    trackReadingProgress();
+    
+    // Calculate read time
+    calculateReadTime();
 }
 
-// Utility Functions
-function scrollToSection(id) {
-    const element = document.getElementById(id);
-    if (element) {
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+function trackReadingProgress() {
+    if (typeof localStorage !== 'undefined') {
+        const articleId = 'blog-cash-in-hafar';
+        const readKey = `read_${articleId}`;
+        
+        // Mark as read when scrolled 75%
+        window.addEventListener('scroll', function() {
+            const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            
+            if (scrollPercentage > 75 && !localStorage.getItem(readKey)) {
+                localStorage.setItem(readKey, 'true');
+                
+                // Optional: Send analytics or update UI
+                console.log('Article marked as read:', articleId);
+            }
         });
     }
 }
 
-function selectDevice(deviceName) {
-    const message = `السلام عليكم، أود الحصول على ${deviceName} 📱\nممكن التفاصيل والأقساط؟`;
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
-}
-
-// Accordion functionality
-function toggleAccordion(button) {
-    const content = button.nextElementSibling;
-    const icon = button.querySelector('i');
-    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+function calculateReadTime() {
+    const articleText = document.querySelector('.article-container')?.innerText || '';
+    const wordCount = articleText.split(/\s+/).length;
+    const readingTime = Math.ceil(wordCount / 200); // 200 words per minute
     
-    if (content.style.maxHeight) {
-        content.style.maxHeight = null;
-        icon.style.transform = 'rotate(0deg)';
-        button.setAttribute('aria-expanded', 'false');
-    } else {
-        content.style.maxHeight = content.scrollHeight + "px";
-        icon.style.transform = 'rotate(180deg)';
-        button.setAttribute('aria-expanded', 'true');
+    const timeElement = document.querySelector('.article-meta span:nth-child(2)');
+    if (timeElement && readingTime > 0) {
+        timeElement.innerHTML = `<i class="far fa-clock"></i> ⏱ ${readingTime} دقائق قراءة`;
     }
 }
 
-// Counter animation for stats
+// ============================================
+// COMMON FUNCTIONALITY
+// ============================================
+
+function initializeCommon() {
+    // Accordion functionality
+    initializeAccordions();
+    
+    // Initialize counters
+    initializeCounters();
+    
+    // Setup scroll to section
+    setupScrollToSection();
+    
+    // Setup device selection
+    setupDeviceSelection();
+    
+    // Add back to top button
+    addBackToTopButton();
+    
+    // Setup keyboard shortcuts
+    setupKeyboardShortcuts();
+    
+    // Setup print functionality
+    setupPrintStyles();
+    
+    // Performance monitoring
+    setupPerformanceMonitoring();
+}
+
+function initializeAccordions() {
+    document.querySelectorAll('.accordion-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const icon = this.querySelector('i');
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                if (icon) icon.style.transform = 'rotate(0deg)';
+                this.setAttribute('aria-expanded', 'false');
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                if (icon) icon.style.transform = 'rotate(180deg)';
+                this.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+}
+
+function initializeCounters() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    document.querySelectorAll('.counter').forEach(counter => {
+        observer.observe(counter);
+    });
+}
+
 function animateCounter(el) {
     const target = parseInt(el.getAttribute('data-target'));
     const duration = 2000;
@@ -535,38 +643,121 @@ function animateCounter(el) {
     }, 16);
 }
 
-// Initialize counters when in view
-if (document.querySelectorAll('.counter').length > 0) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounter(entry.target);
-                observer.unobserve(entry.target);
+function setupScrollToSection() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // If it's an external link, don't prevent default
+            if (href.includes('http') || href === '#') {
+                return;
+            }
+            
+            e.preventDefault();
+            
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         });
-    }, { threshold: 0.5 });
-    
-    document.querySelectorAll('.counter').forEach(counter => {
-        observer.observe(counter);
     });
 }
 
-// Keyboard shortcuts
-document.addEventListener('keydown', function(e) {
-    // Ctrl + Enter to submit form
-    if (e.ctrlKey && e.key === 'Enter' && financingState.valid) {
-        submitToWhatsApp();
+function scrollToSection(id) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
     }
-    
-    // Escape to reset form
-    if (e.key === 'Escape') {
-        if (confirm('هل تريد إعادة تعيين النموذج؟')) {
-            resetForm();
-        }
-    }
-});
+}
 
-// Form reset function
+function setupDeviceSelection() {
+    document.querySelectorAll('.device-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const deviceName = this.parentElement.querySelector('.device-name').textContent;
+            selectDevice(deviceName);
+        });
+    });
+}
+
+function selectDevice(deviceName) {
+    const message = `السلام عليكم، أود الحصول على ${deviceName} 📱\nممكن التفاصيل والأقساط؟`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+}
+
+function addBackToTopButton() {
+    const backToTopButton = document.createElement('button');
+    backToTopButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    backToTopButton.className = 'back-to-top';
+    backToTopButton.style.cssText = `
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: #3AB54A;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.3s, transform 0.3s;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(58, 181, 74, 0.3);
+        display: none;
+    `;
+
+    document.body.appendChild(backToTopButton);
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            backToTopButton.style.display = 'flex';
+            backToTopButton.style.opacity = '1';
+            backToTopButton.style.transform = 'translateY(0)';
+        } else {
+            backToTopButton.style.opacity = '0';
+            backToTopButton.style.transform = 'translateY(10px)';
+            setTimeout(() => {
+                backToTopButton.style.display = 'none';
+            }, 300);
+        }
+    });
+}
+
+function setupKeyboardShortcuts() {
+    document.addEventListener('keydown', function(e) {
+        // Ctrl + Enter to submit form (main page only)
+        if (e.ctrlKey && e.key === 'Enter' && financingState.valid && elements.whatsappSubmit) {
+            submitToWhatsApp();
+        }
+        
+        // Escape to reset form
+        if (e.key === 'Escape' && elements.form) {
+            if (confirm('هل تريد إعادة تعيين النموذج؟')) {
+                resetForm();
+            }
+        }
+        
+        // Ctrl + / to focus on amount input
+        if (e.ctrlKey && e.key === '/' && elements.amountInput) {
+            e.preventDefault();
+            elements.amountInput.focus();
+            elements.amountInput.select();
+        }
+    });
+}
+
 function resetForm() {
     if (elements.form) {
         elements.form.reset();
@@ -611,24 +802,84 @@ function resetForm() {
     validateForm();
 }
 
-// Performance monitoring
-if (window.performance) {
-    window.addEventListener('load', function() {
-        const perfData = window.performance.timing;
-        const loadTime = perfData.loadEventEnd - perfData.navigationStart;
-        
-        if (loadTime > 3000) {
-            console.warn('Page load time is high:', loadTime + 'ms');
+function setupPrintStyles() {
+    const printStyles = `
+        @media print {
+            .whatsapp-float,
+            .alert-banner,
+            .nav-buttons,
+            .duration-btn,
+            .whatsapp-cta-btn,
+            .direct-whatsapp-btn,
+            .toggle-switch,
+            .back-to-top {
+                display: none !important;
+            }
+            
+            body {
+                background-color: white !important;
+                color: black !important;
+            }
+            
+            .calculator-card,
+            .benefits-sidebar {
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+            }
         }
+    `;
+    
+    const styleSheet = document.createElement("style");
+    styleSheet.type = "text/css";
+    styleSheet.textContent = printStyles;
+    document.head.appendChild(styleSheet);
+}
+
+function setupPerformanceMonitoring() {
+    if (window.performance) {
+        window.addEventListener('load', function() {
+            const perfData = window.performance.timing;
+            const loadTime = perfData.loadEventEnd - perfData.navigationStart;
+            
+            if (loadTime > 3000) {
+                console.warn('Page load time is high:', loadTime + 'ms');
+            }
+        });
+    }
+}
+
+// ============================================
+// ANALYTICS & TRACKING
+// ============================================
+
+function trackConversion() {
+    // Track in localStorage
+    const conversions = parseInt(localStorage.getItem('ler_conversions') || '0');
+    localStorage.setItem('ler_conversions', (conversions + 1).toString());
+    
+    // Track in sessionStorage for current session
+    const sessionConversions = parseInt(sessionStorage.getItem('ler_session_conversions') || '0');
+    sessionStorage.setItem('ler_session_conversions', (sessionConversions + 1).toString());
+    
+    console.log('Conversion tracked:', {
+        conversions: conversions + 1,
+        sessionConversions: sessionConversions + 1,
+        timestamp: new Date().toISOString()
     });
 }
 
-// Error handling
+// ============================================
+// ERROR HANDLING
+// ============================================
+
 window.addEventListener('error', function(e) {
     console.error('JavaScript Error:', e.message, 'at', e.filename, 'line', e.lineno);
 });
 
-// Service Worker Registration (optional)
+// ============================================
+// PWA SUPPORT
+// ============================================
+
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
         navigator.serviceWorker.register('/sw.js')
@@ -651,33 +902,55 @@ window.addEventListener('beforeinstallprompt', (e) => {
     console.log('PWA install available');
 });
 
-// Print styles
-const printStyles = `
-@media print {
-    .whatsapp-float,
-    .alert-banner,
-    .nav-buttons,
-    .duration-btn,
-    .whatsapp-cta-btn,
-    .direct-whatsapp-btn,
-    .toggle-switch {
-        display: none !important;
-    }
-    
-    body {
-        background-color: white !important;
-        color: black !important;
-    }
-    
-    .calculator-card,
-    .benefits-sidebar {
-        border: 1px solid #ccc !important;
-        box-shadow: none !important;
-    }
-}`;
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
 
-// Add print styles
-const styleSheet = document.createElement("style");
-styleSheet.type = "text/css";
-styleSheet.textContent = printStyles;
-document.head.appendChild(styleSheet);
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('ar-SA', {
+        style: 'currency',
+        currency: 'SAR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(amount);
+}
+
+function shareArticle() {
+    const title = document.title;
+    const url = window.location.href;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: title,
+            text: 'اقرأ هذا المقال عن طريقة الحصول على كاش فوري من تابي في حفر الباطن',
+            url: url
+        })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing:', error));
+    } else {
+        // Fallback: Copy to clipboard
+        navigator.clipboard.writeText(url).then(() => {
+            alert('تم نسخ رابط المقال! يمكنك مشاركته الآن.');
+        });
+    }
+}
+
+function printArticle() {
+    const printContent = document.querySelector('.article-container')?.innerHTML;
+    const originalContent = document.body.innerHTML;
+    
+    document.body.innerHTML = `
+        <div class="print-container" dir="rtl" style="padding: 20px; font-family: 'Tajawal', sans-serif;">
+            ${printContent}
+            <div style="margin-top: 40px; text-align: center; color: #666; font-size: 12px;">
+                <p>نشرت بواسطة: مؤسسة لير للاتصالات</p>
+                <p>الموقع: www.lear.sa</p>
+                <p>رقم الهاتف: 053-377-4766</p>
+            </div>
+        </div>
+    `;
+    
+    window.print();
+    document.body.innerHTML = originalContent;
+    location.reload();
+}
