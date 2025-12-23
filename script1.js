@@ -76,6 +76,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize common functionality
     initializeCommon();
+
+    // Initialize Quara Modal Events (ESC key)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeQuaraModal();
+    });
 });
 
 // ============================================
@@ -423,7 +428,7 @@ function showValidationMessage(input, message, isValid) {
 }
 
 // ============================================
-// WHATSAPP INTEGRATION
+// WHATSAPP INTEGRATION (Calculator)
 // ============================================
 
 function submitToWhatsApp() {
@@ -685,10 +690,82 @@ function setupDeviceSelection() {
     });
 }
 
+// ----------------------------------------------------
+// UPDATED: Device Selection now opens the Quara Modal
+// ----------------------------------------------------
 function selectDevice(deviceName) {
-    const message = `السلام عليكم، أود الحصول على ${deviceName} 📱\nممكن التفاصيل والأقساط؟`;
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+    const modal = document.getElementById('quaraModal');
+    const deviceNameField = document.getElementById('selectedDeviceName');
+    const hiddenDeviceField = document.getElementById('deviceName');
+    
+    // Set device name in modal
+    if(deviceNameField) deviceNameField.textContent = deviceName;
+    if(hiddenDeviceField) hiddenDeviceField.value = deviceName;
+    
+    // Show Modal
+    if(modal) {
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden'); // Prevent background scrolling
+    }
+    
+    // Focus on first input
+    setTimeout(() => {
+        const nameInput = document.getElementById('quaraFullName');
+        if(nameInput) nameInput.focus();
+    }, 300);
+}
+
+// ============================================
+// NEW: Quara Finance Modal Functions
+// ============================================
+
+function closeQuaraModal() {
+    const modal = document.getElementById('quaraModal');
+    if(modal) {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+    // Reset form
+    const form = document.getElementById('quaraForm');
+    if(form) form.reset();
+}
+
+function submitQuaraForm() {
+    const form = document.getElementById('quaraForm');
+    
+    // Validate inputs
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+    
+    // Collect Data
+    const data = {
+        device: document.getElementById('deviceName').value,
+        name: document.getElementById('quaraFullName').value,
+        mobile: document.getElementById('quaraMobile').value,
+        salary: document.getElementById('quaraSalary').value,
+        sector: document.getElementById('quaraSector').value,
+        city: document.getElementById('quaraCity').value,
+        commitments: document.getElementById('quaraCommitments').value || 'لا يوجد'
+    };
+    
+    // Prepare Message
+    const msg = `
+السلام عليكم، أرغب بتقديم طلب تمويل كوارا:
+📱 الجهاز: ${data.device}
+👤 الاسم: ${data.name}
+📞 الجوال: ${data.mobile}
+💰 الراتب: ${data.salary} ريال
+🏢 الوظيفة: ${data.sector}
+📍 المدينة: ${data.city}
+💳 التزامات: ${data.commitments}
+    `.trim();
+    
+    // Open WhatsApp
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    
+    closeQuaraModal();
 }
 
 function addBackToTopButton() {
@@ -742,10 +819,18 @@ function setupKeyboardShortcuts() {
             submitToWhatsApp();
         }
         
-        // Escape to reset form
-        if (e.key === 'Escape' && elements.form) {
-            if (confirm('هل تريد إعادة تعيين النموذج؟')) {
-                resetForm();
+        // Escape to reset form (Modified to handle Modal first)
+        if (e.key === 'Escape') {
+             const modal = document.getElementById('quaraModal');
+             if(modal && !modal.classList.contains('hidden')) {
+                 closeQuaraModal();
+                 return; // Don't reset calculator form if we just closed modal
+             }
+
+            if (elements.form) {
+                if (confirm('هل تريد إعادة تعيين النموذج؟')) {
+                    resetForm();
+                }
             }
         }
         
@@ -812,7 +897,8 @@ function setupPrintStyles() {
             .whatsapp-cta-btn,
             .direct-whatsapp-btn,
             .toggle-switch,
-            .back-to-top {
+            .back-to-top,
+            #quaraModal {
                 display: none !important;
             }
             
