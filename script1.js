@@ -30,7 +30,7 @@ const MAX_AMOUNT = 100000;
 let financingState = {
     fullName: '',
     mobileNumber: '',
-    amount: 5000,
+    amount: 5000, // هذا الرقم يمثل "الكاش" اللي يبيه العميل
     duration: 4,
     interestRate: 0.05,
     noDownPayment: false,
@@ -144,16 +144,7 @@ function setupEventListeners() {
     if (elements.amountInput) {
         elements.amountInput.addEventListener('input', function() {
             let value = parseInt(this.value) || 0;
-            
-            // Validate range
-            if (value < MIN_AMOUNT) {
-                value = MIN_AMOUNT;
-                this.value = MIN_AMOUNT;
-            } else if (value > MAX_AMOUNT) {
-                value = MAX_AMOUNT;
-                this.value = MAX_AMOUNT;
-            }
-            
+            // Removed strict range enforcement while typing to allow better UX
             financingState.amount = value;
             calculateFinancing();
             validateForm();
@@ -208,41 +199,49 @@ function setDuration(months, rate, button) {
 }
 
 function calculateFinancing() {
-    const amount = financingState.amount;
+    // هنا التعديل: المبلغ المدخل هو "الكاش المطلوب"
+    const desiredCash = financingState.amount;
     const duration = financingState.duration;
     const interestRate = financingState.interestRate;
     const noDownPayment = financingState.noDownPayment;
     
-    // 1. Calculate Total Amount with Interest
-    const interestAmount = amount * interestRate;
-    const totalAmount = amount + interestAmount;
+    // 1. حساب قيمة الجهاز المطلوبة عكسياً
+    // المعادلة: الكاش المطلوب / 0.56 = سعر الجهاز
+    let requiredProductPrice = desiredCash / CASH_LIQUIDITY_RATIO;
     
-    // 2. Calculate Monthly Installment
+    // تقريب السعر لأقرب 50 ريال ليكون منطقياً
+    requiredProductPrice = Math.ceil(requiredProductPrice / 50) * 50;
+
+    // 2. حساب الفائدة بناءً على سعر الجهاز
+    const interestAmount = requiredProductPrice * interestRate;
+    const totalAmount = requiredProductPrice + interestAmount;
+    
+    // 3. حساب القسط الشهري
     const monthlyInstallment = totalAmount / duration;
     
-    // 3. Calculate Base Cash Liquidity (56%)
-    const baseCashLiquidity = amount * CASH_LIQUIDITY_RATIO;
+    // 4. حساب السيولة المتوفرة من هذا الجهاز
+    const baseCashLiquidity = requiredProductPrice * CASH_LIQUIDITY_RATIO;
     
-    // 4. Apply Down Payment Logic
+    // 5. خصم الدفعة الأولى إذا لزم الأمر
     let netCash = baseCashLiquidity;
     let downpaymentStatus = "✅ الدفعة الأولى: تدفعها أنت";
     let downpaymentAmount = 0;
     
     if (noDownPayment) {
-        // Deduct first installment from cash
+        // خصم القسط الأول من الكاش
         netCash = baseCashLiquidity - monthlyInstallment;
         downpaymentStatus = "✅ الدفعة الأولى: دفعناها لك";
         downpaymentAmount = monthlyInstallment;
     }
     
-    // Ensure net cash is not negative
+    // منع القيم السالبة
     netCash = Math.max(netCash, 0);
     
-    // Update UI
+    // تحديث الواجهة
     updateUI({
         monthlyInstallment,
         netCash,
-        amount,
+        amount: requiredProductPrice, // هنا نرسل سعر الجهاز للعرض في التفاصيل
         interestRate,
         interestAmount,
         totalAmount,
@@ -254,7 +253,7 @@ function calculateFinancing() {
 }
 
 function updateUI(data) {
-    // Format numbers with thousand separators
+    // تنسيق الأرقام
     const formatter = new Intl.NumberFormat('ar-SA', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
@@ -262,18 +261,21 @@ function updateUI(data) {
     
     const wholeFormatter = new Intl.NumberFormat('ar-SA');
     
-    // Monthly Installment
+    // القسط الشهري
     if (elements.monthlyInstallment) {
         elements.monthlyInstallment.textContent = formatter.format(data.monthlyInstallment);
     }
     
-    // Net Cash
+    // صافي الكاش (نعرض المبلغ الصافي اللي بيستلمه)
     if (elements.netCash) {
         elements.netCash.textContent = formatter.format(data.netCash);
     }
     
-    // Breakdown
+    // تفاصيل الحسبة
     if (elements.breakdownAmount) {
+        // تغيير النص ليوضح أنها قيمة السلعة المطلوبة
+        const label = elements.breakdownAmount.parentElement.querySelector('span:first-child');
+        if(label) label.textContent = "قيمة السلعة المطلوبة:";
         elements.breakdownAmount.textContent = `${wholeFormatter.format(data.amount)} ر.س`;
     }
     
@@ -374,9 +376,9 @@ function validateMobile() {
 }
 
 function validateAmount() {
+    // التحقق يتم الآن بناء على المبلغ المدخل (الكاش)
     const amount = financingState.amount;
-    
-    return amount >= MIN_AMOUNT && amount <= MAX_AMOUNT;
+    return amount >= 500 && amount <= 100000;
 }
 
 function validateForm() {
@@ -437,16 +439,15 @@ function submitToWhatsApp() {
         return;
     }
     
-    // Calculate final values
-    const amount = financingState.amount;
+    // إعادة الحساب للتأكد من أحدث القيم
+    const desiredCash = financingState.amount;
+    let requiredProductPrice = desiredCash / CASH_LIQUIDITY_RATIO;
+    requiredProductPrice = Math.ceil(requiredProductPrice / 50) * 50;
+    
     const duration = financingState.duration;
     const interestRate = financingState.interestRate;
-    const totalAmount = amount + (amount * interestRate);
+    const totalAmount = requiredProductPrice + (requiredProductPrice * interestRate);
     const monthlyInstallment = totalAmount / duration;
-    const baseCashLiquidity = amount * CASH_LIQUIDITY_RATIO;
-    const netCash = financingState.noDownPayment 
-        ? Math.max(baseCashLiquidity - monthlyInstallment, 0)
-        : baseCashLiquidity;
     
     // Format numbers
     const formatter = new Intl.NumberFormat('ar-SA', {
@@ -454,21 +455,21 @@ function submitToWhatsApp() {
         maximumFractionDigits: 0
     });
     
-    // Prepare WhatsApp message
-    const message = `السلام عليكم، أرغب بطلب تمويل من لير للاتصالات 📱
+    // Prepare WhatsApp message (محدثة لتناسب الحسبة العكسية)
+    const message = `السلام عليكم، أرغب بطلب تمويل (كاش) من لير للاتصالات 📱
 --------------------------------
 👤 بيانات العميل:
 الاسم: ${financingState.fullName}
 الجوال: ${financingState.mobileNumber}
 --------------------------------
 💰 تفاصيل الطلب:
-مبلغ السلعة: ${formatter.format(amount)} ريال
+الكاش المطلوب: ${formatter.format(desiredCash)} ريال
 المدة: ${duration} أشهر
-القسط الشهري: ${formatter.format(monthlyInstallment)} ريال
+القسط الشهري التقريبي: ${formatter.format(monthlyInstallment)} ريال
 --------------------------------
-💵 الحسبة النهائية:
-صافي الكاش المستلم: ${formatter.format(netCash)} ريال
-حالة الدفعة الأولى: ${financingState.noDownPayment ? 'دفعها لير وتم خصمها من الكاش' : 'يدفعها العميل'}
+ℹ️ تفاصيل العملية (للموظف):
+قيمة السلعة المطلوبة: ${formatter.format(requiredProductPrice)} ريال
+حالة الدفعة الأولى: ${financingState.noDownPayment ? 'مخصومة من الكاش' : 'يدفعها العميل'}
 --------------------------------
 ✅ أقر أنا العميل بصحة البيانات والموافقة على الشروط.`;
     
@@ -691,7 +692,7 @@ function setupDeviceSelection() {
 }
 
 // ----------------------------------------------------
-// UPDATED: Device Selection now opens the Quara Modal
+// Device Selection now opens the Quara Modal
 // ----------------------------------------------------
 function selectDevice(deviceName) {
     const modal = document.getElementById('quaraModal');
@@ -716,7 +717,7 @@ function selectDevice(deviceName) {
 }
 
 // ============================================
-// NEW: Quara Finance Modal Functions
+// Quara Finance Modal Functions
 // ============================================
 
 function closeQuaraModal() {
