@@ -489,29 +489,10 @@
                 <p class="section-subtitle">تبي تابي؟ تبي تمارا؟ موجود.. والاستلام فوري</p>
             </div>
             
-            <div class="devices-grid">
-                <div class="device-card" data-aos="fade-up">
-                    <img src="https://www.att.com/scmsassets/global/devices/phones/apple/apple-iphone-17-pro/defaultimage/deep-blue-hero-zoom.png" 
-                         class="device-image" 
-                         alt="آيفون 17 برو - الأزرق العميق"
-                         loading="lazy">
-                    <h3 class="device-name">Deep Blue</h3>
-                    <p class="device-description">التيتانيوم الأزرق العميق</p>
-                    <button onclick="selectDevice('iPhone 17 Pro - Deep Blue')" class="device-btn btn-glow">
-                        <i class="fas fa-cart-plus"></i> أبي هذا الجهاز
-                    </button>
-                </div>
-
-                <div class="device-card" data-aos="fade-up" data-aos-delay="100">
-                    <img src="https://static.k-tuin.com/media/catalog/product/cache/1/image/0dc2d03fe217f8c83829496872af24a0/i/p/iphone-17-pro-plata-5.jpg" 
-                         class="device-image" 
-                         alt="آيفون 17 برو - فضي"
-                         loading="lazy">
-                    <h3 class="device-name">Titanium Silver</h3>
-                    <p class="device-description">التيتانيوم الفضي اللامع</p>
-                    <button onclick="selectDevice('iPhone 17 Pro - Silver')" class="device-btn btn-glow">
-                        <i class="fas fa-cart-plus"></i> أبي هذا الجهاز
-                    </button>
+            <div id="products-container" class="devices-grid">
+                <div class="col-span-full text-center py-12">
+                    <i class="fas fa-spinner fa-spin text-4xl text-tabby mb-4"></i>
+                    <p class="text-gray-400">جاري تحميل العروض الحصرية...</p>
                 </div>
             </div>
         </div>
@@ -920,5 +901,55 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="supabase-client.js"></script>
     <script src="script1.js"></script>
+
+    <script>
+        // إعدادات الاتصال بقاعدة البيانات
+        const PROJECT_URL = "https://mgbdukdtzckxspxmcvpo.supabase.co";
+        const PUBLIC_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1nYmR1a2R0emNreHNweG1jdnBvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NjUzMzM5NywiZXhwIjoyMDgyMTA5Mzk3fQ.Xm7HyGXSLq-CMWhi3aAGR1taK70Xurd_x48ouUt6IO0";
+        const supabase = window.supabase.createClient(PROJECT_URL, PUBLIC_KEY);
+
+        async function loadProducts() {
+            const container = document.getElementById('products-container');
+            
+            // جلب المنتجات من قاعدة البيانات
+            const { data: products, error } = await supabase
+                .from('products')
+                .select('*')
+                .eq('is_active', true)
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Error loading products:', error);
+                return;
+            }
+
+            // تنظيف الحاوية
+            container.innerHTML = '';
+
+            // عرض المنتجات
+            products.forEach(product => {
+                const productHTML = `
+                <div class="device-card" data-aos="fade-up">
+                    <img src="${product.image_url || 'https://via.placeholder.com/300x400?text=No+Image'}" 
+                         class="device-image" 
+                         alt="${product.name}"
+                         loading="lazy">
+                    <h3 class="device-name">${product.name}</h3>
+                    <p class="device-description">
+                        سعر الكاش: <span class="text-blue-400">${product.price_cash} ر.س</span><br>
+                        ${product.price_installment ? `قسط: <span class="text-green-400">${product.price_installment} ر.س</span>` : ''}
+                    </p>
+                    <button onclick="selectDevice('${product.name}')" class="device-btn btn-glow">
+                        <i class="fas fa-cart-plus"></i> أبي هذا الجهاز
+                    </button>
+                </div>
+                `;
+                container.innerHTML += productHTML;
+            });
+        }
+
+        // تشغيل الدالة
+        loadProducts();
+    </script>
 </body>
 </html>
