@@ -1,6 +1,6 @@
 // ============================================
-// LER Telecom - Final Production Script
-// Logic: Direct Cash + 65% Profit Markup
+// LER Telecom - Final Production Script (Supabase Integrated)
+// Logic: Direct Cash + 65% Profit Markup + DB Storage
 // ============================================
 
 // 1. Initialize Libraries
@@ -188,7 +188,7 @@ function setupEventListeners() {
         });
     }
     
-    // زر الواتساب
+    // زر الواتساب (تم تحويلها لدالة Async)
     if (elements.whatsappSubmit) {
         elements.whatsappSubmit.addEventListener('click', submitToWhatsApp);
     }
@@ -219,49 +219,30 @@ function setDuration(months, button) {
     calculateFinancing();
 }
 
-// -------------------------------------------------------------
-// *THE CORE MATH LOGIC* (الحسبة المباشرة)
-// Input + 65% = Total Debt
-// -------------------------------------------------------------
 function calculateFinancing() {
     let cash = financingState.requestedCash;
-    
-    // تطبيق الحدود (100 - 5000)
     if (cash > MAX_AMOUNT) cash = MAX_AMOUNT;
-    // لا نعدل الحد الأدنى تلقائياً أثناء الكتابة لتجربة مستخدم أفضل، لكن نستخدمه في الحساب
     let calcCash = cash < MIN_AMOUNT ? MIN_AMOUNT : cash;
 
     const duration = financingState.duration;
     const noDownPayment = financingState.noDownPayment;
     
-    // 1. حساب الربح (65%)
-    // مثال: 5000 * 0.65 = 3250
     const profitAmount = calcCash * PROFIT_PERCENTAGE;
-    
-    // 2. حساب الإجمالي (المديونية)
-    // مثال: 5000 + 3250 = 8250
     const totalDebt = calcCash + profitAmount;
-    
-    // 3. القسط الشهري
-    // مثال: 8250 / 12 = 687.5
     const monthlyInstallment = totalDebt / duration;
     
-    // 4. صافي الكاش للعميل
     let netCash = calcCash;
     let downpaymentStatus = "✅ الدفعة الأولى: تدفعها أنت";
     let downpaymentAmount = 0;
     
     if (noDownPayment) {
-        // خصم القسط الأول من الكاش المستلم
         netCash = calcCash - monthlyInstallment;
         downpaymentStatus = "✅ الدفعة الأولى: خصمناها من الكاش";
         downpaymentAmount = monthlyInstallment;
     }
     
-    // منع القيم السالبة
     netCash = Math.max(netCash, 0);
     
-    // تحديث الشاشة
     updateUI({
         monthlyInstallment,
         netCash,
@@ -279,29 +260,18 @@ function updateUI(data) {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
     });
-    
     const wholeFormatter = new Intl.NumberFormat('ar-SA');
     
-    // 1. القسط
-    if (elements.monthlyInstallment) {
-        elements.monthlyInstallment.textContent = formatter.format(data.monthlyInstallment);
-    }
+    if (elements.monthlyInstallment) elements.monthlyInstallment.textContent = formatter.format(data.monthlyInstallment);
+    if (elements.netCash) elements.netCash.textContent = formatter.format(data.netCash);
     
-    // 2. صافي الكاش
-    if (elements.netCash) {
-        elements.netCash.textContent = formatter.format(data.netCash);
-    }
-    
-    // 3. الجدول التفصيلي
     if (elements.breakdownAmount) {
         const label = elements.breakdownAmount.parentElement.querySelector('span:first-child');
         if(label) label.textContent = "المبلغ المطلوب (كاش):";
         elements.breakdownAmount.textContent = `${wholeFormatter.format(data.requestedCash)} ر.س`;
     }
     
-    if (elements.breakdownInterest) {
-        elements.breakdownInterest.textContent = `+${wholeFormatter.format(data.profitAmount)} ر.س`;
-    }
+    if (elements.breakdownInterest) elements.breakdownInterest.textContent = `+${wholeFormatter.format(data.profitAmount)} ر.س`;
     
     if (elements.breakdownRate) {
         const label = elements.breakdownRate.parentElement.querySelector('span:first-child');
@@ -309,19 +279,9 @@ function updateUI(data) {
         else elements.breakdownRate.textContent = '65%';
     }
     
-    if (elements.breakdownTotal) {
-        elements.breakdownTotal.textContent = `${wholeFormatter.format(data.totalDebt)} ر.س`;
-    }
-    
-    // إخفاء سطر "نسبة السيولة" لأنه غير مستخدم في هذه الحسبة
-    if (elements.breakdownLiquidity) {
-        const liItem = elements.breakdownLiquidity.parentElement;
-        if(liItem) liItem.style.display = 'none'; 
-    }
-    
-    if (elements.downpaymentStatus) {
-        elements.downpaymentStatus.textContent = data.downpaymentStatus;
-    }
+    if (elements.breakdownTotal) elements.breakdownTotal.textContent = `${wholeFormatter.format(data.totalDebt)} ر.س`;
+    if (elements.breakdownLiquidity) elements.breakdownLiquidity.parentElement.style.display = 'none'; 
+    if (elements.downpaymentStatus) elements.downpaymentStatus.textContent = data.downpaymentStatus;
     
     if (elements.downpaymentAmount) {
         if (data.noDownPayment) {
@@ -408,10 +368,10 @@ function showValidationMessage(input, message, isValid) {
 }
 
 // ============================================
-// 7. WHATSAPP INTEGRATION
+// 7. WHATSAPP & SUPABASE INTEGRATION
 // ============================================
 
-function submitToWhatsApp() {
+async function submitToWhatsApp() {
     if (!validateForm()) {
         const amount = financingState.requestedCash;
         if (amount < MIN_AMOUNT || amount > MAX_AMOUNT) {
@@ -426,16 +386,33 @@ function submitToWhatsApp() {
     const profit = cash * PROFIT_PERCENTAGE;
     const totalDebt = cash + profit;
     const monthly = totalDebt / financingState.duration;
-    
     const formatter = new Intl.NumberFormat('ar-SA', { maximumFractionDigits: 0 });
+    const netCash = financingState.noDownPayment ? Math.max(cash - monthly, 0) : cash;
     
-    // حساب صافي الكاش للرسالة
-    const netCash = financingState.noDownPayment 
-        ? Math.max(cash - monthly, 0)
-        : cash;
-    
-    const message = `السلام عليكم، أرغب بطلب تمويل تابي من لير للاتصالات 📱
+    // --- SUPABASE STORAGE ---
+    const originalHTML = elements.whatsappSubmit.innerHTML;
+    elements.whatsappSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري حفظ الطلب...';
+    elements.whatsappSubmit.disabled = true;
+
+    try {
+        let orderId = "جديد";
+        
+        // محاولة الحفظ في قاعدة البيانات
+        if (window.supabaseClient) {
+            const customerData = { name: financingState.fullName, phone: financingState.mobileNumber };
+            const orderData = { months: financingState.duration, monthlyPayment: monthly, totalAmount: cash };
+            
+            const result = await window.supabaseClient.submitOrder(customerData, orderData);
+            if (result.success) {
+                orderId = result.orderId;
+                console.log("Order saved to DB with ID:", orderId);
+            }
+        }
+
+        // --- WHATSAPP MESSAGE ---
+        const message = `السلام عليكم، أرغب بطلب تمويل تابي من لير للاتصالات 📱
 --------------------------------
+🆔 رقم الطلب: ${orderId}
 👤 بيانات العميل:
 الاسم: ${financingState.fullName}
 الجوال: ${financingState.mobileNumber}
@@ -452,22 +429,23 @@ function submitToWhatsApp() {
 ${financingState.noDownPayment ? 'بدون دفعة أولى (مخصومة من الكاش)' : 'مع دفعة أولى'}
 --------------------------------
 ✅ أقر بصحة البيانات والموافقة على الشروط.`;
-    
-    const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    
-    // Loading Animation
-    const originalHTML = elements.whatsappSubmit.innerHTML;
-    elements.whatsappSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحضير...';
-    elements.whatsappSubmit.disabled = true;
-    
-    setTimeout(() => {
+        
+        const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        
+        // فتح الواتساب
         window.open(whatsappURL, '_blank');
+
+    } catch (err) {
+        console.error("Error saving to Supabase:", err);
+        // في حال فشل الحفظ، يفتح الواتساب بأي حال لتجنب خسارة العميل
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("طلب تمويل جديد من: " + financingState.fullName)}`, '_blank');
+    } finally {
         setTimeout(() => {
             elements.whatsappSubmit.innerHTML = originalHTML;
             elements.whatsappSubmit.disabled = false;
             trackConversion();
         }, 1500);
-    }, 800);
+    }
 }
 
 // ============================================
@@ -531,7 +509,6 @@ function calculateReadTime() {
 // ============================================
 
 function initializeCommon() {
-    // Accordion Logic
     document.querySelectorAll('.accordion-btn').forEach(button => {
         button.addEventListener('click', function() {
             const content = this.nextElementSibling;
@@ -542,7 +519,6 @@ function initializeCommon() {
         });
     });
     
-    // Smooth Scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -553,7 +529,6 @@ function initializeCommon() {
         });
     });
 
-    // Device Buttons
     document.querySelectorAll('.device-btn').forEach(button => {
         button.addEventListener('click', function() {
             const deviceName = this.parentElement.querySelector('.device-name').textContent;
@@ -567,15 +542,12 @@ function initializeCommon() {
     setupPerformanceMonitoring();
 }
 
-// --- QUARA MODAL LOGIC ---
 function selectDevice(deviceName) {
     const modal = document.getElementById('quaraModal');
     const deviceNameField = document.getElementById('selectedDeviceName');
     const hiddenDeviceField = document.getElementById('deviceName');
-    
     if(deviceNameField) deviceNameField.textContent = deviceName;
     if(hiddenDeviceField) hiddenDeviceField.value = deviceName;
-    
     if(modal) {
         modal.classList.remove('hidden');
         document.body.classList.add('overflow-hidden');
@@ -602,7 +574,6 @@ function submitQuaraForm() {
         form.reportValidity();
         return;
     }
-    
     const data = {
         device: document.getElementById('deviceName').value,
         name: document.getElementById('quaraFullName').value,
@@ -612,7 +583,6 @@ function submitQuaraForm() {
         city: document.getElementById('quaraCity').value,
         commitments: document.getElementById('quaraCommitments').value || 'لا يوجد'
     };
-    
     const msg = `السلام عليكم، أرغب بتقديم طلب تمويل كوارا:
 📱 الجهاز: ${data.device}
 👤 الاسم: ${data.name}
@@ -621,12 +591,9 @@ function submitQuaraForm() {
 🏢 الوظيفة: ${data.sector}
 📍 المدينة: ${data.city}
 💳 التزامات: ${data.commitments}`.trim();
-    
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
     closeQuaraModal();
 }
-
-// --- UTILITY FUNCTIONS ---
 
 function initializeCounters() {
     const observer = new IntersectionObserver((entries) => {
@@ -637,10 +604,7 @@ function initializeCounters() {
             }
         });
     }, { threshold: 0.5 });
-    
-    document.querySelectorAll('.counter').forEach(counter => {
-        observer.observe(counter);
-    });
+    document.querySelectorAll('.counter').forEach(counter => observer.observe(counter));
 }
 
 function animateCounter(el) {
@@ -648,7 +612,6 @@ function animateCounter(el) {
     const duration = 2000;
     const step = target / (duration / 16);
     let current = 0;
-    
     const timer = setInterval(() => {
         current += step;
         if (current >= target) {
@@ -667,9 +630,7 @@ function addBackToTopButton() {
     btn.className = 'back-to-top';
     btn.style.cssText = `position: fixed; bottom: 80px; right: 20px; width: 50px; height: 50px; background-color: #3AB54A; color: white; border: none; border-radius: 50%; font-size: 20px; cursor: pointer; opacity: 0; transition: all 0.3s; z-index: 1000; box-shadow: 0 4px 12px rgba(58, 181, 74, 0.3); display: none;`;
     document.body.appendChild(btn);
-    
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    
     window.addEventListener('scroll', () => {
         if (window.pageYOffset > 300) {
             btn.style.display = 'flex';
@@ -684,15 +645,10 @@ function addBackToTopButton() {
 
 function setupKeyboardShortcuts() {
     document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && e.key === 'Enter' && financingState.valid && elements.whatsappSubmit) {
-            submitToWhatsApp();
-        }
+        if (e.ctrlKey && e.key === 'Enter' && financingState.valid && elements.whatsappSubmit) submitToWhatsApp();
         if (e.key === 'Escape') {
              const modal = document.getElementById('quaraModal');
-             if(modal && !modal.classList.contains('hidden')) {
-                 closeQuaraModal();
-                 return;
-             }
+             if(modal && !modal.classList.contains('hidden')) { closeQuaraModal(); return; }
             if (elements.form && confirm('هل تريد إعادة تعيين النموذج؟')) resetForm();
         }
         if (e.ctrlKey && e.key === '/' && elements.amountInput) {
@@ -705,15 +661,7 @@ function setupKeyboardShortcuts() {
 
 function resetForm() {
     if (elements.form) elements.form.reset();
-    financingState = {
-        fullName: '',
-        mobileNumber: '',
-        requestedCash: 2500, // Reset to compliant default
-        duration: 12,
-        interestRate: PROFIT_PERCENTAGE,
-        noDownPayment: false,
-        valid: false
-    };
+    financingState = { fullName: '', mobileNumber: '', requestedCash: 2500, duration: 12, noDownPayment: false, valid: false };
     if (elements.amountInput) elements.amountInput.value = 2500;
     if (elements.downpaymentToggle) elements.downpaymentToggle.checked = false;
     calculateFinancing();
@@ -747,7 +695,6 @@ function trackConversion() {
     localStorage.setItem('ler_conversions', (conversions + 1).toString());
     const sessionConversions = parseInt(sessionStorage.getItem('ler_session_conversions') || '0');
     sessionStorage.setItem('ler_session_conversions', (sessionConversions + 1).toString());
-    console.log('Conversion tracked');
 }
 
 // ============================================
@@ -775,20 +722,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
 // ============================================
 
 function formatCurrency(amount) {
-    return new Intl.NumberFormat('ar-SA', {
-        style: 'currency',
-        currency: 'SAR',
-        minimumFractionDigits: 0
-    }).format(amount);
+    return new Intl.NumberFormat('ar-SA', { style: 'currency', currency: 'SAR', minimumFractionDigits: 0 }).format(amount);
 }
 
 function shareArticle() {
     const url = window.location.href;
-    if (navigator.share) {
-        navigator.share({ title: document.title, url: url });
-    } else {
-        navigator.clipboard.writeText(url).then(() => alert('تم نسخ الرابط!'));
-    }
+    if (navigator.share) navigator.share({ title: document.title, url: url });
+    else navigator.clipboard.writeText(url).then(() => alert('تم نسخ الرابط!'));
 }
 
 function printArticle() {
