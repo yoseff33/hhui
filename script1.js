@@ -1,5 +1,5 @@
 // ============================================
-// LER Telecom - Complete JavaScript File (Full Original Version + Updates)
+// LER Telecom - Complete JavaScript File (Tabby Limit Fixed)
 // ============================================
 
 // Initialize AOS (Animate On Scroll)
@@ -14,26 +14,28 @@ function initializeAOS() {
 }
 
 // ============================================
-// BUSINESS LOGIC CONSTANTS (UPDATED)
+// BUSINESS LOGIC CONFIGURATION
 // ============================================
 
-// تم تثبيت نسبة الفائدة على 65% (0.65)
-const FIXED_INTEREST_RATE = 0.65; 
+// نسبة الربح الثابتة (65%)
+const PROFIT_PERCENTAGE = 0.65; 
 
-// نسبة السيولة (56%)
+// نسبة السيولة (الكاش) من قيمة الجهاز
 const CASH_LIQUIDITY_RATIO = 0.56; 
 
 const WHATSAPP_NUMBER = "966533774766";
-const MIN_AMOUNT = 1000;
-const MAX_AMOUNT = 100000;
+
+// تم تعديل الحدود حسب نظام تابي
+const MIN_AMOUNT = 100;
+const MAX_AMOUNT = 5000;
 
 // State Management
 let financingState = {
     fullName: '',
     mobileNumber: '',
-    amount: 5000, // هذا المبلغ يمثل الكاش اللي يبيه العميل
+    amount: 2500, // مبلغ افتراضي ضمن حدود تابي
     duration: 12,
-    interestRate: FIXED_INTEREST_RATE,
+    interestRate: PROFIT_PERCENTAGE,
     noDownPayment: false,
     valid: false
 };
@@ -80,9 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize Quara Modal Events (ESC key)
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeQuaraModal();
-        }
+        if (e.key === 'Escape') closeQuaraModal();
     });
 });
 
@@ -92,15 +92,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeCalculator() {
     initializeElements();
-    cleanButtonLabels(); // تنظيف الواجهة من النسب القديمة
+    cleanButtonLabels(); // إخفاء النسب القديمة
     setupEventListeners();
+    
+    // تحديث حقول الإدخال لتتناسب مع الحدود الجديدة
+    if(elements.amountInput) {
+        elements.amountInput.min = MIN_AMOUNT;
+        elements.amountInput.max = MAX_AMOUNT;
+        elements.amountInput.value = financingState.amount;
+    }
+    
     calculateFinancing();
     validateForm();
     initializeCounters();
 }
 
-// دالة جديدة لإخفاء الـ badges القديمة
 function cleanButtonLabels() {
+    // إخفاء الـ badges القديمة التي تحتوي على نسب متغيرة
     const badges = document.querySelectorAll('.rate-badge');
     badges.forEach(badge => {
         badge.style.display = 'none';
@@ -124,11 +132,6 @@ function initializeElements() {
     elements.downpaymentStatus = document.getElementById('downpaymentStatus');
     elements.downpaymentAmount = document.getElementById('downpaymentAmount');
     elements.whatsappSubmit = document.getElementById('whatsappSubmit');
-    
-    // Set initial state from inputs
-    if (elements.amountInput) {
-        financingState.amount = parseInt(elements.amountInput.value) || 5000;
-    }
 }
 
 function setupEventListeners() {
@@ -139,7 +142,6 @@ function setupEventListeners() {
             validateName();
             validateForm();
         });
-        
         elements.fullNameInput.addEventListener('blur', validateName);
     }
     
@@ -149,14 +151,18 @@ function setupEventListeners() {
             validateMobile();
             validateForm();
         });
-        
         elements.mobileInput.addEventListener('blur', validateMobile);
     }
     
     if (elements.amountInput) {
         elements.amountInput.addEventListener('input', function() {
             let value = parseInt(this.value) || 0;
-            // السماح بالكتابة بحرية، التحقق يتم عند الحساب
+            
+            // التحقق الفوري من الحدود
+            if (value > MAX_AMOUNT) {
+                // تنبيه المستخدم بطريقة لطيفة (اختياري) أو مجرد تحديث الحالة للتحقق لاحقاً
+            }
+            
             financingState.amount = value;
             calculateFinancing();
             validateForm();
@@ -168,7 +174,6 @@ function setupEventListeners() {
         elements.durationButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const months = parseInt(this.getAttribute('data-months'));
-                // نتجاهل النسبة القديمة ونستخدم الثابتة
                 setDuration(months, button);
             });
         });
@@ -214,39 +219,42 @@ function setDuration(months, button) {
 }
 
 // -------------------------------------------------------------
-// المعادلة الجديدة: (الكاش المطلوب / 0.56) = سعر الجهاز
+// المعادلة الجديدة: (المبلغ المطلوب + 65%)
 // -------------------------------------------------------------
 function calculateFinancing() {
-    const desiredCash = financingState.amount;
+    // بما أننا حددنا الحد الأقصى 5000، فالمقصود هنا هو مبلغ "التمويل" (قيمة الجهاز)
+    // وليس الكاش الصافي، لأن تابي حده 5000 كقيمة شرائية.
+    // إذا العميل حط 5000، يعني يبي يشتري جهاز بـ 5000.
+    
+    let productPrice = financingState.amount;
+    
+    // التأكد من الحدود
+    if (productPrice > MAX_AMOUNT) productPrice = MAX_AMOUNT;
+    if (productPrice < MIN_AMOUNT) productPrice = MIN_AMOUNT;
+
     const duration = financingState.duration;
-    const interestRate = FIXED_INTEREST_RATE; // 0.65
+    const interestRate = PROFIT_PERCENTAGE; // 0.65
     const noDownPayment = financingState.noDownPayment;
     
-    // 1. حساب سعر الجهاز المطلوب عشان يوفر الكاش هذا
-    let requiredProductPrice = desiredCash / CASH_LIQUIDITY_RATIO;
+    // 1. حساب الفائدة (65%) على قيمة الجهاز
+    const profitAmount = productPrice * interestRate;
+    const totalAmount = productPrice + profitAmount;
     
-    // تقريب السعر لأقرب 10 ريال ليكون دقيق
-    requiredProductPrice = Math.ceil(requiredProductPrice / 10) * 10;
-
-    // 2. حساب الفائدة (65%) على سعر الجهاز
-    const interestAmount = requiredProductPrice * interestRate;
-    const totalAmount = requiredProductPrice + interestAmount;
-    
-    // 3. القسط الشهري
+    // 2. القسط الشهري
     const monthlyInstallment = totalAmount / duration;
     
-    // 4. السيولة (الكاش) المتوفرة
-    // (يفترض تكون مساوية أو قريبة جداً من desiredCash)
-    const baseCashLiquidity = requiredProductPrice * CASH_LIQUIDITY_RATIO;
+    // 3. صافي الكاش (السيولة)
+    // المعادلة: قيمة الجهاز * 0.56
+    const baseCashLiquidity = productPrice * CASH_LIQUIDITY_RATIO;
     
-    // 5. خصم الدفعة الأولى
+    // 4. خصم الدفعة الأولى
     let netCash = baseCashLiquidity;
     let downpaymentStatus = "✅ الدفعة الأولى: تدفعها أنت";
     let downpaymentAmount = 0;
     
     if (noDownPayment) {
         netCash = baseCashLiquidity - monthlyInstallment;
-        downpaymentStatus = "✅ الدفعة الأولى: دفعناها لك";
+        downpaymentStatus = "✅ الدفعة الأولى: خصمناها من الكاش";
         downpaymentAmount = monthlyInstallment;
     }
     
@@ -257,11 +265,9 @@ function calculateFinancing() {
     updateUI({
         monthlyInstallment,
         netCash,
-        amount: requiredProductPrice, // نعرض سعر الجهاز هنا
-        interestRate,
-        interestAmount,
+        amount: productPrice,
+        profitAmount,
         totalAmount,
-        baseCashLiquidity,
         downpaymentStatus,
         downpaymentAmount,
         noDownPayment
@@ -269,7 +275,6 @@ function calculateFinancing() {
 }
 
 function updateUI(data) {
-    // Format numbers with thousand separators
     const formatter = new Intl.NumberFormat('ar-SA', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
@@ -289,21 +294,20 @@ function updateUI(data) {
     
     // Breakdown
     if (elements.breakdownAmount) {
-        // نغير النص لـ "قيمة السلعة المطلوبة"
         const label = elements.breakdownAmount.parentElement.querySelector('span:first-child');
-        if(label) label.textContent = "قيمة السلعة المطلوبة:";
+        if(label) label.textContent = "قيمة السلعة (الحد 5000):";
         elements.breakdownAmount.textContent = `${wholeFormatter.format(data.amount)} ر.س`;
     }
     
     if (elements.breakdownInterest) {
-        elements.breakdownInterest.textContent = `+${wholeFormatter.format(data.interestAmount)} ر.س`;
+        elements.breakdownInterest.textContent = `+${wholeFormatter.format(data.profitAmount)} ر.س`;
     }
     
     if (elements.breakdownTotal) {
         elements.breakdownTotal.textContent = `${wholeFormatter.format(data.totalAmount)} ر.س`;
     }
     
-    // نخفي سطر نسبة السيولة عشان ما يلخبط العميل في الحسبة الجديدة
+    // إخفاء سطر نسبة السيولة القديم
     if (elements.breakdownLiquidity) {
         const liItem = elements.breakdownLiquidity.parentElement;
         if(liItem) liItem.style.display = 'none'; 
@@ -331,35 +335,12 @@ function updateUI(data) {
 function validateName() {
     const name = financingState.fullName;
     const input = elements.fullNameInput;
-    
     if (!input) return false;
     
-    // Reset validation classes
     input.classList.remove('valid', 'invalid');
     
-    if (!name) {
+    if (!name || name.split(/\s+/).length < 2) {
         showValidationMessage(input, 'الاسم الكامل مطلوب', false);
-        return false;
-    }
-    
-    // Check for at least 4 parts (typical Arabic name structure)
-    const nameParts = name.split(/\s+/).filter(part => part.length > 0);
-    
-    if (nameParts.length < 2) {
-        showValidationMessage(input, 'الرجاء إدخال الاسم الكامل (اسم واسم العائلة على الأقل)', false);
-        return false;
-    }
-    
-    // Check minimum length
-    if (name.length < 6) {
-        showValidationMessage(input, 'الاسم قصير جداً', false);
-        return false;
-    }
-    
-    // Check for Arabic characters
-    const arabicRegex = /^[ء-ي\s]+$/;
-    if (!arabicRegex.test(name)) {
-        showValidationMessage(input, 'الرجاء استخدام الأحرف العربية فقط', false);
         return false;
     }
     
@@ -370,22 +351,13 @@ function validateName() {
 function validateMobile() {
     const mobile = financingState.mobileNumber;
     const input = elements.mobileInput;
-    
     if (!input) return false;
     
-    // Reset validation classes
     input.classList.remove('valid', 'invalid');
-    
-    if (!mobile) {
-        showValidationMessage(input, 'رقم الجوال مطلوب', false);
-        return false;
-    }
-    
-    // Saudi mobile number validation (05XXXXXXXX)
     const saudiMobileRegex = /^05[0-9]{8}$/;
     
     if (!saudiMobileRegex.test(mobile)) {
-        showValidationMessage(input, 'رقم غير صالح. يجب أن يبدأ بـ 05 ويتكون من 10 أرقام', false);
+        showValidationMessage(input, 'رقم غير صالح. يجب أن يبدأ بـ 05', false);
         return false;
     }
     
@@ -395,7 +367,8 @@ function validateMobile() {
 
 function validateAmount() {
     const amount = financingState.amount;
-    return amount >= 500 && amount <= 100000;
+    // التحقق الصارم من الحدود (100 - 5000)
+    return amount >= MIN_AMOUNT && amount <= MAX_AMOUNT;
 }
 
 function validateForm() {
@@ -405,16 +378,16 @@ function validateForm() {
     
     financingState.valid = isNameValid && isMobileValid && isAmountValid;
     
-    // Update submit button state
     if (elements.whatsappSubmit) {
         if (financingState.valid) {
             elements.whatsappSubmit.disabled = false;
-            elements.whatsappSubmit.setAttribute('aria-disabled', 'false');
-            elements.whatsappSubmit.title = 'انقر لإرسال الطلب عبر واتساب';
+            elements.whatsappSubmit.removeAttribute('title');
         } else {
             elements.whatsappSubmit.disabled = true;
-            elements.whatsappSubmit.setAttribute('aria-disabled', 'true');
-            elements.whatsappSubmit.title = 'الرجاء إكمال جميع الحقول المطلوبة بشكل صحيح';
+            // إضافة رسالة توضيحية للزر
+            if (!isAmountValid) {
+                elements.whatsappSubmit.title = `المبلغ يجب أن يكون بين ${MIN_AMOUNT} و ${MAX_AMOUNT} ريال`;
+            }
         }
     }
     
@@ -422,27 +395,18 @@ function validateForm() {
 }
 
 function showValidationMessage(input, message, isValid) {
-    // Remove existing message
     const existingMessage = input.parentNode.querySelector('.validation-message');
-    if (existingMessage) {
-        existingMessage.remove();
-    }
+    if (existingMessage) existingMessage.remove();
     
-    // Add validation class
-    input.classList.remove('valid', 'invalid');
     input.classList.add(isValid ? 'valid' : 'invalid');
-    
-    // Create message element
     const messageEl = document.createElement('div');
     messageEl.className = `validation-message ${isValid ? 'valid' : 'invalid'}`;
     messageEl.textContent = message;
     
-    // Add icon
     const icon = document.createElement('i');
     icon.className = isValid ? 'fas fa-check-circle mr-1' : 'fas fa-exclamation-circle mr-1';
     messageEl.prepend(icon);
     
-    // Insert after input
     input.parentNode.appendChild(messageEl);
 }
 
@@ -452,64 +416,59 @@ function showValidationMessage(input, message, isValid) {
 
 function submitToWhatsApp() {
     if (!validateForm()) {
-        alert('الرجاء إكمال جميع الحقول المطلوبة بشكل صحيح قبل الإرسال');
+        const amount = financingState.amount;
+        if (amount < MIN_AMOUNT || amount > MAX_AMOUNT) {
+            alert(`عذراً، تمويل تابي متاح فقط من ${MIN_AMOUNT} إلى ${MAX_AMOUNT} ريال`);
+        } else {
+            alert('الرجاء إكمال جميع الحقول المطلوبة');
+        }
         return;
     }
     
-    // Recalculate based on current state
-    const desiredCash = financingState.amount;
-    let requiredProductPrice = desiredCash / CASH_LIQUIDITY_RATIO;
-    requiredProductPrice = Math.ceil(requiredProductPrice / 10) * 10;
-    
+    // إعداد البيانات
+    const productPrice = financingState.amount;
     const duration = financingState.duration;
-    const interestRate = FIXED_INTEREST_RATE;
-    const totalAmount = requiredProductPrice + (requiredProductPrice * interestRate);
+    const profitAmount = productPrice * PROFIT_PERCENTAGE;
+    const totalAmount = productPrice + profitAmount;
     const monthlyInstallment = totalAmount / duration;
     
-    // Format numbers
-    const formatter = new Intl.NumberFormat('ar-SA', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-    });
+    const baseCashLiquidity = productPrice * CASH_LIQUIDITY_RATIO;
+    const netCash = financingState.noDownPayment 
+        ? Math.max(baseCashLiquidity - monthlyInstallment, 0)
+        : baseCashLiquidity;
     
-    // Prepare WhatsApp message
-    const message = `السلام عليكم، أرغب بطلب تمويل (كاش) من لير للاتصالات 📱
+    const formatter = new Intl.NumberFormat('ar-SA', { maximumFractionDigits: 0 });
+    
+    const message = `السلام عليكم، أرغب بطلب تمويل تابي من لير للاتصالات 📱
 --------------------------------
 👤 بيانات العميل:
 الاسم: ${financingState.fullName}
 الجوال: ${financingState.mobileNumber}
 --------------------------------
 💰 تفاصيل الطلب:
-الكاش المطلوب: ${formatter.format(desiredCash)} ريال
+قيمة السلعة (التمويل): ${formatter.format(productPrice)} ريال
+صافي الكاش المتوقع: ${formatter.format(netCash)} ريال
 المدة: ${duration} أشهر
-القسط الشهري التقريبي: ${formatter.format(monthlyInstallment)} ريال
---------------------------------
-ℹ️ تفاصيل للموظف:
-سعر الجهاز المطلوب: ${formatter.format(requiredProductPrice)} ريال
+القسط الشهري: ${formatter.format(monthlyInstallment)} ريال
 إجمالي المديونية: ${formatter.format(totalAmount)} ريال
-ملاحظات: ${financingState.noDownPayment ? 'الدفعة الأولى مخصومة من الكاش' : 'مع دفعة أولى'}
 --------------------------------
-✅ أقر أنا العميل بصحة البيانات والموافقة على الشروط.`;
+ℹ️ ملاحظات الدفع:
+${financingState.noDownPayment ? 'بدون دفعة أولى (مخصومة من الكاش)' : 'مع دفعة أولى'}
+--------------------------------
+✅ أقر بصحة البيانات والموافقة على الشروط.`;
     
-    // Encode message for WhatsApp URL
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+    const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     
-    // Show loading state
+    // Loading State
     const originalHTML = elements.whatsappSubmit.innerHTML;
     elements.whatsappSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحضير...';
     elements.whatsappSubmit.disabled = true;
     
-    // Open WhatsApp after short delay for better UX
     setTimeout(() => {
         window.open(whatsappURL, '_blank');
-        
-        // Reset button state
         setTimeout(() => {
             elements.whatsappSubmit.innerHTML = originalHTML;
             elements.whatsappSubmit.disabled = false;
-            
-            // Track conversion
             trackConversion();
         }, 1500);
     }, 800);
@@ -559,14 +518,11 @@ function trackReadingProgress() {
         const articleId = 'blog-cash-in-hafar';
         const readKey = `read_${articleId}`;
         
-        // Mark as read when scrolled 75%
         window.addEventListener('scroll', function() {
             const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
             
             if (scrollPercentage > 75 && !localStorage.getItem(readKey)) {
                 localStorage.setItem(readKey, 'true');
-                
-                // Optional: Send analytics or update UI
                 console.log('Article marked as read:', articleId);
             }
         });
@@ -576,7 +532,7 @@ function trackReadingProgress() {
 function calculateReadTime() {
     const articleText = document.querySelector('.article-container')?.innerText || '';
     const wordCount = articleText.split(/\s+/).length;
-    const readingTime = Math.ceil(wordCount / 200); // 200 words per minute
+    const readingTime = Math.ceil(wordCount / 200); 
     
     const timeElement = document.querySelector('.article-meta span:nth-child(2)');
     if (timeElement && readingTime > 0) {
@@ -585,53 +541,106 @@ function calculateReadTime() {
 }
 
 // ============================================
-// COMMON FUNCTIONALITY
+// COMMON FUNCTIONALITY & MODALS
 // ============================================
 
 function initializeCommon() {
-    // Accordion functionality
-    initializeAccordions();
-    
-    // Initialize counters
-    initializeCounters();
-    
-    // Setup scroll to section
-    setupScrollToSection();
-    
-    // Setup device selection
-    setupDeviceSelection();
-    
-    // Add back to top button
-    addBackToTopButton();
-    
-    // Setup keyboard shortcuts
-    setupKeyboardShortcuts();
-    
-    // Setup print functionality
-    setupPrintStyles();
-    
-    // Performance monitoring
-    setupPerformanceMonitoring();
-}
-
-function initializeAccordions() {
+    // Accordion Logic
     document.querySelectorAll('.accordion-btn').forEach(button => {
         button.addEventListener('click', function() {
             const content = this.nextElementSibling;
             const icon = this.querySelector('i');
-            const isExpanded = this.getAttribute('aria-expanded') === 'true';
-            
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-                if (icon) icon.style.transform = 'rotate(0deg)';
-                this.setAttribute('aria-expanded', 'false');
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-                if (icon) icon.style.transform = 'rotate(180deg)';
-                this.setAttribute('aria-expanded', 'true');
+            this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+            content.classList.toggle('hidden');
+            if (icon) icon.classList.toggle('rotate-180');
+        });
+    });
+    
+    // Setup Scroll Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href.includes('http') || href === '#') return;
+            e.preventDefault();
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     });
+
+    // Setup Device Selection
+    document.querySelectorAll('.device-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const deviceName = this.parentElement.querySelector('.device-name').textContent;
+            selectDevice(deviceName);
+        });
+    });
+
+    // Add Back to Top
+    addBackToTopButton();
+    setupKeyboardShortcuts();
+    setupPrintStyles();
+    setupPerformanceMonitoring();
+}
+
+// Quara Modal Logic
+function selectDevice(deviceName) {
+    const modal = document.getElementById('quaraModal');
+    const deviceNameField = document.getElementById('selectedDeviceName');
+    const hiddenDeviceField = document.getElementById('deviceName');
+    
+    if(deviceNameField) deviceNameField.textContent = deviceName;
+    if(hiddenDeviceField) hiddenDeviceField.value = deviceName;
+    
+    if(modal) {
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+    setTimeout(() => {
+        const nameInput = document.getElementById('quaraFullName');
+        if(nameInput) nameInput.focus();
+    }, 300);
+}
+
+function closeQuaraModal() {
+    const modal = document.getElementById('quaraModal');
+    if(modal) {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+    const form = document.getElementById('quaraForm');
+    if(form) form.reset();
+}
+
+function submitQuaraForm() {
+    const form = document.getElementById('quaraForm');
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+    
+    const data = {
+        device: document.getElementById('deviceName').value,
+        name: document.getElementById('quaraFullName').value,
+        mobile: document.getElementById('quaraMobile').value,
+        salary: document.getElementById('quaraSalary').value,
+        sector: document.getElementById('quaraSector').value,
+        city: document.getElementById('quaraCity').value,
+        commitments: document.getElementById('quaraCommitments').value || 'لا يوجد'
+    };
+    
+    const msg = `السلام عليكم، أرغب بتقديم طلب تمويل كوارا:
+📱 الجهاز: ${data.device}
+👤 الاسم: ${data.name}
+📞 الجوال: ${data.mobile}
+💰 الراتب: ${data.salary} ريال
+🏢 الوظيفة: ${data.sector}
+📍 المدينة: ${data.city}
+💳 التزامات: ${data.commitments}`.trim();
+    
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    closeQuaraModal();
 }
 
 function initializeCounters() {
@@ -667,193 +676,40 @@ function animateCounter(el) {
     }, 16);
 }
 
-function setupScrollToSection() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            
-            // If it's an external link, don't prevent default
-            if (href.includes('http') || href === '#') {
-                return;
-            }
-            
-            e.preventDefault();
-            
-            const targetElement = document.querySelector(href);
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-}
-
-function scrollToSection(id) {
-    const element = document.getElementById(id);
-    if (element) {
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
-}
-
-function setupDeviceSelection() {
-    document.querySelectorAll('.device-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const deviceName = this.parentElement.querySelector('.device-name').textContent;
-            selectDevice(deviceName);
-        });
-    });
-}
-
-// ----------------------------------------------------
-// UPDATED: Device Selection now opens the Quara Modal
-// ----------------------------------------------------
-function selectDevice(deviceName) {
-    const modal = document.getElementById('quaraModal');
-    const deviceNameField = document.getElementById('selectedDeviceName');
-    const hiddenDeviceField = document.getElementById('deviceName');
-    
-    // Set device name in modal
-    if(deviceNameField) deviceNameField.textContent = deviceName;
-    if(hiddenDeviceField) hiddenDeviceField.value = deviceName;
-    
-    // Show Modal
-    if(modal) {
-        modal.classList.remove('hidden');
-        document.body.classList.add('overflow-hidden'); // Prevent background scrolling
-    }
-    
-    // Focus on first input
-    setTimeout(() => {
-        const nameInput = document.getElementById('quaraFullName');
-        if(nameInput) nameInput.focus();
-    }, 300);
-}
-
-// ============================================
-// Quara Finance Modal Functions
-// ============================================
-
-function closeQuaraModal() {
-    const modal = document.getElementById('quaraModal');
-    if(modal) {
-        modal.classList.add('hidden');
-        document.body.classList.remove('overflow-hidden');
-    }
-    // Reset form
-    const form = document.getElementById('quaraForm');
-    if(form) form.reset();
-}
-
-function submitQuaraForm() {
-    const form = document.getElementById('quaraForm');
-    
-    // Validate inputs
-    if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-    }
-    
-    // Collect Data
-    const data = {
-        device: document.getElementById('deviceName').value,
-        name: document.getElementById('quaraFullName').value,
-        mobile: document.getElementById('quaraMobile').value,
-        salary: document.getElementById('quaraSalary').value,
-        sector: document.getElementById('quaraSector').value,
-        city: document.getElementById('quaraCity').value,
-        commitments: document.getElementById('quaraCommitments').value || 'لا يوجد'
-    };
-    
-    // Prepare Message
-    const msg = `
-السلام عليكم، أرغب بتقديم طلب تمويل كوارا:
-📱 الجهاز: ${data.device}
-👤 الاسم: ${data.name}
-📞 الجوال: ${data.mobile}
-💰 الراتب: ${data.salary} ريال
-🏢 الوظيفة: ${data.sector}
-📍 المدينة: ${data.city}
-💳 التزامات: ${data.commitments}
-    `.trim();
-    
-    // Open WhatsApp
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
-    
-    closeQuaraModal();
-}
-
 function addBackToTopButton() {
-    const backToTopButton = document.createElement('button');
-    backToTopButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
-    backToTopButton.className = 'back-to-top';
-    backToTopButton.style.cssText = `
-        position: fixed;
-        bottom: 80px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        background-color: #3AB54A;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        font-size: 20px;
-        cursor: pointer;
-        opacity: 0;
-        transition: opacity 0.3s, transform 0.3s;
-        z-index: 1000;
-        box-shadow: 0 4px 12px rgba(58, 181, 74, 0.3);
-        display: none;
-    `;
-
-    document.body.appendChild(backToTopButton);
-
-    backToTopButton.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
+    const btn = document.createElement('button');
+    btn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    btn.className = 'back-to-top';
+    btn.style.cssText = `position: fixed; bottom: 80px; right: 20px; width: 50px; height: 50px; background-color: #3AB54A; color: white; border: none; border-radius: 50%; font-size: 20px; cursor: pointer; opacity: 0; transition: all 0.3s; z-index: 1000; box-shadow: 0 4px 12px rgba(58, 181, 74, 0.3); display: none;`;
+    document.body.appendChild(btn);
+    
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    
     window.addEventListener('scroll', () => {
         if (window.pageYOffset > 300) {
-            backToTopButton.style.display = 'flex';
-            backToTopButton.style.opacity = '1';
-            backToTopButton.style.transform = 'translateY(0)';
+            btn.style.display = 'flex';
+            setTimeout(() => { btn.style.opacity = '1'; btn.style.transform = 'translateY(0)'; }, 10);
         } else {
-            backToTopButton.style.opacity = '0';
-            backToTopButton.style.transform = 'translateY(10px)';
-            setTimeout(() => {
-                backToTopButton.style.display = 'none';
-            }, 300);
+            btn.style.opacity = '0';
+            btn.style.transform = 'translateY(10px)';
+            setTimeout(() => btn.style.display = 'none', 300);
         }
     });
 }
 
 function setupKeyboardShortcuts() {
     document.addEventListener('keydown', function(e) {
-        // Ctrl + Enter to submit form (main page only)
         if (e.ctrlKey && e.key === 'Enter' && financingState.valid && elements.whatsappSubmit) {
             submitToWhatsApp();
         }
-        
-        // Escape to reset form (Modified to handle Modal first)
         if (e.key === 'Escape') {
              const modal = document.getElementById('quaraModal');
              if(modal && !modal.classList.contains('hidden')) {
                  closeQuaraModal();
-                 return; // Don't reset calculator form if we just closed modal
+                 return;
              }
-
-            if (elements.form) {
-                if (confirm('هل تريد إعادة تعيين النموذج؟')) {
-                    resetForm();
-                }
-            }
+            if (elements.form && confirm('هل تريد إعادة تعيين النموذج؟')) resetForm();
         }
-        
-        // Ctrl + / to focus on amount input
         if (e.ctrlKey && e.key === '/' && elements.amountInput) {
             e.preventDefault();
             elements.amountInput.focus();
@@ -863,77 +719,24 @@ function setupKeyboardShortcuts() {
 }
 
 function resetForm() {
-    if (elements.form) {
-        elements.form.reset();
-    }
-    
-    // Reset state
+    if (elements.form) elements.form.reset();
     financingState = {
         fullName: '',
         mobileNumber: '',
-        amount: 5000,
-        duration: 4,
-        interestRate: FIXED_INTEREST_RATE,
+        amount: 2500, // Reset to default compliant amount
+        duration: 12,
+        interestRate: PROFIT_PERCENTAGE,
         noDownPayment: false,
         valid: false
     };
-    
-    // Reset UI
-    if (elements.amountInput) {
-        elements.amountInput.value = 5000;
-    }
-    
-    if (elements.downpaymentToggle) {
-        elements.downpaymentToggle.checked = false;
-    }
-    
-    if (elements.durationButtons) {
-        elements.durationButtons.forEach(btn => {
-            btn.classList.remove('active');
-            btn.setAttribute('aria-pressed', 'false');
-        });
-        
-        // Activate 4 months button
-        const fourMonthBtn = document.querySelector('.duration-btn[data-months="4"]');
-        if (fourMonthBtn) {
-            fourMonthBtn.classList.add('active');
-            fourMonthBtn.setAttribute('aria-pressed', 'true');
-        }
-    }
-    
-    // Recalculate
+    if (elements.amountInput) elements.amountInput.value = 2500;
+    if (elements.downpaymentToggle) elements.downpaymentToggle.checked = false;
     calculateFinancing();
     validateForm();
 }
 
 function setupPrintStyles() {
-    const printStyles = `
-        @media print {
-            .whatsapp-float,
-            .alert-banner,
-            .nav-buttons,
-            .duration-btn,
-            .whatsapp-cta-btn,
-            .direct-whatsapp-btn,
-            .toggle-switch,
-            .back-to-top,
-            #quaraModal {
-                display: none !important;
-            }
-            
-            body {
-                background-color: white !important;
-                color: black !important;
-            }
-            
-            .calculator-card,
-            .benefits-sidebar {
-                border: 1px solid #ccc !important;
-                box-shadow: none !important;
-            }
-        }
-    `;
-    
+    const printStyles = `@media print { .whatsapp-float, .alert-banner, .nav-buttons, .duration-btn, .whatsapp-cta-btn, .direct-whatsapp-btn, .toggle-switch, .back-to-top, #quaraModal { display: none !important; } body { background-color: white !important; color: black !important; } .calculator-card, .benefits-sidebar { border: 1px solid #ccc !important; box-shadow: none !important; } }`;
     const styleSheet = document.createElement("style");
     styleSheet.type = "text/css";
     styleSheet.textContent = printStyles;
@@ -945,10 +748,7 @@ function setupPerformanceMonitoring() {
         window.addEventListener('load', function() {
             const perfData = window.performance.timing;
             const loadTime = perfData.loadEventEnd - perfData.navigationStart;
-            
-            if (loadTime > 3000) {
-                console.warn('Page load time is high:', loadTime + 'ms');
-            }
+            if (loadTime > 3000) console.warn('Page load time is high:', loadTime + 'ms');
         });
     }
 }
@@ -958,53 +758,31 @@ function setupPerformanceMonitoring() {
 // ============================================
 
 function trackConversion() {
-    // Track in localStorage
     const conversions = parseInt(localStorage.getItem('ler_conversions') || '0');
     localStorage.setItem('ler_conversions', (conversions + 1).toString());
-    
-    // Track in sessionStorage for current session
     const sessionConversions = parseInt(sessionStorage.getItem('ler_session_conversions') || '0');
     sessionStorage.setItem('ler_session_conversions', (sessionConversions + 1).toString());
-    
-    console.log('Conversion tracked:', {
-        conversions: conversions + 1,
-        sessionConversions: sessionConversions + 1,
-        timestamp: new Date().toISOString()
-    });
+    console.log('Conversion tracked');
 }
 
 // ============================================
-// ERROR HANDLING
+// PWA SUPPORT & ERROR HANDLING
 // ============================================
 
 window.addEventListener('error', function(e) {
-    console.error('JavaScript Error:', e.message, 'at', e.filename, 'line', e.lineno);
+    console.error('JS Error:', e.message, 'at', e.filename, 'line', e.lineno);
 });
-
-// ============================================
-// PWA SUPPORT
-// ============================================
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js')
-            .then(function(registration) {
-                console.log('ServiceWorker registration successful:', registration.scope);
-            })
-            .catch(function(err) {
-                console.log('ServiceWorker registration failed:', err);
-            });
+        navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW failed:', err));
     });
 }
 
-// PWA Install Prompt
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    
-    // You could show an install button here
-    console.log('PWA install available');
 });
 
 // ============================================
@@ -1015,47 +793,29 @@ function formatCurrency(amount) {
     return new Intl.NumberFormat('ar-SA', {
         style: 'currency',
         currency: 'SAR',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
+        minimumFractionDigits: 0
     }).format(amount);
 }
 
 function shareArticle() {
-    const title = document.title;
     const url = window.location.href;
-    
     if (navigator.share) {
-        navigator.share({
-            title: title,
-            text: 'اقرأ هذا المقال عن طريقة الحصول على كاش فوري من تابي في حفر الباطن',
-            url: url
-        })
-        .then(() => console.log('Successful share'))
-        .catch((error) => console.log('Error sharing:', error));
+        navigator.share({ title: document.title, url: url });
     } else {
-        // Fallback: Copy to clipboard
-        navigator.clipboard.writeText(url).then(() => {
-            alert('تم نسخ رابط المقال! يمكنك مشاركته الآن.');
-        });
+        navigator.clipboard.writeText(url).then(() => alert('تم نسخ الرابط!'));
     }
 }
 
 function printArticle() {
-    const printContent = document.querySelector('.article-container')?.innerHTML;
-    const originalContent = document.body.innerHTML;
-    
-    document.body.innerHTML = `
-        <div class="print-container" dir="rtl" style="padding: 20px; font-family: 'Tajawal', sans-serif;">
-            ${printContent}
-            <div style="margin-top: 40px; text-align: center; color: #666; font-size: 12px;">
-                <p>نشرت بواسطة: مؤسسة لير للاتصالات</p>
-                <p>الموقع: www.lear.sa</p>
-                <p>رقم الهاتف: 053-377-4766</p>
-            </div>
-        </div>
-    `;
-    
+    const content = document.querySelector('.article-container')?.innerHTML;
+    const original = document.body.innerHTML;
+    document.body.innerHTML = `<div dir="rtl" style="padding:20px;font-family:'Tajawal'">${content}</div>`;
     window.print();
-    document.body.innerHTML = originalContent;
+    document.body.innerHTML = original;
     location.reload();
+}
+
+function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
