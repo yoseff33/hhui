@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة القيادة V3 - لير للاتصالات</title>
+    <title>لوحة القيادة V3.1 - لير للاتصالات</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -15,7 +15,6 @@
         .nav-item { cursor: pointer; transition: all 0.3s; color: #9CA3AF; }
         .nav-item:hover { background-color: #1F2937; color: white; }
         
-        /* حالات الطلب */
         .badge { padding: 4px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: bold; }
         .badge-pending { background: #FFF7ED; color: #C2410C; border: 1px solid #FFEDD5; }
         .badge-approved { background: #ECFDF5; color: #047857; border: 1px solid #D1FAE5; }
@@ -23,18 +22,16 @@
         .badge-completed { background: #EFF6FF; color: #1D4ED8; border: 1px solid #DBEAFE; }
 
         .modal { transition: opacity 0.25s ease; }
-        body.modal-active { overflow: hidden; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
     <div id="loginScreen" class="fixed inset-0 bg-gray-900 z-50 flex items-center justify-center">
         <div class="bg-white p-8 rounded-2xl shadow-2xl w-96 text-center border-t-8 border-blue-600">
-            <h1 class="text-3xl font-black mb-2 text-gray-800">LER ADMIN <span class="text-sm bg-blue-600 text-white px-2 py-1 rounded">ULTIMATE</span></h1>
-            <p class="text-gray-500 mb-8">نظام الإدارة المتكامل</p>
-            <input type="password" id="adminPass" class="w-full bg-gray-50 border border-gray-300 p-4 rounded-xl mb-4 text-center text-xl outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••">
-            <button onclick="checkLogin()" class="w-full bg-gray-900 text-white p-4 rounded-xl font-bold hover:bg-black transition shadow-lg">تسجيل الدخول</button>
-            <p id="loginError" class="text-red-500 mt-4 hidden font-bold bg-red-50 p-2 rounded">الرمز خطأ!</p>
+            <h1 class="text-3xl font-black mb-2 text-gray-800">LER ADMIN <span class="text-sm bg-blue-600 text-white px-2 py-1 rounded">V3.1</span></h1>
+            <input type="password" id="adminPass" class="w-full bg-gray-50 border border-gray-300 p-4 rounded-xl mb-4 text-center text-xl outline-none" placeholder="••••••">
+            <button onclick="checkLogin()" class="w-full bg-gray-900 text-white p-4 rounded-xl font-bold hover:bg-black transition">دخول</button>
+            <p id="loginError" class="text-red-500 mt-4 hidden font-bold">الرمز خطأ!</p>
         </div>
     </div>
 
@@ -43,7 +40,7 @@
         <aside class="bg-gray-900 w-full md:w-72 flex-shrink-0 flex flex-col shadow-2xl z-20">
             <div class="p-8 text-center border-b border-gray-800">
                 <h2 class="text-3xl font-black text-white tracking-widest">LER</h2>
-                <p class="text-xs text-blue-400 mt-1 uppercase tracking-widest">Control Center V3</p>
+                <p class="text-xs text-blue-400 mt-1 uppercase tracking-widest">Control Center</p>
             </div>
             
             <nav class="flex-1 py-6 space-y-1">
@@ -62,7 +59,7 @@
             </nav>
 
             <div class="p-6 bg-gray-800">
-                <button onclick="logout()" class="w-full py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold transition shadow-lg flex items-center justify-center gap-2">
+                <button onclick="logout()" class="w-full py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold transition flex items-center justify-center gap-2">
                     <i class="fas fa-power-off"></i> خروج
                 </button>
             </div>
@@ -73,9 +70,7 @@
             <section id="view-orders" class="animate-fade-in">
                 <header class="flex justify-between items-center mb-8">
                     <h2 class="text-3xl font-bold text-gray-800">📦 إدارة الطلبات</h2>
-                    <button onclick="fetchOrders()" class="bg-white px-5 py-2.5 rounded-xl shadow-sm text-gray-600 hover:text-blue-600 font-bold transition">
-                        <i class="fas fa-sync-alt ml-2"></i> تحديث
-                    </button>
+                    <button onclick="fetchOrders()" class="bg-white px-5 py-2.5 rounded-xl shadow-sm hover:text-blue-600 font-bold transition"><i class="fas fa-sync-alt ml-2"></i> تحديث</button>
                 </header>
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
@@ -115,7 +110,7 @@
             <section id="view-products" class="hidden animate-fade-in">
                 <header class="flex justify-between items-center mb-8">
                     <h2 class="text-3xl font-bold text-gray-800">📱 المنتجات</h2>
-                    <button onclick="openModal('productModal')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl shadow-lg font-bold transition flex items-center gap-2">
+                    <button onclick="openProductModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl shadow-lg font-bold transition flex items-center gap-2">
                         <i class="fas fa-plus"></i> إضافة منتج
                     </button>
                 </header>
@@ -124,7 +119,7 @@
 
             <section id="view-banners" class="hidden animate-fade-in">
                 <header class="flex justify-between items-center mb-8">
-                    <h2 class="text-3xl font-bold text-gray-800">📢 الإعلانات والعروض</h2>
+                    <h2 class="text-3xl font-bold text-gray-800">📢 الإعلانات</h2>
                     <button onclick="openModal('bannerModal')" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl shadow-lg font-bold transition flex items-center gap-2">
                         <i class="fas fa-plus"></i> إضافة إعلان
                     </button>
@@ -134,56 +129,22 @@
 
             <section id="view-settings" class="hidden animate-fade-in">
                 <header class="mb-8 border-b pb-4">
-                    <h2 class="text-3xl font-bold text-gray-800">⚙️ إعدادات الموقع و SEO</h2>
-                    <p class="text-gray-500">تحكم في نصوص الموقع ومحركات البحث من هنا</p>
+                    <h2 class="text-3xl font-bold text-gray-800">⚙️ الإعدادات & SEO</h2>
                 </header>
-
                 <form id="settingsForm" onsubmit="saveSettings(event)" class="max-w-4xl space-y-8">
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-blue-600"><i class="fab fa-google"></i> تحسين محركات البحث (SEO)</h3>
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-blue-600"><i class="fab fa-google"></i> SEO</h3>
                         <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">اسم الموقع (Title)</label>
-                                <input type="text" id="setSiteTitle" class="w-full border rounded-lg p-3 outline-none focus:border-blue-500">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">وصف الموقع (Meta Description)</label>
-                                <textarea id="setSeoDesc" rows="3" class="w-full border rounded-lg p-3 outline-none focus:border-blue-500" placeholder="الوصف الذي يظهر في نتائج بحث قوقل..."></textarea>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">الكلمات المفتاحية (Keywords)</label>
-                                <input type="text" id="setKeywords" class="w-full border rounded-lg p-3 outline-none focus:border-blue-500" placeholder="ايفون, تقسيط, تمويل...">
-                            </div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-1">اسم الموقع</label><input type="text" id="setSiteTitle" class="w-full border rounded-lg p-3"></div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-1">الوصف</label><textarea id="setSeoDesc" rows="3" class="w-full border rounded-lg p-3"></textarea></div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-1">الكلمات المفتاحية</label><input type="text" id="setKeywords" class="w-full border rounded-lg p-3"></div>
                         </div>
                     </div>
-
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-green-600"><i class="fas fa-pen-nib"></i> نصوص الواجهة</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">العنوان الرئيسي (Hero Title)</label>
-                                <input type="text" id="setHeroTitle" class="w-full border rounded-lg p-3 outline-none focus:border-green-500">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">العنوان الفرعي</label>
-                                <input type="text" id="setHeroSubtitle" class="w-full border rounded-lg p-3 outline-none focus:border-green-500">
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
                         <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-yellow-600"><i class="fab fa-whatsapp"></i> التواصل</h3>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">رقم الواتساب (للاستقبال)</label>
-                            <input type="text" id="setWhatsapp" class="w-full border rounded-lg p-3 outline-none focus:border-yellow-500 text-left" dir="ltr">
-                        </div>
+                        <div><label class="block text-sm font-bold text-gray-700 mb-1">رقم الواتساب</label><input type="text" id="setWhatsapp" class="w-full border rounded-lg p-3 text-left" dir="ltr"></div>
                     </div>
-
-                    <div class="sticky bottom-4">
-                        <button type="submit" class="w-full bg-gray-900 text-white py-4 rounded-xl font-bold shadow-2xl hover:bg-black transition text-lg">
-                            <i class="fas fa-save ml-2"></i> حفظ كافة الإعدادات
-                        </button>
-                    </div>
+                    <button type="submit" class="w-full bg-gray-900 text-white py-4 rounded-xl font-bold shadow-xl hover:bg-black transition">حفظ الإعدادات</button>
                 </form>
             </section>
 
@@ -191,10 +152,10 @@
     </div>
 
     <div id="productModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-2xl transform scale-95 transition-all" id="prodModalContent">
-            <h3 class="text-xl font-bold mb-4">إضافة منتج جديد</h3>
+        <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-2xl transform scale-95 transition-all">
+            <h3 class="text-xl font-bold mb-4" id="prodModalTitle">إضافة منتج جديد</h3>
             <form onsubmit="saveProduct(event)" class="space-y-4">
-                <input type="text" id="prodName" placeholder="اسم المنتج" class="w-full border p-3 rounded-lg" required>
+                <input type="hidden" id="editProdId"> <input type="text" id="prodName" placeholder="اسم المنتج" class="w-full border p-3 rounded-lg" required>
                 <div class="grid grid-cols-2 gap-4">
                     <input type="number" id="prodPrice" placeholder="السعر" class="w-full border p-3 rounded-lg" required>
                     <input type="number" id="prodInstallment" placeholder="القسط" class="w-full border p-3 rounded-lg">
@@ -202,7 +163,7 @@
                 <input type="text" id="prodImage" placeholder="رابط الصورة" class="w-full border p-3 rounded-lg" dir="ltr">
                 <div class="flex gap-3 pt-2">
                     <button type="button" onclick="closeModal('productModal')" class="flex-1 bg-gray-100 p-3 rounded-lg font-bold">إلغاء</button>
-                    <button type="submit" class="flex-1 bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700">حفظ</button>
+                    <button type="submit" id="prodSubmitBtn" class="flex-1 bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700">حفظ</button>
                 </div>
             </form>
         </div>
@@ -212,199 +173,186 @@
         <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-2xl transform scale-95 transition-all">
             <h3 class="text-xl font-bold mb-4">إضافة إعلان جديد</h3>
             <form onsubmit="saveBanner(event)" class="space-y-4">
-                <input type="text" id="banTitle" placeholder="عنوان العرض (مثلاً: خصم خاص)" class="w-full border p-3 rounded-lg" required>
+                <input type="text" id="banTitle" placeholder="عنوان العرض" class="w-full border p-3 rounded-lg" required>
                 <textarea id="banDesc" placeholder="تفاصيل العرض..." class="w-full border p-3 rounded-lg" rows="3"></textarea>
-                <input type="text" id="banImage" placeholder="رابط صورة العرض (اختياري)" class="w-full border p-3 rounded-lg" dir="ltr">
+                <input type="text" id="banImage" placeholder="رابط الصورة" class="w-full border p-3 rounded-lg" dir="ltr">
                 <div class="flex gap-3 pt-2">
                     <button type="button" onclick="closeModal('bannerModal')" class="flex-1 bg-gray-100 p-3 rounded-lg font-bold">إلغاء</button>
-                    <button type="submit" class="flex-1 bg-purple-600 text-white p-3 rounded-lg font-bold hover:bg-purple-700">نشر الإعلان</button>
+                    <button type="submit" class="flex-1 bg-purple-600 text-white p-3 rounded-lg font-bold hover:bg-purple-700">نشر</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        // =======================
-        // Configuration
-        // =======================
         const PROJECT_URL = "https://mgbdukdtzckxspxmcvpo.supabase.co";
         const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1nYmR1a2R0emNreHNweG1jdnBvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NjUzMzM5NywiZXhwIjoyMDgyMTA5Mzk3fQ.Xm7HyGXSLq-CMWhi3aAGR1taK70Xurd_x48ouUt6IO0";
         const ADMIN_PASS = "admin123";
-
         const db = window.supabase.createClient(PROJECT_URL, SERVICE_KEY);
 
-        // =======================
-        // Core Logic
-        // =======================
+        // --- AUTH ---
         function checkLogin() {
             if(document.getElementById('adminPass').value === ADMIN_PASS) {
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('dashboardScreen').classList.remove('hidden');
-                switchTab('orders'); // Load default
-            } else {
-                document.getElementById('loginError').classList.remove('hidden');
-            }
+                switchTab('orders');
+            } else { document.getElementById('loginError').classList.remove('hidden'); }
         }
-
-        // Enter key support
         document.getElementById('adminPass').addEventListener('keyup', e => e.key === 'Enter' && checkLogin());
-
         function logout() { location.reload(); }
 
+        // --- NAVIGATION ---
         function switchTab(tab) {
-            // Hide all
             ['orders', 'products', 'banners', 'settings'].forEach(t => {
                 document.getElementById(`view-${t}`).classList.add('hidden');
-                document.getElementById(`nav-${t}`).classList.remove('active');
-                document.getElementById(`nav-${t}`).classList.add('text-gray-400'); // Reset color
+                document.getElementById(`nav-${t}`).classList.remove('active', 'text-white');
+                document.getElementById(`nav-${t}`).classList.add('text-gray-400');
             });
-
-            // Show current
             document.getElementById(`view-${tab}`).classList.remove('hidden');
-            const activeNav = document.getElementById(`nav-${tab}`);
-            activeNav.classList.add('active');
-            activeNav.classList.remove('text-gray-400');
+            const nav = document.getElementById(`nav-${tab}`);
+            nav.classList.add('active', 'text-white');
+            nav.classList.remove('text-gray-400');
             
-            // Fetch Data
             if(tab === 'orders') fetchOrders();
             if(tab === 'products') fetchProducts();
             if(tab === 'banners') fetchBanners();
             if(tab === 'settings') fetchSettings();
         }
 
-        // =======================
-        // 1. ORDERS
-        // =======================
+        // --- ORDERS ---
         async function fetchOrders() {
-            const { data: orders } = await db.from('financing_orders')
-                .select('*, customers(full_name, phone)').order('created_at', {ascending: false});
-            
+            const { data: orders } = await db.from('financing_orders').select('*, customers(full_name, phone)').order('created_at', {ascending: false});
             const tbody = document.getElementById('ordersTableBody');
             tbody.innerHTML = '';
             
-            if(!orders || !orders.length) {
-                tbody.innerHTML = '<tr><td colspan="4" class="p-8 text-center text-gray-400">لا توجد طلبات</td></tr>';
-                return;
-            }
+            if(!orders?.length) { tbody.innerHTML = '<tr><td colspan="4" class="p-8 text-center text-gray-400">لا توجد طلبات</td></tr>'; return; }
 
-            // Stats
+            // Update Stats
             document.getElementById('statTotal').innerText = orders.length;
             document.getElementById('statPending').innerText = orders.filter(o=>o.status==='pending').length;
             document.getElementById('statApproved').innerText = orders.filter(o=>o.status==='approved'||o.status==='completed').length;
             document.getElementById('statAmount').innerText = orders.reduce((a,b)=>a+(b.total_amount||0),0).toLocaleString() + ' ﷼';
 
             orders.forEach(order => {
-                let badge = 'badge-pending'; let text = 'انتظار';
+                let badge = 'badge-pending', text = 'انتظار';
                 if(order.status === 'approved') { badge = 'badge-approved'; text = 'مقبول'; }
                 if(order.status === 'rejected') { badge = 'badge-rejected'; text = 'مرفوض'; }
                 if(order.status === 'completed') { badge = 'badge-completed'; text = 'مكتمل'; }
 
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="p-5">
-                        <div class="font-bold text-gray-800">${order.customers?.full_name || 'زائر'}</div>
-                        <a href="https://wa.me/966${order.customers?.phone?.substring(1)}" target="_blank" class="text-xs text-blue-500 font-bold hover:underline">
-                            <i class="fab fa-whatsapp"></i> واتساب
-                        </a>
-                    </td>
-                    <td class="p-5 text-sm">
-                        <div class="font-bold">${order.total_amount} ﷼</div>
-                        <div class="text-gray-500">${order.installment_months} شهر</div>
-                    </td>
-                    <td class="p-5"><span class="badge ${badge}">${text}</span></td>
-                    <td class="p-5 text-center flex justify-center gap-2">
-                        ${order.status === 'pending' ? `
-                            <button onclick="setStatus('${order.id}', 'approved')" class="bg-green-100 text-green-700 p-2 rounded-lg hover:bg-green-200" title="قبول">✔</button>
-                            <button onclick="setStatus('${order.id}', 'rejected')" class="bg-red-100 text-red-700 p-2 rounded-lg hover:bg-red-200" title="رفض">✖</button>
-                        ` : ''}
-                        ${order.status === 'approved' ? `
-                            <button onclick="setStatus('${order.id}', 'completed')" class="bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-xs font-bold">إنهاء</button>
-                        ` : ''}
-                        <button onclick="delOrder('${order.id}')" class="text-gray-300 hover:text-red-500"><i class="fas fa-trash"></i></button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50 border-b last:border-0">
+                        <td class="p-5 font-bold">${order.customers?.full_name || 'زائر'} <br> <a href="https://wa.me/966${order.customers?.phone?.substring(1)}" target="_blank" class="text-xs text-blue-500 font-normal hover:underline">واتساب</a></td>
+                        <td class="p-5"><div class="font-bold text-gray-700">${order.total_amount} ﷼</div><div class="text-xs text-gray-500">${order.installment_months} شهر</div></td>
+                        <td class="p-5"><span class="badge ${badge}">${text}</span></td>
+                        <td class="p-5 text-center flex justify-center gap-2">
+                            ${order.status === 'pending' ? `
+                            <button onclick="setStatus('${order.id}', 'approved')" class="bg-green-100 text-green-700 p-2 rounded hover:bg-green-200">✔</button>
+                            <button onclick="setStatus('${order.id}', 'rejected')" class="bg-red-100 text-red-700 p-2 rounded hover:bg-red-200">✖</button>` : ''}
+                            ${order.status === 'approved' ? `<button onclick="setStatus('${order.id}', 'completed')" class="bg-blue-100 text-blue-700 px-3 py-1 rounded text-xs font-bold">إنهاء</button>` : ''}
+                            <button onclick="delOrder('${order.id}')" class="text-gray-300 hover:text-red-500"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`;
             });
         }
+        async function setStatus(id, status) { if(confirm('تحديث الحالة؟')) { await db.from('financing_orders').update({status}).eq('id', id); fetchOrders(); } }
+        async function delOrder(id) { if(confirm('حذف نهائي؟')) { await db.from('financing_orders').delete().eq('id', id); fetchOrders(); } }
 
-        async function setStatus(id, status) {
-            if(confirm('تحديث الحالة؟')) { await db.from('financing_orders').update({status}).eq('id', id); fetchOrders(); }
-        }
-        async function delOrder(id) {
-            if(confirm('حذف نهائي؟')) { await db.from('financing_orders').delete().eq('id', id); fetchOrders(); }
-        }
-
-        // =======================
-        // 2. PRODUCTS
-        // =======================
+        // --- PRODUCTS (ADD & EDIT) ---
         async function fetchProducts() {
             const { data: prods } = await db.from('products').select('*').order('created_at', {ascending: false});
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
 
             prods.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition group';
-                div.innerHTML = `
-                    <div class="h-48 bg-gray-100 relative">
-                        <img src="${p.image_url || 'https://via.placeholder.com/300'}" class="w-full h-full object-cover">
-                        <button onclick="delProd('${p.id}')" class="absolute top-2 right-2 bg-red-500 text-white w-8 h-8 rounded-full opacity-0 group-hover:opacity-100 transition"><i class="fas fa-trash"></i></button>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg">${p.name}</h3>
-                        <div class="flex justify-between mt-2 text-sm">
-                            <span class="font-bold text-blue-600">${p.price_cash} ﷼</span>
-                            <span class="text-gray-500">قسط: ${p.price_installment || '-'}</span>
+                // نمرر البيانات للدالة prepareEdit عشان نعبي الفورم
+                const editData = JSON.stringify(p).replace(/"/g, '&quot;');
+                grid.innerHTML += `
+                    <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition group border border-gray-100 relative">
+                        <div class="h-48 bg-gray-100 relative">
+                            <img src="${p.image_url || 'https://via.placeholder.com/300'}" class="w-full h-full object-cover">
                         </div>
-                    </div>
-                `;
-                grid.appendChild(div);
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg mb-1">${p.name}</h3>
+                            <div class="flex justify-between text-sm mb-4">
+                                <span class="font-bold text-blue-600">${p.price_cash} ﷼</span>
+                                <span class="text-gray-500">قسط: ${p.price_installment || '-'}</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="prepareEdit(${editData})" class="flex-1 bg-yellow-100 text-yellow-700 py-2 rounded-lg text-sm font-bold hover:bg-yellow-200"><i class="fas fa-edit"></i> تعديل</button>
+                                <button onclick="delProd('${p.id}')" class="flex-1 bg-red-100 text-red-700 py-2 rounded-lg text-sm font-bold hover:bg-red-200"><i class="fas fa-trash"></i> حذف</button>
+                            </div>
+                        </div>
+                    </div>`;
             });
+        }
+
+        function openProductModal() {
+            // تصفير المودال للإضافة الجديدة
+            document.getElementById('editProdId').value = '';
+            document.getElementById('prodModalTitle').innerText = 'إضافة منتج جديد';
+            document.getElementById('prodSubmitBtn').innerText = 'حفظ';
+            document.querySelector('#productModal form').reset();
+            openModal('productModal');
+        }
+
+        function prepareEdit(product) {
+            // تعبئة المودال ببيانات المنتج الموجود
+            document.getElementById('editProdId').value = product.id;
+            document.getElementById('prodName').value = product.name;
+            document.getElementById('prodPrice').value = product.price_cash;
+            document.getElementById('prodInstallment').value = product.price_installment;
+            document.getElementById('prodImage').value = product.image_url;
+            
+            // تغيير العناوين
+            document.getElementById('prodModalTitle').innerText = 'تعديل المنتج';
+            document.getElementById('prodSubmitBtn').innerText = 'حفظ التعديلات';
+            
+            openModal('productModal');
         }
 
         async function saveProduct(e) {
             e.preventDefault();
-            await db.from('products').insert([{
+            const id = document.getElementById('editProdId').value;
+            const data = {
                 name: document.getElementById('prodName').value,
                 price_cash: document.getElementById('prodPrice').value,
                 price_installment: document.getElementById('prodInstallment').value,
                 image_url: document.getElementById('prodImage').value
-            }]);
+            };
+            
+            const btn = document.getElementById('prodSubmitBtn');
+            btn.innerText = 'جاري الحفظ...';
+            
+            if (id) {
+                // Update
+                await db.from('products').update(data).eq('id', id);
+            } else {
+                // Insert
+                await db.from('products').insert([data]);
+            }
+            
             closeModal('productModal');
             fetchProducts();
         }
 
-        async function delProd(id) {
-            if(confirm('حذف المنتج؟')) { await db.from('products').delete().eq('id', id); fetchProducts(); }
-        }
+        async function delProd(id) { if(confirm('حذف المنتج؟')) { await db.from('products').delete().eq('id', id); fetchProducts(); } }
 
-        // =======================
-        // 3. BANNERS
-        // =======================
+        // --- BANNERS ---
         async function fetchBanners() {
             const { data: banners } = await db.from('banners').select('*').order('created_at', {ascending: false});
             const grid = document.getElementById('bannersGrid');
             grid.innerHTML = '';
-            
             banners.forEach(b => {
-                const div = document.createElement('div');
-                div.className = 'bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex justify-between items-center';
-                div.innerHTML = `
-                    <div class="flex items-center gap-4">
-                        <div class="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
-                            ${b.image_url ? `<img src="${b.image_url}" class="w-full h-full object-cover">` : '<i class="fas fa-image text-gray-300 m-4"></i>'}
+                grid.innerHTML += `
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex justify-between items-center">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden"><img src="${b.image_url || ''}" class="w-full h-full object-cover" onerror="this.style.display='none'"></div>
+                            <div><h4 class="font-bold text-lg">${b.title}</h4><p class="text-sm text-gray-500">${b.description || ''}</p></div>
                         </div>
-                        <div>
-                            <h4 class="font-bold text-lg">${b.title}</h4>
-                            <p class="text-sm text-gray-500">${b.description || ''}</p>
-                        </div>
-                    </div>
-                    <button onclick="delBanner('${b.id}')" class="text-red-400 hover:text-red-600 bg-red-50 p-2 rounded-lg"><i class="fas fa-trash"></i> حذف</button>
-                `;
-                grid.appendChild(div);
+                        <button onclick="delBanner('${b.id}')" class="text-red-400 hover:text-red-600 bg-red-50 p-2 rounded-lg"><i class="fas fa-trash"></i></button>
+                    </div>`;
             });
         }
-
         async function saveBanner(e) {
             e.preventDefault();
             await db.from('banners').insert([{
@@ -412,73 +360,43 @@
                 description: document.getElementById('banDesc').value,
                 image_url: document.getElementById('banImage').value
             }]);
-            closeModal('bannerModal');
-            fetchBanners();
+            closeModal('bannerModal'); fetchBanners();
         }
+        async function delBanner(id) { if(confirm('حذف؟')) { await db.from('banners').delete().eq('id', id); fetchBanners(); } }
 
-        async function delBanner(id) {
-            if(confirm('حذف الإعلان؟')) { await db.from('banners').delete().eq('id', id); fetchBanners(); }
-        }
-
-        // =======================
-        // 4. SETTINGS & SEO
-        // =======================
+        // --- SETTINGS ---
         async function fetchSettings() {
-            // Get the first row
-            const { data, error } = await db.from('site_settings').select('*').limit(1).single();
-            if(error || !data) return; // Maybe first run
-
-            // Fill Form
-            document.getElementById('setSiteTitle').value = data.site_title || '';
-            document.getElementById('setSeoDesc').value = data.seo_description || '';
-            document.getElementById('setKeywords').value = data.seo_keywords || '';
-            document.getElementById('setHeroTitle').value = data.hero_title || '';
-            document.getElementById('setHeroSubtitle').value = data.hero_subtitle || '';
-            document.getElementById('setWhatsapp').value = data.whatsapp_number || '';
-            
-            // Store ID for update
-            window.settingsId = data.id;
+            const { data } = await db.from('site_settings').select('*').limit(1).single();
+            if(data) {
+                window.settingsId = data.id;
+                document.getElementById('setSiteTitle').value = data.site_title || '';
+                document.getElementById('setSeoDesc').value = data.seo_description || '';
+                document.getElementById('setKeywords').value = data.seo_keywords || '';
+                document.getElementById('setWhatsapp').value = data.whatsapp_number || '';
+            }
         }
-
         async function saveSettings(e) {
             e.preventDefault();
-            const updates = {
+            const data = {
                 site_title: document.getElementById('setSiteTitle').value,
                 seo_description: document.getElementById('setSeoDesc').value,
                 seo_keywords: document.getElementById('setKeywords').value,
-                hero_title: document.getElementById('setHeroTitle').value,
-                hero_subtitle: document.getElementById('setHeroSubtitle').value,
                 whatsapp_number: document.getElementById('setWhatsapp').value,
             };
-
-            const btn = e.target.querySelector('button');
-            btn.innerText = 'جاري الحفظ...';
-            
-            // Update existing row
-            if(window.settingsId) {
-                await db.from('site_settings').update(updates).eq('id', window.settingsId);
-            } else {
-                await db.from('site_settings').insert([updates]);
-            }
-            
-            alert('✅ تم حفظ الإعدادات بنجاح!');
-            btn.innerHTML = '<i class="fas fa-save ml-2"></i> حفظ كافة الإعدادات';
+            if(window.settingsId) await db.from('site_settings').update(data).eq('id', window.settingsId);
+            else await db.from('site_settings').insert([data]);
+            alert('تم الحفظ!');
         }
 
-        // =======================
-        // Utilities (Modals)
-        // =======================
+        // --- UTILS ---
         function openModal(id) {
-            document.getElementById(id).classList.remove('opacity-0', 'pointer-events-none');
-            document.getElementById(id).querySelector('div').classList.remove('scale-95');
-            document.getElementById(id).querySelector('div').classList.add('scale-100');
+            const m = document.getElementById(id); m.classList.remove('opacity-0', 'pointer-events-none');
+            m.querySelector('div').classList.remove('scale-95'); m.querySelector('div').classList.add('scale-100');
         }
         function closeModal(id) {
-            document.getElementById(id).classList.add('opacity-0', 'pointer-events-none');
-            document.getElementById(id).querySelector('div').classList.add('scale-95');
-            document.getElementById(id).querySelector('div').classList.remove('scale-100');
+            const m = document.getElementById(id); m.classList.add('opacity-0', 'pointer-events-none');
+            m.querySelector('div').classList.add('scale-95'); m.querySelector('div').classList.remove('scale-100');
         }
-
     </script>
 </body>
 </html>
