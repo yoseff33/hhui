@@ -1,8 +1,9 @@
 // ============================================
-// LER Telecom - Complete JavaScript File (Final Correct Logic)
+// LER Telecom - Final Production Script
+// Logic: Direct Cash + 65% Profit Markup
 // ============================================
 
-// Initialize AOS (Animate On Scroll)
+// 1. Initialize Libraries
 function initializeAOS() {
     if (typeof AOS !== 'undefined') {
         AOS.init({
@@ -14,29 +15,32 @@ function initializeAOS() {
 }
 
 // ============================================
-// BUSINESS LOGIC CONFIGURATION
+// 2. BUSINESS CONFIGURATION (The Core Logic)
 // ============================================
 
-// نسبة الربح الثابتة (65%) تضاف على المبلغ المطلوب
+// نسبة الربح الثابتة (65%)
 const PROFIT_PERCENTAGE = 0.65; 
 
+// رقم الواتساب الرسمي
 const WHATSAPP_NUMBER = "966533774766";
-// حدود المبلغ المسموح بطلبه كاش
+
+// حدود تابي (100 ريال - 5000 ريال)
 const MIN_AMOUNT = 100;
 const MAX_AMOUNT = 5000;
 
-// State Management
+// ============================================
+// 3. STATE MANAGEMENT
+// ============================================
+
 let financingState = {
     fullName: '',
     mobileNumber: '',
-    amount: 2500, // المبلغ الافتراضي
-    duration: 12, // المدة الافتراضية
-    interestRate: PROFIT_PERCENTAGE,
+    requestedCash: 2500, // المبلغ الافتراضي
+    duration: 12,        // المدة الافتراضية
     noDownPayment: false,
     valid: false
 };
 
-// DOM Elements
 const elements = {
     form: null,
     fullNameInput: null,
@@ -57,29 +61,34 @@ const elements = {
 };
 
 // ============================================
-// MAIN INITIALIZATION
+// 4. MAIN INITIALIZATION (Start Here)
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
+    // تشغيل الأنيميشن
     initializeAOS();
     
+    // تشغيل الحاسبة إذا كانت موجودة في الصفحة
     if (document.getElementById('calculator-section')) {
         initializeCalculator();
     }
     
+    // تشغيل المدونة إذا كانت موجودة
     if (document.querySelector('.article-container')) {
         initializeBlog();
     }
     
+    // تشغيل الوظائف العامة (المودال، القوائم)
     initializeCommon();
 
+    // اختصار إغلاق المودال بزر ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeQuaraModal();
     });
 });
 
 // ============================================
-// CALCULATOR FUNCTIONALITY
+// 5. CALCULATOR LOGIC
 // ============================================
 
 function initializeCalculator() {
@@ -87,11 +96,15 @@ function initializeCalculator() {
     cleanButtonLabels(); 
     setupEventListeners();
     
+    // ضبط حدود الإدخال في HTML
     if(elements.amountInput) {
         elements.amountInput.min = MIN_AMOUNT;
         elements.amountInput.max = MAX_AMOUNT;
-        // التأكد من أن القيمة الحالية داخل الحدود
-        if (elements.amountInput.value > MAX_AMOUNT) elements.amountInput.value = MAX_AMOUNT;
+        // تصحيح القيمة إذا كانت خارج الحدود
+        if (elements.amountInput.value > MAX_AMOUNT) {
+            elements.amountInput.value = MAX_AMOUNT;
+            financingState.requestedCash = MAX_AMOUNT;
+        }
     }
     
     calculateFinancing();
@@ -100,9 +113,10 @@ function initializeCalculator() {
 }
 
 function cleanButtonLabels() {
+    // إخفاء أي ملصقات نسب قديمة
     const badges = document.querySelectorAll('.rate-badge');
     badges.forEach(badge => {
-        badge.style.display = 'none'; // إخفاء النسب القديمة
+        badge.style.display = 'none';
     });
 }
 
@@ -126,6 +140,7 @@ function initializeElements() {
 }
 
 function setupEventListeners() {
+    // مراقبة حقل الاسم
     if (elements.fullNameInput) {
         elements.fullNameInput.addEventListener('input', function() {
             financingState.fullName = this.value.trim();
@@ -135,6 +150,7 @@ function setupEventListeners() {
         elements.fullNameInput.addEventListener('blur', validateName);
     }
     
+    // مراقبة حقل الجوال
     if (elements.mobileInput) {
         elements.mobileInput.addEventListener('input', function() {
             financingState.mobileNumber = this.value.trim();
@@ -144,15 +160,17 @@ function setupEventListeners() {
         elements.mobileInput.addEventListener('blur', validateMobile);
     }
     
+    // مراقبة حقل المبلغ
     if (elements.amountInput) {
         elements.amountInput.addEventListener('input', function() {
             let value = parseInt(this.value) || 0;
-            financingState.amount = value;
+            financingState.requestedCash = value;
             calculateFinancing();
             validateForm();
         });
     }
     
+    // أزرار المدة (4, 6, 8, 12)
     if (elements.durationButtons) {
         elements.durationButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -162,6 +180,7 @@ function setupEventListeners() {
         });
     }
     
+    // زر الدفعة الأولى
     if (elements.downpaymentToggle) {
         elements.downpaymentToggle.addEventListener('change', function() {
             financingState.noDownPayment = this.checked;
@@ -169,6 +188,7 @@ function setupEventListeners() {
         });
     }
     
+    // زر الواتساب
     if (elements.whatsappSubmit) {
         elements.whatsappSubmit.addEventListener('click', submitToWhatsApp);
     }
@@ -177,6 +197,7 @@ function setupEventListeners() {
 function setDuration(months, button) {
     financingState.duration = months;
     
+    // تحديث الستايل
     elements.durationButtons.forEach(btn => {
         btn.classList.remove('active');
         btn.setAttribute('aria-pressed', 'false');
@@ -185,6 +206,7 @@ function setDuration(months, button) {
     button.classList.add('active');
     button.setAttribute('aria-pressed', 'true');
     
+    // تحديث نص النسبة في الجدول
     if (elements.breakdownRate) {
         const label = elements.breakdownRate.parentElement.querySelector('span:first-child');
         if (label) {
@@ -198,50 +220,54 @@ function setDuration(months, button) {
 }
 
 // -------------------------------------------------------------
-// منطق الحساب المباشر (الديناميكي)
-// المبلغ المدخل + 65% = الإجمالي
+// *THE CORE MATH LOGIC* (الحسبة المباشرة)
+// Input + 65% = Total Debt
 // -------------------------------------------------------------
 function calculateFinancing() {
-    let requestedCash = financingState.amount;
+    let cash = financingState.requestedCash;
     
-    // الالتزام بالحدود (100 - 5000)
-    if (requestedCash > MAX_AMOUNT) requestedCash = MAX_AMOUNT;
-    // لا نغير الحد الأدنى تلقائياً أثناء الكتابة لعدم إزعاج المستخدم، لكن نستخدمه في الحساب
-    let calcCash = requestedCash < MIN_AMOUNT ? MIN_AMOUNT : requestedCash;
+    // تطبيق الحدود (100 - 5000)
+    if (cash > MAX_AMOUNT) cash = MAX_AMOUNT;
+    // لا نعدل الحد الأدنى تلقائياً أثناء الكتابة لتجربة مستخدم أفضل، لكن نستخدمه في الحساب
+    let calcCash = cash < MIN_AMOUNT ? MIN_AMOUNT : cash;
 
     const duration = financingState.duration;
     const noDownPayment = financingState.noDownPayment;
     
-    // 1. حساب الأرباح (65% من المبلغ المطلوب)
-    // معادلة ديناميكية: تتغير بتغير المبلغ
+    // 1. حساب الربح (65%)
+    // مثال: 5000 * 0.65 = 3250
     const profitAmount = calcCash * PROFIT_PERCENTAGE;
     
-    // 2. حساب المجموع الكلي (المديونية)
-    const totalAmount = calcCash + profitAmount;
+    // 2. حساب الإجمالي (المديونية)
+    // مثال: 5000 + 3250 = 8250
+    const totalDebt = calcCash + profitAmount;
     
-    // 3. حساب القسط الشهري
-    const monthlyInstallment = totalAmount / duration;
+    // 3. القسط الشهري
+    // مثال: 8250 / 12 = 687.5
+    const monthlyInstallment = totalDebt / duration;
     
-    // 4. صافي الكاش في اليد
+    // 4. صافي الكاش للعميل
     let netCash = calcCash;
     let downpaymentStatus = "✅ الدفعة الأولى: تدفعها أنت";
     let downpaymentAmount = 0;
     
     if (noDownPayment) {
+        // خصم القسط الأول من الكاش المستلم
         netCash = calcCash - monthlyInstallment;
         downpaymentStatus = "✅ الدفعة الأولى: خصمناها من الكاش";
         downpaymentAmount = monthlyInstallment;
     }
     
+    // منع القيم السالبة
     netCash = Math.max(netCash, 0);
     
-    // تحديث الواجهة
+    // تحديث الشاشة
     updateUI({
         monthlyInstallment,
         netCash,
-        amount: calcCash, // المبلغ الأساسي
+        requestedCash: calcCash,
         profitAmount,
-        totalAmount,
+        totalDebt,
         downpaymentStatus,
         downpaymentAmount,
         noDownPayment
@@ -256,18 +282,21 @@ function updateUI(data) {
     
     const wholeFormatter = new Intl.NumberFormat('ar-SA');
     
+    // 1. القسط
     if (elements.monthlyInstallment) {
         elements.monthlyInstallment.textContent = formatter.format(data.monthlyInstallment);
     }
     
+    // 2. صافي الكاش
     if (elements.netCash) {
         elements.netCash.textContent = formatter.format(data.netCash);
     }
     
+    // 3. الجدول التفصيلي
     if (elements.breakdownAmount) {
         const label = elements.breakdownAmount.parentElement.querySelector('span:first-child');
         if(label) label.textContent = "المبلغ المطلوب (كاش):";
-        elements.breakdownAmount.textContent = `${wholeFormatter.format(data.amount)} ر.س`;
+        elements.breakdownAmount.textContent = `${wholeFormatter.format(data.requestedCash)} ر.س`;
     }
     
     if (elements.breakdownInterest) {
@@ -281,10 +310,10 @@ function updateUI(data) {
     }
     
     if (elements.breakdownTotal) {
-        elements.breakdownTotal.textContent = `${wholeFormatter.format(data.totalAmount)} ر.س`;
+        elements.breakdownTotal.textContent = `${wholeFormatter.format(data.totalDebt)} ر.س`;
     }
     
-    // إخفاء سطر "نسبة السيولة" لأنه غير ضروري في الحساب المباشر
+    // إخفاء سطر "نسبة السيولة" لأنه غير مستخدم في هذه الحسبة
     if (elements.breakdownLiquidity) {
         const liItem = elements.breakdownLiquidity.parentElement;
         if(liItem) liItem.style.display = 'none'; 
@@ -306,7 +335,7 @@ function updateUI(data) {
 }
 
 // ============================================
-// VALIDATION FUNCTIONS
+// 6. VALIDATION FUNCTIONS
 // ============================================
 
 function validateName() {
@@ -339,7 +368,7 @@ function validateMobile() {
 }
 
 function validateAmount() {
-    const amount = financingState.amount;
+    const amount = financingState.requestedCash;
     return amount >= MIN_AMOUNT && amount <= MAX_AMOUNT;
 }
 
@@ -356,7 +385,7 @@ function validateForm() {
             elements.whatsappSubmit.removeAttribute('title');
         } else {
             elements.whatsappSubmit.disabled = true;
-            if (!isAmountValid) elements.whatsappSubmit.title = `المبلغ يجب أن يكون بين ${MIN_AMOUNT} و ${MAX_AMOUNT}`;
+            if (!isAmountValid) elements.whatsappSubmit.title = `المبلغ يجب أن يكون بين ${MIN_AMOUNT} و ${MAX_AMOUNT} ريال`;
         }
     }
     return financingState.valid;
@@ -379,12 +408,12 @@ function showValidationMessage(input, message, isValid) {
 }
 
 // ============================================
-// WHATSAPP INTEGRATION
+// 7. WHATSAPP INTEGRATION
 // ============================================
 
 function submitToWhatsApp() {
     if (!validateForm()) {
-        const amount = financingState.amount;
+        const amount = financingState.requestedCash;
         if (amount < MIN_AMOUNT || amount > MAX_AMOUNT) {
             alert(`عذراً، المبلغ المسموح به من ${MIN_AMOUNT} إلى ${MAX_AMOUNT} ريال فقط`);
         } else {
@@ -393,13 +422,14 @@ function submitToWhatsApp() {
         return;
     }
     
-    const cash = financingState.amount;
+    const cash = financingState.requestedCash;
     const profit = cash * PROFIT_PERCENTAGE;
-    const total = cash + profit;
-    const monthly = total / financingState.duration;
+    const totalDebt = cash + profit;
+    const monthly = totalDebt / financingState.duration;
     
     const formatter = new Intl.NumberFormat('ar-SA', { maximumFractionDigits: 0 });
     
+    // حساب صافي الكاش للرسالة
     const netCash = financingState.noDownPayment 
         ? Math.max(cash - monthly, 0)
         : cash;
@@ -413,9 +443,10 @@ function submitToWhatsApp() {
 💰 تفاصيل الطلب:
 المبلغ المطلوب (كاش): ${formatter.format(cash)} ريال
 صافي الكاش (للمحفظة): ${formatter.format(netCash)} ريال
+الأرباح (65%): ${formatter.format(profit)} ريال
 المدة: ${financingState.duration} أشهر
 القسط الشهري: ${formatter.format(monthly)} ريال
-إجمالي المديونية: ${formatter.format(total)} ريال
+إجمالي المديونية: ${formatter.format(totalDebt)} ريال
 --------------------------------
 ℹ️ ملاحظات الدفع:
 ${financingState.noDownPayment ? 'بدون دفعة أولى (مخصومة من الكاش)' : 'مع دفعة أولى'}
@@ -424,6 +455,7 @@ ${financingState.noDownPayment ? 'بدون دفعة أولى (مخصومة من 
     
     const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     
+    // Loading Animation
     const originalHTML = elements.whatsappSubmit.innerHTML;
     elements.whatsappSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحضير...';
     elements.whatsappSubmit.disabled = true;
@@ -439,7 +471,7 @@ ${financingState.noDownPayment ? 'بدون دفعة أولى (مخصومة من 
 }
 
 // ============================================
-// BLOG FUNCTIONALITY
+// 8. BLOG FUNCTIONALITY
 // ============================================
 
 function initializeBlog() {
@@ -495,10 +527,11 @@ function calculateReadTime() {
 }
 
 // ============================================
-// COMMON FUNCTIONALITY & MODALS
+// 9. COMMON FUNCTIONALITY & MODALS
 // ============================================
 
 function initializeCommon() {
+    // Accordion Logic
     document.querySelectorAll('.accordion-btn').forEach(button => {
         button.addEventListener('click', function() {
             const content = this.nextElementSibling;
@@ -509,6 +542,7 @@ function initializeCommon() {
         });
     });
     
+    // Smooth Scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -519,6 +553,7 @@ function initializeCommon() {
         });
     });
 
+    // Device Buttons
     document.querySelectorAll('.device-btn').forEach(button => {
         button.addEventListener('click', function() {
             const deviceName = this.parentElement.querySelector('.device-name').textContent;
@@ -532,6 +567,7 @@ function initializeCommon() {
     setupPerformanceMonitoring();
 }
 
+// --- QUARA MODAL LOGIC ---
 function selectDevice(deviceName) {
     const modal = document.getElementById('quaraModal');
     const deviceNameField = document.getElementById('selectedDeviceName');
@@ -589,6 +625,8 @@ function submitQuaraForm() {
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
     closeQuaraModal();
 }
+
+// --- UTILITY FUNCTIONS ---
 
 function initializeCounters() {
     const observer = new IntersectionObserver((entries) => {
@@ -670,7 +708,7 @@ function resetForm() {
     financingState = {
         fullName: '',
         mobileNumber: '',
-        amount: 2500, // Reset default
+        requestedCash: 2500, // Reset to compliant default
         duration: 12,
         interestRate: PROFIT_PERCENTAGE,
         noDownPayment: false,
@@ -701,7 +739,7 @@ function setupPerformanceMonitoring() {
 }
 
 // ============================================
-// ANALYTICS & TRACKING
+// 10. ANALYTICS & TRACKING
 // ============================================
 
 function trackConversion() {
@@ -713,7 +751,7 @@ function trackConversion() {
 }
 
 // ============================================
-// PWA SUPPORT & ERROR HANDLING
+// 11. PWA SUPPORT & ERROR HANDLING
 // ============================================
 
 window.addEventListener('error', function(e) {
@@ -733,7 +771,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 // ============================================
-// UTILITY FUNCTIONS
+// 12. UTILITY FUNCTIONS
 // ============================================
 
 function formatCurrency(amount) {
