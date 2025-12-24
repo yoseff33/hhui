@@ -1,5 +1,5 @@
 // ============================================
-// LER Telecom - Complete JavaScript File (Full Version)
+// LER Telecom - Complete JavaScript File (Full Original Version + Updates)
 // ============================================
 
 // Initialize AOS (Animate On Scroll)
@@ -14,13 +14,13 @@ function initializeAOS() {
 }
 
 // ============================================
-// BUSINESS LOGIC CONFIGURATION
+// BUSINESS LOGIC CONSTANTS (UPDATED)
 // ============================================
 
-// تم تثبيت النسبة على 65% لجميع المدد
+// تم تثبيت نسبة الفائدة على 65% (0.65)
 const FIXED_INTEREST_RATE = 0.65; 
 
-// نسبة السيولة (الكاش) من قيمة الجهاز
+// نسبة السيولة (56%)
 const CASH_LIQUIDITY_RATIO = 0.56; 
 
 const WHATSAPP_NUMBER = "966533774766";
@@ -31,8 +31,8 @@ const MAX_AMOUNT = 100000;
 let financingState = {
     fullName: '',
     mobileNumber: '',
-    amount: 5000, // المبلغ هنا يمثل الكاش المطلوب
-    duration: 4,
+    amount: 5000, // هذا المبلغ يمثل الكاش اللي يبيه العميل
+    duration: 12,
     interestRate: FIXED_INTEREST_RATE,
     noDownPayment: false,
     valid: false
@@ -80,7 +80,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize Quara Modal Events (ESC key)
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeQuaraModal();
+        if (e.key === 'Escape') {
+            closeQuaraModal();
+        }
     });
 });
 
@@ -90,15 +92,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeCalculator() {
     initializeElements();
-    cleanButtonLabels(); // إخفاء النسب القديمة من الأزرار
+    cleanButtonLabels(); // تنظيف الواجهة من النسب القديمة
     setupEventListeners();
     calculateFinancing();
     validateForm();
     initializeCounters();
 }
 
+// دالة جديدة لإخفاء الـ badges القديمة
 function cleanButtonLabels() {
-    // إخفاء الـ badges القديمة التي تحتوي على نسب متغيرة
     const badges = document.querySelectorAll('.rate-badge');
     badges.forEach(badge => {
         badge.style.display = 'none';
@@ -154,8 +156,7 @@ function setupEventListeners() {
     if (elements.amountInput) {
         elements.amountInput.addEventListener('input', function() {
             let value = parseInt(this.value) || 0;
-            
-            // Allow typing freely, validation happens on calc
+            // السماح بالكتابة بحرية، التحقق يتم عند الحساب
             financingState.amount = value;
             calculateFinancing();
             validateForm();
@@ -167,7 +168,7 @@ function setupEventListeners() {
         elements.durationButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const months = parseInt(this.getAttribute('data-months'));
-                // Ignore old data-rate, use fixed logic
+                // نتجاهل النسبة القديمة ونستخدم الثابتة
                 setDuration(months, button);
             });
         });
@@ -199,12 +200,11 @@ function setDuration(months, button) {
     button.classList.add('active');
     button.setAttribute('aria-pressed', 'true');
     
-    // Update breakdown rate display to fixed 65%
+    // Update breakdown rate display to Fixed 65%
     if (elements.breakdownRate) {
-        // Find label to update text
         const label = elements.breakdownRate.parentElement.querySelector('span:first-child');
         if (label) {
-            label.innerHTML = `نسبة الفائدة (<span id="breakdownRate">65%</span>):`;
+            label.innerHTML = `نسبة الأرباح (<span id="breakdownRate">65%</span>):`;
         } else {
             elements.breakdownRate.textContent = '65%';
         }
@@ -213,39 +213,38 @@ function setDuration(months, button) {
     calculateFinancing();
 }
 
+// -------------------------------------------------------------
+// المعادلة الجديدة: (الكاش المطلوب / 0.56) = سعر الجهاز
+// -------------------------------------------------------------
 function calculateFinancing() {
     const desiredCash = financingState.amount;
     const duration = financingState.duration;
-    const interestRate = FIXED_INTEREST_RATE;
+    const interestRate = FIXED_INTEREST_RATE; // 0.65
     const noDownPayment = financingState.noDownPayment;
     
-    // --------------------------------------------------------
-    // المعادلة العكسية:
-    // سعر الجهاز المطلوب = الكاش المطلوب / 0.56
-    // --------------------------------------------------------
-    
+    // 1. حساب سعر الجهاز المطلوب عشان يوفر الكاش هذا
     let requiredProductPrice = desiredCash / CASH_LIQUIDITY_RATIO;
     
-    // تقريب لأقرب 10 ريال لضمان دقة الرقم
+    // تقريب السعر لأقرب 10 ريال ليكون دقيق
     requiredProductPrice = Math.ceil(requiredProductPrice / 10) * 10;
 
-    // 1. Calculate Interest based on Product Price (65%)
+    // 2. حساب الفائدة (65%) على سعر الجهاز
     const interestAmount = requiredProductPrice * interestRate;
     const totalAmount = requiredProductPrice + interestAmount;
     
-    // 2. Calculate Monthly Installment
+    // 3. القسط الشهري
     const monthlyInstallment = totalAmount / duration;
     
-    // 3. Calculate Liquidity available from this product
+    // 4. السيولة (الكاش) المتوفرة
+    // (يفترض تكون مساوية أو قريبة جداً من desiredCash)
     const baseCashLiquidity = requiredProductPrice * CASH_LIQUIDITY_RATIO;
     
-    // 4. Apply Down Payment Logic
+    // 5. خصم الدفعة الأولى
     let netCash = baseCashLiquidity;
     let downpaymentStatus = "✅ الدفعة الأولى: تدفعها أنت";
     let downpaymentAmount = 0;
     
     if (noDownPayment) {
-        // Deduct first installment from cash
         netCash = baseCashLiquidity - monthlyInstallment;
         downpaymentStatus = "✅ الدفعة الأولى: دفعناها لك";
         downpaymentAmount = monthlyInstallment;
@@ -258,7 +257,7 @@ function calculateFinancing() {
     updateUI({
         monthlyInstallment,
         netCash,
-        amount: requiredProductPrice, // Send the Product Price to display
+        amount: requiredProductPrice, // نعرض سعر الجهاز هنا
         interestRate,
         interestAmount,
         totalAmount,
@@ -270,7 +269,7 @@ function calculateFinancing() {
 }
 
 function updateUI(data) {
-    // Format numbers
+    // Format numbers with thousand separators
     const formatter = new Intl.NumberFormat('ar-SA', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
@@ -290,7 +289,7 @@ function updateUI(data) {
     
     // Breakdown
     if (elements.breakdownAmount) {
-        // Change label to clarify this is the product price
+        // نغير النص لـ "قيمة السلعة المطلوبة"
         const label = elements.breakdownAmount.parentElement.querySelector('span:first-child');
         if(label) label.textContent = "قيمة السلعة المطلوبة:";
         elements.breakdownAmount.textContent = `${wholeFormatter.format(data.amount)} ر.س`;
@@ -304,8 +303,10 @@ function updateUI(data) {
         elements.breakdownTotal.textContent = `${wholeFormatter.format(data.totalAmount)} ر.س`;
     }
     
+    // نخفي سطر نسبة السيولة عشان ما يلخبط العميل في الحسبة الجديدة
     if (elements.breakdownLiquidity) {
-        elements.breakdownLiquidity.textContent = `${wholeFormatter.format(data.baseCashLiquidity)} ر.س`;
+        const liItem = elements.breakdownLiquidity.parentElement;
+        if(liItem) liItem.style.display = 'none'; 
     }
     
     if (elements.downpaymentStatus) {
@@ -394,8 +395,7 @@ function validateMobile() {
 
 function validateAmount() {
     const amount = financingState.amount;
-    
-    return amount >= MIN_AMOUNT && amount <= MAX_AMOUNT;
+    return amount >= 500 && amount <= 100000;
 }
 
 function validateForm() {
@@ -456,19 +456,15 @@ function submitToWhatsApp() {
         return;
     }
     
-    // Calculate final values (ensure latest state)
+    // Recalculate based on current state
     const desiredCash = financingState.amount;
     let requiredProductPrice = desiredCash / CASH_LIQUIDITY_RATIO;
     requiredProductPrice = Math.ceil(requiredProductPrice / 10) * 10;
     
     const duration = financingState.duration;
-    const totalAmount = requiredProductPrice + (requiredProductPrice * FIXED_INTEREST_RATE);
+    const interestRate = FIXED_INTEREST_RATE;
+    const totalAmount = requiredProductPrice + (requiredProductPrice * interestRate);
     const monthlyInstallment = totalAmount / duration;
-    
-    const baseCashLiquidity = requiredProductPrice * CASH_LIQUIDITY_RATIO;
-    const netCash = financingState.noDownPayment 
-        ? Math.max(baseCashLiquidity - monthlyInstallment, 0)
-        : baseCashLiquidity;
     
     // Format numbers
     const formatter = new Intl.NumberFormat('ar-SA', {
@@ -477,7 +473,7 @@ function submitToWhatsApp() {
     });
     
     // Prepare WhatsApp message
-    const message = `السلام عليكم، أرغب بطلب تمويل من لير للاتصالات 📱
+    const message = `السلام عليكم، أرغب بطلب تمويل (كاش) من لير للاتصالات 📱
 --------------------------------
 👤 بيانات العميل:
 الاسم: ${financingState.fullName}
@@ -488,9 +484,10 @@ function submitToWhatsApp() {
 المدة: ${duration} أشهر
 القسط الشهري التقريبي: ${formatter.format(monthlyInstallment)} ريال
 --------------------------------
-ℹ️ تفاصيل العملية (للموظف):
+ℹ️ تفاصيل للموظف:
 سعر الجهاز المطلوب: ${formatter.format(requiredProductPrice)} ريال
-حالة الدفعة الأولى: ${financingState.noDownPayment ? 'دفعها لير وتم خصمها من الكاش' : 'يدفعها العميل'}
+إجمالي المديونية: ${formatter.format(totalAmount)} ريال
+ملاحظات: ${financingState.noDownPayment ? 'الدفعة الأولى مخصومة من الكاش' : 'مع دفعة أولى'}
 --------------------------------
 ✅ أقر أنا العميل بصحة البيانات والموافقة على الشروط.`;
     
@@ -738,7 +735,7 @@ function selectDevice(deviceName) {
 }
 
 // ============================================
-// NEW: Quara Finance Modal Functions
+// Quara Finance Modal Functions
 // ============================================
 
 function closeQuaraModal() {
