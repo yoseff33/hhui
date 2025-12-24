@@ -904,15 +904,17 @@
 
     <script>
         // إعدادات الاتصال بقاعدة البيانات
-        const PROJECT_URL = "https://mgbdukdtzckxspxmcvpo.supabase.co";
-        const PUBLIC_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1nYmR1a2R0emNreHNweG1jdnBvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NjUzMzM5NywiZXhwIjoyMDgyMTA5Mzk3fQ.Xm7HyGXSLq-CMWhi3aAGR1taK70Xurd_x48ouUt6IO0";
-        const supabase = window.supabase.createClient(PROJECT_URL, PUBLIC_KEY);
+        const PROJ_URL = "https://mgbdukdtzckxspxmcvpo.supabase.co";
+        const PUB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1nYmR1a2R0emNreHNweG1jdnBvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NjUzMzM5NywiZXhwIjoyMDgyMTA5Mzk3fQ.Xm7HyGXSLq-CMWhi3aAGR1taK70Xurd_x48ouUt6IO0";
+        
+        // غيرنا الاسم هنا إلى productsDB عشان ما يتعارض
+        const productsDB = window.supabase.createClient(PROJ_URL, PUB_KEY);
 
         async function loadProducts() {
             const container = document.getElementById('products-container');
             
-            // جلب المنتجات من قاعدة البيانات
-            const { data: products, error } = await supabase
+            // جلب المنتجات من قاعدة البيانات باستخدام المتغير الجديد
+            const { data: products, error } = await productsDB
                 .from('products')
                 .select('*')
                 .eq('is_active', true)
@@ -925,6 +927,12 @@
 
             // تنظيف الحاوية
             container.innerHTML = '';
+
+            // إذا ما فيه منتجات
+            if (!products || products.length === 0) {
+                 container.innerHTML = '<div class="col-span-full text-center py-12 text-gray-400">لا توجد منتجات حالياً</div>';
+                 return;
+            }
 
             // عرض المنتجات
             products.forEach(product => {
