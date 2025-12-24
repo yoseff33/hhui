@@ -1,5 +1,5 @@
 // ============================================
-// LER Telecom - Complete JavaScript File (Tabby Limit Fixed)
+// LER Telecom - Complete JavaScript File (Final Correct Logic)
 // ============================================
 
 // Initialize AOS (Animate On Scroll)
@@ -17,15 +17,11 @@ function initializeAOS() {
 // BUSINESS LOGIC CONFIGURATION
 // ============================================
 
-// نسبة الربح الثابتة (65%)
+// نسبة الربح الثابتة (65%) تضاف على المبلغ المطلوب
 const PROFIT_PERCENTAGE = 0.65; 
 
-// نسبة السيولة (الكاش) من قيمة الجهاز
-const CASH_LIQUIDITY_RATIO = 0.56; 
-
 const WHATSAPP_NUMBER = "966533774766";
-
-// تم تعديل الحدود حسب نظام تابي
+// حدود المبلغ المسموح بطلبه كاش
 const MIN_AMOUNT = 100;
 const MAX_AMOUNT = 5000;
 
@@ -33,8 +29,8 @@ const MAX_AMOUNT = 5000;
 let financingState = {
     fullName: '',
     mobileNumber: '',
-    amount: 2500, // مبلغ افتراضي ضمن حدود تابي
-    duration: 12,
+    amount: 2500, // المبلغ الافتراضي
+    duration: 12, // المدة الافتراضية
     interestRate: PROFIT_PERCENTAGE,
     noDownPayment: false,
     valid: false
@@ -65,10 +61,8 @@ const elements = {
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize animations
     initializeAOS();
     
-    // Check if we're on the main page or blog
     if (document.getElementById('calculator-section')) {
         initializeCalculator();
     }
@@ -77,10 +71,8 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeBlog();
     }
     
-    // Initialize common functionality
     initializeCommon();
 
-    // Initialize Quara Modal Events (ESC key)
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeQuaraModal();
     });
@@ -92,14 +84,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeCalculator() {
     initializeElements();
-    cleanButtonLabels(); // إخفاء النسب القديمة
+    cleanButtonLabels(); 
     setupEventListeners();
     
-    // تحديث حقول الإدخال لتتناسب مع الحدود الجديدة
     if(elements.amountInput) {
         elements.amountInput.min = MIN_AMOUNT;
         elements.amountInput.max = MAX_AMOUNT;
-        elements.amountInput.value = financingState.amount;
+        // التأكد من أن القيمة الحالية داخل الحدود
+        if (elements.amountInput.value > MAX_AMOUNT) elements.amountInput.value = MAX_AMOUNT;
     }
     
     calculateFinancing();
@@ -108,10 +100,9 @@ function initializeCalculator() {
 }
 
 function cleanButtonLabels() {
-    // إخفاء الـ badges القديمة التي تحتوي على نسب متغيرة
     const badges = document.querySelectorAll('.rate-badge');
     badges.forEach(badge => {
-        badge.style.display = 'none';
+        badge.style.display = 'none'; // إخفاء النسب القديمة
     });
 }
 
@@ -135,7 +126,6 @@ function initializeElements() {
 }
 
 function setupEventListeners() {
-    // Form Inputs
     if (elements.fullNameInput) {
         elements.fullNameInput.addEventListener('input', function() {
             financingState.fullName = this.value.trim();
@@ -157,19 +147,12 @@ function setupEventListeners() {
     if (elements.amountInput) {
         elements.amountInput.addEventListener('input', function() {
             let value = parseInt(this.value) || 0;
-            
-            // التحقق الفوري من الحدود
-            if (value > MAX_AMOUNT) {
-                // تنبيه المستخدم بطريقة لطيفة (اختياري) أو مجرد تحديث الحالة للتحقق لاحقاً
-            }
-            
             financingState.amount = value;
             calculateFinancing();
             validateForm();
         });
     }
     
-    // Duration Buttons
     if (elements.durationButtons) {
         elements.durationButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -179,7 +162,6 @@ function setupEventListeners() {
         });
     }
     
-    // Down Payment Toggle
     if (elements.downpaymentToggle) {
         elements.downpaymentToggle.addEventListener('change', function() {
             financingState.noDownPayment = this.checked;
@@ -187,7 +169,6 @@ function setupEventListeners() {
         });
     }
     
-    // WhatsApp Submit Button
     if (elements.whatsappSubmit) {
         elements.whatsappSubmit.addEventListener('click', submitToWhatsApp);
     }
@@ -196,7 +177,6 @@ function setupEventListeners() {
 function setDuration(months, button) {
     financingState.duration = months;
     
-    // Update UI
     elements.durationButtons.forEach(btn => {
         btn.classList.remove('active');
         btn.setAttribute('aria-pressed', 'false');
@@ -205,7 +185,6 @@ function setDuration(months, button) {
     button.classList.add('active');
     button.setAttribute('aria-pressed', 'true');
     
-    // Update breakdown rate display to Fixed 65%
     if (elements.breakdownRate) {
         const label = elements.breakdownRate.parentElement.querySelector('span:first-child');
         if (label) {
@@ -219,53 +198,48 @@ function setDuration(months, button) {
 }
 
 // -------------------------------------------------------------
-// المعادلة الجديدة: (المبلغ المطلوب + 65%)
+// منطق الحساب المباشر (الديناميكي)
+// المبلغ المدخل + 65% = الإجمالي
 // -------------------------------------------------------------
 function calculateFinancing() {
-    // بما أننا حددنا الحد الأقصى 5000، فالمقصود هنا هو مبلغ "التمويل" (قيمة الجهاز)
-    // وليس الكاش الصافي، لأن تابي حده 5000 كقيمة شرائية.
-    // إذا العميل حط 5000، يعني يبي يشتري جهاز بـ 5000.
+    let requestedCash = financingState.amount;
     
-    let productPrice = financingState.amount;
-    
-    // التأكد من الحدود
-    if (productPrice > MAX_AMOUNT) productPrice = MAX_AMOUNT;
-    if (productPrice < MIN_AMOUNT) productPrice = MIN_AMOUNT;
+    // الالتزام بالحدود (100 - 5000)
+    if (requestedCash > MAX_AMOUNT) requestedCash = MAX_AMOUNT;
+    // لا نغير الحد الأدنى تلقائياً أثناء الكتابة لعدم إزعاج المستخدم، لكن نستخدمه في الحساب
+    let calcCash = requestedCash < MIN_AMOUNT ? MIN_AMOUNT : requestedCash;
 
     const duration = financingState.duration;
-    const interestRate = PROFIT_PERCENTAGE; // 0.65
     const noDownPayment = financingState.noDownPayment;
     
-    // 1. حساب الفائدة (65%) على قيمة الجهاز
-    const profitAmount = productPrice * interestRate;
-    const totalAmount = productPrice + profitAmount;
+    // 1. حساب الأرباح (65% من المبلغ المطلوب)
+    // معادلة ديناميكية: تتغير بتغير المبلغ
+    const profitAmount = calcCash * PROFIT_PERCENTAGE;
     
-    // 2. القسط الشهري
+    // 2. حساب المجموع الكلي (المديونية)
+    const totalAmount = calcCash + profitAmount;
+    
+    // 3. حساب القسط الشهري
     const monthlyInstallment = totalAmount / duration;
     
-    // 3. صافي الكاش (السيولة)
-    // المعادلة: قيمة الجهاز * 0.56
-    const baseCashLiquidity = productPrice * CASH_LIQUIDITY_RATIO;
-    
-    // 4. خصم الدفعة الأولى
-    let netCash = baseCashLiquidity;
+    // 4. صافي الكاش في اليد
+    let netCash = calcCash;
     let downpaymentStatus = "✅ الدفعة الأولى: تدفعها أنت";
     let downpaymentAmount = 0;
     
     if (noDownPayment) {
-        netCash = baseCashLiquidity - monthlyInstallment;
+        netCash = calcCash - monthlyInstallment;
         downpaymentStatus = "✅ الدفعة الأولى: خصمناها من الكاش";
         downpaymentAmount = monthlyInstallment;
     }
     
-    // Ensure net cash is not negative
     netCash = Math.max(netCash, 0);
     
-    // Update UI
+    // تحديث الواجهة
     updateUI({
         monthlyInstallment,
         netCash,
-        amount: productPrice,
+        amount: calcCash, // المبلغ الأساسي
         profitAmount,
         totalAmount,
         downpaymentStatus,
@@ -282,20 +256,17 @@ function updateUI(data) {
     
     const wholeFormatter = new Intl.NumberFormat('ar-SA');
     
-    // Monthly Installment
     if (elements.monthlyInstallment) {
         elements.monthlyInstallment.textContent = formatter.format(data.monthlyInstallment);
     }
     
-    // Net Cash
     if (elements.netCash) {
         elements.netCash.textContent = formatter.format(data.netCash);
     }
     
-    // Breakdown
     if (elements.breakdownAmount) {
         const label = elements.breakdownAmount.parentElement.querySelector('span:first-child');
-        if(label) label.textContent = "قيمة السلعة (الحد 5000):";
+        if(label) label.textContent = "المبلغ المطلوب (كاش):";
         elements.breakdownAmount.textContent = `${wholeFormatter.format(data.amount)} ر.س`;
     }
     
@@ -303,11 +274,17 @@ function updateUI(data) {
         elements.breakdownInterest.textContent = `+${wholeFormatter.format(data.profitAmount)} ر.س`;
     }
     
+    if (elements.breakdownRate) {
+        const label = elements.breakdownRate.parentElement.querySelector('span:first-child');
+        if(label) label.innerHTML = `الأرباح (<span id="breakdownRate">65%</span>):`;
+        else elements.breakdownRate.textContent = '65%';
+    }
+    
     if (elements.breakdownTotal) {
         elements.breakdownTotal.textContent = `${wholeFormatter.format(data.totalAmount)} ر.س`;
     }
     
-    // إخفاء سطر نسبة السيولة القديم
+    // إخفاء سطر "نسبة السيولة" لأنه غير ضروري في الحساب المباشر
     if (elements.breakdownLiquidity) {
         const liItem = elements.breakdownLiquidity.parentElement;
         if(liItem) liItem.style.display = 'none'; 
@@ -338,12 +315,10 @@ function validateName() {
     if (!input) return false;
     
     input.classList.remove('valid', 'invalid');
-    
     if (!name || name.split(/\s+/).length < 2) {
         showValidationMessage(input, 'الاسم الكامل مطلوب', false);
         return false;
     }
-    
     showValidationMessage(input, '✅ الاسم صالح', true);
     return true;
 }
@@ -355,19 +330,16 @@ function validateMobile() {
     
     input.classList.remove('valid', 'invalid');
     const saudiMobileRegex = /^05[0-9]{8}$/;
-    
     if (!saudiMobileRegex.test(mobile)) {
         showValidationMessage(input, 'رقم غير صالح. يجب أن يبدأ بـ 05', false);
         return false;
     }
-    
     showValidationMessage(input, '✅ رقم الجوال صالح', true);
     return true;
 }
 
 function validateAmount() {
     const amount = financingState.amount;
-    // التحقق الصارم من الحدود (100 - 5000)
     return amount >= MIN_AMOUNT && amount <= MAX_AMOUNT;
 }
 
@@ -384,13 +356,9 @@ function validateForm() {
             elements.whatsappSubmit.removeAttribute('title');
         } else {
             elements.whatsappSubmit.disabled = true;
-            // إضافة رسالة توضيحية للزر
-            if (!isAmountValid) {
-                elements.whatsappSubmit.title = `المبلغ يجب أن يكون بين ${MIN_AMOUNT} و ${MAX_AMOUNT} ريال`;
-            }
+            if (!isAmountValid) elements.whatsappSubmit.title = `المبلغ يجب أن يكون بين ${MIN_AMOUNT} و ${MAX_AMOUNT}`;
         }
     }
-    
     return financingState.valid;
 }
 
@@ -411,33 +379,30 @@ function showValidationMessage(input, message, isValid) {
 }
 
 // ============================================
-// WHATSAPP INTEGRATION (Calculator)
+// WHATSAPP INTEGRATION
 // ============================================
 
 function submitToWhatsApp() {
     if (!validateForm()) {
         const amount = financingState.amount;
         if (amount < MIN_AMOUNT || amount > MAX_AMOUNT) {
-            alert(`عذراً، تمويل تابي متاح فقط من ${MIN_AMOUNT} إلى ${MAX_AMOUNT} ريال`);
+            alert(`عذراً، المبلغ المسموح به من ${MIN_AMOUNT} إلى ${MAX_AMOUNT} ريال فقط`);
         } else {
             alert('الرجاء إكمال جميع الحقول المطلوبة');
         }
         return;
     }
     
-    // إعداد البيانات
-    const productPrice = financingState.amount;
-    const duration = financingState.duration;
-    const profitAmount = productPrice * PROFIT_PERCENTAGE;
-    const totalAmount = productPrice + profitAmount;
-    const monthlyInstallment = totalAmount / duration;
-    
-    const baseCashLiquidity = productPrice * CASH_LIQUIDITY_RATIO;
-    const netCash = financingState.noDownPayment 
-        ? Math.max(baseCashLiquidity - monthlyInstallment, 0)
-        : baseCashLiquidity;
+    const cash = financingState.amount;
+    const profit = cash * PROFIT_PERCENTAGE;
+    const total = cash + profit;
+    const monthly = total / financingState.duration;
     
     const formatter = new Intl.NumberFormat('ar-SA', { maximumFractionDigits: 0 });
+    
+    const netCash = financingState.noDownPayment 
+        ? Math.max(cash - monthly, 0)
+        : cash;
     
     const message = `السلام عليكم، أرغب بطلب تمويل تابي من لير للاتصالات 📱
 --------------------------------
@@ -446,11 +411,11 @@ function submitToWhatsApp() {
 الجوال: ${financingState.mobileNumber}
 --------------------------------
 💰 تفاصيل الطلب:
-قيمة السلعة (التمويل): ${formatter.format(productPrice)} ريال
-صافي الكاش المتوقع: ${formatter.format(netCash)} ريال
-المدة: ${duration} أشهر
-القسط الشهري: ${formatter.format(monthlyInstallment)} ريال
-إجمالي المديونية: ${formatter.format(totalAmount)} ريال
+المبلغ المطلوب (كاش): ${formatter.format(cash)} ريال
+صافي الكاش (للمحفظة): ${formatter.format(netCash)} ريال
+المدة: ${financingState.duration} أشهر
+القسط الشهري: ${formatter.format(monthly)} ريال
+إجمالي المديونية: ${formatter.format(total)} ريال
 --------------------------------
 ℹ️ ملاحظات الدفع:
 ${financingState.noDownPayment ? 'بدون دفعة أولى (مخصومة من الكاش)' : 'مع دفعة أولى'}
@@ -459,7 +424,6 @@ ${financingState.noDownPayment ? 'بدون دفعة أولى (مخصومة من 
     
     const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     
-    // Loading State
     const originalHTML = elements.whatsappSubmit.innerHTML;
     elements.whatsappSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحضير...';
     elements.whatsappSubmit.disabled = true;
@@ -479,12 +443,10 @@ ${financingState.noDownPayment ? 'بدون دفعة أولى (مخصومة من 
 // ============================================
 
 function initializeBlog() {
-    // Add animation to timeline items
     const timelineItems = document.querySelectorAll('.timeline-item');
     timelineItems.forEach((item, index) => {
         item.style.opacity = '0';
         item.style.transform = 'translateX(-20px)';
-        
         setTimeout(() => {
             item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             item.style.opacity = '1';
@@ -492,24 +454,19 @@ function initializeBlog() {
         }, index * 200);
     });
     
-    // Add hover effect to problem cards
     const problemCards = document.querySelectorAll('.problem-card');
     problemCards.forEach(card => {
         card.addEventListener('mouseenter', () => {
             card.style.transform = 'translateY(-5px)';
             card.style.boxShadow = '0 10px 20px rgba(239, 68, 68, 0.2)';
         });
-        
         card.addEventListener('mouseleave', () => {
             card.style.transform = 'translateY(0)';
             card.style.boxShadow = 'none';
         });
     });
     
-    // Track blog reading progress
     trackReadingProgress();
-    
-    // Calculate read time
     calculateReadTime();
 }
 
@@ -517,10 +474,8 @@ function trackReadingProgress() {
     if (typeof localStorage !== 'undefined') {
         const articleId = 'blog-cash-in-hafar';
         const readKey = `read_${articleId}`;
-        
         window.addEventListener('scroll', function() {
             const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-            
             if (scrollPercentage > 75 && !localStorage.getItem(readKey)) {
                 localStorage.setItem(readKey, 'true');
                 console.log('Article marked as read:', articleId);
@@ -533,7 +488,6 @@ function calculateReadTime() {
     const articleText = document.querySelector('.article-container')?.innerText || '';
     const wordCount = articleText.split(/\s+/).length;
     const readingTime = Math.ceil(wordCount / 200); 
-    
     const timeElement = document.querySelector('.article-meta span:nth-child(2)');
     if (timeElement && readingTime > 0) {
         timeElement.innerHTML = `<i class="far fa-clock"></i> ⏱ ${readingTime} دقائق قراءة`;
@@ -545,7 +499,6 @@ function calculateReadTime() {
 // ============================================
 
 function initializeCommon() {
-    // Accordion Logic
     document.querySelectorAll('.accordion-btn').forEach(button => {
         button.addEventListener('click', function() {
             const content = this.nextElementSibling;
@@ -556,20 +509,16 @@ function initializeCommon() {
         });
     });
     
-    // Setup Scroll Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             if (href.includes('http') || href === '#') return;
             e.preventDefault();
             const targetElement = document.querySelector(href);
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
 
-    // Setup Device Selection
     document.querySelectorAll('.device-btn').forEach(button => {
         button.addEventListener('click', function() {
             const deviceName = this.parentElement.querySelector('.device-name').textContent;
@@ -577,14 +526,12 @@ function initializeCommon() {
         });
     });
 
-    // Add Back to Top
     addBackToTopButton();
     setupKeyboardShortcuts();
     setupPrintStyles();
     setupPerformanceMonitoring();
 }
 
-// Quara Modal Logic
 function selectDevice(deviceName) {
     const modal = document.getElementById('quaraModal');
     const deviceNameField = document.getElementById('selectedDeviceName');
@@ -723,7 +670,7 @@ function resetForm() {
     financingState = {
         fullName: '',
         mobileNumber: '',
-        amount: 2500, // Reset to default compliant amount
+        amount: 2500, // Reset default
         duration: 12,
         interestRate: PROFIT_PERCENTAGE,
         noDownPayment: false,
