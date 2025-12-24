@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة القيادة - لير للاتصالات 🔒</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background-color: #f3f4f6; }
+        
+        /* ألوان حالات الطلب */
+        .status-badge { padding: 4px 12px; border-radius: 99px; font-size: 0.85rem; font-weight: bold; display: inline-block; }
+        .status-pending { background-color: #FEF3C7; color: #92400E; border: 1px solid #F59E0B; }
+        .status-approved { background-color: #D1FAE5; color: #065F46; border: 1px solid #10B981; }
+        .status-rejected { background-color: #FEE2E2; color: #991B1B; border: 1px solid #EF4444; }
+        .status-completed { background-color: #DBEAFE; color: #1E40AF; border: 1px solid #3B82F6; }
+
+        /* تأثيرات التحميل */
+        .loading-spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div id="loginScreen" class="min-h-screen flex items-center justify-center bg-gray-900 transition-all duration-500">
+        <div class="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-md border-t-4 border-blue-500">
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-user-shield text-4xl text-blue-600"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800">مدير النظام</h2>
+                <p class="text-gray-500 mt-2">لوحة تحكم لير للاتصالات</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="relative">
+                    <i class="fas fa-lock absolute top-4 right-4 text-gray-400"></i>
+                    <input type="password" id="adminPass" 
+                           class="w-full p-3 pr-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition" 
+                           placeholder="أدخل رمز الدخول السري"
+                           onkeyup="if(event.key === 'Enter') checkLogin()">
+                </div>
+                
+                <button onclick="checkLogin()" 
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl font-bold shadow-lg transform active:scale-95 transition-all">
+                    دخول آمن <i class="fas fa-arrow-left mr-2"></i>
+                </button>
+            </div>
+            
+            <p id="loginError" class="text-red-500 text-center mt-4 text-sm font-bold hidden bg-red-50 p-2 rounded">⛔ الرمز خطأ! حاول مرة أخرى</p>
+        </div>
+    </div>
+
+    <div id="dashboardScreen" class="hidden min-h-screen flex">
+        
+        <aside class="bg-gray-900 text-white w-72 flex-shrink-0 hidden md:flex flex-col shadow-xl z-20">
+            <div class="p-6 text-center border-b border-gray-800 bg-gray-800">
+                <h1 class="text-2xl font-black text-white tracking-wider">LER ADMIN</h1>
+                <p class="text-xs text-blue-400 mt-1 uppercase">Control Panel v1.0</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto py-6">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#" class="flex items-center px-6 py-3 bg-blue-600 text-white border-r-4 border-white">
+                            <i class="fas fa-tachometer-alt w-6 ml-2"></i>
+                            <span class="font-medium">الرئيسية والطلبات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center px-6 py-3 text-gray-400 hover:bg-gray-800 hover:text-white transition">
+                            <i class="fas fa-users w-6 ml-2"></i>
+                            <span class="font-medium">العملاء (قريباً)</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center px-6 py-3 text-gray-400 hover:bg-gray-800 hover:text-white transition">
+                            <i class="fas fa-mobile w-6 ml-2"></i>
+                            <span class="font-medium">المنتجات (قريباً)</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="p-4 bg-gray-800">
+                <button onclick="logout()" class="flex items-center justify-center w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition shadow">
+                    <i class="fas fa-sign-out-alt ml-2"></i> تسجيل خروج
+                </button>
+            </div>
+        </aside>
+
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6 md:p-8">
+            
+            <header class="flex justify-between items-center mb-8 bg-white p-4 rounded-xl shadow-sm">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">👋 أهلاً بك يا مدير</h2>
+                    <p class="text-sm text-gray-500">إليك نظرة عامة على طلبات التمويل اليوم</p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="fetchOrders()" class="flex items-center px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition shadow-sm">
+                        <i class="fas fa-sync-alt ml-2 text-blue-500"></i> تحديث البيانات
+                    </button>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-blue-500 hover:shadow-md transition">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase">إجمالي الطلبات</p>
+                            <h3 class="text-3xl font-bold text-gray-800 mt-2" id="statTotal">...</h3>
+                        </div>
+                        <div class="p-3 bg-blue-50 rounded-lg text-blue-600">
+                            <i class="fas fa-clipboard-list text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-yellow-500 hover:shadow-md transition">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase">طلبات جديدة</p>
+                            <h3 class="text-3xl font-bold text-gray-800 mt-2" id="statPending">...</h3>
+                        </div>
+                        <div class="p-3 bg-yellow-50 rounded-lg text-yellow-600">
+                            <i class="fas fa-clock text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-green-500 hover:shadow-md transition">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase">طلبات مقبولة</p>
+                            <h3 class="text-3xl font-bold text-gray-800 mt-2" id="statApproved">...</h3>
+                        </div>
+                        <div class="p-3 bg-green-50 rounded-lg text-green-600">
+                            <i class="fas fa-check-circle text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-purple-500 hover:shadow-md transition">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase">حجم التمويل المطلوب</p>
+                            <h3 class="text-2xl font-bold text-gray-800 mt-2" id="statAmount">...</h3>
+                        </div>
+                        <div class="p-3 bg-purple-50 rounded-lg text-purple-600">
+                            <i class="fas fa-wallet text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200">
+                <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                    <h3 class="font-bold text-gray-800 text-lg"><i class="fas fa-table ml-2 text-gray-400"></i>أحدث الطلبات</h3>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right">
+                        <thead class="bg-gray-100 text-gray-600 uppercase text-xs font-bold tracking-wider">
+                            <tr>
+                                <th class="p-4"># رقم الطلب</th>
+                                <th class="p-4">تاريخ الطلب</th>
+                                <th class="p-4">بيانات العميل</th>
+                                <th class="p-4">المبلغ المطلوب</th>
+                                <th class="p-4">تفاصيل القسط</th>
+                                <th class="p-4 text-center">الحالة</th>
+                                <th class="p-4 text-center">الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody" class="divide-y divide-gray-100">
+                            <tr>
+                                <td colspan="7" class="p-12 text-center text-gray-500">
+                                    <div class="flex flex-col items-center">
+                                        <i class="fas fa-circle-notch loading-spinner text-3xl text-blue-500 mb-4"></i>
+                                        <span>جاري الاتصال بقاعدة البيانات...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // إعدادات Supabase (مشروعك + المفتاح السري Service Key)
+        const PROJECT_URL = "https://mgbdukdtzckxspxmcvpo.supabase.co";
+        // 🚨 هذا المفتاح خطير جداً، لا تشاركه مع أحد
+        const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1nYmR1a2R0emNreHNweG1jdnBvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NjUzMzM5NywiZXhwIjoyMDgyMTA5Mzk3fQ.Xm7HyGXSLq-CMWhi3aAGR1taK70Xurd_x48ouUt6IO0";
+
+        // كلمة المرور للدخول
+        const ADMIN_PASS = "admin123";
+
+        // الاتصال
+        const supabase = window.supabase.createClient(PROJECT_URL, SERVICE_KEY);
+
+        // ========================
+        // دوال النظام
+        // ========================
+
+        function checkLogin() {
+            const input = document.getElementById('adminPass').value;
+            const errorMsg = document.getElementById('loginError');
+            
+            if (input === ADMIN_PASS) {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('dashboardScreen').classList.remove('hidden');
+                fetchOrders(); // جلب البيانات فوراً
+            } else {
+                errorMsg.classList.remove('hidden');
+                document.getElementById('adminPass').value = '';
+                document.getElementById('adminPass').focus();
+            }
+        }
+
+        function logout() {
+            if(confirm('هل تريد تسجيل الخروج؟')) {
+                location.reload();
+            }
+        }
+
+        async function fetchOrders() {
+            const tbody = document.getElementById('ordersTableBody');
+            
+            // إظهار التحميل فقط إذا كان الجدول فارغاً
+            if (tbody.children.length <= 1) {
+                tbody.innerHTML = '<tr><td colspan="7" class="p-12 text-center"><i class="fas fa-circle-notch loading-spinner text-blue-500 text-2xl"></i><div class="mt-2 text-gray-500">جاري تحديث البيانات...</div></td></tr>';
+            }
+
+            try {
+                // جلب الطلبات مع بيانات العميل (Join)
+                const { data: orders, error } = await supabase
+                    .from('financing_orders')
+                    .select(`
+                        *,
+                        customers ( full_name, phone )
+                    `)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                renderOrders(orders);
+                updateStats(orders);
+
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-red-500 bg-red-50 border border-red-200 rounded m-4">❌ حدث خطأ في الاتصال: ${err.message}</td></tr>`;
+            }
+        }
+
+        function renderOrders(orders) {
+            const tbody = document.getElementById('ordersTableBody');
+            tbody.innerHTML = '';
+
+            if (!orders || orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="p-12 text-center text-gray-400 bg-gray-50">📭 لا توجد طلبات حتى الآن</td></tr>';
+                return;
+            }
+
+            orders.forEach(order => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-blue-50 transition border-b border-gray-50';
+                
+                // تنسيق الحالة
+                let badgeClass = 'status-pending';
+                let statusLabel = 'قيد الانتظار';
+                let icon = '<i class="fas fa-clock"></i>';
+
+                if (order.status === 'approved') { badgeClass = 'status-approved'; statusLabel = 'مقبول مبدئياً'; icon = '<i class="fas fa-check"></i>'; }
+                if (order.status === 'rejected') { badgeClass = 'status-rejected'; statusLabel = 'مرفوض'; icon = '<i class="fas fa-times"></i>'; }
+                if (order.status === 'completed') { badgeClass = 'status-completed'; statusLabel = 'مكتمل (تم التحويل)'; icon = '<i class="fas fa-check-double"></i>'; }
+
+                // تنسيق التاريخ
+                const dateObj = new Date(order.created_at);
+                const date = dateObj.toLocaleDateString('ar-SA');
+                const time = dateObj.toLocaleTimeString('ar-SA', {hour: '2-digit', minute:'2-digit'});
+
+                tr.innerHTML = `
+                    <td class="p-4">
+                        <span class="font-mono text-xs bg-gray-200 px-2 py-1 rounded text-gray-600 select-all" title="${order.id}">${order.id.slice(0, 8)}...</span>
+                    </td>
+                    <td class="p-4 text-sm text-gray-600">
+                        <div class="font-bold">${date}</div>
+                        <div class="text-xs text-gray-400">${time}</div>
+                    </td>
+                    <td class="p-4">
+                        <div class="font-bold text-gray-800">${order.customers?.full_name || 'غير مسجل'}</div>
+                        <a href="https://wa.me/966${order.customers?.phone?.substring(1)}" target="_blank" class="text-xs text-blue-500 hover:underline dir-ltr flex items-center gap-1 mt-1">
+                            <i class="fab fa-whatsapp"></i> ${order.customers?.phone || '-'}
+                        </a>
+                    </td>
+                    <td class="p-4 font-bold text-gray-800 text-lg">${formatMoney(order.total_amount)}</td>
+                    <td class="p-4 text-sm">
+                        <div class="font-bold">${order.installment_months} شهر</div>
+                        <div class="text-xs text-gray-500">قسط: ${formatMoney(order.monthly_payment)}</div>
+                    </td>
+                    <td class="p-4 text-center">
+                        <span class="status-badge ${badgeClass} flex items-center justify-center gap-1 w-fit mx-auto">
+                            ${icon} ${statusLabel}
+                        </span>
+                    </td>
+                    <td class="p-4 text-center">
+                        <div class="flex items-center justify-center gap-2">
+                            ${order.status === 'pending' ? `
+                                <button onclick="updateStatus('${order.id}', 'approved')" class="w-8 h-8 rounded-full bg-green-100 text-green-600 hover:bg-green-600 hover:text-white transition flex items-center justify-center" title="قبول"><i class="fas fa-check"></i></button>
+                                <button onclick="updateStatus('${order.id}', 'rejected')" class="w-8 h-8 rounded-full bg-red-100 text-red-600 hover:bg-red-600 hover:text-white transition flex items-center justify-center" title="رفض"><i class="fas fa-times"></i></button>
+                            ` : ''}
+                            
+                            ${order.status === 'approved' ? `
+                                <button onclick="updateStatus('${order.id}', 'completed')" class="px-3 py-1 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-600 hover:text-white transition text-xs font-bold" title="إتمام"><i class="fas fa-money-bill-wave mr-1"></i> تم التحويل</button>
+                            ` : ''}
+
+                            <button onclick="deleteOrder('${order.id}')" class="w-8 h-8 rounded-full bg-gray-100 text-gray-400 hover:bg-red-500 hover:text-white transition flex items-center justify-center ml-2" title="حذف نهائي"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function updateStatus(orderId, newStatus) {
+            // إضافة تأثير بصري
+            document.body.style.cursor = 'wait';
+            
+            try {
+                const { error } = await supabase
+                    .from('financing_orders')
+                    .update({ status: newStatus })
+                    .eq('id', orderId);
+
+                if (error) throw error;
+                
+                // تحديث البيانات
+                await fetchOrders();
+                
+            } catch (err) {
+                alert('حدث خطأ أثناء التحديث: ' + err.message);
+            } finally {
+                document.body.style.cursor = 'default';
+            }
+        }
+
+        async function deleteOrder(orderId) {
+            if(!confirm('⚠️ تحذير نهائي:\nهل أنت متأكد من حذف هذا الطلب من السجلات؟ لا يمكن التراجع عن هذا الإجراء.')) return;
+
+            try {
+                const { error } = await supabase
+                    .from('financing_orders')
+                    .delete()
+                    .eq('id', orderId);
+
+                if (error) throw error;
+                await fetchOrders();
+                
+            } catch (err) {
+                alert('فشل الحذف: ' + err.message);
+            }
+        }
+
+        function updateStats(orders) {
+            // حساب الأرقام
+            const total = orders.length;
+            const pending = orders.filter(o => o.status === 'pending').length;
+            const approved = orders.filter(o => o.status === 'approved' || o.status === 'completed').length;
+            const money = orders.reduce((sum, order) => sum + (order.total_amount || 0), 0);
+
+            // تحديث الشاشة
+            document.getElementById('statTotal').innerText = total;
+            document.getElementById('statPending').innerText = pending;
+            document.getElementById('statApproved').innerText = approved;
+            document.getElementById('statAmount').innerText = formatMoney(money);
+        }
+
+        function formatMoney(amount) {
+            return new Intl.NumberFormat('ar-SA', {
+                style: 'currency',
+                currency: 'SAR',
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+    </script>
+</body>
+</html>
