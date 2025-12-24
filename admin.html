@@ -3,133 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - لير للاتصالات</title>
+    <title>لوحة التحكم V2 - لير للاتصالات</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         body { font-family: 'Tajawal', sans-serif; background-color: #f3f4f6; }
-        .status-badge { padding: 4px 12px; border-radius: 99px; font-size: 0.85rem; font-weight: bold; }
-        .status-pending { background-color: #FEF3C7; color: #92400E; border: 1px solid #F59E0B; }
-        .status-approved { background-color: #D1FAE5; color: #065F46; border: 1px solid #10B981; }
-        .status-rejected { background-color: #FEE2E2; color: #991B1B; border: 1px solid #EF4444; }
-        .status-completed { background-color: #DBEAFE; color: #1E40AF; border: 1px solid #3B82F6; }
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .status-badge { padding: 4px 12px; border-radius: 99px; font-size: 0.75rem; font-weight: bold; }
+        .status-pending { background-color: #FEF3C7; color: #92400E; }
+        .status-approved { background-color: #D1FAE5; color: #065F46; }
+        .status-rejected { background-color: #FEE2E2; color: #991B1B; }
+        .status-completed { background-color: #DBEAFE; color: #1E40AF; }
+        
+        /* Modal Styles */
+        .modal { transition: opacity 0.25s ease; }
+        body.modal-active { overflow-x: hidden; overflow-y: hidden !important; }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 text-gray-800">
 
-    <div id="loginScreen" class="min-h-screen flex items-center justify-center bg-gray-900">
-        <div class="bg-white p-8 rounded-lg shadow-2xl w-96 text-center">
-            <h2 class="text-2xl font-bold mb-2">تسجيل الدخول</h2>
-            <p class="text-gray-500 mb-6">لوحة الإدارة الآمنة</p>
-            <input type="password" id="adminPass" class="w-full border p-3 rounded mb-4 text-center text-lg" placeholder="كلمة المرور">
-            <button onclick="checkLogin()" class="w-full bg-blue-600 text-white p-3 rounded font-bold hover:bg-blue-700 transition">دخول</button>
-            <p id="loginError" class="text-red-500 mt-4 hidden font-bold">كلمة المرور خاطئة!</p>
+    <div id="loginScreen" class="min-h-screen flex items-center justify-center bg-gray-900 z-50 fixed inset-0">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-96 text-center border-t-4 border-blue-600">
+            <h2 class="text-2xl font-bold mb-2 text-gray-800">LER ADMIN <span class="text-xs bg-blue-100 text-blue-600 px-2 rounded">V2</span></h2>
+            <p class="text-gray-500 mb-6 text-sm">أدخل الرمز السري للمدير</p>
+            <input type="password" id="adminPass" class="w-full border p-3 rounded-lg mb-4 text-center text-lg outline-none focus:border-blue-500 transition" placeholder="••••••">
+            <button onclick="checkLogin()" class="w-full bg-gray-900 text-white p-3 rounded-lg font-bold hover:bg-gray-800 transition">دخول</button>
+            <p id="loginError" class="text-red-500 mt-4 hidden font-bold text-sm bg-red-50 p-2 rounded">الرمز خطأ!</p>
         </div>
     </div>
 
     <div id="dashboardScreen" class="hidden min-h-screen flex flex-col md:flex-row">
-        <nav class="bg-gray-800 text-white w-full md:w-64 flex-shrink-0 p-6">
-            <h1 class="text-2xl font-bold mb-8">LER ADMIN</h1>
-            <ul class="space-y-4">
-                <li class="bg-blue-600 p-3 rounded cursor-pointer"><i class="fas fa-list ml-2"></i> الطلبات</li>
-                <li onclick="logout()" class="text-red-300 cursor-pointer p-3 hover:bg-gray-700 rounded"><i class="fas fa-sign-out-alt ml-2"></i> خروج</li>
+        
+        <nav class="bg-gray-900 text-white w-full md:w-64 flex-shrink-0 flex flex-col shadow-xl">
+            <div class="p-6 text-center border-b border-gray-800">
+                <h1 class="text-2xl font-black tracking-widest">LER</h1>
+                <p class="text-xs text-gray-400">Control Panel</p>
+            </div>
+            
+            <ul class="flex-1 py-6 space-y-2">
+                <li onclick="switchTab('orders')" id="tab-orders" class="px-6 py-3 cursor-pointer bg-blue-600 border-r-4 border-white transition flex items-center">
+                    <i class="fas fa-receipt w-6"></i> الطلبات
+                </li>
+                <li onclick="switchTab('products')" id="tab-products" class="px-6 py-3 cursor-pointer hover:bg-gray-800 text-gray-400 hover:text-white transition flex items-center">
+                    <i class="fas fa-mobile-alt w-6"></i> المنتجات
+                </li>
             </ul>
+
+            <div class="p-4 bg-gray-800">
+                <button onclick="logout()" class="w-full py-2 text-red-400 hover:text-white flex items-center justify-center gap-2">
+                    <i class="fas fa-sign-out-alt"></i> خروج
+                </button>
+            </div>
         </nav>
 
-        <main class="flex-1 p-8 overflow-auto">
-            <header class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl font-bold text-gray-800">إدارة الطلبات</h2>
-                <button onclick="fetchOrders()" class="bg-white px-4 py-2 rounded shadow text-blue-600 font-bold hover:bg-gray-50">
-                    <i class="fas fa-sync-alt ml-2"></i> تحديث
-                </button>
-            </header>
+        <main class="flex-1 p-4 md:p-8 overflow-y-auto h-screen">
+            
+            <div id="view-orders" class="space-y-6">
+                <header class="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm">
+                    <h2 class="text-xl font-bold flex items-center gap-2"><i class="fas fa-list text-blue-500"></i> إدارة الطلبات</h2>
+                    <button onclick="fetchOrders()" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition">
+                        <i class="fas fa-sync-alt"></i> تحديث
+                    </button>
+                </header>
 
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                <div class="bg-white p-4 rounded shadow border-r-4 border-blue-500">
-                    <div class="text-gray-500">العدد الكلي</div>
-                    <div class="text-2xl font-bold" id="statTotal">0</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-white p-4 rounded-xl shadow-sm border-b-4 border-blue-500">
+                        <div class="text-gray-400 text-xs">الكل</div>
+                        <div class="text-2xl font-bold" id="statTotal">0</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border-b-4 border-yellow-500">
+                        <div class="text-gray-400 text-xs">انتظار</div>
+                        <div class="text-2xl font-bold" id="statPending">0</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border-b-4 border-green-500">
+                        <div class="text-gray-400 text-xs">مقبول</div>
+                        <div class="text-2xl font-bold" id="statApproved">0</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border-b-4 border-purple-500">
+                        <div class="text-gray-400 text-xs">المبالغ</div>
+                        <div class="text-lg font-bold truncate" id="statAmount">0</div>
+                    </div>
                 </div>
-                <div class="bg-white p-4 rounded shadow border-r-4 border-yellow-500">
-                    <div class="text-gray-500">انتظار</div>
-                    <div class="text-2xl font-bold" id="statPending">0</div>
-                </div>
-                <div class="bg-white p-4 rounded shadow border-r-4 border-green-500">
-                    <div class="text-gray-500">مقبولة</div>
-                    <div class="text-2xl font-bold" id="statApproved">0</div>
-                </div>
-                <div class="bg-white p-4 rounded shadow border-r-4 border-purple-500">
-                    <div class="text-gray-500">المبالغ</div>
-                    <div class="text-2xl font-bold" id="statAmount">0</div>
+
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right text-sm">
+                            <thead class="bg-gray-50 text-gray-500">
+                                <tr>
+                                    <th class="p-4">#</th>
+                                    <th class="p-4">العميل</th>
+                                    <th class="p-4">التفاصيل</th>
+                                    <th class="p-4">الحالة</th>
+                                    <th class="p-4 text-center">تحكم</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody" class="divide-y divide-gray-100"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded shadow overflow-x-auto">
-                <table class="w-full text-right">
-                    <thead class="bg-gray-50 border-b">
-                        <tr>
-                            <th class="p-4">#</th>
-                            <th class="p-4">التاريخ</th>
-                            <th class="p-4">العميل</th>
-                            <th class="p-4">المبلغ</th>
-                            <th class="p-4">المدة</th>
-                            <th class="p-4">الحالة</th>
-                            <th class="p-4 text-center">تحكم</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ordersTableBody">
-                        <tr><td colspan="7" class="text-center p-8">جاري التحميل...</td></tr>
-                    </tbody>
-                </table>
+            <div id="view-products" class="hidden space-y-6">
+                <header class="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm">
+                    <h2 class="text-xl font-bold flex items-center gap-2"><i class="fas fa-box text-green-500"></i> إدارة المنتجات</h2>
+                    <button onclick="openProductModal()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition shadow flex items-center gap-2">
+                        <i class="fas fa-plus"></i> إضافة منتج
+                    </button>
+                </header>
+
+                <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
             </div>
+
         </main>
     </div>
 
+    <div id="productModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50" onclick="closeProductModal()"></div>
+        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            <div class="modal-content py-4 text-left px-6">
+                <div class="flex justify-between items-center pb-3">
+                    <p class="text-2xl font-bold text-gray-800">بيانات المنتج</p>
+                    <div class="cursor-pointer z-50" onclick="closeProductModal()">
+                        <i class="fas fa-times text-gray-500 hover:text-red-500"></i>
+                    </div>
+                </div>
+
+                <form id="productForm" onsubmit="saveProduct(event)">
+                    <input type="hidden" id="prodId">
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">اسم الجوال</label>
+                        <input type="text" id="prodName" class="w-full border rounded px-3 py-2 outline-none focus:border-blue-500" placeholder="مثلاً: iPhone 16 Pro Max" required>
+                    </div>
+
+                    <div class="mb-4 grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">السعر (كاش)</label>
+                            <input type="number" id="prodPrice" class="w-full border rounded px-3 py-2 outline-none focus:border-blue-500" placeholder="5000" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">القسط (تقريبي)</label>
+                            <input type="number" id="prodInstallment" class="w-full border rounded px-3 py-2 outline-none focus:border-blue-500" placeholder="250">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">رابط الصورة</label>
+                        <input type="text" id="prodImage" class="w-full border rounded px-3 py-2 outline-none focus:border-blue-500 text-left" dir="ltr" placeholder="https://...">
+                        <p class="text-xs text-gray-400 mt-1">انسخ رابط الصورة من النت أو اتركها فاضية للصورة الافتراضية</p>
+                    </div>
+
+                    <div class="flex justify-end pt-2">
+                        <button type="button" onclick="closeProductModal()" class="px-4 bg-gray-200 p-3 rounded-lg text-gray-700 hover:bg-gray-300 mr-2 ml-2">إلغاء</button>
+                        <button type="submit" class="px-4 bg-blue-600 p-3 rounded-lg text-white hover:bg-blue-700 font-bold w-full">حفظ المنتج</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // ==========================================
-        // 1. الإعدادات والربط
-        // ==========================================
+        // إعدادات الاتصال
         const PROJECT_URL = "https://mgbdukdtzckxspxmcvpo.supabase.co";
         const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1nYmR1a2R0emNreHNweG1jdnBvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NjUzMzM5NywiZXhwIjoyMDgyMTA5Mzk3fQ.Xm7HyGXSLq-CMWhi3aAGR1taK70Xurd_x48ouUt6IO0";
         const ADMIN_PASS = "admin123";
 
-        // 🔥 هنا التغيير المهم: سميناه db بدل supabase
+        // تعريف قاعدة البيانات
         const db = window.supabase.createClient(PROJECT_URL, SERVICE_KEY);
 
-        // ==========================================
-        // 2. دوال التشغيل
-        // ==========================================
-
-        // دالة الدخول
+        // ========================
+        // دوال النظام الأساسية
+        // ========================
+        
         function checkLogin() {
             const input = document.getElementById('adminPass').value;
             if (input === ADMIN_PASS) {
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('dashboardScreen').classList.remove('hidden');
-                fetchOrders();
+                fetchOrders(); // جلب البيانات الافتراضية
             } else {
                 document.getElementById('loginError').classList.remove('hidden');
             }
         }
+        
+        // دعم زر Enter للدخول
+        document.getElementById('adminPass').addEventListener('keyup', (e) => {
+            if(e.key === 'Enter') checkLogin();
+        });
 
-        // دالة الخروج
-        function logout() {
-            location.reload();
+        function logout() { location.reload(); }
+
+        function switchTab(tabName) {
+            // إخفاء كل الأقسام
+            document.getElementById('view-orders').classList.add('hidden');
+            document.getElementById('view-products').classList.add('hidden');
+            
+            // إعادة تنسيق الأزرار
+            document.getElementById('tab-orders').className = "px-6 py-3 cursor-pointer hover:bg-gray-800 text-gray-400 hover:text-white transition flex items-center";
+            document.getElementById('tab-products').className = "px-6 py-3 cursor-pointer hover:bg-gray-800 text-gray-400 hover:text-white transition flex items-center";
+
+            // إظهار القسم المطلوب وتلوين زره
+            if(tabName === 'orders') {
+                document.getElementById('view-orders').classList.remove('hidden');
+                document.getElementById('tab-orders').className = "px-6 py-3 cursor-pointer bg-blue-600 border-r-4 border-white transition flex items-center text-white";
+                fetchOrders();
+            } else {
+                document.getElementById('view-products').classList.remove('hidden');
+                document.getElementById('tab-products').className = "px-6 py-3 cursor-pointer bg-green-600 border-r-4 border-white transition flex items-center text-white";
+                fetchProducts();
+            }
         }
 
-        // جلب البيانات
+        // ========================
+        // 1. منطق الطلبات
+        // ========================
         async function fetchOrders() {
             const tbody = document.getElementById('ordersTableBody');
-            tbody.innerHTML = '<tr><td colspan="7"><div class="loader"></div></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center p-8"><i class="fas fa-spinner fa-spin text-blue-500 text-xl"></i></td></tr>';
 
             try {
-                // استخدمنا db هنا
-                const { data: orders, error } = await db
-                    .from('financing_orders')
+                const { data: orders, error } = await db.from('financing_orders')
                     .select('*, customers(full_name, phone)')
                     .order('created_at', { ascending: false });
 
@@ -138,56 +234,58 @@
                 updateStats(orders);
             } catch (err) {
                 console.error(err);
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-red-500 p-4">خطأ: ${err.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-red-500 p-4">خطأ: ${err.message}</td></tr>`;
             }
         }
 
-        // عرض البيانات في الجدول
         function renderOrders(orders) {
             const tbody = document.getElementById('ordersTableBody');
             tbody.innerHTML = '';
-            
-            if (!orders || !orders.length) {
-                tbody.innerHTML = '<tr><td colspan="7" class="text-center p-8 text-gray-500">لا توجد طلبات</td></tr>';
+
+            if(!orders.length) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center p-8 text-gray-400">لا توجد طلبات</td></tr>';
                 return;
             }
 
             orders.forEach(order => {
                 const tr = document.createElement('tr');
-                tr.className = "border-b hover:bg-gray-50";
+                tr.className = "hover:bg-gray-50 transition";
                 
                 let badge = `<span class="status-badge status-pending">انتظار</span>`;
                 if(order.status === 'approved') badge = `<span class="status-badge status-approved">مقبول</span>`;
                 if(order.status === 'rejected') badge = `<span class="status-badge status-rejected">مرفوض</span>`;
-                if(order.status === 'completed') badge = `<span class="status-badge status-completed">مكتمل</span>`;
+                if(order.status === 'completed') badge = `<span class="status-badge status-completed">تم التحويل</span>`;
 
                 tr.innerHTML = `
-                    <td class="p-4 text-xs font-mono">${order.id.slice(0,6)}</td>
-                    <td class="p-4 text-sm">${new Date(order.created_at).toLocaleDateString('ar-SA')}</td>
+                    <td class="p-4 text-xs font-mono text-gray-500">${order.id.slice(0,6)}</td>
                     <td class="p-4">
-                        <div class="font-bold">${order.customers?.full_name || 'غير معروف'}</div>
-                        <a href="https://wa.me/966${order.customers?.phone?.substring(1)}" target="_blank" class="text-xs text-blue-500 hover:underline">واتساب</a>
+                        <div class="font-bold text-gray-800">${order.customers?.full_name || 'ضيف'}</div>
+                        <a href="https://wa.me/966${order.customers?.phone?.substring(1)}" target="_blank" class="text-xs text-blue-500 flex items-center gap-1"><i class="fab fa-whatsapp"></i> واتساب</a>
                     </td>
-                    <td class="p-4 font-bold text-lg">${order.total_amount} ﷼</td>
-                    <td class="p-4 text-sm">${order.installment_months} شهر</td>
+                    <td class="p-4">
+                        <div class="font-bold text-gray-700">${order.total_amount} ﷼</div>
+                        <div class="text-xs text-gray-500">${order.installment_months} شهر (قسط: ${order.monthly_payment})</div>
+                    </td>
                     <td class="p-4">${badge}</td>
-                    <td class="p-4 flex gap-2 justify-center">
-                        ${order.status === 'pending' ? `
-                        <button onclick="updateStatus('${order.id}', 'approved')" class="bg-green-100 text-green-700 p-2 rounded hover:bg-green-200" title="قبول">✔</button>
-                        <button onclick="updateStatus('${order.id}', 'rejected')" class="bg-red-100 text-red-700 p-2 rounded hover:bg-red-200" title="رفض">✖</button>
-                        ` : ''}
-                        ${order.status === 'approved' ? `
-                        <button onclick="updateStatus('${order.id}', 'completed')" class="bg-blue-100 text-blue-700 p-2 rounded hover:bg-blue-200" title="تحويل">تم التحويل</button>
-                        ` : ''}
-                        <button onclick="deleteOrder('${order.id}')" class="bg-gray-100 text-gray-500 p-2 rounded hover:bg-gray-200" title="حذف">🗑</button>
+                    <td class="p-4 text-center">
+                        <div class="flex justify-center gap-2">
+                            ${order.status === 'pending' ? `
+                            <button onclick="updateOrderStatus('${order.id}', 'approved')" class="bg-green-100 hover:bg-green-200 text-green-700 w-8 h-8 rounded-full flex items-center justify-center transition" title="قبول"><i class="fas fa-check"></i></button>
+                            <button onclick="updateOrderStatus('${order.id}', 'rejected')" class="bg-red-100 hover:bg-red-200 text-red-700 w-8 h-8 rounded-full flex items-center justify-center transition" title="رفض"><i class="fas fa-times"></i></button>
+                            ` : ''}
+                            ${order.status === 'approved' ? `
+                            <button onclick="updateOrderStatus('${order.id}', 'completed')" class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded text-xs font-bold transition">إنهاء</button>
+                            ` : ''}
+                            <button onclick="deleteOrder('${order.id}')" class="text-gray-400 hover:text-red-500 w-8 h-8 transition" title="حذف"><i class="fas fa-trash"></i></button>
+                        </div>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        async function updateStatus(id, status) {
-            if(!confirm('تأكيد الإجراء؟')) return;
+        async function updateOrderStatus(id, status) {
+            if(!confirm('تأكيد تغيير الحالة؟')) return;
             await db.from('financing_orders').update({status}).eq('id', id);
             fetchOrders();
         }
@@ -202,13 +300,129 @@
             document.getElementById('statTotal').innerText = orders.length;
             document.getElementById('statPending').innerText = orders.filter(o=>o.status==='pending').length;
             document.getElementById('statApproved').innerText = orders.filter(o=>o.status==='approved'||o.status==='completed').length;
-            document.getElementById('statAmount').innerText = orders.reduce((a,b)=>a+(b.total_amount||0),0).toLocaleString() + ' ﷼';
+            const sum = orders.reduce((a,b)=>a+(b.total_amount||0),0);
+            document.getElementById('statAmount').innerText = sum.toLocaleString() + ' ﷼';
         }
 
-        // تشغيل زر Enter
-        document.getElementById('adminPass').addEventListener('keyup', function(e) {
-            if (e.key === 'Enter') checkLogin();
-        });
+
+        // ========================
+        // 2. منطق المنتجات
+        // ========================
+        async function fetchProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '<div class="col-span-3 text-center py-8"><i class="fas fa-spinner fa-spin text-green-500 text-2xl"></i></div>';
+
+            try {
+                const { data: products, error } = await db.from('products').select('*').order('created_at', {ascending: false});
+                if(error) throw error;
+                renderProducts(products);
+            } catch(err) {
+                grid.innerHTML = `<div class="col-span-3 text-center text-red-500">خطأ: ${err.message}</div>`;
+            }
+        }
+
+        function renderProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            if(!products.length) {
+                grid.innerHTML = `
+                    <div class="col-span-3 text-center py-10 bg-white rounded-xl border border-dashed border-gray-300">
+                        <p class="text-gray-400 mb-4">المستودع فاضي!</p>
+                        <button onclick="openProductModal()" class="text-green-600 font-bold hover:underline">أضف أول منتج</button>
+                    </div>`;
+                return;
+            }
+
+            products.forEach(prod => {
+                const div = document.createElement('div');
+                div.className = "bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition border border-gray-100 group";
+                
+                // صورة افتراضية لو ما فيه صورة
+                const img = prod.image_url || 'https://via.placeholder.com/300x200?text=No+Image';
+
+                div.innerHTML = `
+                    <div class="h-40 bg-gray-100 relative overflow-hidden">
+                        <img src="${img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        <div class="absolute top-2 right-2 bg-white px-2 py-1 rounded-lg text-xs font-bold shadow">${prod.price_cash} ﷼</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-800 text-lg mb-1">${prod.name}</h3>
+                        <p class="text-sm text-gray-500 mb-4">قسط: ${prod.price_installment || 'غير محدد'} ﷼</p>
+                        <div class="flex justify-between items-center border-t pt-3 mt-2">
+                            <span class="text-xs text-gray-400">${new Date(prod.created_at).toLocaleDateString('ar-SA')}</span>
+                            <button onclick="deleteProduct('${prod.id}')" class="text-red-400 hover:text-red-600 text-sm"><i class="fas fa-trash"></i> حذف</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        // التحكم في النافذة (Modal)
+        function openProductModal() {
+            const modal = document.getElementById('productModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            document.body.classList.add('modal-active');
+        }
+
+        function closeProductModal() {
+            const modal = document.getElementById('productModal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            document.body.classList.remove('modal-active');
+            document.getElementById('productForm').reset(); // تنظيف النموذج
+        }
+
+        // حفظ المنتج الجديد
+        async function saveProduct(e) {
+            e.preventDefault();
+            
+            // تجميع البيانات
+            const name = document.getElementById('prodName').value;
+            const price = document.getElementById('prodPrice').value;
+            const installment = document.getElementById('prodInstallment').value;
+            const image = document.getElementById('prodImage').value;
+
+            // تغيير زر الحفظ
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            btn.innerText = "جاري الحفظ...";
+            btn.disabled = true;
+
+            try {
+                const { error } = await db.from('products').insert([{
+                    name: name,
+                    price_cash: price,
+                    price_installment: installment,
+                    image_url: image
+                }]);
+
+                if(error) throw error;
+                
+                closeProductModal();
+                fetchProducts(); // تحديث القائمة
+                alert('✅ تم إضافة المنتج بنجاح');
+
+            } catch(err) {
+                alert('❌ فشل الحفظ: ' + err.message);
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        async function deleteProduct(id) {
+            if(!confirm('هل أنت متأكد من حذف هذا المنتج؟ سيختفي من الموقع فوراً.')) return;
+            
+            try {
+                const { error } = await db.from('products').delete().eq('id', id);
+                if(error) throw error;
+                fetchProducts();
+            } catch(err) {
+                alert('فشل الحذف: ' + err.message);
+            }
+        }
+
     </script>
 </body>
 </html>
