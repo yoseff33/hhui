@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         body { font-family: 'Tajawal', sans-serif; background-color: #f3f4f6; }
         .status-badge { padding: 4px 12px; border-radius: 99px; font-size: 0.85rem; font-weight: bold; }
@@ -89,18 +90,19 @@
     </div>
 
     <script>
-        // الإعدادات
+        // ==========================================
+        // 1. الإعدادات والربط
+        // ==========================================
         const PROJECT_URL = "https://mgbdukdtzckxspxmcvpo.supabase.co";
         const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1nYmR1a2R0emNreHNweG1jdnBvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NjUzMzM5NywiZXhwIjoyMDgyMTA5Mzk3fQ.Xm7HyGXSLq-CMWhi3aAGR1taK70Xurd_x48ouUt6IO0";
         const ADMIN_PASS = "admin123";
 
-        // تعريف Supabase
-        let supabase;
-        try {
-            supabase = window.supabase.createClient(PROJECT_URL, SERVICE_KEY);
-        } catch (e) {
-            console.error("خطأ في تشغيل Supabase", e);
-        }
+        // 🔥 هنا التغيير المهم: سميناه db بدل supabase
+        const db = window.supabase.createClient(PROJECT_URL, SERVICE_KEY);
+
+        // ==========================================
+        // 2. دوال التشغيل
+        // ==========================================
 
         // دالة الدخول
         function checkLogin() {
@@ -125,7 +127,8 @@
             tbody.innerHTML = '<tr><td colspan="7"><div class="loader"></div></td></tr>';
 
             try {
-                const { data: orders, error } = await supabase
+                // استخدمنا db هنا
+                const { data: orders, error } = await db
                     .from('financing_orders')
                     .select('*, customers(full_name, phone)')
                     .order('created_at', { ascending: false });
@@ -134,16 +137,17 @@
                 renderOrders(orders);
                 updateStats(orders);
             } catch (err) {
+                console.error(err);
                 tbody.innerHTML = `<tr><td colspan="7" class="text-center text-red-500 p-4">خطأ: ${err.message}</td></tr>`;
             }
         }
 
-        // عرض البيانات
+        // عرض البيانات في الجدول
         function renderOrders(orders) {
             const tbody = document.getElementById('ordersTableBody');
             tbody.innerHTML = '';
             
-            if (!orders.length) {
+            if (!orders || !orders.length) {
                 tbody.innerHTML = '<tr><td colspan="7" class="text-center p-8 text-gray-500">لا توجد طلبات</td></tr>';
                 return;
             }
@@ -162,7 +166,7 @@
                     <td class="p-4 text-sm">${new Date(order.created_at).toLocaleDateString('ar-SA')}</td>
                     <td class="p-4">
                         <div class="font-bold">${order.customers?.full_name || 'غير معروف'}</div>
-                        <a href="https://wa.me/966${order.customers?.phone?.substring(1)}" target="_blank" class="text-xs text-blue-500">واتساب</a>
+                        <a href="https://wa.me/966${order.customers?.phone?.substring(1)}" target="_blank" class="text-xs text-blue-500 hover:underline">واتساب</a>
                     </td>
                     <td class="p-4 font-bold text-lg">${order.total_amount} ﷼</td>
                     <td class="p-4 text-sm">${order.installment_months} شهر</td>
@@ -184,13 +188,13 @@
 
         async function updateStatus(id, status) {
             if(!confirm('تأكيد الإجراء؟')) return;
-            await supabase.from('financing_orders').update({status}).eq('id', id);
+            await db.from('financing_orders').update({status}).eq('id', id);
             fetchOrders();
         }
 
         async function deleteOrder(id) {
             if(!confirm('حذف نهائي؟')) return;
-            await supabase.from('financing_orders').delete().eq('id', id);
+            await db.from('financing_orders').delete().eq('id', id);
             fetchOrders();
         }
 
@@ -201,8 +205,8 @@
             document.getElementById('statAmount').innerText = orders.reduce((a,b)=>a+(b.total_amount||0),0).toLocaleString() + ' ﷼';
         }
 
-        // دعم زر Enter في حقل الباسوورد
-        document.getElementById('adminPass').addEventListener('keypress', function (e) {
+        // تشغيل زر Enter
+        document.getElementById('adminPass').addEventListener('keyup', function(e) {
             if (e.key === 'Enter') checkLogin();
         });
     </script>
