@@ -2,6 +2,7 @@
 // LER Telecom - Final Production Script (Supabase Integrated)
 // Logic: Direct Cash + 65% Profit Markup + DB Storage
 // ============================================
+
 // ============================================
 // 0. GLOBAL FUNCTIONS (للتعامل مع HTML مباشرة)
 // ============================================
@@ -21,7 +22,11 @@ window.scrollToSection = function(id) {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
+
+// ============================================
 // 1. Initialize Libraries
+// ============================================
+
 function initializeAOS() {
     if (typeof AOS !== 'undefined') {
         AOS.init({
@@ -535,15 +540,8 @@ function calculateReadTime() {
 // ============================================
 
 function initializeCommon() {
-    document.querySelectorAll('.accordion-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const content = this.nextElementSibling;
-            const icon = this.querySelector('i');
-            this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
-            content.classList.toggle('hidden');
-            if (icon) icon.classList.toggle('rotate-180');
-        });
-    });
+    // هذه الدالة مضافة للتأكد من أن الأكواد الموجودة في HTML تعمل
+    // ولكن الدوال الأساسية هي window.toggleAccordion و window.scrollToSection
     
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -770,15 +768,9 @@ function printArticle() {
     location.reload();
 }
 
-function scrollToSection(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-function toggleAccordion(button) {
-    const content = button.nextElementSibling;
-    const icon = button.querySelector('i');
-    if (content) {
-        content.classList.toggle('hidden');
-        if (icon) icon.classList.toggle('rotate-180');
-    }
-}
+// ============================================
+// 13. GLOBAL FUNCTIONS EXPORT (للتوافق)
+// ============================================
+
+// تم نقل هذه الدوال إلى بداية الملف (القسم 0)
+// لتكون متاحة عالمياً من قبل HTML
