@@ -756,3 +756,11 @@ function scrollToSection(id) {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+function toggleAccordion(button) {
+    const content = button.nextElementSibling;
+    const icon = button.querySelector('i');
+    if (content) {
+        content.classList.toggle('hidden');
+        if (icon) icon.classList.toggle('rotate-180');
+    }
+}
