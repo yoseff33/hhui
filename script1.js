@@ -11,9 +11,24 @@
 window.toggleAccordion = function(button) {
     const content = button.nextElementSibling;
     const icon = button.querySelector('i');
+    
     if (content) {
-        content.classList.toggle('hidden');
-        if (icon) icon.classList.toggle('rotate-180');
+        // طريقة أكثر موثوقية للتحكم في العرض/الاخفاء
+        if (content.style.display === 'none' || content.classList.contains('hidden')) {
+            content.style.display = 'block';
+            content.classList.remove('hidden');
+        } else {
+            content.style.display = 'none';
+            content.classList.add('hidden');
+        }
+        
+        if (icon) {
+            icon.classList.toggle('rotate-180');
+        }
+        
+        // تحديث حالة aria-expanded
+        const isExpanded = content.style.display !== 'none' && !content.classList.contains('hidden');
+        button.setAttribute('aria-expanded', isExpanded);
     }
 };
 
@@ -767,10 +782,3 @@ function printArticle() {
     document.body.innerHTML = original;
     location.reload();
 }
-
-// ============================================
-// 13. GLOBAL FUNCTIONS EXPORT (للتوافق)
-// ============================================
-
-// تم نقل هذه الدوال إلى بداية الملف (القسم 0)
-// لتكون متاحة عالمياً من قبل HTML
