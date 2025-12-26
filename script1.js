@@ -368,7 +368,7 @@ function showValidationMessage(input, message, isValid) {
 }
 
 // ============================================
-// 7. WHATSAPP & SUPABASE INTEGRATION
+// 7. WHATSAPP & SUPABASE INTEGRATION (المحدثة)
 // ============================================
 
 async function submitToWhatsApp() {
@@ -389,7 +389,6 @@ async function submitToWhatsApp() {
     const formatter = new Intl.NumberFormat('ar-SA', { maximumFractionDigits: 0 });
     const netCash = financingState.noDownPayment ? Math.max(cash - monthly, 0) : cash;
     
-    // --- SUPABASE STORAGE ---
     const originalHTML = elements.whatsappSubmit.innerHTML;
     elements.whatsappSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري حفظ الطلب...';
     elements.whatsappSubmit.disabled = true;
@@ -397,19 +396,23 @@ async function submitToWhatsApp() {
     try {
         let orderId = "جديد";
         
-        // محاولة الحفظ في قاعدة البيانات
+        // 1. محاولة الحفظ في Supabase
         if (window.supabaseClient) {
-            const customerData = { name: financingState.fullName, phone: financingState.mobileNumber };
-            const orderData = { months: financingState.duration, monthlyPayment: monthly, totalAmount: cash };
-            
-            const result = await window.supabaseClient.submitOrder(customerData, orderData);
-            if (result.success) {
-                orderId = result.orderId;
-                console.log("Order saved to DB with ID:", orderId);
+            try {
+                const customerData = { name: financingState.fullName, phone: financingState.mobileNumber };
+                const orderData = { months: financingState.duration, monthlyPayment: monthly, totalAmount: cash };
+                
+                const result = await window.supabaseClient.submitOrder(customerData, orderData);
+                if (result.success) {
+                    orderId = result.orderId;
+                    console.log("Order saved to DB with ID:", orderId);
+                }
+            } catch (dbErr) {
+                console.error("Error saving to DB:", dbErr);
             }
         }
 
-        // --- WHATSAPP MESSAGE ---
+        // 2. بناء رسالة الواتساب
         const message = `السلام عليكم، أرغب بطلب تمويل تابي من لير للاتصالات 📱
 --------------------------------
 🆔 رقم الطلب: ${orderId}
@@ -432,19 +435,24 @@ ${financingState.noDownPayment ? 'بدون دفعة أولى (مخصومة من 
         
         const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
         
-        // فتح الواتساب
-        window.open(whatsappURL, '_blank');
+        // 3. التحويل المضمون (يعالج مشكلة الجوال واللابتوب)
+        setTimeout(() => {
+            const newWin = window.open(whatsappURL, '_blank');
+            // إذا حظر الجوال النافذة، نحول في نفس الصفحة
+            if (!newWin || newWin.closed || typeof newWin.closed == 'undefined') {
+                window.location.href = whatsappURL;
+            }
+        }, 100);
 
     } catch (err) {
-        console.error("Error saving to Supabase:", err);
-        // في حال فشل الحفظ، يفتح الواتساب بأي حال لتجنب خسارة العميل
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("طلب تمويل جديد من: " + financingState.fullName)}`, '_blank');
+        console.error("Unexpected Error:", err);
+        window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("طلب تمويل جديد من: " + financingState.fullName)}`;
     } finally {
         setTimeout(() => {
             elements.whatsappSubmit.innerHTML = originalHTML;
             elements.whatsappSubmit.disabled = false;
             trackConversion();
-        }, 1500);
+        }, 2000);
     }
 }
 
@@ -691,10 +699,14 @@ function setupPerformanceMonitoring() {
 // ============================================
 
 function trackConversion() {
-    const conversions = parseInt(localStorage.getItem('ler_conversions') || '0');
-    localStorage.setItem('ler_conversions', (conversions + 1).toString());
-    const sessionConversions = parseInt(sessionStorage.getItem('ler_session_conversions') || '0');
-    sessionStorage.setItem('ler_session_conversions', (sessionConversions + 1).toString());
+    try {
+        const conversions = parseInt(localStorage.getItem('ler_conversions') || '0');
+        localStorage.setItem('ler_conversions', (conversions + 1).toString());
+        const sessionConversions = parseInt(sessionStorage.getItem('ler_session_conversions') || '0');
+        sessionStorage.setItem('ler_session_conversions', (sessionConversions + 1).toString());
+    } catch (e) {
+        console.log("Tracking ignored");
+    }
 }
 
 // ============================================
