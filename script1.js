@@ -2,7 +2,25 @@
 // LER Telecom - Final Production Script (Supabase Integrated)
 // Logic: Direct Cash + 65% Profit Markup + DB Storage
 // ============================================
+// ============================================
+// 0. GLOBAL FUNCTIONS (للتعامل مع HTML مباشرة)
+// ============================================
 
+// هذه الدالة متاحة عالمياً للـ onclick في HTML
+window.toggleAccordion = function(button) {
+    const content = button.nextElementSibling;
+    const icon = button.querySelector('i');
+    if (content) {
+        content.classList.toggle('hidden');
+        if (icon) icon.classList.toggle('rotate-180');
+    }
+};
+
+// هذه الدالة أيضاً مطلوبة للأزرار الأخرى
+window.scrollToSection = function(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
 // 1. Initialize Libraries
 function initializeAOS() {
     if (typeof AOS !== 'undefined') {
