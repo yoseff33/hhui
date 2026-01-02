@@ -3,24 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر iron - اشتراك بلس</title>
+    <title>متجر iron - بوابة الدفع</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #121212; color: white; text-align: center; padding: 50px 20px; }
-        .card { background: #1e1e1e; padding: 30px; border-radius: 20px; border: 1px solid #333; display: inline-block; max-width: 400px; width: 100%; }
-        .price { font-size: 32px; color: #2ecc71; font-weight: bold; margin: 20px 0; }
-        .pay-btn { 
-            background: linear-gradient(45deg, #007AFF, #0051af); 
-            color: white; 
-            padding: 18px; 
-            text-decoration: none; 
-            border-radius: 12px; 
-            display: block; 
-            font-size: 20px; 
-            font-weight: bold; 
-            transition: 0.3s;
-        }
-        #successBox { display: none; background: #262626; padding: 20px; border-radius: 15px; border: 2px dashed #2ecc71; margin-top: 20px; }
-        .code { font-size: 24px; color: #2ecc71; font-weight: bold; display: block; margin-top: 10px; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #121212; color: white; text-align: center; padding: 40px 20px; }
+        .card { background: #1e1e1e; padding: 30px; border-radius: 20px; border: 1px solid #333; display: inline-block; max-width: 400px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .price-tag { font-size: 35px; color: #2ecc71; font-weight: bold; margin: 20px 0; }
+        .btn-pay { background: #007AFF; color: white; padding: 18px; border: none; border-radius: 12px; cursor: pointer; font-size: 18px; font-weight: bold; width: 100%; transition: 0.3s; }
+        .btn-pay:disabled { background: #444; cursor: not-allowed; }
+        #status { margin-top: 15px; color: #aaa; font-size: 14px; }
+        #successBox { display: none; background: #1a3321; border: 1px solid #2ecc71; padding: 20px; border-radius: 12px; margin-top: 20px; }
+        .code { font-size: 22px; color: #2ecc71; font-weight: bold; display: block; margin-top: 10px; border: 1px dashed; padding: 10px; }
     </style>
 </head>
 <body>
@@ -28,25 +20,80 @@
 <div class="card">
     <img src="https://i.postimg.cc/c44K4tZn/5954065493062782055.jpg" style="width:100%; border-radius:15px;">
     <h2>اشتراك بلس للايفون (سنة)</h2>
-    <div class="price">5 ريال</div>
+    <div class="price-tag">5 ريال</div>
 
-    <a href="https://payment.paylink.sa/pay/product/26047661000150407" class="pay-btn" id="mainBtn">إتمام عملية الشراء</a>
+    <button onclick="startPayment()" id="payBtn" class="btn-pay">ادفع الآن 5 ريال</button>
+    <div id="status"></div>
 
     <div id="successBox">
-        <h3 style="color: #2ecc71;">تم الدفع بنجاح! ✓</h3>
-        <p>كود التفعيل الخاص بك:</p>
-        <span class="code">IRON-PLUS-TEST-5SR</span>
+        <h3>تم الدفع بنجاح! ✓</h3>
+        <p>كود التفعيل الخاص بك هو:</p>
+        <span class="code">IRON-PRO-2026-TEST</span>
     </div>
 </div>
 
 <script>
-    // فحص إذا العميل رجع من صفحة الدفع
+    // فحص إذا العميل راجع من الدفع
     window.onload = function() {
         const params = new URLSearchParams(window.location.search);
-        // إذا الرابط فيه أي معلومات من Paylink نظهر الكود
-        if (params.has('transactionNo') || params.has('orderId') || params.has('success')) {
+        if (params.has('transactionNo') || params.has('orderId')) {
             document.getElementById('successBox').style.display = 'block';
-            document.getElementById('mainBtn').style.display = 'none';
+            document.getElementById('payBtn').style.display = 'none';
+        }
+    }
+
+    async function startPayment() {
+        const btn = document.getElementById('payBtn');
+        const status = document.getElementById('status');
+        
+        btn.disabled = true;
+        status.innerText = "جاري الاتصال بـ Paylink...";
+
+        // مفاتيحك اللي عطيتني إياها
+        const appId = "APP_ID_1764004501612";
+        const secretKey = "02a622db-e616-3b98-a889-7f57c2bdb2af";
+
+        try {
+            // 1. طلب التوكن
+            const authResponse = await fetch('https://demo.paylink.sa/api/auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ appId: appId, secretKey: secretKey })
+            });
+            const authData = await authResponse.json();
+            
+            if (!authData.id_token) throw new Error("فشل تسجيل الدخول بمفاتيح الربط");
+
+            // 2. إنشاء الفاتورة بسعر 5 ريال
+            const invResponse = await fetch('https://demo.paylink.sa/api/addInvoice', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + authData.id_token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    amount: 5,
+                    clientName: "تجربة",
+                    clientMobile: "0500000000",
+                    orderNumber: "ORD-" + Math.floor(Math.random() * 10000),
+                    callBackUrl: "https://lleerr.shop/rer.html",
+                    products: [{ title: "اشتراك بلس", price: 5, qty: 1 }]
+                })
+            });
+            
+            const invData = await invResponse.json();
+            
+            if (invData.url) {
+                window.location.href = invData.url;
+            } else {
+                status.innerText = "خطأ: " + (invData.title || "تعذر إنشاء الفاتورة");
+                btn.disabled = false;
+            }
+
+        } catch (error) {
+            console.error(error);
+            status.innerText = "حدث خطأ. تأكد من اتصالك أو صحة المفاتيح.";
+            btn.disabled = false;
         }
     }
 </script>
