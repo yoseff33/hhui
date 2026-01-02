@@ -48,7 +48,6 @@
 </div>
 
 <script>
-    // فحص العودة من الدفع
     window.onload = function() {
         const params = new URLSearchParams(window.location.search);
         if (params.has('transactionNo') || params.has('success')) {
@@ -65,38 +64,41 @@
         status.innerText = "جاري تحويلك لبوابة الدفع...";
 
         const PROJECT_ID = "xurecaeakqbsjzebcsuy"; 
-        const ANON_KEY = "sb_publishable_N4uzz2OJdyvbcfiyl8dmoQ_mEmAJgG1";
+        const ANON_KEY = "sb_publishable_N4uzz2OJdyvbcfiyl8dmoQ_mEmAJgG1"; //
 
         try {
+            // التصحيح: نستخدم amount بدلاً من amount_val ليتوافق مع SQL الجديد
             const response = await fetch(`https://${PROJECT_ID}.supabase.co/rest/v1/rpc/create_paylink_invoice`, {
                 method: 'POST',
                 headers: {
                     'apikey': ANON_KEY,
                     'Authorization': `Bearer ${ANON_KEY}`,
                     'Content-Type': 'application/json',
-                    'Prefer': 'return=representation' 
+                    'Prefer': 'return=representation'
                 },
-                body: JSON.stringify({ amount_val: 5 })
+                body: JSON.stringify({ amount: 5 }) //
             });
 
-            const data = await response.json();
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`خطأ ${response.status}: ${errorText}`);
+            }
 
-            // معالجة الرد سواء كان كائن أو مصفوفة
+            const data = await response.json();
             const result = Array.isArray(data) ? data[0] : data;
 
             if (result && result.url) {
-                window.location.href = result.url; 
+                // فتح رابط الدفع في نفس الصفحة لضمان تجربة مستخدم أفضل على الجوال
+                window.location.href = result.url;
             } else {
-                console.error("خطأ في الرد:", result);
-                alert("السيرفر لم يرسل رابط الدفع. تأكد من تفعيل الصلاحيات في Supabase.");
+                alert("السيرفر لم يرسل الرابط. تأكد من تفعيل SQL أولاً.");
                 btn.disabled = false;
-                status.innerText = "";
             }
         } catch (error) {
             console.error("Error:", error);
-            alert("فشل الاتصال بالسيرفر. تأكد من إعدادات CORS في Supabase.");
+            alert(`فشل الاتصال: ${error.message}`);
             btn.disabled = false;
-            status.innerText = "";
+            status.innerText = "حدث خطأ في الاتصال";
         }
     }
 </script>
