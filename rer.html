@@ -11,6 +11,7 @@
         .product-card { background: var(--card); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #333; }
         .product-img { width: 100%; height: auto; display: block; }
         .content { padding: 25px; text-align: center; }
+        h1 { font-size: 22px; margin-bottom: 5px; }
         .price { font-size: 32px; color: var(--success); font-weight: bold; margin: 15px 0; }
         
         .pay-btn { 
@@ -18,6 +19,7 @@
             color: white; border: none; padding: 18px; border-radius: 12px; 
             width: 100%; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
+        .pay-btn:hover { transform: scale(1.02); }
         .pay-btn:disabled { background: #444; cursor: not-allowed; opacity: 0.7; }
 
         #successSection { display: none; background: #1a3321; border: 2px dashed var(--success); padding: 20px; border-radius: 15px; margin-top: 20px; }
@@ -48,11 +50,13 @@
 </div>
 
 <script>
+    // فحص إذا كان العميل راجع من صفحة الدفع بنجاح
     window.onload = function() {
         const params = new URLSearchParams(window.location.search);
         if (params.has('transactionNo') || params.has('success')) {
             document.getElementById('successSection').style.display = 'block';
             document.getElementById('payBtn').style.display = 'none';
+            document.getElementById('status').innerText = "شكراً لشرائك من متجرنا!";
         }
     }
 
@@ -61,46 +65,35 @@
         const status = document.getElementById('status');
         
         btn.disabled = true;
-        status.innerText = "جاري تحويلك لبوابة الدفع...";
+        status.innerText = "جاري إنشاء رابط الدفع...";
 
-        const PROJECT_ID = "xurecaeakqbsjzebcsuy"; 
-        const ANON_KEY = "sb_publishable_N4uzz2OJdyvbcfiyl8dmoQ_mEmAJgG1"; //
+        // رابط الـ Edge Function اللي سويتها
+        const EDGE_URL = 'https://xurecaeakqbsjzebcsuy.supabase.co/functions/v1/create_paylink';
 
         try {
-            // التصحيح: نستخدم amount بدلاً من amount_val ليتوافق مع SQL الجديد
-            const response = await fetch(`https://${PROJECT_ID}.supabase.co/rest/v1/rpc/create_paylink_invoice`, {
+            const response = await fetch(EDGE_URL, {
                 method: 'POST',
-                headers: {
-                    'apikey': ANON_KEY,
-                    'Authorization': `Bearer ${ANON_KEY}`,
-                    'Content-Type': 'application/json',
-                    'Prefer': 'return=representation'
-                },
-                body: JSON.stringify({ amount: 5 }) //
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: 5 }) // السعر 5 ريال
             });
 
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`خطأ ${response.status}: ${errorText}`);
-            }
+            const result = await response.json();
 
-            const data = await response.json();
-            const result = Array.isArray(data) ? data[0] : data;
-
-            if (result && result.url) {
-                // فتح رابط الدفع في نفس الصفحة لضمان تجربة مستخدم أفضل على الجوال
-                window.location.href = result.url;
+            if (result.url) {
+                status.innerText = "جاري تحويلك لصفحة الدفع...";
+                window.location.href = result.url; // يوديك لصفحة ابل باي ومدى
             } else {
-                alert("السيرفر لم يرسل الرابط. تأكد من تفعيل SQL أولاً.");
-                btn.disabled = false;
+                console.error("خطأ من السيرفر:", result);
+                throw new Error(result.error || 'فشل في إنشاء الرابط');
             }
         } catch (error) {
             console.error("Error:", error);
-            alert(`فشل الاتصال: ${error.message}`);
+            alert('حدث خطأ: ' + error.message);
             btn.disabled = false;
-            status.innerText = "حدث خطأ في الاتصال";
+            status.innerText = "";
         }
     }
 </script>
+
 </body>
 </html>
