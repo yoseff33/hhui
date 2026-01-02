@@ -12,13 +12,17 @@
         .product-img { width: 100%; height: auto; display: block; }
         .content { padding: 25px; text-align: center; }
         .price { font-size: 32px; color: var(--success); font-weight: bold; margin: 15px 0; }
+        
         .pay-btn { 
             background: linear-gradient(45deg, var(--primary), #0051af); 
             color: white; border: none; padding: 18px; border-radius: 12px; 
             width: 100%; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
+        .pay-btn:disabled { background: #444; cursor: not-allowed; opacity: 0.7; }
+
         #successSection { display: none; background: #1a3321; border: 2px dashed var(--success); padding: 20px; border-radius: 15px; margin-top: 20px; }
         .activation-code { font-size: 24px; color: var(--success); font-weight: bold; display: block; margin: 10px 0; border: 1px solid #2ecc71; padding: 10px; border-radius: 8px; }
+        #status { margin-top: 15px; font-size: 14px; color: #aaa; min-height: 20px; }
     </style>
 </head>
 <body>
@@ -29,18 +33,22 @@
         <div class="content">
             <h1>اشتراك بلس للايفون (سنة)</h1>
             <div class="price">5 ريال</div>
+            
             <button onclick="startPayment()" id="payBtn" class="pay-btn">إتمام الشراء - تفعيل فوري</button>
-            <div id="status" style="margin-top: 10px; color: #888;"></div>
+            <div id="status"></div>
 
             <div id="successSection">
                 <h3 style="color: var(--success);">تم الدفع بنجاح! ✓</h3>
-                <span class="activation-code">IRON-PRO-SUCCESS</span>
+                <p>كود التفعيل الخاص بك هو:</p>
+                <span class="activation-code">IRON-PRO-2026</span>
+                <p style="font-size: 12px; color: #888;">انسخ الكود أو صور الشاشة</p>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    // فحص العودة من الدفع
     window.onload = function() {
         const params = new URLSearchParams(window.location.search);
         if (params.has('transactionNo') || params.has('success')) {
@@ -52,10 +60,10 @@
     async function startPayment() {
         const btn = document.getElementById('payBtn');
         const status = document.getElementById('status');
+        
         btn.disabled = true;
-        status.innerText = "جاري الاتصال بالسيرفر...";
+        status.innerText = "جاري تحويلك لبوابة الدفع...";
 
-        // المعرف الخاص بك والمفتاح
         const PROJECT_ID = "xurecaeakqbsjzebcsuy"; 
         const ANON_KEY = "sb_publishable_N4uzz2OJdyvbcfiyl8dmoQ_mEmAJgG1";
 
@@ -66,25 +74,29 @@
                     'apikey': ANON_KEY,
                     'Authorization': `Bearer ${ANON_KEY}`,
                     'Content-Type': 'application/json',
-                    'Prefer': 'return=representation' // إضافة مهمة جداً لـ Supabase RPC
+                    'Prefer': 'return=representation' 
                 },
                 body: JSON.stringify({ amount_val: 5 })
             });
 
             const data = await response.json();
 
-            // فحص الرابط القادم من الـ SQL Function
-            if (data && data.url) {
-                window.location.href = data.url; 
+            // معالجة الرد سواء كان كائن أو مصفوفة
+            const result = Array.isArray(data) ? data[0] : data;
+
+            if (result && result.url) {
+                window.location.href = result.url; 
             } else {
-                console.error("الرد من السيرفر:", data);
-                alert("خطأ: السيرفر لم يرسل رابط الدفع. تأكد من تفعيل الصلاحيات في Supabase.");
+                console.error("خطأ في الرد:", result);
+                alert("السيرفر لم يرسل رابط الدفع. تأكد من تفعيل الصلاحيات في Supabase.");
                 btn.disabled = false;
+                status.innerText = "";
             }
         } catch (error) {
-            console.error("Error Details:", error);
-            alert("فشل الاتصال: تأكد من إضافة رابط موقعك في Allowed Origins بـ Supabase.");
+            console.error("Error:", error);
+            alert("فشل الاتصال بالسيرفر. تأكد من إعدادات CORS في Supabase.");
             btn.disabled = false;
+            status.innerText = "";
         }
     }
 </script>
