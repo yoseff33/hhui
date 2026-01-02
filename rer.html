@@ -3,15 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اشتراك بلس - متجر iron</title>
+    <title>متجر iron - اشتراك بلس</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #121212; color: white; text-align: center; padding: 50px 20px; }
         .card { background: #1e1e1e; padding: 30px; border-radius: 20px; border: 1px solid #333; display: inline-block; max-width: 400px; width: 100%; }
-        .product-img { width: 100%; border-radius: 15px; margin-bottom: 15px; }
-        .price { font-size: 28px; color: #2ecc71; font-weight: bold; margin: 15px 0; }
-        .btn-pay { background: linear-gradient(45deg, #007AFF, #0051af); color: white; padding: 15px; border: none; border-radius: 12px; cursor: pointer; font-size: 18px; font-weight: bold; width: 100%; transition: 0.3s; }
-        .btn-pay:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(0,122,255,0.3); }
-        .loading { display: none; color: #aaa; margin-top: 15px; }
-        
-        /* قسم كود التفعيل بعد الدفع */
-        #successSection { display: none; background: #262626;
+        .price { font-size: 32px; color: #2ecc71; font-weight: bold; margin: 20px 0; }
+        .pay-btn { 
+            background: linear-gradient(45deg, #007AFF, #0051af); 
+            color: white; 
+            padding: 18px; 
+            text-decoration: none; 
+            border-radius: 12px; 
+            display: block; 
+            font-size: 20px; 
+            font-weight: bold; 
+            transition: 0.3s;
+        }
+        #successBox { display: none; background: #262626; padding: 20px; border-radius: 15px; border: 2px dashed #2ecc71; margin-top: 20px; }
+        .code { font-size: 24px; color: #2ecc71; font-weight: bold; display: block; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <img src="https://i.postimg.cc/c44K4tZn/5954065493062782055.jpg" style="width:100%; border-radius:15px;">
+    <h2>اشتراك بلس للايفون (سنة)</h2>
+    <div class="price">5 ريال</div>
+
+    <a href="https://payment.paylink.sa/pay/product/26047661000150407" class="pay-btn" id="mainBtn">إتمام عملية الشراء</a>
+
+    <div id="successBox">
+        <h3 style="color: #2ecc71;">تم الدفع بنجاح! ✓</h3>
+        <p>كود التفعيل الخاص بك:</p>
+        <span class="code">IRON-PLUS-TEST-5SR</span>
+    </div>
+</div>
+
+<script>
+    // فحص إذا العميل رجع من صفحة الدفع
+    window.onload = function() {
+        const params = new URLSearchParams(window.location.search);
+        // إذا الرابط فيه أي معلومات من Paylink نظهر الكود
+        if (params.has('transactionNo') || params.has('orderId') || params.has('success')) {
+            document.getElementById('successBox').style.display = 'block';
+            document.getElementById('mainBtn').style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
