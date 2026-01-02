@@ -3,65 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر iron - تطبيقات بلس</title>
+    <title>اشتراك بلس - متجر iron</title>
     <style>
-        :root { --primary-color: #007AFF; --dark-bg: #121212; --card-bg: #1e1e1e; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--dark-bg); color: white; margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .container { max-width: 450px; width: 100%; }
-        .product-card { background: var(--card-bg); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #333; }
-        .product-img { width: 100%; height: auto; display: block; }
-        .content { padding: 20px; text-align: center; }
-        h1 { font-size: 22px; margin: 10px 0; color: #fff; }
-        .price { font-size: 26px; color: #2ecc71; font-weight: bold; margin-bottom: 20px; }
-        
-        /* زر الدفع */
-        .pay-btn { background: linear-gradient(45deg, #007AFF, #0051af); color: white; text-decoration: none; padding: 15px; border-radius: 12px; display: block; font-weight: bold; font-size: 18px; transition: 0.3s; margin-bottom: 15px; }
-        .pay-btn:hover { transform: scale(1.03); box-shadow: 0 5px 15px rgba(0,122,255,0.4); }
-
-        /* تفاصيل الباقة المنسدلة */
-        details { background: #2a2a2a; border-radius: 10px; padding: 10px; text-align: right; cursor: pointer; }
-        summary { font-weight: bold; color: #aaa; outline: none; padding: 5px; }
-        .details-content { font-size: 14px; line-height: 1.6; color: #ccc; max-height: 400px; overflow-y: auto; margin-top: 10px; padding: 10px; border-top: 1px solid #444; }
-        ul { padding-right: 20px; }
-        .badge { background: #444; padding: 2px 8px; border-radius: 5px; font-size: 12px; margin-left: 5px; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #121212; color: white; text-align: center; padding: 50px; }
+        .card { background: #1e1e1e; padding: 30px; border-radius: 20px; border: 1px solid #333; display: inline-block; max-width: 400px; }
+        .btn-pay { background: #007AFF; color: white; padding: 15px 30px; border: none; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold; width: 100%; margin-top: 20px; }
+        .loading { display: none; color: #aaa; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="product-card">
-        <img src="https://i.postimg.cc/c44K4tZn/5954065493062782055.jpg" alt="اشتراك بلس" class="product-img">
-        
-        <div class="content">
-            <h1>اشتراك بلس للايفون (سنة)</h1>
-            <div class="price">5 ريال</div>
-
-            <a href="https://payment.paylink.sa/pay/product/26047661000150407" class="pay-btn">اشترك الآن - تفعيل فوري</a>
-
-            <details>
-                <summary>📝 تفاصيل الباقة (اضغط للعرض)</summary>
-                <div class="details-content">
-                    <p><strong>اشتراك تطبيقات بلس للآيفون – متجر iron</strong></p>
-                    <p>أكثر من 5500 تطبيق بتفعيل فوري! ودّع الإعلانات والقيود.</p>
-                    <ul>
-                        <li>مدة الاشتراك: سنة كاملة (12 شهر).</li>
-                        <li>الضمان: 3 شهور ضد المشاكل الفنية.</li>
-                        <li>التراخيص: <span class="badge">DL</span> <span class="badge">LRD</span> <span class="badge">SAT</span></li>
-                    </ul>
-                    <hr>
-                    <strong>المميزات:</strong>
-                    <ul>
-                        <li><strong>سناب بلس:</strong> حفظ الستوريات، تخطي المشاهدة، رفع من الألبوم.</li>
-                        <li><strong>يوتيوب بلس:</strong> بدون إعلانات، تشغيل في الخلفية، تحميل جودة عالية.</li>
-                        <li><strong>واتساب بلس:</strong> إخفاء الظهور، مشاهدة المحذوف، تعطيل المكالمات.</li>
-                        <li><strong>أفلام ومسلسلات:</strong> دراما سلاير، أنمي كلاود، موفي بوكس برو.</li>
-                    </ul>
-                    <p><strong>الدعم الفني:</strong> متوفر 24/7 عبر الواتساب.</p>
-                </div>
-            </details>
-        </div>
-    </div>
+<div class="card">
+    <img src="https://i.postimg.cc/c44K4tZn/5954065493062782055.jpg" style="width:100%; border-radius:15px;">
+    <h2>اشتراك بلس للايفون (سنة)</h2>
+    <div style="font-size: 24px; color: #2ecc71; margin: 15px 0;">100 ريال</div>
+    
+    <button onclick="payNow()" class="btn-pay" id="payBtn">إتمام عملية الشراء</button>
+    <div id="loading" class="loading">جاري تجهيز الفاتورة...</div>
 </div>
+
+<script>
+async function payNow() {
+    const btn = document.getElementById('payBtn');
+    const loading = document.getElementById('loading');
+    
+    btn.style.display = 'none';
+    loading.style.display = 'block';
+
+    // بياناتك اللي عطيتني إياها
+    const appId = "APP_ID_1764004501612";
+    const secretKey = "02a622db-e616-3b98-a889-7f57c2bdb2af";
+
+    try {
+        // 1. الحصول على التوكن (Auth)
+        const authResponse = await fetch('https://demo.paylink.sa/api/auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ appId: appId, secretKey: secretKey })
+        });
+        const authData = await authResponse.json();
+        const token = authData.id_token;
+
+        // 2. إنشاء الفاتورة
+        const invoiceResponse = await fetch('https://demo.paylink.sa/api/addInvoice', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                amount: 100,
+                clientName: "عميل تجريبي",
+                clientMobile: "0500000000",
+                orderNumber: "IRON-" + Date.now(),
+                callBackUrl: "https://lleerr.shop/rer.html", // يرجع لنفس الصفحة بعد الدفع
+                products: [
+                    { title: "اشتراك بلس للايفون (سنة)", price: 100, qty: 1 }
+                ]
+            })
+        });
+
+        const invoiceData = await invoiceResponse.json();
+        
+        // 3. توجيه العميل لصفحة الدفع
+        if (invoiceData.url) {
+            window.location.href = invoiceData.url;
+        } else {
+            alert("خطأ في إنشاء الفاتورة، تأكد من مفاتيح الربط.");
+            btn.style.display = 'block';
+            loading.style.display = 'none';
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("حدث خطأ فني، جرب مرة ثانية.");
+        btn.style.display = 'block';
+        loading.style.display = 'none';
+    }
+}
+</script>
 
 </body>
 </html>
