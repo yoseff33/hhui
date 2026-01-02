@@ -5,83 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اشتراك بلس - متجر iron</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #121212; color: white; text-align: center; padding: 50px; }
-        .card { background: #1e1e1e; padding: 30px; border-radius: 20px; border: 1px solid #333; display: inline-block; max-width: 400px; }
-        .btn-pay { background: #007AFF; color: white; padding: 15px 30px; border: none; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold; width: 100%; margin-top: 20px; }
-        .loading { display: none; color: #aaa; margin-top: 10px; }
-    </style>
-</head>
-<body>
-
-<div class="card">
-    <img src="https://i.postimg.cc/c44K4tZn/5954065493062782055.jpg" style="width:100%; border-radius:15px;">
-    <h2>اشتراك بلس للايفون (سنة)</h2>
-    <div style="font-size: 24px; color: #2ecc71; margin: 15px 0;">100 ريال</div>
-    
-    <button onclick="payNow()" class="btn-pay" id="payBtn">إتمام عملية الشراء</button>
-    <div id="loading" class="loading">جاري تجهيز الفاتورة...</div>
-</div>
-
-<script>
-async function payNow() {
-    const btn = document.getElementById('payBtn');
-    const loading = document.getElementById('loading');
-    
-    btn.style.display = 'none';
-    loading.style.display = 'block';
-
-    // بياناتك اللي عطيتني إياها
-    const appId = "APP_ID_1764004501612";
-    const secretKey = "02a622db-e616-3b98-a889-7f57c2bdb2af";
-
-    try {
-        // 1. الحصول على التوكن (Auth)
-        const authResponse = await fetch('https://demo.paylink.sa/api/auth', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ appId: appId, secretKey: secretKey })
-        });
-        const authData = await authResponse.json();
-        const token = authData.id_token;
-
-        // 2. إنشاء الفاتورة
-        const invoiceResponse = await fetch('https://demo.paylink.sa/api/addInvoice', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                amount: 100,
-                clientName: "عميل تجريبي",
-                clientMobile: "0500000000",
-                orderNumber: "IRON-" + Date.now(),
-                callBackUrl: "https://lleerr.shop/rer.html", // يرجع لنفس الصفحة بعد الدفع
-                products: [
-                    { title: "اشتراك بلس للايفون (سنة)", price: 100, qty: 1 }
-                ]
-            })
-        });
-
-        const invoiceData = await invoiceResponse.json();
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #121212; color: white; text-align: center; padding: 50px 20px; }
+        .card { background: #1e1e1e; padding: 30px; border-radius: 20px; border: 1px solid #333; display: inline-block; max-width: 400px; width: 100%; }
+        .product-img { width: 100%; border-radius: 15px; margin-bottom: 15px; }
+        .price { font-size: 28px; color: #2ecc71; font-weight: bold; margin: 15px 0; }
+        .btn-pay { background: linear-gradient(45deg, #007AFF, #0051af); color: white; padding: 15px; border: none; border-radius: 12px; cursor: pointer; font-size: 18px; font-weight: bold; width: 100%; transition: 0.3s; }
+        .btn-pay:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(0,122,255,0.3); }
+        .loading { display: none; color: #aaa; margin-top: 15px; }
         
-        // 3. توجيه العميل لصفحة الدفع
-        if (invoiceData.url) {
-            window.location.href = invoiceData.url;
-        } else {
-            alert("خطأ في إنشاء الفاتورة، تأكد من مفاتيح الربط.");
-            btn.style.display = 'block';
-            loading.style.display = 'none';
-        }
-
-    } catch (error) {
-        console.error(error);
-        alert("حدث خطأ فني، جرب مرة ثانية.");
-        btn.style.display = 'block';
-        loading.style.display = 'none';
-    }
-}
-</script>
-
-</body>
-</html>
+        /* قسم كود التفعيل بعد الدفع */
+        #successSection { display: none; background: #262626;
