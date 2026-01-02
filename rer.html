@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر iron - اشتراك بلس</title>
+    <title>متجر iron - إتمام الشراء</title>
     <style>
         :root { --primary: #007AFF; --success: #2ecc71; --bg: #121212; --card: #1e1e1e; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg); color: white; margin: 0; padding: 20px; display: flex; justify-content: center; }
@@ -34,7 +34,7 @@
         <img src="https://i.postimg.cc/c44K4tZn/5954065493062782055.jpg" class="product-img">
         <div class="content">
             <h1>اشتراك بلس للايفون (سنة)</h1>
-            <div class="price">5 ريال</div>
+            <div class="price">10 ريال</div>
             
             <button onclick="startPayment()" id="payBtn" class="pay-btn">إتمام الشراء - تفعيل فوري</button>
             <div id="status"></div>
@@ -50,13 +50,14 @@
 </div>
 
 <script>
-    // فحص إذا كان العميل راجع من صفحة الدفع بنجاح
+    // فحص إذا كان المستخدم عائد من بوابة الدفع بنجاح
     window.onload = function() {
-        const params = new URLSearchParams(window.location.search);
-        if (params.has('transactionNo') || params.has('success')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        // Paylink يرجع transactionNo عند النجاح
+        if (urlParams.has('transactionNo')) {
             document.getElementById('successSection').style.display = 'block';
             document.getElementById('payBtn').style.display = 'none';
-            document.getElementById('status').innerText = "شكراً لشرائك من متجرنا!";
+            document.getElementById('status').innerText = "تمت العملية بنجاح!";
         }
     }
 
@@ -65,32 +66,31 @@
         const status = document.getElementById('status');
         
         btn.disabled = true;
-        status.innerText = "جاري إنشاء رابط الدفع...";
+        status.innerText = "جاري تحويلك لبوابة الدفع...";
 
-        // رابط الـ Edge Function اللي سويتها
+        // رابط الـ Edge Function الخاص بك في Supabase
         const EDGE_URL = 'https://xurecaeakqbsjzebcsuy.supabase.co/functions/v1/create_paylink';
 
         try {
             const response = await fetch(EDGE_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount: 5 }) // السعر 5 ريال
+                body: JSON.stringify({ amount: 10 }) 
             });
 
             const result = await response.json();
 
             if (result.url) {
-                status.innerText = "جاري تحويلك لصفحة الدفع...";
-                window.location.href = result.url; // يوديك لصفحة ابل باي ومدى
+                // التوجيه المباشر لصفحة الدفع
+                window.location.href = result.url;
             } else {
-                console.error("خطأ من السيرفر:", result);
-                throw new Error(result.error || 'فشل في إنشاء الرابط');
+                throw new Error(result.error || 'فشل في إنشاء رابط الدفع');
             }
         } catch (error) {
             console.error("Error:", error);
             alert('حدث خطأ: ' + error.message);
             btn.disabled = false;
-            status.innerText = "";
+            status.innerText = "فشل الاتصال بالسيرفر";
         }
     }
 </script>
