@@ -16,6 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <style>
+        /* CSS المختصر بدون أي مشاكل */
         :root {
             --bg-color: #050505;
             --primary-neon: #00ff88;
@@ -23,7 +24,6 @@
             --text-main: #ffffff;
             --text-dim: #b0b0b0;
             --grid-line: rgba(0, 255, 136, 0.08);
-            --card-bg: rgba(255, 255, 255, 0.03);
         }
 
         * { 
@@ -42,8 +42,8 @@
                 linear-gradient(var(--grid-line) 1.5px, transparent 1.5px), 
                 linear-gradient(90deg, var(--grid-line) 1.5px, transparent 1.5px);
             background-size: 45px 45px;
-            color: var(--text-main);
-            font-family: 'Cairo', sans-serif;
+            color: var(--text-main) !important;
+            font-family: 'Cairo', sans-serif !important;
             line-height: 1.6;
             overflow-x: hidden;
         }
@@ -65,19 +65,6 @@
             gap: 40px; 
             padding: 80px 20px; 
             text-align: center; 
-            position: relative;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            right: 50%;
-            transform: translate(50%, -50%);
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(0, 255, 136, 0.05) 0%, transparent 70%);
-            z-index: -1;
         }
 
         .hero-content { 
@@ -95,19 +82,6 @@
         .hero h1 span { 
             color: var(--primary-neon); 
             text-shadow: 0 0 20px var(--primary-neon); 
-            position: relative;
-            display: inline-block;
-        }
-
-        .hero h1 span::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            right: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--primary-neon);
-            box-shadow: 0 0 10px var(--primary-neon);
         }
 
         .hero p { 
@@ -118,19 +92,18 @@
         }
 
         .hero-img { 
-            width: clamp(220px, 40vw, 380px); 
-            height: clamp(220px, 40vw, 380px); 
+            width: 300px; 
+            height: 300px; 
             border-radius: 50%; 
             border: 4px solid var(--primary-neon); 
-            box-shadow: 
-                0 0 60px rgba(0,255,136,0.4),
-                inset 0 0 30px rgba(0,255,136,0.1); 
+            box-shadow: 0 0 60px rgba(0,255,136,0.4);
             object-fit: cover; 
-            transition: transform 0.5s ease;
-        }
-
-        .hero-img:hover {
-            transform: scale(1.03);
+            background: linear-gradient(45deg, #003300, #006600);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-neon);
+            font-size: 1.2rem;
         }
 
         .contact-info { 
@@ -159,14 +132,12 @@
             background: rgba(0, 255, 136, 0.1);
             border-color: var(--primary-neon);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         /* === Common Headers === */
         .section-header { 
             text-align: center; 
             margin: 100px 0 60px; 
-            position: relative;
         }
 
         .section-header h2 { 
@@ -179,19 +150,6 @@
             margin-bottom: 20px;
         }
 
-        .section-header h2 i {
-            font-size: 2.5rem;
-        }
-
-        .section-header::after {
-            content: '';
-            display: block;
-            width: 150px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
-            margin: 20px auto;
-        }
-
         /* === Cards Grid === */
         .advantage-grid { 
             display: grid; 
@@ -201,48 +159,23 @@
         }
 
         .adv-card { 
-            background: var(--card-bg); 
+            background: rgba(255, 255, 255, 0.03); 
             padding: 45px 35px; 
             border-radius: 30px; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             text-align: center; 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .adv-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity 0.4s;
+            transition: all 0.4s;
         }
 
         .adv-card:hover { 
             border-color: var(--primary-neon); 
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(0, 255, 136, 0.15);
-        }
-
-        .adv-card:hover::before {
-            opacity: 1;
+            transform: translateY(-15px);
         }
 
         .adv-card i { 
             font-size: 3.8rem; 
             color: var(--primary-neon); 
             margin-bottom: 25px; 
-            display: inline-block;
-            transition: transform 0.3s;
-        }
-
-        .adv-card:hover i {
-            transform: scale(1.1);
         }
 
         .adv-card h3 { 
@@ -267,8 +200,6 @@
             display: flex; 
             flex-direction: column; 
             align-items: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .radar-box h3 { 
@@ -299,7 +230,6 @@
             border: 1px solid rgba(0, 255, 136, 0.2); 
             padding: 60px 50px; 
             margin: 80px 0; 
-            backdrop-filter: blur(10px);
         }
 
         .prompt-card { 
@@ -308,20 +238,12 @@
             border-radius: 25px; 
             padding: 40px; 
             margin-bottom: 40px;
-            transition: border-color 0.3s;
-        }
-
-        .prompt-card:hover {
-            border-color: var(--primary-neon);
         }
 
         .prompt-card h3 { 
             color: var(--primary-neon); 
             margin: 0 0 25px 0; 
             font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
         }
 
         .prompt-text { 
@@ -330,24 +252,16 @@
             padding: 25px; 
             border-radius: 15px; 
             color: #88ff88; 
-            font-family: 'Cairo', 'Courier New', monospace; 
+            font-family: 'Courier New', monospace; 
             white-space: pre-wrap; 
             margin: 20px 0; 
             border-right: 5px solid var(--primary-neon); 
             font-size: 1.1rem; 
             line-height: 1.7;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .prompt-text::before {
-            content: '>>> ';
-            color: var(--primary-neon);
-            font-weight: bold;
         }
 
         .copy-btn { 
-            background: linear-gradient(135deg, var(--primary-neon), #00cc6a); 
+            background: var(--primary-neon); 
             color: #000; 
             border: none; 
             padding: 15px 35px; 
@@ -364,11 +278,6 @@
 
         .copy-btn:hover { 
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
-        }
-
-        .copy-btn:active { 
-            transform: translateY(-1px);
         }
 
         /* === Prompt Sandbox === */
@@ -384,9 +293,6 @@
             color: var(--accent-purple); 
             margin: 0 0 15px 0; 
             font-size: 1.6rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
         }
 
         .sandbox p { 
@@ -407,16 +313,10 @@
             margin-bottom: 25px; 
             resize: vertical;
             font-family: 'Cairo', sans-serif;
-            transition: border-color 0.3s;
-        }
-
-        textarea#sandboxInput:focus {
-            outline: none;
-            border-color: var(--accent-purple);
         }
 
         .engineer-btn { 
-            background: linear-gradient(135deg, var(--accent-purple), #7a00cc); 
+            background: var(--accent-purple); 
             color: #fff; 
             border: none; 
             padding: 15px 35px; 
@@ -426,15 +326,10 @@
             width: 100%; 
             font-size: 1.1rem;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
         }
 
         .engineer-btn:hover { 
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(157, 0, 255, 0.3);
         }
 
         #sandboxOutput { 
@@ -442,12 +337,6 @@
             margin-top: 30px; 
             border-top: 1px solid rgba(68, 68, 68, 0.5); 
             padding-top: 30px; 
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         #sandboxOutput span { 
@@ -465,7 +354,6 @@
             padding: 20px;
             background: rgba(0, 0, 0, 0.5);
             border-radius: 10px;
-            border-right: 3px solid var(--accent-purple);
         }
 
         /* === Contract Workflow === */
@@ -475,8 +363,6 @@
             border-radius: 40px; 
             padding: 60px 50px; 
             margin: 80px 0; 
-            backdrop-filter: blur(10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
         .flow-grid { 
@@ -490,24 +376,12 @@
         .flow-item { 
             padding: 30px 20px; 
             border-radius: 20px;
-            transition: transform 0.3s;
-        }
-
-        .flow-item:hover {
-            transform: translateY(-10px);
-            background: rgba(0, 255, 136, 0.05);
         }
 
         .flow-item i { 
             font-size: 3.2rem; 
             color: var(--primary-neon); 
             margin-bottom: 20px; 
-            display: inline-block;
-            transition: transform 0.3s;
-        }
-
-        .flow-item:hover i {
-            transform: scale(1.1);
         }
 
         .flow-item h4 { 
@@ -522,12 +396,6 @@
             line-height: 1.6;
         }
 
-        .verify-box .copy-btn {
-            display: inline-flex;
-            text-decoration: none;
-            margin-top: 20px;
-        }
-
         /* === Impact Comparison === */
         .impact-grid { 
             display: grid; 
@@ -540,11 +408,6 @@
             padding: 40px 35px; 
             border-radius: 25px; 
             border: 1px solid rgba(51, 51, 51, 0.5); 
-            transition: all 0.3s ease;
-        }
-
-        .impact-side:hover {
-            transform: translateY(-5px);
         }
 
         .impact-side.before { 
@@ -554,10 +417,6 @@
         .impact-side.after { 
             background: rgba(0, 255, 136, 0.05); 
             border-color: rgba(0, 255, 136, 0.3); 
-        }
-
-        .impact-side.after:hover {
-            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.1);
         }
 
         .impact-side h3 { 
@@ -585,10 +444,6 @@
             font-size: 1.1rem;
         }
 
-        .impact-side li i {
-            font-size: 1.3rem;
-        }
-
         /* === Timeline === */
         .timeline { 
             position: relative; 
@@ -598,27 +453,10 @@
             padding-right: 40px; 
         }
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            right: -2px;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background: linear-gradient(180deg, transparent, var(--primary-neon), transparent);
-            opacity: 0.5;
-        }
-
         .milestone { 
             position: relative; 
             margin-bottom: 70px; 
             padding: 25px; 
-            border-radius: 20px;
-            transition: background 0.3s;
-        }
-
-        .milestone:hover {
-            background: rgba(0, 255, 136, 0.03);
         }
 
         .milestone .dot { 
@@ -632,11 +470,6 @@
             border: 6px solid var(--bg-color); 
             box-shadow: 0 0 20px var(--primary-neon);
             z-index: 2;
-            transition: transform 0.3s;
-        }
-
-        .milestone:hover .dot {
-            transform: scale(1.2);
         }
 
         .milestone span { 
@@ -665,18 +498,6 @@
             text-align: center; 
             border-top: 1px solid rgba(34, 34, 34, 0.5); 
             margin-top: 120px; 
-            opacity: 0.9; 
-            position: relative;
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
         }
 
         footer p { 
@@ -691,7 +512,7 @@
             margin-bottom: 20px;
         }
 
-        /* === Responsive Handling === */
+        /* === Responsive === */
         @media (min-width: 768px) {
             .hero { 
                 flex-direction: row; 
@@ -711,17 +532,11 @@
             .flow-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
-            
-            .contact-info {
-                justify-content: flex-end;
-            }
         }
 
         @media (max-width: 767px) {
             .section-header h2 {
                 font-size: 2.2rem;
-                flex-direction: column;
-                gap: 10px;
             }
             
             .hero h1 {
@@ -732,28 +547,10 @@
                 font-size: 1.2rem;
             }
             
-            .adv-card {
-                padding: 35px 25px;
-            }
-            
             .prompt-library,
             .verify-box {
                 padding: 40px 25px;
             }
-            
-            .radar-box {
-                padding: 40px 25px;
-            }
-        }
-
-        /* === Animations === */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .hero-img {
-            animation: float 6s ease-in-out infinite;
         }
 
         /* === Scrollbar === */
@@ -765,13 +562,9 @@
             background: var(--bg-color);
         }
 
-        ::-webkit-scrollbar-thumb {
+        ::webkit-scrollbar-thumb {
             background: var(--primary-neon);
             border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #00cc6a;
         }
     </style>
 </head>
@@ -779,64 +572,63 @@
 
 <div class="container">
     <section class="hero">
-        <div class="hero-content" data-aos="fade-left" data-aos-duration="1000">
+        <div class="hero-content" data-aos="fade-left">
             <span style="color:var(--primary-neon); font-weight:bold; font-size:1.2rem; display:block; margin-bottom:20px;">
                 خريج MIS 2026 | جامعة حفر الباطن
             </span>
             <h1>يوسف <span>عيد دليم المطيري</span></h1>
             <p>أنا مهندس حلول نظم معلومات. تخصصي يجمع بين لغة البزنس وكود التقنية؛ ماني مبرمج وبس، أنا أحلل وأبني أنظمة تريح بالك وتكبر حلالك.</p>
             <div class="contact-info">
-                <a href="tel:0565464718" aria-label="اتصل بي على 0565464718">
+                <a href="tel:0565464718">
                     <i class="fas fa-phone"></i> 0565464718
                 </a>
-                <a href="mailto:fndske@gmail.com" aria-label="أرسل بريد إلكتروني إلى fndske@gmail.com">
+                <a href="mailto:fndske@gmail.com">
                     <i class="fas fa-envelope"></i> fndske@gmail.com
-                </a>
-                <a href="#timeline" aria-label="انتقل إلى قسم الجدول الزمني">
-                    <i class="fas fa-history"></i> رحلتي
                 </a>
             </div>
         </div>
-        <img src="fm7pwbxs1eycdkcmfroq.jpg" alt="يوسف المطيري - خبير حلول MIS و AI" class="hero-img" data-aos="zoom-in" data-aos-duration="1200">
+        <div class="hero-img" data-aos="zoom-in">
+            YM
+        </div>
     </section>
 
-    <div class="section-header" data-aos="fade-up" data-aos-duration="800">
+    <div class="section-header" data-aos="fade-up">
         <h2><i class="fas fa-university"></i> سر تميزي كخريج MIS</h2>
         <p style="color:var(--text-dim); max-width:800px; margin:0 auto;">الجمع بين العمق الإداري والبراعة التقنية يصنع فارقاً لا ينكره إلا جاهل</p>
     </div>
     
     <div class="advantage-grid">
-        <div class="adv-card" data-aos="fade-up" data-aos-duration="800">
+        <div class="adv-card" data-aos="fade-up">
             <i class="fas fa-chart-line"></i>
             <h3>أفهم البزنس أولاً</h3>
             <p>درست إدارة العمليات قبل كتابة الكود؛ يعني التقنية عندي وسيلة لزيادة الربح وتقليل الهدر مو بس شكل جمالي.</p>
         </div>
-        <div class="adv-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+        <div class="adv-card" data-aos="fade-up" data-aos-delay="100">
             <i class="fas fa-handshake"></i>
             <h3>أتحدث لغة المدراء</h3>
             <p>أترجم طلبات الإدارة المعقدة لنظام تقني بسيط، وأربطها بقواعد بيانات سحابية متكاملة.</p>
         </div>
-        <div class="adv-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+        <div class="adv-card" data-aos="fade-up" data-aos-delay="200">
             <i class="fas fa-robot"></i>
             <h3>أتمتة ذكية بالـ AI</h3>
             <p>أطوّع الذكاء الاصطناعي في تحليل البيانات وصناعة المحتوى لاختصار أيام من العمل اليدوي في ثواني.</p>
         </div>
     </div>
 
-    <div class="radar-box" data-aos="zoom-in" data-aos-duration="1000">
+    <div class="radar-box" data-aos="zoom-in">
         <h3>رادار المهارات الهجين</h3>
         <p>ليش أنا الخيار الأفضل؟ الرادار يوضح التوازن بين عقل الإدارة ويد التقنية.</p>
         <div class="radar-container">
-            <canvas id="skillsRadar" aria-label="رادار مهارات يوسف المطيري"></canvas>
+            <canvas id="skillsRadar"></canvas>
         </div>
     </div>
 
-    <div class="section-header" data-aos="fade-up" data-aos-duration="800">
+    <div class="section-header" data-aos="fade-up">
         <h2><i class="fas fa-magic"></i> مكتبة أوامر AI جاهزة</h2>
         <p style="color:var(--text-dim); max-width:800px; margin:0 auto;">أوامر محترفة جاهزة للنسخ، ومختبر لتحسين أي أمر تريده</p>
     </div>
     
-    <div class="prompt-library" data-aos="fade-up" data-aos-duration="800">
+    <div class="prompt-library" data-aos="fade-up">
         <div class="prompt-card">
             <h3><i class="fas fa-file-excel"></i> تحليل ملف Excel وتحويله لتقرير</h3>
             <code class="prompt-text" id="mainPrompt">أنت محلل بيانات محترف. لدي ملف Excel يحتوي على:
@@ -849,7 +641,7 @@
 2. حدد أفضل 5 أيام ربحية
 3. أوجد العملاء الأكثر ربحية
 4. قدم توصيات عملية لزيادة الربحية</code>
-            <button class="copy-btn" onclick="copyPrompt('mainPrompt')" aria-label="نسخ الأمر إلى الحافظة">
+            <button class="copy-btn" onclick="copyPrompt('mainPrompt')">
                 <i class="fas fa-copy"></i> نسخ الأمر
             </button>
         </div>
@@ -857,8 +649,8 @@
         <div class="sandbox">
             <h4><i class="fas fa-flask"></i> مختبر تحسين الأوامر بلمسة يوسف</h4>
             <p>اكتب أي أمر بسيط، وشوف كيف أحوّله لأمر احترافي (Prompt Engineering):</p>
-            <textarea id="sandboxInput" placeholder="مثلاً: اكتب لي إيميل اعتذار لعميل..." aria-label="أدخل الأمر الذي تريد تحسينه"></textarea>
-            <button class="engineer-btn" onclick="engineerPrompt()" aria-label="تحسين الأمر">
+            <textarea id="sandboxInput" placeholder="مثلاً: اكتب لي إيميل اعتذار لعميل..."></textarea>
+            <button class="engineer-btn" onclick="engineerPrompt()">
                 <i class="fas fa-wand-sparkles"></i> هندسة الأمر الآن
             </button>
             <div id="sandboxOutput">
@@ -868,12 +660,12 @@
         </div>
     </div>
 
-    <div class="section-header" data-aos="fade-up" data-aos-duration="800">
+    <div class="section-header" data-aos="fade-up">
         <h2><i class="fas fa-file-signature"></i> شلون يشتغل نظام توثيق العقد؟</h2>
         <p style="color:var(--text-dim); max-width:800px; margin:0 auto;">أربع خطوات بسيطة تحول العملية من أسبوع إلى 30 ثانية</p>
     </div>
     
-    <div class="verify-box" data-aos="zoom-in" data-aos-duration="1000">
+    <div class="verify-box" data-aos="zoom-in">
         <div class="flow-grid">
             <div class="flow-item">
                 <i class="fas fa-keyboard"></i>
@@ -897,18 +689,18 @@
             </div>
         </div>
         <div style="text-align:center; margin-top:40px;">
-            <a href="contract_final.html" target="_blank" class="copy-btn" style="text-decoration:none; display:inline-flex;" aria-label="جرب توثيق عقد الآن">
+            <button class="copy-btn" style="text-decoration:none; display:inline-flex; cursor: not-allowed; opacity: 0.7;" title="هذه خاصية تجريبية - تحت التطوير">
                 <i class="fas fa-play-circle"></i> جرب توثيق عقد الآن
-            </a>
+            </button>
         </div>
     </div>
 
-    <div class="section-header" data-aos="fade-up" data-aos-duration="800">
+    <div class="section-header" data-aos="fade-up">
         <h2><i class="fas fa-bolt"></i> الأثر اللي تصنعه أنظمتي</h2>
         <p style="color:var(--text-dim); max-width:800px; margin:0 auto;">مقارنة بين العمل التقليدي والعمل بنظام يوسف</p>
     </div>
     
-    <div class="impact-grid" data-aos="fade-up" data-aos-duration="800">
+    <div class="impact-grid" data-aos="fade-up">
         <div class="impact-side before">
             <h3><i class="fas fa-hourglass-half"></i> قبل النظام</h3>
             <ul>
@@ -929,26 +721,26 @@
         </div>
     </div>
 
-    <div class="section-header" data-aos="fade-up" data-aos-duration="800" id="timeline">
+    <div class="section-header" data-aos="fade-up" id="timeline">
         <h2><i class="fas fa-history"></i> محطات في رحلتي</h2>
         <p style="color:var(--text-dim); max-width:800px; margin:0 auto;">من الطالب إلى خبير الحلول</p>
     </div>
     
     <div class="timeline">
-        <div class="milestone" data-aos="fade-right" data-aos-duration="800">
+        <div class="milestone" data-aos="fade-right">
             <div class="dot"></div>
             <span>2020</span>
             <h3>بداية الطموح في جامعة حفر الباطن</h3>
             <p>دخول تخصص MIS وتأسيس الفكر الإداري-التقني في كلية إدارة الأعمال.</p>
         </div>
-        <div class="milestone" data-aos="fade-right" data-aos-duration="800" data-aos-delay="100">
+        <div class="milestone" data-aos="fade-right" data-aos-delay="100">
             <div class="dot"></div>
             <span>2025</span>
             <h3>ولادة منصة "وجهة"</h3>
             <p>بناء أول نظام متكامل لتأجير السيارات من الفكرة للواقع.</p>
         </div>
-        <div class="milestone" data-aos="fade-right" data-aos-duration="800" data-aos-delay="200">
-            <div class="dot" style="background:var(--accent-purple); box-shadow: 0 0 20px var(--accent-purple);"></div>
+        <div class="milestone" data-aos="fade-right" data-aos-delay="200">
+            <div class="dot" style="background:var(--accent-purple);"></div>
             <span>2026</span>
             <h3>التخرج والإنجاز</h3>
             <p>الوقوف على أعتاب سوق العمل كخبير حلول إدارية-تقنية جاهز لصناعة الأثر.</p>
@@ -964,32 +756,14 @@
 
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>
-    // Initialize AOS
+    // Initialize AOS فقط
     AOS.init({
         duration: 900,
-        once: false,
+        once: true,
         offset: 100
     });
 
-    // Initialize GSAP ScrollTrigger
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Animate elements on scroll
-    gsap.utils.toArray('[data-aos]').forEach(element => {
-        gsap.from(element, {
-            scrollTrigger: {
-                trigger: element,
-                start: "top 80%",
-                toggleActions: "play none none reverse"
-            },
-            opacity: 0,
-            y: 50,
-            duration: 1,
-            ease: "power2.out"
-        });
-    });
-
-    // Radar Chart Logic
+    // Radar Chart Logic فقط
     const ctx = document.getElementById('skillsRadar').getContext('2d');
     const radarChart = new Chart(ctx, {
         type: 'radar',
@@ -1022,8 +796,7 @@
                     pointLabels: { 
                         color: '#fff', 
                         font: { 
-                            size: 16, 
-                            family: 'Cairo',
+                            size: 16,
                             weight: 'bold'
                         } 
                     },
@@ -1039,24 +812,12 @@
             plugins: { 
                 legend: { 
                     display: false 
-                },
-                tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    titleColor: '#00ff88',
-                    bodyColor: '#fff',
-                    borderColor: '#00ff88',
-                    borderWidth: 1,
-                    callbacks: {
-                        label: function(context) {
-                            return `${context.label}: ${context.raw}%`;
-                        }
-                    }
                 }
             }
         }
     });
 
-    // Copy Logic with improved feedback
+    // Copy Logic بدون مشاكل
     function copyPrompt(id) {
         const text = document.getElementById(id).innerText;
         const btn = event.currentTarget;
@@ -1064,19 +825,18 @@
         navigator.clipboard.writeText(text).then(() => {
             const originalHTML = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
-            btn.style.background = 'linear-gradient(135deg, #00cc6a, #00994d)';
+            btn.style.background = '#00cc6a';
             
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
-                btn.style.background = 'linear-gradient(135deg, var(--primary-neon), #00cc6a)';
+                btn.style.background = '';
             }, 2000);
         }).catch(err => {
-            console.error('Error copying text: ', err);
             alert('حدث خطأ في النسخ. حاول مرة أخرى.');
         });
     }
 
-    // Engineer Logic with enhanced functionality
+    // Engineer Logic بدون مشاكل
     function engineerPrompt() {
         const input = document.getElementById('sandboxInput').value.trim();
         const resultArea = document.getElementById('sandboxOutput');
@@ -1089,27 +849,16 @@
             return;
         }
 
-        // Original button state
         const originalHTML = btn.innerHTML;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> يجري التحسين...';
         btn.disabled = true;
 
-        // Simulate processing delay
         setTimeout(() => {
             const engineered = `أنت خبير في الإدارة والتقنية. بناءً على طلبي "${input}"، صغ رداً احترافياً يتضمن (السياق، الدور المناسب، والنتائج المتوقعة بصيغة نقاط). السياق: [أتمتة أعمال يوسف المطيري].. تأكد من دقة المخرجات الإدارية.`;
 
             resultText.innerHTML = engineered;
             resultArea.style.display = 'block';
             
-            // Animate result appearance
-            gsap.from("#sandboxOutput", { 
-                duration: 0.7, 
-                y: 30, 
-                opacity: 0, 
-                ease: "back.out(1.7)" 
-            });
-
-            // Restore button
             btn.innerHTML = '<i class="fas fa-check"></i> تم التحسين!';
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
@@ -1119,19 +868,7 @@
         }, 800);
     }
 
-    // Add floating animation to cards on scroll
-    gsap.utils.toArray('.adv-card').forEach((card, i) => {
-        gsap.to(card, {
-            y: 10,
-            duration: 2,
-            repeat: -1,
-            yoyo: true,
-            delay: i * 0.2,
-            ease: "sine.inOut"
-        });
-    });
-
-    // Add scroll to top button
+    // إضافة زر للعودة للأعلى
     const scrollTopBtn = document.createElement('button');
     scrollTopBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
     scrollTopBtn.style.cssText = `
@@ -1150,64 +887,42 @@
         opacity: 0;
         transform: translateY(20px);
         transition: all 0.3s;
-        box-shadow: 0 5px 15px rgba(0,255,136,0.3);
+        display: none;
     `;
     document.body.appendChild(scrollTopBtn);
 
-    // Show/hide scroll to top button
     window.addEventListener('scroll', () => {
         if (window.pageYOffset > 500) {
-            gsap.to(scrollTopBtn, { opacity: 1, y: 0, duration: 0.3 });
+            scrollTopBtn.style.display = 'block';
+            scrollTopBtn.style.opacity = '1';
+            scrollTopBtn.style.transform = 'translateY(0)';
         } else {
-            gsap.to(scrollTopBtn, { opacity: 0, y: 20, duration: 0.3 });
+            scrollTopBtn.style.opacity = '0';
+            scrollTopBtn.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                if (window.pageYOffset <= 500) {
+                    scrollTopBtn.style.display = 'none';
+                }
+            }, 300);
         }
     });
 
-    // Scroll to top functionality
     scrollTopBtn.addEventListener('click', () => {
-        gsap.to(window, { duration: 1, scrollTo: 0, ease: "power2.inOut" });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Add keyboard navigation support
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            document.getElementById('sandboxOutput').style.display = 'none';
-        }
-    });
-
-    // Initialize tooltips
-    const tooltips = document.querySelectorAll('[aria-label]');
-    tooltips.forEach(el => {
-        el.addEventListener('mouseenter', (e) => {
-            const tooltip = document.createElement('div');
-            tooltip.textContent = e.target.getAttribute('aria-label');
-            tooltip.style.cssText = `
-                position: absolute;
-                background: rgba(0, 0, 0, 0.9);
-                color: var(--primary-neon);
-                padding: 8px 12px;
-                border-radius: 6px;
-                font-size: 0.9rem;
-                z-index: 10000;
-                white-space: nowrap;
-                pointer-events: none;
-                transform: translateY(-100%);
-                border: 1px solid var(--primary-neon);
-            `;
-            document.body.appendChild(tooltip);
-            
-            const rect = e.target.getBoundingClientRect();
-            tooltip.style.top = (rect.top + window.scrollY - 10) + 'px';
-            tooltip.style.left = (rect.left + rect.width/2 - tooltip.offsetWidth/2) + 'px';
-            
-            e.target.dataset.tooltipId = tooltip;
-        });
+    // التأكد من تحميل الخطوط
+    document.addEventListener('DOMContentLoaded', function() {
+        // إضافة فحص للخطوط
+        const testFont = document.createElement('div');
+        testFont.style.cssText = 'font-family: Cairo, sans-serif; position: absolute; opacity: 0;';
+        testFont.innerHTML = 'اختبار الخط';
+        document.body.appendChild(testFont);
         
-        el.addEventListener('mouseleave', (e) => {
-            if (e.target.dataset.tooltipId) {
-                e.target.dataset.tooltipId.remove();
-                delete e.target.dataset.tooltipId;
-            }
+        // إعادة تلوين النصوص للتأكد
+        const allTexts = document.querySelectorAll('h1, h2, h3, h4, p, span, li, a');
+        allTexts.forEach(el => {
+            el.style.color = getComputedStyle(el).color;
         });
     });
 </script>
