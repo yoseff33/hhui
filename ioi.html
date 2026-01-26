@@ -3,191 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>يوسف | تجربة تقنية متكاملة 🚀</title>
+    <title>يوسف المطيري | خبير حلول MIS 🚀</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
     <style>
         :root {
-            --bg: #050505;
-            --primary: #00ff88;
-            --accent: #9D00FF;
-            --glass: rgba(255, 255, 255, 0.05);
+            --bg: #050505; --primary: #00ff88; --accent: #9D00FF;
+            --glass: rgba(255, 255, 255, 0.03); --grid-color: rgba(0, 255, 136, 0.06);
         }
-
+        * { box-sizing: border-box; scroll-behavior: smooth; }
         body {
-            background-color: var(--bg);
-            color: #fff;
-            font-family: 'Cairo', sans-serif;
-            margin: 0;
-            overflow-x: hidden;
+            background-color: var(--bg); background-image: linear-gradient(var(--grid-color) 1.5px, transparent 1.5px), linear-gradient(90deg, var(--grid-color) 1.5px, transparent 1.5px);
+            background-size: 45px 45px; color: #fff; font-family: 'Cairo', sans-serif; margin: 0; overflow-x: hidden;
+        }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* === Hero Section === */
+        .hero { min-height: 95vh; display: flex; flex-direction: column-reverse; justify-content: center; align-items: center; gap: 40px; padding: 60px 20px; text-align: center; }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; margin: 0; line-height: 1.1; }
+        .hero h1 span { color: var(--primary); text-shadow: 0 0 30px var(--primary); }
+        .hero-img { width: clamp(220px, 40vw, 360px); height: clamp(220px, 40vw, 360px); border-radius: 50%; border: 4px solid var(--primary); box-shadow: 0 0 45px rgba(0,255,136,0.3); object-fit: cover; }
+        
+        /* === MIS Advantage (السر المهني) === */
+        .advantage-section { padding: 80px 0; }
+        .advantage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .adv-card { background: var(--glass); padding: 40px; border-radius: 30px; border: 1px solid #333; text-align: center; transition: 0.4s; }
+        .adv-card:hover { border-color: var(--primary); transform: translateY(-10px); }
+        .adv-card i { font-size: 3.5rem; color: var(--primary); margin-bottom: 20px; }
+
+        /* === Contract Workflow (شلون يشتغل العقد) === */
+        .workflow-box { background: rgba(0,255,136,0.02); border: 1px solid #222; border-radius: 40px; padding: 50px; margin: 60px 0; }
+        .flow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
+        .flow-item { text-align: center; position: relative; }
+        .flow-item i { font-size: 2.5rem; color: var(--primary); margin-bottom: 15px; }
+        .flow-item h4 { margin: 10px 0; color: var(--primary); }
+
+        /* === Impact (الفرق اللي نصنعه) === */
+        .impact-box { display: grid; grid-template-columns: 1fr; gap: 20px; margin: 50px 0; }
+        .impact-side { padding: 30px; border-radius: 25px; border: 1px solid #333; }
+        .impact-side.before { background: rgba(255, 68, 68, 0.03); border-color: rgba(255, 68, 68, 0.2); }
+        .impact-side.after { background: rgba(0, 255, 136, 0.03); border-color: rgba(0, 255, 136, 0.2); }
+        .impact-side ul { list-style: none; padding: 0; }
+        .impact-side li { margin: 12px 0; display: flex; align-items: center; gap: 10px; }
+
+        /* === Timeline (رحلتي) === */
+        .timeline { position: relative; max-width: 800px; margin: 60px auto; border-right: 2px solid #333; padding-right: 30px; }
+        .milestone { position: relative; margin-bottom: 60px; }
+        .milestone .dot { position: absolute; right: -41px; top: 0; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; border: 4px solid var(--bg); }
+        .milestone span { font-size: 1.2rem; font-weight: 900; color: var(--accent); }
+
+        @media (min-width: 768px) {
+            .hero { flex-direction: row; text-align: right; justify-content: space-between; }
+            .impact-box { grid-template-columns: 1fr 1fr; }
         }
 
-        section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
-        h2 { text-align: center; color: var(--primary); font-size: 2.5rem; margin-bottom: 50px; }
-
-        /* 1. Scroll-to-Build UI */
-        .build-container {
-            height: 500px;
-            background: #111;
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #333;
-        }
-        .ui-part {
-            position: absolute;
-            background: #222;
-            border: 1px solid var(--primary);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .sidebar { width: 20%; height: 80%; left: 2%; top: 10%; transform: translateX(-150%); }
-        .header { width: 70%; height: 15%; right: 5%; top: 5%; transform: translateY(-150%); }
-        .chart { width: 40%; height: 40%; right: 35%; bottom: 10%; transform: scale(0); }
-        .stats { width: 25%; height: 30%; right: 5%; bottom: 10%; transform: scale(0); }
-
-        /* 2. AI Prompt Slider */
-        .slider-container {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid #333;
-        }
-        .slider-side {
-            position: absolute;
-            top: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 40px; box-sizing: border-box; text-align: center;
-        }
-        .side-before { background: #1a1a1a; z-index: 1; }
-        .side-after { background: linear-gradient(45deg, #0d2a1d, #050505); z-index: 2; clip-path: inset(0 0 0 50%); }
-        .slider-handle {
-            position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: var(--primary);
-            z-index: 3; cursor: ew-resize; transform: translateX(-50%);
-        }
-
-        /* 3. Interactive Journey */
-        .journey-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .role-card {
-            background: var(--glass); padding: 40px; border-radius: 20px; border: 1px solid #333;
-            text-align: center; cursor: pointer; transition: 0.3s;
-        }
-        .role-card:hover { border-color: var(--accent); background: rgba(157, 0, 255, 0.1); }
-        .role-card h3 { color: var(--accent); }
-
-        /* 4. Mini Apps (Iframes) */
-        .apps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .app-window {
-            height: 600px; background: #fff; border-radius: 20px; overflow: hidden;
-            border: 5px solid #222; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-        iframe { width: 100%; height: 100%; border: none; }
-
-        @media (max-width: 768px) {
-            .journey-grid, .apps-grid { grid-template-columns: 1fr; }
-            .app-window { height: 400px; }
-        }
+        footer { padding: 60px 20px; text-align: center; border-top: 1px solid #222; opacity: 0.6; }
     </style>
 </head>
 <body>
 
-    <section id="build">
-        <h2 data-aos="fade-up">أنظمة أبنيها من الصفر 🏗️</h2>
-        <div class="build-container">
-            <div class="ui-part sidebar">القائمة الجانبية</div>
-            <div class="ui-part header">شريط الإدارة الأعلى</div>
-            <div class="ui-part chart">مخططات البيانات</div>
-            <div class="ui-part stats">إحصائيات مباشرة</div>
+<div class="container">
+    <section class="hero">
+        <div class="hero-content" data-aos="fade-left">
+            <span>خريج MIS | 2026</span>
+            <h1>يوسف <span>عيد المطيري</span></h1>
+            <p>يا هلا.. أنا خريج نظم معلومات إدارية من جامعة حفر الباطن. تخصصي يجمع بين "البزنس" و"التقنية".. ماني مبرمج وبس، أنا أصمم حلول تريح بالك وتكبر حلالك.</p>
+            <div style="margin-top: 25px;">
+                <a href="tel:0565464718" style="color:var(--primary); text-decoration:none; margin-left:20px;"><i class="fas fa-phone"></i> 0565464718</a>
+                <a href="mailto:fndske@gmail.com" style="color:var(--primary); text-decoration:none;"><i class="fas fa-envelope"></i> fndske@gmail.com</a>
+            </div>
         </div>
+        <img src="fm7pwbxs1eycdkcmfroq.jpg" class="hero-img" data-aos="zoom-in">
     </section>
 
-    <section id="ai-slider">
-        <h2>ذكاء اصطناعي مو بس كلام 🤖</h2>
-        <div class="slider-container" id="sliderContainer">
-            <div class="side-before">
-                <h3 style="color: #ff4444;">مشكلة بزنس معقدة</h3>
-                <p>"تحليل 500 عقد تأجير يدوي واستخراج المخاطر القانونية لكل عقد وتصنيفها.."</p>
-                <span style="font-size: 0.8rem; color: #888;">(اسحب لليمين لترى السحر)</span>
+    <section class="advantage-section">
+        <h2 style="text-align:center; color: var(--primary);"><i class="fas fa-university"></i> سر تميزي كخريج MIS</h2>
+        <div class="advantage-grid">
+            <div class="adv-card" data-aos="fade-up">
+                <i class="fas fa-briefcase"></i>
+                <h3>أفهم البزنس أولاً</h3>
+                <p>درست إدارة العمليات قبل كتابة الكود؛ يعني التقنية عندي وسيلة لزيادة الربح وليست مجرد شكل.</p>
             </div>
-            <div class="side-after" id="afterSide">
-                <h3 style="color: var(--primary);">الأمر الذكي (Prompt)</h3>
-                <code style="background: #000; padding: 10px; border-radius: 5px; font-size: 0.9rem;">
-                    "Act as a legal auditor, parse these rental contracts from hhui system..."
-                </code>
-                <p style="margin-top: 20px;">النتيجة: أتمتة العملية بنسبة 100% في 30 ثانية!</p>
+            <div class="adv-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-comments"></i>
+                <h3>أتحدث لغة المدراء</h3>
+                <p>أترجم طلبات الإدارة المعقدة لنظام تقني بسيط وسهل الاستخدام.</p>
             </div>
-            <div class="slider-handle" id="sliderHandle"></div>
-        </div>
-    </section>
-
-    <section id="journey">
-        <h2>عيش التجربة بنفسك 🚗</h2>
-        <p style="text-align: center; opacity: 0.8;">كيف يتحول الزائر لمستأجر في "وجهة"؟ اختر دورك:</p>
-        <div class="journey-grid">
-            <div class="role-card" onclick="window.open('dashboard-renter.html', '_blank')">
-                <h3>أنا مستأجر</h3>
-                <p>تصفح السيارات، وقع العقد، واستلم مفتاحك رقمياً.</p>
-                <button style="padding: 10px 20px; background: var(--accent); border: none; color: #fff; border-radius: 5px;">جرب الداشبورد</button>
-            </div>
-            <div class="role-card" onclick="window.open('dashboard-owner.html', '_blank')">
-                <h3>أنا مالك سيارة</h3>
-                <p>أضف سيارتك، تابع حجوزاتك، واستلم أرباحك بلمحة.</p>
-                <button style="padding: 10px 20px; background: var(--primary); border: none; color: #000; border-radius: 5px; font-weight: bold;">أدر حلالك</button>
+            <div class="adv-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-cogs"></i>
+                <h3>بناء حلول واقعية</h3>
+                <p>كل سطر كود أكتبه يحل مشكلة بزنس حقيقية، مثل نظام "وجهة" لتأجير السيارات.</p>
             </div>
         </div>
     </section>
 
-    <section id="mini-apps">
-        <h2>تطبيقات حية (جربها الحين) 🎮</h2>
-        <div class="apps-grid">
-            <div class="app-window">
-                <div style="background: #222; padding: 10px; color: var(--primary); font-weight: bold;">نظام التقييم (Quiz)</div>
-                <iframe src="quiz.html"></iframe>
+    <h2 style="text-align:center; color: var(--primary);"><i class="fas fa-file-signature"></i> شلون يشتغل نظام توثيق العقد؟</h2>
+    <div class="workflow-box" data-aos="zoom-in">
+        <div class="flow-grid">
+            <div class="flow-item">
+                <i class="fas fa-keyboard"></i>
+                <h4>١. سحب البيانات</h4>
+                <p>تعبئة بيانات المالك والمستأجر آلياً لضمان الدقة.</p>
             </div>
-            <div class="app-window">
-                <div style="background: #222; padding: 10px; color: var(--primary); font-weight: bold;">خريطة القصيم التفاعلية</div>
-                <iframe src="qassim-map.html"></iframe>
+            <div class="flow-item">
+                <i class="fas fa-fingerprint"></i>
+                <h4>٢. التوثيق الرقمي</h4>
+                <p>اعتماد العقد الموحد بلمسة واحدة تحفظ حقوق الجميع.</p>
+            </div>
+            <div class="flow-item">
+                <i class="fas fa-qrcode"></i>
+                <h4>٣. التشفير والباركود</h4>
+                <p>إنشاء باركود فريد لكل عقد لمنع التزوير.</p>
+            </div>
+            <div class="flow-item">
+                <i class="fas fa-file-pdf"></i>
+                <h4>٤. التصدير النهائي</h4>
+                <p>حفظ العقد بصيغة رسمية لا يمكن التلاعب بها.</p>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:40px;">
+            <a href="contract_final.html" target="_blank" style="padding:15px 40px; background:var(--primary); color:#000; font-weight:bold; border-radius:50px; text-decoration:none;">جرب توثيق عقد الآن</a>
+        </div>
+    </div>
+
+    <h2 style="text-align:center; color: var(--primary);">الأثر اللي تصنعه أنظمتي <i class="fas fa-bolt"></i></h2>
+    <div class="impact-box" data-aos="fade-up">
+        <div class="impact-side before">
+            <h3 style="color:#ff4444;"><i class="fas fa-hourglass-half"></i> قبل النظام</h3>
+            <ul>
+                <li><i class="fas fa-times"></i> أيام لمعالجة العقد الورقي</li>
+                <li><i class="fas fa-times"></i> تقارير يدوية فيها أخطاء</li>
+                <li><i class="fas fa-times"></i> ضياع وقت في متابعة الحجوزات</li>
+            </ul>
+        </div>
+        <div class="impact-side after">
+            <h3 style="color:var(--primary);"><i class="fas fa-rocket"></i> بعد نظام يوسف</h3>
+            <ul>
+                <li><i class="fas fa-check"></i> ٣٠ ثانية لعقد رسمي موثق</li>
+                <li><i class="fas fa-check"></i> لوحات تحكم دقيقة ١٠٠٪</li>
+                <li><i class="fas fa-check"></i> أتمتة كاملة للعمليات المالية</li>
+            </ul>
+        </div>
+    </div>
+
+    <section style="padding: 60px 0;">
+        <h2 style="text-align:center; color: var(--primary);"><i class="fas fa-history"></i> محطات في رحلتي</h2>
+        <div class="timeline">
+            <div class="milestone" data-aos="fade-right">
+                <div class="dot"></div>
+                <span>2020</span>
+                <h3>بداية الطموح</h3>
+                <p>دخول جامعة حفر الباطن - كلية إدارة الأعمال؛ الانطلاق في عالم نظم المعلومات.</p>
+            </div>
+            <div class="milestone" data-aos="fade-right" data-aos-delay="100">
+                <div class="dot"></div>
+                <span>2025</span>
+                <h3>ولادة "وجهة"</h3>
+                <p>بناء أول نظام متكامل لتأجير السيارات؛ من الفكرة للواقع.</p>
+            </div>
+            <div class="milestone" data-aos="fade-right" data-aos-delay="200">
+                <div class="dot" style="background:var(--accent);"></div>
+                <span>2026</span>
+                <h3>التخرج والإنجاز</h3>
+                <p>الوقوف على أعتاب سوق العمل كخبير MIS جاهز للتغيير.</p>
             </div>
         </div>
     </section>
 
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
+    <footer>
+        <p>بني بكل فخر بـ "عزيمة أهل الحفر" | يوسف عيد المطيري 2026</p>
+    </footer>
+</div>
 
-        // 1. Scroll-to-Build Animation
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".build-container",
-                start: "top 70%",
-                end: "bottom 30%",
-                scrub: 1
-            }
-        });
-        tl.to(".sidebar", { x: 0, duration: 1 })
-          .to(".header", { y: 0, duration: 1 }, "-=0.5")
-          .to(".chart", { scale: 1, duration: 1 }, "-=0.5")
-          .to(".stats", { scale: 1, duration: 1 }, "-=0.5");
-
-        // 2. AI Slider Logic
-        const container = document.getElementById('sliderContainer');
-        const afterSide = document.getElementById('afterSide');
-        const handle = document.getElementById('sliderHandle');
-
-        container.addEventListener('mousemove', (e) => {
-            const rect = container.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            if (x >= 0 && x <= 100) {
-                afterSide.style.clipPath = `inset(0 0 0 ${x}%)`;
-                handle.style.left = `${x}%`;
-            }
-        });
-    </script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 900, once: false });
+</script>
 </body>
 </html>
