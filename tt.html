@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروع الرياضيات - الجوهرة المطيري</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+        }
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm;
+            margin: auto;
+            background: white;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border: 10px double #2563eb; /* إطار أزرق تعليمي */
+            position: relative;
+        }
+        .header {
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .section-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f1f5f9;
+        }
+        .section-title {
+            color: #1e40af;
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .math-concept {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            border-right: 4px solid #3b82f6;
+        }
+        @media print {
+            body { background: none; padding: 0; }
+            .a4-page { box-shadow: none; margin: 0; border: 10px double #2563eb; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="a4-page">
+        <!-- الترويسة -->
+        <div class="header flex justify-between items-start">
+            <div class="text-right">
+                <p class="font-bold text-xl text-blue-800">مشروع مادة الرياضيات</p>
+                <p class="text-gray-600">الفصل الدراسي الثاني</p>
+            </div>
+            <div class="text-left">
+                <p><strong>الطالبة:</strong> الجوهرة عيد المطيري</p>
+                <p><strong>بإشراف الأستاذة:</strong> مها الشمري</p>
+            </div>
+        </div>
+
+        <div class="text-center my-6">
+            <h1 class="text-3xl font-bold text-blue-900">ملخص وحدات الإحصاء والاحتمالات</h1>
+        </div>
+
+        <!-- الوحدة الأولى -->
+        <div class="section-box">
+            <div class="section-title">
+                <span>📊</span>
+                الوحدة الأولى: تمثيل البيانات وتحليلها
+            </div>
+            
+            <div class="math-concept">
+                <p class="font-bold text-blue-700">1. المدرجات التكرارية (Histograms):</p>
+                <p class="text-sm">هي تمثيل بياني يُستخدم لعرض البيانات العددية المنظمة في فئات (فترات) متساوية. يتميز بأن الأعمدة تكون متلاصقة تعبيراً عن استمرارية الفئات.</p>
+            </div>
+
+            <div class="math-concept">
+                <p class="font-bold text-blue-700">2. اختيار طريقة التمثيل المناسبة:</p>
+                <ul class="text-sm list-disc list-inside mt-2 space-y-1">
+                    <li><strong>المدرج التكراري:</strong> عند تمثيل بيانات مقسمة إلى فئات.</li>
+                    <li><strong>التمثيل بالنقاط:</strong> لتوضيح تكرار كل قيمة من قيم البيانات.</li>
+                    <li><strong>التمثيل بالأعمدة:</strong> للمقارنة بين فئات مختلفة من البيانات.</li>
+                    <li><strong>التمثيل بالخطوط:</strong> لتوضيح تغير البيانات عبر الزمن.</li>
+                    <li><strong>القطاعات الدائرية:</strong> لمقارنة جزء من البيانات بالنسبة للمجموع الكلي (النسب المئوية).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- الوحدة الثانية -->
+        <div class="section-box">
+            <div class="section-title">
+                <span>🎲</span>
+                الوحدة الثانية: الاحتمالات
+            </div>
+            
+            <div class="math-concept">
+                <p class="font-bold text-blue-700">1. عد النواتج:</p>
+                <p class="text-sm">يمكن إيجاد عدد النواتج الممكنة باستخدام:</p>
+                <ul class="text-sm list-disc list-inside mt-1">
+                    <li><strong>الرسم الشجري:</strong> مخطط يوضح جميع النواتج الممكنة لتجربة ما.</li>
+                    <li><strong>مبدأ العد الأساسي:</strong> إذا كان هناك (أ) من النواتج للمرحلة الأولى و (ب) للمرحلة الثانية، فإن إجمالي النواتج هو (أ × ب).</li>
+                </ul>
+            </div>
+
+            <div class="math-concept">
+                <p class="font-bold text-blue-700">2. احتمال الحوادث المركبة:</p>
+                <p class="text-sm">الحادثة المركبة تتكون من حادثتين بسيطتين أو أكثر.</p>
+                <div class="mt-2 grid grid-cols-2 gap-4">
+                    <div class="p-2 border rounded bg-blue-50">
+                        <p class="font-bold text-xs">حوادث مستقلة</p>
+                        <p class="text-xs italic">لا يؤثر ناتج إحداهما في الأخرى.</p>
+                    </div>
+                    <div class="p-2 border rounded bg-blue-50">
+                        <p class="font-bold text-xs">حوادث غير مستقلة</p>
+                        <p class="text-xs italic">يؤثر ناتج إحداهما في احتمال الأخرى.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- مثال توضيحي بسيط -->
+        <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+            <p class="font-bold text-blue-900 text-sm">💡 مثال سريع (مبدأ العد):</p>
+            <p class="text-xs">رمي قطعة نقد (2 نواتج) ومكعب أرقام (6 نواتج) = 2 × 6 = 12 ناتجاً ممكناً.</p>
+        </div>
+
+        <!-- التذييل -->
+        <div class="absolute bottom-6 left-0 right-0 text-center">
+            <p class="text-xs text-gray-400">مع تمنياتي لكم بالتوفيق - الطالبة: الجوهرة المطيري</p>
+        </div>
+    </div>
+
+</body>
+</html>
+
