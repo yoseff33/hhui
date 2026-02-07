@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروع مدينة حائل - الجوهرة المطيري</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f7f3f0;
+            margin: 0;
+            padding: 20px;
+        }
+        /* تصميم يحاكي ورقة A4 */
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+            border: 15px double #8b4513; /* إطار تراثي فخم */
+        }
+        .header {
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        h1 { color: #5d2e0a; }
+        .info-box {
+            font-size: 0.95rem;
+            color: #444;
+        }
+        .main-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 4px solid #fdf5e6;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        .section-heading {
+            background-color: #8b4513;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .content-p {
+            line-height: 1.8;
+            color: #333;
+            text-align: justify;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        @media print {
+            body { background: none; padding: 0; }
+            .a4-page { box-shadow: none; margin: 0; border: 15px double #8b4513; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="a4-page">
+        <!-- الترويسة -->
+        <div class="header flex justify-between items-start">
+            <div class="info-box">
+                <p class="font-bold text-lg">المملكة العربية السعودية</p>
+                <p>وزارة التعليم</p>
+            </div>
+            <div class="text-center">
+                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-2 border-2 border-brown-200">
+                    <span class="text-brown-800 font-bold text-xs">شعار الرؤية</span>
+                </div>
+            </div>
+            <div class="info-box text-left">
+                <p><strong>اسم الطالبة:</strong> الجوهرة عيد المطيري</p>
+                <p><strong>بإشراف الأستاذة:</strong> مشاعل المطيري</p>
+                <p><strong>الموضوع:</strong> عروس الشمال (حائل)</p>
+            </div>
+        </div>
+
+        <!-- العنوان الرئيسي -->
+        <div class="text-center mt-6">
+            <h1 class="text-4xl font-bold mb-2">مدينة حائل.. جبالُ الكرمِ وتاريخُ الأمجاد</h1>
+            <div class="w-48 h-1 bg-yellow-600 mx-auto mb-6"></div>
+        </div>
+
+        <!-- الصورة (رابط مباشر لصورة حائل كبديل لضمان العمل) -->
+        <img src="https://cnn-arabic-images.cnn.io/cloudinary/image/upload/w_1920,c_scale,q_auto/cnnarabic/2020/07/14/images/159830.jpg" 
+             alt="جبال حائل" 
+             class="main-image"
+             onerror="this.src='https://via.placeholder.com/800x400?text=صورة+مدينة+حائل'">
+
+        <!-- المحتوى التعليمي -->
+        <div>
+            <div class="section-heading">مقدمة عن حائل</div>
+            <p class="content-p">
+                تُعد منطقة حائل من أبرز المناطق الإدارية في المملكة العربية السعودية، وتشتهر بلقب "عروس الشمال". تقع حائل في قلب شمال المملكة، وتعتبر حلقة وصل هامة بين الشمال والوسط. وتتميز بتضاريسها الجبلية الخلابة، حيث تحيط بها جبال "أجا وسَلمى" التي تُعد من أشهر المعالم الجغرافية في الجزيرة العربية.
+            </p>
+
+            <div class="section-heading">التراث العالمي والآثار</div>
+            <p class="content-p">
+                تضم حائل كنوزاً تاريخية مسجلة في قائمة التراث العالمي (اليونسكو)، مثل منطقة "جبة" و"الشويمس" اللتان تحتويان على نقوش صخرية تعود لآلاف السنين قبل الميلاد، مما يجعلها متحفاً مفتوحاً يحكي قصة الاستيطان البشري القديم في المنطقة.
+            </p>
+
+            <div class="section-heading">الكرم الحاتمي</div>
+            <p class="content-p">
+                اقترن اسم حائل بالكرم والجود، فهي موطن "حاتم الطائي" الذي يُعد رمزاً عالمياً للكرم العربي الأصيل. ولا يزال أهل حائل حتى يومنا هذا يشتهرون بحسن استقبال الضيوف والاحتفاء بهم، متمسكين بعادات آبائهم وأجدادهم.
+            </p>
+        </div>
+
+        <!-- التذييل -->
+        <div class="absolute bottom-10 left-0 right-0 text-center border-t border-gray-200 pt-4 mx-20">
+            <p class="text-sm text-gray-400 italic">تم إعداد هذا البحث بمناسبة الأنشطة المدرسية لعام 1446هـ - الطالبة الجوهرة المطيري</p>
+        </div>
+    </div>
+
+</body>
+</html>
+
