@@ -171,7 +171,7 @@
     <div class="col"><input type="text" id="clientTaxId" placeholder="الرقم الضريبي للعميل" value="123123123123"></div>
   </div>
   <div class="row">
-    <div class="col"><input type="text" id="issuer" placeholder="المسؤول / مصدر الفاتورة" value="(1) - الإدارة"></div>
+    <div class="col"><input type="text" id="issuer" placeholder="المسؤول / مصدر الفاتورة" value="عبدالله"></div>
     <div class="col">
       <input type="number" id="taxRate" placeholder="نسبة الضريبة % (مثل 15)" value="15" step="0.1" min="0">
     </div>
@@ -186,22 +186,11 @@
     <thead><tr><th>نوع المنتج</th><th>وصف المنتج</th><th>المبلغ (ر.س)</th><th></th></tr></thead>
     <tbody id="itemsBody">
       <tr class="item-row">
-        <td><input type="text" class="itemType" value="طيران" placeholder="مثال: طيران"></td>
-        <td><input type="text" class="itemDesc" value="تذاكر طيران"></td>
+        <td><input type="text" class="itemType" value="ايفون" placeholder="مثال: ايفون "></td>
+        <td><input type="text" class="itemDesc" value="ايفون 17 pro"></td>
         <td><input type="number" class="itemAmount" value="800"></td>
         <td><button class="btn-light" onclick="removeItemRow(this)">✖</button></td>
-      </tr>
-      <tr class="item-row">
-        <td><input type="text" class="itemType" value="فنادق"></td>
-        <td><input type="text" class="itemDesc" value="حجز فندق"></td>
-        <td><input type="number" class="itemAmount" value="2500"></td>
-        <td><button class="btn-light" onclick="removeItemRow(this)">✖</button></td>
-      </tr>
-      <tr class="item-row">
-        <td><input type="text" class="itemType" value="سيارات"></td>
-        <td><input type="text" class="itemDesc" value="استئجار سيارات"></td>
-        <td><input type="number" class="itemAmount" value="1200"></td>
-        <td><button class="btn-light" onclick="removeItemRow(this)">✖</button></td>
+
       </tr>
     </tbody>
   </table>
