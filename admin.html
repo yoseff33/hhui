@@ -2707,30 +2707,35 @@ function downloadInvoicePDF() {
 // دالة تصدير جميع الفواتير إلى ملف Excel (CSV) بضغطة زر
 function exportAllOrdersToCSV() {
     if (State.orders.length === 0) {
-        showNotification('لا توجد بيانات لتصديرها', 'warning')
+        showNotification('لا توجد بيانات لتصديرها' 'warning')
         return
     }
 
-    let csvContent = "\uFEFF" // لتدعيم اللغة العربية
-    csvContent += "رقم الطلب,اسم العميل,الجوال,المنتج,المبلغ,طريقة الدفع,التاريخ\n"
+    let csvContent = "\uFEFF" 
+    // الأعمدة كاملة
+    csvContent += "رقم الفاتورة,اسم العميل,رقم الجوال,المنتج,نوع المنتج,المبلغ,طريقة الدفع,تاريخ الطلب,الحالة\n"
 
     State.orders.forEach(order => {
         const row = [
-            order.id.substring(0, 8),
-            order.customers?.full_name || 'غير معروف',
-            order.customers?.phone || '',
-            order.product_name || '',
+            `INV-${order.id.substring(0, 8)}`,
+            `"${order.customers?.full_name || 'عميل نقدي'}"`,
+            `'${order.customers?.phone || ''}`, // علامة ' عشان الاكسل ما يغير الرقم
+            `"${order.product_name || 'جوال'}"`,
+            `"${order.product_type || ''}"`,
             order.total_amount,
-            order.payment_method || '',
-            new Date(order.created_at).toLocaleDateString('ar-SA')
+            `"${order.payment_method || ''}"`,
+            new Date(order.created_at).toLocaleDateString('ar-SA'),
+            `"${order.status}"`
         ].join(",")
         csvContent += row + "\n"
     })
 
-    const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent)
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
     const link = document.createElement("a")
-    link.setAttribute("href", encodedUri)
-    link.setAttribute("download", "all_invoices_" + Date.now() + ".csv")
+    const url = URL.createObjectURL(blob)
+    link.setAttribute("href", url)
+    link.setAttribute("download", "ler_store_report_" + new Date().toLocaleDateString() + ".csv")
+    link.style.visibility = 'hidden'
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
