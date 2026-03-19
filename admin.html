@@ -2647,19 +2647,20 @@ function generateProfessionalInvoice(orderId) {
     const vatAmount = order.total_amount - priceWithoutVat;
     
     document.getElementById('invoiceContent').innerHTML = `
-        <div id="printableInvoice" style="font-family: 'Tajawal', sans-serif; padding: 40px; border: 1px solid #EEE; direction: rtl;">
-            <div style="display: flex; justify-content: space-between; border-bottom: 4px solid #2563EB; padding-bottom: 20px; margin-bottom: 30px;">
-                <div style="text-align: right;">
-                    <h1 style="color: #2563EB; font-size: 28px; margin: 0;">متجر لير للاتصالات</h1>
-                    <p style="margin: 5px 0;">الرقم الضريبي: 300012345600003</p>
-                    <p style="margin: 5px 0;">الرياض - المملكة العربية السعودية</p>
-                </div>
-                <div style="text-align: left;">
-                    <h2 style="margin: 0; color: #666;">فاتورة ضريبية مبسطة</h2>
-                    <p>رقم الفاتورة: <strong>INV-${order.id.substring(0,8)}</strong></p>
-                    <p>التاريخ: ${new Date(order.created_at).toLocaleDateString('ar-SA')}</p>
-                </div>
-            </div>
+      <div style="display: flex; justify-content: space-between; border-bottom: 4px solid #2563EB; padding-bottom: 20px; margin-bottom: 30px;">
+    <div style="text-align: right;">
+        <h1 style="color: #2563EB; font-size: 28px; margin: 0;">متجر لير للاتصالات</h1>
+        <p style="margin: 5px 0;">حفر الباطن - حي المصيف</p>
+        <p style="margin: 5px 0;">شارع الوليد بن عبدالملك</p>
+        <p style="margin: 5px 0;">جوال: 0533774766</p>
+    </div>
+    <div style="text-align: left;">
+        <h2 style="margin: 0; color: #666;">فاتورة مبيعات</h2>
+        <p style="margin: 5px 0;">رقم الفاتورة: <strong>INV-${order.id.substring(0,8)}</strong></p>
+        <p style="margin: 5px 0;">التاريخ: ${new Date(order.created_at).toLocaleDateString('ar-SA')}</p>
+        <p style="margin: 5px 0; color: #DC2626; font-weight: bold;">المنشأة غير خاضعة للضريبة</p>
+    </div>
+</div>
 
             <div style="background: #F8FAFC; padding: 20px; border-radius: 15px; margin-bottom: 30px;">
                 <h4 style="margin-top: 0; color: #2563EB;">بيانات العميل:</h4>
