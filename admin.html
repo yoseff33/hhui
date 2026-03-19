@@ -2255,91 +2255,187 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
         }
 
       // دالة التقرير الحقيقية (تسحب بياناتك الصدق مهوب عشوائي)
+// دالة التقرير المحدثة تسحب بياناتك وتطلعها PDF
         function generateProfitLossReport() {
             if (State.orders.length === 0) {
-                showNotification('ما فيه بيانات مبيعات عشان نطلع تقرير', 'warning');
-                return;
+                showNotification('ما فيه بيانات مبيعات عشان نطلع تقرير' 'warning')
+                return
             }
 
+            // حساب المبيعات الفعلية
             const totalSales = State.orders
                 .filter(o => o.status === 'completed' || o.status === 'shipped')
-                .reduce((sum, order) => sum + (order.total_amount || 0), 0);
+                .reduce((sum, order) => sum + (order.total_amount || 0) 0)
             
-            const cogs = totalSales * 0.6; 
-            const netProfit = totalSales - cogs;
+            const estimatedCogs = totalSales * 0.6 
+            const netProfit = totalSales - estimatedCogs
 
-            let report = `تقرير مبيعات متجر لير للاتصالات\n`;
-            report += `تاريخ التقرير: ${new Date().toLocaleDateString('ar-SA')}\n`;
-            report += `---------------------------\n`;
-            report += `إجمالي المبيعات: ${totalSales.toFixed(2)} ريال\n`;
-            report += `صافي الربح التقديري: ${netProfit.toFixed(2)} ريال\n`;
-            report += `عدد الطلبات الإجمالي: ${State.orders.length}\n`;
+            // بناء محتوى التقرير للطباعة
+            const reportContent = `
+                <div id="printableReport" dir="rtl" style="font-family: 'Tajawal', sans-serif; padding: 40px; color: #333;">
+                    <h1 style="color: #2563EB; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 20px;">تقرير الأداء المالي - متجر لير</h1>
+                    <p style="text-align: center; color: #666;">تاريخ التقرير: ${new Date().toLocaleDateString('ar-SA')}</p>
+                    
+                    <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                            <p style="margin: 0; color: #64748b;">إجمالي المبيعات</p>
+                            <h2 style="margin: 10px 0; color: #0f172a;">${totalSales.toFixed(2)} ريال</h2>
+                        </div>
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                            <p style="margin: 0; color: #64748b;">صافي الربح التقديري</p>
+                            <h2 style="margin: 10px 0; color: #10b981;">${netProfit.toFixed(2)} ريال</h2>
+                        </div>
+                    </div>
 
-            alert(report);
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 40px;">
+                        <thead>
+                            <tr style="background: #2563EB; color: white;">
+                                <th style="padding: 12px; border: 1px solid #ddd;">بند التقرير</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">القيمة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 12px; border: 1px solid #ddd;">عدد الطلبات الكلي</td>
+                                <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${State.orders.length}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px; border: 1px solid #ddd;">متوسط قيمة الطلب</td>
+                                <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${(totalSales / (State.orders.length || 1)).toFixed(2)} ريال</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `
+
+            // تحويل التقرير لملف PDF وتحميله فورا
+            const opt = {
+                margin: 0,
+                filename: `Ler_Report_${Date.now()}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            }
+            
+            const tempDiv = document.createElement('div')
+            tempDiv.innerHTML = reportContent
+            html2pdf().set(opt).from(tempDiv).save()
+            
+            showNotification('جاري تجهيز تقرير الأرباح وتحميله' 'success')
         }
 
-        // =========================
-        // MARKETING MODULE
-        // =========================
-        function loadMarketingData() {
-            // Load coupons
-            loadCoupons();
+        // دالة الفاتورة الاحترافية تاكدت ان الـ ID حقها مضبوط للتحميل
+        function generateProfessionalInvoice(orderId) {
+            const order = State.orders.find(o => o.id === orderId)
+            if(!order) {
+                showNotification('الطلب غير موجود' 'error')
+                return
+            }
             
-            // Setup SEO character counters
-            setupSEOCharCounters();
+            const invoiceContent = document.getElementById('invoiceContent')
+            
+            invoiceContent.innerHTML = `
+                <div id="printableInvoice" dir="rtl" style="font-family: 'Tajawal', sans-serif; padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 4px solid #2563EB; padding-bottom: 20px; margin-bottom: 30px;">
+                        <div>
+                            <h1 style="color: #2563EB; margin: 0;">متجر لير للاتصالات</h1>
+                            <p>حفر الباطن - حي المصيف</p>
+                            <p>جوال: 0533774766</p>
+                        </div>
+                        <div style="text-align: left;">
+                            <h2>فاتورة مبيعات</h2>
+                            <p>رقم: <strong>INV-${order.id.substring(0,8)}</strong></p>
+                            <p>التاريخ: ${new Date(order.created_at).toLocaleDateString('ar-SA')}</p>
+                            <p style="color: #DC2626; font-weight: bold;">المنشأة غير خاضعة للضريبة</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #f1f5f9; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                        <p>العميل: <strong>${order.customers?.full_name || 'عميل نقدي'}</strong></p>
+                        <p>الجوال: ${order.customers?.phone || '-'}</p>
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                        <tr style="background: #2563EB; color: white;">
+                            <th style="padding: 10px; border: 1px solid #ddd;">المنتج</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">السعر</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">${order.product_name || 'جوال'}</td>
+                            <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${(order.total_amount || 0).toFixed(2)} ريال</td>
+                        </tr>
+                    </table>
+
+                    <div style="width: 200px; margin-right: auto; text-align: left; font-weight: bold; font-size: 1.2em; color: #2563EB;">
+                        الإجمالي: ${(order.total_amount || 0).toFixed(2)} ريال
+                    </div>
+                </div>
+            `
+            openModal('invoiceModal')
+        }
+
+        // دالة تحميل الفاتورة PDF الحين بتشتغل لان الـ ID صار موجود
+        function downloadInvoicePDF() {
+            const element = document.getElementById('printableInvoice')
+            if(!element) {
+                showNotification('افتح الفاتورة اولاً عشان تحملها' 'warning')
+                return
+            }
+            
+            const opt = {
+                margin: 0.5,
+                filename: `Invoice_${Date.now()}.pdf`,
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 3, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            }
+            html2pdf().set(opt).from(element).save()
+        }
+
+        // تكملة قسم التسويق والكوبونات
+        function loadMarketingData() {
+            loadCoupons()
+            setupSEOCharCounters()
         }
 
         function loadCoupons() {
-            // Mock coupons data
             State.coupons = [
                 { code: 'WELCOME10', discount: 10, max_uses: 100, used: 45, expiry: '2024-12-31', active: true },
-                { code: 'SAVE20', discount: 20, max_uses: 50, used: 50, expiry: '2024-06-30', active: false },
-                { code: 'SUMMER25', discount: 25, max_uses: 200, used: 89, expiry: '2024-08-31', active: true }
-            ];
-            
-            renderCouponsTable();
+                { code: 'SAVE20', discount: 20, max_uses: 50, used: 50, expiry: '2024-06-30', active: false }
+            ]
+            renderCouponsTable()
         }
 
         function renderCouponsTable() {
-            const tbody = document.getElementById('couponsTableBody');
-            tbody.innerHTML = '';
+            const tbody = document.getElementById('couponsTableBody')
+            if(!tbody) return
+            tbody.innerHTML = ''
             
             State.coupons.forEach(coupon => {
-                const expiryDate = new Date(coupon.expiry);
-                const today = new Date();
-                const isExpired = expiryDate < today;
+                const expiryDate = new Date(coupon.expiry)
+                const isExpired = expiryDate < new Date()
                 
                 tbody.innerHTML += `
                     <tr>
                         <td class="font-mono font-bold">${coupon.code}</td>
                         <td class="font-bold text-green-600">${coupon.discount}%</td>
                         <td>${coupon.max_uses}</td>
-                        <td>
-                            <div class="flex items-center gap-2">
-                                <span>${coupon.used}</span>
-                                <div class="flex-1 bg-gray-200 rounded-full h-2">
-                                    <div class="bg-green-500 h-2 rounded-full" style="width: ${(coupon.used / coupon.max_uses) * 100}%"></div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="${isExpired ? 'text-red-600' : 'text-gray-600'}">
-                            ${expiryDate.toLocaleDateString('ar-SA')}
-                        </td>
+                        <td>${coupon.used}</td>
+                        <td>${expiryDate.toLocaleDateString('ar-SA')}</td>
                         <td>
                             <span class="badge ${coupon.active && !isExpired ? 'badge-completed' : 'badge-cancelled'}">
                                 ${coupon.active && !isExpired ? 'نشط' : 'منتهي'}
                             </span>
                         </td>
                         <td>
-                            <button onclick="deleteCoupon('${coupon.code}')" class="text-red-400 hover:text-red-600">
+                            <button onclick="deleteCoupon('${coupon.code}')" class="text-red-500 hover:text-red-700">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
                     </tr>
-                `;
-            });
+                `
+            })
         }
-
         function deleteCoupon(code) {
             if(confirm(`هل تريد حذف الكوبون ${code}؟`)) {
                 State.coupons = State.coupons.filter(c => c.code !== code);
