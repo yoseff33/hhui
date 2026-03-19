@@ -2707,38 +2707,37 @@ function downloadInvoicePDF() {
 // دالة تصدير جميع الفواتير إلى ملف Excel (CSV) بضغطة زر
 function exportAllOrdersToCSV() {
     if (State.orders.length === 0) {
-        showNotification('لا توجد بيانات لتصديرها', 'warning')
-        return
+        showNotification('لا توجد بيانات لتصديرها', 'warning');
+        return;
     }
 
-    let csvContent = "\uFEFF" 
-    // الأعمدة كاملة
-    csvContent += "رقم الفاتورة,اسم العميل,رقم الجوال,المنتج,نوع المنتج,المبلغ,طريقة الدفع,تاريخ الطلب,الحالة\n"
+    let csvContent = "\uFEFF"; 
+    csvContent += "رقم الفاتورة,اسم العميل,رقم الجوال,المنتج,نوع المنتج,المبلغ الصافي,طريقة الدفع,تاريخ الطلب,الحالة\n";
 
     State.orders.forEach(order => {
         const row = [
             `INV-${order.id.substring(0, 8)}`,
             `"${order.customers?.full_name || 'عميل نقدي'}"`,
-            `'${order.customers?.phone || ''}`, // علامة ' عشان الاكسل ما يغير الرقم
+            `'${order.customers?.phone || ''}`, 
             `"${order.product_name || 'جوال'}"`,
             `"${order.product_type || ''}"`,
-            order.total_amount,
+            order.total_amount ? order.total_amount.toFixed(2) : "0.00",
             `"${order.payment_method || ''}"`,
             new Date(order.created_at).toLocaleDateString('ar-SA'),
             `"${order.status}"`
-        ].join(",")
-        csvContent += row + "\n"
-    })
+        ].join(",");
+        csvContent += row + "\n";
+    });
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-    const link = document.createElement("a")
-    const url = URL.createObjectURL(blob)
-    link.setAttribute("href", url)
-    link.setAttribute("download", "ler_store_report_" + new Date().toLocaleDateString() + ".csv")
-    link.style.visibility = 'hidden'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `ler_store_report_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
     </script>
 </body>
