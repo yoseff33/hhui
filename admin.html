@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enterprise ERP System - Complete E-Commerce Suite</title>
-    
+
     <!-- Dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,7 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         :root {
             --primary: #2563EB;
@@ -24,20 +24,20 @@
             --light: #F9FAFB;
             --dark: #111827;
         }
-        
+
         body { 
             font-family: 'Tajawal', sans-serif; 
             background-color: #f8fafc; 
             direction: rtl;
         }
-        
+
         .sidebar-link.active { 
             background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
             color: white; 
             border-right: 4px solid white;
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
-        
+
         .sidebar-link { 
             cursor: pointer; 
             transition: all 0.3s ease; 
@@ -46,13 +46,13 @@
             margin: 0.25rem 0.5rem;
             padding: 0.75rem 1rem;
         }
-        
+
         .sidebar-link:hover { 
             background-color: #F3F4F6; 
             color: var(--primary);
             transform: translateX(-4px);
         }
-        
+
         .card {
             background: white;
             border-radius: 1rem;
@@ -60,12 +60,12 @@
             border: 1px solid #E5E7EB;
             transition: all 0.3s ease;
         }
-        
+
         .card:hover {
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
             transform: translateY(-2px);
         }
-        
+
         .badge { 
             padding: 0.25rem 0.75rem; 
             border-radius: 9999px; 
@@ -75,40 +75,40 @@
             align-items: center;
             gap: 0.25rem;
         }
-        
+
         .badge-pending { background: #FEF3C7; color: #92400E; border: 1px solid #FDE68A; }
         .badge-processing { background: #DBEAFE; color: #1E40AF; border: 1px solid #BFDBFE; }
         .badge-shipped { background: #F0F9FF; color: #075985; border: 1px solid #BAE6FD; }
         .badge-completed { background: #D1FAE5; color: #065F46; border: 1px solid #A7F3D0; }
         .badge-cancelled { background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; }
         .badge-returned { background: #F3E8FF; color: #5B21B6; border: 1px solid #E9D5FF; }
-        
+
         .status-badge-vip { background: linear-gradient(135deg, #FCD34D, #F59E0B); color: #78350F; }
         .status-badge-new { background: linear-gradient(135deg, #93C5FD, #3B82F6); color: white; }
-        
+
         .modal { 
             transition: opacity 0.3s ease, transform 0.3s ease; 
         }
-        
+
         .animate-slide-in {
             animation: slideIn 0.3s ease-out;
         }
-        
+
         @keyframes slideIn {
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
-        
+
         .low-stock { border-right: 4px solid var(--danger); }
         .out-of-stock { opacity: 0.7; background: repeating-linear-gradient(45deg, #FEE2E2, #FEE2E2 10px, #FEF2F2 10px, #FEF2F2 20px); }
-        
+
         .kpi-card {
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
             border-radius: 1rem;
             position: relative;
             overflow: hidden;
         }
-        
+
         .kpi-card::before {
             content: '';
             position: absolute;
@@ -118,7 +118,7 @@
             height: 4px;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
         }
-        
+
         .print-label {
             width: 100mm;
             height: 150mm;
@@ -127,24 +127,24 @@
             background: white;
             font-family: 'Tajawal', sans-serif;
         }
-        
+
         .whatsapp-btn {
             background: linear-gradient(135deg, #25D366, #128C7E);
             color: white;
             transition: all 0.3s;
         }
-        
+
         .whatsapp-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
         }
-        
+
         table.data-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
         }
-        
+
         table.data-table th {
             background: #F9FAFB;
             padding: 1rem;
@@ -153,17 +153,17 @@
             border-bottom: 2px solid #E5E7EB;
             text-align: right;
         }
-        
+
         table.data-table td {
             padding: 1rem;
             border-bottom: 1px solid #F3F4F6;
             vertical-align: middle;
         }
-        
+
         table.data-table tr:hover td {
             background-color: #F9FAFB;
         }
-        
+
         .search-box {
             background: #F9FAFB;
             border: 1px solid #E5E7EB;
@@ -171,13 +171,13 @@
             padding: 0.75rem 1rem;
             transition: all 0.3s;
         }
-        
+
         .search-box:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
-        
+
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
@@ -188,7 +188,7 @@
             border: none;
             cursor: pointer;
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
@@ -215,7 +215,7 @@
 
     <!-- Main Dashboard -->
     <div id="dashboardScreen" class="hidden min-h-screen flex flex-col md:flex-row">
-        
+
         <!-- Sidebar Navigation -->
         <aside class="bg-white w-full md:w-72 flex-shrink-0 flex flex-col shadow-lg z-20 border-l border-gray-100">
             <div class="p-8 text-center border-b border-gray-100">
@@ -228,7 +228,7 @@
                     <i class="fas fa-user ml-2"></i> <span id="currentUser">المشرف</span>
                 </div>
             </div>
-            
+
             <nav class="flex-1 py-6 space-y-1 px-3">
                 <div onclick="switchTab('dashboard')" id="nav-dashboard" class="sidebar-link active">
                     <i class="fas fa-tachometer-alt w-6"></i> <span class="font-bold">لوحة القيادة</span>
@@ -271,7 +271,7 @@
 
         <!-- Main Content Area -->
         <main class="flex-1 p-6 md:p-8 overflow-y-auto h-screen">
-            
+
             <!-- Dashboard Header -->
             <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                 <div>
@@ -310,7 +310,7 @@
                             <span class="text-gray-500">عن الشهر الماضي</span>
                         </div>
                     </div>
-                    
+
                     <div class="kpi-card p-6">
                         <div class="flex justify-between items-start">
                             <div>
@@ -327,7 +327,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="kpi-card p-6">
                         <div class="flex justify-between items-start">
                             <div>
@@ -342,7 +342,7 @@
                             <span class="text-sm text-gray-500">+5 طلبات اليوم</span>
                         </div>
                     </div>
-                    
+
                     <div class="kpi-card p-6">
                         <div class="flex justify-between items-start">
                             <div>
@@ -376,7 +376,7 @@
                             <canvas id="salesChart"></canvas>
                         </div>
                     </div>
-                    
+
                     <div class="card p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-6">حالات الطلبات</h3>
                         <div class="h-80">
@@ -448,7 +448,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="overflow-x-auto">
                         <table class="data-table">
                             <thead>
@@ -466,7 +466,7 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
                     <div class="p-4 border-t border-gray-200 flex justify-between items-center">
                         <div class="text-sm text-gray-500" id="ordersCount">0 طلب</div>
                         <div class="flex gap-2">
@@ -521,7 +521,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="overflow-x-auto">
                         <table class="data-table">
                             <thead>
@@ -583,7 +583,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="overflow-x-auto">
                         <table class="data-table">
                             <thead>
@@ -637,7 +637,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="card p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-6">أدوات مالية</h3>
                         <div class="space-y-4">
@@ -874,7 +874,7 @@
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
-            
+
             <form onsubmit="saveProduct(event)" class="space-y-6">
                 <input type="hidden" id="editProductId">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -910,7 +910,7 @@
                 <h3 class="text-2xl font-bold text-gray-800">إصدار فاتورة مبيعات</h3>
                 <button onclick="closeModal('orderModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
             </div>
-            
+
             <form onsubmit="saveAndPrintInvoice(event)" class="space-y-6 text-right" dir="rtl">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -1097,16 +1097,16 @@
             coupons: [],
             users: [],
             settings: {},
-            
+
             // UI State
             currentTab: 'dashboard',
             currentOrderFilter: 'all',
             currentCustomerFilter: 'all',
-            
+
             // Pagination
             ordersPage: 1,
             ordersPerPage: 10,
-            
+
             // Charts
             charts: {
                 sales: null,
@@ -1127,7 +1127,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
         function checkLogin() {
             const password = document.getElementById('adminPass').value;
             const errorElement = document.getElementById('loginError');
-            
+
             if(password === ADMIN_PASS) {
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('dashboardScreen').classList.remove('hidden');
@@ -1154,7 +1154,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
         function switchTab(tab) {
             // Update State
             State.currentTab = tab;
-            
+
             // Hide all views
             const views = ['dashboard', 'orders', 'products', 'customers', 'finance', 'marketing', 'settings'];
             views.forEach(view => {
@@ -1165,7 +1165,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                     nav.classList.remove('text-white');
                 }
             });
-            
+
             // Show selected view
             document.getElementById(`view-${tab}`).classList.remove('hidden');
             const activeNav = document.getElementById(`nav-${tab}`);
@@ -1173,7 +1173,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 activeNav.classList.add('active');
                 activeNav.classList.add('text-white');
             }
-            
+
             // Update page title
             const titles = {
                 dashboard: 'لوحة القيادة',
@@ -1184,7 +1184,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 marketing: 'مركز التسويق',
                 settings: 'الإعدادات'
             };
-            
+
             const subtitles = {
                 dashboard: 'نظرة عامة على أداء المتجر والإحصائيات',
                 orders: 'إدارة وتتبع جميع طلبات المتجر',
@@ -1194,10 +1194,10 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 marketing: 'كوبونات وحملات تسويقية',
                 settings: 'إعدادات المتجر والمستخدمين'
             };
-            
+
             document.getElementById('currentPageTitle').textContent = titles[tab];
             document.getElementById('currentPageSubtitle').textContent = subtitles[tab];
-            
+
             // Load data for tab
             loadTabData(tab);
         }
@@ -1245,15 +1245,15 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 // Fetch orders
                 const { data: orders } = await db.from('financing_orders').select('*, customers(full_name, phone)');
                 if(orders) State.orders = orders;
-                
+
                 // Fetch products
                 const { data: products } = await db.from('products').select('*');
                 if(products) State.products = products;
-                
+
                 // Calculate KPIs
                 calculateKPIs();
                 updateDashboardCharts();
-                
+
             } catch (error) {
                 console.error('Error loading dashboard data:', error);
             }
@@ -1264,28 +1264,28 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             const totalSales = State.orders
                 .filter(o => o.status === 'completed' || o.status === 'shipped')
                 .reduce((sum, order) => sum + (order.total_amount || 0), 0);
-            
+
             // Total Orders
             const totalOrders = State.orders.length;
-            
+
             // Calculate COGS (Cost of Goods Sold)
             const cogs = State.orders.reduce((sum, order) => {
                 // This would normally come from order items, but we'll estimate
                 return sum + (order.total_amount || 0) * 0.6; // Assuming 60% cost
             }, 0);
-            
+
             // Net Profit
             const netProfit = totalSales - cogs;
-            
+
             // Low Stock Alerts
             const lowStock = State.products.filter(p => (p.stock_quantity || 0) < 5).length;
-            
+
             // Update KPI Cards
             document.getElementById('kpiTotalSales').textContent = formatCurrency(totalSales);
             document.getElementById('kpiTotalOrders').textContent = totalOrders;
             document.getElementById('kpiNetProfit').textContent = formatCurrency(netProfit);
             document.getElementById('kpiLowStock').textContent = lowStock;
-            
+
             // Update notification count
             document.getElementById('notificationCount').textContent = `${lowStock} تنبيهات`;
         }
@@ -1294,7 +1294,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             const salesCtx = document.getElementById('salesChart').getContext('2d');
             const ordersCtx = document.getElementById('ordersChart').getContext('2d');
             const productsCtx = document.getElementById('productsChart').getContext('2d');
-            
+
             // Sales Chart (Line)
             State.charts.sales = new Chart(salesCtx, {
                 type: 'line',
@@ -1330,7 +1330,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                     }
                 }
             });
-            
+
             // Orders Chart (Doughnut)
             State.charts.orders = new Chart(ordersCtx, {
                 type: 'doughnut',
@@ -1359,7 +1359,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                     }
                 }
             });
-            
+
             // Products Chart (Bar)
             State.charts.products = new Chart(productsCtx, {
                 type: 'bar',
@@ -1395,7 +1395,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             State.charts.sales.data.labels = salesData.labels;
             State.charts.sales.data.datasets[0].data = salesData.values;
             State.charts.sales.update();
-            
+
             // Update Orders Chart
             const orderStatuses = ['pending', 'processing', 'shipped', 'completed', 'cancelled', 'returned'];
             const orderCounts = orderStatuses.map(status => 
@@ -1403,7 +1403,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             );
             State.charts.orders.data.datasets[0].data = orderCounts;
             State.charts.orders.update();
-            
+
             // Update Products Chart (Top 5)
             const topProducts = getTopSellingProducts(5);
             State.charts.products.data.labels = topProducts.names;
@@ -1414,16 +1414,16 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
         function generateSalesData(days) {
             const labels = [];
             const values = [];
-            
+
             for(let i = days-1; i >= 0; i--) {
                 const date = new Date();
                 date.setDate(date.getDate() - i);
                 labels.push(formatDate(date));
-                
+
                 // Generate random sales data for demo
                 values.push(Math.floor(Math.random() * 5000) + 1000);
             }
-            
+
             return { labels, values };
         }
 
@@ -1452,7 +1452,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 const { data: orders } = await db.from('financing_orders')
                     .select('*, customers(full_name, phone, email)')
                     .order('created_at', { ascending: false });
-                
+
                 if(orders) {
                     State.orders = orders;
                     updateOrderStats();
@@ -1465,7 +1465,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 
         function updateOrderStats() {
             const statuses = ['all', 'pending', 'processing', 'shipped', 'completed', 'cancelled'];
-            
+
             statuses.forEach(status => {
                 let count;
                 if(status === 'all') {
@@ -1473,7 +1473,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 } else {
                     count = State.orders.filter(o => o.status === status).length;
                 }
-                
+
                 const element = document.getElementById(`stat${status.charAt(0).toUpperCase() + status.slice(1)}`);
                 if(element) element.textContent = count;
             });
@@ -1483,9 +1483,9 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
     const tbody = document.getElementById('ordersTableBody');
     const filteredOrders = filterOrdersByStatus(State.currentOrderFilter);
     const paginatedOrders = paginateOrders(filteredOrders);
-    
+
     tbody.innerHTML = '';
-    
+
     if(paginatedOrders.length === 0) {
         tbody.innerHTML = `
             <tr>
@@ -1497,13 +1497,13 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
         `;
         return;
     }
-    
+
     paginatedOrders.forEach(order => {
         const statusBadge = getStatusBadge(order.status);
         const date = new Date(order.created_at).toLocaleDateString('ar-SA');
         const customerName = order.customers?.full_name || 'عميل نقدي';
         const customerPhone = order.customers?.phone || '';
-        
+
         tbody.innerHTML += `
             <tr class="hover:bg-gray-50 transition border-b">
                 <td class="font-bold text-blue-600">#${order.id.substring(0, 8)}</td>
@@ -1540,7 +1540,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             </tr>
         `;
     });
-    
+
     document.getElementById('ordersCount').textContent = `${filteredOrders.length} طلب`;
 }
 
@@ -1553,7 +1553,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 cancelled: '<span class="badge badge-cancelled"><i class="fas fa-times"></i> ملغى</span>',
                 returned: '<span class="badge badge-returned"><i class="fas fa-undo"></i> مرتجع</span>'
             };
-            
+
             return badges[status] || badges.pending;
         }
 
@@ -1585,7 +1585,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             const totalPages = Math.ceil(
                 filterOrdersByStatus(State.currentOrderFilter).length / State.ordersPerPage
             );
-            
+
             if(State.ordersPage < totalPages) {
                 State.ordersPage++;
                 renderOrdersTable();
@@ -1604,31 +1604,31 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
         function sendWhatsAppTemplate(templateType) {
             const order = window.currentWhatsAppOrder;
             if(!order) return;
-            
+
             const templates = {
                 cart_recovery: `مرحباً ${order.customers?.full_name || 'عميلنا العزيز'} 👋، 
 لاحظنا أنك بدأت عملية شراء ولم تكملها! 
 لدينا عرض خاص لك إذا أكملت الشراء خلال 24 ساعة ⏰ 
 رابط الإكمال: https://ler-store.com/checkout/${order.id}`,
-                
+
                 installment: `أهلاً ${order.customers?.full_name || 'عميلنا العزيز'} 🌹، 
 توفرت خدمة التقسيط بدون فوائد عبر تابي/تمارا لجميع طلباتك! 
 معدل القبول 97% ✅ 
 راجع طلبك: https://ler-store.com/orders/${order.id}`,
-                
+
                 shipping: `مرحباً ${order.customers?.full_name || 'عميلنا العزيز'}، 
 تم شحن طلبك رقم #${order.id.substring(0, 8)} 📦 
 رقم التتبع: SMSA-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000)} 
 تابع الشحن: https://smsa.com/tracking`
             };
-            
+
             const message = encodeURIComponent(templates[templateType]);
             const phone = order.customers?.phone?.replace(/\D/g, '') || '';
-            
+
             if(phone) {
                 window.open(`https://wa.me/966${phone}?text=${message}`, '_blank');
             }
-            
+
             closeModal('whatsappModal');
         }
 
@@ -1636,19 +1636,19 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             const order = State.orders.find(o => o.id === orderId);
             if(order) {
                 window.currentShippingOrder = order;
-                
+
                 // Generate tracking number
                 const trackingNumber = `SMSA-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000)}`;
                 document.getElementById('trackingNumber').textContent = trackingNumber;
-                
+
                 // Set customer info
                 document.getElementById('shippingCustomer').textContent = order.customers?.full_name || 'العميل';
                 document.getElementById('shippingPhone').textContent = order.customers?.phone || '';
-                
+
                 // Set shipping date
                 const today = new Date();
                 document.getElementById('shippingDate').textContent = today.toISOString().split('T')[0];
-                
+
                 // Mock shipping contents
                 const contentsDiv = document.getElementById('shippingContents');
                 contentsDiv.innerHTML = `
@@ -1657,7 +1657,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                         <span>الكمية: 1</span>
                     </div>
                 `;
-                
+
                 openModal('shippingModal');
             }
         }
@@ -1665,7 +1665,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
         function printShippingLabel() {
             const printContent = document.getElementById('shippingLabel').innerHTML;
             const originalContent = document.body.innerHTML;
-            
+
             document.body.innerHTML = `
                 <!DOCTYPE html>
                 <html dir="rtl">
@@ -1680,7 +1680,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 <body>${printContent}</body>
                 </html>
             `;
-            
+
             window.print();
             document.body.innerHTML = originalContent;
             location.reload();
@@ -1689,18 +1689,18 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
         function updateOrderStatus(orderId) {
             const order = State.orders.find(o => o.id === orderId);
             if(!order) return;
-            
+
             const currentStatus = order.status;
             const statusOrder = ['pending', 'processing', 'shipped', 'completed', 'cancelled', 'returned'];
             const currentIndex = statusOrder.indexOf(currentStatus);
             const nextIndex = (currentIndex + 1) % statusOrder.length;
             const nextStatus = statusOrder[nextIndex];
-            
+
             // In a real app, you would update this in the database
             order.status = nextStatus;
             renderOrdersTable();
             updateOrderStats();
-            
+
             // Show notification
             showNotification(`تم تغيير حالة الطلب إلى: ${nextStatus}`, 'success');
         }
@@ -1711,7 +1711,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
         async function fetchProducts() {
             try {
                 const { data: products } = await db.from('products').select('*').order('created_at', { ascending: false });
-                
+
                 if(products) {
                     State.products = products;
                     updateProductStats();
@@ -1727,7 +1727,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             const inStock = State.products.filter(p => (p.stock_quantity || 0) > 5).length;
             const outOfStock = State.products.filter(p => (p.stock_quantity || 0) === 0).length;
             const lowStock = State.products.filter(p => (p.stock_quantity || 0) > 0 && (p.stock_quantity || 0) < 5).length;
-            
+
             document.getElementById('statTotalProducts').textContent = totalProducts;
             document.getElementById('statInStock').textContent = inStock;
             document.getElementById('statOutOfStock').textContent = outOfStock;
@@ -1737,7 +1737,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
         function renderProductsTable() {
             const tbody = document.getElementById('productsTableBody');
             tbody.innerHTML = '';
-            
+
             if(State.products.length === 0) {
                 tbody.innerHTML = `
                     <tr>
@@ -1749,18 +1749,18 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 `;
                 return;
             }
-            
+
             State.products.forEach(product => {
                 const stock = product.stock_quantity || 0;
                 const cost = product.cost_price || 0;
                 const price = product.selling_price || product.price_cash || 0;
                 const profit = price - cost;
                 const profitMargin = price > 0 ? ((profit / price) * 100).toFixed(1) : 0;
-                
+
                 let rowClass = '';
                 if(stock === 0) rowClass = 'out-of-stock';
                 else if(stock < 5) rowClass = 'low-stock';
-                
+
                 tbody.innerHTML += `
                     <tr class="${rowClass}">
                         <td>
@@ -1802,7 +1802,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             const modal = document.getElementById('productModal');
             const title = document.getElementById('productModalTitle');
             const submitBtn = document.getElementById('productSubmitBtn');
-            
+
             if(productId) {
                 // Edit mode
                 const product = State.products.find(p => p.id === productId);
@@ -1817,7 +1817,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                     document.getElementById('productPrice').value = product.selling_price || product.price_cash || 0;
                     document.getElementById('productDescription').value = product.description || '';
                     document.getElementById('productImage').value = product.image_url || '';
-                    
+
                     title.textContent = 'تعديل المنتج';
                     submitBtn.textContent = 'حفظ التعديلات';
                 }
@@ -1829,13 +1829,13 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 title.textContent = 'إضافة منتج جديد';
                 submitBtn.textContent = 'إضافة المنتج';
             }
-            
+
             openModal('productModal');
         }
 
         async function saveProduct(event) {
             event.preventDefault();
-            
+
             const productId = document.getElementById('editProductId').value;
             const productData = {
                 name: document.getElementById('productName').value,
@@ -1848,7 +1848,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 description: document.getElementById('productDescription').value,
                 image_url: document.getElementById('productImage').value
             };
-            
+
             try {
                 if(productId) {
                     // Update existing product
@@ -1859,11 +1859,11 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                     await db.from('products').insert([productData]);
                     showNotification('تم إضافة المنتج بنجاح', 'success');
                 }
-                
+
                 closeModal('productModal');
                 fetchProducts();
                 calculateKPIs(); // Update dashboard KPIs
-                
+
             } catch (error) {
                 console.error('Error saving product:', error);
                 showNotification('حدث خطأ في حفظ المنتج', 'error');
@@ -1900,24 +1900,24 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 p.stock_quantity || 0,
                 (p.selling_price || p.price_cash || 0) - (p.cost_price || 0)
             ]);
-            
+
             const csvContent = [
                 headers.join(','),
                 ...rows.map(row => row.join(','))
             ].join('\n');
-            
+
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             const url = URL.createObjectURL(blob);
-            
+
             link.setAttribute('href', url);
             link.setAttribute('download', `منتجات_${new Date().toISOString().split('T')[0]}.csv`);
             link.style.visibility = 'hidden';
-            
+
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            
+
             showNotification('تم تصدير البيانات بنجاح', 'success');
         }
 
@@ -1930,11 +1930,11 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 // For now, we'll extract from orders
                 const { data: orders } = await db.from('financing_orders')
                     .select('*, customers(full_name, phone, email)');
-                
+
                 if(orders) {
                     // Create unique customers list from orders
                     const customersMap = new Map();
-                    
+
                     orders.forEach(order => {
                         if(order.customers) {
                             const customerId = order.customers.phone || order.customers.email;
@@ -1949,17 +1949,17 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                                     last_order_date: order.created_at
                                 });
                             }
-                            
+
                             const customer = customersMap.get(customerId);
                             customer.orders.push(order);
                             customer.total_spent += order.total_amount || 0;
-                            
+
                             if(new Date(order.created_at) > new Date(customer.last_order_date)) {
                                 customer.last_order_date = order.created_at;
                             }
                         }
                     });
-                    
+
                     State.customers = Array.from(customersMap.values());
                     updateCustomerStats();
                     renderCustomersTable();
@@ -1973,7 +1973,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             const totalCustomers = State.customers.length;
             const vipCustomers = State.customers.filter(c => c.total_spent > 1000).length;
             const newCustomers = State.customers.filter(c => c.orders.length === 0).length;
-            
+
             document.getElementById('statTotalCustomers').textContent = totalCustomers;
             document.getElementById('statVipCustomers').textContent = vipCustomers;
             document.getElementById('statNewCustomers').textContent = newCustomers;
@@ -1982,9 +1982,9 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
         function renderCustomersTable() {
             const tbody = document.getElementById('customersTableBody');
             const filteredCustomers = filterCustomersBySegment(State.currentCustomerFilter);
-            
+
             tbody.innerHTML = '';
-            
+
             if(filteredCustomers.length === 0) {
                 tbody.innerHTML = `
                     <tr>
@@ -1996,12 +1996,12 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 `;
                 return;
             }
-            
+
             filteredCustomers.forEach(customer => {
                 const segment = getCustomerSegment(customer);
                 const lastOrder = customer.last_order_date ? 
                     new Date(customer.last_order_date).toLocaleDateString('ar-SA') : 'لا يوجد';
-                
+
                 tbody.innerHTML += `
                     <tr>
                         <td>
@@ -2049,7 +2049,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 
         function filterCustomersBySegment(segment) {
             if(segment === 'all') return State.customers;
-            
+
             return State.customers.filter(customer => {
                 if(segment === 'vip') return customer.total_spent > 1000;
                 if(segment === 'new') return customer.orders.length === 0;
@@ -2091,14 +2091,14 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             const grossSales = State.orders
                 .filter(o => o.status === 'completed' || o.status === 'shipped')
                 .reduce((sum, order) => sum + (order.total_amount || 0), 0);
-            
+
             const cogs = grossSales * 0.6; // Estimated 60% COGS
             const netProfit = grossSales - cogs;
-            
+
             document.getElementById('financeGrossSales').textContent = formatCurrency(grossSales);
             document.getElementById('financeCOGS').textContent = formatCurrency(cogs);
             document.getElementById('financeNetProfit').textContent = formatCurrency(netProfit);
-            
+
             // Load recent invoices
             loadRecentInvoices();
         }
@@ -2106,12 +2106,12 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
         function loadRecentInvoices() {
             const tbody = document.getElementById('invoicesTableBody');
             tbody.innerHTML = '';
-            
+
             // Get completed orders as invoices
             const invoices = State.orders
                 .filter(o => o.status === 'completed')
                 .slice(0, 5);
-            
+
             invoices.forEach(order => {
                 tbody.innerHTML += `
                     <tr>
@@ -2140,7 +2140,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
     const invoiceContent = document.getElementById('invoiceContent');
     const invoiceNumber = `INV-${order.id.substring(0, 8)}`;
     const today = new Date().toLocaleDateString('ar-SA');
-    
+
     // المبلغ الإجمالي (صافي بدون ضريبة حسب طلبك)
     const totalAmount = order.total_amount || 0;
 
@@ -2221,7 +2221,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
         function printInvoice() {
             const printContent = document.getElementById('printableInvoice').innerHTML
             const printWindow = window.open('', '', 'height=800,width=1000')
-            
+
             printWindow.document.write('<html><head><title>طباعة فاتورة مبيعات</title>')
             printWindow.document.write('<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">')
             printWindow.document.write('<style>')
@@ -2233,7 +2233,7 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             printWindow.document.write('</style></head><body>')
             printWindow.document.write(printContent)
             printWindow.document.write('</body></html>')
-            
+
             printWindow.document.close()
             setTimeout(() => {
                 printWindow.print()
@@ -2241,6 +2241,26 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             }, 500)
         }
 
+        // دالة تحميل الـ PDF مع تحسين المقاسات
+        function downloadInvoicePDF() {
+            const element = document.getElementById('printableInvoice')
+            const opt = {
+                margin: 0.5,
+                filename: `Invoice_${Date.now()}.pdf`,
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 3, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            }
+            html2pdf().set(opt).from(element).save()
+        }
+
+      // دالة التقرير الحقيقية (تسحب بياناتك الصدق مهوب عشوائي)
+// دالة التقرير المحدثة تسحب بياناتك وتطلعها PDF
+        function generateProfitLossReport() {
+            if (State.orders.length === 0) {
+                showNotification('ما فيه بيانات مبيعات عشان نطلع تقرير' 'warning')
+                return
+            }
      // دالة التقرير المحدثة تسحب بياناتك وتطلعها PDF
 function generateProfitLossReport() {
     if (State.orders.length === 0) {
@@ -2248,6 +2268,13 @@ function generateProfitLossReport() {
         return
     }
 
+            // حساب المبيعات الفعلية
+            const totalSales = State.orders
+                .filter(o => o.status === 'completed' || o.status === 'shipped')
+                .reduce((sum, order) => sum + (order.total_amount || 0) 0)
+            
+            const estimatedCogs = totalSales * 0.6 
+            const netProfit = totalSales - estimatedCogs
     // حساب المبيعات الفعلية - تم إضافة الفاصلة الناقصة هنا قبل الصفر
     const totalSales = State.orders
         .filter(o => o.status === 'completed' || o.status === 'shipped')
@@ -2273,6 +2300,22 @@ function generateProfitLossReport() {
                 </div>
             </div>
 
+            // بناء محتوى التقرير للطباعة
+            const reportContent = `
+                <div id="printableReport" dir="rtl" style="font-family: 'Tajawal', sans-serif; padding: 40px; color: #333;">
+                    <h1 style="color: #2563EB; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 20px;">تقرير الأداء المالي - متجر لير</h1>
+                    <p style="text-align: center; color: #666;">تاريخ التقرير: ${new Date().toLocaleDateString('ar-SA')}</p>
+                    
+                    <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                            <p style="margin: 0; color: #64748b;">إجمالي المبيعات</p>
+                            <h2 style="margin: 10px 0; color: #0f172a;">${totalSales.toFixed(2)} ريال</h2>
+                        </div>
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                            <p style="margin: 0; color: #64748b;">صافي الربح التقديري</p>
+                            <h2 style="margin: 10px 0; color: #10b981;">${netProfit.toFixed(2)} ريال</h2>
+                        </div>
+                    </div>
             <table style="width: 100%; border-collapse: collapse; margin-top: 40px;">
                 <thead>
                     <tr style="background: #2563EB; color: white;">
@@ -2294,6 +2337,26 @@ function generateProfitLossReport() {
         </div>
     `
 
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 40px;">
+                        <thead>
+                            <tr style="background: #2563EB; color: white;">
+                                <th style="padding: 12px; border: 1px solid #ddd;">بند التقرير</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">القيمة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 12px; border: 1px solid #ddd;">عدد الطلبات الكلي</td>
+                                <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${State.orders.length}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px; border: 1px solid #ddd;">متوسط قيمة الطلب</td>
+                                <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${(totalSales / (State.orders.length || 1)).toFixed(2)} ريال</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `
     // تحويل التقرير لملف PDF وتحميله فورا
     const opt = {
         margin: 0,
@@ -2310,6 +2373,21 @@ function generateProfitLossReport() {
     showNotification('جاري تجهيز تقرير الأرباح وتحميله', 'success')
 }
 
+            // تحويل التقرير لملف PDF وتحميله فورا
+            const opt = {
+                margin: 0,
+                filename: `Ler_Report_${Date.now()}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            }
+            
+            const tempDiv = document.createElement('div')
+            tempDiv.innerHTML = reportContent
+            html2pdf().set(opt).from(tempDiv).save()
+            
+            showNotification('جاري تجهيز تقرير الأرباح وتحميله' 'success')
+        }
 // دالة الفاتورة الاحترافية تاكدت ان الـ ID حقها مضبوط للتحميل
 function generateProfessionalInvoice(orderId) {
     const order = State.orders.find(o => o.id === orderId)
@@ -2336,11 +2414,40 @@ function generateProfessionalInvoice(orderId) {
                 </div>
             </div>
 
+        // دالة الفاتورة الاحترافية تاكدت ان الـ ID حقها مضبوط للتحميل
+        function generateProfessionalInvoice(orderId) {
+            const order = State.orders.find(o => o.id === orderId)
+            if(!order) {
+                showNotification('الطلب غير موجود' 'error')
+                return
+            }
+            
+            const invoiceContent = document.getElementById('invoiceContent')
+            
+            invoiceContent.innerHTML = `
+                <div id="printableInvoice" dir="rtl" style="font-family: 'Tajawal', sans-serif; padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 4px solid #2563EB; padding-bottom: 20px; margin-bottom: 30px;">
+                        <div>
+                            <h1 style="color: #2563EB; margin: 0;">متجر لير للاتصالات</h1>
+                            <p>حفر الباطن - حي المصيف</p>
+                            <p>جوال: 0533774766</p>
+                        </div>
+                        <div style="text-align: left;">
+                            <h2>فاتورة مبيعات</h2>
+                            <p>رقم: <strong>INV-${order.id.substring(0,8)}</strong></p>
+                            <p>التاريخ: ${new Date(order.created_at).toLocaleDateString('ar-SA')}</p>
+                            <p style="color: #DC2626; font-weight: bold;">المنشأة غير خاضعة للضريبة</p>
+                        </div>
+                    </div>
             <div style="background: #f1f5f9; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
                 <p>العميل: <strong>${order.customers?.full_name || 'عميل نقدي'}</strong></p>
                 <p>الجوال: ${order.customers?.phone || '-'}</p>
             </div>
 
+                    <div style="background: #f1f5f9; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                        <p>العميل: <strong>${order.customers?.full_name || 'عميل نقدي'}</strong></p>
+                        <p>الجوال: ${order.customers?.phone || '-'}</p>
+                    </div>
             <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
                 <tr style="background: #2563EB; color: white;">
                     <th style="padding: 10px; border: 1px solid #ddd;">المنتج</th>
@@ -2352,6 +2459,24 @@ function generateProfessionalInvoice(orderId) {
                 </tr>
             </table>
 
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                        <tr style="background: #2563EB; color: white;">
+                            <th style="padding: 10px; border: 1px solid #ddd;">المنتج</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">السعر</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">${order.product_name || 'جوال'}</td>
+                            <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${(order.total_amount || 0).toFixed(2)} ريال</td>
+                        </tr>
+                    </table>
+
+                    <div style="width: 200px; margin-right: auto; text-align: left; font-weight: bold; font-size: 1.2em; color: #2563EB;">
+                        الإجمالي: ${(order.total_amount || 0).toFixed(2)} ريال
+                    </div>
+                </div>
+            `
+            openModal('invoiceModal')
+        }
             <div style="width: 200px; margin-right: auto; text-align: left; font-weight: bold; font-size: 1.2em; color: #2563EB;">
                 الإجمالي: ${(order.total_amount || 0).toFixed(2)} ريال
             </div>
@@ -2360,6 +2485,13 @@ function generateProfessionalInvoice(orderId) {
     openModal('invoiceModal')
 }
 
+        // دالة تحميل الفاتورة PDF الحين بتشتغل لان الـ ID صار موجود
+        function downloadInvoicePDF() {
+            const element = document.getElementById('printableInvoice')
+            if(!element) {
+                showNotification('افتح الفاتورة اولاً عشان تحملها' 'warning')
+                return
+            }
 // دالة تحميل الفاتورة PDF الحين بتشتغل لان الـ ID صار موجود
 function downloadInvoicePDF() {
     const element = document.getElementById('printableInvoice')
@@ -2377,8 +2509,8 @@ function downloadInvoicePDF() {
     }
     html2pdf().set(opt).from(element).save()
 }
-            
-           const opt = {
+
+            const opt = {
                 margin: 0.5,
                 filename: `Invoice_${Date.now()}.pdf`,
                 image: { type: 'jpeg', quality: 1 },
@@ -2406,11 +2538,11 @@ function downloadInvoicePDF() {
             const tbody = document.getElementById('couponsTableBody')
             if(!tbody) return
             tbody.innerHTML = ''
-            
+
             State.coupons.forEach(coupon => {
                 const expiryDate = new Date(coupon.expiry)
                 const isExpired = expiryDate < new Date()
-                
+
                 tbody.innerHTML += `
                     <tr>
                         <td class="font-mono font-bold">${coupon.code}</td>
@@ -2446,7 +2578,7 @@ function downloadInvoicePDF() {
                 showNotification('الرجاء كتابة رسالة أولاً', 'warning');
                 return;
             }
-            
+
             navigator.clipboard.writeText(message).then(() => {
                 showNotification('تم نسخ الرسالة إلى الحافظة', 'success');
             });
@@ -2458,7 +2590,7 @@ function downloadInvoicePDF() {
                 showNotification('الرجاء كتابة رسالة أولاً', 'warning');
                 return;
             }
-            
+
             // In a real app, this would integrate with WhatsApp Business API
             showNotification('تم إعداد الرسالة للبث الجماعي', 'success');
         }
@@ -2466,11 +2598,11 @@ function downloadInvoicePDF() {
         function setupSEOCharCounters() {
             const titleInput = document.getElementById('seoTitle');
             const descInput = document.getElementById('seoDescription');
-            
+
             titleInput.addEventListener('input', () => {
                 document.getElementById('titleChars').textContent = titleInput.value.length;
             });
-            
+
             descInput.addEventListener('input', () => {
                 document.getElementById('descChars').textContent = descInput.value.length;
             });
@@ -2479,7 +2611,7 @@ function downloadInvoicePDF() {
         function saveSEOSettings() {
             const title = document.getElementById('seoTitle').value;
             const description = document.getElementById('seoDescription').value;
-            
+
             // Save to database in real app
             showNotification('تم حفظ إعدادات SEO بنجاح', 'success');
         }
@@ -2490,10 +2622,10 @@ function downloadInvoicePDF() {
         function loadSettings() {
             // Load store settings
             loadStoreSettings();
-            
+
             // Load users
             loadUsers();
-            
+
             // Update last update time
             document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('ar-SA');
         }
@@ -2511,7 +2643,7 @@ function downloadInvoicePDF() {
             const logo = document.getElementById('storeLogo').value;
             const currency = document.getElementById('storeCurrency').value;
             const vat = document.getElementById('storeVAT').value;
-            
+
             // Save to database in real app
             showNotification('تم حفظ إعدادات المتجر بنجاح', 'success');
         }
@@ -2523,14 +2655,14 @@ function downloadInvoicePDF() {
                 { name: 'سارة خالد', email: 'sara@ler.com', role: 'مشرف', added: '2024-02-15', active: true },
                 { name: 'محمد علي', email: 'mohammed@ler.com', role: 'محاسب', added: '2024-03-20', active: false }
             ];
-            
+
             renderUsersTable();
         }
 
         function renderUsersTable() {
             const tbody = document.getElementById('usersTableBody');
             tbody.innerHTML = '';
-            
+
             State.users.forEach(user => {
                 tbody.innerHTML += `
                     <tr>
@@ -2611,20 +2743,20 @@ function downloadInvoicePDF() {
             // Create notification element
             const notification = document.createElement('div');
             notification.className = `fixed top-6 left-6 right-6 md:left-auto md:right-6 md:w-96 z-50 animate-slide-in`;
-            
+
             const bgColor = type === 'success' ? 'bg-green-500' : 
                            type === 'error' ? 'bg-red-500' : 
                            type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500';
-            
+
             notification.innerHTML = `
                 <div class="${bgColor} text-white p-4 rounded-xl shadow-lg flex items-center gap-3">
                     <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
                     <span>${message}</span>
                 </div>
             `;
-            
+
             document.body.appendChild(notification);
-            
+
             // Remove after 3 seconds
             setTimeout(() => {
                 notification.remove();
@@ -2633,12 +2765,12 @@ function downloadInvoicePDF() {
 
         function handleGlobalSearch(event) {
             const searchTerm = event.target.value.toLowerCase();
-            
+
             if(searchTerm.length < 2) return;
-            
+
             // Search across all data
             const results = [];
-            
+
             // Search orders
             State.orders.forEach(order => {
                 if(
@@ -2649,7 +2781,7 @@ function downloadInvoicePDF() {
                     results.push({ type: 'طلب', id: order.id, name: order.customers?.full_name });
                 }
             });
-            
+
             // Search products
             State.products.forEach(product => {
                 if(
@@ -2659,7 +2791,7 @@ function downloadInvoicePDF() {
                     results.push({ type: 'منتج', id: product.id, name: product.name });
                 }
             });
-            
+
             // Search customers
             State.customers.forEach(customer => {
                 if(
@@ -2669,7 +2801,7 @@ function downloadInvoicePDF() {
                     results.push({ type: 'عميل', id: customer.id, name: customer.name });
                 }
             });
-            
+
             if(results.length > 0) {
                 alert(`نتائج البحث (${results.length}):\n\n${
                     results.slice(0, 5).map(r => `• ${r.type}: ${r.name}`).join('\n')
@@ -2681,14 +2813,14 @@ function downloadInvoicePDF() {
         document.addEventListener('DOMContentLoaded', () => {
             // Auto-focus password input
             document.getElementById('adminPass').focus();
-            
+
             // Set current year for copyright
             document.getElementById('currentYear').textContent = new Date().getFullYear();
         });
         // دالة حفظ البيانات وإظهار الفاتورة
 async function saveAndPrintInvoice(event) {
     event.preventDefault();
-    
+
     const data = {
         name: document.getElementById('invCustName').value,
         phone: document.getElementById('invCustPhone').value,
@@ -2720,7 +2852,7 @@ async function saveAndPrintInvoice(event) {
 
         showNotification('تم حفظ الفاتورة بنجاح', 'success');
         closeModal('orderModal');
-        
+
         // 3. تحديث الجدول محلياً ثم فتح الفاتورة للطباعة
         await fetchOrders(); 
         generateProfessionalInvoice(order.id); 
@@ -2734,11 +2866,11 @@ async function saveAndPrintInvoice(event) {
 function generateProfessionalInvoice(orderId) {
     const order = State.orders.find(o => o.id === orderId);
     if(!order) return;
-    
+
     const vatRate = 0.15;
     const priceWithoutVat = order.total_amount / (1 + vatRate);
     const vatAmount = order.total_amount - priceWithoutVat;
-    
+
     document.getElementById('invoiceContent').innerHTML = `
       <div style="display: flex; justify-content: space-between; border-bottom: 4px solid #2563EB; padding-bottom: 20px; margin-bottom: 30px;">
     <div style="text-align: right;">
