@@ -2254,133 +2254,142 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             html2pdf().set(opt).from(element).save()
         }
 
-      // دالة التقرير الحقيقية (تسحب بياناتك الصدق مهوب عشوائي)
-// دالة التقرير المحدثة تسحب بياناتك وتطلعها PDF
-        function generateProfitLossReport() {
-            if (State.orders.length === 0) {
-                showNotification('ما فيه بيانات مبيعات عشان نطلع تقرير' 'warning')
-                return
-            }
+     // دالة التقرير المحدثة تسحب بياناتك وتطلعها PDF
+function generateProfitLossReport() {
+    if (State.orders.length === 0) {
+        showNotification('ما فيه بيانات مبيعات عشان نطلع تقرير', 'warning')
+        return
+    }
 
-            // حساب المبيعات الفعلية
-            const totalSales = State.orders
-                .filter(o => o.status === 'completed' || o.status === 'shipped')
-                .reduce((sum, order) => sum + (order.total_amount || 0) 0)
+    // حساب المبيعات الفعلية - تم إضافة الفاصلة الناقصة هنا قبل الصفر
+    const totalSales = State.orders
+        .filter(o => o.status === 'completed' || o.status === 'shipped')
+        .reduce((sum, order) => sum + (order.total_amount || 0), 0)
+    
+    const estimatedCogs = totalSales * 0.6 
+    const netProfit = totalSales - estimatedCogs
+
+    // بناء محتوى التقرير للطباعة
+    const reportContent = `
+        <div id="printableReport" dir="rtl" style="font-family: 'Tajawal', sans-serif; padding: 40px; color: #333;">
+            <h1 style="color: #2563EB; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 20px;">تقرير الأداء المالي - متجر لير</h1>
+            <p style="text-align: center; color: #666;">تاريخ التقرير: ${new Date().toLocaleDateString('ar-SA')}</p>
             
-            const estimatedCogs = totalSales * 0.6 
-            const netProfit = totalSales - estimatedCogs
-
-            // بناء محتوى التقرير للطباعة
-            const reportContent = `
-                <div id="printableReport" dir="rtl" style="font-family: 'Tajawal', sans-serif; padding: 40px; color: #333;">
-                    <h1 style="color: #2563EB; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 20px;">تقرير الأداء المالي - متجر لير</h1>
-                    <p style="text-align: center; color: #666;">تاريخ التقرير: ${new Date().toLocaleDateString('ar-SA')}</p>
-                    
-                    <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
-                            <p style="margin: 0; color: #64748b;">إجمالي المبيعات</p>
-                            <h2 style="margin: 10px 0; color: #0f172a;">${totalSales.toFixed(2)} ريال</h2>
-                        </div>
-                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
-                            <p style="margin: 0; color: #64748b;">صافي الربح التقديري</p>
-                            <h2 style="margin: 10px 0; color: #10b981;">${netProfit.toFixed(2)} ريال</h2>
-                        </div>
-                    </div>
-
-                    <table style="width: 100%; border-collapse: collapse; margin-top: 40px;">
-                        <thead>
-                            <tr style="background: #2563EB; color: white;">
-                                <th style="padding: 12px; border: 1px solid #ddd;">بند التقرير</th>
-                                <th style="padding: 12px; border: 1px solid #ddd;">القيمة</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="padding: 12px; border: 1px solid #ddd;">عدد الطلبات الكلي</td>
-                                <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${State.orders.length}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 12px; border: 1px solid #ddd;">متوسط قيمة الطلب</td>
-                                <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${(totalSales / (State.orders.length || 1)).toFixed(2)} ريال</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                    <p style="margin: 0; color: #64748b;">إجمالي المبيعات</p>
+                    <h2 style="margin: 10px 0; color: #0f172a;">${totalSales.toFixed(2)} ريال</h2>
                 </div>
-            `
-
-            // تحويل التقرير لملف PDF وتحميله فورا
-            const opt = {
-                margin: 0,
-                filename: `Ler_Report_${Date.now()}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-            }
-            
-            const tempDiv = document.createElement('div')
-            tempDiv.innerHTML = reportContent
-            html2pdf().set(opt).from(tempDiv).save()
-            
-            showNotification('جاري تجهيز تقرير الأرباح وتحميله' 'success')
-        }
-
-        // دالة الفاتورة الاحترافية تاكدت ان الـ ID حقها مضبوط للتحميل
-        function generateProfessionalInvoice(orderId) {
-            const order = State.orders.find(o => o.id === orderId)
-            if(!order) {
-                showNotification('الطلب غير موجود' 'error')
-                return
-            }
-            
-            const invoiceContent = document.getElementById('invoiceContent')
-            
-            invoiceContent.innerHTML = `
-                <div id="printableInvoice" dir="rtl" style="font-family: 'Tajawal', sans-serif; padding: 20px;">
-                    <div style="display: flex; justify-content: space-between; border-bottom: 4px solid #2563EB; padding-bottom: 20px; margin-bottom: 30px;">
-                        <div>
-                            <h1 style="color: #2563EB; margin: 0;">متجر لير للاتصالات</h1>
-                            <p>حفر الباطن - حي المصيف</p>
-                            <p>جوال: 0533774766</p>
-                        </div>
-                        <div style="text-align: left;">
-                            <h2>فاتورة مبيعات</h2>
-                            <p>رقم: <strong>INV-${order.id.substring(0,8)}</strong></p>
-                            <p>التاريخ: ${new Date(order.created_at).toLocaleDateString('ar-SA')}</p>
-                            <p style="color: #DC2626; font-weight: bold;">المنشأة غير خاضعة للضريبة</p>
-                        </div>
-                    </div>
-
-                    <div style="background: #f1f5f9; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-                        <p>العميل: <strong>${order.customers?.full_name || 'عميل نقدي'}</strong></p>
-                        <p>الجوال: ${order.customers?.phone || '-'}</p>
-                    </div>
-
-                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-                        <tr style="background: #2563EB; color: white;">
-                            <th style="padding: 10px; border: 1px solid #ddd;">المنتج</th>
-                            <th style="padding: 10px; border: 1px solid #ddd;">السعر</th>
-                        </tr>
-                        <tr>
-                            <td style="padding: 10px; border: 1px solid #ddd;">${order.product_name || 'جوال'}</td>
-                            <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${(order.total_amount || 0).toFixed(2)} ريال</td>
-                        </tr>
-                    </table>
-
-                    <div style="width: 200px; margin-right: auto; text-align: left; font-weight: bold; font-size: 1.2em; color: #2563EB;">
-                        الإجمالي: ${(order.total_amount || 0).toFixed(2)} ريال
-                    </div>
+                <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                    <p style="margin: 0; color: #64748b;">صافي الربح التقديري</p>
+                    <h2 style="margin: 10px 0; color: #10b981;">${netProfit.toFixed(2)} ريال</h2>
                 </div>
-            `
-            openModal('invoiceModal')
-        }
+            </div>
 
-        // دالة تحميل الفاتورة PDF الحين بتشتغل لان الـ ID صار موجود
-        function downloadInvoicePDF() {
-            const element = document.getElementById('printableInvoice')
-            if(!element) {
-                showNotification('افتح الفاتورة اولاً عشان تحملها' 'warning')
-                return
-            }
+            <table style="width: 100%; border-collapse: collapse; margin-top: 40px;">
+                <thead>
+                    <tr style="background: #2563EB; color: white;">
+                        <th style="padding: 12px; border: 1px solid #ddd;">بند التقرير</th>
+                        <th style="padding: 12px; border: 1px solid #ddd;">القيمة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">عدد الطلبات الكلي</td>
+                        <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${State.orders.length}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">متوسط قيمة الطلب</td>
+                        <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${(totalSales / (State.orders.length || 1)).toFixed(2)} ريال</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    `
+
+    // تحويل التقرير لملف PDF وتحميله فورا
+    const opt = {
+        margin: 0,
+        filename: `Ler_Report_${Date.now()}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    }
+    
+    const tempDiv = document.createElement('div')
+    tempDiv.innerHTML = reportContent
+    html2pdf().set(opt).from(tempDiv).save()
+    
+    showNotification('جاري تجهيز تقرير الأرباح وتحميله', 'success')
+}
+
+// دالة الفاتورة الاحترافية تاكدت ان الـ ID حقها مضبوط للتحميل
+function generateProfessionalInvoice(orderId) {
+    const order = State.orders.find(o => o.id === orderId)
+    if(!order) {
+        showNotification('الطلب غير موجود', 'error')
+        return
+    }
+    
+    const invoiceContent = document.getElementById('invoiceContent')
+    
+    invoiceContent.innerHTML = `
+        <div id="printableInvoice" dir="rtl" style="font-family: 'Tajawal', sans-serif; padding: 20px;">
+            <div style="display: flex; justify-content: space-between; border-bottom: 4px solid #2563EB; padding-bottom: 20px; margin-bottom: 30px;">
+                <div>
+                    <h1 style="color: #2563EB; margin: 0;">متجر لير للاتصالات</h1>
+                    <p>حفر الباطن - حي المصيف</p>
+                    <p>جوال: 0533774766</p>
+                </div>
+                <div style="text-align: left;">
+                    <h2>فاتورة مبيعات</h2>
+                    <p>رقم: <strong>INV-${order.id.substring(0,8)}</strong></p>
+                    <p>التاريخ: ${new Date(order.created_at).toLocaleDateString('ar-SA')}</p>
+                    <p style="color: #DC2626; font-weight: bold;">المنشأة غير خاضعة للضريبة</p>
+                </div>
+            </div>
+
+            <div style="background: #f1f5f9; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                <p>العميل: <strong>${order.customers?.full_name || 'عميل نقدي'}</strong></p>
+                <p>الجوال: ${order.customers?.phone || '-'}</p>
+            </div>
+
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                <tr style="background: #2563EB; color: white;">
+                    <th style="padding: 10px; border: 1px solid #ddd;">المنتج</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">السعر</th>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd;">${order.product_name || 'جوال'}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${(order.total_amount || 0).toFixed(2)} ريال</td>
+                </tr>
+            </table>
+
+            <div style="width: 200px; margin-right: auto; text-align: left; font-weight: bold; font-size: 1.2em; color: #2563EB;">
+                الإجمالي: ${(order.total_amount || 0).toFixed(2)} ريال
+            </div>
+        </div>
+    `
+    openModal('invoiceModal')
+}
+
+// دالة تحميل الفاتورة PDF الحين بتشتغل لان الـ ID صار موجود
+function downloadInvoicePDF() {
+    const element = document.getElementById('printableInvoice')
+    if(!element) {
+        showNotification('افتح الفاتورة اولاً عشان تحملها', 'warning')
+        return
+    }
+    
+    const opt = {
+        margin: 0.5,
+        filename: `Invoice_${Date.now()}.pdf`,
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 3, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    }
+    html2pdf().set(opt).from(element).save()
+}
             
             const opt = {
                 margin: 0.5,
