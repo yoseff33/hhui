@@ -865,12 +865,7 @@
         </main>
     </div>
 
-    <!-- ========================
-            MODALS
-    ========================= -->
-
-    <!-- Product Modal -->
-    <div id="productModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+ <div id="productModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
         <div class="bg-white w-full max-w-4xl p-8 rounded-2xl shadow-2xl transform scale-95 transition-all max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-2xl font-bold text-gray-800" id="productModalTitle">إضافة منتج جديد</h3>
@@ -881,7 +876,6 @@
             
             <form onsubmit="saveProduct(event)" class="space-y-6">
                 <input type="hidden" id="editProductId">
-                
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">اسم المنتج *</label>
@@ -892,206 +886,137 @@
                         <select id="productCategory" class="w-full border border-gray-300 rounded-xl p-3">
                             <option value="electronics">إلكترونيات</option>
                             <option value="phones">هواتف</option>
-                            <option value="computers">كمبيوترات</option>
                             <option value="accessories">إكسسوارات</option>
-                            <option value="other">أخرى</option>
                         </select>
                     </div>
                 </div>
-                
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">SKU *</label>
-                        <input type="text" id="productSKU" class="w-full border border-gray-300 rounded-xl p-3" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">الباركود</label>
-                        <input type="text" id="productBarcode" class="w-full border border-gray-300 rounded-xl p-3">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">الكمية بالمخزون *</label>
-                        <input type="number" id="productStock" class="w-full border border-gray-300 rounded-xl p-3" min="0" required>
-                    </div>
+                    <div><label class="block text-sm font-bold text-gray-700 mb-2">SKU *</label><input type="text" id="productSKU" class="w-full border border-gray-300 rounded-xl p-3" required></div>
+                    <div><label class="block text-sm font-bold text-gray-700 mb-2">الكمية *</label><input type="number" id="productStock" class="w-full border border-gray-300 rounded-xl p-3" required></div>
+                    <div><label class="block text-sm font-bold text-gray-700 mb-2">السعر *</label><input type="number" id="productPrice" class="w-full border border-gray-300 rounded-xl p-3" required></div>
                 </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">سعر التكلفة *</label>
-                        <input type="number" id="productCost" class="w-full border border-gray-300 rounded-xl p-3" min="0" step="0.01" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">سعر البيع *</label>
-                        <input type="number" id="productPrice" class="w-full border border-gray-300 rounded-xl p-3" min="0" step="0.01" required>
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">وصف المنتج</label>
-                    <textarea id="productDescription" rows="3" class="w-full border border-gray-300 rounded-xl p-3"></textarea>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">صورة المنتج (رابط)</label>
-                    <input type="text" id="productImage" class="w-full border border-gray-300 rounded-xl p-3" dir="ltr" placeholder="https://example.com/image.jpg">
-                </div>
-                
                 <div class="flex gap-3 pt-4">
-                    <button type="button" onclick="closeModal('productModal')" class="flex-1 bg-gray-100 text-gray-700 p-3 rounded-xl font-bold hover:bg-gray-200 transition">إلغاء</button>
-                    <button type="submit" id="productSubmitBtn" class="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-xl font-bold hover:opacity-90 transition">حفظ المنتج</button>
+                    <button type="button" onclick="closeModal('productModal')" class="flex-1 bg-gray-100 p-3 rounded-xl font-bold">إلغاء</button>
+                    <button type="submit" id="productSubmitBtn" class="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-xl font-bold">حفظ المنتج</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- WhatsApp CRM Modal -->
+    <div id="orderModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-2xl p-8 rounded-2xl shadow-2xl transform scale-95 transition-all">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">إنشاء طلب جديد</h3>
+                <button onclick="closeModal('orderModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="space-y-4 text-center">
+                <i class="fas fa-shopping-cart text-5xl text-blue-100"></i>
+                <p class="text-gray-600">سيتم ربط نظام الطلبات اليدوي قريباً. حالياً الطلبات تأتي تلقائياً من الموقع.</p>
+                <button onclick="closeModal('orderModal')" class="btn-primary w-full">فهمت</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="customerModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-lg p-8 rounded-2xl shadow-2xl transform scale-95 transition-all">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">إضافة عميل جديد</h3>
+                <button onclick="closeModal('customerModal')" class="text-gray-400"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="space-y-4">
+                <input type="text" placeholder="اسم العميل" class="w-full border border-gray-300 rounded-xl p-3">
+                <input type="text" placeholder="رقم الهاتف" class="w-full border border-gray-300 rounded-xl p-3">
+                <button class="btn-primary w-full">حفظ العميل</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="userModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-lg p-8 rounded-2xl shadow-2xl transform scale-95 transition-all">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">إضافة مشرف جديد</h3>
+                <button onclick="closeModal('userModal')" class="text-gray-400"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="space-y-4">
+                <input type="email" placeholder="البريد الإلكتروني" class="w-full border border-gray-300 rounded-xl p-3">
+                <select class="w-full border border-gray-300 rounded-xl p-3">
+                    <option>مدير نظام</option>
+                    <option>مشرف طلبات</option>
+                </select>
+                <button class="btn-primary w-full">إرسال دعوة</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="couponModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-lg p-8 rounded-2xl shadow-2xl transform scale-95 transition-all">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">إنشاء كوبون جديد</h3>
+                <button onclick="closeModal('couponModal')" class="text-gray-400"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="space-y-4">
+                <input type="text" placeholder="كود الكوبون (مثلاً: LER10)" class="w-full border border-gray-300 rounded-xl p-3">
+                <input type="number" placeholder="نسبة الخصم %" class="w-full border border-gray-300 rounded-xl p-3">
+                <button class="btn-primary w-full">تفعيل الكوبون</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="taxSettingsModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-lg p-8 rounded-2xl shadow-2xl transform scale-95 transition-all">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">إعدادات الضريبة</h3>
+                <button onclick="closeModal('taxSettingsModal')" class="text-gray-400"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="space-y-4">
+                <label class="block text-sm font-bold">الرقم الضريبي للمنشأة</label>
+                <input type="text" value="300012345600003" class="w-full border border-gray-300 rounded-xl p-3">
+                <label class="block text-sm font-bold">نسبة الضريبة (VAT %)</label>
+                <input type="number" value="15" class="w-full border border-gray-300 rounded-xl p-3">
+                <button class="btn-primary w-full">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
+
     <div id="whatsappModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
         <div class="bg-white w-full max-w-md p-6 rounded-2xl shadow-2xl transform scale-95 transition-all">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-bold text-gray-800">إرسال رسالة واتساب</h3>
-                <button onclick="closeModal('whatsappModal')" class="text-gray-400 hover:text-gray-600">
-                    <i class="fas fa-times"></i>
-                </button>
+                <button onclick="closeModal('whatsappModal')" class="text-gray-400"><i class="fas fa-times"></i></button>
             </div>
-            
             <div class="space-y-4" id="whatsappTemplates">
-                <div class="border border-gray-200 rounded-xl p-4 hover:border-green-500 cursor-pointer transition" onclick="sendWhatsAppTemplate('cart_recovery')">
-                    <h4 class="font-bold text-gray-800 mb-2">استرجاع السلة المتروكة</h4>
-                    <p class="text-sm text-gray-600">مرحباً [الاسم]، لاحظنا أنك بدأت عملية شراء ولم تكملها...</p>
-                    <div class="mt-3 text-xs text-green-600">
-                        <i class="fab fa-whatsapp ml-1"></i> إرسال الآن
-                    </div>
+                <div class="border border-gray-200 rounded-xl p-4 hover:border-green-500 cursor-pointer" onclick="sendWhatsAppTemplate('shipping')">
+                    <h4 class="font-bold">تحديث حالة الشحن</h4>
+                    <p class="text-sm">تم شحن طلبك بنجاح...</p>
                 </div>
-                
-                <div class="border border-gray-200 rounded-xl p-4 hover:border-green-500 cursor-pointer transition" onclick="sendWhatsAppTemplate('installment')">
-                    <h4 class="font-bold text-gray-800 mb-2">عرض التقسيط (تابي/تمارا)</h4>
-                    <p class="text-sm text-gray-600">أهلاً [الاسم]، توفرت خدمة التقسيط بدون فوائد لطلباتك...</p>
-                    <div class="mt-3 text-xs text-green-600">
-                        <i class="fab fa-whatsapp ml-1"></i> إرسال الآن
-                    </div>
-                </div>
-                
-                <div class="border border-gray-200 rounded-xl p-4 hover:border-green-500 cursor-pointer transition" onclick="sendWhatsAppTemplate('shipping')">
-                    <h4 class="font-bold text-gray-800 mb-2">تحديث حالة الشحن</h4>
-                    <p class="text-sm text-gray-600">مرحباً [الاسم]، تم شحن طلبك رقم [رقم الطلب]...</p>
-                    <div class="mt-3 text-xs text-green-600">
-                        <i class="fab fa-whatsapp ml-1"></i> إرسال الآن
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-6 p-4 bg-blue-50 rounded-xl">
-                <p class="text-sm text-blue-800">سيتم فتح تطبيق واتساب مع الرسالة الجاهزة للعميل <span id="customerNameDisplay"></span></p>
             </div>
         </div>
     </div>
 
-    <!-- Shipping Label Modal -->
     <div id="shippingModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-2xl p-8 rounded-2xl shadow-2xl transform scale-95 transition-all">
+        <div class="bg-white w-full max-w-2xl p-8 rounded-2xl shadow-2xl">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-bold text-gray-800">بوليصة الشحن - SMSA</h3>
-                <div class="flex gap-2">
-                    <button onclick="printShippingLabel()" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
-                        <i class="fas fa-print ml-2"></i> طباعة
-                    </button>
-                    <button onclick="closeModal('shippingModal')" class="text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
+                <h3 class="text-xl font-bold">بوليصة الشحن</h3>
+                <button onclick="closeModal('shippingModal')" class="text-gray-400"><i class="fas fa-times"></i></button>
             </div>
-            
-            <div class="print-label mx-auto" id="shippingLabel">
-                <div class="text-center mb-6">
-                    <h2 class="text-2xl font-black text-gray-800">SMSA Express</h2>
-                    <p class="text-gray-600">بوليصة شحن إلكترونية</p>
+            <div id="shippingLabel" class="print-label mx-auto">
                 </div>
-                
-                <div class="border-t border-b border-gray-300 py-4 my-4">
-                    <div class="flex justify-between items-center mb-4">
-                        <div>
-                            <p class="text-sm text-gray-500">رقم التتبع</p>
-                            <p class="font-bold text-xl" id="trackingNumber">SMSA-2024-001</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-sm text-gray-500">تاريخ الشحن</p>
-                            <p class="font-bold" id="shippingDate">2024-01-15</p>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <p class="text-sm text-gray-500 mb-1">المرسل:</p>
-                            <p class="font-bold">متجر لير</p>
-                            <p class="text-sm">الرياض، السعودية</p>
-                            <p class="text-sm">0551234567</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500 mb-1">المستلم:</p>
-                            <p class="font-bold" id="shippingCustomer">محمد أحمد</p>
-                            <p class="text-sm" id="shippingAddress">جدة، السعودية</p>
-                            <p class="text-sm" id="shippingPhone">0557654321</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mb-6">
-                    <p class="text-sm text-gray-500 mb-2">محتويات الشحنة:</p>
-                    <div id="shippingContents">
-                        <!-- Products will be added here -->
-                    </div>
-                </div>
-                
-                <div class="border-t border-gray-300 pt-4">
-                    <div class="flex justify-between">
-                        <div>
-                            <p class="text-sm text-gray-500">الوزن</p>
-                            <p class="font-bold">2.5 كجم</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">عدد القطع</p>
-                            <p class="font-bold">3</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">طريقة الدفع</p>
-                            <p class="font-bold">مدفوع</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-8 text-center">
-                    <div class="inline-block p-4 bg-gray-100 rounded-lg">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SMSA-2024-001" alt="QR Code">
-                    </div>
-                    <p class="text-sm text-gray-500 mt-2">امسح الباركود للمتابعة</p>
-                </div>
-            </div>
         </div>
     </div>
 
-    <!-- Invoice Modal -->
     <div id="invoiceModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-4xl p-8 rounded-2xl shadow-2xl transform scale-95 transition-all max-h-[90vh] overflow-y-auto">
+        <div class="bg-white w-full max-w-4xl p-8 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-bold text-gray-800">فاتورة ضريبية</h3>
-                <div class="flex gap-2">
-                    <button onclick="printInvoice()" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
-                        <i class="fas fa-print ml-2"></i> طباعة
-                    </button>
-                    <button onclick="downloadInvoicePDF()" class="bg-green-600 text-white px-4 py-2 rounded-lg">
-                        <i class="fas fa-download ml-2"></i> PDF
-                    </button>
-                    <button onclick="closeModal('invoiceModal')" class="text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
+                <h3 class="text-xl font-bold">فاتورة ضريبية</h3>
+                <button onclick="closeModal('invoiceModal')" class="text-gray-400"><i class="fas fa-times"></i></button>
             </div>
-            
-            <div id="invoiceContent" class="bg-white p-8 border border-gray-300">
-                <!-- Invoice content will be generated here -->
-            </div>
+            <div id="invoiceContent" class="bg-white p-8 border border-gray-300"></div>
         </div>
     </div>
 
+    <footer class="text-center py-6 text-gray-400 text-sm">
+        <p>© <span id="currentYear"></span> متجر لير للاتصالات - جميع الحقوق محفوظة</p>
+    </footer>
     <!-- System Initialization & Core Logic -->
     <script>
         // =========================
