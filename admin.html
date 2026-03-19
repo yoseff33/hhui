@@ -2391,7 +2391,7 @@ function downloadInvoicePDF() {
     html2pdf().set(opt).from(element).save()
 }
             
-            const opt = {
+           const opt = {
                 margin: 0.5,
                 filename: `Invoice_${Date.now()}.pdf`,
                 image: { type: 'jpeg', quality: 1 },
