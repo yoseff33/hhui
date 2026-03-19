@@ -2212,79 +2212,52 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             openModal('invoiceModal');
         }
 
+       // دالة الطباعة المحدثة عشان تركز على الفاتورة بس
         function printInvoice() {
-            const printContent = document.getElementById('invoiceContent').innerHTML;
-            const originalContent = document.body.innerHTML;
+            const printContent = document.getElementById('printableInvoice').innerHTML
+            const printWindow = window.open('', '', 'height=800,width=1000')
             
-            document.body.innerHTML = `
-                <!DOCTYPE html>
-                <html dir="rtl">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>فاتورة ضريبية</title>
-                    <style>
-                        body { font-family: 'Tajawal', sans-serif; padding: 40px; }
-                        table { width: 100%; border-collapse: collapse; }
-                        th, td { border: 1px solid #000; padding: 8px; }
-                    </style>
-                </head>
-                <body>${printContent}</body>
-                </html>
-            `;
+            printWindow.document.write('<html><head><title>طباعة فاتورة مبيعات</title>')
+            printWindow.document.write('<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">')
+            printWindow.document.write('<style>')
+            printWindow.document.write('body { font-family: "Tajawal", sans-serif; direction: rtl; padding: 30px; }')
+            printWindow.document.write('table { width: 100%; border-collapse: collapse; margin-top: 20px; }')
+            printWindow.document.write('th, td { border: 1px solid #ddd; padding: 12px; text-align: center; }')
+            printWindow.document.write('th { background-color: #f8fafc; }')
+            printWindow.document.write('.no-print { display: none; }')
+            printWindow.document.write('</style></head><body>')
+            printWindow.document.write(printContent)
+            printWindow.document.write('</body></html>')
             
-            window.print();
-            document.body.innerHTML = originalContent;
-            location.reload();
+            printWindow.document.close()
+            setTimeout(() => {
+                printWindow.print()
+                printWindow.close()
+            }, 500)
         }
 
+        // دالة تحميل الـ PDF مع تحسين المقاسات
         function downloadInvoicePDF() {
-            const element = document.getElementById('invoiceContent');
+            const element = document.getElementById('printableInvoice')
             const opt = {
-                margin:       1,
-                filename:     `invoice_${Date.now()}.pdf`,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-            
-            html2pdf().set(opt).from(element).save();
+                margin: 0.5,
+                filename: `Invoice_${Date.now()}.pdf`,
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 3, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            }
+            html2pdf().set(opt).from(element).save()
         }
 
+        // دالة التقرير الحقيقية (تسحب بياناتك الصدق مهوب عشوائي)
         function generateProfitLossReport() {
-            const months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 
-                           'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
-            
-            let report = `تقرير الأرباح والخسائر\n`;
-            report += `الفترة: ${new Date().getFullYear()}\n`;
-            report += `==========================\n\n`;
-            
-            months.forEach((month, index) => {
-                const sales = Math.floor(Math.random() * 50000) + 10000;
-                const cogs = sales * 0.6;
-                const profit = sales - cogs;
-                
-                report += `${month}:\n`;
-                report += `  المبيعات: ${formatCurrency(sales)}\n`;
-                report += `  التكلفة: ${formatCurrency(cogs)}\n`;
-                report += `  الربح: ${formatCurrency(profit)}\n`;
-                report += `  الهامش: ${((profit / sales) * 100).toFixed(1)}%\n\n`;
-            });
-            
-            // Create and download report
-            const blob = new Blob([report], { type: 'text/plain;charset=utf-8' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            
-            link.setAttribute('href', url);
-            link.setAttribute('download', `تقرير_الأرباح_${new Date().getFullYear()}.txt`);
-            link.style.visibility = 'hidden';
-            
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showNotification('تم إنشاء التقرير بنجاح', 'success');
-        }
+            if (State.orders.length === 0) {
+                showNotification('ما فيه بيانات مبيعات عشان نطلع تقرير' 'warning')
+                return
+            }
+
+            let report = `تقرير مبيعات متجر لير للاتصالات\n`
+            report += `تاريخ التقرير: ${new Date().
 
         // =========================
         // MARKETING MODULE
