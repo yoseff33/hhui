@@ -1054,17 +1054,34 @@
         </div>
     </div>
 
-    <div id="invoiceModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-4xl p-8 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-bold">فاتورة ضريبية</h3>
-                <button onclick="closeModal('invoiceModal')" class="text-gray-400"><i class="fas fa-times"></i></button>
+  <div id="invoiceModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-4xl p-8 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto transform scale-95 transition-all">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 border-b pb-4">
+                <h3 class="text-2xl font-bold text-gray-800">فاتورة ضريبية</h3>
+                <div class="flex gap-2">
+                    <button onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                        <i class="fas fa-print ml-2"></i> طباعة
+                    </button>
+                    <button onclick="downloadInvoicePDF()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                        <i class="fas fa-file-pdf ml-2"></i> تحميل PDF
+                    </button>
+                    <button onclick="closeModal('invoiceModal')" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-200 transition">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
-            <div id="invoiceContent" class="bg-white p-8 border border-gray-300"></div>
+            <div id="invoiceContent" class="bg-white p-4 md:p-8 border border-gray-200 rounded-xl shadow-inner overflow-x-auto">
+                </div>
         </div>
     </div>
 
-    <footer class="text-center py-6 text-gray-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 mt-8 mb-4 flex justify-center md:justify-end">
+        <button onclick="exportAllOrdersToCSV()" class="bg-green-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-green-700 transition shadow-xl transform hover:-translate-y-1">
+            <i class="fas fa-file-excel ml-2 text-xl"></i> تصدير جميع الفواتير (Excel)
+        </button>
+    </div>
+
+    <footer class="text-center py-10 border-t mt-12 text-gray-400 text-sm">
         <p>© <span id="currentYear"></span> متجر لير للاتصالات - جميع الحقوق محفوظة</p>
     </footer>
     <!-- System Initialization & Core Logic -->
