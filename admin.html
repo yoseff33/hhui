@@ -2130,87 +2130,92 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             });
         }
 
-        function generateInvoice(orderId) {
-            const order = State.orders.find(o => o.id === orderId);
-            if(!order) return;
-            
-            const invoiceContent = document.getElementById('invoiceContent');
-            const invoiceNumber = `INV-${order.id.substring(0, 8)}-${Date.now().toString().slice(-4)}`;
-            const today = new Date().toLocaleDateString('ar-SA');
-            const vatRate = 15; // Default VAT rate
-            
-            const subtotal = order.total_amount || 0;
-            const vatAmount = subtotal * (vatRate / 100);
-            const total = subtotal + vatAmount;
-            
-            invoiceContent.innerHTML = `
-                <div class="text-center mb-8">
-                    <h1 class="text-2xl font-black text-gray-800">فاتورة ضريبية</h1>
-                    <p class="text-gray-600">رقم الفاتورة: ${invoiceNumber}</p>
+    function generateInvoice(orderId) {
+    const order = State.orders.find(o => o.id === orderId);
+    if (!order) {
+        showNotification('عذراً، لم يتم العثور على بيانات الفاتورة', 'error');
+        return;
+    }
+
+    const invoiceContent = document.getElementById('invoiceContent');
+    const invoiceNumber = `INV-${order.id.substring(0, 8)}`;
+    const today = new Date().toLocaleDateString('ar-SA');
+    
+    // المبلغ الإجمالي (صافي بدون ضريبة حسب طلبك)
+    const totalAmount = order.total_amount || 0;
+
+    invoiceContent.innerHTML = `
+        <div id="printableInvoice" dir="rtl" style="font-family: 'Tajawal', sans-serif; color: #333; padding: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #2563EB; padding-bottom: 15px; margin-bottom: 25px;">
+                <div style="text-align: right;">
+                    <h1 style="color: #2563EB; font-size: 26px; margin: 0; font-weight: 900;">متجر لير للاتصالات</h1>
+                    <p style="margin: 5px 0; font-size: 14px; font-weight: bold;">حفر الباطن - حي المصيف</p>
+                    <p style="margin: 3px 0; font-size: 13px;">شارع الوليد بن عبدالملك</p>
+                    <p style="margin: 3px 0; font-size: 13px;">جوال: 0533774766</p>
                 </div>
-                
-                <div class="grid grid-cols-2 gap-8 mb-8">
-                    <div>
-                        <h3 class="font-bold text-gray-800 mb-2">معلومات البائع:</h3>
-                        <p>متجر لير للاتصالات</p>
-                        <p>الرياض، المملكة العربية السعودية</p>
-                        <p>رقم السجل الضريبي: 123456789123456</p>
-                    </div>
-                    <div class="text-left">
-                        <h3 class="font-bold text-gray-800 mb-2">معلومات العميل:</h3>
-                        <p>${order.customers?.full_name || 'العميل'}</p>
-                        <p>${order.customers?.phone || ''}</p>
-                        <p>${order.customers?.email || ''}</p>
-                    </div>
+                <div style="text-align: left;">
+                    <h2 style="margin: 0; color: #4B5563; font-size: 20px; font-weight: 800;">فاتورة مبيعات</h2>
+                    <p style="margin: 5px 0; font-size: 14px;">رقم الفاتورة: <strong>${invoiceNumber}</strong></p>
+                    <p style="margin: 5px 0; font-size: 14px;">التاريخ: ${today}</p>
+                    <p style="margin: 5px 0; color: #DC2626; font-weight: bold; font-size: 12px; border: 1px solid #DC2626; padding: 2px 5px; border-radius: 4px; display: inline-block;">
+                        المنشأة غير خاضعة للضريبة
+                    </p>
                 </div>
-                
-                <div class="mb-8">
-                    <p><strong>تاريخ الفاتورة:</strong> ${today}</p>
-                    <p><strong>تاريخ الطلب:</strong> ${new Date(order.created_at).toLocaleDateString('ar-SA')}</p>
+            </div>
+
+            <div style="background: #F1F5F9; padding: 15px; border-radius: 12px; margin-bottom: 25px; border-right: 6px solid #2563EB;">
+                <h4 style="margin: 0 0 8px 0; color: #2563EB; font-size: 15px;">بيانات العميل:</h4>
+                <p style="margin: 4px 0; font-size: 14px;">الاسم: <strong>${order.customers?.full_name || 'عميل نقدي'}</strong></p>
+                <p style="margin: 4px 0; font-size: 14px;">الجوال: ${order.customers?.phone || '-'}</p>
+            </div>
+
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; text-align: center; font-size: 14px;">
+                <thead>
+                    <tr style="background: #2563EB; color: white;">
+                        <th style="padding: 12px; border: 1px solid #E5E7EB;">المنتج / الوصف</th>
+                        <th style="padding: 12px; border: 1px solid #E5E7EB;">طريقة الدفع</th>
+                        <th style="padding: 12px; border: 1px solid #E5E7EB;">الكمية</th>
+                        <th style="padding: 12px; border: 1px solid #E5E7EB;">السعر</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #FFFFFF;">
+                        <td style="padding: 15px; border: 1px solid #E5E7EB; text-align: right;">
+                            <strong>${order.product_name || 'جوال / ملحقات'}</strong>
+                            <div style="font-size: 11px; color: #6B7280; margin-top: 4px;">نوع الطلب: ${order.product_type || 'إلكترونيات'}</div>
+                        </td>
+                        <td style="padding: 15px; border: 1px solid #E5E7EB;">${order.payment_method || 'مدى'}</td>
+                        <td style="padding: 15px; border: 1px solid #E5E7EB;">1</td>
+                        <td style="padding: 15px; border: 1px solid #E5E7EB; font-weight: bold;">${totalAmount.toFixed(2)} ﷼</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="width: 280px; margin-right: auto;">
+                <div style="display: flex; justify-content: space-between; padding: 8px 0; color: #4B5563;">
+                    <span>المجموع الفرعي:</span>
+                    <span>${totalAmount.toFixed(2)} ﷼</span>
                 </div>
-                
-                <table class="w-full border-collapse mb-8">
-                    <thead>
-                        <tr class="bg-gray-100">
-                            <th class="border p-3 text-right">الوصف</th>
-                            <th class="border p-3">الكمية</th>
-                            <th class="border p-3">السعر</th>
-                            <th class="border p-3">المجموع</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="border p-3">طلب #${order.id.substring(0, 8)}</td>
-                            <td class="border p-3 text-center">1</td>
-                            <td class="border p-3">${formatCurrency(subtotal)}</td>
-                            <td class="border p-3">${formatCurrency(subtotal)}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <div class="text-left">
-                    <div class="mb-2 flex justify-between">
-                        <span>المجموع الفرعي:</span>
-                        <span>${formatCurrency(subtotal)}</span>
-                    </div>
-                    <div class="mb-2 flex justify-between">
-                        <span>الضريبة ${vatRate}%:</span>
-                        <span>${formatCurrency(vatAmount)}</span>
-                    </div>
-                    <div class="text-xl font-bold flex justify-between border-t pt-2">
-                        <span>الإجمالي:</span>
-                        <span>${formatCurrency(total)}</span>
-                    </div>
+                <div style="display: flex; justify-content: space-between; padding: 8px 0; color: #4B5563;">
+                    <span>الضريبة (0%):</span>
+                    <span>0.00 ﷼</span>
                 </div>
-                
-                <div class="mt-8 pt-8 border-t text-center text-gray-500 text-sm">
-                    <p>شكراً لشرائك من متجر لير</p>
-                    <p>للاستفسارات: 0551234567 | info@ler-store.com</p>
+                <div style="display: flex; justify-content: space-between; padding: 12px 10px; background: #2563EB; color: white; border-radius: 8px; font-weight: bold; font-size: 1.2em; margin-top: 10px; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);">
+                    <span>الإجمالي الصافي:</span>
+                    <span>${totalAmount.toFixed(2)} ﷼</span>
                 </div>
-            `;
-            
-            openModal('invoiceModal');
-        }
+            </div>
+
+            <div style="margin-top: 60px; text-align: center; border-top: 1px dashed #CBD5E1; pt: 20px;">
+                <p style="margin: 15px 0 5px 0; font-weight: bold; color: #1F2937;">شكراً لتعاملكم مع متجر لير للاتصالات</p>
+                <p style="margin: 0; font-size: 12px; color: #6B7280;">السلع المباعة لا ترد ولا تستبدل إلا في حال وجود عيب مصنعي خلال 3 أيام</p>
+                <div style="margin-top: 20px; opacity: 0.2; font-size: 10px;">نظام لير للإدارة v2.0</div>
+            </div>
+        </div>
+    `;
+
+    openModal('invoiceModal');
+}
 
        // دالة الطباعة المحدثة عشان تركز على الفاتورة بس
         function printInvoice() {
