@@ -1479,61 +1479,70 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             });
         }
 
-        function renderOrdersTable() {
-            const tbody = document.getElementById('ordersTableBody');
-            const filteredOrders = filterOrdersByStatus(State.currentOrderFilter);
-            const paginatedOrders = paginateOrders(filteredOrders);
-            
-            tbody.innerHTML = '';
-            
-            if(paginatedOrders.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="6" class="p-8 text-center text-gray-500">
-                            <i class="fas fa-shopping-cart text-3xl mb-4 block text-gray-300"></i>
-                            لا توجد طلبات
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-            
-            paginatedOrders.forEach(order => {
-                const statusBadge = getStatusBadge(order.status);
-                const date = new Date(order.created_at).toLocaleDateString('ar-SA');
-                
-                tbody.innerHTML += `
-                    <tr>
-                        <td class="font-bold">#${order.id.substring(0, 8)}</td>
-                        <td>
-                            <div class="font-bold">${order.customers?.full_name || 'عميل'}</div>
-                            <div class="text-sm text-gray-500">${order.customers?.phone || ''}</div>
-                        </td>
-                        <td class="font-bold text-green-600">${formatCurrency(order.total_amount || 0)}</td>
-                        <td>${statusBadge}</td>
-                        <td class="text-sm text-gray-500">${date}</td>
-                        <td class="text-center">
-                            <div class="flex gap-2 justify-center">
-                                <button onclick="openWhatsAppModal('${order.id}')" class="whatsapp-btn p-2 rounded-lg" title="واتساب">
-                                    <i class="fab fa-whatsapp"></i>
-                                </button>
-                                <button onclick="openShippingModal('${order.id}')" class="bg-blue-100 text-blue-700 p-2 rounded-lg" title="شحن">
-                                    <i class="fas fa-truck"></i>
-                                </button>
-                                <button onclick="generateInvoice('${order.id}')" class="bg-green-100 text-green-700 p-2 rounded-lg" title="فاتورة">
-                                    <i class="fas fa-file-invoice"></i>
-                                </button>
-                                <button onclick="updateOrderStatus('${order.id}')" class="bg-yellow-100 text-yellow-700 p-2 rounded-lg" title="تغيير الحالة">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
-            
-            document.getElementById('ordersCount').textContent = `${filteredOrders.length} طلب`;
-        }
+      function renderOrdersTable() {
+    const tbody = document.getElementById('ordersTableBody');
+    const filteredOrders = filterOrdersByStatus(State.currentOrderFilter);
+    const paginatedOrders = paginateOrders(filteredOrders);
+    
+    tbody.innerHTML = '';
+    
+    if(paginatedOrders.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="p-8 text-center text-gray-500">
+                    <i class="fas fa-box-open text-3xl mb-4 block text-gray-300"></i>
+                    لا توجد فواتير أو طلبات حالياً
+                </td>
+            </tr>
+        `;
+        return;
+    }
+    
+    paginatedOrders.forEach(order => {
+        const statusBadge = getStatusBadge(order.status);
+        const date = new Date(order.created_at).toLocaleDateString('ar-SA');
+        const customerName = order.customers?.full_name || 'عميل نقدي';
+        const customerPhone = order.customers?.phone || '';
+        
+        tbody.innerHTML += `
+            <tr class="hover:bg-gray-50 transition border-b">
+                <td class="font-bold text-blue-600">#${order.id.substring(0, 8)}</td>
+                <td>
+                    <div class="font-bold text-gray-800">${customerName}</div>
+                    <div class="text-xs text-gray-500">${customerPhone}</div>
+                </td>
+                <td>
+                    <div class="text-sm font-bold text-gray-700">${order.product_name || 'جوال'}</div>
+                    <div class="text-xs text-blue-500">${order.payment_method || '-'}</div>
+                </td>
+                <td class="font-bold text-green-600">${formatCurrency(order.total_amount || 0)}</td>
+                <td>${statusBadge}</td>
+                <td class="text-xs text-gray-400">${date}</td>
+                <td class="text-center">
+                    <div class="flex gap-2 justify-center">
+                        <button onclick="generateProfessionalInvoice('${order.id}')" class="bg-blue-100 text-blue-700 p-2 rounded-lg hover:bg-blue-200" title="عرض وطباعة الفاتورة">
+                            <i class="fas fa-file-invoice"></i>
+                        </button>
+                        
+                        <button onclick="openWhatsAppModal('${customerPhone}', '${customerName}')" class="bg-green-100 text-green-700 p-2 rounded-lg hover:bg-green-200" title="واتساب">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+
+                        <button onclick="openShippingModal('${order.id}')" class="bg-gray-100 text-gray-700 p-2 rounded-lg hover:bg-gray-200" title="بوليصة شحن">
+                            <i class="fas fa-truck"></i>
+                        </button>
+
+                        <button onclick="updateOrderStatus('${order.id}')" class="bg-yellow-100 text-yellow-700 p-2 rounded-lg hover:bg-yellow-200" title="تغيير الحالة">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    });
+    
+    document.getElementById('ordersCount').textContent = `${filteredOrders.length} طلب`;
+}
 
         function getStatusBadge(status) {
             const badges = {
