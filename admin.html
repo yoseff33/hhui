@@ -2241,19 +2241,6 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             }, 500)
         }
 
-        // دالة تحميل الـ PDF مع تحسين المقاسات
-        function downloadInvoicePDF() {
-            const element = document.getElementById('printableInvoice')
-            const opt = {
-                margin: 0.5,
-                filename: `Invoice_${Date.now()}.pdf`,
-                image: { type: 'jpeg', quality: 1 },
-                html2canvas: { scale: 3, useCORS: true },
-                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-            }
-            html2pdf().set(opt).from(element).save()
-        }
-
      // دالة التقرير المحدثة تسحب بياناتك وتطلعها PDF
 function generateProfitLossReport() {
     if (State.orders.length === 0) {
