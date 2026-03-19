@@ -2254,15 +2254,29 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             html2pdf().set(opt).from(element).save()
         }
 
-        // دالة التقرير الحقيقية (تسحب بياناتك الصدق مهوب عشوائي)
+      // دالة التقرير الحقيقية (تسحب بياناتك الصدق مهوب عشوائي)
         function generateProfitLossReport() {
             if (State.orders.length === 0) {
-                showNotification('ما فيه بيانات مبيعات عشان نطلع تقرير' 'warning')
-                return
+                showNotification('ما فيه بيانات مبيعات عشان نطلع تقرير', 'warning');
+                return;
             }
 
-            let report = `تقرير مبيعات متجر لير للاتصالات\n`
-            report += `تاريخ التقرير: ${new Date().
+            const totalSales = State.orders
+                .filter(o => o.status === 'completed' || o.status === 'shipped')
+                .reduce((sum, order) => sum + (order.total_amount || 0), 0);
+            
+            const cogs = totalSales * 0.6; 
+            const netProfit = totalSales - cogs;
+
+            let report = `تقرير مبيعات متجر لير للاتصالات\n`;
+            report += `تاريخ التقرير: ${new Date().toLocaleDateString('ar-SA')}\n`;
+            report += `---------------------------\n`;
+            report += `إجمالي المبيعات: ${totalSales.toFixed(2)} ريال\n`;
+            report += `صافي الربح التقديري: ${netProfit.toFixed(2)} ريال\n`;
+            report += `عدد الطلبات الإجمالي: ${State.orders.length}\n`;
+
+            alert(report);
+        }
 
         // =========================
         // MARKETING MODULE
