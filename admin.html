@@ -2574,6 +2574,122 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             // Set current year for copyright
             document.getElementById('currentYear').textContent = new Date().getFullYear();
         });
+        // دالة حفظ البيانات وإظهار الفاتورة
+async function saveAndPrintInvoice(event) {
+    event.preventDefault();
+    
+    const data = {
+        name: document.getElementById('invCustName').value,
+        phone: document.getElementById('invCustPhone').value,
+        product: document.getElementById('invProdName').value,
+        type: document.getElementById('invProdType').value,
+        price: parseFloat(document.getElementById('invPrice').value),
+        payment: document.getElementById('invPayment').value,
+        date: document.getElementById('invDate').value
+    };
+
+    try {
+        // 1. حفظ أو تحديث العميل
+        const { data: customer, error: cErr } = await db.from('customers')
+            .upsert({ full_name: data.name, phone: data.phone }, { onConflict: 'phone' })
+            .select().single();
+        if (cErr) throw cErr;
+
+        // 2. حفظ الفاتورة في جدول الطلبات
+        const { data: order, error: oErr } = await db.from('financing_orders').insert([{
+            customer_id: customer.id,
+            total_amount: data.price,
+            product_name: data.product,
+            product_type: data.type,
+            payment_method: data.payment,
+            created_at: data.date,
+            status: 'completed'
+        }]).select().single();
+        if (oErr) throw oErr;
+
+        showNotification('تم حفظ الفاتورة بنجاح', 'success');
+        closeModal('orderModal');
+        
+        // 3. تحديث الجدول محلياً ثم فتح الفاتورة للطباعة
+        await fetchOrders(); 
+        generateProfessionalInvoice(order.id); 
+
+    } catch (error) {
+        alert('حدث خطأ أثناء الحفظ: ' + error.message);
+    }
+}
+
+// دالة توليد شكل الفاتورة الاحترافي
+function generateProfessionalInvoice(orderId) {
+    const order = State.orders.find(o => o.id === orderId);
+    if(!order) return;
+    
+    const vatRate = 0.15;
+    const priceWithoutVat = order.total_amount / (1 + vatRate);
+    const vatAmount = order.total_amount - priceWithoutVat;
+    
+    document.getElementById('invoiceContent').innerHTML = `
+        <div id="printableInvoice" style="font-family: 'Tajawal', sans-serif; padding: 40px; border: 1px solid #EEE; direction: rtl;">
+            <div style="display: flex; justify-content: space-between; border-bottom: 4px solid #2563EB; padding-bottom: 20px; margin-bottom: 30px;">
+                <div style="text-align: right;">
+                    <h1 style="color: #2563EB; font-size: 28px; margin: 0;">متجر لير للاتصالات</h1>
+                    <p style="margin: 5px 0;">الرقم الضريبي: 300012345600003</p>
+                    <p style="margin: 5px 0;">الرياض - المملكة العربية السعودية</p>
+                </div>
+                <div style="text-align: left;">
+                    <h2 style="margin: 0; color: #666;">فاتورة ضريبية مبسطة</h2>
+                    <p>رقم الفاتورة: <strong>INV-${order.id.substring(0,8)}</strong></p>
+                    <p>التاريخ: ${new Date(order.created_at).toLocaleDateString('ar-SA')}</p>
+                </div>
+            </div>
+
+            <div style="background: #F8FAFC; padding: 20px; border-radius: 15px; margin-bottom: 30px;">
+                <h4 style="margin-top: 0; color: #2563EB;">بيانات العميل:</h4>
+                <p>الاسم: <strong>${order.customers?.full_name || 'عميل نقدي'}</strong></p>
+                <p>الجوال: ${order.customers?.phone || '-'}</p>
+            </div>
+
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+                <thead>
+                    <tr style="background: #2563EB; color: white;">
+                        <th style="padding: 15px; border: 1px solid #DDD; text-align: right;">المنتج</th>
+                        <th style="padding: 15px; border: 1px solid #DDD;">النوع</th>
+                        <th style="padding: 15px; border: 1px solid #DDD;">طريقة الدفع</th>
+                        <th style="padding: 15px; border: 1px solid #DDD;">المبلغ شامل الضريبة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 15px; border: 1px solid #DDD;">${order.product_name || 'طلب جوال'}</td>
+                        <td style="padding: 15px; border: 1px solid #DDD; text-align: center;">${order.product_type || 'إلكترونيات'}</td>
+                        <td style="padding: 15px; border: 1px solid #DDD; text-align: center;">${order.payment_method || 'مدى'}</td>
+                        <td style="padding: 15px; border: 1px solid #DDD; text-align: center; font-weight: bold;">${order.total_amount.toFixed(2)} ﷼</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="width: 250px; margin-right: auto; border: 2px solid #2563EB; padding: 15px; border-radius: 10px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span>المبلغ الخاضع:</span> <span>${priceWithoutVat.toFixed(2)} ﷼</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span>ضريبة (15%):</span> <span>${vatAmount.toFixed(2)} ﷼</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-weight: bold; border-top: 1px solid #DDD; padding-top: 10px; font-size: 1.2em;">
+                    <span>الإجمالي:</span> <span>${order.total_amount.toFixed(2)} ﷼</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 50px; text-align: center; color: #888;">
+                <p>شكراً لثقتكم بمتجر لير - الفاتورة معتمدة من هيئة الزكاة والدخل</p>
+                <div style="display: inline-block; padding: 10px; background: #EEE; border-radius: 10px; margin-top: 10px;">
+                    <small>QR Code متوفر عند الطباعة الورقية</small>
+                </div>
+            </div>
+        </div>
+    `;
+    openModal('invoiceModal');
+}
 
     </script>
 </body>
