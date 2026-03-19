@@ -903,30 +903,79 @@
         </div>
     </div>
 
-    <div id="orderModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-2xl p-8 rounded-2xl shadow-2xl transform scale-95 transition-all">
+ <div id="orderModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-3xl p-8 rounded-2xl shadow-2xl transform scale-95 transition-all max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-800">إنشاء طلب جديد</h3>
-                <button onclick="closeModal('orderModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+                <h3 class="text-2xl font-bold text-gray-800">إصدار فاتورة مبيعات</h3>
+                <button onclick="closeModal('orderModal')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
             </div>
-            <div class="space-y-4 text-center">
-                <i class="fas fa-shopping-cart text-5xl text-blue-100"></i>
-                <p class="text-gray-600">سيتم ربط نظام الطلبات اليدوي قريباً. حالياً الطلبات تأتي تلقائياً من الموقع.</p>
-                <button onclick="closeModal('orderModal')" class="btn-primary w-full">فهمت</button>
-            </div>
+            
+            <form onsubmit="saveAndPrintInvoice(event)" class="space-y-6 text-right" dir="rtl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-gray-700">اسم العميل</label>
+                        <input type="text" id="invCustName" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="الاسم الكامل" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-gray-700">رقم جوال العميل</label>
+                        <input type="text" id="invCustPhone" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="05xxxxxxxx" required>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-gray-700">اسم المنتج</label>
+                        <input type="text" id="invProdName" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="مثلاً: ايفون 15 برو" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-gray-700">نوع المنتج</label>
+                        <select id="invProdType" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                            <option value="جوال">جوال</option>
+                            <option value="ساعة ذكية">ساعة ذكية</option>
+                            <option value="سماعة">سماعة</option>
+                            <option value="إكسسوار">إكسسوار</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-gray-700">سعر المنتج (﷼)</label>
+                        <input type="number" id="invPrice" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-gray-700">طريقة الدفع</label>
+                        <select id="invPayment" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                            <option value="تابي">تابي (Tabby)</option>
+                            <option value="تمارا">تمارا (Tamara)</option>
+                            <option value="مدى">مدى (Mada)</option>
+                            <option value="كوارا">كوارا (Quara)</option>
+                            <option value="كاش">كاش</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-gray-700">تاريخ الشراء</label>
+                        <input type="date" id="invDate" class="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition duration-300 shadow-lg">
+                    <i class="fas fa-print ml-2"></i> حفظ وإصدار فاتورة للطباعة
+                </button>
+            </form>
         </div>
     </div>
 
     <div id="customerModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
         <div class="bg-white w-full max-w-lg p-8 rounded-2xl shadow-2xl transform scale-95 transition-all">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-800">إضافة عميل جديد</h3>
+                <h3 class="text-2xl font-bold text-gray-800 text-right w-full">إضافة عميل جديد</h3>
                 <button onclick="closeModal('customerModal')" class="text-gray-400"><i class="fas fa-times"></i></button>
             </div>
             <div class="space-y-4">
-                <input type="text" placeholder="اسم العميل" class="w-full border border-gray-300 rounded-xl p-3">
-                <input type="text" placeholder="رقم الهاتف" class="w-full border border-gray-300 rounded-xl p-3">
-                <button class="btn-primary w-full">حفظ العميل</button>
+                <input type="text" id="directCustName" placeholder="اسم العميل" class="w-full border border-gray-300 rounded-xl p-3 text-right">
+                <input type="text" id="directCustPhone" placeholder="رقم الهاتف" class="w-full border border-gray-300 rounded-xl p-3 text-right">
+                <button onclick="saveQuickCustomer()" class="btn-primary w-full">حفظ بيانات العميل</button>
             </div>
         </div>
     </div>
