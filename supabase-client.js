@@ -4,8 +4,8 @@
 // ==========================================
 
 // 1. إعدادات المشروع (مفاتيح الربط)
-const MY_PROJECT_URL = "https://mgbdukdtzckxspxmcvpo.supabase.co"
-const MY_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1nYmR1a2R0emNreHNweG1jdnBvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY1MzMzOTcsImV4cCI6MjA4MjEwOTM5N30.iUDPcU5AG5XCQOSHBMZKTnYrVQRAYAOCXOkOKHZqzPo"
+const MY_PROJECT_URL = "https://vxzklcnaikzuxkfufqxt.supabase.co";
+const MY_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4emtsY25haWt6dXhrZnVmcXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4ODU4NjIsImV4cCI6MjA4OTQ2MTg2Mn0.hLDCKuqlY3lEEpjEpY_TQW_elAKJA2eMvm4sHmS0KUs";
 
 // 2. تهيئة الاتصال
 // ملاحظة: سمينا المتغير dbClient عشان ما يتعارض مع اسم المكتبة الأصلي
