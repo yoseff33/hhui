@@ -2690,7 +2690,50 @@ function generateProfessionalInvoice(orderId) {
     `;
     openModal('invoiceModal');
 }
+// دالة تحميل الفاتورة الحالية كـ PDF
+function downloadInvoicePDF() {
+    const element = document.getElementById('printableInvoice')
+    const opt = {
+        margin: 10,
+        filename: 'invoice-' + Date.now() + '.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    }
+    html2pdf().set(opt).from(element).save()
+}
 
+// دالة تصدير جميع الفواتير إلى ملف Excel (CSV) بضغطة زر
+function exportAllOrdersToCSV() {
+    if (State.orders.length === 0) {
+        showNotification('لا توجد بيانات لتصديرها', 'warning')
+        return
+    }
+
+    let csvContent = "\uFEFF" // لتدعيم اللغة العربية
+    csvContent += "رقم الطلب,اسم العميل,الجوال,المنتج,المبلغ,طريقة الدفع,التاريخ\n"
+
+    State.orders.forEach(order => {
+        const row = [
+            order.id.substring(0, 8),
+            order.customers?.full_name || 'غير معروف',
+            order.customers?.phone || '',
+            order.product_name || '',
+            order.total_amount,
+            order.payment_method || '',
+            new Date(order.created_at).toLocaleDateString('ar-SA')
+        ].join(",")
+        csvContent += row + "\n"
+    })
+
+    const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent)
+    const link = document.createElement("a")
+    link.setAttribute("href", encodedUri)
+    link.setAttribute("download", "all_invoices_" + Date.now() + ".csv")
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+}
     </script>
 </body>
 </html>
