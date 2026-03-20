@@ -197,21 +197,102 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- Login Screen -->
-    <div id="loginScreen" class="fixed inset-0 bg-gradient-to-br from-blue-900 to-purple-900 z-50 flex items-center justify-center">
-        <div class="bg-white p-10 rounded-2xl shadow-2xl w-96 text-center border-t-8 border-blue-600 animate-slide-in">
-            <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i class="fas fa-store text-white text-3xl"></i>
-            </div>
-            <h1 class="text-3xl font-black mb-2 text-gray-800">ERP Enterprise <span class="text-sm bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1 rounded-full">PRO</span></h1>
-            <p class="text-gray-500 mb-6">نظام إدارة المتاجر الإلكترونية المتكامل</p>
-            <input type="password" id="adminPass" class="w-full bg-gray-50 border border-gray-300 p-4 rounded-xl mb-4 text-center text-xl outline-none transition focus:border-blue-500" placeholder="••••••••">
-            <button onclick="checkLogin()" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-xl font-bold hover:opacity-90 transition flex items-center justify-center gap-2">
-                <i class="fas fa-lock"></i> دخول إلى النظام
-            </button>
-            <p id="loginError" class="text-red-500 mt-4 hidden font-bold animate-pulse">الرمز خطأ! حاول مرة أخرى</p>
+   <!-- Login Screen -->
+<div id="loginScreen" class="fixed inset-0 bg-gradient-to-br from-blue-900 to-purple-900 z-50 flex items-center justify-center">
+    <div class="bg-white p-10 rounded-2xl shadow-2xl w-96 text-center border-t-8 border-blue-600 animate-slide-in">
+        
+        <!-- Logo -->
+        <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-store text-white text-3xl"></i>
         </div>
+
+        <!-- Title -->
+        <h1 class="text-3xl font-black mb-2 text-gray-800">
+            ERP Enterprise 
+            <span class="text-sm bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1 rounded-full">PRO</span>
+        </h1>
+
+        <p class="text-gray-500 mb-6">نظام إدارة المتاجر الإلكترونية المتكامل</p>
+
+        <!-- Password -->
+        <input 
+            type="password" 
+            id="adminPass" 
+            class="w-full bg-gray-50 border border-gray-300 p-4 rounded-xl mb-4 text-center text-xl outline-none transition focus:border-blue-500"
+            placeholder="••••••••"
+        >
+
+        <!-- Button -->
+        <button 
+            id="loginBtn"
+            class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-xl font-bold hover:opacity-90 transition flex items-center justify-center gap-2"
+        >
+            <i class="fas fa-lock"></i> دخول إلى النظام
+        </button>
+
+        <!-- Error -->
+        <p id="loginError" class="text-red-500 mt-4 hidden font-bold animate-pulse">
+            الرمز خطأ! حاول مرة أخرى
+        </p>
     </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    const loginBtn = document.getElementById("loginBtn");
+    const passwordInput = document.getElementById("adminPass");
+    const loginError = document.getElementById("loginError");
+    const loginScreen = document.getElementById("loginScreen");
+
+    // غير الباسورد هنا 👇
+    const ADMIN_PASSWORD = "1234";
+
+    function checkLogin() {
+        const enteredPass = passwordInput.value.trim();
+
+        if (!enteredPass) {
+            showError("اكتب كلمة المرور أولاً");
+            return;
+        }
+
+        if (enteredPass === ADMIN_PASSWORD) {
+            // نجاح تسجيل الدخول
+            loginError.classList.add("hidden");
+
+            loginScreen.style.opacity = "0";
+            loginScreen.style.pointerEvents = "none";
+
+            setTimeout(() => {
+                loginScreen.style.display = "none";
+            }, 300);
+
+        } else {
+            showError("الرمز خطأ! حاول مرة أخرى");
+        }
+    }
+
+    function showError(message) {
+        loginError.textContent = message;
+        loginError.classList.remove("hidden");
+
+        // يهز البوكس (تأثير بسيط)
+        passwordInput.classList.add("border-red-500");
+
+        setTimeout(() => {
+            passwordInput.classList.remove("border-red-500");
+        }, 1000);
+    }
+
+    // زر تسجيل الدخول
+    loginBtn.addEventListener("click", checkLogin);
+
+    // Enter يشتغل
+    passwordInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            checkLogin();
+        }
+    });
+</script>
 
     <!-- Main Dashboard -->
     <div id="dashboardScreen" class="hidden min-h-screen flex flex-col md:flex-row">
