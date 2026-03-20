@@ -977,11 +977,23 @@
         const PROJ_URL = "https://vxzklcnaikzuxkfufqxt.supabase.co";
         const PUB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4emtsY25haWt6dXhrZnVmcXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4ODU4NjIsImV4cCI6MjA4OTQ2MTg2Mn0.hLDCKuqlY3lEEpjEpY_TQW_elAKJA2eMvm4sHmS0KUs";
 
-        const supabase = window.supabase.createClient(PROJ_URL, PUB_KEY, {
+        // غيرنا اسم المتغير هنا إلى supabaseClient لتجنب التعارض
+        const supabaseClient = window.supabase.createClient(PROJ_URL, PUB_KEY, {
             localStorage: window.localStorage,
             autoRefreshToken: true,
             persistSession: true
         });
+
+        // منع محاولة تسجيل Service Worker غير المرغوب فيه
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                for (let reg of registrations) {
+                    if (reg.active && reg.active.scriptURL.includes('sw.js')) {
+                        reg.unregister();
+                    }
+                }
+            });
+        }
 
         // منع محاولة تسجيل Service Worker غير المرغوب فيه
         if ('serviceWorker' in navigator) {
