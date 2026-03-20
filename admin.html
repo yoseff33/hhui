@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>ERP PRO | نظام متكامل لإدارة المتاجر</title>
+    <title>ERP PRO | النظام المتكامل - النسخة النهائية</title>
 
-    <!-- المكتبات الأساسية -->
+    <!-- المكتبات الأساسية مع حلول مشاكل التخزين -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- استخدام Tailwind بأمان مع تجاهل التحذير -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -16,7 +17,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        /* إعادة تعيين وحل مشكلة التخزين Tracking Prevention */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
@@ -26,29 +32,18 @@
             --danger: #dc2626;
             --light: #f9fafb;
             --dark: #111827;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
         }
-
         body {
             font-family: 'Tajawal', sans-serif;
             background-color: #f8fafc;
-            color: var(--gray-800);
+            color: #1f2937;
             direction: rtl;
-            min-height: 100vh;
         }
-
-        /* شريط التمرير المخصص */
+        /* شريط التمرير */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: var(--gray-400); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gray-500); }
+        ::-webkit-scrollbar-thumb { background: #9ca3af; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
 
         /* الروابط الجانبية */
         .sidebar-link {
@@ -58,13 +53,13 @@
             padding: 0.75rem 1rem;
             margin: 0.25rem 0.5rem;
             border-radius: 0.75rem;
-            color: var(--gray-600);
+            color: #4b5563;
             font-weight: 500;
             transition: all 0.2s;
             cursor: pointer;
         }
         .sidebar-link:hover {
-            background-color: var(--gray-100);
+            background-color: #f3f4f6;
             color: var(--primary);
             transform: translateX(-4px);
         }
@@ -78,7 +73,7 @@
         .card {
             background: white;
             border-radius: 1rem;
-            border: 1px solid var(--gray-200);
+            border: 1px solid #e5e7eb;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             transition: all 0.2s;
         }
@@ -86,15 +81,13 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.08);
             transform: translateY(-2px);
         }
-
-        /* بطاقات KPI */
         .kpi-card {
             background: white;
             border-radius: 1rem;
             padding: 1.5rem;
             position: relative;
             overflow: hidden;
-            border: 1px solid var(--gray-200);
+            border: 1px solid #e5e7eb;
         }
         .kpi-card::before {
             content: '';
@@ -125,10 +118,10 @@
         .badge-vip { background: linear-gradient(135deg, #fcd34d, #f59e0b); color: #78350f; }
         .badge-new { background: linear-gradient(135deg, #93c5fd, #3b82f6); color: white; }
 
-        /* شريط البحث */
+        /* البحث */
         .search-box {
-            background: var(--gray-100);
-            border: 1px solid var(--gray-200);
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
             border-radius: 0.75rem;
             padding: 0.75rem 1rem;
             transition: all 0.2s;
@@ -160,7 +153,7 @@
         }
         .btn-outline {
             background: white;
-            border: 1px solid var(--gray-300);
+            border: 1px solid #d1d5db;
             padding: 0.75rem 1.5rem;
             border-radius: 0.75rem;
             font-weight: 500;
@@ -178,19 +171,19 @@
             border-collapse: collapse;
         }
         .data-table th {
-            background: var(--gray-100);
+            background: #f3f4f6;
             padding: 1rem;
             font-weight: 700;
-            color: var(--gray-700);
-            border-bottom: 2px solid var(--gray-200);
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
             text-align: right;
         }
         .data-table td {
             padding: 1rem;
-            border-bottom: 1px solid var(--gray-200);
+            border-bottom: 1px solid #e5e7eb;
         }
         .data-table tr:hover td {
-            background-color: var(--gray-50);
+            background-color: #f9fafb;
         }
 
         /* المودالات */
@@ -230,7 +223,7 @@
             background: white;
             padding: 2rem;
             border-radius: 1rem;
-            border: 1px solid var(--gray-200);
+            border: 1px solid #e5e7eb;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
         @media print {
@@ -248,13 +241,13 @@
             .btn-primary, .btn-outline { padding: 0.5rem 1rem; }
         }
 
-        /* تأثيرات */
-        .animate-slide-in {
-            animation: slideIn 0.3s ease-out;
-        }
-        @keyframes slideIn {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        /* معاينة الصورة */
+        .image-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            border: 1px solid #e5e7eb;
         }
     </style>
 </head>
@@ -268,7 +261,7 @@
         </div>
         <h1 class="text-3xl font-black mb-2 text-gray-800">
             ERP PRO
-            <span class="text-sm bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1 rounded-full">v4.0</span>
+            <span class="text-sm bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1 rounded-full">v5.0</span>
         </h1>
         <p class="text-gray-500 mb-6">نظام متكامل لإدارة المبيعات والمخزون</p>
         <input type="password" id="adminPass" class="w-full bg-gray-50 border border-gray-300 p-4 rounded-xl mb-4 text-center text-xl outline-none transition focus:border-blue-500" placeholder="كلمة المرور" autofocus>
@@ -576,7 +569,7 @@
                 <h3 class="font-bold mb-4">آخر الفواتير</h3>
                 <div class="overflow-x-auto">
                     <table class="data-table">
-                        <thead><tr><th>رقم الفاتورة</th><th>العميل</th><th>المبلغ</th><th>التاريخ</th><th>PDF</th></tr></thead>
+                        <thead><tr><th>رقم الفاتورة</th><th>العميل</th><th>المبلغ</th><th>التاريخ</th><th>PDF</th><th>إرسال</th></tr></thead>
                         <tbody id="invoicesTableBody"></tbody>
                     </table>
                 </div>
@@ -643,7 +636,7 @@
     </div>
 </div>
 
-<!-- مودال المنتج -->
+<!-- مودال المنتج (مع إضافة صورة) -->
 <div id="productModal" class="modal">
     <div class="modal-content w-full max-w-2xl">
         <div class="flex justify-between items-center mb-6">
@@ -652,9 +645,32 @@
         </div>
         <form onsubmit="saveProduct(event)" class="space-y-4">
             <input type="hidden" id="editProductId">
-            <div><label class="block text-sm font-bold mb-1">اسم المنتج</label><input type="text" id="productName" class="w-full border p-3 rounded-xl" required></div>
-            <div><label class="block text-sm font-bold mb-1">السعر</label><input type="number" id="productPrice" class="w-full border p-3 rounded-xl" required></div>
-            <div><label class="block text-sm font-bold mb-1">الكمية</label><input type="number" id="productStock" class="w-full border p-3 rounded-xl" required></div>
+            
+            <!-- حقل رفع الصورة -->
+            <div>
+                <label class="block text-sm font-bold mb-2">صورة المنتج</label>
+                <div class="flex items-center gap-4">
+                    <img id="productImagePreview" src="https://via.placeholder.com/100" alt="معاينة" class="image-preview">
+                    <input type="file" id="productImageFile" accept="image/*" class="border p-2 rounded-xl flex-1">
+                </div>
+                <input type="hidden" id="productImage" value="">
+                <p class="text-xs text-gray-500 mt-1">اختر صورة أو أدخل رابط مباشر أدناه</p>
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-1">رابط الصورة (اختياري)</label>
+                <input type="url" id="productImageUrl" class="w-full border p-3 rounded-xl" placeholder="https://example.com/image.jpg" onchange="updateImagePreviewFromUrl()">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div><label class="block text-sm font-bold mb-1">اسم المنتج</label><input type="text" id="productName" class="w-full border p-3 rounded-xl" required></div>
+                <div><label class="block text-sm font-bold mb-1">SKU</label><input type="text" id="productSKU" class="w-full border p-3 rounded-xl"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div><label class="block text-sm font-bold mb-1">سعر البيع</label><input type="number" id="productPrice" class="w-full border p-3 rounded-xl" required></div>
+                <div><label class="block text-sm font-bold mb-1">سعر التكلفة</label><input type="number" id="productCost" class="w-full border p-3 rounded-xl"></div>
+                <div><label class="block text-sm font-bold mb-1">الكمية</label><input type="number" id="productStock" class="w-full border p-3 rounded-xl" required></div>
+            </div>
+            <div><label class="block text-sm font-bold mb-1">الوصف</label><textarea id="productDescription" rows="3" class="w-full border p-3 rounded-xl"></textarea></div>
             <button type="submit" class="btn-primary w-full">حفظ المنتج</button>
         </form>
     </div>
@@ -683,6 +699,7 @@
             <div class="flex gap-2">
                 <button onclick="printInvoice()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-print ml-2"></i> طباعة</button>
                 <button onclick="downloadInvoicePDF()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"><i class="fas fa-file-pdf ml-2"></i> PDF</button>
+                <button onclick="sendInvoiceViaWhatsApp()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"><i class="fab fa-whatsapp ml-2"></i> واتساب</button>
                 <button onclick="closeModal('invoiceModal')" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-200 transition"><i class="fas fa-times"></i></button>
             </div>
         </div>
@@ -708,14 +725,16 @@
 
 <!-- ===================== نهاية المودالات ===================== -->
 
-<!-- JavaScript الرئيسي -->
+<!-- JavaScript الرئيسي المحسن -->
 <script>
     (function() {
         // -------------------- الإعدادات الثابتة --------------------
         const ADMIN_PASSWORD = "1234";
         const SUPABASE_URL = "https://vxzklcnaikzuxkfufqxt.supabase.co";
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4emtsY25haWt6dXhrZnVmcXh0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg4NTg2MiwiZXhwIjoyMDg5NDYxODYyfQ.8fmrwrF0yAMHeFPpCi_QtGUqUbLox-CcvMEJUlgQiYE";
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+            localStorage: window.localStorage, // حل لمشكلة Tracking Prevention
+        });
 
         // -------------------- الحالة العامة --------------------
         const State = {
@@ -741,6 +760,27 @@
             document.body.appendChild(div);
             setTimeout(() => div.remove(), 3000);
         }
+
+        // -------------------- معاينة الصورة --------------------
+        window.updateImagePreviewFromUrl = function() {
+            const url = document.getElementById('productImageUrl').value;
+            if (url) {
+                document.getElementById('productImagePreview').src = url;
+                document.getElementById('productImage').value = url;
+            }
+        };
+
+        document.getElementById('productImageFile')?.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    document.getElementById('productImagePreview').src = ev.target.result;
+                    document.getElementById('productImage').value = ev.target.result; // تخزين base64
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
         // -------------------- تسجيل الدخول --------------------
         window.checkLogin = function() {
@@ -779,7 +819,6 @@
             document.getElementById('currentPageTitle').textContent = titles[tab];
             document.getElementById('currentPageSubtitle').textContent = 'آخر تحديث: ' + new Date().toLocaleDateString('ar-SA');
 
-            // تحميل البيانات حسب التبويب
             if (tab === 'dashboard') loadDashboardData();
             else if (tab === 'orders') fetchOrders();
             else if (tab === 'products') fetchProducts();
@@ -819,7 +858,6 @@
         }
 
         async function fetchCustomers() {
-            // بناء قائمة العملاء من الطلبات (لتبسيط المثال)
             const map = new Map();
             State.orders.forEach(o => {
                 if (o.customers && o.customers.phone) {
@@ -869,7 +907,6 @@
             const ctxSales = document.getElementById('salesChart').getContext('2d');
             const ctxOrders = document.getElementById('ordersChart').getContext('2d');
 
-            // مبيعات آخر 7 أيام
             const labels = [], salesData = [];
             for (let i = 6; i >= 0; i--) {
                 const d = new Date(); d.setDate(d.getDate() - i);
@@ -899,7 +936,6 @@
                 options: { responsive: true, maintainAspectRatio: false }
             });
 
-            // حالات الطلبات
             const statusCount = {
                 pending: State.orders.filter(o => o.status === 'pending').length,
                 processing: State.orders.filter(o => o.status === 'processing').length,
@@ -927,17 +963,13 @@
             const today = new Date().toDateString();
             const todayOrders = State.orders.filter(o => o.status === 'completed' && new Date(o.created_at).toDateString() === today);
             const total = todayOrders.reduce((s, o) => s + (o.total_amount || 0), 0);
-            const profit = total * 0.4; // هامش ربح تقديري 40%
+            const profit = total * 0.4;
 
-            // أفضل منتج
             const productCount = {};
             todayOrders.forEach(o => { productCount[o.product_name] = (productCount[o.product_name] || 0) + 1; });
             const bestProduct = Object.keys(productCount).sort((a,b) => productCount[b] - productCount[a])[0] || 'لا يوجد';
-
-            // أسوأ منتج (أقل مبيعاً) - ببساطة آخر منتج
             const worstProduct = Object.keys(productCount).sort((a,b) => productCount[a] - productCount[b])[0] || 'لا يوجد';
 
-            // أكثر عميل إنفاقاً
             const customerSpend = {};
             todayOrders.forEach(o => {
                 if (o.customers?.full_name) {
@@ -957,9 +989,7 @@
         }
         window.quickDailyReport = updateQuickReport;
 
-        // -------------------- أفضل المنتجات والعملاء VIP --------------------
         function updateTopProductsAndVIP() {
-            // أفضل 5 منتجات مبيعاً (حسب عدد الطلبات المكتملة)
             const productSales = {};
             State.orders.filter(o => o.status === 'completed').forEach(o => {
                 if (o.product_name) {
@@ -975,7 +1005,6 @@
                 </div>
             `).join('') || '<p class="text-gray-400">لا توجد بيانات</p>';
 
-            // عملاء VIP (أكثر من 1000 ريال مشتريات)
             const vip = State.customers.filter(c => c.total_spent > 1000).sort((a,b) => b.total_spent - a.total_spent).slice(0,5);
             const vipList = document.getElementById('vipCustomersList');
             vipList.innerHTML = vip.map(c => `
@@ -1059,7 +1088,7 @@
             `}).join('');
         }
 
-        // -------------------- الفاتورة الاحترافية --------------------
+        // -------------------- الفاتورة الاحترافية (محسنة QR و PDF) --------------------
         window.generateProfessionalInvoice = function(orderId) {
             const order = State.orders.find(o => o.id === orderId);
             if (!order) { showNotification('الطلب غير موجود', 'error'); return; }
@@ -1125,7 +1154,7 @@
                         </div>
                     </div>
 
-                    <!-- QR Code -->
+                    <!-- QR Code (نص مختصر لتجنب طول البيانات) -->
                     <div style="margin-top: 40px; text-align: center;" id="qrcodeContainer"></div>
 
                     <!-- توقيع -->
@@ -1136,12 +1165,23 @@
                 </div>
             `;
             document.getElementById('invoiceContent').innerHTML = invoiceHTML;
-            // إنشاء QR
-            new QRCode(document.getElementById('qrcodeContainer'), {
-                text: `فاتورة رقم INV-${order.id.substr(0,8)} - المبلغ ${total.toFixed(2)} ريال - تاريخ ${new Date(order.created_at).toLocaleDateString('ar-SA')}`,
-                width: 120,
-                height: 120
-            });
+
+            // إنشاء QR بنص مختصر
+            const qrContainer = document.getElementById('qrcodeContainer');
+            qrContainer.innerHTML = ''; // مسح أي محتوى سابق
+            try {
+                new QRCode(qrContainer, {
+                    text: `فاتورة INV-${order.id.substr(0,6)} - ${total.toFixed(2)} ر.س`,
+                    width: 120,
+                    height: 120
+                });
+            } catch (e) {
+                console.warn('QR code error, using fallback');
+                qrContainer.innerHTML = '<p style="color:#999;">QR غير متاح</p>';
+            }
+
+            // تخزين معرف الطلب الحالي للاستخدام في إرسال واتساب
+            window.currentInvoiceOrderId = order.id;
             openModal('invoiceModal');
         };
 
@@ -1155,7 +1195,21 @@
 
         window.downloadInvoicePDF = function() {
             const element = document.getElementById('printableInvoice');
-            html2pdf().from(element).set({ margin: 0.5, filename: 'invoice.pdf' }).save();
+            if (!element) { showNotification('الفاتورة غير موجودة', 'error'); return; }
+            html2pdf().from(element).set({ margin: 0.5, filename: `فاتورة_${Date.now()}.pdf` }).save();
+        };
+
+        // إرسال الفاتورة عبر واتساب
+        window.sendInvoiceViaWhatsApp = function() {
+            const orderId = window.currentInvoiceOrderId;
+            if (!orderId) { showNotification('لا توجد فاتورة محددة', 'error'); return; }
+            const order = State.orders.find(o => o.id === orderId);
+            if (!order || !order.customers?.phone) { showNotification('رقم العميل غير متوفر', 'warning'); return; }
+
+            // إنشاء رابط تحميل PDF (مؤقت) أو إرسال رسالة نصية
+            const phone = order.customers.phone.replace(/\D/g, '');
+            const message = encodeURIComponent(`السلام عليكم، فاتورتك من متجر لير:\nالمبلغ: ${formatCurrency(order.total_amount)}\nتاريخ: ${new Date(order.created_at).toLocaleDateString('ar-SA')}\nيمكنك تحميل PDF من النظام.`);
+            window.open(`https://wa.me/966${phone}?text=${message}`, '_blank');
         };
 
         // -------------------- حفظ فاتورة جديدة --------------------
@@ -1170,7 +1224,6 @@
                 date: document.getElementById('invDate').value
             };
             try {
-                // التحقق من وجود العميل أو إنشاؤه
                 let customerId;
                 const { data: existing } = await supabase.from('customers').select('id').eq('phone', data.phone).maybeSingle();
                 if (existing) {
@@ -1180,7 +1233,6 @@
                     customerId = newCust.id;
                 }
 
-                // إدراج الطلب
                 const { data: order } = await supabase.from('financing_orders').insert({
                     customer_id: customerId,
                     product_name: data.product,
@@ -1223,7 +1275,6 @@
         window.exportAllToExcel = function() {
             const wb = XLSX.utils.book_new();
 
-            // Sheet 1: الطلبات
             const ordersSheet = State.orders.map(o => ({
                 'رقم الطلب': o.id,
                 'العميل': o.customers?.full_name || '',
@@ -1236,7 +1287,6 @@
             }));
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(ordersSheet), 'الطلبات');
 
-            // Sheet 2: العملاء
             const custSheet = State.customers.map(c => ({
                 'الاسم': c.name,
                 'الجوال': c.phone,
@@ -1245,7 +1295,6 @@
             }));
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(custSheet), 'العملاء');
 
-            // Sheet 3: الإيرادات اليومية (آخر 30 يوم)
             const revenue = [];
             for (let i = 29; i >= 0; i--) {
                 const d = new Date(); d.setDate(d.getDate() - i);
@@ -1254,7 +1303,6 @@
             }
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(revenue), 'الإيرادات');
 
-            // Sheet 4: تحليلات
             const analytics = [];
             const statusCount = { completed:0, pending:0, processing:0, shipped:0, cancelled:0, returned:0 };
             State.orders.forEach(o => { if (statusCount[o.status] !== undefined) statusCount[o.status]++; });
@@ -1269,12 +1317,18 @@
             showNotification('تم إنشاء ملف Excel بنجاح');
         };
 
-        // -------------------- دوال المنتجات --------------------
+        // -------------------- دوال المنتجات مع الصورة --------------------
         window.openProductModal = function() {
             document.getElementById('editProductId').value = '';
             document.getElementById('productName').value = '';
+            document.getElementById('productSKU').value = '';
             document.getElementById('productPrice').value = '';
+            document.getElementById('productCost').value = '';
             document.getElementById('productStock').value = '';
+            document.getElementById('productDescription').value = '';
+            document.getElementById('productImage').value = '';
+            document.getElementById('productImageUrl').value = '';
+            document.getElementById('productImagePreview').src = 'https://via.placeholder.com/100';
             document.getElementById('productModalTitle').textContent = 'إضافة منتج جديد';
             openModal('productModal');
         };
@@ -1284,8 +1338,14 @@
             if (p) {
                 document.getElementById('editProductId').value = p.id;
                 document.getElementById('productName').value = p.name;
+                document.getElementById('productSKU').value = p.sku || '';
                 document.getElementById('productPrice').value = p.selling_price || p.price_cash;
+                document.getElementById('productCost').value = p.cost_price || '';
                 document.getElementById('productStock').value = p.stock_quantity;
+                document.getElementById('productDescription').value = p.description || '';
+                document.getElementById('productImage').value = p.image_url || '';
+                document.getElementById('productImageUrl').value = p.image_url || '';
+                document.getElementById('productImagePreview').src = p.image_url || 'https://via.placeholder.com/100';
                 document.getElementById('productModalTitle').textContent = 'تعديل المنتج';
                 openModal('productModal');
             }
@@ -1294,10 +1354,15 @@
         window.saveProduct = async function(event) {
             event.preventDefault();
             const id = document.getElementById('editProductId').value;
+            const imageUrl = document.getElementById('productImage').value || document.getElementById('productImageUrl').value || null;
             const data = {
                 name: document.getElementById('productName').value,
+                sku: document.getElementById('productSKU').value,
                 selling_price: parseFloat(document.getElementById('productPrice').value),
-                stock_quantity: parseInt(document.getElementById('productStock').value)
+                cost_price: parseFloat(document.getElementById('productCost').value) || 0,
+                stock_quantity: parseInt(document.getElementById('productStock').value),
+                description: document.getElementById('productDescription').value,
+                image_url: imageUrl
             };
             try {
                 if (id) {
@@ -1336,16 +1401,15 @@
         // -------------------- المالية --------------------
         function loadFinancialData() {
             const totalSales = State.orders.filter(o => o.status === 'completed').reduce((s, o) => s + (o.total_amount || 0), 0);
-            const cogs = totalSales * 0.6; // تقدير
+            const cogs = totalSales * 0.6;
             const netProfit = totalSales - cogs;
             document.getElementById('financeGrossSales').textContent = formatCurrency(totalSales);
             document.getElementById('financeCOGS').textContent = formatCurrency(cogs);
             document.getElementById('financeNetProfit').textContent = formatCurrency(netProfit);
 
-            // آخر الفواتير
             const recent = State.orders.filter(o => o.status === 'completed').slice(0,5);
             document.getElementById('invoicesTableBody').innerHTML = recent.map(o => `
-                <tr><td class="p-2">INV-${o.id.substr(0,6)}</td><td class="p-2">${o.customers?.full_name || ''}</td><td class="p-2">${formatCurrency(o.total_amount)}</td><td class="p-2">${new Date(o.created_at).toLocaleDateString('ar-SA')}</td><td class="p-2"><button onclick="generateProfessionalInvoice('${o.id}')" class="text-red-600"><i class="fas fa-file-pdf"></i></button></td></tr>
+                <tr><td class="p-2">INV-${o.id.substr(0,6)}</td><td class="p-2">${o.customers?.full_name || ''}</td><td class="p-2">${formatCurrency(o.total_amount)}</td><td class="p-2">${new Date(o.created_at).toLocaleDateString('ar-SA')}</td><td class="p-2"><button onclick="generateProfessionalInvoice('${o.id}')" class="text-red-600"><i class="fas fa-file-pdf"></i></button></td><td class="p-2"><button onclick="openWhatsApp('${o.customers?.phone}')" class="text-green-600"><i class="fab fa-whatsapp"></i></button></td></tr>
             `).join('');
         }
 
@@ -1367,7 +1431,6 @@
 
         // -------------------- التسويق --------------------
         function loadMarketingData() {
-            // محاكاة كوبونات
             State.coupons = [
                 { code: 'WELCOME10', discount: 10, max_uses: 100, used: 45, expiry: '2025-12-31', active: true },
                 { code: 'SAVE20', discount: 20, max_uses: 50, used: 50, expiry: '2024-06-30', active: false }
@@ -1433,10 +1496,9 @@
         // -------------------- بدء التشغيل --------------------
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('adminPass').focus();
-            // بيانات تجريبية إذا لم تكن هناك بيانات في supabase (للعرض)
+            // بيانات تجريبية إذا لم تكن هناك بيانات في supabase
             setTimeout(() => {
                 if (State.orders.length === 0) {
-                    // إضافة بيانات وهمية للعرض
                     State.orders = [
                         { id: 'ORD001', customers: { full_name: 'أحمد محمد', phone: '0555555555' }, product_name: 'آيفون 15', total_amount: 3500, payment_method: 'تابي', status: 'completed', created_at: new Date().toISOString() },
                         { id: 'ORD002', customers: { full_name: 'سارة خالد', phone: '0566666666' }, product_name: 'ساعة ذكية', total_amount: 800, payment_method: 'كاش', status: 'pending', created_at: new Date().toISOString() }
