@@ -977,25 +977,14 @@
         const PROJ_URL = "https://vxzklcnaikzuxkfufqxt.supabase.co";
         const PUB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4emtsY25haWt6dXhrZnVmcXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4ODU4NjIsImV4cCI6MjA4OTQ2MTg2Mn0.hLDCKuqlY3lEEpjEpY_TQW_elAKJA2eMvm4sHmS0KUs";
 
-        // غيرنا اسم المتغير هنا إلى supabaseClient لتجنب التعارض
+     // تعريف الاتصال بـ Supabase
         const supabaseClient = window.supabase.createClient(PROJ_URL, PUB_KEY, {
             localStorage: window.localStorage,
             autoRefreshToken: true,
             persistSession: true
         });
 
-        // منع محاولة تسجيل Service Worker غير المرغوب فيه
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(registrations => {
-                for (let reg of registrations) {
-                    if (reg.active && reg.active.scriptURL.includes('sw.js')) {
-                        reg.unregister();
-                    }
-                }
-            });
-        }
-
-        // منع محاولة تسجيل Service Worker غير المرغوب فيه
+        // تنظيف الـ Service Workers القديمة
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then(registrations => {
                 for (let reg of registrations) {
@@ -1010,7 +999,8 @@
         async function loadProducts() {
             const container = document.getElementById('products-container');
             try {
-                const { data: products, error } = await supabase
+                // هنا التعديل: استخدمنا supabaseClient اللي عرفناه فوق
+                const { data: products, error } = await supabaseClient
                     .from('products')
                     .select('*')
                     .order('created_at', { ascending: false });
@@ -1063,15 +1053,17 @@
             content.style.display = expanded ? 'none' : 'block';
         };
 
-        // دوال حاسبة التمويل (مبسطة)
+        // حاسبة التمويل
         function calculate() {
             const amount = parseFloat(document.getElementById('amountInput').value) || 5000;
-            const months = parseInt(document.querySelector('.duration-btn.active')?.dataset.months || 4);
-            const rate = parseFloat(document.querySelector('.duration-btn.active')?.dataset.rate || 0.05);
+            const activeBtn = document.querySelector('.duration-btn.active');
+            const months = parseInt(activeBtn?.dataset.months || 4);
+            const rate = parseFloat(activeBtn?.dataset.rate || 0.05);
             const downpayment = document.getElementById('downpaymentToggle').checked;
+            
             const interest = amount * rate;
             const total = amount + interest;
-            const cash = total * 0.56; // 56% صافي
+            const cash = total * 0.56; 
             const monthly = total / months;
 
             document.getElementById('monthlyInstallment').innerText = monthly.toFixed(2);
@@ -1080,16 +1072,19 @@
             document.getElementById('breakdownInterest').innerText = '+' + interest.toFixed(2) + ' ر.س';
             document.getElementById('breakdownTotal').innerText = total.toFixed(2) + ' ر.س';
             document.getElementById('breakdownLiquidity').innerText = cash.toFixed(2) + ' ر.س';
+            
+            const statusEl = document.getElementById('downpaymentStatus');
+            const amountEl = document.getElementById('downpaymentAmount');
             if (downpayment) {
-                document.getElementById('downpaymentStatus').innerText = '✅ سيتم خصم القسط الأول';
-                document.getElementById('downpaymentAmount').innerText = '-' + monthly.toFixed(2) + ' ر.س';
+                statusEl.innerText = '✅ سيتم خصم القسط الأول';
+                amountEl.innerText = '-' + monthly.toFixed(2) + ' ر.س';
             } else {
-                document.getElementById('downpaymentStatus').innerText = '✅ الدفعة الأولى: تدفعها أنت';
-                document.getElementById('downpaymentAmount').innerText = '-0 ر.س';
+                statusEl.innerText = '✅ الدفعة الأولى: تدفعها أنت';
+                amountEl.innerText = '-0 ر.س';
             }
         }
 
-        // أحداث المدخلات
+        // المستمعات للأحداث
         document.getElementById('amountInput')?.addEventListener('input', calculate);
         document.getElementById('downpaymentToggle')?.addEventListener('change', calculate);
         document.querySelectorAll('.duration-btn').forEach(btn => {
@@ -1100,7 +1095,7 @@
             });
         });
 
-        // إرسال عبر واتساب
+        // طلب الواتساب
         document.getElementById('whatsappSubmit')?.addEventListener('click', function() {
             const name = document.getElementById('fullName').value;
             const mobile = document.getElementById('mobileNumber').value;
@@ -1108,6 +1103,7 @@
             const cash = document.getElementById('netCash').innerText;
             const monthly = document.getElementById('monthlyInstallment').innerText;
             const months = document.querySelector('.duration-btn.active')?.innerText.trim() || '4 شهور';
+            
             const message = `طلب سيولة تابي كاش:
 الاسم: ${name}
 الجوال: ${mobile}
@@ -1115,11 +1111,11 @@
 القسط: ${monthly} ر.س/شهرياً (${months})
 صافي الكاش: ${cash} ر.س
 أوافق على الشروط والأحكام.`;
-            const url = `https://wa.me/966533774766?text=${encodeURIComponent(message)}`;
-            window.open(url, '_blank');
+            
+            window.open(`https://wa.me/966533774766?text=${encodeURIComponent(message)}`, '_blank');
         });
 
-        // دوال مودال كوارا
+        // مودال كوارا
         window.selectDevice = function(deviceName) {
             document.getElementById('deviceName').value = deviceName;
             document.getElementById('quaraModal').classList.add('flex');
@@ -1134,6 +1130,7 @@
             const sector = document.getElementById('quaraSector').value;
             const city = document.getElementById('quaraCity').value;
             const device = document.getElementById('deviceName').value;
+            
             const message = `طلب تمويل كوارا:
 الجهاز: ${device}
 الاسم: ${name}
@@ -1141,14 +1138,13 @@
 الراتب: ${salary}
 جهة العمل: ${sector}
 المدينة: ${city}`;
-            const url = `https://wa.me/966533774766?text=${encodeURIComponent(message)}`;
-            window.open(url, '_blank');
+            
+            window.open(`https://wa.me/966533774766?text=${encodeURIComponent(message)}`, '_blank');
             closeQuaraModal();
         };
 
-        // تنفيذ التحميل عند فتح الصفحة
+        // التشغيل الابتدائي
         loadProducts();
-        // تشغيل الحاسبة مع القيم الافتراضية
         setTimeout(calculate, 100);
     </script>
 </body>
