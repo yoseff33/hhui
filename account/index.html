@@ -4,24 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>روابط لير | LER Telecom</title>
+
+    <!-- خط -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <!-- أيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* =========================================== */
-        /* إعدادات الصفحة الأساسية */
-        /* =========================================== */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
-            background-color: #0b1120 !important; /* لون الخلفية الكحلي */
-            color: white;
+            background: #f8fafc;
             font-family: 'Tajawal', sans-serif;
-            min-height: 100vh;
+            color: #1f2937;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow-x: hidden;
+            min-height: 100vh;
         }
 
         .bio-container {
@@ -29,182 +33,183 @@
             max-width: 500px;
             padding: 40px 20px;
             text-align: center;
-            background-image: radial-gradient(circle at top, rgba(58, 181, 74, 0.1), transparent 70%);
         }
 
-        /* =========================================== */
-        /* الشعار والنصوص */
-        /* =========================================== */
+        /* ================= HEADER ================= */
         .profile-header {
             margin-bottom: 30px;
-            animation: fadeIn 1s ease-in;
         }
 
         .logo-box {
             width: 110px;
             height: 110px;
             margin: 0 auto 20px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 2px solid #3AB54A;
+            background: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 40px rgba(58, 181, 74, 0.25);
+            border: 2px solid #3AB54A;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
-        .logo-icon { font-size: 50px; color: #3AB54A; }
+        .logo-icon {
+            font-size: 50px;
+            color: #3AB54A;
+        }
 
         .brand-name {
             font-size: 28px;
             font-weight: 900;
-            margin-bottom: 8px;
-            line-height: 1.4;
+            margin-bottom: 6px;
         }
 
-        .bio-text { color: #9ca3af; font-size: 16px; font-weight: 500; }
+        .bio-text {
+            color: #6b7280;
+            font-size: 15px;
+        }
 
-        /* =========================================== */
-        /* تنسيق قسم الفروع */
-        /* =========================================== */
+        /* ================= SECTION ================= */
         .branches-section {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin: 20px 0;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
         }
 
         .section-title {
-            font-size: 14px;
+            font-size: 13px;
             color: #3AB54A;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-weight: bold;
-            opacity: 0.8;
         }
 
-        /* =========================================== */
-        /* الأزرار */
-        /* =========================================== */
+        /* ================= BUTTONS ================= */
         .links-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
 
         .bio-btn {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 24px;
-            background: rgba(30, 41, 59, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid #374151;
-            border-radius: 16px;
-            color: white;
+            padding: 16px 20px;
+            background: white;
+            border-radius: 14px;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+            color: #1f2937;
+            border: 1px solid #e5e7eb;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
         }
 
         .bio-btn:hover {
-            border-color: #3AB54A;
             transform: translateY(-4px);
-            background: rgba(30, 41, 59, 0.9);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: #3AB54A;
+            box-shadow: 0 10px 25px rgba(58,181,74,0.15);
         }
 
-        .btn-text { font-weight: 700; font-size: 16px; }
+        .btn-text {
+            font-weight: 700;
+            font-size: 15px;
+        }
 
         .btn-icon {
-            font-size: 22px;
+            font-size: 20px;
             color: #9ca3af;
-            transition: color 0.3s;
         }
 
-        .bio-btn:hover .btn-icon { color: #3AB54A; }
+        .bio-btn:hover .btn-icon {
+            color: #3AB54A;
+        }
 
-        /* زر المتجر المميز */
+        /* زر المتجر */
         .store-btn {
-            background: #3AB54A !important;
-            border-color: #3AB54A !important;
-            box-shadow: 0 0 25px rgba(58, 181, 74, 0.4);
+            background: #3AB54A;
+            color: white;
+            border: none;
         }
-        
+
+        .store-btn .btn-icon {
+            color: white;
+        }
+
         .store-btn:hover {
-            background: #2e9e3e !important;
-            transform: scale(1.02);
+            background: #2e9e3e;
+            box-shadow: 0 10px 25px rgba(58,181,74,0.3);
         }
 
-        .store-btn .btn-icon { color: white !important; }
-
-        /* زر الموقع (خريطة) */
-        .location-btn { border-color: rgba(58, 181, 74, 0.4); }
-        .location-btn .btn-icon { color: #f87171; } /* لون دبوس أحمر */
-
-        .footer { margin-top: 50px; font-size: 12px; color: #6b7280; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* زر الموقع */
+        .location-btn .btn-icon {
+            color: #ef4444;
         }
+
+        /* ================= FOOTER ================= */
+        .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="bio-container">
-        
-        <div class="profile-header">
-            <div class="logo-box">
-                 <i class="fa-solid fa-bolt logo-icon"></i> 
-            </div>
-            <h1 class="brand-name">لير LER للإتصالات</h1>
-            <p class="bio-text">وجهتك الأولى لعالم الاتصالات والأناقة</p>
+<div class="bio-container">
+
+    <div class="profile-header">
+        <div class="logo-box">
+            <i class="fa-solid fa-bolt logo-icon"></i>
         </div>
 
-        <div class="links-wrapper">
-            
-            <a href="https://lleerr.shop" class="bio-btn store-btn" target="_blank">
-                <span class="btn-text">المتجر الإلكتروني</span>
-                <i class="fa-solid fa-cart-shopping btn-icon"></i>
+        <h1 class="brand-name">لير LER للإتصالات</h1>
+        <p class="bio-text">وجهتك الأولى لعالم الاتصالات والأناقة</p>
+    </div>
+
+    <div class="links-wrapper">
+
+        <a href="https://lleerr.shop" class="bio-btn store-btn" target="_blank">
+            <span class="btn-text">المتجر الإلكتروني</span>
+            <i class="fa-solid fa-cart-shopping btn-icon"></i>
+        </a>
+
+        <div class="branches-section">
+            <p class="section-title">فروعنا ومواقعنا</p>
+
+            <a href="https://maps.app.goo.gl/KtSYT2ijGtktDmDA6?g_st=ic" class="bio-btn location-btn" target="_blank">
+                <span class="btn-text">موقع المعرض (اضغط للوصول)</span>
+                <i class="fa-solid fa-location-dot btn-icon"></i>
             </a>
-
-            <div class="branches-section">
-                <p class="section-title">فروعنا ومواقعنا</p>
-                
-                <a href="https://maps.app.goo.gl/KtSYT2ijGtktDmDA6?g_st=ic" class="bio-btn location-btn" target="_blank">
-                    <span class="btn-text">موقع المعرض (اضغط للوصول)</span>
-                    <i class="fa-solid fa-location-dot btn-icon"></i>
-                </a>
-            </div>
-
-            <a href="https://wa.me/966533774766" class="bio-btn" target="_blank">
-                <span class="btn-text">تواصل معنا واتساب</span>
-                <i class="fa-brands fa-whatsapp btn-icon"></i>
-            </a>
-
-            <a href="https://www.instagram.com/ler35r?igsh=Mzh5bHZ4eWFjanJn" class="bio-btn" target="_blank">
-                <span class="btn-text">تابعنا في انستقرام</span>
-                <i class="fa-brands fa-instagram btn-icon"></i>
-            </a>
-
-            <a href="https://www.tiktok.com/@MS4wLjABAAAAq-r1MpwDvPXZUH0fwx8k6NwnmJuiBYO0MTMBA2aX-6ypkBxeskWhCh_nf_XLTy2F?_r=1&_t=ZT-92ZcMJGFD1T" class="bio-btn" target="_blank">
-                <span class="btn-text">مقاطعنا في تيك توك</span>
-                <i class="fa-brands fa-tiktok btn-icon"></i>
-            </a>
-
-            <a href="https://snapchat.com/t/UV2ucZyd" class="bio-btn" target="_blank"> 
-                <span class="btn-text">يومياتنا بالسناب</span>
-                <i class="fa-brands fa-snapchat btn-icon"></i>
-            </a>
-
         </div>
 
-        <div class="footer">
-            <p>© 2025 لير LER للإتصالات. جميع الحقوق محفوظة.</p>
-        </div>
+        <a href="https://wa.me/966533774766" class="bio-btn" target="_blank">
+            <span class="btn-text">تواصل معنا واتساب</span>
+            <i class="fa-brands fa-whatsapp btn-icon"></i>
+        </a>
+
+        <a href="https://www.instagram.com/ler35r" class="bio-btn" target="_blank">
+            <span class="btn-text">تابعنا في انستقرام</span>
+            <i class="fa-brands fa-instagram btn-icon"></i>
+        </a>
+
+        <a href="https://www.tiktok.com" class="bio-btn" target="_blank">
+            <span class="btn-text">مقاطعنا في تيك توك</span>
+            <i class="fa-brands fa-tiktok btn-icon"></i>
+        </a>
+
+        <a href="https://snapchat.com" class="bio-btn" target="_blank">
+            <span class="btn-text">يومياتنا بالسناب</span>
+            <i class="fa-brands fa-snapchat btn-icon"></i>
+        </a>
 
     </div>
 
+    <div class="footer">
+        <p>© 2025 لير LER للإتصالات</p>
+    </div>
+
+</div>
+
 </body>
 </html>
-
