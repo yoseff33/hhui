@@ -86,7 +86,7 @@
         .video-box h2 { font-size: 32px; font-weight: 800; margin-bottom: 25px; }
         .image-container {
             border-radius: 32px;
-overflow: hidden;
+            overflow: hidden;
             box-shadow: var(--shadow);
             transition: transform 0.3s ease;
         }
@@ -185,7 +185,7 @@ overflow: hidden;
             border-bottom: 1px dashed var(--border);
         }
         .terms-list li svg { width: 24px; height: 24px; fill: var(--accent); flex-shrink: 0; }
-.terms-list li strong { color: var(--accent); margin-left: 5px; }
+        .terms-list li strong { color: var(--accent); margin-left: 5px; }
 
         /* باقي الأقسام */
         .faq-wrap { max-width: 900px; margin: 0 auto 80px; }
@@ -263,7 +263,7 @@ overflow: hidden;
                 <div class="sub-price">قسط ميسر لـ 42 شهر</div>
                 <button class="btn btn-blue" onclick="openModal('iPhone 17 Pro Max')">اطلب الآن</button>
             </div>
-            <div <div class="card">
+            <div class="card">
                 <img loading="lazy" src="https://www.att.com/scmsassets/global/devices/phones/apple/apple-iphone-17-pro-max/carousel/deep-blue-2.png" alt="iPhone 17">
                 <h3>iPhone 17 Pro</h3>
                 <div class="price">115 <span>ريال</span></div>
@@ -308,7 +308,7 @@ overflow: hidden;
                     <div class="accordion-item" id="accordion-sectors">
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <span>
-<svg viewBox="0 0 24 24" width="28" height="28"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2z"/></svg>
+                                <svg viewBox="0 0 24 24" width="28" height="28"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2z"/></svg>
                                 القطاعات المستهدفة
                             </span>
                             <span class="accordion-icon">+</span>
@@ -383,7 +383,7 @@ overflow: hidden;
         <div class="modal-content">
             <h2 style="margin-bottom:15px;">طلب تقسيط فوري</h2>
             <input type="text" id="u_name" placeholder="الاسم الثلاثي">
-<input type="text" id="u_id" placeholder="رقم الهوية الوطنية">
+            <input type="text" id="u_id" placeholder="رقم الهوية الوطنية">
             <input type="number" id="u_salary" placeholder="الراتب الصافي">
             <input type="number" id="u_debt" placeholder="إجمالي الأقساط الشهرية">
             <input type="number" id="u_age" placeholder="العمر">
@@ -423,13 +423,14 @@ overflow: hidden;
 
             if (name.split(' ').length < 3) return alert("فضلاً اكتب اسمك الثلاثي");
             if (!idNumber) return alert("رقم الهوية الوطنية مطلوب");
-            if (!salary  !debt  !duration) return alert("كمل البيانات لاهنت");
+            // ✅ تم إصلاح الخطأ هنا ✅
+            if (!salary || !debt || !duration) return alert("كمل البيانات لاهنت (الراتب، الأقساط، مدة الخدمة)");
             if (age < 21) return alert("التقسيط متاح لعمر 21 سنة وفوق");
             if (job === "حكومي" && duration < 1) return alert("موظف الحكومي لازم خدمة شهر وفوق");
             if (job === "خاص" && duration < 3) return alert("موظف القطاع الخاص لازم خدمة 3 شهور وفوق");
 
-            const msg = السلام عليكم لير للاتصالات\nحاب اطلب ${pName}\nالاسم: ${name}\nرقم الهوية: ${idNumber}\nالراتب: ${salary}\nالالتزامات: ${debt}\nالعمر: ${age}\nالقطاع: ${job}\nمدة الخدمة: ${duration} شهر\nبانتظار ردكم 🌹;
-            window.location.href = https://wa.me/966533774766?text=${encodeURIComponent(msg)};
+            const msg = `السلام عليكم لير للاتصالات\nحاب اطلب ${pName}\nالاسم: ${name}\nرقم الهوية: ${idNumber}\nالراتب: ${salary}\nالالتزامات: ${debt}\nالعمر: ${age}\nالقطاع: ${job}\nمدة الخدمة: ${duration} شهر\nبانتظار ردكم 🌹`;
+            window.location.href = `https://wa.me/966533774766?text=${encodeURIComponent(msg)}`;
         }
 
         function toggleTheme() { 
