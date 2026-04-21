@@ -3,95 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>السيرة الذاتية يوسف المطيري</title>
+    <title>يوسف عيد المطيري | MIS & Business Tech Expert</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: #fff; color: #000; line-height: 1.6; padding: 0; }
-        .wrapper { max-width: 800px; margin: 0 auto; padding: 40px; }
-        header { text-align: center; border-bottom: 3px solid #000; padding-bottom: 20px; margin-bottom: 25px; }
-        h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 5px; }
-        .info { font-size: 1rem; font-weight: 700; }
+        body { background-color: #fdfdfd; color: #1a1a1a; line-height: 1.6; }
+        .cv-container { max-width: 850px; margin: 20px auto; padding: 40px; background: #fff; border: 1px solid #eee; }
+        
+        header { text-align: center; border-bottom: 3px solid #000; padding-bottom: 15px; margin-bottom: 25px; }
+        h1 { font-size: 2.2rem; font-weight: 900; color: #000; margin-bottom: 5px; }
+        .contact { font-size: 1rem; font-weight: 700; color: #444; margin-bottom: 10px; }
+        
+        /* رابط معرض الأعمال - بارز جداً للمديرة */
+        .portfolio-box { 
+            background: #f9f9f9; 
+            border: 2px dashed #000; 
+            padding: 12px; 
+            margin: 10px 0; 
+            text-align: center;
+        }
+        .portfolio-box p { font-weight: 900; color: #000; margin-bottom: 5px; }
+        .portfolio-link { 
+            display: inline-block; 
+            color: #0044cc; 
+            text-decoration: underline; 
+            font-weight: 800; 
+            word-break: break-all;
+        }
+
         .section { margin-bottom: 25px; }
-        .title { font-size: 1.2rem; font-weight: 900; border-bottom: 1px solid #000; margin-bottom: 15px; padding-bottom: 5px; }
-        .item { margin-bottom: 15px; }
-        .item-head { display: flex; justify-content: space-between; font-weight: 900; font-size: 1.05rem; }
-        .sub { font-weight: 700; color: #333; display: block; margin-bottom: 5px; }
-        ul { list-style: none; padding-right: 15px; }
-        li { position: relative; padding-right: 15px; margin-bottom: 5px; font-size: 0.95rem; }
-        li::before { content: "•"; position: absolute; right: 0; font-weight: bold; }
-        .skills { display: flex; flex-wrap: wrap; gap: 10px; font-weight: 700; }
-        .tag { border: 1px solid #000; padding: 2px 10px; font-size: 0.85rem; }
-        @media print { .wrapper { padding: 20px; width: 100%; } }
+        .section-title { 
+            font-size: 1.2rem; 
+            font-weight: 900; 
+            color: #fff; 
+            background: #000;
+            padding: 4px 15px;
+            margin-bottom: 15px; 
+            display: inline-block;
+        }
+
+        .content-block { margin-bottom: 20px; }
+        .block-header { display: flex; justify-content: space-between; align-items: baseline; }
+        .title { font-weight: 900; font-size: 1.15rem; color: #000; }
+        .date { font-size: 0.9rem; color: #666; font-weight: 800; }
+        .subtitle { font-weight: 800; color: #333; font-size: 1rem; display: block; margin-bottom: 8px; }
+
+        p, li { font-size: 1rem; color: #333; text-align: justify; }
+        ul { list-style: none; padding-right: 5px; }
+        li { position: relative; padding-right: 20px; margin-bottom: 6px; }
+        li::before { content: "■"; position: absolute; right: 0; color: #000; font-size: 0.8rem; top: 4px; }
+
+        .skills-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+        .tag { border: 1.5px solid #000; padding: 3px 12px; font-size: 0.85rem; font-weight: 800; }
+
+        @media print { .cv-container { border: none; padding: 10px; width: 100%; } }
     </style>
 </head>
 <body>
-<div class="wrapper">
+
+<div class="cv-container">
     <header>
-        <h1>يوسف عيد المطيري</h1>
-        <div class="info">0565464718 | fndske@gmail.com | الخبر السعودية</div>
+        <h1>يوسف عيد دليم المطيري</h1>
+        <div class="contact">
+            0565464718 | fndske@gmail.com | الخبر، السعودية
+        </div>
+        
+        <div class="portfolio-box">
+            <p>للاطلاع على المشاريع الحية وتجربة الأنظمة الذكية التي قمت ببنائها:</p>
+            <a href="https://yoseff33.github.io/YOUSEF-EID-dev/#skills" class="portfolio-link" target="_blank">
+                https://yoseff33.github.io/YOUSEF-EID-dev/#skills
+            </a>
+        </div>
     </header>
 
     <section class="section">
-        <h2 class="title">الملخص المهني</h2>
-        <p>خريج نظم معلومات إدارية متخصص في تحليل النظم وتوظيف حلول الذكاء الاصطناعي في تطوير الأعمال أمتلك مهارة في هندسة الأوامر الذكية وأتمتة العمليات لرفع الكفاءة التشغيلية وبناء نماذج عمل رقمية مبتكرة تتوافق مع رؤية المملكة التقنية</p>
+        <h2 class="section-title">الملخص المهني</h2>
+        <p>
+            خبير هجين في نظم المعلومات الإدارية (MIS) يجمع بين الرؤية الإدارية والقدرة التقنية. متميز في تحليل وتصميم "رحلة المستخدم" (User Journey) وأتمتة العمليات لرفع الكفاءة الإنتاجية. أوظف تقنيات الذكاء الاصطناعي كأداة استراتيجية لحل مشكلات البيزنس، وتحويل البيانات إلى قرارات إدارية فعالة تخدم أهداف المنظمة.
+        </p>
     </section>
 
     <section class="section">
-        <h2 class="title">التعليم</h2>
-        <div class="item">
-            <div class="item-head">
-                <span>بكالوريوس نظم معلومات إدارية (MIS)</span>
-                <span>2026-01-08</span>
+        <h2 class="section-title">التعليم</h2>
+        <div class="content-block">
+            <div class="block-header">
+                <span class="title">بكالوريوس نظم معلومات إدارية (MIS)</span>
+                <span class="date">2026-01-08</span>
             </div>
-            <span class="sub">جامعة حفر الباطن كلية إدارة الأعمال</span>
+            <span class="subtitle">جامعة حفر الباطن - كلية إدارة الأعمال</span>
         </div>
     </section>
 
     <section class="section">
-        <h2 class="title">المشاريع والإنجازات التقنية</h2>
-        <div class="item">
-            <div class="item-head">
-                <span>مشروع مفحوص للأمن السيبراني</span>
-                <span>2025-12-12</span>
-            </div>
-            <span class="sub">هكاثون طويق أبشر</span>
-            <ul>
-                <li>تطوير نموذج ذكاء اصطناعي متخصص في كشف وتحليل رسائل الاحتيال الرقمي</li>
-                <li>تصميم نظام فحص الأرقام والروابط المشبوهة لتعزيز الحماية الأمنية للمستخدمين</li>
-            </ul>
-        </div>
-        <div class="item">
-            <div class="item-head">
-                <span>منصة وُجْهَة للتنقل الرقمي</span>
-                <span>2025 - 2026</span>
+        <h2 class="section-title">الخبرة العملية والمشاريع</h2>
+        
+        <div class="content-block">
+            <div class="block-header">
+                <span class="title">منصة وُجْهَة (Wujha) | تحليل نظم وإدارة تجربة العميل</span>
+                <span class="date">2025 - 2026</span>
             </div>
             <ul>
-                <li>تحليل النظم وتصميم رحلة المستخدم لمنصة تأجير السيارات التشاركية</li>
-                <li>إدارة قواعد البيانات السحابية وضمان الربط التقني بين واجهات المنصة</li>
+                <li><strong>الجانب الإداري:</strong> هندسة "رحلة المستخدم" لتقليل العقبات التشغيلية في تأجير السيارات وتحسين انسيابية العمل.</li>
+                <li><strong>الجانب التقني:</strong> بناء نظام أتمتة كامل للعقود الرقمية والربط مع قواعد البيانات السحابية لضمان دقة المعلومات.</li>
+            </ul>
+        </div>
+
+        <div class="content-block">
+            <div class="block-header">
+                <span class="title">مشروع مُحْكَم (Muhkam) | أتمتة المنطق القانوني والإداري</span>
+                <span class="date">مشروع تقني إداري</span>
+            </div>
+            <ul>
+                <li>تحويل التظلمات الإدارية من صياغات عامية إلى نماذج رسمية مهيكلة تدعم اتخاذ القرار القانوني.</li>
+                <li>توظيف الذكاء الاصطناعي لرفع كفاءة الصياغة الإدارية بنسبة 90% وتقليل الهدر الزمني.</li>
+            </ul>
+        </div>
+
+        <div class="content-block">
+            <div class="block-header">
+                <span class="title">مشروع مفحوص (Mafhoos) | إدارة المخاطر الرقمية</span>
+                <span class="date">هكاثون طويق | 2025-12-12</span>
+            </div>
+            <ul>
+                <li>تطوير نظام ذكي لتحليل رسائل الاحتيال في قطاع التجزئة، مما يعزز أمان تعاملات العملاء الرقمية.</li>
+                <li>ربط البيانات التحليلية بمصادر موثوقة لتقديم توصيات أمنية لحظية تدعم استقرار العمليات.</li>
             </ul>
         </div>
     </section>
 
     <section class="section">
-        <h2 class="title">المهارات والقدرات</h2>
-        <div class="skills">
-            <span class="tag">تحليل وتصميم النظم الإدارية</span>
-            <span class="tag">هندسة أوامر الذكاء الاصطناعي</span>
-            <span class="tag">إدارة قواعد البيانات SQL</span>
-            <span class="tag">أتمتة العمليات الرقمية</span>
-            <span class="tag">تحليل تجربة المستخدم UX</span>
-            <span class="tag">إدارة مشاريع التقنيات الناشئة</span>
+        <h2 class="section-title">المهارات الهجينة (Business & Tech)</h2>
+        <div class="skills-grid">
+            <span class="tag">تحليل رحلة المستخدم (User Journey Mapping)</span>
+            <span class="tag">تحليل النظم وتصميم العمليات (MIS)</span>
+            <span class="tag">أتمتة تدفق العمل (Workflow Automation)</span>
+            <span class="tag">إدارة قواعد البيانات (SQL & Data Logic)</span>
+            <span class="tag">هندسة أوامر الذكاء الاصطناعي للأعمال</span>
+            <span class="tag">إدارة المشاريع الرقمية</span>
         </div>
     </section>
-
-    <section class="section">
-        <h2 class="title">اللغات</h2>
-        <div class="skills">
-            <span class="tag">اللغة العربية اللغة الأم</span>
-            <span class="tag">اللغة الإنجليزية مستوى أساسي </span>
         </div>
     </section>
 </div>
+
 </body>
 </html>
