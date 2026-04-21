@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:'Cairo',sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+    color:#111;
+    line-height:1.7;
+}
+
+/* A4 Container */
+.cv-container{
+    width:210mm;
+    min-height:297mm;
+    margin:20px auto;
+    background:#fff;
+    padding:22mm 18mm;
+    box-shadow:0 0 10px rgba(0,0,0,0.08);
+}
+
+/* Header */
+header{
+    text-align:center;
+    border-bottom:3px solid #000;
+    padding-bottom:12px;
+    margin-bottom:20px;
+}
+
+h1{
+    font-size:28px;
+    font-weight:900;
+    margin-bottom:5px;
+}
+
+.contact{
+    font-size:14px;
+    font-weight:700;
+    color:#444;
+}
+
+/* Portfolio */
+.portfolio-box{
+    margin-top:12px;
+    padding:10px;
+    border:2px dashed #000;
+    background:#fafafa;
+}
+
+.portfolio-box p{
+    font-weight:900;
+    margin-bottom:6px;
+}
+
+.portfolio-link{
+    font-weight:800;
+    color:#0044cc;
+    word-break:break-all;
+    text-decoration:underline;
+}
+
+/* Sections */
+.section{
+    margin-top:18px;
+}
+
+.section-title{
+    display:inline-block;
+    background:#000;
+    color:#fff;
+    font-size:16px;
+    font-weight:900;
+    padding:4px 12px;
+    margin-bottom:12px;
+}
+
+/* Content */
+.content-block{
+    margin-bottom:14px;
+}
+
+.block-header{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.title{
+    font-weight:900;
+    font-size:15px;
+}
+
+.date{
+    font-size:12px;
+    color:#666;
+    font-weight:800;
+}
+
+.subtitle{
+    font-weight:700;
+    color:#333;
+    font-size:13px;
+    display:block;
+    margin-top:3px;
+}
+
+/* Lists */
+ul{
+    list-style:none;
+    margin-top:8px;
+}
+
+li{
+    position:relative;
+    padding-left:18px;
+    margin-bottom:6px;
+    font-size:13px;
+}
+
+li::before{
+    content:"■";
+    position:absolute;
+    left:0;
+    top:2px;
+    font-size:10px;
+}
+
+/* Skills */
+.skills-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.tag{
+    border:1.5px solid #000;
+    padding:3px 10px;
+    font-size:12px;
+    font-weight:800;
+}
+
+/* PRINT MODE */
+@media print{
+
+    body{
+        background:#fff;
+    }
+
+    .cv-container{
+        width:100%;
+        min-height:auto;
+        margin:0;
+        padding:15mm;
+        box-shadow:none;
+    }
+
+    .section{
+        page-break-inside:avoid;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="cv-container">
+
+<header>
+    <h1>Yousef Eid Dleim Al-Mutairi</h1>
+    <div class="contact">
+        0565464718 | fndske@gmail.com | Khobar, Saudi Arabia
+    </div>
+
+    <div class="portfolio-box">
+        <p>To view live projects and smart systems I built:</p>
+        <a class="portfolio-link" href="https://yoseff33.github.io/YOUSEF-EID-dev/#skills" target="_blank">
+            https://yoseff33.github.io/YOUSEF-EID-dev/#skills
+        </a>
+    </div>
+</header>
+
+<section class="section">
+    <div class="section-title">Professional Summary</div>
+    <p>
+        A hybrid MIS specialist combining administrative vision with technical capability. Skilled in User Journey analysis and workflow automation to enhance operational efficiency. I leverage AI technologies as a strategic tool to solve business problems and transform data into effective managerial decisions that support organizational goals.
+    </p>
+</section>
+
+<section class="section">
+    <div class="section-title">Education</div>
+
+    <div class="content-block">
+        <div class="block-header">
+            <div class="title">Bachelor of Management Information Systems (MIS)</div>
+            <div class="date">2026-01-08</div>
+        </div>
+        <div class="subtitle">University of Hafr Al-Batin - College of Business Administration</div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-title">Experience & Projects</div>
+
+    <div class="content-block">
+        <div class="block-header">
+            <div class="title">Wujha Platform | Systems Analysis & Customer Experience Management</div>
+            <div class="date">2025 - 2026</div>
+        </div>
+        <ul>
+            <li><strong>Administrative side:</strong> Designed the User Journey to reduce operational friction in car rental processes and improve workflow efficiency.</li>
+            <li><strong>Technical side:</strong> Built a full automation system for digital contracts and integrated cloud databases to ensure data accuracy.</li>
+        </ul>
+    </div>
+
+    <div class="content-block">
+        <div class="block-header">
+            <div class="title">Muhkam Project | Legal & Administrative Logic Automation</div>
+            <div class="date">Technical Administrative Project</div>
+        </div>
+        <ul>
+            <li>Transformed administrative complaints from informal language into structured formal templates supporting legal decision-making.</li>
+            <li>Utilized AI to improve administrative drafting efficiency by 90% and reduce time waste.</li>
+        </ul>
+    </div>
+
+    <div class="content-block">
+        <div class="block-header">
+            <div class="title">Mafhoos Project | Digital Risk Management</div>
+            <div class="date">Tuwaiq Hackathon | 2025-12-12</div>
+        </div>
+        <ul>
+            <li>Developed an intelligent system to analyze fraud messages in the retail sector, improving digital transaction security.</li>
+            <li>Connected analytical data with trusted sources to provide real-time security recommendations supporting operational stability.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-title">Hybrid Skills (Business & Tech)</div>
+
+    <div class="skills-grid">
+        <span class="tag">User Journey Mapping</span>
+        <span class="tag">MIS Systems & Process Design</span>
+        <span class="tag">Workflow Automation</span>
+        <span class="tag">Database Management (SQL & Data Logic)</span>
+        <span class="tag">AI Prompt Engineering for Business</span>
+        <span class="tag">Digital Project Management</span>
+    </div>
+</section>
+
+</div>
+
+</body>
+</html>
