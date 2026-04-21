@@ -1,149 +1,266 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>يوسف عيد المطيري | MIS & Business Tech Expert</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: #fdfdfd; color: #1a1a1a; line-height: 1.6; }
-        .cv-container { max-width: 850px; margin: 20px auto; padding: 40px; background: #fff; border: 1px solid #eee; }
-        
-        header { text-align: center; border-bottom: 3px solid #000; padding-bottom: 15px; margin-bottom: 25px; }
-        h1 { font-size: 2.2rem; font-weight: 900; color: #000; margin-bottom: 5px; }
-        .contact { font-size: 1rem; font-weight: 700; color: #444; margin-bottom: 10px; }
-        
-        /* رابط معرض الأعمال - بارز جداً للمديرة */
-        .portfolio-box { 
-            background: #f9f9f9; 
-            border: 2px dashed #000; 
-            padding: 12px; 
-            margin: 10px 0; 
-            text-align: center;
-        }
-        .portfolio-box p { font-weight: 900; color: #000; margin-bottom: 5px; }
-        .portfolio-link { 
-            display: inline-block; 
-            color: #0044cc; 
-            text-decoration: underline; 
-            font-weight: 800; 
-            word-break: break-all;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV</title>
 
-        .section { margin-bottom: 25px; }
-        .section-title { 
-            font-size: 1.2rem; 
-            font-weight: 900; 
-            color: #fff; 
-            background: #000;
-            padding: 4px 15px;
-            margin-bottom: 15px; 
-            display: inline-block;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
-        .content-block { margin-bottom: 20px; }
-        .block-header { display: flex; justify-content: space-between; align-items: baseline; }
-        .title { font-weight: 900; font-size: 1.15rem; color: #000; }
-        .date { font-size: 0.9rem; color: #666; font-weight: 800; }
-        .subtitle { font-weight: 800; color: #333; font-size: 1rem; display: block; margin-bottom: 8px; }
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:'Cairo',sans-serif;
+}
 
-        p, li { font-size: 1rem; color: #333; text-align: justify; }
-        ul { list-style: none; padding-right: 5px; }
-        li { position: relative; padding-right: 20px; margin-bottom: 6px; }
-        li::before { content: "■"; position: absolute; right: 0; color: #000; font-size: 0.8rem; top: 4px; }
+body{
+    background:#f4f4f4;
+    color:#111;
+    line-height:1.7;
+}
 
-        .skills-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-        .tag { border: 1.5px solid #000; padding: 3px 12px; font-size: 0.85rem; font-weight: 800; }
+/* A4 Container */
+.cv-container{
+    width:210mm;
+    min-height:297mm;
+    margin:20px auto;
+    background:#fff;
+    padding:22mm 18mm;
+    box-shadow:0 0 10px rgba(0,0,0,0.08);
+}
 
-        @media print { .cv-container { border: none; padding: 10px; width: 100%; } }
-    </style>
+/* Header */
+header{
+    text-align:center;
+    border-bottom:3px solid #000;
+    padding-bottom:12px;
+    margin-bottom:20px;
+}
+
+h1{
+    font-size:28px;
+    font-weight:900;
+    margin-bottom:5px;
+}
+
+.contact{
+    font-size:14px;
+    font-weight:700;
+    color:#444;
+}
+
+/* Portfolio */
+.portfolio-box{
+    margin-top:12px;
+    padding:10px;
+    border:2px dashed #000;
+    background:#fafafa;
+}
+
+.portfolio-box p{
+    font-weight:900;
+    margin-bottom:6px;
+}
+
+.portfolio-link{
+    font-weight:800;
+    color:#0044cc;
+    word-break:break-all;
+    text-decoration:underline;
+}
+
+/* Sections */
+.section{
+    margin-top:18px;
+}
+
+.section-title{
+    display:inline-block;
+    background:#000;
+    color:#fff;
+    font-size:16px;
+    font-weight:900;
+    padding:4px 12px;
+    margin-bottom:12px;
+}
+
+/* Content */
+.content-block{
+    margin-bottom:14px;
+}
+
+.block-header{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.title{
+    font-weight:900;
+    font-size:15px;
+}
+
+.date{
+    font-size:12px;
+    color:#666;
+    font-weight:800;
+}
+
+.subtitle{
+    font-weight:700;
+    color:#333;
+    font-size:13px;
+    display:block;
+    margin-top:3px;
+}
+
+/* Lists */
+ul{
+    list-style:none;
+    margin-top:8px;
+}
+
+li{
+    position:relative;
+    padding-right:18px;
+    margin-bottom:6px;
+    font-size:13px;
+}
+
+li::before{
+    content:"■";
+    position:absolute;
+    right:0;
+    top:2px;
+    font-size:10px;
+}
+
+/* Skills */
+.skills-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.tag{
+    border:1.5px solid #000;
+    padding:3px 10px;
+    font-size:12px;
+    font-weight:800;
+}
+
+/* PRINT MODE */
+@media print{
+
+    body{
+        background:#fff;
+    }
+
+    .cv-container{
+        width:100%;
+        min-height:auto;
+        margin:0;
+        padding:15mm;
+        box-shadow:none;
+    }
+
+    .section{
+        page-break-inside:avoid;
+    }
+}
+</style>
+
 </head>
+
 <body>
 
 <div class="cv-container">
-    <header>
-        <h1>يوسف عيد دليم المطيري</h1>
-        <div class="contact">
-            0565464718 | fndske@gmail.com | الخبر، السعودية
-        </div>
-        
-        <div class="portfolio-box">
-            <p>للاطلاع على المشاريع الحية وتجربة الأنظمة الذكية التي قمت ببنائها:</p>
-            <a href="https://yoseff33.github.io/YOUSEF-EID-dev/#skills" class="portfolio-link" target="_blank">
-                https://yoseff33.github.io/YOUSEF-EID-dev/#skills
-            </a>
-        </div>
-    </header>
 
-    <section class="section">
-        <h2 class="section-title">الملخص المهني</h2>
-        <p>
-            خبير هجين في نظم المعلومات الإدارية (MIS) يجمع بين الرؤية الإدارية والقدرة التقنية. متميز في تحليل وتصميم "رحلة المستخدم" (User Journey) وأتمتة العمليات لرفع الكفاءة الإنتاجية. أوظف تقنيات الذكاء الاصطناعي كأداة استراتيجية لحل مشكلات البيزنس، وتحويل البيانات إلى قرارات إدارية فعالة تخدم أهداف المنظمة.
-        </p>
-    </section>
+<header>
+    <h1>يوسف عيد دليم المطيري</h1>
+    <div class="contact">
+        0565464718 | fndske@gmail.com | الخبر، السعودية
+    </div>
 
-    <section class="section">
-        <h2 class="section-title">التعليم</h2>
-        <div class="content-block">
-            <div class="block-header">
-                <span class="title">بكالوريوس نظم معلومات إدارية (MIS)</span>
-                <span class="date">2026-01-08</span>
-            </div>
-            <span class="subtitle">جامعة حفر الباطن - كلية إدارة الأعمال</span>
-        </div>
-    </section>
+    <div class="portfolio-box">
+        <p>للاطلاع على المشاريع الحية وتجربة الأنظمة الذكية التي قمت ببنائها:</p>
+        <a class="portfolio-link" href="https://yoseff33.github.io/YOUSEF-EID-dev/#skills" target="_blank">
+            https://yoseff33.github.io/YOUSEF-EID-dev/#skills
+        </a>
+    </div>
+</header>
 
-    <section class="section">
-        <h2 class="section-title">الخبرة العملية والمشاريع</h2>
-        
-        <div class="content-block">
-            <div class="block-header">
-                <span class="title">منصة وُجْهَة (Wujha) | تحليل نظم وإدارة تجربة العميل</span>
-                <span class="date">2025 - 2026</span>
-            </div>
-            <ul>
-                <li><strong>الجانب الإداري:</strong> هندسة "رحلة المستخدم" لتقليل العقبات التشغيلية في تأجير السيارات وتحسين انسيابية العمل.</li>
-                <li><strong>الجانب التقني:</strong> بناء نظام أتمتة كامل للعقود الرقمية والربط مع قواعد البيانات السحابية لضمان دقة المعلومات.</li>
-            </ul>
-        </div>
+<section class="section">
+    <div class="section-title">الملخص المهني</div>
+    <p>
+        خبير هجين في نظم المعلومات الإدارية (MIS) يجمع بين الرؤية الإدارية والقدرة التقنية. متميز في تحليل وتصميم "رحلة المستخدم" (User Journey) وأتمتة العمليات لرفع الكفاءة الإنتاجية. أوظف تقنيات الذكاء الاصطناعي كأداة استراتيجية لحل مشكلات البيزنس، وتحويل البيانات إلى قرارات إدارية فعالة تخدم أهداف المنظمة.
+    </p>
+</section>
 
-        <div class="content-block">
-            <div class="block-header">
-                <span class="title">مشروع مُحْكَم (Muhkam) | أتمتة المنطق القانوني والإداري</span>
-                <span class="date">مشروع تقني إداري</span>
-            </div>
-            <ul>
-                <li>تحويل التظلمات الإدارية من صياغات عامية إلى نماذج رسمية مهيكلة تدعم اتخاذ القرار القانوني.</li>
-                <li>توظيف الذكاء الاصطناعي لرفع كفاءة الصياغة الإدارية بنسبة 90% وتقليل الهدر الزمني.</li>
-            </ul>
-        </div>
+<section class="section">
+    <div class="section-title">التعليم</div>
 
-        <div class="content-block">
-            <div class="block-header">
-                <span class="title">مشروع مفحوص (Mafhoos) | إدارة المخاطر الرقمية</span>
-                <span class="date">هكاثون طويق | 2025-12-12</span>
-            </div>
-            <ul>
-                <li>تطوير نظام ذكي لتحليل رسائل الاحتيال في قطاع التجزئة، مما يعزز أمان تعاملات العملاء الرقمية.</li>
-                <li>ربط البيانات التحليلية بمصادر موثوقة لتقديم توصيات أمنية لحظية تدعم استقرار العمليات.</li>
-            </ul>
+    <div class="content-block">
+        <div class="block-header">
+            <div class="title">بكالوريوس نظم معلومات إدارية (MIS)</div>
+            <div class="date">2026-01-08</div>
         </div>
-    </section>
+        <div class="subtitle">جامعة حفر الباطن - كلية إدارة الأعمال</div>
+    </div>
+</section>
 
-    <section class="section">
-        <h2 class="section-title">المهارات الهجينة (Business & Tech)</h2>
-        <div class="skills-grid">
-            <span class="tag">تحليل رحلة المستخدم (User Journey Mapping)</span>
-            <span class="tag">تحليل النظم وتصميم العمليات (MIS)</span>
-            <span class="tag">أتمتة تدفق العمل (Workflow Automation)</span>
-            <span class="tag">إدارة قواعد البيانات (SQL & Data Logic)</span>
-            <span class="tag">هندسة أوامر الذكاء الاصطناعي للأعمال</span>
-            <span class="tag">إدارة المشاريع الرقمية</span>
+<section class="section">
+    <div class="section-title">الخبرة العملية والمشاريع</div>
+
+    <div class="content-block">
+        <div class="block-header">
+            <div class="title">منصة وُجْهَة (Wujha) | تحليل نظم وإدارة تجربة العميل</div>
+            <div class="date">2025 - 2026</div>
         </div>
-    </section>
+        <ul>
+            <li><strong>الجانب الإداري:</strong> هندسة "رحلة المستخدم" لتقليل العقبات التشغيلية في تأجير السيارات وتحسين انسيابية العمل.</li>
+            <li><strong>الجانب التقني:</strong> بناء نظام أتمتة كامل للعقود الرقمية والربط مع قواعد البيانات السحابية لضمان دقة المعلومات.</li>
+        </ul>
+    </div>
+
+    <div class="content-block">
+        <div class="block-header">
+            <div class="title">مشروع مُحْكَم (Muhkam) | أتمتة المنطق القانوني والإداري</div>
+            <div class="date">مشروع تقني إداري</div>
         </div>
-    </section>
+        <ul>
+            <li>تحويل التظلمات الإدارية من صياغات عامية إلى نماذج رسمية مهيكلة تدعم اتخاذ القرار القانوني.</li>
+            <li>توظيف الذكاء الاصطناعي لرفع كفاءة الصياغة الإدارية بنسبة 90% وتقليل الهدر الزمني.</li>
+        </ul>
+    </div>
+
+    <div class="content-block">
+        <div class="block-header">
+            <div class="title">مشروع مفحوص (Mafhoos) | إدارة المخاطر الرقمية</div>
+            <div class="date">هكاثون طويق | 2025-12-12</div>
+        </div>
+        <ul>
+            <li>تطوير نظام ذكي لتحليل رسائل الاحتيال في قطاع التجزئة، مما يعزز أمان تعاملات العملاء الرقمية.</li>
+            <li>ربط البيانات التحليلية بمصادر موثوقة لتقديم توصيات أمنية لحظية تدعم استقرار العمليات.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-title">المهارات الهجينة (Business & Tech)</div>
+
+    <div class="skills-grid">
+        <span class="tag">تحليل رحلة المستخدم (User Journey Mapping)</span>
+        <span class="tag">تحليل النظم وتصميم العمليات (MIS)</span>
+        <span class="tag">أتمتة تدفق العمل (Workflow Automation)</span>
+        <span class="tag">إدارة قواعد البيانات (SQL & Data Logic)</span>
+        <span class="tag">هندسة أوامر الذكاء الاصطناعي للأعمال</span>
+        <span class="tag">إدارة المشاريع الرقمية</span>
+    </div>
+</section>
+
 </div>
 
 </body>
