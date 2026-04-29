@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فزاع - سيولة تابي فورية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+:root {
+    --primary-color: #111;
+    --accent-color: #e8e1c9;
+    --white: #ffffff;
+    --tabby-green: #37b376;
+    --whatsapp-green: #25D366;
+    --bg-gradient: linear-gradient(135deg, #f8f5eb 0%, #e8e1c9 100%);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    width: 95%;
+    max-width: 400px;
+    background: var(--white);
+    padding: 40px 25px;
+    border-radius: 35px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    text-align: center;
+    position: relative;
+}
+
+.logo-container img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid var(--accent-color);
+    margin-bottom: 15px;
+    background: #fff;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--tabby-green);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--primary-color);
+    margin: 5px 0;
+}
+
+.p-desc {
+    font-size: 17px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.btn-pulse {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: var(--whatsapp-green);
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    border-radius: 20px;
+    transition: 0.3s;
+    animation: pulse-animation 2s infinite;
+}
+
+.btn-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-pulse i {
+    font-size: 30px;
+}
+
+.btn-pulse .main-text {
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.btn-pulse .sub-text {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-top: 2px;
+}
+
+@keyframes pulse-animation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+.fallback-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed #ddd;
+}
+
+.phone-number-box {
+    direction: ltr;
+    unicode-bidi: bidi-override;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8f8f8;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    border: 1px solid #eee;
+    margin-top: 10px;
+}
+
+.tabby-logo-container {
+    margin-top: 30px;
+}
+
+.tabby-logo {
+    width: 100px;
+    height: auto;
+    filter: grayscale(0.2);
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <div class="logo-container">
+        <img src="https://up6.cc/2026/04/177735080739821.png" alt="فزاع">
+    </div>
+
+    <div class="badge">
+        <i class="fas fa-check-circle"></i> موثوقين ومعتمدين
+    </div>
+
+    <h1>سيولة تابي فورية</h1>
+    <p class="p-desc">استلم كاشك الحين بكل سهولة</p>
+
+    <a href="https://wa.me/966500473425?text=سلام%20عليكم%20فزاع%20محتاج%20سلفة" class="btn-pulse" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <div class="btn-content">
+            <span class="main-text">لتواصل عبر الواتساب</span>
+            <span class="sub-text">اضغط هنا</span>
+        </div>
+    </a>
+
+    <div class="fallback-section">
+        <div style="font-size: 13px; color: #888;">أو انسخ الرقم مباشرة</div>
+        <div class="phone-number-box" onclick="copyNum()">
+            <i class="far fa-copy" style="font-size: 14px; color: #aaa;"></i>
+            <span>+966 50 047 3425</span>
+        </div>
+    </div>
+
+    <div class="tabby-logo-container">
+        <img src="https://i0.wp.com/ksalogo.com/wp-content/uploads/2025/02/Tabby-01.png?fit=1000%2C1000&ssl=1" class="tabby-logo" alt="Tabby">
+    </div>
+</div>
+
+<script>
+function copyNum() {
+    navigator.clipboard.writeText('+966500473425');
+    alert('تم نسخ الرقم بنجاح');
+}
+</script>
+
+</body>
+</html>
