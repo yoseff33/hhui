@@ -14,6 +14,7 @@
     --white: #ffffff;
     --tabby-green: #37b376;
     --bg-gradient: linear-gradient(135deg, #f8f5eb 0%, #e8e1c9 100%);
+    --whatsapp-green: #25D366;
 }
 
 body {
@@ -36,6 +37,10 @@ body {
     box-shadow: 0 20px 50px rgba(0,0,0,0.1);
     text-align: center;
     position: relative;
+    transition: transform 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
 }
 
 .logo-container img {
@@ -61,47 +66,40 @@ body {
 }
 
 h1 {
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 900;
     color: var(--primary-color);
     margin: 5px 0;
 }
 
 .p-desc {
-    font-size: 17px;
+    font-size: 16px;
     color: #555;
     margin-bottom: 30px;
 }
 
+/* زر واتساب عصري */
 .btn-pulse {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    background: var(--primary-color);
-    color: var(--accent-color);
+    background: var(--whatsapp-green);
+    color: white;
     text-decoration: none;
     padding: 15px;
-    border-radius: 20px;
-    transition: 0.3s;
-    animation: pulse-animation 2s infinite;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 17px;
+    transition: 0.3s, box-shadow 0.3s;
 }
-
-.btn-pulse .main-text {
-    font-size: 19px;
-    font-weight: 700;
+.btn-pulse i {
+    margin-right: 10px;
+    font-size: 20px;
 }
-
-.btn-pulse .sub-text {
-    font-size: 14px; /* تصغير اضغط هنا */
-    opacity: 0.9;
-    margin-top: 2px;
-}
-
-@keyframes pulse-animation {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.03); }
-    100% { transform: scale(1); }
+.btn-pulse:hover {
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.6);
+    transform: scale(1.05);
 }
 
 .fallback-section {
@@ -111,7 +109,7 @@ h1 {
 }
 
 .phone-number-box {
-    direction: ltr; /* لضمان عدم انعكاس الرقم */
+    direction: ltr;
     unicode-bidi: bidi-override;
     display: inline-flex;
     align-items: center;
@@ -124,6 +122,10 @@ h1 {
     cursor: pointer;
     border: 1px solid #eee;
     margin-top: 10px;
+    transition: 0.3s;
+}
+.phone-number-box:hover {
+    background: #e0e0e0;
 }
 
 .tabby-logo-container {
@@ -149,11 +151,11 @@ h1 {
     </div>
 
     <h1>سيولة تابي فورية</h1>
-    <p class="p-desc">استلم كاشك الحين بكل سهولة</p>
+    <p class="p-desc">استلم كاشك الحين بكل سهولة وبالطريقة الأسرع</p>
 
+    <!-- زر واتساب عصري باللهجة السعودية -->
     <a href="https://wa.me/966565464718?text=سلام%20عليكم%20فزاع%20محتاج%20سلفة" class="btn-pulse" target="_blank">
-        <span class="main-text">لتواصل عبر الواتساب</span>
-        <span class="sub-text">اضغط هنا</span>
+        <i class="fab fa-whatsapp"></i> تواصل معي على واتساب
     </a>
 
     <div class="fallback-section">
