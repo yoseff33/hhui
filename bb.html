@@ -7,6 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
+<!-- ===== سكربت جوجل أناليتكس المُقوى ===== -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-14CR4J2GEC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-14CR4J2GEC');
+</script>
+
 <style>
 :root {
     --primary-color: #111;
@@ -162,7 +171,11 @@ h1 {
     <h1>سيولة تابي فورية</h1>
     <p class="p-desc">استلم كاشك الحين بكل سهولة</p>
 
-    <a href="https://wa.me/966565464718?text=سلام%20عليكم%20فزاع%20محتاج%20سلفة" class="btn-pulse" target="_blank">
+    <!-- زر الواتساب مع تتبع الضغطات -->
+    <a href="https://wa.me/966565464718?text=سلام%20عليكم%20فزاع%20محتاج%20سلفة" 
+       class="btn-pulse" 
+       target="_blank" 
+       id="whatsapp-btn">
         <i class="fab fa-whatsapp"></i>
         <div class="btn-content">
             <span class="main-text">لتواصل عبر الواتساب</span>
@@ -172,7 +185,7 @@ h1 {
 
     <div class="fallback-section">
         <div style="font-size: 13px; color: #888;">أو انسخ الرقم مباشرة</div>
-        <div class="phone-number-box" onclick="copyNum()">
+        <div class="phone-number-box" id="copy-box">
             <i class="far fa-copy" style="font-size: 14px; color: #aaa;"></i>
             <span>+966 56 546 4718</span>
         </div>
@@ -184,15 +197,36 @@ h1 {
 </div>
 
 <script>
+// ========== دالة نسخ الرقم مع تتبع الحدث ==========
 function copyNum() {
-    const el = document.createElement('textarea')
-    el.value = '0565464718'
-    document.body.appendChild(el)
-    el.select()
-    document.execCommand('copy')
-    document.body.removeChild(el)
-    alert('تم نسخ الرقم')
+    const el = document.createElement('textarea');
+    el.value = '0565464718';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    alert('تم نسخ الرقم');
+
+    // تتبع الحدث في Google Analytics
+    gtag('event', 'copy_phone_number', {
+        'event_category': 'engagement',
+        'event_label': 'نسخ رقم الهاتف'
+    });
 }
+
+// ========== ربط الأحداث ==========
+// ربط زر نسخ الرقم
+document.getElementById('copy-box').addEventListener('click', copyNum);
+
+// ربط زر الواتساب لتتبع الضغطات قبل الانتقال
+document.getElementById('whatsapp-btn').addEventListener('click', function(e) {
+    // e.preventDefault(); // لا نمنع الانتقال، فقط نتتبع
+    gtag('event', 'whatsapp_click', {
+        'event_category': 'conversion',
+        'event_label': 'ضغط زر الواتساب الرئيسي'
+    });
+    // سينتقل تلقائياً بعد التتبع
+});
 </script>
 
 </body>
