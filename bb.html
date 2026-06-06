@@ -3,17 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>فزاع - سيولة تابي وتمارا 12 شهر فورية</title>
+<title>فزاع - سيولة تابي فورية</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-<!-- ===== سكربت جوجل أناليتكس المُقوى ===== -->
+<!-- ===== Google Analytics ===== -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-14CR4J2GEC"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-14CR4J2GEC');
+</script>
+
+<!-- ===== Microsoft Clarity (استبدل XXXXXXXXXX بمعرف مشروعك) ===== -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "XXXXXXXXXX");
 </script>
 
 <style>
@@ -41,7 +50,7 @@ body {
     width: 95%;
     max-width: 400px;
     background: var(--white);
-    padding: 40px 25px;
+    padding: 40px 25px 25px;
     border-radius: 35px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.1);
     text-align: center;
@@ -144,6 +153,35 @@ h1 {
     cursor: pointer;
     border: 1px solid #eee;
     margin-top: 10px;
+    transition: 0.2s;
+}
+.phone-number-box:hover {
+    background: #e8f5e9;
+}
+
+.phone-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.call-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #111;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+.call-link:hover {
+    background: #333;
 }
 
 .tabby-logo-container {
@@ -154,6 +192,26 @@ h1 {
     width: 100px;
     height: auto;
     filter: grayscale(0.2);
+}
+
+/* عداد الزوار */
+.visitor-counter {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 13px;
+    color: #666;
+}
+.counter-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.counter-item i {
+    color: var(--whatsapp-green);
 }
 </style>
 </head>
@@ -168,10 +226,9 @@ h1 {
         <i class="fas fa-check-circle"></i> موثوقين ومعتمدين
     </div>
 
-    <h1>سيولة تابي وتمارا على 12 شهر حوالة فورية</h1>
+    <h1>سيولة تابي فورية</h1>
     <p class="p-desc">استلم كاشك الحين بكل سهولة</p>
 
-    <!-- زر الواتساب مع تتبع الضغطات -->
     <a href="https://wa.me/966565464718?text=سلام%20عليكم%20فزاع%20محتاج%20سلفة" 
        class="btn-pulse" 
        target="_blank" 
@@ -184,20 +241,144 @@ h1 {
     </a>
 
     <div class="fallback-section">
-        <div style="font-size: 13px; color: #888;">أو انسخ الرقم مباشرة</div>
-        <div class="phone-number-box" id="copy-box">
-            <i class="far fa-copy" style="font-size: 14px; color: #aaa;"></i>
-            <span>+966 56 546 4718</span>
+        <div style="font-size: 13px; color: #888; margin-bottom: 5px;">أو انسخ الرقم / اتصل مباشرة</div>
+        <div class="phone-actions">
+            <div class="phone-number-box" id="copy-box">
+                <i class="far fa-copy" style="font-size: 14px; color: #aaa;"></i>
+                <span>+966 56 546 4718</span>
+            </div>
+            <a href="tel:+966565464718" class="call-link" id="call-btn">
+                <i class="fas fa-phone"></i> اتصال
+            </a>
         </div>
     </div>
 
     <div class="tabby-logo-container">
         <img src="https://i0.wp.com/ksalogo.com/wp-content/uploads/2025/02/Tabby-01.png?fit=1000%2C1000&ssl=1" class="tabby-logo" alt="Tabby">
     </div>
+
+    <!-- عداد الزوار -->
+    <div class="visitor-counter">
+        <div class="counter-item">
+            <i class="fas fa-eye"></i> <span id="pageViews">...</span> مشاهدة
+        </div>
+        <div class="counter-item">
+            <i class="fas fa-user"></i> <span id="uniqueVisitors">...</span> زائر اليوم
+        </div>
+    </div>
 </div>
 
 <script>
-// ========== دالة نسخ الرقم مع تتبع الحدث ==========
+// ========== 1. عداد الزوار المرئي ==========
+const NAMESPACE = 'fazaa-tabby-site';   // غيّره لاسم مميز
+const PAGE_KEY = 'page-views';
+const UNIQUE_KEY = 'unique-visitors';
+
+function updateVisibleCounters() {
+    fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${PAGE_KEY}`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('pageViews').innerText = data.value;
+        })
+        .catch(() => document.getElementById('pageViews').innerText = '---');
+
+    const today = new Date().toDateString();
+    const lastVisit = localStorage.getItem('fazaa_last_visit');
+    if (lastVisit !== today) {
+        localStorage.setItem('fazaa_last_visit', today);
+        fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${UNIQUE_KEY}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('uniqueVisitors').innerText = data.value;
+            })
+            .catch(() => document.getElementById('uniqueVisitors').innerText = '---');
+    } else {
+        fetch(`https://api.countapi.xyz/get/${NAMESPACE}/${UNIQUE_KEY}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('uniqueVisitors').innerText = data.value || 0;
+            })
+            .catch(() => document.getElementById('uniqueVisitors').innerText = '---');
+    }
+}
+updateVisibleCounters();
+
+// ========== 2. تتبع مصدر الزائر (UTM) ==========
+(function() {
+    const params = new URLSearchParams(window.location.search);
+    const utm_source = params.get('utm_source');
+    const utm_medium = params.get('utm_medium');
+    const utm_campaign = params.get('utm_campaign');
+    const utm_term = params.get('utm_term');
+    const utm_content = params.get('utm_content');
+
+    if (utm_source || utm_medium || utm_campaign) {
+        // تخزين المصدر في sessionStorage عشان الجلسة كلها
+        sessionStorage.setItem('utm_source', utm_source || '');
+        sessionStorage.setItem('utm_medium', utm_medium || '');
+        sessionStorage.setItem('utm_campaign', utm_campaign || '');
+
+        gtag('event', 'utm_visit', {
+            'event_category': 'acquisition',
+            'event_label': 'مصدر الحملة',
+            'utm_source': utm_source,
+            'utm_medium': utm_medium,
+            'utm_campaign': utm_campaign,
+            'utm_term': utm_term,
+            'utm_content': utm_content
+        });
+    }
+})();
+
+// ========== 3. تتبع التمرير (Scroll Depth) ==========
+let scrollMilestones = [25, 50, 75, 100];
+let scrollReached = {};
+window.addEventListener('scroll', function() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (docHeight <= 0) return;
+    const scrolledPercent = Math.round((scrollTop / docHeight) * 100);
+    scrollMilestones.forEach(m => {
+        if (scrolledPercent >= m && !scrollReached[m]) {
+            scrollReached[m] = true;
+            gtag('event', 'scroll_depth', {
+                'event_category': 'engagement',
+                'event_label': m + '%',
+                'value': m
+            });
+        }
+    });
+}, {passive: true});
+
+// ========== 4. تتبع الوقت والمغادرة ==========
+let startTime = Date.now();
+let timeMilestones = [15, 30, 60];
+let timeReached = {};
+const timeCheckInterval = setInterval(() => {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    timeMilestones.forEach(sec => {
+        if (elapsed >= sec && !timeReached[sec]) {
+            timeReached[sec] = true;
+            gtag('event', 'time_on_page', {
+                'event_category': 'engagement',
+                'event_label': sec + '_seconds',
+                'value': sec
+            });
+        }
+    });
+}, 1000);
+
+window.addEventListener('beforeunload', () => {
+    const totalTime = Math.floor((Date.now() - startTime) / 1000);
+    gtag('event', 'page_exit', {
+        'event_category': 'engagement',
+        'event_label': 'مغادرة الصفحة',
+        'value': totalTime
+    });
+});
+
+// ========== 5. تتبع الأزرار ==========
+// نسخ الرقم
 function copyNum() {
     const el = document.createElement('textarea');
     el.value = '0565464718';
@@ -207,25 +388,29 @@ function copyNum() {
     document.body.removeChild(el);
     alert('تم نسخ الرقم');
 
-    // تتبع الحدث في Google Analytics
     gtag('event', 'copy_phone_number', {
         'event_category': 'engagement',
         'event_label': 'نسخ رقم الهاتف'
     });
 }
-
-// ========== ربط الأحداث ==========
-// ربط زر نسخ الرقم
 document.getElementById('copy-box').addEventListener('click', copyNum);
 
-// ربط زر الواتساب لتتبع الضغطات قبل الانتقال
+// الضغط على واتساب
 document.getElementById('whatsapp-btn').addEventListener('click', function(e) {
-    // e.preventDefault(); // لا نمنع الانتقال، فقط نتتبع
     gtag('event', 'whatsapp_click', {
         'event_category': 'conversion',
         'event_label': 'ضغط زر الواتساب الرئيسي'
     });
     // سينتقل تلقائياً بعد التتبع
+});
+
+// الضغط على زر الاتصال
+document.getElementById('call-btn').addEventListener('click', function(e) {
+    gtag('event', 'click_to_call', {
+        'event_category': 'conversion',
+        'event_label': 'ضغط زر الاتصال المباشر'
+    });
+    // المتصفح سيفتح تطبيق الهاتف
 });
 </script>
 
