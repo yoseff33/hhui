@@ -1,191 +1,100 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>السيرة الذاتية | يوسف المطيري</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --text-color: #000000;
-            --sub-text: #444444;
-            --border-color: #dddddd;
-            --bg-color: #ffffff;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Cairo', sans-serif; background-color: #f9f9f9; color: var(--text-color); line-height: 1.5; padding: 20px; }
-
-        .cv-page {
-            max-width: 850px;
-            margin: 0 auto;
-            background: var(--bg-color);
-            padding: 50px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
-        }
-
-        /* === Header === */
-        header {
-            text-align: center;
-            border-bottom: 2px solid #000;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        header h1 { font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            font-size: 0.9rem;
-            color: var(--sub-text);
-        }
-        .contact-info a { color: var(--text-color); text-decoration: none; font-weight: 600; }
-        .contact-info i { margin-left: 5px; color: #000; }
-
-        /* === Sections === */
-        .section { margin-bottom: 30px; }
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: 800;
-            border-bottom: 1px solid #000;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .content-block { margin-bottom: 20px; }
-        .block-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 5px;
-        }
-        .block-title { font-weight: 700; font-size: 1.1rem; }
-        .block-date { font-size: 0.85rem; color: #666; font-weight: bold; }
-        .block-subtitle { font-weight: 600; color: #555; font-size: 0.95rem; margin-bottom: 8px; }
-
-        ul { list-style: none; }
-        ul li {
-            position: relative;
-            padding-right: 20px;
-            font-size: 0.95rem;
-            color: var(--sub-text);
-            margin-bottom: 5px;
-            text-align: justify;
-        }
-        ul li::before {
-            content: "•";
-            position: absolute;
-            right: 0;
-            color: #000;
-            font-weight: bold;
-        }
-
-        /* === Skills Tags (Simple B&W) === */
-        .skills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .skill-tag {
-            border: 1px solid #000;
-            padding: 4px 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        @media print {
-            body { background: #fff; padding: 0; }
-            .cv-page { border: none; box-shadow: none; width: 100%; padding: 20px; }
-        }
-
-        @media (max-width: 600px) {
-            .cv-page { padding: 20px; }
-            .block-header { flex-direction: column; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV - Yousef Al-Mutairi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Cairo',sans-serif;}
+body{background:#f4f4f4;color:#111;line-height:1.6;}
+.cv-container{width:210mm;min-height:297mm;margin:20px auto;background:#fff;padding:22mm 18mm;box-shadow:0 0 10px rgba(0,0,0,0.08);}
+header{text-align:center;border-bottom:3px solid #000;padding-bottom:12px;margin-bottom:20px;}
+h1{font-size:28px;font-weight:900;margin-bottom:5px;}
+.contact{font-size:14px;font-weight:700;color:#444;}
+.section{margin-top:18px;}
+.section-title{display:inline-block;background:#000;color:#fff;font-size:16px;font-weight:900;padding:4px 12px;margin-bottom:12px;}
+.content-block{margin-bottom:14px;}
+.block-header{display:flex;justify-content:space-between;gap:10px;}
+.title{font-weight:900;font-size:15px;}
+.date{font-size:12px;color:#666;font-weight:800;}
+.subtitle{font-weight:700;color:#333;font-size:13px;display:block;margin-top:3px;}
+ul{list-style:none;margin-top:8px;}
+li{position:relative;padding-left:18px;margin-bottom:6px;font-size:13px;}
+li::before{content:"■";position:absolute;left:0;top:2px;font-size:10px;}
+.skills-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.tag{border:1.5px solid #000;padding:3px 10px;font-size:12px;font-weight:800;}
+@media print{body{background:#fff;}.cv-container{width:100%;min-height:auto;margin:0;padding:15mm;box-shadow:none;}.section{page-break-inside:avoid;}}
+</style>
 </head>
 <body>
-
-    <div class="cv-page">
-        <header>
-            <h1>يوسف عيد المطيري</h1>
-            <div class="contact-info">
-                <span><i class="fas fa-phone"></i> 0565464718</span>
-                <span><i class="fas fa-envelope"></i> fndske@gmail.com</span>
-                <a href="https://www.linkedin.com/in/yousef-eid-540aa0375" target="_blank"><i class="fab fa-linkedin"></i> linkedin.com/in/yousef-eid</a>
-                <span><i class="fas fa-map-marker-alt"></i> حفر الباطن، السعودية</span>
-            </div>
-        </header>
-
-        <section class="section">
-            <h2 class="section-title">الملخص المهني</h2>
-            <p style="font-size: 1rem; color: var(--sub-text); text-align: justify;">
-                خريج نظم معلومات إدارية (MIS) متخصص في هندسة أوامر الذكاء الاصطناعي وتحليل النظم. أمتلك مهارة عالية في ربط احتياجات الأعمال بالحلول التقنية المؤتمتة، مع خبرة في بناء المنصات الرقمية وإدارة قواعد البيانات لزيادة الكفاءة التشغيلية.
-            </p>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">الخبرة والمشاريع</h2>
-            
-            <div class="content-block">
-                <div class="block-header">
-                    <span class="block-title">مؤسس ومطوّر أنظمة</span>
-                    <span class="block-date">2025 - الحالي</span>
-                </div>
-                <div class="block-subtitle">منصة وُجْهَة (Wujha)</div>
-                <ul>
-                    <li>بناء وتطوير نظام تأجير سيارات P2P يربط الملاك بالمستأجرين.</li>
-                    <li>تصميم نظام عقود رقمي ذكي يوثق العمليات آلياً لضمان الحقوق.</li>
-                    <li>إدارة قواعد البيانات السحابية وضمان استقرار النظام.</li>
-                </ul>
-            </div>
-
-            <div class="content-block">
-                <div class="block-header">
-                    <span class="block-title">خبير هندسة أوامر AI (Freelance)</span>
-                    <span class="block-date">2024 - الحالي</span>
-                </div>
-                <ul>
-                    <li>تطوير مكتبات أوامر (Prompts) متقدمة لتحليل بيانات الأعمال.</li>
-                    <li>بناء أنظمة دعم فني ذكية وأتمتة الردود لخدمة العملاء.</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">التعليم</h2>
-            <div class="content-block">
-                <div class="block-header">
-                    <span class="block-title">بكالوريوس نظم معلومات إدارية (MIS)</span>
-                    <span class="block-date">2020 - 2026</span>
-                </div>
-                <div class="block-subtitle">جامعة حفر الباطن - كلية إدارة الأعمال</div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">المهارات</h2>
-            <div class="skills-grid">
-                <div class="skill-tag">Prompt Engineering</div>
-                <div class="skill-tag">Systems Analysis</div>
-                <div class="skill-tag">Business Logic</div>
-                <div class="skill-tag">SQL & Supabase</div>
-                <div class="skill-tag">Web Development (HTML/CSS/JS)</div>
-            </div>
-        </section>
-
-        <section class="section" style="margin-bottom: 0;">
-            <h2 class="section-title">اللغات</h2>
-            <div class="skills-grid">
-                <div class="skill-tag">العربية (اللغة الأم)</div>
-                <div class="skill-tag">الإنجليزية (مستوى مبتدى)</div>
-            </div>
-        </section>
+<div class="cv-container">
+<header>
+    <h1>Yousef Eid Dalim Al-Mutairi</h1>
+    <div class="contact">
+        0565464718 | fndske@gmail.com | Khobar, Saudi Arabia
     </div>
-
+</header>
+<section class="section">
+    <div class="section-title">Professional Summary</div>
+    <p>
+        Management Information Systems (MIS) graduate with a focus on streamlining HR operations through technical integration. Proficient in data analysis, process management, and workflow automation to ensure efficiency and accuracy. Committed to adding value to the Tamheer program by enhancing administrative performance and supporting organizational goals.
+    </p>
+</section>
+<section class="section">
+    <div class="section-title">Education</div>
+    <div class="content-block">
+        <div class="block-header">
+            <div class="title">Bachelor of Management Information Systems (MIS)</div>
+            <div class="date">2026</div>
+        </div>
+        <div class="subtitle">University of Hafar Al-Batin - College of Business Administration</div>
+    </div>
+</section>
+<section class="section">
+    <div class="section-title">Experience & Projects</div>
+    <div class="content-block">
+        <div class="block-header">
+            <div class="title">Operational Management - Wujha Platform</div>
+            <div class="date">2025 - 2026</div>
+        </div>
+        <ul>
+            <li>Managed operational activities and developed workflows to reduce costs and streamline administrative procedures.</li>
+            <li>Organized and documented digital data to ensure accuracy and easy access for decision-making.</li>
+        </ul>
+    </div>
+    <div class="content-block">
+        <div class="block-header">
+            <div class="title">Administrative Logic Automation - Muhkam Project</div>
+            <div class="date">Administrative Project</div>
+        </div>
+        <ul>
+            <li>Structured administrative models into formal systems to accelerate transaction processing.</li>
+            <li>Improved administrative efficiency and reduced time required for daily office tasks.</li>
+        </ul>
+    </div>
+    <div class="content-block">
+        <div class="block-header">
+            <div class="title">Risk Management - Mafhoos Project</div>
+            <div class="date">Tuwaiq Hackathon 2025</div>
+        </div>
+        <ul>
+            <li>Analyzed operational data to identify risks and developed proactive solutions to ensure business stability.</li>
+            <li>Contributed to designing organized work policies to enhance data security and confidentiality.</li>
+        </ul>
+    </div>
+</section>
+<section class="section">
+    <div class="section-title">Core Skills</div>
+    <div class="skills-grid">
+        <span class="tag">Administrative Operations Management</span>
+        <span class="tag">Data Organization & Documentation</span>
+        <span class="tag">Office Task Automation</span>
+        <span class="tag">Professional Communication</span>
+        <span class="tag">Systems & Process Analysis</span>
+        <span class="tag">Project Management</span>
+    </div>
+</section>
+</div>
 </body>
 </html>
