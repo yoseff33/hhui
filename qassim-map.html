@@ -221,7 +221,8 @@
         }
 
         // --- الخريطة والبيانات ---
-        let map, carLayer, routeLine;
+        // تم تغيير اسم المتغير من 'map' إلى 'mapInstance' لتجنب التعارض مع script.js
+        let mapInstance, carLayer, routeLine;
         const centerPoint = [24.8375090, 46.7297325]; // واجهة روشن
 
         const cars = [
@@ -235,19 +236,19 @@
         function initMap() {
             if(!document.getElementById('mapid')) return;
             
-            map = L.map('mapid').setView(centerPoint, 15);
+            mapInstance = L.map('mapid').setView(centerPoint, 15);
             L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; CARTO', maxZoom: 20
-            }).addTo(map);
-            carLayer = L.layerGroup().addTo(map);
+            }).addTo(mapInstance);
+            carLayer = L.layerGroup().addTo(mapInstance);
             renderCars();
             
-            setTimeout(() => { map.invalidateSize(); }, 500);
+            setTimeout(() => { mapInstance.invalidateSize(); }, 500);
 
             // إرجاع الكاميرا عند الإغلاق
-            map.on('popupclose', function() {
-                map.flyTo(centerPoint, 15, { duration: 1 });
-                if(routeLine) map.removeLayer(routeLine);
+            mapInstance.on('popupclose', function() {
+                mapInstance.flyTo(centerPoint, 15, { duration: 1 });
+                if(routeLine) mapInstance.removeLayer(routeLine);
             });
         }
 
@@ -282,10 +283,10 @@
                     // حركة الإزاحة الذكية (تنزل السيارة تحت شوي)
                     // 0.0025 درجة كافية لرفع الكاميرا فوق السيارة
                     const offsetLat = c.lat + 0.0025;
-                    map.flyTo([offsetLat, c.lng], 16, { duration: 1 });
+                    mapInstance.flyTo([offsetLat, c.lng], 16, { duration: 1 });
                     
-                    if(routeLine) map.removeLayer(routeLine);
-                    routeLine = L.polyline([centerPoint, [c.lat, c.lng]], { color: '#34495e', dashArray: '10, 10' }).addTo(map);
+                    if(routeLine) mapInstance.removeLayer(routeLine);
+                    routeLine = L.polyline([centerPoint, [c.lat, c.lng]], { color: '#34495e', dashArray: '10, 10' }).addTo(mapInstance);
                 });
 
                 const content = `
@@ -303,12 +304,11 @@
                     </div>
                 `;
 
-                // autoPanPadding صغير (20) لأن البطاقة صغيرة أصلاً
                 marker.bindPopup(content, { autoPan: true, autoPanPadding: [20, 20], closeButton: true });
             });
         }
 
-        window.simulateSmartLocate = () => { map.flyTo(centerPoint, 16); }
+        window.simulateSmartLocate = () => { mapInstance.flyTo(centerPoint, 16); }
 
         document.addEventListener('DOMContentLoaded', () => {
             initTheme(); updateNavbar(); setTimeout(initMap, 100);
