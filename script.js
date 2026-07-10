@@ -1,36 +1,103 @@
-// تنشيط فلتر السيارات (سيستخدم في صفحة السيارات)
-document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const currentActive = document.querySelector('.filter-btn.active');
-        if (currentActive) {
-            currentActive.classList.remove('active');
-        }
-        this.classList.add('active');
-    });
-});
-
-// تأثير التنقل عند التمرير
-window.addEventListener('scroll', function() {
-    const header = document.querySelector('header');
-    if (header) { 
-        if (window.scrollY > 100) {
-            header.style.padding = '10px 0';
-            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
-        } else {
-            header.style.padding = '15px 0';
-            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.05)';
-        }
-    }
-});
+// ============================================================
+//  script.js - الملف الأساسي لمنصة وُجْهَة (معدل)
+//  يحتوي على جميع الدوال الأساسية، بما فيها نظام مواقع السيارات
+// ============================================================
 
 // -------------------------------------
-// وظيفة إدارة حالة تسجيل الدخول وتحديث أشرطة التنقل
+// دوال مساعدة عامة
 // -------------------------------------
+
+// الحصول على المستخدم الحالي من localStorage (محاكاة)
+function getCurrentUser() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (!isLoggedIn) return null;
+    const userType = localStorage.getItem('userType');
+    const userName = localStorage.getItem('userName') || 'مستخدم';
+    return {
+        id: 'user-' + Date.now(), // محاكاة معرف فريد
+        email: 'user@example.com',
+        user_metadata: { name: userName },
+        userType: userType
+    };
+}
+
+function getUserRole() {
+    return localStorage.getItem('userType') || null;
+}
+
+// -------------------------------------
+// دوال Supabase (افتراضية - قد تستبدل بالاتصال الحقيقي)
+// -------------------------------------
+// نستخدم window.supabaseClient الذي تم تعريفه في supabase-config.js
+// إذا لم يكن موجوداً، نستخدم نسخة وهمية للاختبار
+if (typeof window.supabaseClient === 'undefined') {
+    console.warn('supabaseClient غير معرف، سيتم استخدام بيانات وهمية');
+    window.supabaseClient = {
+        from: (table) => ({
+            select: (cols) => ({
+                eq: (field, value) => ({
+                    single: async () => {
+                        // بيانات وهمية للاختبار
+                        if (table === 'cars') {
+                            const mockCar = {
+                                id: value,
+                                brand: 'تويوتا',
+                                model: 'كامري',
+                                year: 2024,
+                                city: 'الرياض',
+                                daily_price: 120,
+                                status: 'active',
+                                images: ['https://via.placeholder.com/300x200'],
+                                latitude: 24.8375,
+                                longitude: 46.7297,
+                                location_address: 'واجهة روشن، الرياض',
+                                geofence_radius: 500,
+                                location_updated_at: new Date().toISOString()
+                            };
+                            return { data: mockCar, error: null };
+                        }
+                        if (table === 'bookings') {
+                            return { data: [], error: null };
+                        }
+                        return { data: null, error: null };
+                    },
+                    in: (field, values) => ({
+                        order: (col, opts) => ({
+                            then: (cb) => cb({ data: [], error: null })
+                        })
+                    }),
+                    order: (col, opts) => ({
+                        then: (cb) => cb({ data: [], error: null })
+                    })
+                }),
+                insert: (data) => ({
+                    then: (cb) => cb({ data: data, error: null })
+                }),
+                update: (data) => ({
+                    eq: (field, value) => ({
+                        select: (cols) => ({
+                            single: async () => ({ data: { ...data, id: value }, error: null })
+                        }),
+                        then: (cb) => cb({ data: { ...data, id: value }, error: null })
+                    })
+                })
+            }),
+            insert: (data) => ({
+                then: (cb) => cb({ data: data, error: null })
+            })
+        })
+    };
+}
+
+// -------------------------------------
+// دوال إدارة حالة تسجيل الدخول
+// -------------------------------------
+
 function updateNavbarBasedOnLoginStatus() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     const userType = localStorage.getItem('userType');
 
-    const desktopNavLinks = document.querySelector('.desktop-nav-links'); 
+    const desktopNavLinks = document.querySelector('.desktop-nav-links');
     const desktopAuthLinks = desktopNavLinks ? desktopNavLinks.querySelectorAll('.auth-link') : [];
     const desktopGuestButton = document.getElementById('nav-guest-button');
     const desktopUserProfilePlaceholder = document.getElementById('nav-user-profile-placeholder');
@@ -113,8 +180,398 @@ function logoutUser() {
 }
 
 // -------------------------------------
-// وظيفة تحديث بطاقة الولاء
+// دوال الموقع (جلب وتحديث)
 // -------------------------------------
+
+/**
+ * جلب موقع السيارة من قاعدة البيانات
+ * @param {string} carId - معرف السيارة
+ * @returns {Promise<Object|null>} - كائن يحتوي على latitude, longitude, location_address, geofence_radius, location_updated_at
+ */
+async function getCarLocation(carId) {
+    if (!carId) return null;
+    try {
+        const { data, error } = await window.supabaseClient
+            .from('cars')
+            .select('latitude, longitude, location_address, geofence_radius, location_updated_at')
+            .eq('id', carId)
+            .single();
+        if (error) {
+            console.error('فشل جلب موقع السيارة:', error);
+            return null;
+        }
+        return data;
+    } catch (err) {
+        console.error('استثناء في جلب موقع السيارة:', err);
+        return null;
+    }
+}
+
+/**
+ * تحديث موقع السيارة في قاعدة البيانات (للمالك)
+ * @param {string} carId - معرف السيارة
+ * @param {number} lat - خط العرض
+ * @param {number} lng - خط الطول
+ * @param {string} address - عنوان الموقع
+ * @param {number} radius - نصف قطر النطاق بالمتر
+ * @returns {Promise<Object|null>} - بيانات السيارة المحدثة
+ */
+async function updateCarLocation(carId, lat, lng, address, radius = 500) {
+    const user = getCurrentUser();
+    if (!user) {
+        alert('الرجاء تسجيل الدخول');
+        return null;
+    }
+    try {
+        const { data, error } = await window.supabaseClient
+            .from('cars')
+            .update({
+                latitude: lat,
+                longitude: lng,
+                location_address: address,
+                geofence_radius: radius,
+                location_updated_at: new Date().toISOString()
+            })
+            .eq('id', carId)
+            .select()
+            .single();
+        if (error) {
+            console.error('فشل تحديث موقع السيارة:', error);
+            return null;
+        }
+        // تسجيل السجل في history
+        await window.supabaseClient
+            .from('car_location_history')
+            .insert([{
+                car_id: carId,
+                latitude: lat,
+                longitude: lng,
+                address: address,
+                updated_by: user.id
+            }]);
+        return data;
+    } catch (err) {
+        console.error('استثناء في تحديث موقع السيارة:', err);
+        return null;
+    }
+}
+
+// -------------------------------------
+// دوال عرض السيارات (شبكة البطاقات)
+// -------------------------------------
+
+/**
+ * عرض السيارات في شبكة (مع معلومات الموقع)
+ * @param {Array} cars - قائمة السيارات
+ * @param {string} containerId - معرف العنصر الذي سيتم العرض فيه (افتراضي 'cars-grid')
+ */
+function renderCarsGrid(cars, containerId = 'cars-grid') {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    if (!cars || cars.length === 0) {
+        container.innerHTML = '<p style="text-align:center; padding:40px; color:#888;">لا توجد سيارات متاحة حالياً</p>';
+        return;
+    }
+
+    function sanitize(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    container.innerHTML = cars.map(car => {
+        const hasLocation = car.latitude && car.longitude;
+        const locationStatus = hasLocation ? '📍 موقع محدد' : '❌ لم يحدد الموقع';
+        const locationText = hasLocation ? `نطاق تقريبي: ${car.geofence_radius || 500} متر` : '';
+        const imgSrc = car.images && car.images.length > 0 ? car.images[0] : 'https://via.placeholder.com/300x200?text=سيارة';
+
+        return `
+        <div class="car-card" data-car-id="${sanitize(car.id)}">
+            <div class="car-img-box">
+                <img src="${sanitize(imgSrc)}" alt="${sanitize(car.brand)} ${sanitize(car.model)}" loading="lazy">
+                <span class="badge ${car.status === 'active' ? 'badge-success' : 'badge-warning'}">${car.status === 'active' ? 'متاحة' : 'قيد المراجعة'}</span>
+            </div>
+            <div class="car-info">
+                <h3 class="car-title">${sanitize(car.brand)} ${sanitize(car.model)}</h3>
+                <div class="car-year">${sanitize(car.year)} | ${sanitize(car.city)}</div>
+                <div class="car-specs">
+                    <span class="spec"><i class="fas fa-map-pin"></i> ${locationStatus}</span>
+                    ${hasLocation ? `<span class="spec"><i class="fas fa-circle" style="color:#c5a065;"></i> ${locationText}</span>` : ''}
+                </div>
+                <div class="price-box">
+                    <div class="price">${sanitize(car.daily_price)} <small>ر.س/يوم</small></div>
+                    ${car.status === 'active' ? `<button class="btn-book" onclick="bookCar('${sanitize(car.id)}')">حجز الآن</button>` : `<button class="btn-book" style="background:#95a5a6;cursor:not-allowed;" disabled>غير متاحة</button>`}
+                </div>
+                ${hasLocation ? `<div style="margin-top:10px;"><button class="btn btn-sm btn-outline" onclick="showApproximateLocation('${sanitize(car.id)}')"><i class="fas fa-eye"></i> عرض النطاق التقريبي</button></div>` : ''}
+            </div>
+        </div>
+        `;
+    }).join('');
+}
+
+/**
+ * عرض النطاق التقريبي للسيارة في نافذة جديدة
+ * @param {string} carId - معرف السيارة
+ */
+function showApproximateLocation(carId) {
+    window.open(`car-location-preview.html?carId=${carId}`, '_blank', 'width=900,height=650');
+}
+
+// -------------------------------------
+// دوال الحجز (استدعاء createBooking من script.js الأساسي إن وجد)
+// -------------------------------------
+
+// إذا كانت createBooking غير معرفة، نضيف دالة احتياطية
+if (typeof createBooking === 'undefined') {
+    window.createBooking = async function(bookingData) {
+        console.log('محاكاة إنشاء حجز:', bookingData);
+        // محاكاة نجاح
+        return { id: 'mock-booking-id', ...bookingData };
+    };
+}
+
+window.bookCar = async function(carId) {
+    const user = getCurrentUser();
+    if (!user) {
+        alert('الرجاء تسجيل الدخول أولاً');
+        window.location.href = 'landing.html';
+        return;
+    }
+
+    const startDate = prompt('أدخل تاريخ البداية (YYYY-MM-DD HH:MM:SS)');
+    const endDate = prompt('أدخل تاريخ النهاية (YYYY-MM-DD HH:MM:SS)');
+    if (!startDate || !endDate) return;
+
+    // جلب سعر السيارة اليومي (محاكاة)
+    const car = await getCarInfo(carId);
+    if (!car) {
+        alert('حدث خطأ في جلب بيانات السيارة');
+        return;
+    }
+
+    const days = Math.max(1, Math.ceil((new Date(endDate) - new Date(startDate)) / (1000*60*60*24)));
+    const total = days * car.daily_price;
+
+    const booking = await createBooking({
+        car_id: carId,
+        start_date: startDate,
+        end_date: endDate,
+        total_price: total
+    });
+
+    if (booking) {
+        alert('تم إنشاء الحجز بنجاح، في انتظار موافقة المالك');
+        window.location.href = 'dashboard-renter.html';
+    }
+};
+
+// دالة مساعدة لجلب معلومات السيارة (محاكاة)
+async function getCarInfo(carId) {
+    try {
+        const { data, error } = await window.supabaseClient
+            .from('cars')
+            .select('daily_price')
+            .eq('id', carId)
+            .single();
+        if (error || !data) {
+            return { daily_price: 100 }; // قيمة افتراضية
+        }
+        return data;
+    } catch (e) {
+        return { daily_price: 100 };
+    }
+}
+
+// -------------------------------------
+// دوال الخريطة (واجهة روشن) - موجودة سابقاً مع تعديلات طفيفة
+// -------------------------------------
+
+let map;
+let carMarkersLayer;
+let currentRouteLine = null;
+const targetLocation = [24.8375090, 46.7297325];
+
+// بيانات السيارات المحدثة (واجهة روشن)
+const allCars = [
+    { 
+        id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', 
+        rating: 4.9, reviews: 52, lat: 24.8375090, lng: 46.7297325, 
+        scores: { mech: 10, acc: 10, clean: 9 },
+        img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' 
+    },
+    { 
+        id: 'r2', type: 'دفع رباعي', model: 'تويوتا لاندكروزر', price: '450', 
+        rating: 5.0, reviews: 18, lat: 24.8381000, lng: 46.7292000, 
+        scores: { mech: 10, acc: 10, clean: 10 },
+        img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' 
+    },
+    { 
+        id: 'r3', type: 'فاخرة', model: 'مرسيدس S500', price: '900', 
+        rating: 4.8, reviews: 12, lat: 24.8369000, lng: 46.7301000, 
+        scores: { mech: 10, acc: 9, clean: 10 }, 
+        img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' 
+    },
+    { 
+        id: 'r4', type: 'سيدان', model: 'هونداي النترا', price: '85', 
+        rating: 4.2, reviews: 89, lat: 24.8378000, lng: 46.7305000, 
+        scores: { mech: 8, acc: 7, clean: 8 },
+        img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' 
+    },
+    { id: 'r5', type: 'سيدان', model: 'تويوتا كامري 2023', price: '115', rating: 4.7, reviews: 40, lat: 24.8372000, lng: 46.7289000, scores: { mech: 9, acc: 10, clean: 8 }, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
+    { id: 'r6', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '380', rating: 4.9, reviews: 22, lat: 24.8365000, lng: 46.7295000, scores: { mech: 10, acc: 10, clean: 9 }, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
+    { id: 'r7', type: 'فاخرة', model: 'لوسيد آير', price: '700', rating: 5.0, reviews: 4, lat: 24.8385000, lng: 46.7298000, scores: { mech: 10, acc: 10, clean: 10 }, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' }
+];
+
+function initMap() {
+    if (document.getElementById('mapid') && typeof L !== 'undefined') {
+        if(map) { map.remove(); }
+        
+        map = L.map('mapid').setView(targetLocation, 17);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO',
+            maxZoom: 20
+        }).addTo(map);
+
+        carMarkersLayer = L.layerGroup().addTo(map);
+        renderCarsOnMap(); 
+
+        setTimeout(() => { map.invalidateSize(); }, 500);
+    }
+}
+
+function createPriceIcon(price, type, extraClass = '') {
+    let iconHtml = '';
+    if(type === 'فاخرة') iconHtml = '<i class="fas fa-gem" style="color:#f1c40f"></i>';
+    else if(type === 'دفع رباعي') iconHtml = '<i class="fas fa-truck-pickup" style="color:#e67e22"></i>';
+    else iconHtml = '<i class="fas fa-car" style="color:var(--primary)"></i>';
+
+    return L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div class="price-marker-box ${extraClass}">${iconHtml} ${price} ﷼</div>`,
+        iconSize: [80, 30],
+        iconAnchor: [40, 35],
+        popupAnchor: [0, -35]
+    });
+}
+
+function getProgressBar(score) {
+    let colorClass = 'bg-success';
+    if (score < 7) colorClass = 'bg-warning';
+    if (score < 5) colorClass = 'bg-danger';
+    
+    return `
+        <div class="progress-track">
+            <div class="progress-fill ${colorClass}" style="width: ${score * 10}%"></div>
+        </div>
+        <div class="rating-score">${score}</div>
+    `;
+}
+
+function drawRouteToCar(destLat, destLng) {
+    if(currentRouteLine) map.removeLayer(currentRouteLine);
+    
+    const startPoint = targetLocation;
+    const endPoint = [destLat, destLng];
+
+    currentRouteLine = L.polyline([startPoint, endPoint], {
+        color: 'var(--secondary)',
+        weight: 4,
+        opacity: 0.7,
+        dashArray: '10, 10',
+        lineCap: 'round'
+    }).addTo(map);
+
+    map.fitBounds(currentRouteLine.getBounds(), { padding: [50, 50] });
+}
+
+// متغيرات الفلترة
+let currentType = 'الكل';
+let maxPrice = 1000;
+
+window.updatePriceLabel = function(val) {
+    maxPrice = parseInt(val);
+    const label = document.getElementById('priceValue');
+    if(label) label.innerText = val + ' ريال';
+}
+
+window.filterMap = function(type, element) {
+    currentType = type;
+    document.querySelectorAll('.filter-tag').forEach(btn => btn.classList.remove('active'));
+    if(element) element.classList.add('active');
+    renderCarsOnMap();
+}
+
+// دالة عرض السيارات على الخريطة (تستخدم allCars)
+function renderCarsOnMap() {
+    if(!map || !carMarkersLayer) return;
+    
+    carMarkersLayer.clearLayers();
+    if(currentRouteLine) map.removeLayer(currentRouteLine);
+
+    const filtered = allCars.filter(car => {
+        const typeMatch = currentType === 'الكل' ? true : car.type === currentType;
+        const priceMatch = parseInt(car.price) <= maxPrice;
+        return typeMatch && priceMatch;
+    });
+
+    filtered.forEach(car => {
+        const isPremium = car.rating >= 5.0;
+        const extraClass = isPremium ? 'premium-marker' : '';
+        const marker = L.marker([car.lat, car.lng], { icon: createPriceIcon(car.price, car.type, extraClass) }).addTo(carMarkersLayer);
+        
+        marker.on('click', function() {
+            drawRouteToCar(car.lat, car.lng);
+        });
+
+        const popupContent = `
+            <div class="popup-car-card">
+                <img src="${car.img}" class="popup-img">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                    <h4 style="margin:0; color:var(--primary);">${car.model}</h4>
+                    <span class="rating-badge"><i class="fas fa-star"></i> ${car.rating}</span>
+                </div>
+                
+                <div class="rating-bars-container">
+                    <div class="rating-row"><span class="rating-label"><i class="fas fa-wrench"></i> الميكانيكا</span>${getProgressBar(car.scores.mech)}</div>
+                    <div class="rating-row"><span class="rating-label"><i class="fas fa-shield-alt"></i> الحوادث</span>${getProgressBar(car.scores.acc)}</div>
+                    <div class="rating-row"><span class="rating-label"><i class="fas fa-sparkles"></i> النظافة</span>${getProgressBar(car.scores.clean)}</div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                    <div style="font-weight:bold; font-size:1.1rem;">${car.price} <span style="font-size:0.8rem; font-weight:normal;">ريال/يوم</span></div>
+                    <a href="cars.html?carId=${car.id}" class="btn btn-primary" style="padding:6px 15px; font-size:0.9rem;">حجز</a>
+                </div>
+            </div>
+        `;
+        marker.bindPopup(popupContent);
+    });
+}
+
+window.simulateSmartLocate = function() {
+    const btn = document.getElementById('smart-locate-btn');
+    if(!btn) return;
+    
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري البحث...';
+    
+    setTimeout(() => {
+        map.flyTo(targetLocation, 17);
+        btn.innerHTML = '<i class="fas fa-check"></i> أنت هنا';
+        btn.style.background = '#2ecc71';
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = '';
+        }, 2000);
+    }, 1000);
+}
+
+// -------------------------------------
+// دوال الولاء، الشهادات، الاختبار، إلخ.
+// -------------------------------------
+
 function updateLoyaltyCard(completedRentals) {
     const totalRentalsNeeded = 8;
     const progressPercentage = (completedRentals / totalRentalsNeeded) * 100;
@@ -147,9 +604,6 @@ function updateLoyaltyCard(completedRentals) {
     }
 }
 
-// -------------------------------------
-// الواجهة الليلية/النهارية
-// -------------------------------------
 function setupThemeToggle() {
     const themeToggleBtn = document.getElementById('theme-toggle-desktop'); 
 
@@ -179,9 +633,6 @@ function setupThemeToggle() {
     }
 }
 
-// -------------------------------------
-// شريط "آخر مشاهدة للسيارات"
-// -------------------------------------
 const RECENTLY_VIEWED_KEY = 'recentlyViewedCars';
 const MAX_RECENTLY_VIEWED = 5;
 
@@ -216,9 +667,6 @@ function renderRecentlyViewedCars() {
     }
 }
 
-// -------------------------------------
-// شهادات العملاء
-// -------------------------------------
 let slideIndex = 0;
 let slideInterval;
 
@@ -253,9 +701,6 @@ function currentSlide(n) {
     slideInterval = setInterval(showSlides, 5000); 
 }
 
-// -------------------------------------
-// أداة اختبار السيارة
-// -------------------------------------
 function setupQuiz() {
     const quizForm = document.getElementById('car-quiz-form');
     const quizResults = document.getElementById('quiz-results');
@@ -305,9 +750,7 @@ function setupQuiz() {
     });
 }
 
-// -------------------------------------
-// وظائف المسؤولية الاجتماعية
-// -------------------------------------
+// دوال المسؤولية الاجتماعية (إن وجدت)
 function displayRandomCsrFact() {
     const csrFactElement = document.getElementById('csr-fact-display');
     if (csrFactElement && typeof csrFacts !== 'undefined' && csrFacts.length > 0) {
@@ -374,200 +817,7 @@ function renderImpactDashboard() {
 }
 
 // -------------------------------------
-// وظائف الخريطة (الجديدة كلياً - واجهة روشن)
-// -------------------------------------
-
-let map;
-let carMarkersLayer;
-let currentRouteLine = null; // للمسار
-const targetLocation = [24.8375090, 46.7297325]; // واجهة روشن
-
-// بيانات السيارات المحدثة (واجهة روشن)
-const allCars = [
-    { 
-        id: 'r1', type: 'سيدان', model: 'تويوتا كامري 2024', price: '120', 
-        rating: 4.9, reviews: 52, lat: 24.8375090, lng: 46.7297325, 
-        scores: { mech: 10, acc: 10, clean: 9 },
-        img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' 
-    },
-    { 
-        id: 'r2', type: 'دفع رباعي', model: 'تويوتا لاندكروزر', price: '450', 
-        rating: 5.0, reviews: 18, lat: 24.8381000, lng: 46.7292000, 
-        scores: { mech: 10, acc: 10, clean: 10 },
-        img: 'https://www.autopediame.com/userfiles/images/%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1/%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7%20%D9%84%D8%A7%D9%86%D8%AF%D9%83%D8%B1%D9%88%D8%B2%D8%B1%201.jpg' 
-    },
-    { 
-        id: 'r3', type: 'فاخرة', model: 'مرسيدس S500', price: '900', 
-        rating: 4.8, reviews: 12, lat: 24.8369000, lng: 46.7301000, 
-        scores: { mech: 10, acc: 9, clean: 10 }, 
-        img: 'https://media.elbalad.news/2024/10/large/995/9/554.jpg' 
-    },
-    { 
-        id: 'r4', type: 'سيدان', model: 'هونداي النترا', price: '85', 
-        rating: 4.2, reviews: 89, lat: 24.8378000, lng: 46.7305000, 
-        scores: { mech: 8, acc: 7, clean: 8 },
-        img: 'https://static.sayidaty.net/styles/900_scale/public/2022-03/80578.jpeg.webp' 
-    },
-    { id: 'r5', type: 'سيدان', model: 'تويوتا كامري 2023', price: '115', rating: 4.7, reviews: 40, lat: 24.8372000, lng: 46.7289000, scores: { mech: 9, acc: 10, clean: 8 }, img: 'https://tse2.mm.bing.net/th/id/OIP.F3b-M0eckL0XjmywTpu8EgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3' },
-    { id: 'r6', type: 'دفع رباعي', model: 'شيفروليه تاهو', price: '380', rating: 4.9, reviews: 22, lat: 24.8365000, lng: 46.7295000, scores: { mech: 10, acc: 10, clean: 9 }, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' },
-    { id: 'r7', type: 'فاخرة', model: 'لوسيد آير', price: '700', rating: 5.0, reviews: 4, lat: 24.8385000, lng: 46.7298000, scores: { mech: 10, acc: 10, clean: 10 }, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xL-R8y8f_Q_g_h_j_k_l_m_n_o_p' }
-];
-
-// تهيئة الخريطة
-function initMap() {
-    if (document.getElementById('mapid') && typeof L !== 'undefined') {
-        if(map) { map.remove(); } // إزالة أي خريطة سابقة
-        
-        map = L.map('mapid').setView(targetLocation, 17);
-
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap &copy; CARTO',
-            maxZoom: 20
-        }).addTo(map);
-
-        carMarkersLayer = L.layerGroup().addTo(map);
-        renderCars(); 
-
-        setTimeout(() => { map.invalidateSize(); }, 500);
-    }
-}
-
-// دالة إنشاء الأيقونة (تصميم الكبسولة)
-function createPriceIcon(price, type, extraClass = '') {
-    let iconHtml = '';
-    if(type === 'فاخرة') iconHtml = '<i class="fas fa-gem" style="color:#f1c40f"></i>';
-    else if(type === 'دفع رباعي') iconHtml = '<i class="fas fa-truck-pickup" style="color:#e67e22"></i>';
-    else iconHtml = '<i class="fas fa-car" style="color:var(--primary)"></i>';
-
-    return L.divIcon({
-        className: 'custom-div-icon',
-        html: `<div class="price-marker-box ${extraClass}">${iconHtml} ${price} ﷼</div>`,
-        iconSize: [80, 30],
-        iconAnchor: [40, 35],
-        popupAnchor: [0, -35]
-    });
-}
-
-// رسم شريط التقييم
-function getProgressBar(score) {
-    let colorClass = 'bg-success';
-    if (score < 7) colorClass = 'bg-warning';
-    if (score < 5) colorClass = 'bg-danger';
-    
-    return `
-        <div class="progress-track">
-            <div class="progress-fill ${colorClass}" style="width: ${score * 10}%"></div>
-        </div>
-        <div class="rating-score">${score}</div>
-    `;
-}
-
-// رسم المسار
-function drawRouteToCar(destLat, destLng) {
-    if(currentRouteLine) map.removeLayer(currentRouteLine);
-    
-    // من سنتر واجهة روشن (كنقطة افتراضية للمستخدم) إلى السيارة
-    const startPoint = targetLocation;
-    const endPoint = [destLat, destLng];
-
-    currentRouteLine = L.polyline([startPoint, endPoint], {
-        color: 'var(--secondary)',
-        weight: 4,
-        opacity: 0.7,
-        dashArray: '10, 10',
-        lineCap: 'round'
-    }).addTo(map);
-
-    map.fitBounds(currentRouteLine.getBounds(), { padding: [50, 50] });
-}
-
-// المتغيرات العامة للفلترة (مربوطة مع HTML)
-let currentType = 'الكل';
-let maxPrice = 1000;
-
-// تحديث السعر من السلايدر
-window.updatePriceLabel = function(val) {
-    maxPrice = parseInt(val);
-    const label = document.getElementById('priceValue');
-    if(label) label.innerText = val + ' ريال';
-}
-
-// دالة الفلترة
-window.filterMap = function(type, element) {
-    currentType = type;
-    document.querySelectorAll('.filter-tag').forEach(btn => btn.classList.remove('active'));
-    if(element) element.classList.add('active');
-    renderCars();
-}
-
-// عرض السيارات (النسخة المتطورة)
-function renderCars() {
-    if(!map || !carMarkersLayer) return;
-    
-    carMarkersLayer.clearLayers();
-    if(currentRouteLine) map.removeLayer(currentRouteLine);
-
-    const filtered = allCars.filter(car => {
-        const typeMatch = currentType === 'الكل' ? true : car.type === currentType;
-        const priceMatch = parseInt(car.price) <= maxPrice;
-        return typeMatch && priceMatch;
-    });
-
-    filtered.forEach(car => {
-        const isPremium = car.rating >= 5.0;
-        const extraClass = isPremium ? 'premium-marker' : '';
-        const marker = L.marker([car.lat, car.lng], { icon: createPriceIcon(car.price, car.type, extraClass) }).addTo(carMarkersLayer);
-        
-        // عند الضغط: رسم المسار
-        marker.on('click', function() {
-            drawRouteToCar(car.lat, car.lng);
-        });
-
-        const popupContent = `
-            <div class="popup-car-card">
-                <img src="${car.img}" class="popup-img">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-                    <h4 style="margin:0; color:var(--primary);">${car.model}</h4>
-                    <span class="rating-badge"><i class="fas fa-star"></i> ${car.rating}</span>
-                </div>
-                
-                <div class="rating-bars-container">
-                    <div class="rating-row"><span class="rating-label"><i class="fas fa-wrench"></i> الميكانيكا</span>${getProgressBar(car.scores.mech)}</div>
-                    <div class="rating-row"><span class="rating-label"><i class="fas fa-shield-alt"></i> الحوادث</span>${getProgressBar(car.scores.acc)}</div>
-                    <div class="rating-row"><span class="rating-label"><i class="fas fa-sparkles"></i> النظافة</span>${getProgressBar(car.scores.clean)}</div>
-                </div>
-
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-                    <div style="font-weight:bold; font-size:1.1rem;">${car.price} <span style="font-size:0.8rem; font-weight:normal;">ريال/يوم</span></div>
-                    <a href="cars.html?carId=${car.id}" class="btn btn-primary" style="padding:6px 15px; font-size:0.9rem;">حجز</a>
-                </div>
-            </div>
-        `;
-        marker.bindPopup(popupContent);
-    });
-}
-
-// وظيفة Smart Locate المحسنة
-window.simulateSmartLocate = function() {
-    const btn = document.getElementById('smart-locate-btn');
-    if(!btn) return;
-    
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري البحث...';
-    
-    setTimeout(() => {
-        map.flyTo(targetLocation, 17);
-        btn.innerHTML = '<i class="fas fa-check"></i> أنت هنا';
-        btn.style.background = '#2ecc71';
-        setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.style.background = '';
-        }, 2000);
-    }, 1000);
-}
-
-// -------------------------------------
-// عند تحميل المحتوى (DOMContentLoaded)
+// تهيئة الصفحة عند التحميل
 // -------------------------------------
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -610,16 +860,35 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('pledge-form')) setupPledgeGenerator(); 
     if (document.getElementById('impact-stats-container')) renderImpactDashboard(); 
 
-    // Map Initialization
+    // Map Initialization (إذا كانت الصفحة تحتوي على خريطة)
     if (document.getElementById('mapid')) {
         setTimeout(() => {
             if (typeof L !== 'undefined') {
                 initMap();
-                // setupMapFilters(); // تم استبدالها بالمنطق الجديد داخل initMap و renderCars
             } else {
                 console.error("Leaflet library not loaded");
             }
         }, 100);
+    }
+
+    // إذا كانت الصفحة هي cars.html، نقوم بجلب السيارات وعرضها باستخدام renderCarsGrid
+    // (يتم استدعاؤها من كود خاص في cars.html، لكننا نضع هنا منطقاً تلقائياً)
+    const carsGrid = document.getElementById('cars-grid');
+    if (carsGrid) {
+        // جلب السيارات من قاعدة البيانات (محاكاة أو حقيقية)
+        (async () => {
+            try {
+                const { data: cars, error } = await window.supabaseClient
+                    .from('cars')
+                    .select('*')
+                    .eq('status', 'active');
+                if (error) throw error;
+                renderCarsGrid(cars || [], 'cars-grid');
+            } catch (err) {
+                console.error('فشل تحميل السيارات:', err);
+                renderCarsGrid([], 'cars-grid');
+            }
+        })();
     }
 });
 
@@ -641,3 +910,91 @@ document.addEventListener('click', (e) => {
         addCarToRecentlyViewed(carId, carImg, carTitle);
     }
 });
+
+// ============================================================
+//  دوال إضافية للتوافق مع الملفات الجديدة (car-location, إلخ)
+// ============================================================
+
+// دالة لجلب السيارات حسب الفلتر (تستخدم في cars.html)
+async function fetchCars(filter = {}) {
+    try {
+        let query = window.supabaseClient.from('cars').select('*');
+        if (filter.status) {
+            query = query.eq('status', filter.status);
+        }
+        const { data, error } = await query;
+        if (error) throw error;
+        return data || [];
+    } catch (err) {
+        console.error('فشل جلب السيارات:', err);
+        return [];
+    }
+}
+
+// دالة للحجز (تستخدم في cars.html)
+window.bookCar = async function(carId) {
+    const user = getCurrentUser();
+    if (!user) {
+        alert('الرجاء تسجيل الدخول أولاً');
+        window.location.href = 'landing.html';
+        return;
+    }
+
+    const startDate = prompt('أدخل تاريخ البداية (YYYY-MM-DD HH:MM:SS)');
+    const endDate = prompt('أدخل تاريخ النهاية (YYYY-MM-DD HH:MM:SS)');
+    if (!startDate || !endDate) return;
+
+    // جلب سعر السيارة اليومي
+    const { data: car, error } = await window.supabaseClient
+        .from('cars')
+        .select('daily_price')
+        .eq('id', carId)
+        .single();
+    if (error || !car) {
+        alert('حدث خطأ في جلب بيانات السيارة');
+        return;
+    }
+
+    const days = Math.max(1, Math.ceil((new Date(endDate) - new Date(startDate)) / (1000*60*60*24)));
+    const total = days * car.daily_price;
+
+    const booking = await createBooking({
+        car_id: carId,
+        start_date: startDate,
+        end_date: endDate,
+        total_price: total
+    });
+
+    if (booking) {
+        alert('تم إنشاء الحجز بنجاح، في انتظار موافقة المالك');
+        window.location.href = 'dashboard-renter.html';
+    }
+};
+
+// دالة createBooking (إذا لم تكن معرفة)
+if (typeof createBooking === 'undefined') {
+    window.createBooking = async function(bookingData) {
+        try {
+            const { data, error } = await window.supabaseClient
+                .from('bookings')
+                .insert([bookingData])
+                .select()
+                .single();
+            if (error) throw error;
+            return data;
+        } catch (err) {
+            console.error('فشل إنشاء الحجز:', err);
+            alert('حدث خطأ أثناء الحجز');
+            return null;
+        }
+    };
+}
+
+// تصدير الدوال إلى النافذة العامة للاستخدام في الصفحات الأخرى
+window.renderCarsGrid = renderCarsGrid;
+window.showApproximateLocation = showApproximateLocation;
+window.getCarLocation = getCarLocation;
+window.updateCarLocation = updateCarLocation;
+window.fetchCars = fetchCars;
+
+console.log('✅ script.js تم تحديثه بنجاح مع نظام مواقع السيارات.');
