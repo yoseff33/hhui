@@ -16,7 +16,7 @@
 
         .top-filter-bar {
             background: #ffffff; border: 1px solid #e0e0e0; border-radius: 16px;
-            padding: 12px 15px; margin-bottom: 15px; /* هوامش أقل */
+            padding: 12px 15px; margin-bottom: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.03); display: flex;
             align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
         }
@@ -47,47 +47,19 @@
 
         /* --- 3. البطاقة المصغرة (Compact Popup) --- */
         .leaflet-popup-content-wrapper { border-radius: 12px; padding: 0; overflow: hidden; }
-        
-        /* تصغير العرض الكلي للبطاقة */
         .leaflet-popup-content { margin: 0 !important; width: 220px !important; } 
-        
-        .popup-car-card {
-            padding: 10px;
-            /* ارتفاع أقصى صغير مناسب للجوال */
-            max-height: 260px; 
-            overflow-y: auto;
-        }
-        /* تصغير الصورة */
+        .popup-car-card { padding: 10px; max-height: 260px; overflow-y: auto; }
         .popup-img { width: 100%; height: 90px; object-fit: cover; border-radius: 6px; margin-bottom: 5px; }
-        
-        /* تصغير النصوص */
         .popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
         .popup-header h4 { margin: 0; font-size: 0.9rem; color: #1abc9c; }
         .popup-rating { background: #fff9db; padding: 1px 6px; border-radius: 4px; font-weight: bold; color: #f39c12; font-size: 0.75rem; }
-
-        /* تصغير أشرطة التقييم */
         .rating-row { display: flex; justify-content: space-between; font-size: 0.7rem; margin: 3px 0; color: #666; align-items: center; }
         .progress-bar { width: 60px; height: 4px; background: #eee; border-radius: 2px; overflow: hidden; }
         .progress-fill { height: 100%; background: #2ecc71; }
+        .popup-btn { display: block; padding: 6px; font-size: 0.85rem; text-align: center; background: var(--primary, #1abc9c); color: white; border-radius: 6px; margin-top: 8px; text-decoration: none; }
+        .leaflet-popup-close-button { font-size: 18px !important; color: #333 !important; top: 5px !important; right: 5px !important; width: 24px !important; height: 24px !important; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        /* تصغير الزر */
-        .popup-btn { 
-            display: block; padding: 6px; font-size: 0.85rem; text-align: center; 
-            background: var(--primary, #1abc9c); color: white; border-radius: 6px; 
-            margin-top: 8px; text-decoration: none; 
-        }
-
-        /* زر الإغلاق */
-        .leaflet-popup-close-button {
-            font-size: 18px !important; color: #333 !important;
-            top: 5px !important; right: 5px !important;
-            width: 24px !important; height: 24px !important;
-            background: rgba(255,255,255,0.9); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        /* ستايلات الوضع الليلي والإضافات */
+        /* الوضع الليلي */
         body.dark-mode .top-filter-bar { background: #2d3436; border-color: #444; }
         body.dark-mode .tf-label { color: #ccc; }
         body.dark-mode .tf-select { background: #444; color: white; border-color: #555; }
@@ -180,7 +152,7 @@
     <script>AOS.init({ once: true });</script>
     
     <script>
-        // تحديث الناف بار
+        // ===== تحديث الناف بار =====
         function updateNavbar() {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const userType = localStorage.getItem('userType');
@@ -220,9 +192,9 @@
             }
         }
 
-        // --- الخريطة والبيانات ---
-        // تم تغيير اسم المتغير من 'map' إلى 'mapInstance' لتجنب التعارض مع script.js
-        let mapInstance, carLayer, routeLine;
+        // ===== الخريطة والبيانات =====
+        // استخدام اسم متغير فريد لتجنب التعارض مع script.js
+        let leafletMap, carLayer, routeLine;
         const centerPoint = [24.8375090, 46.7297325]; // واجهة روشن
 
         const cars = [
@@ -236,19 +208,19 @@
         function initMap() {
             if(!document.getElementById('mapid')) return;
             
-            mapInstance = L.map('mapid').setView(centerPoint, 15);
+            leafletMap = L.map('mapid').setView(centerPoint, 15);
             L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; CARTO', maxZoom: 20
-            }).addTo(mapInstance);
-            carLayer = L.layerGroup().addTo(mapInstance);
+            }).addTo(leafletMap);
+            carLayer = L.layerGroup().addTo(leafletMap);
             renderCars();
             
-            setTimeout(() => { mapInstance.invalidateSize(); }, 500);
+            setTimeout(() => { leafletMap.invalidateSize(); }, 500);
 
             // إرجاع الكاميرا عند الإغلاق
-            mapInstance.on('popupclose', function() {
-                mapInstance.flyTo(centerPoint, 15, { duration: 1 });
-                if(routeLine) mapInstance.removeLayer(routeLine);
+            leafletMap.on('popupclose', function() {
+                leafletMap.flyTo(centerPoint, 15, { duration: 1 });
+                if(routeLine) leafletMap.removeLayer(routeLine);
             });
         }
 
@@ -280,13 +252,11 @@
                 const marker = L.marker([c.lat, c.lng], { icon: createIcon(c.price, c.type, c.rating >= 5) }).addTo(carLayer);
 
                 marker.on('click', () => {
-                    // حركة الإزاحة الذكية (تنزل السيارة تحت شوي)
-                    // 0.0025 درجة كافية لرفع الكاميرا فوق السيارة
                     const offsetLat = c.lat + 0.0025;
-                    mapInstance.flyTo([offsetLat, c.lng], 16, { duration: 1 });
+                    leafletMap.flyTo([offsetLat, c.lng], 16, { duration: 1 });
                     
-                    if(routeLine) mapInstance.removeLayer(routeLine);
-                    routeLine = L.polyline([centerPoint, [c.lat, c.lng]], { color: '#34495e', dashArray: '10, 10' }).addTo(mapInstance);
+                    if(routeLine) leafletMap.removeLayer(routeLine);
+                    routeLine = L.polyline([centerPoint, [c.lat, c.lng]], { color: '#34495e', dashArray: '10, 10' }).addTo(leafletMap);
                 });
 
                 const content = `
@@ -308,10 +278,26 @@
             });
         }
 
-        window.simulateSmartLocate = () => { mapInstance.flyTo(centerPoint, 16); }
+        window.simulateSmartLocate = () => { leafletMap.flyTo(centerPoint, 16); }
+
+        // ===== دالة changeCity (للتوافق مع الـ select) =====
+        window.changeCity = function() {
+            const city = document.getElementById('city-selector').value;
+            // يمكن إضافة إحداثيات مدن مختلفة هنا
+            const cityCoords = {
+                riyadh: [24.8375090, 46.7297325],
+                dammam: [26.3927, 50.1419],
+                khobar: [26.2833, 50.2167],
+                jeddah: [21.5433, 39.1728]
+            };
+            const coords = cityCoords[city] || centerPoint;
+            leafletMap.flyTo(coords, 14);
+        };
 
         document.addEventListener('DOMContentLoaded', () => {
-            initTheme(); updateNavbar(); setTimeout(initMap, 100);
+            initTheme(); 
+            updateNavbar(); 
+            setTimeout(initMap, 100);
         });
     </script>
 </body>
