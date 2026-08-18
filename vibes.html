@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VIBES | بطاقة عمودية بخطوط متعددة</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;700;800&family=El+Messiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;700&family=Lalezar&family=Marhey:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Reem+Kufi:wght@400;700&family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --brown:#7A3F1C;
+    --brown-dark:#552A12;
+    --paper:#FFF8EC;
+    --line:#7A3F1C;
+    --card-w:55mm;
+    --card-h:90mm;
+    --ui-font:"Tajawal", Tahoma, Arial, sans-serif;
+    --font-ar-title:"Amiri", serif;
+    --font-ar-body:"Tajawal", sans-serif;
+    --font-en-title:Georgia, "Times New Roman", serif;
+    --font-en-body:"Cairo", Arial, sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#efe6d8;color:var(--brown-dark);font-family:var(--ui-font)}
+  .app{display:grid;grid-template-columns:minmax(340px,440px) 1fr;min-height:100vh}
+  .panel{background:#fffaf2;border-left:1px solid #decfbc;padding:18px;overflow:auto}
+  .panel h1{margin:0 0 6px;color:var(--brown);font-family:var(--font-en-title);font-size:26px}
+  .panel p{margin:0 0 14px;font-size:13px;line-height:1.8;color:#765844}
+  .tip{background:#f6ecde;border:1px solid #e0cfb6;color:#6c482d;border-radius:12px;padding:10px 12px;margin-bottom:14px;font-size:12px;line-height:1.8}
+  .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+  .tab{border:1px solid #d8c4aa;background:#f8efe3;color:var(--brown);border-radius:10px;padding:10px;font-weight:700;cursor:pointer;font-family:var(--ui-font)}
+  .tab.active{background:var(--brown);color:#fff;border-color:var(--brown)}
+  .group{background:#fffdf9;border:1px solid #e4d3be;border-radius:14px;padding:14px;margin-bottom:14px}
+  .group h3{margin:0 0 10px;font-size:14px;color:var(--brown)}
+  label{display:block;font-size:12px;margin:9px 0 5px;font-weight:700}
+  input,textarea,select{width:100%;border:1px solid #ceb99f;border-radius:9px;padding:9px 10px;font:inherit;background:#fff;color:#4a2818;outline:none}
+  textarea{resize:vertical;min-height:80px}
+  input:focus,textarea:focus,select:focus{border-color:var(--brown)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px;position:sticky;bottom:0;background:#fffaf2;padding-top:10px}
+  button{border:0;border-radius:10px;padding:11px 12px;font-weight:700;cursor:pointer;font-family:var(--ui-font)}
+  .primary{background:var(--brown);color:#fff}
+  .secondary{background:#eadac7;color:var(--brown-dark)}
+  .danger{background:#f5e8db;color:#7a3f1c}
+  .hidden-editor{display:none}
+  .stage{display:flex;align-items:flex-start;justify-content:center;gap:24px;padding:28px;flex-wrap:wrap;overflow:auto}
+  .stage-head{width:100%;text-align:center;color:#6d4426;font-family:var(--font-en-title);font-size:18px;font-weight:700}
+  .card{width:var(--card-w);height:var(--card-h);background:var(--paper);border:1.2mm solid var(--brown);border-radius:6mm;overflow:hidden;position:relative;box-shadow:0 16px 40px rgba(75,46,25,.14)}
+  .card-inner{position:absolute;inset:3.5mm;border:.45mm solid var(--line);border-radius:4.8mm;overflow:hidden;background:var(--paper)}
+  .front-layout{display:grid;grid-template-rows:50% auto;height:100%}
+  .front-image{position:relative;overflow:hidden;border-bottom:.4mm solid var(--line);background:#e8dcc8;background-size:cover;background-position:center;background-repeat:no-repeat}
+  .front-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;color:#81614b;font-size:12px;line-height:1.6;background:radial-gradient(circle at 20% 25%, rgba(122,63,28,.08), transparent 22%),radial-gradient(circle at 75% 75%, rgba(122,63,28,.08), transparent 22%),#ece1d0}
+  .front-image.has-image .front-placeholder{display:none}
+  .front-info{padding:3.2mm;display:grid;grid-template-rows:auto auto auto 1fr auto;gap:1.7mm;min-height:0;overflow:hidden}
+  .logo{text-align:center;line-height:1}
+  .logo-en{font-family:var(--font-en-title);font-size:7.1mm;letter-spacing:1.1mm;font-weight:700;color:var(--brown)}
+  .logo-sub{font-family:var(--font-en-body);font-size:2.15mm;letter-spacing:.6mm;margin-top:1mm;color:#6b4629}
+  .logo-ar{font-family:var(--font-ar-title);font-size:5.8mm;font-weight:700;margin-top:.8mm;color:var(--brown)}
+  .origin{text-align:center;line-height:1.5;padding:.8mm 0;border-top:.35mm solid var(--line);border-bottom:.35mm solid var(--line)}
+  .origin-ar{font-family:var(--font-ar-body);font-size:3.8mm;font-weight:700}
+  .origin-en{font-family:var(--font-en-title);font-size:3mm;font-weight:700}
+  .tastes{text-align:center}
+  .tastes-ar{font-family:var(--font-ar-body);font-size:4.1mm;line-height:1.4;font-weight:700}
+  .tastes-en{font-family:var(--font-en-title);font-size:2.7mm;line-height:1.45;margin-top:.8mm}
+  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1mm;font-size:2.55mm;text-align:center}
+  .spec{border:.35mm solid rgba(122,63,28,.35);border-radius:2.5mm;padding:1.2mm 1mm;line-height:1.45}
+  .spec strong{font-family:var(--font-ar-body);font-size:3.2mm}
+  .spec span{font-family:var(--font-en-title)}
+  .altitude{text-align:center;font-family:var(--font-en-title);font-size:3.2mm;font-weight:700;border-top:.35mm solid var(--line);padding-top:1.4mm}
+  .back-layout{height:100%;display:grid;grid-template-rows:20mm 1fr 18mm 18mm}
+  .back-top{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;border-bottom:.4mm solid var(--line);padding:2.5mm}
+  .back-logo{font-family:var(--font-en-title);font-size:7mm;letter-spacing:1mm;font-weight:700;color:var(--brown)}
+  .tagline{margin-top:1.5mm;font-family:var(--font-ar-title);font-size:4mm}
+  .story{padding:4mm;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.8;white-space:pre-line;font-family:var(--font-ar-body);font-size:4.1mm;overflow:hidden}
+  .brew{border-top:.4mm solid var(--line);border-bottom:.4mm solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);text-align:center;align-items:center;font-family:var(--font-en-title);font-size:2.65mm}
+  .brew > div + div{border-inline-start:.35mm solid var(--line)}
+  .brew strong{font-size:3.2mm}
+  .footer-back{display:grid;grid-template-columns:1.2fr .8fr;gap:2mm;align-items:center;padding:2.8mm 3.2mm}
+  .social-lines{line-height:1.55}
+  .social-lines .label{font-family:var(--font-en-title);font-size:2.5mm}
+  .social-lines .value{font-family:var(--font-en-body);font-size:2.9mm;font-weight:700}
+  .qr{height:13mm;border:.45mm dashed var(--line);border-radius:2.5mm;display:flex;align-items:center;justify-content:center;text-align:center;font-size:2.4mm;font-family:var(--font-en-title)}
+  @media (max-width:1000px){.app{grid-template-columns:1fr}.panel{border-left:0;border-bottom:1px solid #decfbc}}
+  @page{margin:6mm}
+  @media print{
+    body{background:#fff}
+    .panel,.stage-head{display:none !important}
+    .app{display:block}
+    .stage{padding:0;gap:8mm;justify-content:flex-start;align-items:flex-start}
+    .card{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="panel">
+    <h1>VIBES Vertical Card</h1>
+    <p>أضفت لك خطوط كثيرة، ومنها <strong>Amiri</strong>، مع خيارات تغيير الخط العربي والإنجليزي، وزر <strong>حفظ كصورة PNG</strong> لكل بطاقة.</p>
+
+    <div class="tip">
+      المقاس الافتراضي: <strong>55 × 90 mm</strong><br>
+      والبيانات معبّية على محصول إثيوبيا + حساب الانستقرام <strong>Vibes.espresso</strong>.
+    </div>
+
+    <div class="tabs">
+      <button type="button" class="tab active" data-tab="frontEditor">تعديل الوجه</button>
+      <button type="button" class="tab" data-tab="backEditor">تعديل الظهر</button>
+    </div>
+
+    <section id="frontEditor">
+      <div class="group">
+        <h3>هوية فايبز</h3>
+        <label>اسم الكوفي بالإنجليزي</label>
+        <input id="brandEn" value="VIBES" />
+        <label>الوصف الصغير</label>
+        <input id="brandSub" value="SPECIALTY COFFEE" />
+        <label>اسم الكوفي بالعربي</label>
+        <input id="brandAr" value="فايبز" />
+      </div>
+
+      <div class="group">
+        <h3>الخطوط</h3>
+        <label>خط العنوان العربي</label>
+        <select id="fontArTitle">
+          <option value='"Amiri", serif' selected>Amiri</option>
+          <option value='"Aref Ruqaa", serif'>Aref Ruqaa</option>
+          <option value='"Marhey", cursive'>Marhey</option>
+          <option value='"Lalezar", cursive'>Lalezar</option>
+          <option value='"El Messiri", sans-serif'>El Messiri</option>
+          <option value='"Reem Kufi", sans-serif'>Reem Kufi</option>
+          <option value='"Noto Naskh Arabic", serif'>Noto Naskh Arabic</option>
+        </select>
+
+        <label>خط النص العربي</label>
+        <select id="fontArBody">
+          <option value='"Tajawal", sans-serif' selected>Tajawal</option>
+          <option value='"Cairo", sans-serif'>Cairo</option>
+          <option value='"IBM Plex Sans Arabic", sans-serif'>IBM Plex Sans Arabic</option>
+          <option value='"El Messiri", sans-serif'>El Messiri</option>
+          <option value='"Noto Naskh Arabic", serif'>Noto Naskh Arabic</option>
+          <option value='"Amiri", serif'>Amiri</option>
+          <option value='"Reem Kufi", sans-serif'>Reem Kufi</option>
+        </select>
+
+        <label>خط العنوان الإنجليزي</label>
+        <select id="fontEnTitle">
+          <option value='Georgia, "Times New Roman", serif' selected>Georgia</option>
+          <option value='"Cairo", Arial, sans-serif'>Cairo</option>
+          <option value='"Tajawal", Arial, sans-serif'>Tajawal</option>
+          <option value='"IBM Plex Sans Arabic", Arial, sans-serif'>IBM Plex Sans Arabic</option>
+        </select>
+
+        <label>خط النص الإنجليزي</label>
+        <select id="fontEnBody">
+          <option value='"Cairo", Arial, sans-serif' selected>Cairo</option>
+          <option value='"Tajawal", Arial, sans-serif'>Tajawal</option>
+          <option value='"IBM Plex Sans Arabic", Arial, sans-serif'>IBM Plex Sans Arabic</option>
+          <option value='Georgia, "Times New Roman", serif'>Georgia</option>
+        </select>
+      </div>
+
+      <div class="group">
+        <h3>صورة الوجه</h3>
+        <label>اختر الصورة</label>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <input id="frontImageInput" type="file" accept="image/*" style="flex:1" />
+          <button type="button" id="removeImageBtn" class="secondary" style="padding:9px 12px;">إزالة</button>
+        </div>
+        <label>عرض الصورة داخل البطاقة</label>
+        <select id="frontFit">
+          <option value="cover">تعبئة الإطار</option>
+          <option value="contain">إظهار الصورة كاملة</option>
+        </select>
+      </div>
+
+      <div class="group">
+        <h3>المعلومات</h3>
+        <label>الاسم بالعربي</label>
+        <input id="originAr" value="إثيوبيا" />
+        <label>الاسم بالإنجليزي</label>
+        <input id="originEn" value="ETHIOPIA" />
+        <label>الإيحاء الرئيسي بالعربي</label>
+        <input id="notesAr" value="بيري" />
+        <label>الإيحاء الرئيسي بالإنجليزي</label>
+        <input id="notesEn" value="BERRY" />
+        <div class="row">
+          <div>
+            <label>السلالة</label>
+            <input id="process" value="هيرليوم" />
+          </div>
+          <div>
+            <label>المعالجة</label>
+            <input id="roast" value="مجففة" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Variety</label>
+            <input id="processEn" value="HEIRLOOM" />
+          </div>
+          <div>
+            <label>Process</label>
+            <input id="roastEn" value="DRIED" />
+          </div>
+        </div>
+        <label>الارتفاع</label>
+        <input id="altitude" value="1900 - 2100 م" />
+      </div>
+    </section>
+
+    <section id="backEditor" class="hidden-editor">
+      <div class="group">
+        <h3>محتوى الظهر</h3>
+        <label>العبارة</label>
+        <input id="tagline" value="محصول إثيوبي بطابع بيري واضح." />
+        <label>الوصف / الإيحاءات</label>
+        <textarea id="story">الإيحاءات: شوكولاتة، توت، بندق، كراميل</textarea>
+      </div>
+
+      <div class="group">
+        <h3>وصفة التحضير</h3>
+        <div class="row">
+          <div>
+            <label>الجرعة</label>
+            <input id="dose" value="15 g" />
+          </div>
+          <div>
+            <label>الماء</label>
+            <input id="water" value="240 ml" />
+          </div>
+        </div>
+        <label>درجة الحرارة</label>
+        <input id="temp" value="92°C" />
+      </div>
+
+      <div class="group">
+        <h3>التواصل</h3>
+        <label>عنوان السطر الأول</label>
+        <input id="socialLabel" value="instagram" />
+        <label>حساب الانستقرام</label>
+        <input id="social" value="Vibes.espresso" />
+        <label>السطر الثاني</label>
+        <input id="location" value="VIBES SPECIALTY COFFEE" />
+        <label>نص مكان QR</label>
+        <input id="qrText" value="QR" />
+      </div>
+    </section>
+
+    <div class="group">
+      <h3>مقاس البطاقة والألوان</h3>
+      <div class="row">
+        <div>
+          <label>العرض mm</label>
+          <input id="w" type="number" min="40" max="100" value="55" />
+        </div>
+        <div>
+          <label>الارتفاع mm</label>
+          <input id="h" type="number" min="60" max="140" value="90" />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>لون البني</label>
+          <input id="brown" type="color" value="#7A3F1C" />
+        </div>
+        <div>
+          <label>لون الخلفية</label>
+          <input id="paper" type="color" value="#FFF8EC" />
+        </div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="primary" onclick="window.print()">طباعة الوجه والظهر</button>
+      <button type="button" class="secondary" id="saveFrontBtn">حفظ الوجه كصورة</button>
+      <button type="button" class="secondary" id="saveBackBtn">حفظ الظهر كصورة</button>
+      <button type="button" class="danger" id="reset" style="grid-column:1/-1">إرجاع الافتراضي</button>
+    </div>
+  </aside>
+
+  <main class="stage">
+    <div class="stage-head">المعاينة</div>
+
+    <div class="card" id="frontCard">
+      <div class="card-inner">
+        <div class="front-layout">
+          <div class="front-image" id="frontImage">
+            <div class="front-placeholder" id="frontPlaceholder">اختر صورة<br>ويصير نصف البطاقة صورة</div>
+          </div>
+
+          <div class="front-info">
+            <div class="logo">
+              <div class="logo-en" id="pBrandEn">VIBES</div>
+              <div class="logo-sub" id="pBrandSub">SPECIALTY COFFEE</div>
+              <div class="logo-ar" id="pBrandAr">فايبز</div>
+            </div>
+
+            <div class="origin">
+              <div class="origin-ar" id="pOriginAr">إثيوبيا</div>
+              <div class="origin-en" id="pOriginEn">ETHIOPIA</div>
+            </div>
+
+            <div class="tastes">
+              <div class="tastes-ar" id="pNotesAr">بيري</div>
+              <div class="tastes-en" id="pNotesEn">BERRY</div>
+            </div>
+
+            <div class="spec-grid">
+              <div class="spec"><strong id="pProcess">هيرليوم</strong><br><span id="pProcessEn">HEIRLOOM</span></div>
+              <div class="spec"><strong id="pRoast">مجففة</strong><br><span id="pRoastEn">DRIED</span></div>
+            </div>
+
+            <div class="altitude">Altitude · <span id="pAltitude">1900 - 2100 م</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="backCard">
+      <div class="card-inner">
+        <div class="back-layout">
+          <div class="back-top">
+            <div class="back-logo">VIBES</div>
+            <div class="tagline" id="pTagline">محصول إثيوبي بطابع بيري واضح.</div>
+          </div>
+
+          <div class="story" id="pStory">الإيحاءات: شوكولاتة، توت، بندق، كراميل</div>
+
+          <div class="brew">
+            <div><strong id="pDose">15 g</strong><br>COFFEE</div>
+            <div><strong id="pWater">240 ml</strong><br>WATER</div>
+            <div><strong id="pTemp">92°C</strong><br>TEMP</div>
+          </div>
+
+          <div class="footer-back">
+            <div class="social-lines">
+              <div class="label" id="pSocialLabel">instagram</div>
+              <div class="value" id="pSocial">Vibes.espresso</div>
+              <div class="label" id="pLocation">VIBES SPECIALTY COFFEE</div>
+            </div>
+            <div class="qr" id="pQrText">QR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+const bind = (inputId, previewId) => {
+  const input = document.getElementById(inputId);
+  const preview = document.getElementById(previewId);
+  input.addEventListener('input', () => preview.textContent = input.value);
+};
+
+[
+  ['brandEn','pBrandEn'],['brandSub','pBrandSub'],['brandAr','pBrandAr'],
+  ['originAr','pOriginAr'],['originEn','pOriginEn'],
+  ['notesAr','pNotesAr'],['notesEn','pNotesEn'],
+  ['process','pProcess'],['processEn','pProcessEn'],
+  ['roast','pRoast'],['roastEn','pRoastEn'],
+  ['altitude','pAltitude'],
+  ['tagline','pTagline'],['story','pStory'],
+  ['dose','pDose'],['water','pWater'],['temp','pTemp'],
+  ['socialLabel','pSocialLabel'],['social','pSocial'],['location','pLocation'],
+  ['qrText','pQrText']
+].forEach(x => bind(...x));
+
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('frontEditor').classList.add('hidden-editor');
+    document.getElementById('backEditor').classList.add('hidden-editor');
+    document.getElementById(btn.dataset.tab).classList.remove('hidden-editor');
+  });
+});
+
+const frontImage = document.getElementById('frontImage');
+const frontPlaceholder = document.getElementById('frontPlaceholder');
+const frontImageInput = document.getElementById('frontImageInput');
+const frontFit = document.getElementById('frontFit');
+
+frontImageInput.addEventListener('change', e => {
+  const file = e.target.files?.[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    frontImage.style.backgroundImage = `url("${ev.target.result}")`;
+    frontImage.classList.add('has-image');
+  };
+  reader.readAsDataURL(file);
+});
+
+document.getElementById('removeImageBtn').addEventListener('click', () => {
+  frontImage.style.backgroundImage = '';
+  frontImage.classList.remove('has-image');
+  frontImageInput.value = '';
+});
+
+frontFit.addEventListener('change', e => {
+  frontImage.style.backgroundSize = e.target.value;
+});
+
+document.getElementById('w').addEventListener('input', e => {
+  document.documentElement.style.setProperty('--card-w', e.target.value + 'mm');
+});
+document.getElementById('h').addEventListener('input', e => {
+  document.documentElement.style.setProperty('--card-h', e.target.value + 'mm');
+});
+document.getElementById('brown').addEventListener('input', e => {
+  document.documentElement.style.setProperty('--brown', e.target.value);
+  document.documentElement.style.setProperty('--brown-dark', e.target.value);
+  document.documentElement.style.setProperty('--line', e.target.value);
+});
+document.getElementById('paper').addEventListener('input', e => {
+  document.documentElement.style.setProperty('--paper', e.target.value);
+});
+
+document.getElementById('fontArTitle').addEventListener('change', e => {
+  document.documentElement.style.setProperty('--font-ar-title', e.target.value);
+});
+document.getElementById('fontArBody').addEventListener('change', e => {
+  document.documentElement.style.setProperty('--font-ar-body', e.target.value);
+});
+document.getElementById('fontEnTitle').addEventListener('change', e => {
+  document.documentElement.style.setProperty('--font-en-title', e.target.value);
+});
+document.getElementById('fontEnBody').addEventListener('change', e => {
+  document.documentElement.style.setProperty('--font-en-body', e.target.value);
+});
+
+document.getElementById('reset').addEventListener('click', () => {
+  if(confirm('ترجع كل شيء للوضع الافتراضي؟')) location.reload();
+});
+
+async function saveCardAsImage(cardId, filename){
+  try {
+    // انتظار تحميل الخطوط لضمان دقة التصيير
+    await document.fonts.ready;
+    const card = document.getElementById(cardId);
+    const canvas = await html2canvas(card, {
+      backgroundColor: null,
+      scale: 4,
+      useCORS: true,
+      logging: false
+    });
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch (err) {
+    alert('تعذر حفظ الصورة: ' + err.message);
+  }
+}
+
+document.getElementById('saveFrontBtn').addEventListener('click', () => {
+  saveCardAsImage('frontCard', 'vibes-front-card.png');
+});
+document.getElementById('saveBackBtn').addEventListener('click', () => {
+  saveCardAsImage('backCard', 'vibes-back-card.png');
+});
+</script>
+</body>
+</html>
