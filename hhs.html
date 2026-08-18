@@ -1,1112 +1,454 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VIBES | المحرر المتقدم (بدون إيموجي)</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VIBES | بطاقة عمودية بخطوط متعددة</title>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Cairo:wght@200..1000&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;700;800&family=El+Messiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;700&family=Lalezar&family=Marhey:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Reem+Kufi:wght@400;700&family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome 6 (مكتبة الأيقونات) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <!-- html2canvas للتصدير -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-  <style>
-    /* ===== ROOT ===== */
-    :root {
-      --card-w: 55mm;
-      --card-h: 85mm;
-      --bleed: 2mm;
-      
-      /* ألوان الوضع الفاتح (Light) */
-      --brown: #7A3F1C;
-      --brown-dark: #54270F;
-      --brown-light: #a05f35;
-      --paper: #FFF9EE;
-      --text-color: #2d1a0d;
-      --line: #7A3F1C;
-      --shadow: rgba(82, 49, 26, 0.15);
-      --chip-bg: #f0e4d4;
-      --chip-border: #d7c2a8;
-      --card-bg: var(--paper);
-      
-      /* الخطوط */
-      --brand-font: 'Playfair Display', serif;
-      --body-font: 'Cairo', 'Amiri', 'Poppins', sans-serif;
-      
-      /* أحجام الخطوط المنفصلة */
-      --brand-size: 1.8em;
-      --detail-size: 0.65em;
-      --story-size: 0.7em;
-    }
-
-    /* ===== DARK MODE ===== */
-    .dark-mode {
-      --paper: #2b1a10;
-      --text-color: #ecd6b9;
-      --line: #c99a6b;
-      --brown: #c99a6b;
-      --brown-dark: #e0c29a;
-      --brown-light: #a67c52;
-      --shadow: rgba(0,0,0,0.5);
-      --chip-bg: #3d2a1c;
-      --chip-border: #7a5a3a;
-      --card-bg: #1f1108;
-    }
-    .dark-mode .card {
-      border-color: #c99a6b;
-    }
-    .dark-mode .inner {
-      border-color: #c99a6b;
-    }
-    .dark-mode .photo-wrap {
-      border-bottom-color: #c99a6b;
-    }
-    .dark-mode .info-grid .brand,
-    .dark-mode .info-grid .origin,
-    .dark-mode .info-grid .notes,
-    .dark-mode .info-grid .meta {
-      border-color: #c99a6b !important;
-    }
-    .dark-mode .back-brand,
-    .dark-mode .back-story,
-    .dark-mode .back-footer .qr {
-      border-color: #c99a6b !important;
-    }
-    .dark-mode .back-footer .qr {
-      border-color: #c99a6b !important;
-    }
-    .dark-mode .print-note { color: #ecd6b9; }
-
-    /* ===== BASE ===== */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background: #ede5da;
-      color: var(--text-color);
-      font-family: var(--body-font);
-      font-size: 10px;
-      direction: rtl;
-      transition: background 0.3s;
-    }
-    .dark-mode-body {
-      background: #1a110b;
-    }
-
-    /* ===== LAYOUT ===== */
-    .app {
-      display: grid;
-      grid-template-columns: minmax(340px, 440px) 1fr;
-      min-height: 100vh;
-    }
-
-    .panel {
-      background: #fffaf1;
-      padding: 20px 18px;
-      border-left: 1px solid #dccab5;
-      overflow-y: auto;
-      height: 100vh;
-      position: sticky;
-      top: 0;
-      transition: background 0.3s;
-    }
-    .dark-mode-body .panel {
-      background: #241810;
-      border-left-color: #4d3421;
-    }
-    .dark-mode-body .panel h1 { color: #c99a6b; }
-    .dark-mode-body .panel p { color: #b8966e; }
-    .dark-mode-body .group { background: #2f1f13; border-color: #4d3421; }
-    .dark-mode-body .group h3 { color: #c99a6b; }
-    .dark-mode-body label { color: #d4b48c; }
-    .dark-mode-body input,
-    .dark-mode-body select,
-    .dark-mode-body textarea {
-      background: #1f1108; color: #ecd6b9; border-color: #5a3d28;
-    }
-    .dark-mode-body .tab { background: #2f1f13; color: #c99a6b; border-color: #4d3421; }
-    .dark-mode-body .tab.active { background: #c99a6b; color: #1f1108; }
-    .dark-mode-body .secondary { background: #3d2a1c; color: #d4b48c; }
-    .dark-mode-body .danger { background: #3d2a1c; color: #e0b68c; }
-    .dark-mode-body .buttons { background: #241810; }
-
-    .panel h1 {
-      font-family: 'Playfair Display', serif;
-      color: var(--brown);
-      font-size: 26px;
-      margin: 0 0 4px;
-    }
-    .panel p {
-      font-size: 12px;
-      color: #755943;
-      margin: 0 0 18px;
-      line-height: 1.6;
-    }
-
-    .tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .tab {
-      padding: 10px;
-      border: 1px solid #d7c2a8;
-      background: #f8efe2;
-      color: var(--brown);
-      border-radius: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: var(--body-font);
-      font-size: 13px;
-      transition: 0.2s;
-      text-align: center;
-    }
-    .tab.active { background: var(--brown); color: white; border-color: var(--brown); }
-
-    .group {
-      border: 1px solid #e2d1bc;
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 14px;
-      background: #fffdf9;
-    }
-    .group h3 {
-      font-size: 14px;
-      margin: 0 0 10px;
-      color: var(--brown);
-      font-family: 'Cairo', sans-serif;
-    }
-    label {
-      display: block;
-      font-size: 12px;
-      margin: 10px 0 4px;
-      font-weight: 700;
-      color: var(--brown-dark);
-    }
-    input, select, textarea {
-      width: 100%;
-      border: 1px solid #ccb89f;
-      border-radius: 9px;
-      padding: 8px 10px;
-      background: #fff;
-      color: #2d1a0d;
-      outline: none;
-      font: inherit;
-      font-size: 13px;
-      transition: 0.2s;
-    }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .hidden-editor { display: none; }
-
-    .buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 6px;
-      position: sticky;
-      bottom: 0;
-      background: #fffaf1;
-      padding: 12px 0 6px;
-      border-top: 1px solid #e2d1bc;
-    }
-    .buttons .full { grid-column: 1 / -1; }
-    button {
-      border: 0;
-      border-radius: 10px;
-      padding: 11px 8px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: var(--body-font);
-      font-size: 12px;
-      transition: 0.2s;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-    .primary { background: var(--brown); color: #fff; }
-    .secondary { background: #eadac6; color: var(--brown-dark); }
-    .danger { background: #f3e9dc; color: #7a3f1c; }
-    .dark-toggle { background: #2d1a0d; color: #ecd6b9; }
-
-    /* ===== STAGE ===== */
-    .stage {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 30px;
-      padding: 30px 20px;
-      flex-wrap: wrap;
-      background: #f5ede4;
-      transition: background 0.3s;
-    }
-    .dark-mode-body .stage { background: #120a05; }
-    .sheet-title {
-      width: 100%;
-      text-align: center;
-      font-family: 'Playfair Display', serif;
-      color: #6c3c20;
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .dark-mode-body .sheet-title { color: #c99a6b; }
-
-    /* ===== CARD ===== */
-    .card-container {
-      position: relative;
-      padding: var(--bleed);
-      background: var(--card-bg);
-      border-radius: 4mm;
-      box-shadow: 0 8px 20px var(--shadow);
-      transition: all 0.3s;
-    }
-    .card {
-      width: var(--card-w);
-      height: var(--card-h);
-      background: var(--paper);
-      border: 1.2mm solid var(--brown);
-      border-radius: 2.8mm;
-      position: relative;
-      overflow: hidden;
-      color: var(--text-color);
-      transition: all 0.3s;
-      font-family: var(--body-font);
-    }
-    .inner {
-      position: absolute;
-      inset: 1.8mm;
-      border: 0.4mm solid var(--line);
-      border-radius: 2mm;
-      overflow: hidden;
-      display: grid;
-      background: var(--paper);
-      transition: all 0.3s;
-    }
-
-    /* ===== FRONT ===== */
-    .front .inner {
-      grid-template-rows: 1fr 1fr;
-    }
-
-    /* الصورة */
-    .photo-wrap {
-      background: #dfcfba;
-      position: relative;
-      overflow: hidden;
-      border-bottom: 0.4mm solid var(--line);
-      aspect-ratio: 1 / 1;
-      width: 100%;
-      height: 100%;
-      transition: border-color 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .photo-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .photo-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 10px;
-      color: #7a604c;
-      font-size: 11px;
-      background: radial-gradient(circle at 30% 30%, rgba(122,63,28,0.06), transparent 40%), #eadfce;
-      font-family: var(--body-font);
-      gap: 6px;
-    }
-    .photo-placeholder i { font-size: 24px; opacity: 0.6; }
-
-    /* المعلومات (النصف السفلي) */
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto auto 1fr auto auto;
-      gap: 0px;
-      padding: 3px 5px 2px;
-      font-size: 0.85em;
-      line-height: 1.3;
-      align-content: start;
-      height: 100%;
-    }
-    .info-grid .brand {
-      grid-column: 1 / -1;
-      text-align: center;
-      font-family: var(--brand-font);
-      border-bottom: 0.3mm solid var(--line);
-      padding-bottom: 1px;
-      margin-bottom: 1px;
-    }
-    .brand .en {
-      font-size: var(--brand-size);
-      font-weight: 700;
-      font-family: var(--brand-font);
-      letter-spacing: 0.5px;
-    }
-    .brand .ar {
-      font-size: calc(var(--brand-size) * 0.85);
-      font-weight: 700;
-      font-family: var(--brand-font);
-      margin-top: -2px;
-    }
-
-    .info-grid .origin {
-      grid-column: 1 / -1;
-      display: flex;
-      justify-content: space-between;
-      font-weight: 700;
-      font-size: calc(var(--detail-size) * 1.2);
-      border-bottom: 0.3mm dashed var(--line);
-      padding-bottom: 1px;
-      margin-bottom: 1px;
-    }
-
-    /* الإيحاءات (Chips) */
-    .info-grid .notes {
-      grid-column: 1 / -1;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2px 3px;
-      justify-content: center;
-      border-bottom: 0.3mm solid var(--line);
-      padding-bottom: 2px;
-      margin-bottom: 2px;
-    }
-    .note-chip {
-      background: var(--chip-bg);
-      border: 0.3mm solid var(--chip-border);
-      border-radius: 3px;
-      padding: 0px 4px;
-      font-size: calc(var(--detail-size) * 0.9);
-      font-weight: 600;
-      white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      color: var(--text-color);
-      transition: all 0.3s;
-    }
-    .note-chip .dot {
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-    }
-
-    /* الميتا (معالجة، تحميص، ارتفاع، حموضة، ثقل) */
-    .info-grid .meta {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1px;
-      font-size: calc(var(--detail-size) * 0.95);
-      font-weight: 600;
-      border-bottom: 0.3mm solid var(--line);
-      padding-bottom: 2px;
-      margin-bottom: 2px;
-    }
-    .meta-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      line-height: 1.3;
-    }
-    .meta-item .label {
-      font-size: calc(var(--detail-size) * 0.7);
-      font-weight: 400;
-      opacity: 0.7;
-      display: flex;
-      align-items: center;
-      gap: 2px;
-    }
-    .meta-item .label i { font-size: 0.8em; }
-    .meta-item .value {
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 2px;
-    }
-    .meta-item .value i { font-size: 0.9em; }
-
-    /* مقياس التحميص */
-    .roast-scale-wrap {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      padding: 0 2px;
-      margin-bottom: 1px;
-    }
-    .roast-scale-wrap .label {
-      font-size: calc(var(--detail-size) * 0.7);
-      font-weight: 600;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 3px;
-    }
-    .roast-track {
-      flex: 1;
-      height: 3px;
-      background: linear-gradient(to left, #c47b4e, #7a3f1c, #3b1f0b);
-      border-radius: 2px;
-      position: relative;
-    }
-    .roast-track .pointer {
-      width: 6px;
-      height: 6px;
-      background: var(--brown-dark);
-      border: 1px solid var(--paper);
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      transition: left 0.3s;
-      box-shadow: 0 0 4px rgba(0,0,0,0.3);
-    }
-
-    /* التاريخ والدفعة */
-    .info-grid .footer-meta {
-      grid-column: 1 / -1;
-      display: flex;
-      justify-content: space-between;
-      font-size: calc(var(--detail-size) * 0.7);
-      opacity: 0.7;
-      padding-top: 1px;
-      border-top: 0.2mm dotted var(--line);
-    }
-    .info-grid .footer-meta span { font-weight: 500; display: flex; align-items: center; gap: 3px; }
-    .info-grid .footer-meta i { font-size: 0.9em; }
-
-    /* ===== BACK ===== */
-    .back .inner {
-      grid-template-rows: 1.2fr 1.8fr 1fr;
-    }
-    .back-brand {
-      text-align: center;
-      padding: 4px 0;
-      border-bottom: 0.3mm solid var(--line);
-      font-family: var(--brand-font);
-      transition: border-color 0.3s;
-    }
-    .back-brand .en {
-      font-size: var(--brand-size);
-      font-weight: 700;
-    }
-    .back-brand .tagline {
-      font-size: calc(var(--detail-size) * 1.1);
-      font-family: var(--body-font);
-      font-weight: 500;
-    }
-    .back-story {
-      padding: 4px 6px;
-      font-size: var(--story-size);
-      line-height: 1.5;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 0.3mm solid var(--line);
-      font-family: var(--body-font);
-      white-space: pre-line;
-      transition: border-color 0.3s;
-    }
-    .back-footer {
-      display: grid;
-      grid-template-columns: 1fr 0.8fr;
-      align-items: center;
-      padding: 3px 6px;
-      font-size: calc(var(--detail-size) * 0.9);
-    }
-    .back-footer .social { font-weight: 700; }
-    .back-footer .qr {
-      width: 12mm;
-      height: 12mm;
-      border: 0.4mm dashed var(--line);
-      border-radius: 2mm;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8em;
-      margin-right: auto;
-      text-align: center;
-      transition: border-color 0.3s;
-    }
-
-    /* DPI نص */
-    .print-note {
-      text-align: center;
-      font-size: 4px;
-      opacity: 0.3;
-      margin-top: 2px;
-      letter-spacing: 0.5px;
-      color: var(--text-color);
-      transition: color 0.3s;
-      font-weight: 600;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 900px) {
-      .app { grid-template-columns: 1fr; }
-      .panel { border-left: 0; border-bottom: 1px solid #dbcab5; height: auto; position: static; }
-      .stage { padding: 20px 10px; }
-    }
-
-    @media print {
-      body { background: white; }
-      .panel, .sheet-title, .print-note { display: none !important; }
-      .app { display: block; }
-      .stage {
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 10mm;
-        padding: 0;
-        background: white;
-        flex-wrap: wrap;
-      }
-      .card-container {
-        box-shadow: none;
-        padding: 0;
-        background: transparent;
-      }
-      .card {
-        box-shadow: none;
-        break-inside: avoid;
-        page-break-inside: avoid;
-        margin: 0;
-      }
-    }
-  </style>
+<style>
+  :root{
+    --brown:#7A3F1C;
+    --brown-dark:#552A12;
+    --paper:#FFF8EC;
+    --line:#7A3F1C;
+    --card-w:55mm;
+    --card-h:90mm;
+    --ui-font:"Tajawal", Tahoma, Arial, sans-serif;
+    --font-ar-title:"Amiri", serif;
+    --font-ar-body:"Tajawal", sans-serif;
+    --font-en-title:Georgia, "Times New Roman", serif;
+    --font-en-body:"Cairo", Arial, sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#efe6d8;color:var(--brown-dark);font-family:var(--ui-font)}
+  .app{display:grid;grid-template-columns:minmax(340px,440px) 1fr;min-height:100vh}
+  .panel{background:#fffaf2;border-left:1px solid #decfbc;padding:18px;overflow:auto}
+  .panel h1{margin:0 0 6px;color:var(--brown);font-family:var(--font-en-title);font-size:26px}
+  .panel p{margin:0 0 14px;font-size:13px;line-height:1.8;color:#765844}
+  .tip{background:#f6ecde;border:1px solid #e0cfb6;color:#6c482d;border-radius:12px;padding:10px 12px;margin-bottom:14px;font-size:12px;line-height:1.8}
+  .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+  .tab{border:1px solid #d8c4aa;background:#f8efe3;color:var(--brown);border-radius:10px;padding:10px;font-weight:700;cursor:pointer;font-family:var(--ui-font)}
+  .tab.active{background:var(--brown);color:#fff;border-color:var(--brown)}
+  .group{background:#fffdf9;border:1px solid #e4d3be;border-radius:14px;padding:14px;margin-bottom:14px}
+  .group h3{margin:0 0 10px;font-size:14px;color:var(--brown)}
+  label{display:block;font-size:12px;margin:9px 0 5px;font-weight:700}
+  input,textarea,select{width:100%;border:1px solid #ceb99f;border-radius:9px;padding:9px 10px;font:inherit;background:#fff;color:#4a2818;outline:none}
+  textarea{resize:vertical;min-height:80px}
+  input:focus,textarea:focus,select:focus{border-color:var(--brown)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px;position:sticky;bottom:0;background:#fffaf2;padding-top:10px}
+  button{border:0;border-radius:10px;padding:11px 12px;font-weight:700;cursor:pointer;font-family:var(--ui-font)}
+  .primary{background:var(--brown);color:#fff}
+  .secondary{background:#eadac7;color:var(--brown-dark)}
+  .danger{background:#f5e8db;color:#7a3f1c}
+  .hidden-editor{display:none}
+  .stage{display:flex;align-items:flex-start;justify-content:center;gap:24px;padding:28px;flex-wrap:wrap;overflow:auto}
+  .stage-head{width:100%;text-align:center;color:#6d4426;font-family:var(--font-en-title);font-size:18px;font-weight:700}
+  .card{width:var(--card-w);height:var(--card-h);background:var(--paper);border:1.2mm solid var(--brown);border-radius:6mm;overflow:hidden;position:relative;box-shadow:0 16px 40px rgba(75,46,25,.14)}
+  .card-inner{position:absolute;inset:3.5mm;border:.45mm solid var(--line);border-radius:4.8mm;overflow:hidden;background:var(--paper)}
+  .front-layout{display:grid;grid-template-rows:50% auto;height:100%}
+  .front-image{position:relative;overflow:hidden;border-bottom:.4mm solid var(--line);background:#e8dcc8}
+  .front-image img{width:100%;height:100%;object-fit:cover;display:none}
+  .front-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;color:#81614b;font-size:12px;line-height:1.6;background:radial-gradient(circle at 20% 25%, rgba(122,63,28,.08), transparent 22%),radial-gradient(circle at 75% 75%, rgba(122,63,28,.08), transparent 22%),#ece1d0}
+  .front-info{padding:3.2mm;display:grid;grid-template-rows:auto auto auto 1fr auto;gap:1.7mm;min-height:0}
+  .logo{text-align:center;line-height:1}
+  .logo-en{font-family:var(--font-en-title);font-size:7.1mm;letter-spacing:1.1mm;font-weight:700;color:var(--brown)}
+  .logo-sub{font-family:var(--font-en-body);font-size:2.15mm;letter-spacing:.6mm;margin-top:1mm;color:#6b4629}
+  .logo-ar{font-family:var(--font-ar-title);font-size:5.8mm;font-weight:700;margin-top:.8mm;color:var(--brown)}
+  .origin{text-align:center;line-height:1.5;padding:.8mm 0;border-top:.35mm solid var(--line);border-bottom:.35mm solid var(--line)}
+  .origin-ar{font-family:var(--font-ar-body);font-size:3.8mm;font-weight:700}
+  .origin-en{font-family:var(--font-en-title);font-size:3mm;font-weight:700}
+  .tastes{text-align:center}
+  .tastes-ar{font-family:var(--font-ar-body);font-size:4.1mm;line-height:1.4;font-weight:700}
+  .tastes-en{font-family:var(--font-en-title);font-size:2.7mm;line-height:1.45;margin-top:.8mm}
+  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1mm;font-size:2.55mm;text-align:center}
+  .spec{border:.35mm solid rgba(122,63,28,.35);border-radius:2.5mm;padding:1.2mm 1mm;line-height:1.45}
+  .spec strong{font-family:var(--font-ar-body);font-size:3.2mm}
+  .spec span{font-family:var(--font-en-title)}
+  .altitude{text-align:center;font-family:var(--font-en-title);font-size:3.2mm;font-weight:700;border-top:.35mm solid var(--line);padding-top:1.4mm}
+  .back-layout{height:100%;display:grid;grid-template-rows:20mm 1fr 18mm 18mm}
+  .back-top{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;border-bottom:.4mm solid var(--line);padding:2.5mm}
+  .back-logo{font-family:var(--font-en-title);font-size:7mm;letter-spacing:1mm;font-weight:700;color:var(--brown)}
+  .tagline{margin-top:1.5mm;font-family:var(--font-ar-title);font-size:4mm}
+  .story{padding:4mm;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.8;white-space:pre-line;font-family:var(--font-ar-body);font-size:4.1mm}
+  .brew{border-top:.4mm solid var(--line);border-bottom:.4mm solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);text-align:center;align-items:center;font-family:var(--font-en-title);font-size:2.65mm}
+  .brew > div+div{border-right:.35mm solid var(--line)}
+  .brew strong{font-size:3.2mm}
+  .footer-back{display:grid;grid-template-columns:1.2fr .8fr;gap:2mm;align-items:center;padding:2.8mm 3.2mm}
+  .social-lines{line-height:1.55}
+  .social-lines .label{font-family:var(--font-en-title);font-size:2.5mm}
+  .social-lines .value{font-family:var(--font-en-body);font-size:2.9mm;font-weight:700}
+  .qr{height:13mm;border:.45mm dashed var(--line);border-radius:2.5mm;display:flex;align-items:center;justify-content:center;text-align:center;font-size:2.4mm;font-family:var(--font-en-title)}
+  @media (max-width:1000px){.app{grid-template-columns:1fr}.panel{border-left:0;border-bottom:1px solid #decfbc}}
+  @page{margin:6mm}
+  @media print{
+    body{background:#fff}
+    .panel,.stage-head{display:none !important}
+    .app{display:block}
+    .stage{padding:0;gap:8mm;justify-content:flex-start;align-items:flex-start}
+    .card{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+  }
+</style>
 </head>
 <body>
 <div class="app">
-  <!-- ===== PANEL ===== -->
   <aside class="panel">
-    <h1>VIBES · محرر متقدم</h1>
-    <p>تحكم كامل بالنصوص، الألوان، الخطوط، ودرجة التحميص. مع تصدير PNG ووضع داكن.</p>
+    <h1>VIBES Vertical Card</h1>
+    <p>أضفت لك خطوط كثيرة، ومنها <strong>Amiri</strong>، مع خيارات تغيير الخط العربي والإنجليزي، وزر <strong>حفظ كصورة PNG</strong> لكل بطاقة.</p>
 
-    <div class="tabs">
-      <button class="tab active" data-tab="frontEditor"><i class="fas fa-id-card"></i> الوجه</button>
-      <button class="tab" data-tab="backEditor"><i class="fas fa-address-card"></i> الظهر</button>
+    <div class="tip">
+      المقاس الافتراضي: <strong>55 × 90 mm</strong><br>
+      والبيانات معبّية على محصول إثيوبيا + حساب الانستقرام <strong>Vibes.espresso</strong>.
     </div>
 
-    <!-- Front Editor -->
+    <div class="tabs">
+      <button class="tab active" data-tab="frontEditor">تعديل الوجه</button>
+      <button class="tab" data-tab="backEditor">تعديل الظهر</button>
+    </div>
+
     <section id="frontEditor">
       <div class="group">
-        <h3><i class="fas fa-tag"></i> الهوية والمنشأ</h3>
-        <label>الاسم بالإنجليزي</label>
+        <h3>هوية فايبز</h3>
+        <label>اسم الكوفي بالإنجليزي</label>
         <input id="brandEn" value="VIBES" />
-        <label>الاسم بالعربي</label>
+        <label>الوصف الصغير</label>
+        <input id="brandSub" value="SPECIALTY COFFEE" />
+        <label>اسم الكوفي بالعربي</label>
         <input id="brandAr" value="فايبز" />
-        <label>المنشأ (عربي)</label>
-        <input id="originAr" value="إثيوبيا · بيري" />
-        <label>المنشأ (إنجليزي)</label>
-        <input id="originEn" value="ETHIOPIA · BERRY" />
       </div>
 
       <div class="group">
-        <h3><i class="fas fa-image"></i> الصورة (نسبة 1:1)</h3>
+        <h3>الخطوط</h3>
+        <label>خط العنوان العربي</label>
+        <select id="fontArTitle">
+          <option value='"Amiri", serif' selected>Amiri</option>
+          <option value='"Aref Ruqaa", serif'>Aref Ruqaa</option>
+          <option value='"Marhey", cursive'>Marhey</option>
+          <option value='"Lalezar", cursive'>Lalezar</option>
+          <option value='"El Messiri", sans-serif'>El Messiri</option>
+          <option value='"Reem Kufi", sans-serif'>Reem Kufi</option>
+          <option value='"Noto Naskh Arabic", serif'>Noto Naskh Arabic</option>
+        </select>
+
+        <label>خط النص العربي</label>
+        <select id="fontArBody">
+          <option value='"Tajawal", sans-serif' selected>Tajawal</option>
+          <option value='"Cairo", sans-serif'>Cairo</option>
+          <option value='"IBM Plex Sans Arabic", sans-serif'>IBM Plex Sans Arabic</option>
+          <option value='"El Messiri", sans-serif'>El Messiri</option>
+          <option value='"Noto Naskh Arabic", serif'>Noto Naskh Arabic</option>
+          <option value='"Amiri", serif'>Amiri</option>
+          <option value='"Reem Kufi", sans-serif'>Reem Kufi</option>
+        </select>
+
+        <label>خط العنوان الإنجليزي</label>
+        <select id="fontEnTitle">
+          <option value='Georgia, "Times New Roman", serif' selected>Georgia</option>
+          <option value='"Cairo", Arial, sans-serif'>Cairo</option>
+          <option value='"Tajawal", Arial, sans-serif'>Tajawal</option>
+          <option value='"IBM Plex Sans Arabic", Arial, sans-serif'>IBM Plex Sans Arabic</option>
+        </select>
+
+        <label>خط النص الإنجليزي</label>
+        <select id="fontEnBody">
+          <option value='"Cairo", Arial, sans-serif' selected>Cairo</option>
+          <option value='"Tajawal", Arial, sans-serif'>Tajawal</option>
+          <option value='"IBM Plex Sans Arabic", Arial, sans-serif'>IBM Plex Sans Arabic</option>
+          <option value='Georgia, "Times New Roman", serif'>Georgia</option>
+        </select>
+      </div>
+
+      <div class="group">
+        <h3>صورة الوجه</h3>
+        <label>اختر الصورة</label>
         <input id="frontImageInput" type="file" accept="image/*" />
-        <label>طريقة العرض</label>
+        <label>عرض الصورة داخل البطاقة</label>
         <select id="frontFit">
-          <option value="cover">تغطية (cover)</option>
-          <option value="contain">احتواء (contain)</option>
-        </select>
-        <button class="secondary" id="removeFrontImage" style="margin-top:8px; width:100%;"><i class="fas fa-trash-alt"></i> حذف الصورة</button>
-      </div>
-
-      <div class="group">
-        <h3><i class="fas fa-utensils"></i> الإيحاءات (نكهات)</h3>
-        <label>أدخل النكهات مفصولة بفاصلة (مثال: شوكولاتة، توت، بندق، كراميل)</label>
-        <input id="notesInput" value="شوكولاتة، توت، بندق، كراميل" />
-        <label>النكهات بالإنجليزي مفصولة بفاصلة</label>
-        <input id="notesEnInput" value="Chocolate, Berry, Hazelnut, Caramel" />
-        <div class="row">
-          <div>
-            <label>المعالجة (عربي)</label>
-            <input id="process" value="مجففة" />
-          </div>
-          <div>
-            <label>أيقونة المعالجة</label>
-            <select id="processIcon">
-              <option value="fa-sun">طبيعي (شمس)</option>
-              <option value="fa-droplet">مغسول (ماء)</option>
-              <option value="fa-seedling">عسل (بذرة)</option>
-              <option value="fa-wind" selected>مجفف (رياح)</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div>
-            <label>Process (En)</label>
-            <input id="processEn" value="Dried" />
-          </div>
-          <div>
-            <label>Roast (En)</label>
-            <input id="roastEn" value="Medium" />
-          </div>
-        </div>
-        <label>التحميص (عربي)</label>
-        <input id="roast" value="متوسط" />
-        <label>درجة التحميص (المؤشر)</label>
-        <select id="roastLevel">
-          <option value="10%">فاتح جداً</option>
-          <option value="30%">فاتح</option>
-          <option value="50%" selected>متوسط</option>
-          <option value="70%">غامق</option>
-          <option value="90%">غامق جداً</option>
+          <option value="cover">تعبئة الإطار</option>
+          <option value="contain">إظهار الصورة كاملة</option>
         </select>
       </div>
 
       <div class="group">
-        <h3><i class="fas fa-sliders-h"></i> تفاصيل إضافية</h3>
+        <h3>المعلومات</h3>
+        <label>الاسم بالعربي</label>
+        <input id="originAr" value="إثيوبيا" />
+        <label>الاسم بالإنجليزي</label>
+        <input id="originEn" value="ETHIOPIA" />
+        <label>الإيحاء الرئيسي بالعربي</label>
+        <input id="notesAr" value="بيري" />
+        <label>الإيحاء الرئيسي بالإنجليزي</label>
+        <input id="notesEn" value="BERRY" />
         <div class="row">
           <div>
-            <label>الارتفاع</label>
-            <input id="altitude" value="1900 - 2100 m" />
+            <label>السلالة</label>
+            <input id="process" value="هيرليوم" />
           </div>
           <div>
-            <label>الحموضة</label>
-            <select id="acidity">
-              <option value="منخفضة">منخفضة</option>
-              <option value="متوسطة" selected>متوسطة</option>
-              <option value="عالية">عالية</option>
-            </select>
+            <label>المعالجة</label>
+            <input id="roast" value="مجففة" />
           </div>
         </div>
         <div class="row">
           <div>
-            <label>الثقل (Body)</label>
-            <select id="body">
-              <option value="خفيف">خفيف</option>
-              <option value="متوسط" selected>متوسط</option>
-              <option value="ثقيل">ثقيل</option>
-            </select>
+            <label>Variety</label>
+            <input id="processEn" value="HEIRLOOM" />
           </div>
           <div>
-            <label>تاريخ التحميص</label>
-            <input id="roastDate" value="18/08/2026" />
+            <label>Process</label>
+            <input id="roastEn" value="DRIED" />
           </div>
         </div>
-        <label>رقم الدفعة</label>
-        <input id="batchNumber" value="VBS-0824" />
+        <label>الارتفاع</label>
+        <input id="altitude" value="1900 - 2100 م" />
       </div>
     </section>
 
-    <!-- Back Editor -->
     <section id="backEditor" class="hidden-editor">
       <div class="group">
-        <h3><i class="fas fa-file-alt"></i> محتوى الظهر</h3>
-        <label>عبارة قصيرة (السلالة)</label>
-        <input id="tagline" value="سلالة هيرليوم · Heirloom" />
-        <label>القصة / الوصف</label>
-        <textarea id="story">سلالة هيرليوم الأصلية، معالجة مجففة، تزرع على ارتفاع 1900-2100 متر. تقدم نكهات الشوكولاتة الغنية، التوت، البندق، والكراميل.</textarea>
-        <label>الإنستقرام</label>
+        <h3>محتوى الظهر</h3>
+        <label>العبارة</label>
+        <input id="tagline" value="محصول إثيوبي بطابع بيري واضح." />
+        <label>الوصف / الإيحاءات</label>
+        <textarea id="story">الإيحاءات: شوكولاتة، توت، بندق، كراميل</textarea>
+      </div>
+
+      <div class="group">
+        <h3>وصفة التحضير</h3>
+        <div class="row">
+          <div>
+            <label>الجرعة</label>
+            <input id="dose" value="15 g" />
+          </div>
+          <div>
+            <label>الماء</label>
+            <input id="water" value="240 ml" />
+          </div>
+        </div>
+        <label>درجة الحرارة</label>
+        <input id="temp" value="92°C" />
+      </div>
+
+      <div class="group">
+        <h3>التواصل</h3>
+        <label>عنوان السطر الأول</label>
+        <input id="socialLabel" value="instagram" />
+        <label>حساب الانستقرام</label>
         <input id="social" value="Vibes.espresso" />
-        <label>الموقع</label>
-        <input id="location" value="حفر الباطن · السعودية" />
-        <label>نص الـ QR</label>
-        <input id="qrText" value="VIBES" />
+        <label>السطر الثاني</label>
+        <input id="location" value="VIBES SPECIALTY COFFEE" />
+        <label>نص مكان QR</label>
+        <input id="qrText" value="QR" />
       </div>
     </section>
 
-    <!-- Global Settings -->
     <div class="group">
-      <h3><i class="fas fa-palette"></i> إعدادات التصميم</h3>
+      <h3>مقاس البطاقة والألوان</h3>
       <div class="row">
         <div>
-          <label>العرض (mm)</label>
-          <input id="w" type="number" min="40" max="80" value="55" />
+          <label>العرض mm</label>
+          <input id="w" type="number" min="40" max="100" value="55" />
         </div>
         <div>
-          <label>الارتفاع (mm)</label>
-          <input id="h" type="number" min="60" max="120" value="85" />
+          <label>الارتفاع mm</label>
+          <input id="h" type="number" min="60" max="140" value="90" />
         </div>
       </div>
       <div class="row">
-        <div><label>لون البني</label><input id="brown" type="color" value="#7A3F1C" /></div>
-        <div><label>لون الخلفية</label><input id="paper" type="color" value="#FFF9EE" /></div>
-      </div>
-      <div><label>لون النص</label><input id="textColor" type="color" value="#2d1a0d" /></div>
-      
-      <div class="row">
         <div>
-          <label>خط العلامة</label>
-          <select id="brandFont">
-            <option value="'Playfair Display', serif">Playfair Display</option>
-            <option value="'Poppins', sans-serif">Poppins</option>
-            <option value="'Times New Roman', serif">Times</option>
-          </select>
+          <label>لون البني</label>
+          <input id="brown" type="color" value="#7A3F1C" />
         </div>
         <div>
-          <label>خط النصوص</label>
-          <select id="bodyFont">
-            <option value="'Cairo', sans-serif">Cairo (عربي)</option>
-            <option value="'Tajawal', sans-serif">Tajawal (عربي)</option>
-            <option value="'Amiri', serif">Amiri (عربي)</option>
-            <option value="'Poppins', sans-serif">Poppins (إنجليزي)</option>
-          </select>
+          <label>لون الخلفية</label>
+          <input id="paper" type="color" value="#FFF8EC" />
         </div>
-      </div>
-
-      <div class="row">
-        <div>
-          <label>حجم اسم الماركة</label>
-          <select id="brandSize">
-            <option value="1.4em">صغير</option>
-            <option value="1.8em" selected>متوسط</option>
-            <option value="2.2em">كبير</option>
-          </select>
-        </div>
-        <div>
-          <label>حجم التفاصيل</label>
-          <select id="detailSize">
-            <option value="0.55em">صغير</option>
-            <option value="0.65em" selected>متوسط</option>
-            <option value="0.8em">كبير</option>
-          </select>
-        </div>
-      </div>
-      <div>
-        <label>حجم القصة (الظهر)</label>
-        <select id="storySize">
-          <option value="0.6em">صغير</option>
-          <option value="0.7em" selected>متوسط</option>
-          <option value="0.9em">كبير</option>
-        </select>
       </div>
     </div>
 
     <div class="buttons">
-      <button class="primary" onclick="window.print()"><i class="fas fa-print"></i> طباعة</button>
-      <button class="dark-toggle" id="darkModeToggle"><i class="fas fa-moon"></i> وضع داكن</button>
-      <button class="secondary" id="exportFront"><i class="fas fa-download"></i> الوجه PNG</button>
-      <button class="secondary" id="exportBack"><i class="fas fa-download"></i> الظهر PNG</button>
-      <button class="danger full" id="reset"><i class="fas fa-undo-alt"></i> إعادة ضبط الكل</button>
+      <button class="primary" onclick="window.print()">طباعة الوجه والظهر</button>
+      <button class="secondary" id="saveFrontBtn">حفظ الوجه كصورة</button>
+      <button class="secondary" id="saveBackBtn">حفظ الظهر كصورة</button>
+      <button class="danger" id="reset" style="grid-column:1/-1">إرجاع الافتراضي</button>
     </div>
   </aside>
 
-  <!-- ===== STAGE ===== -->
   <main class="stage">
-    <div class="sheet-title"><i class="fas fa-id-card"></i> الوجه الأمامي</div>
-    <div class="card-container" id="frontContainer">
-      <div class="card front" id="frontCard">
-        <div class="inner">
-          <div class="photo-wrap">
-            <div class="photo-placeholder" id="frontPlaceholder">
-              <i class="fas fa-camera"></i>
-              <span>اختر صورة</span>
-            </div>
-            <img id="frontPreviewImage" alt="" style="display:none" />
+    <div class="stage-head">المعاينة</div>
+
+    <div class="card" id="frontCard">
+      <div class="card-inner">
+        <div class="front-layout">
+          <div class="front-image">
+            <div class="front-placeholder" id="frontPlaceholder">اختر صورة<br>ويصير نصف البطاقة صورة</div>
+            <img id="frontPreviewImage" alt="">
           </div>
-          <div class="info-grid">
-            <div class="brand">
-              <div class="en" id="pBrandEn">VIBES</div>
-              <div class="ar" id="pBrandAr">فايبز</div>
+
+          <div class="front-info">
+            <div class="logo">
+              <div class="logo-en" id="pBrandEn">VIBES</div>
+              <div class="logo-sub" id="pBrandSub">SPECIALTY COFFEE</div>
+              <div class="logo-ar" id="pBrandAr">فايبز</div>
             </div>
+
             <div class="origin">
-              <span id="pOriginAr">إثيوبيا · بيري</span>
-              <span id="pOriginEn">ETHIOPIA · BERRY</span>
+              <div class="origin-ar" id="pOriginAr">إثيوبيا</div>
+              <div class="origin-en" id="pOriginEn">ETHIOPIA</div>
             </div>
-            <div class="notes" id="notesContainer">
-              <!-- ستُملأ بالـ JS -->
+
+            <div class="tastes">
+              <div class="tastes-ar" id="pNotesAr">بيري</div>
+              <div class="tastes-en" id="pNotesEn">BERRY</div>
             </div>
-            <div class="meta">
-              <div class="meta-item">
-                <span class="label"><i class="fas fa-cog"></i> معالجة</span>
-                <span class="value" id="pProcessIcon"><i class="fas fa-wind"></i></span>
-                <span class="value" id="pProcess">مجففة</span>
-              </div>
-              <div class="meta-item">
-                <span class="label"><i class="fas fa-fire"></i> تحميص</span>
-                <span class="value" id="pRoast">متوسط</span>
-                <span class="value" id="pRoastEn" style="font-size:0.7em;font-weight:400;">Medium</span>
-              </div>
-              <div class="meta-item">
-                <span class="label"><i class="fas fa-mountain"></i> ارتفاع</span>
-                <span class="value" id="pAltitude">1900 - 2100 m</span>
-              </div>
-              <div class="meta-item">
-                <span class="label"><i class="fas fa-circle-half-stroke"></i> حموضة</span>
-                <span class="value" id="pAcidity">متوسطة</span>
-              </div>
-              <div class="meta-item">
-                <span class="label"><i class="fas fa-weight-scale"></i> ثقل</span>
-                <span class="value" id="pBody">متوسط</span>
-              </div>
+
+            <div class="spec-grid">
+              <div class="spec"><strong id="pProcess">هيرليوم</strong><br><span id="pProcessEn">HEIRLOOM</span></div>
+              <div class="spec"><strong id="pRoast">مجففة</strong><br><span id="pRoastEn">DRIED</span></div>
             </div>
-            <div class="roast-scale-wrap">
-              <span class="label"><i class="fas fa-chart-line"></i> مقياس التحميص</span>
-              <div class="roast-track" id="roastTrack">
-                <span class="pointer" id="roastPointer" style="left:50%;"></span>
-              </div>
-            </div>
-            <div class="footer-meta">
-              <span><i class="far fa-calendar-alt"></i> <span id="pRoastDate">18/08/2026</span></span>
-              <span><i class="fas fa-tag"></i> <span id="pBatchNumber">VBS-0824</span></span>
-            </div>
+
+            <div class="altitude">Altitude · <span id="pAltitude">1900 - 2100 م</span></div>
           </div>
         </div>
       </div>
-      <div class="print-note">300 DPI · CMYK</div>
     </div>
 
-    <div class="sheet-title"><i class="fas fa-address-card"></i> الظهر الخلفي</div>
-    <div class="card-container" id="backContainer">
-      <div class="card back" id="backCard">
-        <div class="inner">
-          <div class="back-brand">
-            <div class="en">VIBES</div>
-            <div class="tagline" id="pTagline">سلالة هيرليوم · Heirloom</div>
+    <div class="card" id="backCard">
+      <div class="card-inner">
+        <div class="back-layout">
+          <div class="back-top">
+            <div class="back-logo">VIBES</div>
+            <div class="tagline" id="pTagline">محصول إثيوبي بطابع بيري واضح.</div>
           </div>
-          <div class="back-story" id="pStory">سلالة هيرليوم الأصلية، معالجة مجففة، تزرع على ارتفاع 1900-2100 متر. تقدم نكهات الشوكولاتة الغنية، التوت، البندق، والكراميل.</div>
-          <div class="back-footer">
-            <div>
-              <div class="social" id="pSocial">Vibes.espresso</div>
-              <div id="pLocation">حفر الباطن · السعودية</div>
+
+          <div class="story" id="pStory">الإيحاءات: شوكولاتة، توت، بندق، كراميل</div>
+
+          <div class="brew">
+            <div><strong id="pDose">15 g</strong><br>COFFEE</div>
+            <div><strong id="pWater">240 ml</strong><br>WATER</div>
+            <div><strong id="pTemp">92°C</strong><br>TEMP</div>
+          </div>
+
+          <div class="footer-back">
+            <div class="social-lines">
+              <div class="label" id="pSocialLabel">instagram</div>
+              <div class="value" id="pSocial">Vibes.espresso</div>
+              <div class="label" id="pLocation">VIBES SPECIALTY COFFEE</div>
             </div>
-            <div class="qr" id="pQrText">VIBES</div>
+            <div class="qr" id="pQrText">QR</div>
           </div>
         </div>
       </div>
-      <div class="print-note">300 DPI · CMYK</div>
     </div>
   </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-  // ============================================================
-  // 1. BINDING (ربط المدخلات بالمعاينة)
-  // ============================================================
-  const bind = (id, targetId) => {
-    const input = document.getElementById(id);
-    const target = document.getElementById(targetId);
-    if (!input || !target) return;
-    input.addEventListener('input', () => {
-      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT') {
-        target.value = input.value;
-      } else {
-        target.textContent = input.value;
-      }
-    });
+const bind = (inputId, previewId) => {
+  const input = document.getElementById(inputId);
+  const preview = document.getElementById(previewId);
+  input.addEventListener('input', () => preview.textContent = input.value);
+};
+
+[
+  ['brandEn','pBrandEn'],['brandSub','pBrandSub'],['brandAr','pBrandAr'],
+  ['originAr','pOriginAr'],['originEn','pOriginEn'],
+  ['notesAr','pNotesAr'],['notesEn','pNotesEn'],
+  ['process','pProcess'],['processEn','pProcessEn'],
+  ['roast','pRoast'],['roastEn','pRoastEn'],
+  ['altitude','pAltitude'],
+  ['tagline','pTagline'],['story','pStory'],
+  ['dose','pDose'],['water','pWater'],['temp','pTemp'],
+  ['socialLabel','pSocialLabel'],['social','pSocial'],['location','pLocation'],
+  ['qrText','pQrText']
+].forEach(x => bind(...x));
+
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('frontEditor').classList.add('hidden-editor');
+    document.getElementById('backEditor').classList.add('hidden-editor');
+    document.getElementById(btn.dataset.tab).classList.remove('hidden-editor');
+  });
+});
+
+const frontImageInput = document.getElementById('frontImageInput');
+const frontPreviewImage = document.getElementById('frontPreviewImage');
+const frontPlaceholder = document.getElementById('frontPlaceholder');
+
+frontImageInput.addEventListener('change', e => {
+  const file = e.target.files?.[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    frontPreviewImage.src = ev.target.result;
+    frontPreviewImage.style.display = 'block';
+    frontPlaceholder.style.display = 'none';
   };
+  reader.readAsDataURL(file);
+});
 
-  // نصوص عادية
-  [
-    ['brandEn','pBrandEn'], ['brandAr','pBrandAr'],
-    ['originAr','pOriginAr'], ['originEn','pOriginEn'],
-    ['process','pProcess'], ['processEn','pRoastEn'],
-    ['roast','pRoast'], ['altitude','pAltitude'],
-    ['tagline','pTagline'], ['story','pStory'],
-    ['social','pSocial'], ['location','pLocation'], ['qrText','pQrText'],
-    ['roastDate','pRoastDate'], ['batchNumber','pBatchNumber']
-  ].forEach(pair => bind(...pair));
+document.getElementById('frontFit').addEventListener('change', e => {
+  frontPreviewImage.style.objectFit = e.target.value;
+});
 
-  // الحموضة والثقل
-  document.getElementById('acidity').addEventListener('change', e => {
-    document.getElementById('pAcidity').textContent = e.target.value;
-  });
-  document.getElementById('body').addEventListener('change', e => {
-    document.getElementById('pBody').textContent = e.target.value;
-  });
+document.getElementById('w').addEventListener('input', e => {
+  document.documentElement.style.setProperty('--card-w', e.target.value + 'mm');
+});
+document.getElementById('h').addEventListener('input', e => {
+  document.documentElement.style.setProperty('--card-h', e.target.value + 'mm');
+});
+document.getElementById('brown').addEventListener('input', e => {
+  document.documentElement.style.setProperty('--brown', e.target.value);
+  document.documentElement.style.setProperty('--brown-dark', e.target.value);
+  document.documentElement.style.setProperty('--line', e.target.value);
+});
+document.getElementById('paper').addEventListener('input', e => {
+  document.documentElement.style.setProperty('--paper', e.target.value);
+});
 
-  // أيقونة المعالجة (Font Awesome)
-  document.getElementById('processIcon').addEventListener('change', e => {
-    const iconClass = e.target.value;
-    document.getElementById('pProcessIcon').innerHTML = `<i class="fas ${iconClass}"></i>`;
-  });
+document.getElementById('fontArTitle').addEventListener('change', e => {
+  document.documentElement.style.setProperty('--font-ar-title', e.target.value);
+});
+document.getElementById('fontArBody').addEventListener('change', e => {
+  document.documentElement.style.setProperty('--font-ar-body', e.target.value);
+});
+document.getElementById('fontEnTitle').addEventListener('change', e => {
+  document.documentElement.style.setProperty('--font-en-title', e.target.value);
+});
+document.getElementById('fontEnBody').addEventListener('change', e => {
+  document.documentElement.style.setProperty('--font-en-body', e.target.value);
+});
 
-  // مقياس التحميص (حركة المؤشر)
-  document.getElementById('roastLevel').addEventListener('change', e => {
-    document.getElementById('roastPointer').style.left = e.target.value;
-  });
+document.getElementById('reset').addEventListener('click', () => {
+  if(confirm('ترجع كل شيء للوضع الافتراضي؟')) location.reload();
+});
 
-  // ============================================================
-  // 2. NOTES (الإيحاءات على شكل شيبس ملونة)
-  // ============================================================
-  const notesInput = document.getElementById('notesInput');
-  const notesEnInput = document.getElementById('notesEnInput');
-  const notesContainer = document.getElementById('notesContainer');
+async function saveCardAsImage(cardId, filename){
+  const card = document.getElementById(cardId);
+  const canvas = await html2canvas(card, {
+    backgroundColor: null,
+    scale: 4,
+    useCORS: true
+  });
+  const link = document.createElement('a');
+  link.download = filename;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
 
-  const colors = ['#e74c3c', '#f39c12', '#2ecc71', '#3498db', '#9b59b6', '#e67e22', '#1abc9c'];
-
-  function renderNotes() {
-    const arText = notesInput.value;
-    const enText = notesEnInput.value;
-    const arItems = arText.split(',').map(s => s.trim()).filter(Boolean);
-    const enItems = enText.split(',').map(s => s.trim()).filter(Boolean);
-    const maxLen = Math.max(arItems.length, enItems.length);
-    let html = '';
-    for (let i = 0; i < maxLen; i++) {
-      const ar = arItems[i] || '';
-      const en = enItems[i] || '';
-      const dotColor = colors[i % colors.length];
-      html += `<span class="note-chip"><span class="dot" style="background:${dotColor};"></span> ${ar} / ${en}</span>`;
-    }
-    notesContainer.innerHTML = html || '<span style="font-size:0.6em;opacity:0.5;">أضف نكهات</span>';
-  }
-
-  notesInput.addEventListener('input', renderNotes);
-  notesEnInput.addEventListener('input', renderNotes);
-  // التهيئة الأولية
-  renderNotes();
-
-  // ============================================================
-  // 3. TABS
-  // ============================================================
-  document.querySelectorAll('.tab').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('frontEditor').classList.add('hidden-editor');
-      document.getElementById('backEditor').classList.add('hidden-editor');
-      document.getElementById(btn.dataset.tab).classList.remove('hidden-editor');
-    });
-  });
-
-  // ============================================================
-  // 4. IMAGE (الصورة)
-  // ============================================================
-  const frontImageInput = document.getElementById('frontImageInput');
-  const frontPreviewImage = document.getElementById('frontPreviewImage');
-  const frontPlaceholder = document.getElementById('frontPlaceholder');
-
-  frontImageInput.addEventListener('change', e => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      frontPreviewImage.src = ev.target.result;
-      frontPreviewImage.style.display = 'block';
-      frontPlaceholder.style.display = 'none';
-    };
-    reader.readAsDataURL(file);
-  });
-
-  document.getElementById('frontFit').addEventListener('change', e => {
-    frontPreviewImage.style.objectFit = e.target.value;
-  });
-
-  document.getElementById('removeFrontImage').addEventListener('click', () => {
-    frontPreviewImage.src = '';
-    frontPreviewImage.style.display = 'none';
-    frontPlaceholder.style.display = 'flex';
-    frontImageInput.value = '';
-  });
-
-  // ============================================================
-  // 5. SIZE & COLORS & FONTS
-  // ============================================================
-  document.getElementById('w').addEventListener('input', e => {
-    document.documentElement.style.setProperty('--card-w', e.target.value + 'mm');
-  });
-  document.getElementById('h').addEventListener('input', e => {
-    document.documentElement.style.setProperty('--card-h', e.target.value + 'mm');
-  });
-
-  document.getElementById('brown').addEventListener('input', e => {
-    const c = e.target.value;
-    document.documentElement.style.setProperty('--brown', c);
-    document.documentElement.style.setProperty('--brown-dark', c);
-    document.documentElement.style.setProperty('--line', c);
-    document.documentElement.style.setProperty('--brown-light', c);
-  });
-  document.getElementById('paper').addEventListener('input', e => {
-    document.documentElement.style.setProperty('--paper', e.target.value);
-    document.documentElement.style.setProperty('--card-bg', e.target.value);
-  });
-  document.getElementById('textColor').addEventListener('input', e => {
-    document.documentElement.style.setProperty('--text-color', e.target.value);
-  });
-
-  document.getElementById('brandFont').addEventListener('change', e => {
-    document.documentElement.style.setProperty('--brand-font', e.target.value);
-  });
-  document.getElementById('bodyFont').addEventListener('change', e => {
-    document.documentElement.style.setProperty('--body-font', e.target.value);
-  });
-
-  document.getElementById('brandSize').addEventListener('change', e => {
-    document.documentElement.style.setProperty('--brand-size', e.target.value);
-  });
-  document.getElementById('detailSize').addEventListener('change', e => {
-    document.documentElement.style.setProperty('--detail-size', e.target.value);
-  });
-  document.getElementById('storySize').addEventListener('change', e => {
-    document.documentElement.style.setProperty('--story-size', e.target.value);
-  });
-
-  // ============================================================
-  // 6. DARK MODE
-  // ============================================================
-  let darkMode = false;
-  document.getElementById('darkModeToggle').addEventListener('click', function() {
-    darkMode = !darkMode;
-    document.body.classList.toggle('dark-mode-body', darkMode);
-    document.querySelectorAll('.card, .card-container, .inner, .photo-wrap, .back-brand, .back-story, .back-footer .qr, .info-grid .brand, .info-grid .origin, .info-grid .notes, .info-grid .meta, .print-note').forEach(el => {
-      el.classList.toggle('dark-mode', darkMode);
-    });
-    document.querySelectorAll('.card').forEach(c => c.classList.toggle('dark-mode', darkMode));
-    document.querySelectorAll('.card-container').forEach(c => c.classList.toggle('dark-mode', darkMode));
-    this.innerHTML = darkMode ? '<i class="fas fa-sun"></i> وضع فاتح' : '<i class="fas fa-moon"></i> وضع داكن';
-  });
-
-  // ============================================================
-  // 7. EXPORT PNG (html2canvas)
-  // ============================================================
-  async function exportCard(elementId, filename) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-    const canvas = await html2canvas(el, {
-      scale: 3,
-      backgroundColor: null,
-      useCORS: true,
-      logging: false,
-      width: el.scrollWidth,
-      height: el.scrollHeight,
-    });
-    const link = document.createElement('a');
-    link.download = `${filename}.png`;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-  }
-
-  document.getElementById('exportFront').addEventListener('click', () => {
-    exportCard('frontContainer', 'VIBES_Front');
-  });
-  document.getElementById('exportBack').addEventListener('click', () => {
-    exportCard('backContainer', 'VIBES_Back');
-  });
-
-  // ============================================================
-  // 8. RESET
-  // ============================================================
-  document.getElementById('reset').addEventListener('click', () => {
-    if (confirm('إعادة كل الإعدادات إلى الافتراضية؟')) location.reload();
-  });
-
-  // ============================================================
-  // 9. تطبيق التهيئة على المؤشر (Roast Pointer)
-  // ============================================================
-  document.getElementById('roastPointer').style.left = '50%';
+document.getElementById('saveFrontBtn').addEventListener('click', () => {
+  saveCardAsImage('frontCard', 'vibes-front-card.png');
+});
+document.getElementById('saveBackBtn').addEventListener('click', () => {
+  saveCardAsImage('backCard', 'vibes-back-card.png');
+});
 </script>
 </body>
 </html>
