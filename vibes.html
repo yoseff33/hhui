@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vibes ☕ Specialty Coffee</title>
   <meta name="description" content="Vibes Specialty Coffee – قهوة مختصة، حلويات، ومشروبات باردة. طلب سريع عبر واتساب.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23795239'><path d='M2 21h18v-2H2v2zM20 8h-2V5h2m-4 0H4v6c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4V5z'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;800;900&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -840,11 +841,11 @@
 
   <script>
     // ============================================================
-    //  CONFIGURATION
+    //  CONFIGURATION (تم تحديث المفتاح)
     // ============================================================
     const CONFIG = {
       supabaseUrl: 'https://lqdgqyhagpzzeelwfcyn.supabase.co',
-      supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxZGdxeWhhZ3B6emVlbHdmY3luIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0MjA1ODMsImV4cCI6MjA1Nzk5NjU4M30.3X1tG2YrWq9OK6nzjfHkxZc_9WJkLxvX1p3J5L6A8cE',
+      supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxZGdxeWhhZ3B6emVlbHdmY3luIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwNjk2ODYsImV4cCI6MjEwMjY0NTY4Nn0.905RefxSGM9kzkmEESwaRjBswK9z5td84TdM7lBmNPs',
       whatsappNumber: '966500000000',
     };
 
@@ -956,7 +957,7 @@
         renderProducts();
       } catch (err) {
         console.error('Supabase fetch error:', err);
-        showToast('⚠️ فشل تحميل المنتجات');
+        showToast('⚠️ فشل تحميل المنتجات: تأكد من اتصال Supabase');
         STATE.products = [];
         renderProducts();
       }
@@ -1271,8 +1272,6 @@
         const p = STATE.products.find((x) => x.id === card.dataset.id);
         if (p) openProduct(p);
       });
-
-      // ---- Options (handled by dynamic listeners) ----
 
       // ---- Quantity ----
       els.qtyMinus.addEventListener('click', () => {
