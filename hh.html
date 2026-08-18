@@ -1,127 +1,966 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="auto">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشروع مدينة حائل - الجوهرة المطيري</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NSL Coffee – بطاقة احترافية (وجه وظهر)</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
     <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: #f7f3f0;
+        /* ========== متغيرات عامة ========== */
+        :root {
+            --primary-color: #795548;
+            --secondary-color: #a1887f;
+            --bg-front: #fff8f0;
+            --bg-back: #f5ede4;
+            --text-color: #2d1c14;
+            --card-radius: 28px;
+            --image-height: 200px;   /* الارتفاع الافتراضي للصورة */
+            --font-family: 'Poppins', 'Cairo', sans-serif;
+            --shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        /* ========== إعدادات عامة ========== */
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #1f130e, #3a251c);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-family);
             padding: 20px;
         }
-        /* تصميم يحاكي ورقة A4 */
-        .a4-page {
-            width: 210mm;
-            min-height: 297mm;
-            padding: 20mm;
-            margin: auto;
-            background: white;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            position: relative;
-            border: 15px double #8b4513; /* إطار تراثي فخم */
-        }
-        .header {
-            border-bottom: 2px solid #8b4513;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-        }
-        h1 { color: #5d2e0a; }
-        .info-box {
-            font-size: 0.95rem;
-            color: #444;
-        }
-        .main-image {
+
+        /* ========== الحاوية الرئيسية ========== */
+        .app-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
             width: 100%;
-            height: 350px;
-            object-fit: cover;
-            border-radius: 12px;
-            border: 4px solid #fdf5e6;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            margin: 20px 0;
+            max-width: 800px;
         }
-        .section-heading {
-            background-color: #8b4513;
-            color: white;
-            padding: 5px 15px;
+
+        /* ========== البطاقة ========== */
+        .flip-container {
+            perspective: 1300px;
+            width: 100%;
+            max-width: 420px;
+            height: 580px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .flipper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flipper.flipped {
+            transform: rotateY(180deg);
+        }
+
+        /* الوجه والظهر */
+        .front,
+        .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border-radius: var(--card-radius);
+            backface-visibility: hidden;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-front);
+            box-shadow: var(--shadow);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .back {
+            transform: rotateY(180deg);
+            background: var(--bg-back);
+        }
+
+        /* ========== منطقة الصورة (كما طلبت) ========== */
+        .image-area {
+            width: 100%;
+            height: var(--image-height);  /* 200px افتراضياً */
+            background: #e8d9cd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+            cursor: pointer;
+            border-bottom: 3px solid var(--secondary-color);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .image-area:hover {
+            background: #dccbc0;
+        }
+
+        /* الصورة تظهر بالكامل باستخدام contain */
+        .image-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;   /* 🔥 يضمن ظهور الصورة كاملة بدون قص */
+            background: #e8d9cd;
+            transition: transform 0.3s;
+        }
+
+        .image-area .placeholder-icon {
+            font-size: 48px;
+            color: #a48d7a;
+            opacity: 0.6;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .image-area .upload-hint {
+            position: absolute;
+            bottom: 8px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        /* ========== المحتوى ========== */
+        .content {
+            flex: 1;
+            padding: 18px 22px 22px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            color: var(--text-color);
+        }
+
+        /* ========== حقول النصوص القابلة للتحرير ========== */
+        .content [contenteditable="true"] {
+            outline: none;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s, background 0.2s;
+            padding: 4px 2px;
             border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 10px;
-            font-weight: bold;
         }
-        .content-p {
-            line-height: 1.8;
-            color: #333;
-            text-align: justify;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
+
+        .content [contenteditable="true"]:hover {
+            border-bottom-color: var(--secondary-color);
+            background: rgba(141, 110, 99, 0.05);
         }
-        @media print {
-            body { background: none; padding: 0; }
-            .a4-page { box-shadow: none; margin: 0; border: 15px double #8b4513; }
+
+        .content [contenteditable="true"]:focus {
+            border-bottom-color: var(--primary-color);
+            background: rgba(141, 110, 99, 0.08);
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .field-group label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--secondary-color);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .field-group label i {
+            color: var(--primary-color);
+            font-size: 14px;
+            width: 18px;
+        }
+
+        .field-group .editable {
+            font-size: 15px;
+            padding: 6px 4px 5px;
+            min-height: 32px;
+        }
+
+        /* الحقول المزدوجة (عربي/إنجليزي) */
+        .dual-field {
+            display: flex;
+            gap: 10px;
+        }
+        .dual-field .editable {
+            flex: 1;
+        }
+        .dual-field .editable:last-child {
+            direction: rtl;
+            text-align: right;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        /* ========== أزرار القلب ========== */
+        .flip-btn {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 40px;
+            padding: 10px 18px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            align-self: center;
+            width: fit-content;
+            font-family: var(--font-family);
+            margin-top: 6px;
+        }
+
+        .flip-btn:hover {
+            transform: scale(1.05);
+            background: #a08072;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ========== تنسيق الظهر ========== */
+        .back .content .back-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 8px;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .back .content .back-title i {
+            color: var(--secondary-color);
+            margin: 0 6px;
+        }
+
+        .back-note {
+            font-size: 13px;
+            color: #8d7a6b;
+            text-align: center;
+            font-style: italic;
+            border-top: 1px solid #ddd0c5;
+            padding-top: 10px;
+            margin-top: 4px;
+        }
+
+        /* ========== إخفاء مدخلات الملفات ========== */
+        input[type="file"] {
+            display: none;
+        }
+
+        /* ========== لوحة التحكم ========== */
+        .control-panel {
+            background: rgba(255, 248, 240, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 20px 24px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            color: #2d1c14;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .control-panel h3 {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .control-panel h3 i {
+            color: var(--secondary-color);
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .control-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .control-item label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: #5d4037;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .control-item input[type="color"] {
+            width: 100%;
+            height: 36px;
+            border: none;
+            border-radius: 8px;
+            padding: 2px;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .control-item input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary-color);
+        }
+
+        .control-item select {
+            padding: 6px 8px;
+            border-radius: 8px;
+            border: 1px solid #d6c4b8;
+            background: white;
+            font-family: var(--font-family);
+            font-size: 13px;
+        }
+
+        .control-item input[type="number"] {
+            padding: 6px 8px;
+            border-radius: 8px;
+            border: 1px solid #d6c4b8;
+            width: 100%;
+            font-size: 13px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .btn-add-field {
+            background: var(--secondary-color);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            justify-self: center;
+        }
+
+        .btn-add-field:hover {
+            background: var(--primary-color);
+            transform: scale(1.03);
+        }
+
+        .btn-reset {
+            background: #8d7a6b;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            justify-self: center;
+        }
+
+        .btn-reset:hover {
+            background: #6b5b4e;
+            transform: scale(1.03);
+        }
+
+        /* ========== التجاوب ========== */
+        @media (max-width: 460px) {
+            .flip-container {
+                height: 520px;
+            }
+            :root {
+                --image-height: 160px; /* يمكن تغييره للهواتف */
+            }
+            .content {
+                padding: 14px 16px 18px;
+                gap: 10px;
+            }
+            .control-grid {
+                grid-template-columns: 1fr;
+            }
+            .dual-field {
+                flex-direction: column;
+                gap: 4px;
+            }
+        }
+
+        /* شريط التمرير */
+        .content::-webkit-scrollbar {
+            width: 4px;
+        }
+        .content::-webkit-scrollbar-track {
+            background: #e8ddd2;
+            border-radius: 8px;
+        }
+        .content::-webkit-scrollbar-thumb {
+            background: #b7a69b;
+            border-radius: 8px;
+        }
+
+        /* زر حذف الحقل */
+        .remove-field {
+            background: transparent;
+            border: none;
+            color: #b71c1c;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0 4px;
+            transition: 0.2s;
+            opacity: 0.5;
+        }
+        .remove-field:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        .field-group .field-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 </head>
 <body>
 
-    <div class="a4-page">
-        <!-- الترويسة -->
-        <div class="header flex justify-between items-start">
-            <div class="info-box">
-                <p class="font-bold text-lg">المملكة العربية السعودية</p>
-                <p>وزارة التعليم</p>
-            </div>
-            <div class="text-center">
-                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-2 border-2 border-brown-200">
+    <div class="app-wrapper">
+        <!-- ========== البطاقة ========== -->
+        <div class="flip-container" id="flipContainer">
+            <div class="flipper" id="flipper">
 
+                <!-- ======== الوجه (FRONT) ======== -->
+                <div class="front" id="frontCard">
+                    <div class="image-area" id="frontImageArea">
+                        <i class="fas fa-coffee placeholder-icon"></i>
+                        <span class="upload-hint"><i class="fas fa-camera"></i> اضغط لرفع</span>
+                    </div>
+                    <input type="file" id="frontImageInput" accept="image/*" />
+
+                    <div class="content" id="frontContent">
+                        <!-- الهيدر (مختصر) -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 22px; font-weight: 800; border-bottom: 2px solid var(--secondary-color); padding-bottom: 6px; margin-bottom: 4px;">
+                            <span contenteditable="true" id="brandShort">NSL</span>
+                            <span contenteditable="true" id="brandArShort" style="font-family: 'Cairo', sans-serif;">نسل</span>
+                        </div>
+
+                        <!-- الحقول الرئيسية (مزدوجة) -->
+                        <div class="field-group">
+                            <div class="field-header">
+                                <label><i class="fas fa-tag"></i> Brand Name / اسم الماركة</label>
+                            </div>
+                            <div class="dual-field">
+                                <div class="editable" contenteditable="true" id="brandEn">NSL نسل</div>
+                                <div class="editable" contenteditable="true" id="brandAr" style="font-family:'Cairo',sans-serif;">نسل</div>
+                            </div>
+                        </div>
+
+                        <div class="field-group">
+                            <label><i class="fas fa-map-pin"></i> Origin / منطقة المصدر</label>
+                            <div class="dual-field">
+                                <div class="editable" contenteditable="true" id="originEn">Ethiopian · Gorydah</div>
+                                <div class="editable" contenteditable="true" id="originAr" style="font-family:'Cairo',sans-serif;">إثيوبي · قوريدة</div>
+                            </div>
+                        </div>
+
+                        <div class="field-group">
+                            <label><i class="fas fa-cogs"></i> Processing / المعالجة</label>
+                            <div class="dual-field">
+                                <div class="editable" contenteditable="true" id="processingEn">Dried | Medium</div>
+                                <div class="editable" contenteditable="true" id="processingAr" style="font-family:'Cairo',sans-serif;">مجفف | متوسط</div>
+                            </div>
+                        </div>
+
+                        <div class="field-group">
+                            <label><i class="fas fa-seedling"></i> Tasting Notes / النوتات</label>
+                            <div class="dual-field">
+                                <div class="editable" contenteditable="true" id="notesEn">Strawberry · Blossom · Blueberry</div>
+                                <div class="editable" contenteditable="true" id="notesAr" style="font-family:'Cairo',sans-serif;">توت · كرز · زهور</div>
+                            </div>
+                        </div>
+
+                        <div class="field-group">
+                            <label><i class="fas fa-mountain"></i> Elevation / الارتفاع</label>
+                            <div class="dual-field">
+                                <div class="editable" contenteditable="true" id="elevationEn">1950 m</div>
+                                <div class="editable" contenteditable="true" id="elevationAr" style="font-family:'Cairo',sans-serif;">١٩٥٠ م</div>
+                            </div>
+                        </div>
+
+                        <!-- حقل إضافي قابل للإزالة (مثال) -->
+                        <div class="field-group extra-field" data-id="extra1">
+                            <div class="field-header">
+                                <label><i class="fas fa-star"></i> مميز إضافي</label>
+                                <button class="remove-field" data-target="extra1"><i class="fas fa-times-circle"></i></button>
+                            </div>
+                            <div class="editable" contenteditable="true">تحميص خفيف · قهوة خاصة</div>
+                        </div>
+
+                        <button class="flip-btn" id="flipToBack"><i class="fas fa-rotate"></i> اقلب للظهر</button>
+                    </div>
+                </div>
+
+                <!-- ======== الظهر (BACK) ======== -->
+                <div class="back" id="backCard">
+                    <div class="image-area" id="backImageArea">
+                        <i class="fas fa-images placeholder-icon"></i>
+                        <span class="upload-hint"><i class="fas fa-camera"></i> اضغط لرفع</span>
+                    </div>
+                    <input type="file" id="backImageInput" accept="image/*" />
+
+                    <div class="content" id="backContent">
+                        <div class="back-title" contenteditable="true">
+                            <i class="fas fa-mug-hot"></i> NSL · COFFEE <i class="fas fa-mug-hot"></i>
+                        </div>
+
+                        <div class="field-group">
+                            <label><i class="fas fa-pen-fancy"></i> رسالة إضافية</label>
+                            <div class="editable" contenteditable="true" id="backMessage">صنعت بحب · من البن إلى الفنجان</div>
+                        </div>
+
+                        <div class="field-group">
+                            <label><i class="fas fa-calendar-alt"></i> تاريخ التحميص</label>
+                            <div class="editable" contenteditable="true" id="roastDate">أغسطس 2026</div>
+                        </div>
+
+                        <div class="field-group">
+                            <label><i class="fas fa-info-circle"></i> ملاحظة</label>
+                            <div class="editable" contenteditable="true" id="backNote">قوام متوسط · حموضة مشرقة</div>
+                        </div>
+
+                        <!-- حقل إضافي في الظهر -->
+                        <div class="field-group extra-field" data-id="backExtra1">
+                            <div class="field-header">
+                                <label><i class="fas fa-gem"></i> خاصية</label>
+                                <button class="remove-field" data-target="backExtra1"><i class="fas fa-times-circle"></i></button>
+                            </div>
+                            <div class="editable" contenteditable="true">حبوب مزرعة واحدة</div>
+                        </div>
+
+                        <div class="back-note"><i class="fas fa-hand-pointer"></i> اضغط على البطاقة أو الزر للقلب</div>
+
+                        <button class="flip-btn" id="flipToFront"><i class="fas fa-rotate"></i> اقلب للوجه</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ========== لوحة التحكم ========== -->
+        <div class="control-panel" id="controlPanel">
+            <h3><i class="fas fa-sliders-h"></i> لوحة التخصيص الشاملة</h3>
+
+            <div class="control-grid">
+                <!-- لون خلفية الوجه -->
+                <div class="control-item">
+                    <label><i class="fas fa-palette"></i> خلفية الوجه</label>
+                    <input type="color" id="frontBgColor" value="#fff8f0" />
+                </div>
+                <!-- لون خلفية الظهر -->
+                <div class="control-item">
+                    <label><i class="fas fa-palette"></i> خلفية الظهر</label>
+                    <input type="color" id="backBgColor" value="#f5ede4" />
+                </div>
+                <!-- لون النص الأساسي -->
+                <div class="control-item">
+                    <label><i class="fas fa-font"></i> لون النص</label>
+                    <input type="color" id="textColor" value="#2d1c14" />
+                </div>
+                <!-- لون العناوين -->
+                <div class="control-item">
+                    <label><i class="fas fa-heading"></i> لون العناوين</label>
+                    <input type="color" id="primaryColor" value="#795548" />
+                </div>
+                <!-- حجم الخط (نطاق) -->
+                <div class="control-item">
+                    <label><i class="fas fa-text-height"></i> حجم الخط الأساسي</label>
+                    <input type="range" id="fontSizeRange" min="12" max="22" value="15" step="1" />
+                    <span id="fontSizeValue">15px</span>
+                </div>
+                <!-- ارتفاع الصورة (يمكن تركه لكن القيمة الافتراضية 200) -->
+                <div class="control-item">
+                    <label><i class="fas fa-image"></i> ارتفاع الصورة</label>
+                    <input type="number" id="imageHeight" value="200" min="100" max="350" step="5" />
+                    <span>px</span>
+                </div>
+                <!-- نصف قطر الزوايا -->
+                <div class="control-item">
+                    <label><i class="fas fa-border-all"></i> استدارة الزوايا</label>
+                    <input type="number" id="cardRadius" value="28" min="8" max="50" step="2" />
+                    <span>px</span>
+                </div>
+                <!-- نوع الخط -->
+                <div class="control-item">
+                    <label><i class="fas fa-font"></i> نوع الخط</label>
+                    <select id="fontFamilySelect">
+                        <option value="'Poppins','Cairo',sans-serif">Poppins + Cairo</option>
+                        <option value="'Roboto','Tajawal',sans-serif">Roboto + Tajawal</option>
+                        <option value="'Open Sans','Amiri',serif">Open Sans + Amiri</option>
+                        <option value="'Lato','Noto Kufi Arabic',sans-serif">Lato + Noto Kufi</option>
+                    </select>
                 </div>
             </div>
-            <div class="info-box text-left">
-                <p><strong>اسم الطالبة:</strong> الجوهرة عيد المطيري</p>
-                <p><strong>بإشراف الأستاذة:</strong> مشاعل المطيري</p>
-                <p><strong>الموضوع:</strong> عروس الشمال (حائل)</p>
+
+            <!-- أزرار الإضافة والحذف -->
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 6px;">
+                <button class="btn-add-field" id="addFrontField"><i class="fas fa-plus-circle"></i> أضف حقل للوجه</button>
+                <button class="btn-add-field" id="addBackField"><i class="fas fa-plus-circle"></i> أضف حقل للظهر</button>
+                <button class="btn-reset" id="resetDefaults"><i class="fas fa-undo-alt"></i> إعادة الضبط</button>
             </div>
-        </div>
 
-        <!-- العنوان الرئيسي -->
-        <div class="text-center mt-6">
-            <h1 class="text-4xl font-bold mb-2">مدينة حائل.. جبالُ الكرمِ وتاريخُ الأمجاد</h1>
-            <div class="w-48 h-1 bg-yellow-600 mx-auto mb-6"></div>
-        </div>
-
-        <!-- الصورة (رابط مباشر لصورة حائل كبديل لضمان العمل) -->
-        <img src="https://cnn-arabic-images.cnn.io/cloudinary/image/upload/w_1920,c_scale,q_auto/cnnarabic/2020/07/14/images/159830.jpg" 
-             alt="جبال حائل" 
-             class="main-image"
-             onerror="this.src='https://via.placeholder.com/800x400?text=صورة+مدينة+حائل'">
-
-        <!-- المحتوى التعليمي -->
-        <div>
-            <div class="section-heading">مقدمة عن حائل</div>
-            <p class="content-p">
-                تُعد منطقة حائل من أبرز المناطق الإدارية في المملكة العربية السعودية، وتشتهر بلقب "عروس الشمال". تقع حائل في قلب شمال المملكة، وتعتبر حلقة وصل هامة بين الشمال والوسط. وتتميز بتضاريسها الجبلية الخلابة، حيث تحيط بها جبال "أجا وسَلمى" التي تُعد من أشهر المعالم الجغرافية في الجزيرة العربية.
-            </p>
-
-            <div class="section-heading">التراث العالمي والآثار</div>
-            <p class="content-p">
-                تضم حائل كنوزاً تاريخية مسجلة في قائمة التراث العالمي (اليونسكو)، مثل منطقة "جبة" و"الشويمس" اللتان تحتويان على نقوش صخرية تعود لآلاف السنين قبل الميلاد، مما يجعلها متحفاً مفتوحاً يحكي قصة الاستيطان البشري القديم في المنطقة.
-            </p>
-
-            <div class="section-heading">الكرم الحاتمي</div>
-            <p class="content-p">
-                اقترن اسم حائل بالكرم والجود، فهي موطن "حاتم الطائي" الذي يُعد رمزاً عالمياً للكرم العربي الأصيل. ولا يزال أهل حائل حتى يومنا هذا يشتهرون بحسن استقبال الضيوف والاحتفاء بهم، متمسكين بعادات آبائهم وأجدادهم.
-            </p>
-        </div>
-
-        <!-- التذييل -->
-        <div class="absolute bottom-10 left-0 right-0 text-center border-t border-gray-200 pt-4 mx-20">
-            <p class="text-sm text-gray-400 italic">تم إعداد هذا البحث بمناسبة الأنشطة المدرسية لعام 1446هـ - الطالبة الجوهرة المطيري</p>
+            <div style="font-size: 12px; color: #8d7a6b; text-align: center; margin-top: 4px;">
+                <i class="fas fa-edit"></i> انقر على أي نص في البطاقة لتعديله مباشرة
+            </div>
         </div>
     </div>
 
+    <script>
+        (function() {
+            'use strict';
+
+            // ========== عناصر البطاقة ==========
+            const frontCard = document.getElementById('frontCard');
+            const backCard = document.getElementById('backCard');
+            const flipper = document.getElementById('flipper');
+            const flipContainer = document.getElementById('flipContainer');
+
+            // عناصر الصور
+            const frontArea = document.getElementById('frontImageArea');
+            const frontInput = document.getElementById('frontImageInput');
+            const backArea = document.getElementById('backImageArea');
+            const backInput = document.getElementById('backImageInput');
+
+            // أزرار القلب
+            const flipToBack = document.getElementById('flipToBack');
+            const flipToFront = document.getElementById('flipToFront');
+
+            // ========== لوحة التحكم ==========
+            const frontBgColor = document.getElementById('frontBgColor');
+            const backBgColor = document.getElementById('backBgColor');
+            const textColor = document.getElementById('textColor');
+            const primaryColor = document.getElementById('primaryColor');
+            const fontSizeRange = document.getElementById('fontSizeRange');
+            const fontSizeValue = document.getElementById('fontSizeValue');
+            const imageHeightInput = document.getElementById('imageHeight');
+            const cardRadiusInput = document.getElementById('cardRadius');
+            const fontFamilySelect = document.getElementById('fontFamilySelect');
+
+            // أزرار الإضافة والحذف
+            const addFrontFieldBtn = document.getElementById('addFrontField');
+            const addBackFieldBtn = document.getElementById('addBackField');
+            const resetBtn = document.getElementById('resetDefaults');
+
+            // ========== وظائف القلب ==========
+            function flipCard() {
+                flipper.classList.toggle('flipped');
+            }
+
+            flipToBack.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!flipper.classList.contains('flipped')) flipCard();
+            });
+
+            flipToFront.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (flipper.classList.contains('flipped')) flipCard();
+            });
+
+            flipContainer.addEventListener('click', (e) => {
+                const tag = e.target.tagName.toLowerCase();
+                if (tag === 'input' || tag === 'button' || tag === 'img') return;
+                if (e.target.closest('.image-area')) return;
+                if (e.target.closest('.control-panel')) return;
+                flipCard();
+            });
+
+            // منع انتشار النقر داخل المناطق التفاعلية
+            document.querySelectorAll('input, button, .image-area, .control-panel').forEach(el => {
+                el.addEventListener('click', (e) => e.stopPropagation());
+            });
+
+            // ========== رفع الصور ==========
+            function handleImageUpload(area, input) {
+                input.addEventListener('change', () => {
+                    const file = input.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            area.innerHTML = `<img src="${e.target.result}" alt="Uploaded" />`;
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        area.innerHTML =
+                            `<i class="fas fa-coffee placeholder-icon"></i><span class="upload-hint"><i class="fas fa-camera"></i> اضغط لرفع</span>`;
+                    }
+                });
+
+                area.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    input.click();
+                });
+            }
+
+            handleImageUpload(frontArea, frontInput);
+            handleImageUpload(backArea, backInput);
+
+            // ========== تحديث المتغيرات العامة ==========
+            function updateCSSVariable(varName, value) {
+                document.documentElement.style.setProperty(varName, value);
+            }
+
+            // لون خلفية الوجه
+            frontBgColor.addEventListener('input', () => {
+                frontCard.style.background = frontBgColor.value;
+            });
+
+            // لون خلفية الظهر
+            backBgColor.addEventListener('input', () => {
+                backCard.style.background = backBgColor.value;
+            });
+
+            // لون النص
+            textColor.addEventListener('input', () => {
+                document.querySelectorAll('.front .content, .back .content').forEach(el => {
+                    el.style.color = textColor.value;
+                });
+                document.querySelectorAll('.back .back-title').forEach(el => {
+                    el.style.color = textColor.value;
+                });
+            });
+
+            // لون العناوين (primary)
+            primaryColor.addEventListener('input', () => {
+                updateCSSVariable('--primary-color', primaryColor.value);
+                document.querySelectorAll('.flip-btn').forEach(btn => btn.style.background = primaryColor.value);
+                document.querySelectorAll('.field-group label i').forEach(icon => icon.style.color = primaryColor.value);
+                document.querySelectorAll('.back .back-title').forEach(el => el.style.color = primaryColor.value);
+            });
+
+            // حجم الخط
+            fontSizeRange.addEventListener('input', () => {
+                const val = fontSizeRange.value + 'px';
+                fontSizeValue.textContent = val;
+                document.querySelectorAll('.content .editable, .content .field-group input, .content .field-group div')
+                    .forEach(el => {
+                        if (!el.classList.contains('back-title') && !el.classList.contains('back-note')) {
+                            el.style.fontSize = val;
+                        }
+                    });
+                document.querySelectorAll('#brandShort, #brandArShort').forEach(el => el.style.fontSize = (parseInt(
+                    fontSizeRange.value) + 7) + 'px');
+            });
+
+            // ارتفاع الصورة (يحافظ على 200px افتراضياً)
+            imageHeightInput.addEventListener('input', () => {
+                const h = imageHeightInput.value + 'px';
+                updateCSSVariable('--image-height', h);
+            });
+
+            // استدارة الزوايا
+            cardRadiusInput.addEventListener('input', () => {
+                const r = cardRadiusInput.value + 'px';
+                updateCSSVariable('--card-radius', r);
+                frontCard.style.borderRadius = r;
+                backCard.style.borderRadius = r;
+            });
+
+            // نوع الخط
+            fontFamilySelect.addEventListener('change', () => {
+                updateCSSVariable('--font-family', fontFamilySelect.value);
+            });
+
+            // ========== إضافة حقول جديدة ==========
+            function addField(container, isBack = false) {
+                const id = 'extra_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+                const group = document.createElement('div');
+                group.className = 'field-group extra-field';
+                group.dataset.id = id;
+
+                const header = document.createElement('div');
+                header.className = 'field-header';
+
+                const label = document.createElement('label');
+                label.innerHTML = `<i class="fas fa-plus-circle"></i> حقل جديد`;
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-field';
+                removeBtn.innerHTML = '<i class="fas fa-times-circle"></i>';
+                removeBtn.dataset.target = id;
+                removeBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const targetId = this.dataset.target;
+                    const targetGroup = container.querySelector(`.field-group[data-id="${targetId}"]`);
+                    if (targetGroup) targetGroup.remove();
+                });
+
+                header.appendChild(label);
+                header.appendChild(removeBtn);
+
+                const editable = document.createElement('div');
+                editable.className = 'editable';
+                editable.contentEditable = true;
+                editable.textContent = isBack ? 'محتوى الظهر الجديد' : 'محتوى الوجه الجديد';
+
+                group.appendChild(header);
+                group.appendChild(editable);
+
+                const flipBtn = container.querySelector('.flip-btn');
+                container.insertBefore(group, flipBtn);
+            }
+
+            addFrontFieldBtn.addEventListener('click', () => {
+                const frontContent = document.getElementById('frontContent');
+                addField(frontContent, false);
+            });
+
+            addBackFieldBtn.addEventListener('click', () => {
+                const backContent = document.getElementById('backContent');
+                addField(backContent, true);
+            });
+
+            // حذف الحقول الموجودة
+            document.querySelectorAll('.remove-field').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const targetId = this.dataset.target;
+                    const targetGroup = document.querySelector(`.field-group[data-id="${targetId}"]`);
+                    if (targetGroup) targetGroup.remove();
+                });
+            });
+
+            // ========== إعادة الضبط ==========
+            function resetDefaults() {
+                // إعادة الألوان
+                frontBgColor.value = '#fff8f0';
+                backBgColor.value = '#f5ede4';
+                textColor.value = '#2d1c14';
+                primaryColor.value = '#795548';
+                frontCard.style.background = '#fff8f0';
+                backCard.style.background = '#f5ede4';
+                document.querySelectorAll('.front .content, .back .content').forEach(el => {
+                    el.style.color = '#2d1c14';
+                });
+                document.querySelectorAll('.back .back-title').forEach(el => el.style.color = '#795548');
+                document.querySelectorAll('.flip-btn').forEach(btn => btn.style.background = '#795548');
+                document.querySelectorAll('.field-group label i').forEach(icon => icon.style.color = '#795548');
+                updateCSSVariable('--primary-color', '#795548');
+
+                // حجم الخط
+                fontSizeRange.value = '15';
+                fontSizeValue.textContent = '15px';
+                document.querySelectorAll('.content .editable, .content .field-group input, .content .field-group div')
+                    .forEach(el => {
+                        if (!el.classList.contains('back-title') && !el.classList.contains('back-note')) {
+                            el.style.fontSize = '15px';
+                        }
+                    });
+                document.querySelectorAll('#brandShort, #brandArShort').forEach(el => el.style.fontSize = '22px');
+
+                // ارتفاع الصورة = 200px (القيمة الافتراضية)
+                imageHeightInput.value = '200';
+                updateCSSVariable('--image-height', '200px');
+
+                // استدارة الزوايا
+                cardRadiusInput.value = '28';
+                updateCSSVariable('--card-radius', '28px');
+                frontCard.style.borderRadius = '28px';
+                backCard.style.borderRadius = '28px';
+
+                // نوع الخط
+                fontFamilySelect.value = "'Poppins','Cairo',sans-serif";
+                updateCSSVariable('--font-family', "'Poppins','Cairo',sans-serif");
+
+                // إعادة النصوص الافتراضية
+                document.getElementById('brandShort').textContent = 'NSL';
+                document.getElementById('brandArShort').textContent = 'نسل';
+                document.getElementById('brandEn').textContent = 'NSL نسل';
+                document.getElementById('brandAr').textContent = 'نسل';
+                document.getElementById('originEn').textContent = 'Ethiopian · Gorydah';
+                document.getElementById('originAr').textContent = 'إثيوبي · قوريدة';
+                document.getElementById('processingEn').textContent = 'Dried | Medium';
+                document.getElementById('processingAr').textContent = 'مجفف | متوسط';
+                document.getElementById('notesEn').textContent = 'Strawberry · Blossom · Blueberry';
+                document.getElementById('notesAr').textContent = 'توت · كرز · زهور';
+                document.getElementById('elevationEn').textContent = '1950 m';
+                document.getElementById('elevationAr').textContent = '١٩٥٠ م';
+                document.getElementById('backMessage').textContent = 'صنعت بحب · من البن إلى الفنجان';
+                document.getElementById('roastDate').textContent = 'أغسطس 2026';
+                document.getElementById('backNote').textContent = 'قوام متوسط · حموضة مشرقة';
+
+                // حذف الحقول الإضافية (ما عدا الافتراضية)
+                document.querySelectorAll('.field-group.extra-field').forEach(el => {
+                    if (el.dataset.id !== 'extra1' && el.dataset.id !== 'backExtra1') {
+                        el.remove();
+                    }
+                });
+                const extra1 = document.querySelector('.field-group[data-id="extra1"]');
+                if (extra1) {
+                    const editable = extra1.querySelector('.editable');
+                    if (editable) editable.textContent = 'تحميص خفيف · قهوة خاصة';
+                }
+                const backExtra1 = document.querySelector('.field-group[data-id="backExtra1"]');
+                if (backExtra1) {
+                    const editable = backExtra1.querySelector('.editable');
+                    if (editable) editable.textContent = 'حبوب مزرعة واحدة';
+                }
+            }
+
+            resetBtn.addEventListener('click', resetDefaults);
+
+            // ========== تهيئة ==========
+            resetDefaults();
+
+            console.log('✅ بطاقة NSL جاهزة مع تحكم كامل و object-fit: contain');
+        })();
+    </script>
 </body>
 </html>
-
