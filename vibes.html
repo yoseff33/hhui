@@ -1,469 +1,909 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>VIBES | بطاقة عمودية بخطوط متعددة</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibes - Specialty Coffee</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;800;900&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #795239;
+            --primary-dark: #5A3A2A;
+            --primary-light: #A67C5B;
+            --cream: #F6F2ED;
+            --beige: #EAE0D5;
+            --white: #FFFFFF;
+            --text: #2D1F16;
+            --text-light: #7A6A5D;
+            --radius-sm: 10px;
+            --radius-md: 18px;
+            --radius-lg: 24px;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 6px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
+            --font-ar: 'Tajawal', sans-serif;
+            --font-amiri: 'Amiri', serif;
+            --font-en: 'Montserrat', sans-serif;
+            --transition: 0.25s ease;
+        }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;700;800&family=El+Messiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;700&family=Lalezar&family=Marhey:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Reem+Kufi:wght@400;700&family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: var(--font-ar);
+            background: var(--cream);
+            color: var(--text);
+            min-height:100vh;
+            line-height:1.6;
+            overflow-x:hidden;
+            padding-bottom: 92px;
+        }
 
-<style>
-  :root{
-    --brown:#7A3F1C;
-    --brown-dark:#552A12;
-    --paper:#FFF8EC;
-    --line:#7A3F1C;
-    --card-w:55mm;
-    --card-h:90mm;
-    --ui-font:"Tajawal", Tahoma, Arial, sans-serif;
-    --font-ar-title:"Amiri", serif;
-    --font-ar-body:"Tajawal", sans-serif;
-    --font-en-title:Georgia, "Times New Roman", serif;
-    --font-en-body:"Cairo", Arial, sans-serif;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:#efe6d8;color:var(--brown-dark);font-family:var(--ui-font)}
-  .app{display:grid;grid-template-columns:minmax(340px,440px) 1fr;min-height:100vh}
-  .panel{background:#fffaf2;border-left:1px solid #decfbc;padding:18px;overflow:auto}
-  .panel h1{margin:0 0 6px;color:var(--brown);font-family:var(--font-en-title);font-size:26px}
-  .panel p{margin:0 0 14px;font-size:13px;line-height:1.8;color:#765844}
-  .tip{background:#f6ecde;border:1px solid #e0cfb6;color:#6c482d;border-radius:12px;padding:10px 12px;margin-bottom:14px;font-size:12px;line-height:1.8}
-  .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-  .tab{border:1px solid #d8c4aa;background:#f8efe3;color:var(--brown);border-radius:10px;padding:10px;font-weight:700;cursor:pointer;font-family:var(--ui-font)}
-  .tab.active{background:var(--brown);color:#fff;border-color:var(--brown)}
-  .group{background:#fffdf9;border:1px solid #e4d3be;border-radius:14px;padding:14px;margin-bottom:14px}
-  .group h3{margin:0 0 10px;font-size:14px;color:var(--brown)}
-  label{display:block;font-size:12px;margin:9px 0 5px;font-weight:700}
-  input,textarea,select{width:100%;border:1px solid #ceb99f;border-radius:9px;padding:9px 10px;font:inherit;background:#fff;color:#4a2818;outline:none}
-  textarea{resize:vertical;min-height:80px}
-  input:focus,textarea:focus,select:focus{border-color:var(--brown)}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-  .buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px;position:sticky;bottom:0;background:#fffaf2;padding-top:10px}
-  button{border:0;border-radius:10px;padding:11px 12px;font-weight:700;cursor:pointer;font-family:var(--ui-font)}
-  .primary{background:var(--brown);color:#fff}
-  .secondary{background:#eadac7;color:var(--brown-dark)}
-  .danger{background:#f5e8db;color:#7a3f1c}
-  .hidden-editor{display:none}
-  .stage{display:flex;align-items:flex-start;justify-content:center;gap:24px;padding:28px;flex-wrap:wrap;overflow:auto}
-  .stage-head{width:100%;text-align:center;color:#6d4426;font-family:var(--font-en-title);font-size:18px;font-weight:700}
-  .card{width:var(--card-w);height:var(--card-h);background:var(--paper);border:1.2mm solid var(--brown);border-radius:6mm;overflow:hidden;position:relative;box-shadow:0 16px 40px rgba(75,46,25,.14)}
-  .card-inner{position:absolute;inset:3.5mm;border:.45mm solid var(--line);border-radius:4.8mm;overflow:hidden;background:var(--paper)}
-  .front-layout{display:grid;grid-template-rows:50% auto;height:100%}
-  .front-image{position:relative;overflow:hidden;border-bottom:.4mm solid var(--line);background:#e8dcc8;background-size:cover;background-position:center;background-repeat:no-repeat}
-  .front-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;color:#81614b;font-size:12px;line-height:1.6;background:radial-gradient(circle at 20% 25%, rgba(122,63,28,.08), transparent 22%),radial-gradient(circle at 75% 75%, rgba(122,63,28,.08), transparent 22%),#ece1d0}
-  .front-image.has-image .front-placeholder{display:none}
-  .front-info{padding:3.2mm;display:grid;grid-template-rows:auto auto auto 1fr auto;gap:1.7mm;min-height:0;overflow:hidden}
-  .logo{text-align:center;line-height:1}
-  .logo-en{font-family:var(--font-en-title);font-size:7.1mm;letter-spacing:1.1mm;font-weight:700;color:var(--brown)}
-  .logo-sub{font-family:var(--font-en-body);font-size:2.15mm;letter-spacing:.6mm;margin-top:1mm;color:#6b4629}
-  .logo-ar{font-family:var(--font-ar-title);font-size:5.8mm;font-weight:700;margin-top:.8mm;color:var(--brown)}
-  .origin{text-align:center;line-height:1.5;padding:.8mm 0;border-top:.35mm solid var(--line);border-bottom:.35mm solid var(--line)}
-  .origin-ar{font-family:var(--font-ar-body);font-size:3.8mm;font-weight:700}
-  .origin-en{font-family:var(--font-en-title);font-size:3mm;font-weight:700}
-  .tastes{text-align:center}
-  .tastes-ar{font-family:var(--font-ar-body);font-size:4.1mm;line-height:1.4;font-weight:700}
-  .tastes-en{font-family:var(--font-en-title);font-size:2.7mm;line-height:1.45;margin-top:.8mm}
-  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1mm;font-size:2.55mm;text-align:center}
-  .spec{border:.35mm solid rgba(122,63,28,.35);border-radius:2.5mm;padding:1.2mm 1mm;line-height:1.45}
-  .spec strong{font-family:var(--font-ar-body);font-size:3.2mm}
-  .spec span{font-family:var(--font-en-title)}
-  .altitude{text-align:center;font-family:var(--font-en-title);font-size:3.2mm;font-weight:700;border-top:.35mm solid var(--line);padding-top:1.4mm}
-  .back-layout{height:100%;display:grid;grid-template-rows:20mm 1fr 18mm 18mm}
-  .back-top{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;border-bottom:.4mm solid var(--line);padding:2.5mm}
-  .back-logo{font-family:var(--font-en-title);font-size:7mm;letter-spacing:1mm;font-weight:700;color:var(--brown)}
-  .tagline{margin-top:1.5mm;font-family:var(--font-ar-title);font-size:4mm}
-  .story{padding:4mm;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.8;white-space:pre-line;font-family:var(--font-ar-body);font-size:4.1mm;overflow:hidden}
-  .brew{border-top:.4mm solid var(--line);border-bottom:.4mm solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);text-align:center;align-items:center;font-family:var(--font-en-title);font-size:2.65mm}
-  .brew > div + div{border-inline-start:.35mm solid var(--line)}
-  .brew strong{font-size:3.2mm}
-  .footer-back{display:grid;grid-template-columns:1.2fr .8fr;gap:2mm;align-items:center;padding:2.8mm 3.2mm}
-  .social-lines{line-height:1.55}
-  .social-lines .label{font-family:var(--font-en-title);font-size:2.5mm}
-  .social-lines .value{font-family:var(--font-en-body);font-size:2.9mm;font-weight:700}
-  .qr{height:13mm;border:.45mm dashed var(--line);border-radius:2.5mm;display:flex;align-items:center;justify-content:center;text-align:center;font-size:2.4mm;font-family:var(--font-en-title)}
-  @media (max-width:1000px){.app{grid-template-columns:1fr}.panel{border-left:0;border-bottom:1px solid #decfbc}}
-  @page{margin:6mm}
-  @media print{
-    body{background:#fff}
-    .panel,.stage-head{display:none !important}
-    .app{display:block}
-    .stage{padding:0;gap:8mm;justify-content:flex-start;align-items:flex-start}
-    .card{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
-  }
-</style>
+        .header {
+            text-align:center;
+            padding:22px 16px 14px;
+            background:var(--white);
+            border-bottom:1px solid rgba(0,0,0,.05);
+        }
+        .logo-area {
+            display:inline-flex;
+            align-items:center;
+            gap:12px;
+        }
+        .logo-img {
+            width:46px; height:46px;
+            border-radius:50%;
+            background:var(--primary);
+            color:#fff;
+            display:grid;
+            place-items:center;
+            box-shadow:0 2px 8px rgba(121,82,57,.2);
+        }
+        .brand-name {
+            font-family:var(--font-en);
+            font-size:1.9rem;
+            font-weight:900;
+            color:var(--primary);
+            letter-spacing:2px;
+            line-height:1;
+        }
+        .brand-name span {
+            display:block;
+            margin-top:6px;
+            font-size:.68rem;
+            font-weight:700;
+            letter-spacing:2px;
+            color:var(--text-light);
+        }
+        .welcome {
+            margin-top:12px;
+            font-family:var(--font-amiri);
+            font-size:1.08rem;
+            color:var(--primary);
+        }
+        .status-badge {
+            display:inline-block;
+            margin-top:8px;
+            padding:4px 12px;
+            border-radius:999px;
+            font-size:.75rem;
+            font-weight:700;
+            background:#E8F5E9;
+            color:#2E7D32;
+        }
+        .status-badge.closed { background:#FFEBEE; color:#C62828; }
+
+        .search-container {
+            max-width:800px;
+            margin:14px auto 8px;
+            padding:0 16px;
+        }
+        .search-input {
+            width:100%;
+            padding:12px 16px;
+            border:1px solid rgba(121,82,57,.16);
+            border-radius:999px;
+            font-family:var(--font-ar);
+            background:#fff;
+            outline:none;
+        }
+        .search-input:focus {
+            border-color:var(--primary);
+            box-shadow:0 0 0 3px rgba(121,82,57,.08);
+        }
+
+        .tabs-container {
+            display:flex;
+            gap:8px;
+            overflow-x:auto;
+            padding:10px 16px 12px;
+            scrollbar-width:none;
+        }
+        .tabs-container::-webkit-scrollbar { display:none; }
+        .tab-btn {
+            flex:0 0 auto;
+            padding:8px 17px;
+            border:none;
+            border-radius:999px;
+            background:var(--beige);
+            color:var(--text-light);
+            font-family:var(--font-ar);
+            font-weight:700;
+            cursor:pointer;
+        }
+        .tab-btn.active { background:var(--primary); color:#fff; }
+
+        .products-grid {
+            display:grid;
+            grid-template-columns:repeat(2,minmax(0,1fr));
+            gap:12px;
+            padding:14px 16px 24px;
+            max-width:980px;
+            margin:auto;
+        }
+        .product-card {
+            background:#fff;
+            border:1px solid rgba(121,82,57,.09);
+            border-radius:var(--radius-md);
+            overflow:hidden;
+            box-shadow:var(--shadow-sm);
+            position:relative;
+            cursor:pointer;
+            transition:.2s ease;
+        }
+        .product-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+        .card-image {
+            width:100%;
+            aspect-ratio:1/1;
+            background:var(--beige);
+            overflow:hidden;
+            display:grid;
+            place-items:center;
+        }
+        .card-image img { width:100%; height:100%; object-fit:cover; }
+        .placeholder { color:var(--primary-light); }
+        .card-body { padding:12px; position:relative; min-height:110px; }
+        .product-name { font-size:15px; font-weight:800; padding-left:38px; }
+        .product-desc {
+            margin-top:3px;
+            color:var(--text-light);
+            font-size:.79rem;
+            line-height:1.5;
+            display:-webkit-box;
+            -webkit-line-clamp:2;
+            -webkit-box-orient:vertical;
+            overflow:hidden;
+            min-height:38px;
+        }
+        .product-price { margin-top:7px; color:var(--primary); font-weight:900; }
+        .quick-add {
+            position:absolute;
+            left:10px;
+            bottom:10px;
+            width:32px; height:32px;
+            border:none;
+            border-radius:50%;
+            background:var(--primary);
+            color:#fff;
+            font-size:1.25rem;
+            font-weight:700;
+            display:grid;
+            place-items:center;
+            cursor:pointer;
+        }
+
+        .cart-bar {
+            position:fixed;
+            bottom:0; left:0; right:0;
+            background:#fff;
+            padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+            box-shadow:0 -4px 20px rgba(0,0,0,.08);
+            z-index:50;
+            display:none;
+            align-items:center;
+            justify-content:space-between;
+            gap:10px;
+        }
+        .cart-bar.show { display:flex; }
+        .cart-info { display:flex; align-items:center; gap:8px; font-weight:700; }
+        .cart-count {
+            width:25px; height:25px; border-radius:50%;
+            display:grid; place-items:center;
+            background:var(--primary); color:#fff; font-size:.8rem;
+        }
+        .cart-total { color:var(--primary); font-weight:900; }
+        .cart-btn {
+            border:none; border-radius:999px;
+            background:var(--primary); color:#fff;
+            padding:10px 20px;
+            font-family:var(--font-ar); font-weight:800;
+            cursor:pointer;
+        }
+
+        .sheet-overlay {
+            position:fixed; inset:0;
+            background:rgba(0,0,0,.48);
+            z-index:100;
+            opacity:0;
+            visibility:hidden;
+            transition:.25s ease;
+        }
+        .sheet-overlay.active { opacity:1; visibility:visible; }
+        .sheet {
+            position:fixed;
+            left:0; right:0; bottom:0;
+            background:#fff;
+            border-radius:24px 24px 0 0;
+            padding:14px 18px calc(26px + env(safe-area-inset-bottom));
+            max-height:90vh;
+            overflow:auto;
+            transform:translateY(100%);
+            transition:transform .3s cubic-bezier(.4,0,.2,1);
+            box-shadow:0 -12px 40px rgba(0,0,0,.18);
+        }
+        .sheet-overlay.active .sheet { transform:translateY(0); }
+        .sheet-handle { width:42px; height:4px; border-radius:999px; background:#ddd; margin:0 auto 12px; }
+        .sheet-close {
+            position:absolute;
+            top:14px; left:16px;
+            border:none; background:transparent;
+            font-size:1.2rem; color:var(--text-light); cursor:pointer;
+        }
+        .detail-image {
+            width:100%;
+            aspect-ratio:16/10;
+            border-radius:18px;
+            background:var(--beige);
+            overflow:hidden;
+            margin-bottom:14px;
+            display:grid;
+            place-items:center;
+        }
+        .detail-image img { width:100%; height:100%; object-fit:cover; }
+        .sheet h3 { font-size:1.25rem; font-weight:900; margin-bottom:4px; }
+        .sheet-price { color:var(--primary); font-weight:900; margin-bottom:14px; }
+        .option-group { margin-bottom:16px; }
+        .option-group label { display:block; margin-bottom:7px; font-weight:700; font-size:.88rem; color:var(--text-light); }
+        .option-buttons { display:flex; flex-wrap:wrap; gap:8px; }
+        .option-btn {
+            border:1px solid var(--beige);
+            background:var(--cream);
+            color:var(--text);
+            border-radius:999px;
+            padding:8px 14px;
+            font-family:var(--font-ar);
+            cursor:pointer;
+        }
+        .option-btn.selected { background:var(--primary); color:#fff; border-color:var(--primary); }
+        .quantity-control { display:flex; align-items:center; gap:12px; }
+        .qty-btn {
+            width:34px; height:34px;
+            border-radius:50%;
+            border:1px solid var(--beige);
+            background:var(--cream);
+            font-size:1.2rem;
+            cursor:pointer;
+        }
+        .qty-value { min-width:28px; text-align:center; font-weight:800; }
+        .add-to-cart-btn {
+            width:100%;
+            border:none;
+            border-radius:999px;
+            padding:14px;
+            background:var(--primary);
+            color:#fff;
+            font-family:var(--font-ar);
+            font-size:1rem;
+            font-weight:900;
+            cursor:pointer;
+        }
+
+        .cart-items-list { max-height:260px; overflow:auto; margin-bottom:12px; }
+        .cart-item {
+            display:grid;
+            grid-template-columns:1fr auto;
+            gap:10px;
+            padding:12px 0;
+            border-bottom:1px solid #eee;
+        }
+        .item-name { font-weight:800; }
+        .item-details { font-size:.78rem; color:var(--text-light); margin-top:2px; }
+        .item-right { text-align:left; }
+        .item-price { color:var(--primary); font-weight:900; }
+        .item-actions { display:flex; align-items:center; gap:6px; margin-top:7px; justify-content:flex-end; }
+        .mini-btn {
+            width:26px; height:26px;
+            border:1px solid var(--beige);
+            background:var(--cream);
+            border-radius:50%;
+            cursor:pointer;
+            font-weight:800;
+        }
+        .remove-btn {
+            border:none;
+            background:transparent;
+            color:#C0392B;
+            cursor:pointer;
+            font-family:var(--font-ar);
+            font-size:.78rem;
+        }
+        .cart-total-row {
+            display:flex; justify-content:space-between;
+            font-size:1.12rem; font-weight:900;
+            padding:12px 0;
+            border-top:2px solid var(--primary);
+        }
+        .whatsapp-send-btn {
+            width:100%;
+            border:none; border-radius:999px;
+            background:#25D366; color:#fff;
+            padding:15px;
+            font-family:var(--font-ar);
+            font-size:1rem; font-weight:900;
+            cursor:pointer;
+        }
+
+        .empty {
+            grid-column:1/-1;
+            text-align:center;
+            padding:42px 10px;
+            color:var(--text-light);
+        }
+
+
+        .social-section {
+            max-width: 980px;
+            margin: 8px auto 22px;
+            padding: 0 16px;
+            text-align: center;
+        }
+        .social-title {
+            font-family: var(--font-amiri);
+            font-size: 1.05rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--primary);
+            background: #fff;
+            border: 1px solid rgba(121,82,57,.12);
+            border-radius: 999px;
+            padding: 9px 14px;
+            font-weight: 800;
+            box-shadow: var(--shadow-sm);
+        }
+        .social-link svg {
+            width: 20px;
+            height: 20px;
+            flex: 0 0 auto;
+        }
+
+        @media (min-width:600px) {
+            .products-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+            .sheet { max-width:560px; left:50%; right:auto; width:100%; transform:translate(-50%,100%); }
+            .sheet-overlay.active .sheet { transform:translate(-50%,0); }
+        }
+        @media (min-width:900px) {
+            .products-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+        }
+    </style>
 </head>
 <body>
-<div class="app">
-  <aside class="panel">
-    <h1>VIBES Vertical Card</h1>
-    <p>أضفت لك خطوط كثيرة، ومنها <strong>Amiri</strong>، مع خيارات تغيير الخط العربي والإنجليزي، وزر <strong>حفظ كصورة PNG</strong> لكل بطاقة.</p>
+    <header class="header">
+        <div class="logo-area">
+            <div class="logo-img">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="#fff"><path d="M2 21h18v-2H2v2zM20 8h-2V5h2m-4 0H4v6c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4V5z"/></svg>
+            </div>
+            <div class="brand-name">VIBES<span>SPECIALTY COFFEE</span></div>
+        </div>
+        <div class="welcome">وش مزاجك اليوم؟</div>
+        <div class="status-badge" id="statusBadge">مفتوح الآن</div>
+    </header>
 
-    <div class="tip">
-      المقاس الافتراضي: <strong>55 × 90 mm</strong><br>
-      والبيانات معبّية على محصول إثيوبيا + حساب الانستقرام <strong>Vibes.espresso</strong>.
+    <div class="search-container">
+        <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن منتج...">
     </div>
 
-    <div class="tabs">
-      <button type="button" class="tab active" data-tab="frontEditor">تعديل الوجه</button>
-      <button type="button" class="tab" data-tab="backEditor">تعديل الظهر</button>
+    <div class="tabs-container" id="tabsContainer">
+        <button class="tab-btn active" data-category="all">الكل</button>
+        <button class="tab-btn" data-category="popular">الأكثر طلبًا</button>
+        <button class="tab-btn" data-category="coffee">القهوة</button>
+        <button class="tab-btn" data-category="cold">المشروبات الباردة</button>
+        <button class="tab-btn" data-category="sweets">الحلويات</button>
     </div>
 
-    <section id="frontEditor">
-      <div class="group">
-        <h3>هوية فايبز</h3>
-        <label>اسم الكوفي بالإنجليزي</label>
-        <input id="brandEn" value="VIBES" />
-        <label>الوصف الصغير</label>
-        <input id="brandSub" value="SPECIALTY COFFEE" />
-        <label>اسم الكوفي بالعربي</label>
-        <input id="brandAr" value="فايبز" />
-      </div>
+    <main class="products-grid" id="productsGrid"></main>
 
-      <div class="group">
-        <h3>الخطوط</h3>
-        <label>خط العنوان العربي</label>
-        <select id="fontArTitle">
-          <option value='"Amiri", serif' selected>Amiri</option>
-          <option value='"Aref Ruqaa", serif'>Aref Ruqaa</option>
-          <option value='"Marhey", cursive'>Marhey</option>
-          <option value='"Lalezar", cursive'>Lalezar</option>
-          <option value='"El Messiri", sans-serif'>El Messiri</option>
-          <option value='"Reem Kufi", sans-serif'>Reem Kufi</option>
-          <option value='"Noto Naskh Arabic", serif'>Noto Naskh Arabic</option>
-        </select>
 
-        <label>خط النص العربي</label>
-        <select id="fontArBody">
-          <option value='"Tajawal", sans-serif' selected>Tajawal</option>
-          <option value='"Cairo", sans-serif'>Cairo</option>
-          <option value='"IBM Plex Sans Arabic", sans-serif'>IBM Plex Sans Arabic</option>
-          <option value='"El Messiri", sans-serif'>El Messiri</option>
-          <option value='"Noto Naskh Arabic", serif'>Noto Naskh Arabic</option>
-          <option value='"Amiri", serif'>Amiri</option>
-          <option value='"Reem Kufi", sans-serif'>Reem Kufi</option>
-        </select>
-
-        <label>خط العنوان الإنجليزي</label>
-        <select id="fontEnTitle">
-          <option value='Georgia, "Times New Roman", serif' selected>Georgia</option>
-          <option value='"Cairo", Arial, sans-serif'>Cairo</option>
-          <option value='"Tajawal", Arial, sans-serif'>Tajawal</option>
-          <option value='"IBM Plex Sans Arabic", Arial, sans-serif'>IBM Plex Sans Arabic</option>
-        </select>
-
-        <label>خط النص الإنجليزي</label>
-        <select id="fontEnBody">
-          <option value='"Cairo", Arial, sans-serif' selected>Cairo</option>
-          <option value='"Tajawal", Arial, sans-serif'>Tajawal</option>
-          <option value='"IBM Plex Sans Arabic", Arial, sans-serif'>IBM Plex Sans Arabic</option>
-          <option value='Georgia, "Times New Roman", serif'>Georgia</option>
-        </select>
-      </div>
-
-      <div class="group">
-        <h3>صورة الوجه</h3>
-        <label>اختر الصورة</label>
-        <div style="display:flex; gap:8px; align-items:center;">
-          <input id="frontImageInput" type="file" accept="image/*" style="flex:1" />
-          <button type="button" id="removeImageBtn" class="secondary" style="padding:9px 12px;">إزالة</button>
+    <section class="social-section">
+        <div class="social-title">تابعونا على حسابات VIBES</div>
+        <div class="social-links">
+            <a class="social-link" href="https://www.instagram.com/vibes.espresso" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <circle cx="17.5" cy="6.5" r="1"></circle>
+                </svg>
+                <span>Instagram @vibes.espresso</span>
+            </a>
+            <a class="social-link" href="https://www.tiktok.com/@vibes.espresso" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M14 3v10.1a3.6 3.6 0 1 1-3-3.55V7.1a6 6 0 1 0 5.5 5.98V8.65c1.15.82 2.55 1.3 4.05 1.3V7.5A4.55 4.55 0 0 1 16.5 3H14z"/>
+                </svg>
+                <span>TikTok @vibes.espresso</span>
+            </a>
         </div>
-        <label>عرض الصورة داخل البطاقة</label>
-        <select id="frontFit">
-          <option value="cover">تعبئة الإطار</option>
-          <option value="contain">إظهار الصورة كاملة</option>
-        </select>
-      </div>
-
-      <div class="group">
-        <h3>المعلومات</h3>
-        <label>الاسم بالعربي</label>
-        <input id="originAr" value="إثيوبيا" />
-        <label>الاسم بالإنجليزي</label>
-        <input id="originEn" value="ETHIOPIA" />
-        <label>الإيحاء الرئيسي بالعربي</label>
-        <input id="notesAr" value="بيري" />
-        <label>الإيحاء الرئيسي بالإنجليزي</label>
-        <input id="notesEn" value="BERRY" />
-        <div class="row">
-          <div>
-            <label>السلالة</label>
-            <input id="process" value="هيرليوم" />
-          </div>
-          <div>
-            <label>المعالجة</label>
-            <input id="roast" value="مجففة" />
-          </div>
-        </div>
-        <div class="row">
-          <div>
-            <label>Variety</label>
-            <input id="processEn" value="HEIRLOOM" />
-          </div>
-          <div>
-            <label>Process</label>
-            <input id="roastEn" value="DRIED" />
-          </div>
-        </div>
-        <label>الارتفاع</label>
-        <input id="altitude" value="1900 - 2100 م" />
-      </div>
     </section>
 
-    <section id="backEditor" class="hidden-editor">
-      <div class="group">
-        <h3>محتوى الظهر</h3>
-        <label>العبارة</label>
-        <input id="tagline" value="محصول إثيوبي بطابع بيري واضح." />
-        <label>الوصف / الإيحاءات</label>
-        <textarea id="story">الإيحاءات: شوكولاتة، توت، بندق، كراميل</textarea>
-      </div>
-
-      <div class="group">
-        <h3>وصفة التحضير</h3>
-        <div class="row">
-          <div>
-            <label>الجرعة</label>
-            <input id="dose" value="15 g" />
-          </div>
-          <div>
-            <label>الماء</label>
-            <input id="water" value="240 ml" />
-          </div>
+    <div class="cart-bar" id="cartBar">
+        <div class="cart-info">
+            <span class="cart-count" id="cartCount">0</span>
+            <span>سلتك</span>
+            <span class="cart-total" id="cartTotal">0 ر.س</span>
         </div>
-        <label>درجة الحرارة</label>
-        <input id="temp" value="92°C" />
-      </div>
-
-      <div class="group">
-        <h3>التواصل</h3>
-        <label>عنوان السطر الأول</label>
-        <input id="socialLabel" value="instagram" />
-        <label>حساب الانستقرام</label>
-        <input id="social" value="Vibes.espresso" />
-        <label>السطر الثاني</label>
-        <input id="location" value="VIBES SPECIALTY COFFEE" />
-        <label>نص مكان QR</label>
-        <input id="qrText" value="QR" />
-      </div>
-    </section>
-
-    <div class="group">
-      <h3>مقاس البطاقة والألوان</h3>
-      <div class="row">
-        <div>
-          <label>العرض mm</label>
-          <input id="w" type="number" min="40" max="100" value="55" />
-        </div>
-        <div>
-          <label>الارتفاع mm</label>
-          <input id="h" type="number" min="60" max="140" value="90" />
-        </div>
-      </div>
-      <div class="row">
-        <div>
-          <label>لون البني</label>
-          <input id="brown" type="color" value="#7A3F1C" />
-        </div>
-        <div>
-          <label>لون الخلفية</label>
-          <input id="paper" type="color" value="#FFF8EC" />
-        </div>
-      </div>
+        <button class="cart-btn" id="openCartBtn">عرض السلة</button>
     </div>
 
-    <div class="buttons">
-      <button type="button" class="primary" onclick="window.print()">طباعة الوجه والظهر</button>
-      <button type="button" class="secondary" id="saveFrontBtn">حفظ الوجه كصورة</button>
-      <button type="button" class="secondary" id="saveBackBtn">حفظ الظهر كصورة</button>
-      <button type="button" class="danger" id="reset" style="grid-column:1/-1">إرجاع الافتراضي</button>
-    </div>
-  </aside>
-
-  <main class="stage">
-    <div class="stage-head">المعاينة</div>
-
-    <div class="card" id="frontCard">
-      <div class="card-inner">
-        <div class="front-layout">
-          <div class="front-image" id="frontImage">
-            <div class="front-placeholder" id="frontPlaceholder">اختر صورة<br>ويصير نصف البطاقة صورة</div>
-          </div>
-
-          <div class="front-info">
-            <div class="logo">
-              <div class="logo-en" id="pBrandEn">VIBES</div>
-              <div class="logo-sub" id="pBrandSub">SPECIALTY COFFEE</div>
-              <div class="logo-ar" id="pBrandAr">فايبز</div>
+    <div class="sheet-overlay" id="productSheetOverlay">
+        <div class="sheet" id="productSheet">
+            <div class="sheet-handle"></div>
+            <button class="sheet-close" id="closeProductSheet">✕</button>
+            <div class="detail-image" id="detailImage"></div>
+            <h3 id="sheetProductName"></h3>
+            <div class="sheet-price" id="sheetPrice"></div>
+            <div id="dynamicOptions"></div>
+            <div class="option-group">
+                <label>الكمية</label>
+                <div class="quantity-control">
+                    <button class="qty-btn" id="qtyMinus">−</button>
+                    <span class="qty-value" id="qtyValue">1</span>
+                    <button class="qty-btn" id="qtyPlus">+</button>
+                </div>
             </div>
-
-            <div class="origin">
-              <div class="origin-ar" id="pOriginAr">إثيوبيا</div>
-              <div class="origin-en" id="pOriginEn">ETHIOPIA</div>
-            </div>
-
-            <div class="tastes">
-              <div class="tastes-ar" id="pNotesAr">بيري</div>
-              <div class="tastes-en" id="pNotesEn">BERRY</div>
-            </div>
-
-            <div class="spec-grid">
-              <div class="spec"><strong id="pProcess">هيرليوم</strong><br><span id="pProcessEn">HEIRLOOM</span></div>
-              <div class="spec"><strong id="pRoast">مجففة</strong><br><span id="pRoastEn">DRIED</span></div>
-            </div>
-
-            <div class="altitude">Altitude · <span id="pAltitude">1900 - 2100 م</span></div>
-          </div>
+            <button class="add-to-cart-btn" id="addToCartBtn">إضافة للسلة</button>
         </div>
-      </div>
     </div>
 
-    <div class="card" id="backCard">
-      <div class="card-inner">
-        <div class="back-layout">
-          <div class="back-top">
-            <div class="back-logo">VIBES</div>
-            <div class="tagline" id="pTagline">محصول إثيوبي بطابع بيري واضح.</div>
-          </div>
-
-          <div class="story" id="pStory">الإيحاءات: شوكولاتة، توت، بندق، كراميل</div>
-
-          <div class="brew">
-            <div><strong id="pDose">15 g</strong><br>COFFEE</div>
-            <div><strong id="pWater">240 ml</strong><br>WATER</div>
-            <div><strong id="pTemp">92°C</strong><br>TEMP</div>
-          </div>
-
-          <div class="footer-back">
-            <div class="social-lines">
-              <div class="label" id="pSocialLabel">instagram</div>
-              <div class="value" id="pSocial">Vibes.espresso</div>
-              <div class="label" id="pLocation">VIBES SPECIALTY COFFEE</div>
+    <div class="sheet-overlay" id="cartSheetOverlay">
+        <div class="sheet">
+            <div class="sheet-handle"></div>
+            <button class="sheet-close" id="closeCartSheet">✕</button>
+            <h3>سلة الطلب</h3>
+            <div class="cart-items-list" id="cartItemsList"></div>
+            <div class="cart-total-row">
+                <span>الإجمالي</span>
+                <span id="cartSheetTotal">0 ر.س</span>
             </div>
-            <div class="qr" id="pQrText">QR</div>
-          </div>
+            <button class="whatsapp-send-btn" id="sendWhatsAppBtn">إرسال الطلب عبر واتساب</button>
         </div>
-      </div>
     </div>
-  </main>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-const bind = (inputId, previewId) => {
-  const input = document.getElementById(inputId);
-  const preview = document.getElementById(previewId);
-  input.addEventListener('input', () => preview.textContent = input.value);
-};
+(() => {
+    const WHATSAPP_NUMBER = '966500000000';
 
-[
-  ['brandEn','pBrandEn'],['brandSub','pBrandSub'],['brandAr','pBrandAr'],
-  ['originAr','pOriginAr'],['originEn','pOriginEn'],
-  ['notesAr','pNotesAr'],['notesEn','pNotesEn'],
-  ['process','pProcess'],['processEn','pProcessEn'],
-  ['roast','pRoast'],['roastEn','pRoastEn'],
-  ['altitude','pAltitude'],
-  ['tagline','pTagline'],['story','pStory'],
-  ['dose','pDose'],['water','pWater'],['temp','pTemp'],
-  ['socialLabel','pSocialLabel'],['social','pSocial'],['location','pLocation'],
-  ['qrText','pQrText']
-].forEach(x => bind(...x));
+    const PRODUCTS = [
+        {
+            id:'p1', name:'تارت تشوكليت', price:18, category:'sweets',
+            desc:'تارت شوكولاتة غني', image:null, popular:false,
+            options:{}
+        },
+        {
+            id:'p2', name:'كيكة المانجو', price:22, category:'sweets',
+            desc:'كيكة مانجو منعشة', image:null, popular:true,
+            options:{}
+        },
+        {
+            id:'p3', name:'كيكة بيكان', price:22, category:'sweets',
+            desc:'كيكة بيكان غنية', image:null, popular:false,
+            options:{}
+        },
+        {
+            id:'p4', name:'تشوكليت قليتر', price:15, category:'sweets',
+            desc:'حلى شوكولاتة بقوام غني', image:null, popular:false,
+            options:{}
+        },
+        {
+            id:'p5', name:'V60', price:15, category:'coffee',
+            desc:'قهوة مختصة بتحضير يدوي', image:null, popular:false,
+            options:{ temperature:true }
+        },
+        {
+            id:'p6', name:'اسبريسو', price:10, category:'coffee',
+            desc:'شوت إسبريسو مركز', image:null, popular:true,
+            options:{ extraShot:true }
+        },
+        {
+            id:'p7', name:'الفاريدو', price:13, category:'cold',
+            desc:'إسبريسو • رغوة باردة', image:null, popular:true,
+            options:{ extraShot:true }
+        },
+        {
+            id:'p8', name:'ايس لاتيه', price:15, category:'cold',
+            desc:'إسبريسو • حليب • ثلج', image:null, popular:true,
+            options:{ milk:true, extraShot:true }
+        }
+    ];
 
-document.querySelectorAll('.tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('frontEditor').classList.add('hidden-editor');
-    document.getElementById('backEditor').classList.add('hidden-editor');
-    document.getElementById(btn.dataset.tab).classList.remove('hidden-editor');
-  });
-});
+    let currentCategory = 'all';
+    let searchQuery = '';
+    let currentProduct = null;
+    let currentQty = 1;
+    let selectedOptions = {};
+    let cart = [];
 
-const frontImage = document.getElementById('frontImage');
-const frontPlaceholder = document.getElementById('frontPlaceholder');
-const frontImageInput = document.getElementById('frontImageInput');
-const frontFit = document.getElementById('frontFit');
+    const productsGrid = document.getElementById('productsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const tabsContainer = document.getElementById('tabsContainer');
+    const productSheetOverlay = document.getElementById('productSheetOverlay');
+    const closeProductSheet = document.getElementById('closeProductSheet');
+    const detailImage = document.getElementById('detailImage');
+    const sheetProductName = document.getElementById('sheetProductName');
+    const sheetPrice = document.getElementById('sheetPrice');
+    const dynamicOptions = document.getElementById('dynamicOptions');
+    const qtyMinus = document.getElementById('qtyMinus');
+    const qtyPlus = document.getElementById('qtyPlus');
+    const qtyValue = document.getElementById('qtyValue');
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    const cartBar = document.getElementById('cartBar');
+    const cartCountEl = document.getElementById('cartCount');
+    const cartTotalEl = document.getElementById('cartTotal');
+    const openCartBtn = document.getElementById('openCartBtn');
+    const cartSheetOverlay = document.getElementById('cartSheetOverlay');
+    const closeCartSheet = document.getElementById('closeCartSheet');
+    const cartItemsList = document.getElementById('cartItemsList');
+    const cartSheetTotal = document.getElementById('cartSheetTotal');
+    const sendWhatsAppBtn = document.getElementById('sendWhatsAppBtn');
+    const statusBadge = document.getElementById('statusBadge');
 
-frontImageInput.addEventListener('change', e => {
-  const file = e.target.files?.[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    frontImage.style.backgroundImage = `url("${ev.target.result}")`;
-    frontImage.classList.add('has-image');
-  };
-  reader.readAsDataURL(file);
-});
+    const fmt = n => `${n} ر.س`;
+    const escapeHtml = str => {
+        const d = document.createElement('div');
+        d.textContent = str ?? '';
+        return d.innerHTML;
+    };
 
-document.getElementById('removeImageBtn').addEventListener('click', () => {
-  frontImage.style.backgroundImage = '';
-  frontImage.classList.remove('has-image');
-  frontImageInput.value = '';
-});
+    function placeholderSVG() {
+        return `<div class="placeholder">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="#A67C5B">
+                <path d="M2 21h18v-2H2v2zM20 8h-2V5h2m-4 0H4v6c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4V5z"/>
+            </svg>
+        </div>`;
+    }
 
-frontFit.addEventListener('change', e => {
-  frontImage.style.backgroundSize = e.target.value;
-});
+    function renderProducts() {
+        let filtered = PRODUCTS.filter(p => {
+            const catOk = currentCategory === 'all'
+                || (currentCategory === 'popular' ? p.popular : p.category === currentCategory);
+            const q = searchQuery.trim().toLowerCase();
+            const searchOk = !q || p.name.toLowerCase().includes(q) || (p.desc || '').toLowerCase().includes(q);
+            return catOk && searchOk;
+        });
 
-document.getElementById('w').addEventListener('input', e => {
-  document.documentElement.style.setProperty('--card-w', e.target.value + 'mm');
-});
-document.getElementById('h').addEventListener('input', e => {
-  document.documentElement.style.setProperty('--card-h', e.target.value + 'mm');
-});
-document.getElementById('brown').addEventListener('input', e => {
-  document.documentElement.style.setProperty('--brown', e.target.value);
-  document.documentElement.style.setProperty('--brown-dark', e.target.value);
-  document.documentElement.style.setProperty('--line', e.target.value);
-});
-document.getElementById('paper').addEventListener('input', e => {
-  document.documentElement.style.setProperty('--paper', e.target.value);
-});
+        if (!filtered.length) {
+            productsGrid.innerHTML = `<div class="empty">ما لقينا منتج مطابق.</div>`;
+            return;
+        }
 
-document.getElementById('fontArTitle').addEventListener('change', e => {
-  document.documentElement.style.setProperty('--font-ar-title', e.target.value);
-});
-document.getElementById('fontArBody').addEventListener('change', e => {
-  document.documentElement.style.setProperty('--font-ar-body', e.target.value);
-});
-document.getElementById('fontEnTitle').addEventListener('change', e => {
-  document.documentElement.style.setProperty('--font-en-title', e.target.value);
-});
-document.getElementById('fontEnBody').addEventListener('change', e => {
-  document.documentElement.style.setProperty('--font-en-body', e.target.value);
-});
+        productsGrid.innerHTML = filtered.map(p => `
+            <article class="product-card" data-id="${p.id}">
+                <div class="card-image">
+                    ${p.image ? `<img src="${p.image}" alt="${escapeHtml(p.name)}">` : placeholderSVG()}
+                </div>
+                <div class="card-body">
+                    <div class="product-name">${escapeHtml(p.name)}</div>
+                    <div class="product-desc">${escapeHtml(p.desc)}</div>
+                    <div class="product-price">${fmt(p.price)}</div>
+                    <button class="quick-add" data-id="${p.id}" aria-label="إضافة">+</button>
+                </div>
+            </article>
+        `).join('');
+    }
 
-document.getElementById('reset').addEventListener('click', () => {
-  if(confirm('ترجع كل شيء للوضع الافتراضي؟')) location.reload();
-});
+    function buildOptions(product) {
+        selectedOptions = {};
+        const blocks = [];
 
-async function saveCardAsImage(cardId, filename){
-  try {
-    // انتظار تحميل الخطوط لضمان دقة التصيير
-    await document.fonts.ready;
-    const card = document.getElementById(cardId);
-    const canvas = await html2canvas(card, {
-      backgroundColor: null,
-      scale: 4,
-      useCORS: true,
-      logging: false
+        if (product.options.temperature) {
+            selectedOptions.temperature = 'hot';
+            blocks.push(`
+                <div class="option-group">
+                    <label>درجة الحرارة</label>
+                    <div class="option-buttons" data-option="temperature">
+                        <button class="option-btn selected" data-value="hot">ساخن</button>
+                        <button class="option-btn" data-value="cold">بارد</button>
+                    </div>
+                </div>
+            `);
+        }
+
+        if (product.options.milk) {
+            selectedOptions.milk = 'regular';
+            blocks.push(`
+                <div class="option-group">
+                    <label>نوع الحليب</label>
+                    <div class="option-buttons" data-option="milk">
+                        <button class="option-btn selected" data-value="regular" data-price="0">عادي</button>
+                        <button class="option-btn" data-value="oat" data-price="3">شوفان (+3)</button>
+                        <button class="option-btn" data-value="almond" data-price="3">لوز (+3)</button>
+                    </div>
+                </div>
+            `);
+        }
+
+        if (product.options.extraShot) {
+            selectedOptions.extraShot = 'no';
+            blocks.push(`
+                <div class="option-group">
+                    <label>Extra Shot</label>
+                    <div class="option-buttons" data-option="extraShot">
+                        <button class="option-btn selected" data-value="no" data-price="0">بدون</button>
+                        <button class="option-btn" data-value="single" data-price="5">شوت (+5)</button>
+                        <button class="option-btn" data-value="double" data-price="10">شوتين (+10)</button>
+                    </div>
+                </div>
+            `);
+        }
+
+        dynamicOptions.innerHTML = blocks.join('');
+    }
+
+    function calcUnitPrice() {
+        if (!currentProduct) return 0;
+        let price = currentProduct.price;
+
+        const milk = dynamicOptions.querySelector('[data-option="milk"] .selected');
+        const shot = dynamicOptions.querySelector('[data-option="extraShot"] .selected');
+
+        if (milk) price += Number(milk.dataset.price || 0);
+        if (shot) price += Number(shot.dataset.price || 0);
+
+        return price;
+    }
+
+    function updateSheetPrice() {
+        const unit = calcUnitPrice();
+        sheetPrice.textContent = fmt(unit);
+        addToCartBtn.textContent = `إضافة للسلة • ${fmt(unit * currentQty)}`;
+    }
+
+    function openProduct(product) {
+        currentProduct = product;
+        currentQty = 1;
+        qtyValue.textContent = '1';
+        sheetProductName.textContent = product.name;
+        detailImage.innerHTML = product.image
+            ? `<img src="${product.image}" alt="${escapeHtml(product.name)}">`
+            : placeholderSVG();
+
+        buildOptions(product);
+        updateSheetPrice();
+        productSheetOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeProduct() {
+        productSheetOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        currentProduct = null;
+    }
+
+    function optionLabel(key, value) {
+        const maps = {
+            temperature:{hot:'ساخن',cold:'بارد'},
+            milk:{regular:'حليب عادي',oat:'حليب شوفان',almond:'حليب لوز'},
+            extraShot:{no:'بدون شوت إضافي',single:'شوت إضافي',double:'شوتين إضافيين'}
+        };
+        return maps[key]?.[value] || value;
+    }
+
+    function addToCart() {
+        if (!currentProduct) return;
+
+        const unitPrice = calcUnitPrice();
+        const signature = JSON.stringify({id:currentProduct.id, options:selectedOptions});
+
+        const existing = cart.find(item => item.signature === signature);
+        if (existing) {
+            existing.qty += currentQty;
+            existing.totalPrice = existing.qty * existing.unitPrice;
+        } else {
+            cart.push({
+                signature,
+                product: currentProduct,
+                options:{...selectedOptions},
+                qty:currentQty,
+                unitPrice,
+                totalPrice:unitPrice * currentQty
+            });
+        }
+
+        updateCartUI();
+        closeProduct();
+    }
+
+    function updateCartUI() {
+        const count = cart.reduce((s,i) => s + i.qty, 0);
+        const total = cart.reduce((s,i) => s + i.totalPrice, 0);
+        cartCountEl.textContent = count;
+        cartTotalEl.textContent = fmt(total);
+        cartBar.classList.toggle('show', count > 0);
+        renderCart();
+    }
+
+    function renderCart() {
+        if (!cart.length) {
+            cartItemsList.innerHTML = `<div class="empty">السلة فاضية.</div>`;
+        } else {
+            cartItemsList.innerHTML = cart.map((item, index) => {
+                const details = Object.entries(item.options)
+                    .filter(([k,v]) => !(k === 'extraShot' && v === 'no'))
+                    .map(([k,v]) => optionLabel(k,v))
+                    .join(' • ');
+
+                return `
+                    <div class="cart-item">
+                        <div>
+                            <div class="item-name">${escapeHtml(item.product.name)}</div>
+                            ${details ? `<div class="item-details">${escapeHtml(details)}</div>` : ''}
+                            <button class="remove-btn" data-action="remove" data-index="${index}">حذف</button>
+                        </div>
+                        <div class="item-right">
+                            <div class="item-price">${fmt(item.totalPrice)}</div>
+                            <div class="item-actions">
+                                <button class="mini-btn" data-action="minus" data-index="${index}">−</button>
+                                <strong>${item.qty}</strong>
+                                <button class="mini-btn" data-action="plus" data-index="${index}">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        cartSheetTotal.textContent = fmt(cart.reduce((s,i)=>s+i.totalPrice,0));
+    }
+
+    productsGrid.addEventListener('click', e => {
+        const add = e.target.closest('.quick-add');
+        if (add) {
+            e.stopPropagation();
+            const p = PRODUCTS.find(x => x.id === add.dataset.id);
+            if (p) openProduct(p);
+            return;
+        }
+        const card = e.target.closest('.product-card');
+        if (!card) return;
+        const p = PRODUCTS.find(x => x.id === card.dataset.id);
+        if (p) openProduct(p);
     });
-    const link = document.createElement('a');
-    link.download = filename;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-  } catch (err) {
-    alert('تعذر حفظ الصورة: ' + err.message);
-  }
-}
 
-document.getElementById('saveFrontBtn').addEventListener('click', () => {
-  saveCardAsImage('frontCard', 'vibes-front-card.png');
-});
-document.getElementById('saveBackBtn').addEventListener('click', () => {
-  saveCardAsImage('backCard', 'vibes-back-card.png');
-});
+    dynamicOptions.addEventListener('click', e => {
+        const btn = e.target.closest('.option-btn');
+        if (!btn) return;
+        const group = btn.closest('.option-buttons');
+        const key = group.dataset.option;
+        group.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedOptions[key] = btn.dataset.value;
+        updateSheetPrice();
+    });
+
+    qtyMinus.addEventListener('click', () => {
+        currentQty = Math.max(1, currentQty - 1);
+        qtyValue.textContent = currentQty;
+        updateSheetPrice();
+    });
+
+    qtyPlus.addEventListener('click', () => {
+        currentQty++;
+        qtyValue.textContent = currentQty;
+        updateSheetPrice();
+    });
+
+    addToCartBtn.addEventListener('click', addToCart);
+
+    productSheetOverlay.addEventListener('click', e => {
+        if (e.target === productSheetOverlay) closeProduct();
+    });
+    closeProductSheet.addEventListener('click', closeProduct);
+
+    openCartBtn.addEventListener('click', () => {
+        renderCart();
+        cartSheetOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+
+    closeCartSheet.addEventListener('click', () => {
+        cartSheetOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+
+    cartSheetOverlay.addEventListener('click', e => {
+        if (e.target === cartSheetOverlay) {
+            cartSheetOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    cartItemsList.addEventListener('click', e => {
+        const btn = e.target.closest('[data-action]');
+        if (!btn) return;
+        const i = Number(btn.dataset.index);
+        const action = btn.dataset.action;
+
+        if (action === 'plus') cart[i].qty++;
+        if (action === 'minus') cart[i].qty--;
+        if (action === 'remove' || cart[i].qty <= 0) cart.splice(i,1);
+
+        cart.forEach(item => item.totalPrice = item.qty * item.unitPrice);
+        updateCartUI();
+    });
+
+    tabsContainer.addEventListener('click', e => {
+        const btn = e.target.closest('.tab-btn');
+        if (!btn) return;
+        currentCategory = btn.dataset.category;
+        tabsContainer.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderProducts();
+    });
+
+    searchInput.addEventListener('input', e => {
+        searchQuery = e.target.value;
+        renderProducts();
+    });
+
+    sendWhatsAppBtn.addEventListener('click', () => {
+        if (!cart.length) return;
+
+        let msg = 'مرحباً، أود طلب التالي من Vibes:\\n\\n';
+        cart.forEach((item, i) => {
+            const details = Object.entries(item.options)
+                .filter(([k,v]) => !(k === 'extraShot' && v === 'no'))
+                .map(([k,v]) => optionLabel(k,v));
+
+            msg += `${i+1}. ${item.product.name} × ${item.qty}\\n`;
+            if (details.length) msg += `   ${details.join(' • ')}\\n`;
+            msg += `   ${fmt(item.totalPrice)}\\n\\n`;
+        });
+        msg += `الإجمالي: ${fmt(cart.reduce((s,i)=>s+i.totalPrice,0))}`;
+
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    });
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            if (productSheetOverlay.classList.contains('active')) closeProduct();
+            if (cartSheetOverlay.classList.contains('active')) {
+                cartSheetOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+    });
+
+    function setStatus() {
+        const h = new Date().getHours();
+        const open = h >= 8 && h < 23;
+        statusBadge.textContent = open ? 'مفتوح الآن' : 'مغلق';
+        statusBadge.classList.toggle('closed', !open);
+    }
+
+    renderProducts();
+    updateCartUI();
+    setStatus();
+})();
 </script>
 </body>
 </html>
