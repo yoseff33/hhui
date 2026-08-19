@@ -24,6 +24,7 @@
             <button data-category="coffee">قهوة</button>
             <button data-category="cold">مشروبات باردة</button>
             <button data-category="sweets">حلويات</button>
+            <button data-category="other">أخرى</button>
         </div>
 
         <!-- قائمة المنتجات -->
@@ -31,7 +32,7 @@
     </div>
 
     <!-- زر السلة العائم -->
-    <button class="cart-fab" id="cartFab">
+    <button class="cart-fab hidden" id="cartFab">
         <span>🛒 سلة الطلبات</span>
         <span id="cartCount">0</span>
     </button>
@@ -48,7 +49,7 @@
             <label>ملاحظة <input name="notes" maxlength="500"></label>
             <button class="primary" type="submit">تأكيد الطلب</button>
         </form>
-        <button class="secondary" id="clearCart">تفريغ السلة</button>
+        <button class="secondary" id="clearCart" style="margin-top:10px;width:100%">تفريغ السلة</button>
     </dialog>
 
     <div id="toast" class="toast"></div>
@@ -60,10 +61,9 @@
             const $$ = s => document.querySelectorAll(s);
 
             let products = [];
-            let cart = {}; // { productId: quantity }
+            let cart = {};
             let currentCategory = 'all';
 
-            // وظائف مساعدة
             function toast(msg) {
                 const el = $('#toast');
                 el.textContent = msg;
@@ -71,11 +71,11 @@
                 setTimeout(() => el.classList.remove('show'), 3000);
             }
 
+            const esc = (v = '') => String(v).replace(/[&<>'"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[c]));
             function money(v) { return `${Number(v||0).toFixed(2)} ر.س`; }
 
-            // تحميل المنتجات
             async function loadProducts(category = 'all') {
-                let query = supabase.from('products').select('*').eq('active', true).order('sort_order');
+                let query = supabase.from('products').select('*').eq('active', true).order('sort_order').order('created_at');
                 if (category !== 'all') query = query.eq('category', category);
                 const { data, error } = await query;
                 if (error) { toast(error.message); return; }
@@ -84,15 +84,18 @@
                 updateCartUI();
             }
 
-            // عرض المنتجات
             function renderProducts() {
                 const container = $('#productList');
+                if (!products.length) {
+                    container.innerHTML = '<div class="message" style="text-align:center;padding:40px;color:#888;">لا توجد منتجات حالياً</div>';
+                    return;
+                }
                 container.innerHTML = products.map(p => `
                     <div class="product">
-                        <img src="${p.image_url || ''}" alt="${p.name}" onerror="this.style.display='none'">
+                        ${p.image_url ? `<img src="${esc(p.image_url)}" alt="${esc(p.name)}" onerror="this.onerror=null;this.src='';this.className='image-placeholder';this.alt='☕';">` : '<div class="image-placeholder" style="display:flex;align-items:center;justify-content:center;height:160px;font-size:40px;background:#f5f2eb;border-radius:12px 12px 0 0;">☕</div>'}
                         <div class="product-content">
-                            <h3>${p.name}</h3>
-                            <p>${p.description || ''}</p>
+                            <h3>${esc(p.name)}</h3>
+                            <p>${esc(p.description || '')}</p>
                             <span class="price">${money(p.price)}</span>
                             ${p.popular ? '<span class="badge">الأكثر طلباً</span>' : ''}
                         </div>
@@ -100,7 +103,6 @@
                     </div>
                 `).join('');
 
-                // إضافة مستمع للأزرار
                 container.querySelectorAll('.add').forEach(btn => {
                     btn.addEventListener('click', () => {
                         const id = btn.dataset.id;
@@ -108,45 +110,44 @@
                         if (!product) return;
                         cart[id] = (cart[id] || 0) + 1;
                         updateCartUI();
-                        toast(`تم إضافة ${product.name}`);
+                        toast(`تمت إضافة ${product.name}`);
                     });
                 });
             }
 
-            // تحديث واجهة السلة
             function updateCartUI() {
                 const count = Object.values(cart).reduce((a, b) => a + b, 0);
                 $('#cartCount').textContent = count;
                 $('#cartFab').classList.toggle('hidden', count === 0);
-                // إذا كانت السلة مفتوحة، حدث المحتوى
                 if ($('#cartModal').open) renderCartItems();
             }
 
-            // عرض محتويات السلة
             function renderCartItems() {
                 const container = $('#cartItems');
-                const total = products.reduce((sum, p) => sum + (cart[p.id] || 0) * p.price, 0);
+                const total = Object.entries(cart).reduce((sum, [id, qty]) => {
+                    const p = products.find(pr => pr.id === id);
+                    return sum + (p ? qty * p.price : 0);
+                }, 0);
                 $('#cartTotal').textContent = money(total);
 
                 if (Object.keys(cart).length === 0) {
-                    container.innerHTML = '<p class="muted">السلة فارغة</p>';
+                    container.innerHTML = '<p class="muted" style="text-align:center;padding:20px 0;">السلة فارغة</p>';
                     return;
                 }
                 container.innerHTML = Object.entries(cart).map(([id, qty]) => {
                     const p = products.find(pr => pr.id === id);
                     if (!p) return '';
                     return `
-                        <div class="cart-item">
-                            <span>${p.name} × ${qty}</span>
+                        <div class="cart-item" style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #eee;">
+                            <span>${esc(p.name)} × ${qty}</span>
                             <span>${money(qty * p.price)}
-                                <button class="danger small" data-id="${id}" data-action="remove">-</button>
+                                <button class="danger small" data-id="${id}" data-action="remove" style="margin-right:8px;">-</button>
                                 <button class="primary small" data-id="${id}" data-action="add">+</button>
                             </span>
                         </div>
                     `;
                 }).join('');
 
-                // مستمعات أزرار +/- في السلة
                 container.querySelectorAll('[data-action]').forEach(btn => {
                     btn.addEventListener('click', () => {
                         const id = btn.dataset.id;
@@ -162,7 +163,6 @@
                 });
             }
 
-            // إرسال الطلب عبر دالة create_order
             async function submitOrder(e) {
                 e.preventDefault();
                 const form = e.currentTarget;
@@ -177,20 +177,26 @@
                     p_items: items
                 };
 
+                const submitBtn = form.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'جاري الإرسال...';
+
                 try {
                     const { data, error } = await supabase.rpc('create_order', payload);
                     if (error) throw error;
-                    toast(`تم إنشاء الطلب رقم #${data}`);
+                    toast(`تم تسجيل الطلب بنجاح رقم #${data?.order_number || data}`);
                     cart = {};
                     updateCartUI();
                     form.reset();
                     $('#cartModal').close();
                 } catch (err) {
                     toast('فشل الطلب: ' + err.message);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'تأكيد الطلب';
                 }
             }
 
-            // تفريغ السلة
             function clearCart() {
                 cart = {};
                 updateCartUI();
@@ -198,11 +204,9 @@
                 toast('تم تفريغ السلة');
             }
 
-            // ---- الأحداث ----
             document.addEventListener('DOMContentLoaded', () => {
                 loadProducts();
 
-                // فلتر التصنيفات
                 $('#filterChips').addEventListener('click', e => {
                     const btn = e.target.closest('[data-category]');
                     if (!btn) return;
@@ -212,22 +216,17 @@
                     loadProducts(currentCategory);
                 });
 
-                // فتح السلة
                 $('#cartFab').addEventListener('click', () => {
                     renderCartItems();
                     $('#cartModal').showModal();
                 });
 
-                // إغلاق المودال
                 document.addEventListener('click', e => {
                     const close = e.target.closest('[data-close]');
                     if (close) document.getElementById(close.dataset.close).close();
                 });
 
-                // إرسال الطلب
                 $('#orderForm').addEventListener('submit', submitOrder);
-
-                // تفريغ السلة
                 $('#clearCart').addEventListener('click', clearCart);
             });
         })();
