@@ -13,7 +13,6 @@
         const $ = s => document.querySelector(s);
         const $$ = s => document.querySelectorAll(s);
 
-        // دوال مساعدة
         const esc = (v = '') => String(v).replace(/[&<>'"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[c]));
         const money = v => `${Number(v || 0).toFixed(2)} ر.س`;
 
@@ -21,7 +20,6 @@
         let currentUserRole = '';
         let selectedFile = null;
 
-        // Toast
         function toast(t) {
             const e = $('#toast');
             e.textContent = t;
@@ -29,7 +27,6 @@
             setTimeout(() => e.classList.remove('show'), 3000);
         }
 
-        // ---- المصادقة ----
         async function boot() {
             const { data: { session } } = await supabase.auth.getSession();
             if (!session) return showLogin();
@@ -42,7 +39,6 @@
         }
 
         async function enter(user) {
-            // جلب صلاحية المستخدم من جدول profiles
             const { data: profile, error } = await supabase
                 .from('profiles')
                 .select('role')
@@ -65,11 +61,9 @@
 
             $('#loginView').classList.add('hidden');
             $('#dashboardView').classList.remove('hidden');
-            // عرض البريد الإلكتروني من جلسة المستخدم (لأنه غير موجود في profiles)
             $('#adminEmail').textContent = user.email;
             $('#adminRole').textContent = `الصلاحية: ${currentUserRole === 'admin' ? 'أدمن كامل' : 'مشرف'}`;
 
-            // إخفاء تبويب المستخدمين إذا كان مشرف
             if (currentUserRole !== 'admin') {
                 $('#usersTab').style.display = 'none';
             }
@@ -78,16 +72,14 @@
             if (currentUserRole === 'admin') loadUsers();
         }
 
-        // ---- تحميل المنتجات ----
         async function loadProducts() {
             const { data, error } = await supabase.from('products').select('*').order('sort_order').order('created_at');
             if (error) return toast(error.message);
             products = data || [];
             $('#productStat').textContent = products.length;
-            $('#productsTable').innerHTML = `<table><thead><tr><th>الصورة</th><th>المنتج</th><th>السعر</th><th>التصنيف</th><th>الحالة</th><th></th></tr></thead><tbody>${products.map(p => `<tr><td>${p.image_url ? `<img src="${esc(p.image_url)}" alt="">` : '☕'}</td><td><b>${esc(p.name)}</b><div class="muted">${esc(p.description || '')}</div></td><td>${money(p.price)}</td><td>${esc(p.category)}</td><td>${p.active ? 'ظاهر' : 'مخفي'}</td><td><button class="secondary" data-edit="${p.id}">تعديل</button> <button class="danger" data-delete="${p.id}">حذف</button></td></tr>`).join('')}</tbody></table>`;
+            $('#productsTable').innerHTML = `<table><thead><tr><th>الصورة</th><th>المنتج</th><th>السعر</th><th>التصنيف</th><th>الحالة</th><th></th></tr></thead><tbody>${products.map(p => `<tr><td>${p.image_url ? `<img src="${esc(p.image_url)}" alt="" style="width:45px;height:45px;object-fit:cover;border-radius:8px">` : '☕'}</td><td><b>${esc(p.name)}</b><div class="muted">${esc(p.description || '')}</div></td><td>${money(p.price)}</td><td>${esc(p.category)}</td><td>${p.active ? 'ظاهر' : 'مخفي'}</td><td><button class="secondary" data-edit="${p.id}">تعديل</button> <button class="danger" data-delete="${p.id}">حذف</button></td></tr>`).join('')}</tbody></table>`;
         }
 
-        // ---- تحميل الطلبات ----
         async function loadOrders() {
             const { data, error } = await supabase.from('orders')
                 .select('id,order_number,customer_name,customer_phone,notes,total,status,created_at,order_items(quantity,unit_price,product_name)')
@@ -102,7 +94,6 @@
             $('#ordersTable').innerHTML = `<table><thead><tr><th>الطلب</th><th>العميل</th><th>التفاصيل</th><th>الإجمالي</th><th>الحالة</th><th>الوقت</th></tr></thead><tbody>${orders.map(o => `<tr><td>#${o.order_number}</td><td>${esc(o.customer_name)}<div class="muted">${esc(o.customer_phone)}</div></td><td class="order-items">${(o.order_items || []).map(i => `${esc(i.product_name)} × ${i.quantity}`).join('<br>')}${o.notes ? `<br>ملاحظة: ${esc(o.notes)}` : ''}</td><td>${money(o.total)}</td><td><select class="status-select" data-order="${o.id}">${[['new','جديد'],['accepted','مقبول'],['preparing','قيد التحضير'],['ready','جاهز'],['completed','مكتمل'],['cancelled','ملغي']].map(([v,l]) => `<option value="${v}" ${o.status === v ? 'selected' : ''}>${l}</option>`).join('')}</select></td><td>${new Date(o.created_at).toLocaleString('ar-SA')}</td></tr>`).join('')}</tbody></table>`;
         }
 
-        // ---- تحميل الإعدادات ----
         async function loadSettings() {
             const { data } = await supabase.from('store_settings').select('*').eq('id', 1).single();
             if (!data) return;
@@ -111,49 +102,39 @@
             f.elements.is_open.checked = data.is_open;
         }
 
-        // ---- تحميل المستخدمين (للأدمن فقط) ----
         async function loadUsers() {
             if (currentUserRole !== 'admin') return;
             const { data, error } = await supabase.from('profiles').select('id, role, created_at').order('created_at');
             if (error) return toast(error.message);
             const users = data || [];
-            // بما أننا لا نملك البريد الإلكتروني في profiles، نعرض id مختصراً أو نستخدم auth.users (لكن يحتاج خدمة)
-            // سنعرض id مختصر (أول 8 خانات) كبديل.
             $('#usersTable').innerHTML = `<table><thead><tr><th>المعرف</th><th>الصلاحية</th><th>تاريخ التسجيل</th><th>تغيير الصلاحية</th></tr></thead><tbody>${users.map(u => `<tr><td>${u.id.substring(0,8)}...</td><td>${u.role === 'admin' ? 'أدمن' : u.role === 'manager' ? 'مشرف' : 'عميل'}</td><td>${new Date(u.created_at).toLocaleDateString('ar-SA')}</td><td><select class="user-role-select" data-user="${u.id}"><option value="customer" ${u.role === 'customer' ? 'selected' : ''}>عميل</option><option value="manager" ${u.role === 'manager' ? 'selected' : ''}>مشرف</option><option value="admin" ${u.role === 'admin' ? 'selected' : ''}>أدمن</option></select></td></tr>`).join('')}</tbody></table>`;
         }
 
-        // ---- رفع الصورة إلى Storage ----
         async function uploadImage(file) {
-            if (!cfg.storageBucket) {
-                toast('يجب تحديد اسم bucket في config.js');
-                return null;
-            }
+            const bucketName = cfg.storageBucket || 'products';
             const fileExt = file.name.split('.').pop();
-            const fileName = `${Date.now()}.${fileExt}`;
+            const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
             const filePath = `${fileName}`;
             const { data, error } = await supabase.storage
-                .from(cfg.storageBucket)
+                .from(bucketName)
                 .upload(filePath, file, { cacheControl: '3600', upsert: false });
             if (error) {
                 toast('فشل رفع الصورة: ' + error.message);
                 return null;
             }
-            const { data: urlData } = supabase.storage.from(cfg.storageBucket).getPublicUrl(filePath);
+            const { data: urlData } = supabase.storage.from(bucketName).getPublicUrl(filePath);
             return urlData.publicUrl;
         }
 
-        // ---- حذف صورة من Storage ----
         async function deleteImage(imageUrl) {
             if (!imageUrl) return;
+            const bucketName = cfg.storageBucket || 'products';
             const fileName = imageUrl.split('/').pop();
             if (!fileName) return;
-            const { error } = await supabase.storage.from(cfg.storageBucket).remove([fileName]);
+            const { error } = await supabase.storage.from(bucketName).remove([fileName]);
             if (error) console.warn('فشل حذف الصورة:', error.message);
         }
 
-        // ---- أحداث (Event Listeners) ----
-
-        // تسجيل الدخول
         $('#loginForm').addEventListener('submit', async e => {
             e.preventDefault();
             $('#loginError').textContent = '';
@@ -166,13 +147,11 @@
             await enter(data.user);
         });
 
-        // خروج
         $('#logout').addEventListener('click', async () => {
             await supabase.auth.signOut();
             showLogin();
         });
 
-        // تبديل التبويبات
         document.querySelector('.admin-tabs').addEventListener('click', e => {
             const b = e.target.closest('[data-tab]');
             if (!b) return;
@@ -183,7 +162,6 @@
             if (b.dataset.tab === 'usersPane' && currentUserRole === 'admin') loadUsers();
         });
 
-        // فتح محرر المنتج
         $('#newProduct').addEventListener('click', () => {
             $('#productForm').reset();
             $('#productForm').elements.active.checked = true;
@@ -195,7 +173,6 @@
             $('#productEditor').showModal();
         });
 
-        // تحميل الصورة عند اختيار ملف
         $('#productImage').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -209,7 +186,6 @@
             reader.readAsDataURL(file);
         });
 
-        // تعديل/حذف المنتج
         $('#productsTable').addEventListener('click', async e => {
             const edit = e.target.closest('[data-edit]');
             const del = e.target.closest('[data-delete]');
@@ -217,7 +193,6 @@
                 const p = products.find(x => x.id === edit.dataset.edit);
                 if (!p) return toast('المنتج غير موجود');
                 const f = $('#productForm');
-                // تعبئة الحقول
                 f.elements.id.value = p.id;
                 f.elements.name.value = p.name || '';
                 f.elements.description.value = p.description || '';
@@ -225,7 +200,6 @@
                 f.elements.category.value = p.category || 'other';
                 f.elements.popular.checked = !!p.popular;
                 f.elements.active.checked = !!p.active;
-                // الصورة
                 if (p.image_url) {
                     $('#imagePreview').src = p.image_url;
                     $('#imagePreview').style.display = 'block';
@@ -249,20 +223,21 @@
             }
         });
 
-        // حفظ المنتج (إضافة أو تعديل)
         $('#productForm').addEventListener('submit', async e => {
             e.preventDefault();
+            const submitBtn = e.currentTarget.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'جاري الحفظ...';
+
             const f = e.currentTarget;
             const fd = new FormData(f);
             const id = fd.get('id');
 
-            // رفع الصورة إذا تم اختيار ملف جديد
             let imageUrl = $('#imageUrlInput').value || null;
             if (selectedFile) {
                 const uploadedUrl = await uploadImage(selectedFile);
                 if (uploadedUrl) {
-                    // حذف الصورة القديمة إذا وجدت
-                    if (id && imageUrl) {
+                    if (id && imageUrl && imageUrl !== uploadedUrl) {
                         await deleteImage(imageUrl);
                     }
                     imageUrl = uploadedUrl;
@@ -281,20 +256,21 @@
 
             const q = id ? supabase.from('products').update(row).eq('id', id) : supabase.from('products').insert(row);
             const { error } = await q;
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'حفظ المنتج';
+
             if (error) return toast(error.message);
             $('#productEditor').close();
-            toast('تم حفظ المنتج');
+            toast('تم حفظ المنتج بنجاح');
             loadProducts();
         });
 
-        // تحديث حالة الطلب
         $('#ordersTable').addEventListener('change', async e => {
             if (!e.target.matches('[data-order]')) return;
             const { error } = await supabase.from('orders').update({ status: e.target.value }).eq('id', e.target.dataset.order);
             error ? toast(error.message) : toast('تم تحديث الطلب');
         });
 
-        // حفظ الإعدادات
         $('#settingsForm').addEventListener('submit', async e => {
             e.preventDefault();
             const f = e.currentTarget;
@@ -311,7 +287,6 @@
             error ? toast(error.message) : toast('تم حفظ الإعدادات');
         });
 
-        // تغيير صلاحية المستخدم (للأدمن فقط)
         $('#usersTable').addEventListener('change', async e => {
             if (!e.target.matches('.user-role-select')) return;
             if (currentUserRole !== 'admin') return toast('لا تملك صلاحية');
@@ -321,16 +296,17 @@
             error ? toast(error.message) : toast('تم تحديث الصلاحية');
         });
 
-        // تحديث المستخدمين
         $('#refreshUsers').addEventListener('click', () => loadUsers());
         $('#refreshOrders').addEventListener('click', loadOrders);
 
-        // إغلاق المودال
         document.addEventListener('click', e => {
             const b = e.target.closest('[data-close]');
             if (b) document.getElementById(b.dataset.close).close();
         });
 
+        boot();
+    });
+})();
         // بدء التطبيق
         boot();
     });
