@@ -441,7 +441,7 @@
             align-items: center;
         }
 
-        /* Stories Viewer */
+        /* Stories Viewer with Tap Controls */
         #storyViewer {
             width: 100vw;
             height: 100vh;
@@ -460,7 +460,7 @@
             height: 3px;
             background: rgba(255,255,255,0.25);
             border-radius: 3px;
-            z-index: 10;
+            z-index: 20;
             overflow: hidden;
         }
         .story-progress-fill {
@@ -469,6 +469,18 @@
             background: #fff;
             transition: width 0.1s linear;
         }
+        .story-tap-area {
+            position: absolute;
+            top: 40px;
+            bottom: 90px;
+            width: 50%;
+            z-index: 15;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        #storyTapLeft { left: 0; }
+        #storyTapRight { right: 0; }
+
         .story-viewer-img {
             width: 100%;
             height: 100%;
@@ -483,7 +495,7 @@
             padding: 16px;
             border-radius: 14px;
             backdrop-filter: blur(8px);
-            z-index: 10;
+            z-index: 20;
             color: #fff;
         }
         .story-viewer-close {
@@ -498,7 +510,7 @@
             border-radius: 50%;
             font-size: 20px;
             cursor: pointer;
-            z-index: 20;
+            z-index: 30;
         }
 
         .toast {
@@ -525,6 +537,7 @@
 <body>
 
     <header class="hero">
+        <a class="admin-link" href="admin.html">الإدارة</a>
         <div class="logo-wrap" id="brandLogoContainer">
             <span class="logo-letter" id="brandLetter">V</span>
         </div>
@@ -678,10 +691,14 @@
         </form>
     </dialog>
 
-    <!-- Story Viewer Dialog -->
+    <!-- Story Viewer Dialog with Tap Controls -->
     <dialog id="storyViewer">
         <button class="story-viewer-close" id="closeStory">×</button>
         <div class="story-progress-bar"><div class="story-progress-fill" id="storyProgress"></div></div>
+        
+        <div class="story-tap-area" id="storyTapLeft" title="السابق"></div>
+        <div class="story-tap-area" id="storyTapRight" title="التالي"></div>
+
         <img id="storyViewerImg" class="story-viewer-img" src="" alt="">
         <div class="story-viewer-info">
             <h3 id="storyViewerTitle" style="margin:0 0 4px;font-size:15px;"></h3>
@@ -766,6 +783,13 @@
             }
 
             function openStory(idx) {
+                if (idx < 0) idx = 0
+                if (idx >= stories.length) {
+                    clearInterval(storyTimer)
+                    $('#storyViewer').close()
+                    return
+                }
+
                 currentStoryIndex = idx
                 const s = stories[idx]
                 if (!s) return
@@ -773,25 +797,53 @@
                 $('#storyViewerImg').src = s.image_url
                 $('#storyViewerTitle').textContent = s.title
                 $('#storyViewerTag').textContent = s.tag || 'جديد'
-                $('#storyViewer').showModal()
+                
+                if (!$('#storyViewer').open) {
+                    $('#storyViewer').showModal()
+                }
 
                 const fill = $('#storyProgress')
                 fill.style.width = '0%'
                 let progress = 0
                 clearInterval(storyTimer)
+
                 storyTimer = setInterval(() => {
                     progress += 2
                     fill.style.width = `${progress}%`
                     if (progress >= 100) {
                         clearInterval(storyTimer)
-                        if (currentStoryIndex + 1 < stories.length) {
-                            openStory(currentStoryIndex + 1)
-                        } else {
-                            $('#storyViewer').close()
-                        }
+                        nextStory()
                     }
                 }, 100)
             }
+
+            function nextStory() {
+                clearInterval(storyTimer)
+                if (currentStoryIndex + 1 < stories.length) {
+                    openStory(currentStoryIndex + 1)
+                } else {
+                    $('#storyViewer').close()
+                }
+            }
+
+            function prevStory() {
+                clearInterval(storyTimer)
+                if (currentStoryIndex > 0) {
+                    openStory(currentStoryIndex - 1)
+                } else {
+                    openStory(0)
+                }
+            }
+
+            $('#storyTapRight').addEventListener('click', e => {
+                e.stopPropagation()
+                nextStory()
+            })
+
+            $('#storyTapLeft').addEventListener('click', e => {
+                e.stopPropagation()
+                prevStory()
+            })
 
             $('#closeStory').addEventListener('click', () => {
                 clearInterval(storyTimer)
