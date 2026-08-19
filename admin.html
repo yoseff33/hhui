@@ -1,35 +1,142 @@
+<!-- admin.html -->
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Vibes | لوحة التحكم</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js" defer></script>
-  <script src="config.js" defer></script><script src="admin.js" defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Vibes | لوحة التحكم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js">
+    </script>
+    <script src="config.js"></script>
+    <script src="admin.js"></script>
 </head>
 <body class="admin-body">
-  <main class="admin-container">
-    <section id="loginView" class="login-card">
-      <div class="logo">V</div><h1>دخول الإدارة</h1><p class="muted">استخدم حساب الأدمن المسجل في Supabase</p>
-      <form id="loginForm">
-        <label>البريد الإلكتروني<input name="email" type="email" required autocomplete="username"></label>
-        <label>كلمة المرور<input name="password" type="password" required autocomplete="current-password"></label>
-        <button class="primary" type="submit">دخول</button>
-      </form><p id="loginError" class="error"></p><a href="index.html">العودة للمتجر</a>
-    </section>
+    <main class="admin-container">
 
-    <section id="dashboardView" class="hidden">
-      <header class="dashboard-head"><div><h1>لوحة تحكم Vibes</h1><p id="adminEmail" class="muted"></p></div><div class="actions"><a class="secondary" href="index.html">عرض المتجر</a><button id="logout" class="danger">خروج</button></div></header>
-      <div class="stats"><article><span>المنتجات</span><b id="productStat">0</b></article><article><span>طلبات اليوم</span><b id="orderStat">0</b></article><article><span>مبيعات اليوم</span><b id="salesStat">0 ر.س</b></article></div>
-      <div class="admin-tabs"><button class="active" data-tab="ordersPane">الطلبات</button><button data-tab="productsPane">المنتجات</button><button data-tab="settingsPane">الإعدادات</button></div>
+        <!-- ====== LOGIN VIEW ====== -->
+        <section id="loginView" class="login-card">
+            <div class="logo">V</div>
+            <h1>دخول الإدارة</h1>
+            <p class="muted">استخدم حساب الأدمن المسجل في Supabase</p>
+            <form id="loginForm">
+                <label>البريد الإلكتروني
+                    <input name="email" type="email" required autocomplete="username">
+                </label>
+                <label>كلمة المرور
+                    <input name="password" type="password" required autocomplete="current-password">
+                </label>
+                <button class="primary" type="submit">دخول</button>
+            </form>
+            <p id="loginError" class="error"></p>
+            <a href="index.html">العودة للمتجر</a>
+        </section>
 
-      <section id="ordersPane" class="pane"><div class="section-head"><h2>الطلبات</h2><button id="refreshOrders" class="secondary">تحديث</button></div><div id="ordersTable" class="table-wrap"></div></section>
-      <section id="productsPane" class="pane hidden"><div class="section-head"><h2>المنتجات</h2><button id="newProduct" class="primary small">+ منتج جديد</button></div><div id="productsTable" class="table-wrap"></div></section>
-      <section id="settingsPane" class="pane hidden"><h2>إعدادات المتجر</h2><form id="settingsForm" class="card-form"><label>رقم واتساب (بصيغة دولية بدون +)<input name="whatsapp_number" required pattern="[0-9]{8,15}"></label><label>اسم المتجر<input name="store_name" required maxlength="80"></label><label>يفتح الساعة<input name="open_hour" type="number" min="0" max="23" required></label><label>يغلق الساعة<input name="close_hour" type="number" min="0" max="23" required></label><label class="check"><input name="is_open" type="checkbox"> استقبال الطلبات مفعل</label><button class="primary" type="submit">حفظ الإعدادات</button></form></section>
-    </section>
-  </main>
+        <!-- ====== DASHBOARD ====== -->
+        <section id="dashboardView" class="hidden">
+            <header class="dashboard-head">
+                <div>
+                    <h1>لوحة تحكم Vibes</h1>
+                    <p id="adminEmail" class="muted"></p>
+                </div>
+                <div class="actions">
+                    <a class="secondary" href="index.html">عرض المتجر</a>
+                    <button id="logout" class="danger">خروج</button>
+                </div>
+            </header>
 
-  <dialog id="productEditor" class="modal"><button class="close" data-close="productEditor">×</button><h2 id="editorTitle">منتج جديد</h2><form id="productForm" class="card-form"><input name="id" type="hidden"><label>اسم المنتج<input name="name" required maxlength="100"></label><label>الوصف<textarea name="description" maxlength="300"></textarea></label><label>السعر<input name="price" type="number" min="0" step="0.01" required></label><label>التصنيف<select name="category" required><option value="coffee">القهوة</option><option value="cold">مشروبات باردة</option><option value="sweets">الحلويات</option><option value="other">أخرى</option></select></label><label>رابط الصورة<input name="image_url" type="url" placeholder="https://..."></label><label class="check"><input name="popular" type="checkbox"> الأكثر طلبًا</label><label class="check"><input name="active" type="checkbox" checked> ظاهر في المتجر</label><button class="primary" type="submit">حفظ المنتج</button></form></dialog>
-  <div id="toast" class="toast"></div>
-</body></html>
+            <div class="stats">
+                <article><span>المنتجات</span><b id="productStat">0</b></article>
+                <article><span>طلبات اليوم</span><b id="orderStat">0</b></article>
+                <article><span>مبيعات اليوم</span><b id="salesStat">0 ر.س</b></article>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="active" data-tab="ordersPane">الطلبات</button>
+                <button data-tab="productsPane">المنتجات</button>
+                <button data-tab="settingsPane">الإعدادات</button>
+            </div>
+
+            <!-- ORDERS -->
+            <section id="ordersPane" class="pane">
+                <div class="section-head">
+                    <h2>الطلبات</h2>
+                    <button id="refreshOrders" class="secondary">تحديث</button>
+                </div>
+                <div id="ordersTable" class="table-wrap"></div>
+            </section>
+
+            <!-- PRODUCTS -->
+            <section id="productsPane" class="pane hidden">
+                <div class="section-head">
+                    <h2>المنتجات</h2>
+                    <button id="newProduct" class="primary small">+ منتج جديد</button>
+                </div>
+                <div id="productsTable" class="table-wrap"></div>
+            </section>
+
+            <!-- SETTINGS -->
+            <section id="settingsPane" class="pane hidden">
+                <h2>إعدادات المتجر</h2>
+                <form id="settingsForm" class="card-form">
+                    <label>رقم واتساب (بصيغة دولية بدون +)
+                        <input name="whatsapp_number" required pattern="[0-9]{8,15}">
+                    </label>
+                    <label>اسم المتجر
+                        <input name="store_name" required maxlength="80">
+                    </label>
+                    <label>يفتح الساعة
+                        <input name="open_hour" type="number" min="0" max="23" required>
+                    </label>
+                    <label>يغلق الساعة
+                        <input name="close_hour" type="number" min="0" max="23" required>
+                    </label>
+                    <label class="check">
+                        <input name="is_open" type="checkbox"> استقبال الطلبات مفعل
+                    </label>
+                    <button class="primary" type="submit">حفظ الإعدادات</button>
+                </form>
+            </section>
+        </section>
+    </main>
+
+    <!-- ====== PRODUCT EDITOR MODAL ====== -->
+    <dialog id="productEditor" class="modal">
+        <button class="close" data-close="productEditor">×</button>
+        <h2 id="editorTitle">منتج جديد</h2>
+        <form id="productForm" class="card-form">
+            <input name="id" type="hidden">
+            <label>اسم المنتج
+                <input name="name" required maxlength="100">
+            </label>
+            <label>الوصف
+                <textarea name="description" maxlength="300"></textarea>
+            </label>
+            <label>السعر
+                <input name="price" type="number" min="0" step="0.01" required>
+            </label>
+            <label>التصنيف
+                <select name="category" required>
+                    <option value="coffee">القهوة</option>
+                    <option value="cold">مشروبات باردة</option>
+                    <option value="sweets">الحلويات</option>
+                    <option value="other">أخرى</option>
+                </select>
+            </label>
+            <label>رابط الصورة
+                <input name="image_url" type="url" placeholder="https://...">
+            </label>
+            <label class="check">
+                <input name="popular" type="checkbox"> الأكثر طلبًا
+            </label>
+            <label class="check">
+                <input name="active" type="checkbox" checked> ظاهر في المتجر
+            </label>
+            <button class="primary" type="submit">حفظ المنتج</button>
+        </form>
+    </dialog>
+
+    <div id="toast" class="toast"></div>
+</body>
+</html>
