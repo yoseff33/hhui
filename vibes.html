@@ -1,31 +1,236 @@
-<!DOCTYPE html>
-<html dir="rtl">
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>Vibes</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js"></script>
-  <script src="config.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Vibes | كوفي شوب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js"></script>
+    <script src="config.js"></script>
 </head>
 <body>
-  <div class="container">
-    <div class="products" id="productList"></div>
-  </div>
-  <script>
-    (async () => {
-      const supabase = window.supabase.createClient(VIBES_CONFIG.supabaseUrl, VIBES_CONFIG.supabaseAnonKey);
-      const { data: products } = await supabase.from('products').select('*').eq('active', true).order('sort_order');
-      document.getElementById('productList').innerHTML = products.map(p => `
-        <div class="product">
-          <img src="${p.image_url || ''}" alt="${p.name}" style="width:100%;aspect-ratio:1;object-fit:cover;background:#eadfd4;">
-          <div class="product-content">
-            <h3>${p.name}</h3>
-            <p>${p.description || ''}</p>
-            <span class="price">${Number(p.price).toFixed(2)} ر.س</span>
-          </div>
+    <header class="hero">
+        <div class="logo">V</div>
+        <h1>Vibes</h1>
+        <p>قهوة • حلويات • أجواء</p>
+        <a class="admin-link" href="admin.html">إدارة</a>
+    </header>
+
+    <div class="container">
+        <!-- فلتر التصنيفات -->
+        <div class="chips" id="filterChips">
+            <button class="active" data-category="all">الكل</button>
+            <button data-category="coffee">قهوة</button>
+            <button data-category="cold">مشروبات باردة</button>
+            <button data-category="sweets">حلويات</button>
         </div>
-      `).join('');
-    })();
-  </script>
+
+        <!-- قائمة المنتجات -->
+        <div class="products" id="productList"></div>
+    </div>
+
+    <!-- زر السلة العائم -->
+    <button class="cart-fab" id="cartFab">
+        <span>🛒 سلة الطلبات</span>
+        <span id="cartCount">0</span>
+    </button>
+
+    <!-- مودال السلة والطلب -->
+    <dialog id="cartModal" class="modal">
+        <button class="close" data-close="cartModal">×</button>
+        <h2>سلة الطلبات</h2>
+        <div id="cartItems"></div>
+        <div class="total-line"><span>الإجمالي</span><span id="cartTotal">0.00 ر.س</span></div>
+        <form id="orderForm" class="order-form">
+            <label>الاسم <input name="customer_name" required></label>
+            <label>رقم الجوال <input name="customer_phone" required pattern="[0-9+() -]{8,20}"></label>
+            <label>ملاحظة <input name="notes" maxlength="500"></label>
+            <button class="primary" type="submit">تأكيد الطلب</button>
+        </form>
+        <button class="secondary" id="clearCart">تفريغ السلة</button>
+    </dialog>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        (() => {
+            const supabase = window.supabase.createClient(VIBES_CONFIG.supabaseUrl, VIBES_CONFIG.supabaseAnonKey);
+            const $ = s => document.querySelector(s);
+            const $$ = s => document.querySelectorAll(s);
+
+            let products = [];
+            let cart = {}; // { productId: quantity }
+            let currentCategory = 'all';
+
+            // وظائف مساعدة
+            function toast(msg) {
+                const el = $('#toast');
+                el.textContent = msg;
+                el.classList.add('show');
+                setTimeout(() => el.classList.remove('show'), 3000);
+            }
+
+            function money(v) { return `${Number(v||0).toFixed(2)} ر.س`; }
+
+            // تحميل المنتجات
+            async function loadProducts(category = 'all') {
+                let query = supabase.from('products').select('*').eq('active', true).order('sort_order');
+                if (category !== 'all') query = query.eq('category', category);
+                const { data, error } = await query;
+                if (error) { toast(error.message); return; }
+                products = data || [];
+                renderProducts();
+                updateCartUI();
+            }
+
+            // عرض المنتجات
+            function renderProducts() {
+                const container = $('#productList');
+                container.innerHTML = products.map(p => `
+                    <div class="product">
+                        <img src="${p.image_url || ''}" alt="${p.name}" onerror="this.style.display='none'">
+                        <div class="product-content">
+                            <h3>${p.name}</h3>
+                            <p>${p.description || ''}</p>
+                            <span class="price">${money(p.price)}</span>
+                            ${p.popular ? '<span class="badge">الأكثر طلباً</span>' : ''}
+                        </div>
+                        <button class="add" data-id="${p.id}">+</button>
+                    </div>
+                `).join('');
+
+                // إضافة مستمع للأزرار
+                container.querySelectorAll('.add').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = btn.dataset.id;
+                        const product = products.find(p => p.id === id);
+                        if (!product) return;
+                        cart[id] = (cart[id] || 0) + 1;
+                        updateCartUI();
+                        toast(`تم إضافة ${product.name}`);
+                    });
+                });
+            }
+
+            // تحديث واجهة السلة
+            function updateCartUI() {
+                const count = Object.values(cart).reduce((a, b) => a + b, 0);
+                $('#cartCount').textContent = count;
+                $('#cartFab').classList.toggle('hidden', count === 0);
+                // إذا كانت السلة مفتوحة، حدث المحتوى
+                if ($('#cartModal').open) renderCartItems();
+            }
+
+            // عرض محتويات السلة
+            function renderCartItems() {
+                const container = $('#cartItems');
+                const total = products.reduce((sum, p) => sum + (cart[p.id] || 0) * p.price, 0);
+                $('#cartTotal').textContent = money(total);
+
+                if (Object.keys(cart).length === 0) {
+                    container.innerHTML = '<p class="muted">السلة فارغة</p>';
+                    return;
+                }
+                container.innerHTML = Object.entries(cart).map(([id, qty]) => {
+                    const p = products.find(pr => pr.id === id);
+                    if (!p) return '';
+                    return `
+                        <div class="cart-item">
+                            <span>${p.name} × ${qty}</span>
+                            <span>${money(qty * p.price)}
+                                <button class="danger small" data-id="${id}" data-action="remove">-</button>
+                                <button class="primary small" data-id="${id}" data-action="add">+</button>
+                            </span>
+                        </div>
+                    `;
+                }).join('');
+
+                // مستمعات أزرار +/- في السلة
+                container.querySelectorAll('[data-action]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = btn.dataset.id;
+                        if (btn.dataset.action === 'add') {
+                            cart[id] = (cart[id] || 0) + 1;
+                        } else {
+                            cart[id] = (cart[id] || 0) - 1;
+                            if (cart[id] <= 0) delete cart[id];
+                        }
+                        updateCartUI();
+                        renderCartItems();
+                    });
+                });
+            }
+
+            // إرسال الطلب عبر دالة create_order
+            async function submitOrder(e) {
+                e.preventDefault();
+                const form = e.currentTarget;
+                const fd = new FormData(form);
+                const items = Object.entries(cart).map(([id, qty]) => ({ product_id: id, quantity: qty }));
+                if (items.length === 0) return toast('السلة فارغة');
+
+                const payload = {
+                    p_customer_name: fd.get('customer_name').trim(),
+                    p_customer_phone: fd.get('customer_phone').trim(),
+                    p_notes: fd.get('notes').trim() || null,
+                    p_items: items
+                };
+
+                try {
+                    const { data, error } = await supabase.rpc('create_order', payload);
+                    if (error) throw error;
+                    toast(`تم إنشاء الطلب رقم #${data}`);
+                    cart = {};
+                    updateCartUI();
+                    form.reset();
+                    $('#cartModal').close();
+                } catch (err) {
+                    toast('فشل الطلب: ' + err.message);
+                }
+            }
+
+            // تفريغ السلة
+            function clearCart() {
+                cart = {};
+                updateCartUI();
+                renderCartItems();
+                toast('تم تفريغ السلة');
+            }
+
+            // ---- الأحداث ----
+            document.addEventListener('DOMContentLoaded', () => {
+                loadProducts();
+
+                // فلتر التصنيفات
+                $('#filterChips').addEventListener('click', e => {
+                    const btn = e.target.closest('[data-category]');
+                    if (!btn) return;
+                    $$('#filterChips button').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentCategory = btn.dataset.category;
+                    loadProducts(currentCategory);
+                });
+
+                // فتح السلة
+                $('#cartFab').addEventListener('click', () => {
+                    renderCartItems();
+                    $('#cartModal').showModal();
+                });
+
+                // إغلاق المودال
+                document.addEventListener('click', e => {
+                    const close = e.target.closest('[data-close]');
+                    if (close) document.getElementById(close.dataset.close).close();
+                });
+
+                // إرسال الطلب
+                $('#orderForm').addEventListener('submit', submitOrder);
+
+                // تفريغ السلة
+                $('#clearCart').addEventListener('click', clearCart);
+            });
+        })();
+    </script>
 </body>
 </html>
