@@ -12,57 +12,95 @@
         :root {
             --primary: #c29a5b;
             --primary-dark: #9e7a40;
-            --bg: #0f1115;
-            --card-bg: #181b22;
-            --card-border: #262a34;
+            --bg: #0c0d10;
+            --card-bg: #14171d;
+            --card-border: #222631;
             --text: #f3f4f6;
-            --muted: #9ca3af;
+            --muted: #949ba8;
         }
         body {
             background-color: var(--bg);
             color: var(--text);
             font-family: 'Tajawal', sans-serif;
             margin: 0;
-            padding-bottom: 90px;
+            padding-bottom: 95px;
             -webkit-tap-highlight-color: transparent;
+        }
+        .svg-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            display: inline-block;
+            vertical-align: middle;
         }
         .hero {
             text-align: center;
-            padding: 24px 16px 12px;
-            background: linear-gradient(180deg, #1f232d 0%, var(--bg) 100%);
+            padding: 24px 16px 16px;
+            background: linear-gradient(180deg, #181b22 0%, var(--bg) 100%);
             position: relative;
         }
-        .hero .logo {
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            color: #000;
-            font-size: 26px;
-            font-weight: 900;
+        .logo-wrap {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 10px;
+            border-radius: 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 14px;
-            margin: 0 auto 8px;
+            overflow: hidden;
+        }
+        .logo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .logo-letter {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary);
         }
         .hero h1 { margin: 0; font-size: 24px; font-weight: 800; }
-        .hero p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+        .hero p { margin: 4px 0 12px; color: var(--muted); font-size: 13px; }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .social-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+        .social-btn:hover { border-color: var(--primary); color: var(--primary); }
+
         .admin-link {
             position: absolute;
             top: 16px;
             left: 16px;
             color: var(--muted);
             text-decoration: none;
-            font-size: 13px;
-            background: rgba(255,255,255,0.05);
+            font-size: 12px;
+            background: rgba(255,255,255,0.04);
             padding: 6px 12px;
             border-radius: 20px;
             border: 1px solid var(--card-border);
         }
 
-        /* --- Stories Bar --- */
+        /* Stories */
         .stories-wrapper {
-            padding: 10px 16px;
+            padding: 12px 16px;
             overflow-x: auto;
             display: flex;
             gap: 14px;
@@ -75,14 +113,14 @@
             align-items: center;
             cursor: pointer;
             flex-shrink: 0;
-            width: 72px;
+            width: 70px;
         }
         .story-ring {
-            width: 64px;
-            height: 64px;
+            width: 62px;
+            height: 62px;
             border-radius: 50%;
             padding: 2px;
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            background: linear-gradient(45deg, #c29a5b, #e0b879, #9e7a40);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -95,8 +133,8 @@
             border: 2px solid var(--bg);
         }
         .story-title {
-            font-size: 12px;
-            margin-top: 6px;
+            font-size: 11px;
+            margin-top: 5px;
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
@@ -105,7 +143,7 @@
             color: var(--text);
         }
 
-        /* --- Categories Chips --- */
+        /* Categories */
         .chips {
             display: flex;
             gap: 8px;
@@ -120,7 +158,7 @@
             border: 1px solid var(--card-border);
             padding: 8px 18px;
             border-radius: 25px;
-            font-size: 14px;
+            font-size: 13px;
             font-family: inherit;
             cursor: pointer;
             white-space: nowrap;
@@ -133,7 +171,7 @@
             border-color: var(--primary);
         }
 
-        /* --- Products Grid --- */
+        /* Products Grid */
         .products {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -148,14 +186,14 @@
             display: flex;
             flex-direction: column;
             cursor: pointer;
-            transition: transform 0.15s;
             position: relative;
+            transition: transform 0.15s;
         }
         .product-card:active { transform: scale(0.98); }
         .product-img-wrap {
             width: 100%;
             height: 140px;
-            background: #20242f;
+            background: #1b1e26;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -170,7 +208,7 @@
             position: absolute;
             top: 8px;
             right: 8px;
-            background: rgba(194, 154, 91, 0.9);
+            background: var(--primary);
             color: #000;
             font-size: 11px;
             font-weight: 800;
@@ -208,7 +246,7 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             display: flex;
             align-items: center;
@@ -216,7 +254,7 @@
             cursor: pointer;
         }
 
-        /* --- Floating Cart FAB --- */
+        /* Cart Floating Button */
         .cart-fab {
             position: fixed;
             bottom: 20px;
@@ -225,18 +263,17 @@
             background: var(--primary);
             color: #000;
             border: none;
-            padding: 14px 28px;
+            padding: 14px 26px;
             border-radius: 30px;
             font-weight: 800;
-            font-size: 16px;
+            font-size: 15px;
             font-family: inherit;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             box-shadow: 0 8px 24px rgba(194, 154, 91, 0.4);
             cursor: pointer;
             z-index: 90;
-            transition: 0.3s;
         }
         .cart-fab.hidden { display: none; }
         .cart-fab-badge {
@@ -244,10 +281,10 @@
             color: #fff;
             padding: 2px 8px;
             border-radius: 12px;
-            font-size: 13px;
+            font-size: 12px;
         }
 
-        /* --- Modals & Dialogs --- */
+        /* Dialogs */
         dialog {
             background: var(--card-bg);
             color: var(--text);
@@ -258,19 +295,19 @@
             padding: 20px;
             margin: auto;
         }
-        dialog::backdrop { background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); }
+        dialog::backdrop { background: rgba(0,0,0,0.85); backdrop-filter: blur(4px); }
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 16px;
         }
-        .modal-header h2 { margin: 0; font-size: 18px; }
+        .modal-header h2 { margin: 0; font-size: 17px; }
         .close-btn {
             background: transparent;
             border: none;
             color: var(--muted);
-            font-size: 24px;
+            font-size: 22px;
             cursor: pointer;
         }
         .detail-img {
@@ -280,17 +317,17 @@
             border-radius: 14px;
             margin-bottom: 12px;
         }
-        .input-group { margin-bottom: 14px; }
+        .input-group { margin-bottom: 12px; }
         .input-group label {
             display: block;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--muted);
             margin-bottom: 6px;
         }
-        .input-group input, .input-group select, .input-group textarea {
+        .input-group input, .input-group select {
             width: 100%;
             box-sizing: border-box;
-            background: #111318;
+            background: #0d0f13;
             border: 1px solid var(--card-border);
             color: #fff;
             padding: 12px;
@@ -305,7 +342,7 @@
             margin-bottom: 14px;
         }
         .order-type-btn {
-            background: #111318;
+            background: #0d0f13;
             border: 1px solid var(--card-border);
             color: var(--muted);
             padding: 10px 4px;
@@ -313,7 +350,10 @@
             font-size: 12px;
             cursor: pointer;
             font-family: inherit;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
         }
         .order-type-btn.active {
             background: var(--primary);
@@ -321,6 +361,7 @@
             font-weight: bold;
             border-color: var(--primary);
         }
+        .order-type-btn.active .svg-icon { fill: #000; }
         .primary-btn {
             width: 100%;
             background: var(--primary);
@@ -328,24 +369,28 @@
             border: none;
             padding: 14px;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 800;
             cursor: pointer;
             font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         .saved-customer-badge {
-            background: rgba(194, 154, 91, 0.15);
+            background: rgba(194, 154, 91, 0.12);
             color: var(--primary);
             padding: 8px 12px;
             border-radius: 10px;
-            font-size: 13px;
+            font-size: 12px;
             margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        /* --- Story Viewer Modal --- */
+        /* Story Viewer */
         #storyViewer {
             width: 100vw;
             height: 100vh;
@@ -362,7 +407,7 @@
             left: 15px;
             right: 15px;
             height: 3px;
-            background: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.25);
             border-radius: 3px;
             z-index: 10;
             overflow: hidden;
@@ -383,7 +428,7 @@
             bottom: 30px;
             left: 20px;
             right: 20px;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.65);
             padding: 16px;
             border-radius: 14px;
             backdrop-filter: blur(8px);
@@ -403,17 +448,16 @@
             cursor: pointer;
             z-index: 20;
         }
-
         .toast {
             position: fixed;
             bottom: 85px;
             left: 50%;
             transform: translateX(-50%);
-            background: #2a2f3b;
+            background: #242934;
             color: #fff;
             padding: 10px 20px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 13px;
             display: none;
             z-index: 100;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
@@ -424,13 +468,31 @@
 <body>
 
     <header class="hero">
-        <div class="logo">V</div>
-        <h1>Vibes</h1>
-        <p>قهوة مختصة • حلويات • استلام سيارة</p>
-        <a class="admin-link" href="admin.html">لوحة الإدارة</a>
+        <a class="admin-link" href="admin.html">الإدارة</a>
+        <div class="logo-wrap" id="brandLogoContainer">
+            <span class="logo-letter" id="brandLetter">V</span>
+        </div>
+        <h1 id="storeNameHeader">Vibes</h1>
+        <p id="storeDesc">Specialty Coffee & Sweets</p>
+
+        <!-- Social Media & Maps Infographics -->
+        <div class="social-links">
+            <a href="#" target="_blank" id="instagramLink" class="social-btn">
+                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <span>Instagram</span>
+            </a>
+            <a href="#" target="_blank" id="tiktokLink" class="social-btn">
+                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                <span>TikTok</span>
+            </a>
+            <a href="#" target="_blank" id="mapsLink" class="social-btn" style="display:none;">
+                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 5.688-9.06 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/></svg>
+                <span>الموقع</span>
+            </a>
+        </div>
     </header>
 
-    <!-- شريط القصص (الستوري) -->
+    <!-- شريط القصص -->
     <div class="stories-wrapper" id="storiesContainer"></div>
 
     <!-- تصنيفات المنيو -->
@@ -447,27 +509,28 @@
 
     <!-- زر السلة العائم -->
     <button class="cart-fab hidden" id="cartFab">
-        <span>🛒 سلة الطلب</span>
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M10 19.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5zm3.5-1.5c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm1.336-5l1.977-7h-16.813l2.938 7h11.898zm4.969-10l-3.432 12h-12.597l-.839-2h11.608l2.073-7.324-17.625-.676-.525-2h20.337z"/></svg>
+        <span>سلة الطلب</span>
         <span class="cart-fab-badge" id="cartCount">0</span>
         <span id="cartFabTotal">0 ر.س</span>
     </button>
 
-    <!-- مودال تفاصيل المنتج -->
+    <!-- مودال تفاصيل المشروب -->
     <dialog id="productModal">
         <div class="modal-header">
-            <h2 id="modalProdTitle">تفاصيل المشروب</h2>
+            <h2 id="modalProdTitle">تفاصيل المنتج</h2>
             <button class="close-btn" data-close="productModal">×</button>
         </div>
         <img id="modalProdImg" class="detail-img" src="" alt="">
-        <p id="modalProdDesc" style="color:var(--muted);font-size:14px;line-height:1.5;margin-bottom:12px;"></p>
+        <p id="modalProdDesc" style="color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:12px;"></p>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-            <span style="font-size:14px;color:var(--muted);">السعر</span>
+            <span style="font-size:13px;color:var(--muted);">السعر</span>
             <b id="modalProdPrice" style="color:var(--primary);font-size:20px;"></b>
         </div>
-        <button class="primary-btn" id="modalAddToCart">إضافة للسلة</button>
+        <button class="primary-btn" id="modalAddToCart">إضافة إلى السلة</button>
     </dialog>
 
-    <!-- مودال السلة والدفع واستلام السيارة -->
+    <!-- مودال السلة وإتمام الطلب -->
     <dialog id="cartModal">
         <div class="modal-header">
             <h2>إتمام الطلب</h2>
@@ -476,8 +539,7 @@
 
         <div id="cartItemsList" style="max-height:160px;overflow-y:auto;margin-bottom:12px;"></div>
 
-        <!-- ملخص الحساب -->
-        <div style="border-top:1px solid var(--card-border);padding-top:10px;margin-bottom:14px;font-size:14px;">
+        <div style="border-top:1px solid var(--card-border);padding-top:10px;margin-bottom:14px;font-size:13px;">
             <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
                 <span>مجموع الأصناف</span>
                 <span id="subTotalText">0.00 ر.س</span>
@@ -486,32 +548,39 @@
                 <span>رسوم التوصيل</span>
                 <span id="deliveryFeeText">0.00 ر.س</span>
             </div>
-            <div style="display:flex;justify-content:space-between;font-weight:800;font-size:16px;margin-top:6px;border-top:1px dashed var(--card-border);padding-top:6px;">
-                <span>الإجمالي النهائي</span>
+            <div style="display:flex;justify-content:space-between;font-weight:800;font-size:15px;margin-top:6px;border-top:1px dashed var(--card-border);padding-top:6px;">
+                <span>المجموع الكلي</span>
                 <span id="grandTotalText">0.00 ر.س</span>
             </div>
         </div>
 
-        <!-- اختيار نوع الاستلام -->
         <div class="input-group">
             <label>طريقة الاستلام</label>
             <div class="order-types" id="orderTypeSelector">
-                <button type="button" class="order-type-btn active" data-type="car">🚗 استلام سيارة</button>
-                <button type="button" class="order-type-btn" data-type="delivery">🛵 توصيل</button>
-                <button type="button" class="order-type-btn" data-type="pickup">☕ استلام فرع</button>
+                <button type="button" class="order-type-btn active" data-type="car">
+                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                    <span>استلام سيارة</span>
+                </button>
+                <button type="button" class="order-type-btn" data-type="delivery">
+                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 7c0-1.1-.9-2-2-2h-3v2h3v2.65L13.52 14H10V9H4c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h1c0 1.66 1.34 3 3 3s3-1.34 3-3h4c0 1.66 1.34 3 3 3s3-1.34 3-3h1c1.1 0 2-.9 2-2v-5l-3-4zM8 19c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm11 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+                    <span>توصيل</span>
+                </button>
+                <button type="button" class="order-type-btn" data-type="pickup">
+                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.9 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
+                    <span>استلام فرع</span>
+                </button>
             </div>
         </div>
 
         <form id="checkoutForm">
-            <!-- إشعار البيانات المحفوظة -->
             <div class="saved-customer-badge" id="savedInfoNotice" style="display:none;">
-                <span>⚡ تم استرجاع بياناتك تلقائياً</span>
-                <span style="cursor:pointer;text-decoration:underline;font-size:12px;" id="clearCustomerData">تعديل كجديد</span>
+                <span>تم استرجاع بياناتك المحفوظة</span>
+                <span style="cursor:pointer;text-decoration:underline;" id="clearCustomerData">تعديل</span>
             </div>
 
             <div class="input-group">
-                <label>الاسم الكريم</label>
-                <input type="text" name="customer_name" id="custName" required placeholder="مثال: يوسف المطيري">
+                <label>الاسم</label>
+                <input type="text" name="customer_name" id="custName" required placeholder="الاسم الكريم">
             </div>
 
             <div class="input-group">
@@ -519,11 +588,10 @@
                 <input type="tel" name="customer_phone" id="custPhone" required placeholder="05XXXXXXXX">
             </div>
 
-            <!-- حقول استلام السيارة -->
             <div id="carPickupFields">
                 <div class="input-group">
                     <label>نوع ولون السيارة</label>
-                    <input type="text" name="car_model" id="carModel" placeholder="مثال: تاهو أسود / كامري بيضاء">
+                    <input type="text" name="car_model" id="carModel" placeholder="مثال: يوكن أسود">
                 </div>
                 <div class="input-group">
                     <label>رقم أو حروف اللوحة</label>
@@ -531,20 +599,22 @@
                 </div>
             </div>
 
-            <!-- حقول التوصيل -->
             <div id="deliveryFields" style="display:none;">
                 <div class="input-group">
-                    <label>عنوان التوصيل أو اسم الحي</label>
-                    <input type="text" name="delivery_address" id="deliveryAddress" placeholder="الحي - الشارع - رقم المنزل">
+                    <label>عنوان التوصيل</label>
+                    <input type="text" name="delivery_address" id="deliveryAddress" placeholder="الحي - الشارع - رقم المبنى">
                 </div>
             </div>
 
             <div class="input-group">
-                <label>ملاحظات إضافية على الطلب</label>
-                <input type="text" name="order_notes" placeholder="بدون سكر / حليب بارد extra...">
+                <label>ملاحظات إضافية</label>
+                <input type="text" name="order_notes" placeholder="ملاحظات على الطلب...">
             </div>
 
-            <button type="submit" class="primary-btn" id="submitOrderBtn">📲 إرسال الطلب عبر واتساب</button>
+            <button type="submit" class="primary-btn" id="submitOrderBtn">
+                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                <span>إرسال الطلب عبر واتساب</span>
+            </button>
         </form>
     </dialog>
 
@@ -554,8 +624,8 @@
         <div class="story-progress-bar"><div class="story-progress-fill" id="storyProgress"></div></div>
         <img id="storyViewerImg" class="story-viewer-img" src="" alt="">
         <div class="story-viewer-info">
-            <h3 id="storyViewerTitle" style="margin:0 0 4px;font-size:16px;"></h3>
-            <span id="storyViewerTag" style="color:var(--primary);font-size:13px;font-weight:bold;"></span>
+            <h3 id="storyViewerTitle" style="margin:0 0 4px;font-size:15px;"></h3>
+            <span id="storyViewerTag" style="color:var(--primary);font-size:12px;font-weight:bold;"></span>
         </div>
     </dialog>
 
@@ -571,8 +641,9 @@
             let products = []
             let stories = []
             let cart = {}
+            let settings = null
             let selectedProduct = null
-            let orderType = 'car' // car | delivery | pickup
+            let orderType = 'car'
             let currentStoryIndex = 0
             let storyTimer = null
 
@@ -586,16 +657,33 @@
                 setTimeout(() => el.classList.remove('show'), 2800)
             }
 
-            // --- تحميل البيانات ---
             async function init() {
                 loadCustomerProfile()
-                await Promise.all([loadStories(), loadProducts()])
+                await Promise.all([loadSettings(), loadStories(), loadProducts()])
             }
 
-            // تحميل الستوري
+            async function loadSettings() {
+                const { data } = await supabase.from('store_settings').select('*').eq('id', 1).maybeSingle()
+                if (data) {
+                    settings = data
+                    if (data.store_name) $('#storeNameHeader').textContent = data.store_name
+                    if (data.logo_url) {
+                        $('#brandLogoContainer').innerHTML = `<img src="${esc(data.logo_url)}" alt="Logo">`
+                    }
+                    const ig = data.instagram_username || cfg.defaultInstagram || 'vibes.espresso'
+                    const tt = data.tiktok_username || cfg.defaultTiktok || 'vibes.espresso'
+                    $('#instagramLink').href = `https://instagram.com/${ig}`
+                    $('#tiktokLink').href = `https://tiktok.com/@${tt}`
+                    if (data.google_maps_url) {
+                        $('#mapsLink').href = data.google_maps_url
+                        $('#mapsLink').style.display = 'inline-flex'
+                    }
+                }
+            }
+
             async function loadStories() {
-                const { data, error } = await supabase.from('stories').select('*').eq('active', true).order('created_at', { ascending: false })
-                if (!error && data && data.length) {
+                const { data } = await supabase.from('stories').select('*').eq('active', true).order('created_at', { ascending: false })
+                if (data && data.length) {
                     stories = data
                     renderStories()
                 }
@@ -617,7 +705,6 @@
                 })
             }
 
-            // تشغيل الستوري
             function openStory(idx) {
                 currentStoryIndex = idx
                 const s = stories[idx]
@@ -625,10 +712,9 @@
 
                 $('#storyViewerImg').src = s.image_url
                 $('#storyViewerTitle').textContent = s.title
-                $('#storyViewerTag').textContent = s.tag || 'جديد Vibes'
+                $('#storyViewerTag').textContent = s.tag || 'جديد'
                 $('#storyViewer').showModal()
 
-                // شريط الوقت 5 ثواني
                 const fill = $('#storyProgress')
                 fill.style.width = '0%'
                 let progress = 0
@@ -652,7 +738,6 @@
                 $('#storyViewer').close()
             })
 
-            // تحميل المنتجات
             async function loadProducts(cat = 'all') {
                 let query = supabase.from('products').select('*').eq('active', true).order('sort_order').order('created_at')
                 if (cat !== 'all') query = query.eq('category', cat)
@@ -665,18 +750,18 @@
             function renderProducts() {
                 const container = $('#productList')
                 if (!products.length) {
-                    container.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:var(--muted);padding:30px;">لا توجد مشروبات في هذا التصنيف</p>'
+                    container.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:var(--muted);padding:30px;">لا توجد أصناف في هذا التصنيف</p>'
                     return
                 }
                 container.innerHTML = products.map(p => `
                     <div class="product-card" data-prod-id="${p.id}">
                         <div class="product-img-wrap">
-                            ${p.popular ? '<span class="badge-popular">⭐ الأكثر طلباً</span>' : ''}
-                            ${p.image_url ? `<img src="${esc(p.image_url)}" alt="${esc(p.name)}" loading="lazy">` : '<span style="font-size:36px">☕</span>'}
+                            ${p.popular ? '<span class="badge-popular">الأكثر طلباً</span>' : ''}
+                            ${p.image_url ? `<img src="${esc(p.image_url)}" alt="${esc(p.name)}" loading="lazy">` : '<svg class="svg-icon" style="width:36px;height:36px;fill:var(--muted);" viewBox="0 0 24 24"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.9 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>'}
                         </div>
                         <div class="product-info">
                             <h3>${esc(p.name)}</h3>
-                            <p>${esc(p.description || 'مشروب مميز محضر بأجود أنواع البن')}</p>
+                            <p>${esc(p.description || '')}</p>
                             <div class="product-bottom">
                                 <span class="price">${money(p.price)}</span>
                                 <button class="add-btn" data-add-id="${p.id}" title="إضافة">+</button>
@@ -685,7 +770,6 @@
                     </div>
                 `).join('')
 
-                // فتح بطاقة المنتج عند الضغط على الكرت
                 container.querySelectorAll('.product-card').forEach(card => {
                     card.addEventListener('click', e => {
                         if (e.target.closest('.add-btn')) return
@@ -694,7 +778,6 @@
                     })
                 })
 
-                // زر الإضافة السريع
                 container.querySelectorAll('.add-btn').forEach(btn => {
                     btn.addEventListener('click', e => {
                         e.stopPropagation()
@@ -704,11 +787,10 @@
                 })
             }
 
-            // بطاقة تفاصيل المشروب
             function openProductModal(p) {
                 selectedProduct = p
                 $('#modalProdTitle').textContent = p.name
-                $('#modalProdDesc').textContent = p.description || 'مشروب فاخر محضر بعناية من كافيه فايبز.'
+                $('#modalProdDesc').textContent = p.description || ''
                 $('#modalProdPrice').textContent = money(p.price)
                 if (p.image_url) {
                     $('#modalProdImg').src = p.image_url
@@ -726,7 +808,6 @@
                 }
             })
 
-            // إدارة السلة
             function addToCart(p) {
                 cart[p.id] = (cart[p.id] || 0) + 1
                 updateCartUI()
@@ -744,9 +825,8 @@
                 $('#cartFabTotal').textContent = money(subtotal)
                 $('#cartFab').classList.toggle('hidden', count === 0)
 
-                // تحديث داخل المودال
                 $('#subTotalText').textContent = money(subtotal)
-                const deliveryFee = orderType === 'delivery' ? (cfg.deliveryFee || 15) : 0
+                const deliveryFee = orderType === 'delivery' ? (Number(settings?.delivery_fee) || 15) : 0
                 $('#deliveryFeeText').textContent = money(deliveryFee)
                 $('#grandTotalText').textContent = money(subtotal + deliveryFee)
 
@@ -765,13 +845,13 @@
                     return `
                         <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--card-border);">
                             <div>
-                                <b style="font-size:14px;">${esc(p.name)}</b>
-                                <div style="color:var(--primary);font-size:13px;">${money(p.price * qty)}</div>
+                                <b style="font-size:13px;">${esc(p.name)}</b>
+                                <div style="color:var(--primary);font-size:12px;">${money(p.price * qty)}</div>
                             </div>
                             <div style="display:flex;align-items:center;gap:8px;">
-                                <button type="button" class="add-btn" style="width:26px;height:26px;font-size:14px;background:#333;color:#fff;" data-cart-action="minus" data-id="${id}">-</button>
+                                <button type="button" class="add-btn" style="width:24px;height:24px;font-size:13px;background:#262a34;color:#fff;" data-cart-action="minus" data-id="${id}">-</button>
                                 <span>${qty}</span>
-                                <button type="button" class="add-btn" style="width:26px;height:26px;font-size:14px;" data-cart-action="plus" data-id="${id}">+</button>
+                                <button type="button" class="add-btn" style="width:24px;height:24px;font-size:13px;" data-cart-action="plus" data-id="${id}">+</button>
                             </div>
                         </div>
                     `
@@ -790,7 +870,6 @@
                 })
             }
 
-            // حفظ بيانات العميل محلياً واسترجاعها
             function saveCustomerProfile(data) {
                 localStorage.setItem('vibes_customer', JSON.stringify(data))
             }
@@ -819,7 +898,6 @@
                 $('#savedInfoNotice').style.display = 'none'
             })
 
-            // اختيار نوع الاستلام
             $('#orderTypeSelector').addEventListener('click', e => {
                 const btn = e.target.closest('.order-type-btn')
                 if (!btn) return
@@ -833,7 +911,6 @@
                 updateCartUI()
             })
 
-            // إرسال الطلب وحفظه ثم التوجيه للواتساب
             $('#checkoutForm').addEventListener('submit', async e => {
                 e.preventDefault()
                 const fd = new FormData(e.currentTarget)
@@ -844,7 +921,6 @@
                 const address = fd.get('delivery_address') || ''
                 const notes = fd.get('order_notes') || ''
 
-                // حفظ بيانات العميل للمرات القادمة
                 saveCustomerProfile({ name, phone, carModel, carPlate, address })
 
                 const items = Object.entries(cart).map(([id, qty]) => {
@@ -854,29 +930,27 @@
                 if (!items.length) return toast('السلة فارغة')
 
                 const subtotal = items.reduce((s, i) => s + (i.price * i.qty), 0)
-                const deliveryFee = orderType === 'delivery' ? (cfg.deliveryFee || 15) : 0
+                const deliveryFee = orderType === 'delivery' ? (Number(settings?.delivery_fee) || 15) : 0
                 const grandTotal = subtotal + deliveryFee
 
-                // نص طريقة الاستلام
-                let typeText = '🚗 استلام من السيارة'
-                let detailsText = `نوع السيارة: ${carModel}\nاللوحة: ${carPlate}`
+                let typeText = 'استلام من السيارة'
+                let detailsText = `السيارة: ${carModel}\nاللوحة: ${carPlate}`
                 if (orderType === 'delivery') {
-                    typeText = '🛵 توصيل للعنوان'
+                    typeText = 'توصيل'
                     detailsText = `العنوان: ${address}\nرسوم التوصيل: ${money(deliveryFee)}`
                 } else if (orderType === 'pickup') {
-                    typeText = '☕ استلام من الفرع'
+                    typeText = 'استلام من الفرع'
                     detailsText = 'استلام محلي'
                 }
 
-                // صياغة رسالة الواتساب الاحترافية
-                let msg = `*طلب جديد من كافيه Vibes ✨*\n`
+                let msg = `*طلب جديد من Vibes*\n`
                 msg += `-----------------------------\n`
                 msg += `*العميل:* ${name}\n`
                 msg += `*الجوال:* ${phone}\n`
                 msg += `*طريقة الاستلام:* ${typeText}\n`
                 msg += `${detailsText}\n`
                 msg += `-----------------------------\n`
-                msg += `*الأصناف المطلوبة:*\n`
+                msg += `*الأصناف:*\n`
                 items.forEach(i => {
                     msg += `• ${i.name} × ${i.qty} = ${money(i.price * i.qty)}\n`
                 })
@@ -889,11 +963,10 @@
                 if (notes) msg += `*ملاحظات:* ${notes}\n`
                 msg += `-----------------------------`
 
-                // فتح الواتساب
-                const storeWhatsapp = '966500000000' // يتحدث تلقائياً من إعدادات المتجر
-                const whatsappUrl = `https://wa.me/${storeWhatsapp}?text=${encodeURIComponent(msg)}`
+                const whatsappNumber = (settings?.whatsapp_number || '966500000000').replace(/\D/g, '')
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`
                 
-                toast('تم تجهيز طلبك، جاري تحويلك للواتساب...')
+                toast('تم تجهيز طلبك، جاري التحويل للواتساب...')
                 setTimeout(() => {
                     window.open(whatsappUrl, '_blank')
                     cart = {}
@@ -902,7 +975,6 @@
                 }, 1000)
             })
 
-            // الأحداث العامة
             $('#cartFab').addEventListener('click', () => $('#cartModal').showModal())
             $('#filterChips').addEventListener('click', e => {
                 const b = e.target.closest('[data-category]')
