@@ -74,7 +74,7 @@
             if (currentUserRole === 'admin') loadUsers()
         }
 
-        // رفع الملفات مع حماية الأخطاء
+        // رفع الملفات
         async function uploadFile(file) {
             try {
                 const bucketName = cfg.storageBucket || 'products'
@@ -103,7 +103,7 @@
             }
         }
 
-        // حذف الملفات من التخزين
+        // حذف الملفات
         async function deleteStorageFile(fileUrl) {
             if (!fileUrl) return
             try {
@@ -178,10 +178,11 @@
         $('#loginForm').addEventListener('submit', async e => {
             e.preventDefault()
             $('#loginError').textContent = ''
-            const f = new FormData(e.currentTarget)
+            const f = e.currentTarget
+            const fd = new FormData(f)
             const { data, error } = await supabase.auth.signInWithPassword({
-                email: f.get('email'),
-                password: f.get('password')
+                email: fd.get('email'),
+                password: fd.get('password')
             })
             if (error) return $('#loginError').textContent = 'بيانات الدخول غير صحيحة'
             await enter(data.user)
@@ -205,10 +206,11 @@
             if (b.dataset.tab === 'storiesPane') loadStories()
         })
 
-        // فتح مودال إضافة منتج
+        // إضافة منتج
         $('#newProduct').addEventListener('click', () => {
-            $('#productForm').reset()
-            $('#productForm').elements.active.checked = true
+            const f = $('#productForm')
+            f.reset()
+            f.elements.active.checked = true
             $('#editorTitle').textContent = 'منتج جديد'
             $('#imagePreview').style.display = 'none'
             $('#imagePreview').src = ''
@@ -217,7 +219,7 @@
             $('#productEditor').showModal()
         })
 
-        // معاينة صورة المنتج
+        // اختيار صورة المنتج
         $('#productImage').addEventListener('change', function(e) {
             const file = e.target.files[0]
             if (!file) return
@@ -266,16 +268,19 @@
             }
         })
 
-        // حفظ المنتج
+        // حفظ المنتج بعد تصحيح المتغيرات
         $('#productForm').addEventListener('submit', async e => {
             e.preventDefault()
-            const btn = e.currentTarget.querySelector('button[type="submit"]')
+            const form = e.currentTarget
+            const btn = form.querySelector('button[type="submit"]')
             btn.disabled = true
             btn.textContent = 'جاري الحفظ...'
 
             try {
-                const fd = new FormData(e.currentTarget)
+                const fd = new FormData(form)
                 const id = fd.get('id')
+                const isPopular = form.elements.popular.checked
+                const isActive = form.elements.active.checked
                 let imageUrl = $('#imageUrlInput').value || null
 
                 if (selectedProductFile) {
@@ -296,8 +301,8 @@
                     price: Number(fd.get('price')),
                     category: fd.get('category'),
                     image_url: imageUrl,
-                    popular: e.currentTarget.elements.popular.checked,
-                    active: e.currentTarget.elements.active.checked
+                    popular: isPopular,
+                    active: isActive
                 }
 
                 const q = id ? supabase.from('products').update(row).eq('id', id) : supabase.from('products').insert(row)
@@ -317,7 +322,7 @@
             }
         })
 
-        // فتح مودال إضافة قصة
+        // إضافة قصة
         $('#newStory').addEventListener('click', () => {
             $('#storyForm').reset()
             $('#storyPreview').style.display = 'none'
@@ -325,7 +330,7 @@
             $('#storyEditor').showModal()
         })
 
-        // معاينة صورة القصة
+        // اختيار صورة القصة
         $('#storyImageFile').addEventListener('change', function(e) {
             const file = e.target.files[0]
             if (!file) return
@@ -341,13 +346,14 @@
         // نشر الستوري
         $('#storyForm').addEventListener('submit', async e => {
             e.preventDefault()
+            const form = e.currentTarget
             if (!selectedStoryFile) return toast('يرجى اختيار صورة للستوري')
-            const btn = e.currentTarget.querySelector('button[type="submit"]')
+            const btn = form.querySelector('button[type="submit"]')
             btn.disabled = true
             btn.textContent = 'جاري النشر...'
 
             try {
-                const fd = new FormData(e.currentTarget)
+                const fd = new FormData(form)
                 const uploadedUrl = await uploadFile(selectedStoryFile)
                 if (!uploadedUrl) {
                     btn.disabled = false
@@ -390,7 +396,7 @@
             }
         })
 
-        // معاينة الشعار في الإعدادات
+        // اختيار الشعار
         $('#logoImageFile').addEventListener('change', function(e) {
             const file = e.target.files[0]
             if (!file) return
@@ -403,16 +409,16 @@
             reader.readAsDataURL(file)
         })
 
-        // حفظ الإعدادات والشعار
+        // حفظ الإعدادات
         $('#settingsForm').addEventListener('submit', async e => {
             e.preventDefault()
-            const btn = e.currentTarget.querySelector('button[type="submit"]')
+            const form = e.currentTarget
+            const btn = form.querySelector('button[type="submit"]')
             btn.disabled = true
             btn.textContent = 'جاري الحفظ...'
 
             try {
-                const f = e.currentTarget
-                const fd = new FormData(f)
+                const fd = new FormData(form)
                 let logoUrl = $('#logoUrlInput').value || null
 
                 if (selectedLogoFile) {
@@ -430,7 +436,7 @@
                     delivery_fee: Number(fd.get('delivery_fee')) || 15.00,
                     open_hour: Number(fd.get('open_hour')),
                     close_hour: Number(fd.get('close_hour')),
-                    is_open: f.elements.is_open.checked,
+                    is_open: form.elements.is_open.checked,
                     logo_url: logoUrl
                 }
 
@@ -453,7 +459,7 @@
             else toast('تم تحديث حالة الطلب')
         })
 
-        // تغيير صلاحيات المستخدم
+        // تعديل الصلاحية
         $('#usersTable').addEventListener('change', async e => {
             if (!e.target.matches('.user-role-select')) return
             if (currentUserRole !== 'admin') return toast('لا تملك صلاحية')
@@ -466,7 +472,7 @@
         $('#refreshUsers').addEventListener('click', loadUsers)
         $('#refreshOrders').addEventListener('click', loadOrders)
 
-        // إغلاق النوافذ
+        // إغلاق المودال
         document.addEventListener('click', e => {
             const b = e.target.closest('[data-close]')
             if (b) document.getElementById(b.dataset.close).close()
