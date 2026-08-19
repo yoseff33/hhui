@@ -43,7 +43,12 @@
 
         async function enter(user) {
             // جلب صلاحية المستخدم من جدول profiles
-            const { data: profile, error } = await supabase.from('profiles').select('role').eq('id', user.id).single();
+            const { data: profile, error } = await supabase
+                .from('profiles')
+                .select('role')
+                .eq('id', user.id)
+                .single();
+
             if (error || !profile) {
                 await supabase.auth.signOut();
                 $('#loginError').textContent = 'حسابك غير مسجل في النظام.';
@@ -60,6 +65,7 @@
 
             $('#loginView').classList.add('hidden');
             $('#dashboardView').classList.remove('hidden');
+            // عرض البريد الإلكتروني من جلسة المستخدم (لأنه غير موجود في profiles)
             $('#adminEmail').textContent = user.email;
             $('#adminRole').textContent = `الصلاحية: ${currentUserRole === 'admin' ? 'أدمن كامل' : 'مشرف'}`;
 
@@ -108,14 +114,20 @@
         // ---- تحميل المستخدمين (للأدمن فقط) ----
         async function loadUsers() {
             if (currentUserRole !== 'admin') return;
-            const { data, error } = await supabase.from('profiles').select('id, email, role, full_name').order('created_at');
+            const { data, error } = await supabase.from('profiles').select('id, role, created_at').order('created_at');
             if (error) return toast(error.message);
             const users = data || [];
-            $('#usersTable').innerHTML = `<table><thead><tr><th>البريد</th><th>الاسم</th><th>الصلاحية</th><th>تغيير الصلاحية</th></tr></thead><tbody>${users.map(u => `<tr><td>${esc(u.email)}</td><td>${esc(u.full_name || '')}</td><td>${u.role === 'admin' ? 'أدمن' : u.role === 'manager' ? 'مشرف' : 'عميل'}</td><td><select class="user-role-select" data-user="${u.id}"><option value="customer" ${u.role === 'customer' ? 'selected' : ''}>عميل</option><option value="manager" ${u.role === 'manager' ? 'selected' : ''}>مشرف</option><option value="admin" ${u.role === 'admin' ? 'selected' : ''}>أدمن</option></select></td></tr>`).join('')}</tbody></table>`;
+            // بما أننا لا نملك البريد الإلكتروني في profiles، نعرض id مختصراً أو نستخدم auth.users (لكن يحتاج خدمة)
+            // سنعرض id مختصر (أول 8 خانات) كبديل.
+            $('#usersTable').innerHTML = `<table><thead><tr><th>المعرف</th><th>الصلاحية</th><th>تاريخ التسجيل</th><th>تغيير الصلاحية</th></tr></thead><tbody>${users.map(u => `<tr><td>${u.id.substring(0,8)}...</td><td>${u.role === 'admin' ? 'أدمن' : u.role === 'manager' ? 'مشرف' : 'عميل'}</td><td>${new Date(u.created_at).toLocaleDateString('ar-SA')}</td><td><select class="user-role-select" data-user="${u.id}"><option value="customer" ${u.role === 'customer' ? 'selected' : ''}>عميل</option><option value="manager" ${u.role === 'manager' ? 'selected' : ''}>مشرف</option><option value="admin" ${u.role === 'admin' ? 'selected' : ''}>أدمن</option></select></td></tr>`).join('')}</tbody></table>`;
         }
 
         // ---- رفع الصورة إلى Storage ----
         async function uploadImage(file) {
+            if (!cfg.storageBucket) {
+                toast('يجب تحديد اسم bucket في config.js');
+                return null;
+            }
             const fileExt = file.name.split('.').pop();
             const fileName = `${Date.now()}.${fileExt}`;
             const filePath = `${fileName}`;
@@ -126,7 +138,6 @@
                 toast('فشل رفع الصورة: ' + error.message);
                 return null;
             }
-            // الحصول على الرابط العام
             const { data: urlData } = supabase.storage.from(cfg.storageBucket).getPublicUrl(filePath);
             return urlData.publicUrl;
         }
@@ -147,7 +158,10 @@
             e.preventDefault();
             $('#loginError').textContent = '';
             const f = new FormData(e.currentTarget);
-            const { data, error } = await supabase.auth.signInWithPassword({ email: f.get('email'), password: f.get('password') });
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: f.get('email'),
+                password: f.get('password')
+            });
             if (error) return $('#loginError').textContent = 'بيانات الدخول غير صحيحة.';
             await enter(data.user);
         });
@@ -166,7 +180,6 @@
             $$('.admin-tabs button').forEach(x => x.classList.remove('active'));
             $('#' + b.dataset.tab).classList.remove('hidden');
             b.classList.add('active');
-            // تحديث المستخدمين إذا كان التبويب نشطاً
             if (b.dataset.tab === 'usersPane' && currentUserRole === 'admin') loadUsers();
         });
 
@@ -204,16 +217,15 @@
                 const p = products.find(x => x.id === edit.dataset.edit);
                 if (!p) return toast('المنتج غير موجود');
                 const f = $('#productForm');
-                Object.keys(p).forEach(k => {
-                    if (f.elements[k]) {
-                        if (f.elements[k].type === 'checkbox') {
-                            f.elements[k].checked = !!p[k];
-                        } else {
-                            f.elements[k].value = p[k] ?? '';
-                        }
-                    }
-                });
-                // عرض الصورة الحالية
+                // تعبئة الحقول
+                f.elements.id.value = p.id;
+                f.elements.name.value = p.name || '';
+                f.elements.description.value = p.description || '';
+                f.elements.price.value = p.price || '';
+                f.elements.category.value = p.category || 'other';
+                f.elements.popular.checked = !!p.popular;
+                f.elements.active.checked = !!p.active;
+                // الصورة
                 if (p.image_url) {
                     $('#imagePreview').src = p.image_url;
                     $('#imagePreview').style.display = 'block';
