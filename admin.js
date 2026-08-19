@@ -2,7 +2,6 @@
     'use strict'
 
     document.addEventListener('DOMContentLoaded', function() {
-
         const cfg = window.VIBES_CONFIG
         if (!cfg || !cfg.supabaseUrl || !cfg.supabaseAnonKey) {
             console.error('VIBES_CONFIG غير معرف')
@@ -17,8 +16,11 @@
         const money = v => `${Number(v || 0).toFixed(2)} ر.س`
 
         let products = []
+        let stories = []
         let currentUserRole = ''
-        let selectedFile = null
+        let selectedProductFile = null
+        let selectedLogoFile = null
+        let selectedStoryFile = null
 
         function toast(t) {
             const e = $('#toast')
@@ -68,18 +70,55 @@
                 $('#usersTab').style.display = 'none'
             }
 
-            await Promise.all([loadProducts(), loadOrders(), loadSettings()])
+            await Promise.all([loadProducts(), loadStories(), loadOrders(), loadSettings()])
             if (currentUserRole === 'admin') loadUsers()
         }
 
+        // Upload Helper
+        async function uploadFile(file) {
+            const bucketName = cfg.storageBucket || 'products'
+            const fileExt = file.name.split('.').pop()
+            const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`
+            const filePath = `${fileName}`
+            const { data, error } = await supabase.storage
+                .from(bucketName)
+                .upload(filePath, file, { cacheControl: '3600', upsert: false })
+            if (error) {
+                toast(`فشل رفع الملف: ${error.message}`)
+                return null
+            }
+            const { data: urlData } = supabase.storage.from(bucketName).getPublicUrl(filePath)
+            return urlData.publicUrl
+        }
+
+        // Delete Helper
+        async function deleteStorageFile(fileUrl) {
+            if (!fileUrl) return
+            const bucketName = cfg.storageBucket || 'products'
+            const fileName = fileUrl.split('/').pop()
+            if (!fileName) return
+            await supabase.storage.from(bucketName).remove([fileName])
+        }
+
+        // Load Products
         async function loadProducts() {
             const { data, error } = await supabase.from('products').select('*').order('sort_order').order('created_at')
             if (error) return toast(error.message)
             products = data || []
             $('#productStat').textContent = products.length
-            $('#productsTable').innerHTML = `<table><thead><tr><th>الصورة</th><th>المنتج</th><th>السعر</th><th>التصنيف</th><th>الحالة</th><th></th></tr></thead><tbody>${products.map(p => `<tr><td>${p.image_url ? `<img src="${esc(p.image_url)}" alt="" style="width:45px;height:45px;object-fit:cover;border-radius:8px">` : '☕'}</td><td><b>${esc(p.name)}</b><div class="muted">${esc(p.description || '')}</div></td><td>${money(p.price)}</td><td>${esc(p.category)}</td><td>${p.active ? 'ظاهر' : 'مخفي'}</td><td><button class="secondary" data-edit="${p.id}">تعديل</button> <button class="danger" data-delete="${p.id}">حذف</button></td></tr>`).join('')}</tbody></table>`
+            $('#productsTable').innerHTML = `<table><thead><tr><th>الصورة</th><th>المنتج</th><th>السعر</th><th>التصنيف</th><th>الحالة</th><th></th></tr></thead><tbody>${products.map(p => `<tr><td>${p.image_url ? `<img src="${esc(p.image_url)}" alt="" style="width:40px;height:40px;object-fit:cover;border-radius:8px">` : '-'}</td><td><b>${esc(p.name)}</b><div class="muted">${esc(p.description || '')}</div></td><td>${money(p.price)}</td><td>${esc(p.category)}</td><td>${p.active ? 'ظاهر' : 'مخفي'}</td><td><button class="secondary" data-edit="${p.id}">تعديل</button> <button class="danger" data-delete="${p.id}">حذف</button></td></tr>`).join('')}</tbody></table>`
         }
 
+        // Load Stories
+        async function loadStories() {
+            const { data, error } = await supabase.from('stories').select('*').order('created_at', { ascending: false })
+            if (error) return toast(error.message)
+            stories = data || []
+            $('#storyStat').textContent = stories.length
+            $('#storiesTable').innerHTML = `<table><thead><tr><th>القصة</th><th>العنوان</th><th>الوسم</th><th>تاريخ النشر</th><th></th></tr></thead><tbody>${stories.map(s => `<tr><td><img src="${esc(s.image_url)}" alt="" style="width:40px;height:60px;object-fit:cover;border-radius:6px"></td><td><b>${esc(s.title)}</b></td><td>${esc(s.tag || '')}</td><td>${new Date(s.created_at).toLocaleDateString('ar-SA')}</td><td><button class="danger" data-delete-story="${s.id}">حذف</button></td></tr>`).join('')}</tbody></table>`
+        }
+
+        // Load Orders
         async function loadOrders() {
             const { data, error } = await supabase.from('orders')
                 .select('id,order_number,customer_name,customer_phone,notes,total,status,created_at,order_items(quantity,unit_price,product_name)')
@@ -94,14 +133,23 @@
             $('#ordersTable').innerHTML = `<table><thead><tr><th>الطلب</th><th>العميل</th><th>التفاصيل</th><th>الإجمالي</th><th>الحالة</th><th>الوقت</th></tr></thead><tbody>${orders.map(o => `<tr><td>#${o.order_number}</td><td>${esc(o.customer_name)}<div class="muted">${esc(o.customer_phone)}</div></td><td class="order-items">${(o.order_items || []).map(i => `${esc(i.product_name)} × ${i.quantity}`).join('<br>')}${o.notes ? `<br>ملاحظة: ${esc(o.notes)}` : ''}</td><td>${money(o.total)}</td><td><select class="status-select" data-order="${o.id}">${[['new','جديد'],['accepted','مقبول'],['preparing','قيد التحضير'],['ready','جاهز'],['completed','مكتمل'],['cancelled','ملغي']].map(([v,l]) => `<option value="${v}" ${o.status === v ? 'selected' : ''}>${l}</option>`).join('')}</select></td><td>${new Date(o.created_at).toLocaleString('ar-SA')}</td></tr>`).join('')}</tbody></table>`
         }
 
+        // Load Settings
         async function loadSettings() {
-            const { data } = await supabase.from('store_settings').select('*').eq('id', 1).single()
+            const { data } = await supabase.from('store_settings').select('*').eq('id', 1).maybeSingle()
             if (!data) return
             const f = $('#settingsForm')
-            ;['whatsapp_number', 'store_name', 'open_hour', 'close_hour'].forEach(k => f.elements[k].value = data[k] ?? '')
+            ;['whatsapp_number', 'store_name', 'instagram_username', 'tiktok_username', 'google_maps_url', 'delivery_fee', 'open_hour', 'close_hour'].forEach(k => {
+                if (f.elements[k]) f.elements[k].value = data[k] ?? ''
+            })
             f.elements.is_open.checked = data.is_open
+            if (data.logo_url) {
+                $('#logoPreview').src = data.logo_url
+                $('#logoPreview').style.display = 'block'
+                $('#logoUrlInput').value = data.logo_url
+            }
         }
 
+        // Load Users
         async function loadUsers() {
             if (currentUserRole !== 'admin') return
             const { data, error } = await supabase.from('profiles').select('id, role, created_at').order('created_at')
@@ -110,31 +158,7 @@
             $('#usersTable').innerHTML = `<table><thead><tr><th>المعرف</th><th>الصلاحية</th><th>تاريخ التسجيل</th><th>تغيير الصلاحية</th></tr></thead><tbody>${users.map(u => `<tr><td>${u.id.substring(0,8)}...</td><td>${u.role === 'admin' ? 'أدمن' : u.role === 'manager' ? 'مشرف' : 'عميل'}</td><td>${new Date(u.created_at).toLocaleDateString('ar-SA')}</td><td><select class="user-role-select" data-user="${u.id}"><option value="customer" ${u.role === 'customer' ? 'selected' : ''}>عميل</option><option value="manager" ${u.role === 'manager' ? 'selected' : ''}>مشرف</option><option value="admin" ${u.role === 'admin' ? 'selected' : ''}>أدمن</option></select></td></tr>`).join('')}</tbody></table>`
         }
 
-        async function uploadImage(file) {
-            const bucketName = cfg.storageBucket || 'products'
-            const fileExt = file.name.split('.').pop()
-            const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`
-            const filePath = `${fileName}`
-            const { data, error } = await supabase.storage
-                .from(bucketName)
-                .upload(filePath, file, { cacheControl: '3600', upsert: false })
-            if (error) {
-                toast(`فشل رفع الصورة: ${error.message}`)
-                return null
-            }
-            const { data: urlData } = supabase.storage.from(bucketName).getPublicUrl(filePath)
-            return urlData.publicUrl
-        }
-
-        async function deleteImage(imageUrl) {
-            if (!imageUrl) return
-            const bucketName = cfg.storageBucket || 'products'
-            const fileName = imageUrl.split('/').pop()
-            if (!fileName) return
-            const { error } = await supabase.storage.from(bucketName).remove([fileName])
-            if (error) console.warn('فشل حذف الصورة:', error.message)
-        }
-
+        // Event Listeners
         $('#loginForm').addEventListener('submit', async e => {
             e.preventDefault()
             $('#loginError').textContent = ''
@@ -160,8 +184,10 @@
             $('#' + b.dataset.tab).classList.remove('hidden')
             b.classList.add('active')
             if (b.dataset.tab === 'usersPane' && currentUserRole === 'admin') loadUsers()
+            if (b.dataset.tab === 'storiesPane') loadStories()
         })
 
+        // Product Form Actions
         $('#newProduct').addEventListener('click', () => {
             $('#productForm').reset()
             $('#productForm').elements.active.checked = true
@@ -169,19 +195,18 @@
             $('#imagePreview').style.display = 'none'
             $('#imagePreview').src = ''
             $('#imageUrlInput').value = ''
-            selectedFile = null
+            selectedProductFile = null
             $('#productEditor').showModal()
         })
 
         $('#productImage').addEventListener('change', function(e) {
             const file = e.target.files[0]
             if (!file) return
-            selectedFile = file
+            selectedProductFile = file
             const reader = new FileReader()
-            reader.onload = function(ev) {
-                const img = $('#imagePreview')
-                img.src = ev.target.result
-                img.style.display = 'block'
+            reader.onload = ev => {
+                $('#imagePreview').src = ev.target.result
+                $('#imagePreview').style.display = 'block'
             }
             reader.readAsDataURL(file)
         })
@@ -206,46 +231,36 @@
                     $('#imageUrlInput').value = p.image_url
                 } else {
                     $('#imagePreview').style.display = 'none'
-                    $('#imagePreview').src = ''
                     $('#imageUrlInput').value = ''
                 }
-                selectedFile = null
+                selectedProductFile = null
                 $('#editorTitle').textContent = 'تعديل المنتج'
                 $('#productEditor').showModal()
             }
             if (del && confirm('حذف المنتج نهائياً؟')) {
                 const p = products.find(x => x.id === del.dataset.delete)
-                if (p && p.image_url) {
-                    await deleteImage(p.image_url)
-                }
+                if (p && p.image_url) await deleteStorageFile(p.image_url)
                 const { error } = await supabase.from('products').delete().eq('id', del.dataset.delete)
-                if (error) {
-                    toast(error.message)
-                } else {
-                    toast('تم الحذف')
-                    loadProducts()
-                }
+                if (error) toast(error.message)
+                else { toast('تم الحذف'); loadProducts(); }
             }
         })
 
         $('#productForm').addEventListener('submit', async e => {
             e.preventDefault()
-            const submitBtn = e.currentTarget.querySelector('button[type="submit"]')
-            submitBtn.disabled = true
-            submitBtn.textContent = 'جاري الحفظ...'
+            const btn = e.currentTarget.querySelector('button[type="submit"]')
+            btn.disabled = true
+            btn.textContent = 'جاري الحفظ...'
 
-            const f = e.currentTarget
-            const fd = new FormData(f)
+            const fd = new FormData(e.currentTarget)
             const id = fd.get('id')
-
             let imageUrl = $('#imageUrlInput').value || null
-            if (selectedFile) {
-                const uploadedUrl = await uploadImage(selectedFile)
-                if (uploadedUrl) {
-                    if (id && imageUrl && imageUrl !== uploadedUrl) {
-                        await deleteImage(imageUrl)
-                    }
-                    imageUrl = uploadedUrl
+
+            if (selectedProductFile) {
+                const uploaded = await uploadFile(selectedProductFile)
+                if (uploaded) {
+                    if (id && imageUrl && imageUrl !== uploaded) await deleteStorageFile(imageUrl)
+                    imageUrl = uploaded
                 }
             }
 
@@ -255,65 +270,148 @@
                 price: Number(fd.get('price')),
                 category: fd.get('category'),
                 image_url: imageUrl,
-                popular: f.elements.popular.checked,
-                active: f.elements.active.checked
+                popular: e.currentTarget.elements.popular.checked,
+                active: e.currentTarget.elements.active.checked
             }
 
             const q = id ? supabase.from('products').update(row).eq('id', id) : supabase.from('products').insert(row)
             const { error } = await q
-            submitBtn.disabled = false
-            submitBtn.textContent = 'حفظ المنتج'
-
+            btn.disabled = false
+            btn.textContent = 'حفظ المنتج'
             if (error) return toast(error.message)
             $('#productEditor').close()
             toast('تم حفظ المنتج بنجاح')
             loadProducts()
         })
 
-        $('#ordersTable').addEventListener('change', async e => {
-            if (!e.target.matches('[data-order]')) return
-            const { error } = await supabase.from('orders').update({ status: e.target.value }).eq('id', e.target.dataset.order)
-            if (error) {
-                toast(error.message)
-            } else {
-                toast('تم تحديث الطلب')
+        // Stories Actions
+        $('#newStory').addEventListener('click', () => {
+            $('#storyForm').reset()
+            $('#storyPreview').style.display = 'none'
+            selectedStoryFile = null
+            $('#storyEditor').showModal()
+        })
+
+        $('#storyImageFile').addEventListener('change', function(e) {
+            const file = e.target.files[0]
+            if (!file) return
+            selectedStoryFile = file
+            const reader = new FileReader()
+            reader.onload = ev => {
+                $('#storyPreview').src = ev.target.result
+                $('#storyPreview').style.display = 'block'
+            }
+            reader.readAsDataURL(file)
+        })
+
+        $('#storyForm').addEventListener('submit', async e => {
+            e.preventDefault()
+            if (!selectedStoryFile) return toast('يرجى اختيار صورة للستوري')
+            const btn = e.currentTarget.querySelector('button[type="submit"]')
+            btn.disabled = true
+            btn.textContent = 'جاري النشر...'
+
+            const fd = new FormData(e.currentTarget)
+            const uploadedUrl = await uploadFile(selectedStoryFile)
+            if (!uploadedUrl) {
+                btn.disabled = false
+                btn.textContent = 'نشر الستوري'
+                return
+            }
+
+            const row = {
+                title: fd.get('title').trim(),
+                tag: fd.get('tag').trim() || 'جديد Vibes',
+                image_url: uploadedUrl,
+                active: true
+            }
+
+            const { error } = await supabase.from('stories').insert(row)
+            btn.disabled = false
+            btn.textContent = 'نشر الستوري'
+            if (error) return toast(error.message)
+            $('#storyEditor').close()
+            toast('تم نشر القصة بنجاح')
+            loadStories()
+        })
+
+        $('#storiesTable').addEventListener('click', async e => {
+            const del = e.target.closest('[data-delete-story]')
+            if (del && confirm('حذف هذه القصة؟')) {
+                const s = stories.find(x => x.id === del.dataset.deleteStory)
+                if (s && s.image_url) await deleteStorageFile(s.image_url)
+                const { error } = await supabase.from('stories').delete().eq('id', del.dataset.deleteStory)
+                if (error) toast(error.message)
+                else { toast('تم حذف القصة'); loadStories(); }
             }
         })
 
+        // Logo Upload in Settings
+        $('#logoImageFile').addEventListener('change', function(e) {
+            const file = e.target.files[0]
+            if (!file) return
+            selectedLogoFile = file
+            const reader = new FileReader()
+            reader.onload = ev => {
+                $('#logoPreview').src = ev.target.result
+                $('#logoPreview').style.display = 'block'
+            }
+            reader.readAsDataURL(file)
+        })
+
+        // Save Settings
         $('#settingsForm').addEventListener('submit', async e => {
             e.preventDefault()
+            const btn = e.currentTarget.querySelector('button[type="submit"]')
+            btn.disabled = true
+            btn.textContent = 'جاري الحفظ...'
+
             const f = e.currentTarget
             const fd = new FormData(f)
+            let logoUrl = $('#logoUrlInput').value || null
+
+            if (selectedLogoFile) {
+                const uploadedLogo = await uploadFile(selectedLogoFile)
+                if (uploadedLogo) logoUrl = uploadedLogo
+            }
+
             const row = {
                 id: 1,
-                whatsapp_number: fd.get('whatsapp_number'),
-                store_name: fd.get('store_name'),
+                store_name: fd.get('store_name').trim(),
+                whatsapp_number: fd.get('whatsapp_number').trim(),
+                instagram_username: fd.get('instagram_username').trim() || 'vibes.espresso',
+                tiktok_username: fd.get('tiktok_username').trim() || 'vibes.espresso',
+                google_maps_url: fd.get('google_maps_url').trim() || null,
+                delivery_fee: Number(fd.get('delivery_fee')) || 15.00,
                 open_hour: Number(fd.get('open_hour')),
                 close_hour: Number(fd.get('close_hour')),
-                is_open: f.elements.is_open.checked
+                is_open: f.elements.is_open.checked,
+                logo_url: logoUrl
             }
+
             const { error } = await supabase.from('store_settings').upsert(row)
-            if (error) {
-                toast(error.message)
-            } else {
-                toast('تم حفظ الإعدادات')
-            }
+            btn.disabled = false
+            btn.textContent = 'حفظ الإعدادات'
+            if (error) toast(error.message)
+            else toast('تم حفظ الإعدادات بنجاح')
+        })
+
+        $('#ordersTable').addEventListener('change', async e => {
+            if (!e.target.matches('[data-order]')) return
+            const { error } = await supabase.from('orders').update({ status: e.target.value }).eq('id', e.target.dataset.order)
+            if (error) toast(error.message)
+            else toast('تم تحديث حالة الطلب')
         })
 
         $('#usersTable').addEventListener('change', async e => {
             if (!e.target.matches('.user-role-select')) return
             if (currentUserRole !== 'admin') return toast('لا تملك صلاحية')
-            const userId = e.target.dataset.user
-            const newRole = e.target.value
-            const { error } = await supabase.from('profiles').update({ role: newRole }).eq('id', userId)
-            if (error) {
-                toast(error.message)
-            } else {
-                toast('تم تحديث الصلاحية')
-            }
+            const { error } = await supabase.from('profiles').update({ role: e.target.value }).eq('id', e.target.dataset.user)
+            if (error) toast(error.message)
+            else toast('تم تحديث الصلاحية')
         })
 
-        $('#refreshUsers').addEventListener('click', () => loadUsers())
+        $('#refreshUsers').addEventListener('click', loadUsers)
         $('#refreshOrders').addEventListener('click', loadOrders)
 
         document.addEventListener('click', e => {
