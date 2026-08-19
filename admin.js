@@ -74,33 +74,49 @@
             if (currentUserRole === 'admin') loadUsers()
         }
 
-        // Upload Helper
+        // رفع الملفات مع حماية الأخطاء
         async function uploadFile(file) {
-            const bucketName = cfg.storageBucket || 'products'
-            const fileExt = file.name.split('.').pop()
-            const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`
-            const filePath = `${fileName}`
-            const { data, error } = await supabase.storage
-                .from(bucketName)
-                .upload(filePath, file, { cacheControl: '3600', upsert: false })
-            if (error) {
-                toast(`فشل رفع الملف: ${error.message}`)
+            try {
+                const bucketName = cfg.storageBucket || 'products'
+                const fileExt = file.name.split('.').pop()
+                const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`
+                
+                const { data, error } = await supabase.storage
+                    .from(bucketName)
+                    .upload(fileName, file, { 
+                        cacheControl: '3600', 
+                        upsert: true 
+                    })
+
+                if (error) {
+                    console.error('Storage Upload Error:', error)
+                    toast(`خطأ رفع الصورة: ${error.message}`)
+                    return null
+                }
+
+                const { data: urlData } = supabase.storage.from(bucketName).getPublicUrl(fileName)
+                return urlData.publicUrl
+            } catch (err) {
+                console.error('Upload catch error:', err)
+                toast(`تعذر رفع الصورة: ${err.message}`)
                 return null
             }
-            const { data: urlData } = supabase.storage.from(bucketName).getPublicUrl(filePath)
-            return urlData.publicUrl
         }
 
-        // Delete Helper
+        // حذف الملفات من التخزين
         async function deleteStorageFile(fileUrl) {
             if (!fileUrl) return
-            const bucketName = cfg.storageBucket || 'products'
-            const fileName = fileUrl.split('/').pop()
-            if (!fileName) return
-            await supabase.storage.from(bucketName).remove([fileName])
+            try {
+                const bucketName = cfg.storageBucket || 'products'
+                const fileName = fileUrl.split('/').pop()
+                if (!fileName) return
+                await supabase.storage.from(bucketName).remove([fileName])
+            } catch(e) {
+                console.warn('فشل حذف الصورة:', e)
+            }
         }
 
-        // Load Products
+        // تحميل المنتجات
         async function loadProducts() {
             const { data, error } = await supabase.from('products').select('*').order('sort_order').order('created_at')
             if (error) return toast(error.message)
@@ -109,7 +125,7 @@
             $('#productsTable').innerHTML = `<table><thead><tr><th>الصورة</th><th>المنتج</th><th>السعر</th><th>التصنيف</th><th>الحالة</th><th></th></tr></thead><tbody>${products.map(p => `<tr><td>${p.image_url ? `<img src="${esc(p.image_url)}" alt="" style="width:40px;height:40px;object-fit:cover;border-radius:8px">` : '-'}</td><td><b>${esc(p.name)}</b><div class="muted">${esc(p.description || '')}</div></td><td>${money(p.price)}</td><td>${esc(p.category)}</td><td>${p.active ? 'ظاهر' : 'مخفي'}</td><td><button class="secondary" data-edit="${p.id}">تعديل</button> <button class="danger" data-delete="${p.id}">حذف</button></td></tr>`).join('')}</tbody></table>`
         }
 
-        // Load Stories
+        // تحميل القصص
         async function loadStories() {
             const { data, error } = await supabase.from('stories').select('*').order('created_at', { ascending: false })
             if (error) return toast(error.message)
@@ -118,7 +134,7 @@
             $('#storiesTable').innerHTML = `<table><thead><tr><th>القصة</th><th>العنوان</th><th>الوسم</th><th>تاريخ النشر</th><th></th></tr></thead><tbody>${stories.map(s => `<tr><td><img src="${esc(s.image_url)}" alt="" style="width:40px;height:60px;object-fit:cover;border-radius:6px"></td><td><b>${esc(s.title)}</b></td><td>${esc(s.tag || '')}</td><td>${new Date(s.created_at).toLocaleDateString('ar-SA')}</td><td><button class="danger" data-delete-story="${s.id}">حذف</button></td></tr>`).join('')}</tbody></table>`
         }
 
-        // Load Orders
+        // تحميل الطلبات
         async function loadOrders() {
             const { data, error } = await supabase.from('orders')
                 .select('id,order_number,customer_name,customer_phone,notes,total,status,created_at,order_items(quantity,unit_price,product_name)')
@@ -133,7 +149,7 @@
             $('#ordersTable').innerHTML = `<table><thead><tr><th>الطلب</th><th>العميل</th><th>التفاصيل</th><th>الإجمالي</th><th>الحالة</th><th>الوقت</th></tr></thead><tbody>${orders.map(o => `<tr><td>#${o.order_number}</td><td>${esc(o.customer_name)}<div class="muted">${esc(o.customer_phone)}</div></td><td class="order-items">${(o.order_items || []).map(i => `${esc(i.product_name)} × ${i.quantity}`).join('<br>')}${o.notes ? `<br>ملاحظة: ${esc(o.notes)}` : ''}</td><td>${money(o.total)}</td><td><select class="status-select" data-order="${o.id}">${[['new','جديد'],['accepted','مقبول'],['preparing','قيد التحضير'],['ready','جاهز'],['completed','مكتمل'],['cancelled','ملغي']].map(([v,l]) => `<option value="${v}" ${o.status === v ? 'selected' : ''}>${l}</option>`).join('')}</select></td><td>${new Date(o.created_at).toLocaleString('ar-SA')}</td></tr>`).join('')}</tbody></table>`
         }
 
-        // Load Settings
+        // تحميل الإعدادات
         async function loadSettings() {
             const { data } = await supabase.from('store_settings').select('*').eq('id', 1).maybeSingle()
             if (!data) return
@@ -149,7 +165,7 @@
             }
         }
 
-        // Load Users
+        // تحميل المستخدمين
         async function loadUsers() {
             if (currentUserRole !== 'admin') return
             const { data, error } = await supabase.from('profiles').select('id, role, created_at').order('created_at')
@@ -158,7 +174,7 @@
             $('#usersTable').innerHTML = `<table><thead><tr><th>المعرف</th><th>الصلاحية</th><th>تاريخ التسجيل</th><th>تغيير الصلاحية</th></tr></thead><tbody>${users.map(u => `<tr><td>${u.id.substring(0,8)}...</td><td>${u.role === 'admin' ? 'أدمن' : u.role === 'manager' ? 'مشرف' : 'عميل'}</td><td>${new Date(u.created_at).toLocaleDateString('ar-SA')}</td><td><select class="user-role-select" data-user="${u.id}"><option value="customer" ${u.role === 'customer' ? 'selected' : ''}>عميل</option><option value="manager" ${u.role === 'manager' ? 'selected' : ''}>مشرف</option><option value="admin" ${u.role === 'admin' ? 'selected' : ''}>أدمن</option></select></td></tr>`).join('')}</tbody></table>`
         }
 
-        // Event Listeners
+        // تسجيل الدخول
         $('#loginForm').addEventListener('submit', async e => {
             e.preventDefault()
             $('#loginError').textContent = ''
@@ -171,11 +187,13 @@
             await enter(data.user)
         })
 
+        // تسجيل الخروج
         $('#logout').addEventListener('click', async () => {
             await supabase.auth.signOut()
             showLogin()
         })
 
+        // تبديل التبويبات
         document.querySelector('.admin-tabs').addEventListener('click', e => {
             const b = e.target.closest('[data-tab]')
             if (!b) return
@@ -187,7 +205,7 @@
             if (b.dataset.tab === 'storiesPane') loadStories()
         })
 
-        // Product Form Actions
+        // فتح مودال إضافة منتج
         $('#newProduct').addEventListener('click', () => {
             $('#productForm').reset()
             $('#productForm').elements.active.checked = true
@@ -199,6 +217,7 @@
             $('#productEditor').showModal()
         })
 
+        // معاينة صورة المنتج
         $('#productImage').addEventListener('change', function(e) {
             const file = e.target.files[0]
             if (!file) return
@@ -211,6 +230,7 @@
             reader.readAsDataURL(file)
         })
 
+        // تعديل أو حذف منتج
         $('#productsTable').addEventListener('click', async e => {
             const edit = e.target.closest('[data-edit]')
             const del = e.target.closest('[data-delete]')
@@ -246,45 +266,58 @@
             }
         })
 
+        // حفظ المنتج
         $('#productForm').addEventListener('submit', async e => {
             e.preventDefault()
             const btn = e.currentTarget.querySelector('button[type="submit"]')
             btn.disabled = true
             btn.textContent = 'جاري الحفظ...'
 
-            const fd = new FormData(e.currentTarget)
-            const id = fd.get('id')
-            let imageUrl = $('#imageUrlInput').value || null
+            try {
+                const fd = new FormData(e.currentTarget)
+                const id = fd.get('id')
+                let imageUrl = $('#imageUrlInput').value || null
 
-            if (selectedProductFile) {
-                const uploaded = await uploadFile(selectedProductFile)
-                if (uploaded) {
-                    if (id && imageUrl && imageUrl !== uploaded) await deleteStorageFile(imageUrl)
-                    imageUrl = uploaded
+                if (selectedProductFile) {
+                    const uploaded = await uploadFile(selectedProductFile)
+                    if (uploaded) {
+                        if (id && imageUrl && imageUrl !== uploaded) await deleteStorageFile(imageUrl)
+                        imageUrl = uploaded
+                    } else {
+                        btn.disabled = false
+                        btn.textContent = 'حفظ المنتج'
+                        return
+                    }
                 }
-            }
 
-            const row = {
-                name: fd.get('name').trim(),
-                description: fd.get('description').trim() || null,
-                price: Number(fd.get('price')),
-                category: fd.get('category'),
-                image_url: imageUrl,
-                popular: e.currentTarget.elements.popular.checked,
-                active: e.currentTarget.elements.active.checked
-            }
+                const row = {
+                    name: fd.get('name').trim(),
+                    description: fd.get('description').trim() || null,
+                    price: Number(fd.get('price')),
+                    category: fd.get('category'),
+                    image_url: imageUrl,
+                    popular: e.currentTarget.elements.popular.checked,
+                    active: e.currentTarget.elements.active.checked
+                }
 
-            const q = id ? supabase.from('products').update(row).eq('id', id) : supabase.from('products').insert(row)
-            const { error } = await q
-            btn.disabled = false
-            btn.textContent = 'حفظ المنتج'
-            if (error) return toast(error.message)
-            $('#productEditor').close()
-            toast('تم حفظ المنتج بنجاح')
-            loadProducts()
+                const q = id ? supabase.from('products').update(row).eq('id', id) : supabase.from('products').insert(row)
+                const { error } = await q
+                if (error) {
+                    toast(`خطأ قاعدة البيانات: ${error.message}`)
+                } else {
+                    $('#productEditor').close()
+                    toast('تم حفظ المنتج بنجاح')
+                    loadProducts()
+                }
+            } catch (err) {
+                toast(`حدث خطأ: ${err.message}`)
+            } finally {
+                btn.disabled = false
+                btn.textContent = 'حفظ المنتج'
+            }
         })
 
-        // Stories Actions
+        // فتح مودال إضافة قصة
         $('#newStory').addEventListener('click', () => {
             $('#storyForm').reset()
             $('#storyPreview').style.display = 'none'
@@ -292,6 +325,7 @@
             $('#storyEditor').showModal()
         })
 
+        // معاينة صورة القصة
         $('#storyImageFile').addEventListener('change', function(e) {
             const file = e.target.files[0]
             if (!file) return
@@ -304,6 +338,7 @@
             reader.readAsDataURL(file)
         })
 
+        // نشر الستوري
         $('#storyForm').addEventListener('submit', async e => {
             e.preventDefault()
             if (!selectedStoryFile) return toast('يرجى اختيار صورة للستوري')
@@ -311,30 +346,39 @@
             btn.disabled = true
             btn.textContent = 'جاري النشر...'
 
-            const fd = new FormData(e.currentTarget)
-            const uploadedUrl = await uploadFile(selectedStoryFile)
-            if (!uploadedUrl) {
+            try {
+                const fd = new FormData(e.currentTarget)
+                const uploadedUrl = await uploadFile(selectedStoryFile)
+                if (!uploadedUrl) {
+                    btn.disabled = false
+                    btn.textContent = 'نشر الستوري'
+                    return
+                }
+
+                const row = {
+                    title: fd.get('title').trim(),
+                    tag: fd.get('tag').trim() || 'جديد Vibes',
+                    image_url: uploadedUrl,
+                    active: true
+                }
+
+                const { error } = await supabase.from('stories').insert(row)
+                if (error) {
+                    toast(error.message)
+                } else {
+                    $('#storyEditor').close()
+                    toast('تم نشر القصة بنجاح')
+                    loadStories()
+                }
+            } catch (err) {
+                toast(`حدث خطأ: ${err.message}`)
+            } finally {
                 btn.disabled = false
                 btn.textContent = 'نشر الستوري'
-                return
             }
-
-            const row = {
-                title: fd.get('title').trim(),
-                tag: fd.get('tag').trim() || 'جديد Vibes',
-                image_url: uploadedUrl,
-                active: true
-            }
-
-            const { error } = await supabase.from('stories').insert(row)
-            btn.disabled = false
-            btn.textContent = 'نشر الستوري'
-            if (error) return toast(error.message)
-            $('#storyEditor').close()
-            toast('تم نشر القصة بنجاح')
-            loadStories()
         })
 
+        // حذف الستوري
         $('#storiesTable').addEventListener('click', async e => {
             const del = e.target.closest('[data-delete-story]')
             if (del && confirm('حذف هذه القصة؟')) {
@@ -346,7 +390,7 @@
             }
         })
 
-        // Logo Upload in Settings
+        // معاينة الشعار في الإعدادات
         $('#logoImageFile').addEventListener('change', function(e) {
             const file = e.target.files[0]
             if (!file) return
@@ -359,43 +403,49 @@
             reader.readAsDataURL(file)
         })
 
-        // Save Settings
+        // حفظ الإعدادات والشعار
         $('#settingsForm').addEventListener('submit', async e => {
             e.preventDefault()
             const btn = e.currentTarget.querySelector('button[type="submit"]')
             btn.disabled = true
             btn.textContent = 'جاري الحفظ...'
 
-            const f = e.currentTarget
-            const fd = new FormData(f)
-            let logoUrl = $('#logoUrlInput').value || null
+            try {
+                const f = e.currentTarget
+                const fd = new FormData(f)
+                let logoUrl = $('#logoUrlInput').value || null
 
-            if (selectedLogoFile) {
-                const uploadedLogo = await uploadFile(selectedLogoFile)
-                if (uploadedLogo) logoUrl = uploadedLogo
+                if (selectedLogoFile) {
+                    const uploadedLogo = await uploadFile(selectedLogoFile)
+                    if (uploadedLogo) logoUrl = uploadedLogo
+                }
+
+                const row = {
+                    id: 1,
+                    store_name: fd.get('store_name').trim(),
+                    whatsapp_number: fd.get('whatsapp_number').trim(),
+                    instagram_username: fd.get('instagram_username').trim() || 'vibes.espresso',
+                    tiktok_username: fd.get('tiktok_username').trim() || 'vibes.espresso',
+                    google_maps_url: fd.get('google_maps_url').trim() || null,
+                    delivery_fee: Number(fd.get('delivery_fee')) || 15.00,
+                    open_hour: Number(fd.get('open_hour')),
+                    close_hour: Number(fd.get('close_hour')),
+                    is_open: f.elements.is_open.checked,
+                    logo_url: logoUrl
+                }
+
+                const { error } = await supabase.from('store_settings').upsert(row)
+                if (error) toast(error.message)
+                else toast('تم حفظ الإعدادات بنجاح')
+            } catch (err) {
+                toast(`حدث خطأ: ${err.message}`)
+            } finally {
+                btn.disabled = false
+                btn.textContent = 'حفظ الإعدادات'
             }
-
-            const row = {
-                id: 1,
-                store_name: fd.get('store_name').trim(),
-                whatsapp_number: fd.get('whatsapp_number').trim(),
-                instagram_username: fd.get('instagram_username').trim() || 'vibes.espresso',
-                tiktok_username: fd.get('tiktok_username').trim() || 'vibes.espresso',
-                google_maps_url: fd.get('google_maps_url').trim() || null,
-                delivery_fee: Number(fd.get('delivery_fee')) || 15.00,
-                open_hour: Number(fd.get('open_hour')),
-                close_hour: Number(fd.get('close_hour')),
-                is_open: f.elements.is_open.checked,
-                logo_url: logoUrl
-            }
-
-            const { error } = await supabase.from('store_settings').upsert(row)
-            btn.disabled = false
-            btn.textContent = 'حفظ الإعدادات'
-            if (error) toast(error.message)
-            else toast('تم حفظ الإعدادات بنجاح')
         })
 
+        // تحديث حالة الطلب
         $('#ordersTable').addEventListener('change', async e => {
             if (!e.target.matches('[data-order]')) return
             const { error } = await supabase.from('orders').update({ status: e.target.value }).eq('id', e.target.dataset.order)
@@ -403,6 +453,7 @@
             else toast('تم تحديث حالة الطلب')
         })
 
+        // تغيير صلاحيات المستخدم
         $('#usersTable').addEventListener('change', async e => {
             if (!e.target.matches('.user-role-select')) return
             if (currentUserRole !== 'admin') return toast('لا تملك صلاحية')
@@ -411,9 +462,11 @@
             else toast('تم تحديث الصلاحية')
         })
 
+        // أزرار التحديث
         $('#refreshUsers').addEventListener('click', loadUsers)
         $('#refreshOrders').addEventListener('click', loadOrders)
 
+        // إغلاق النوافذ
         document.addEventListener('click', e => {
             const b = e.target.closest('[data-close]')
             if (b) document.getElementById(b.dataset.close).close()
