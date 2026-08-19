@@ -13,11 +13,11 @@
 <body class="admin-body">
     <main class="admin-container">
 
-        <!-- ====== LOGIN ====== -->
+        <!-- LOGIN -->
         <section id="loginView" class="login-card">
             <div class="logo">V</div>
             <h1>دخول الإدارة</h1>
-            <p class="muted">استخدم حساب الأدمن المسجل في Supabase</p>
+            <p class="muted">لوحة تحكم كافيه Vibes</p>
             <form id="loginForm">
                 <label>البريد الإلكتروني
                     <input name="email" type="email" required autocomplete="username">
@@ -31,13 +31,13 @@
             <a href="index.html">العودة للمتجر</a>
         </section>
 
-        <!-- ====== DASHBOARD ====== -->
+        <!-- DASHBOARD -->
         <section id="dashboardView" class="hidden">
             <header class="dashboard-head">
                 <div>
                     <h1>لوحة تحكم Vibes</h1>
                     <p id="adminEmail" class="muted"></p>
-                    <p id="adminRole" class="muted" style="font-size:14px"></p>
+                    <p id="adminRole" class="muted" style="font-size:13px"></p>
                 </div>
                 <div class="actions">
                     <a class="secondary" href="index.html">عرض المتجر</a>
@@ -47,6 +47,7 @@
 
             <div class="stats">
                 <article><span>المنتجات</span><b id="productStat">0</b></article>
+                <article><span>القصص المنشورة</span><b id="storyStat">0</b></article>
                 <article><span>طلبات اليوم</span><b id="orderStat">0</b></article>
                 <article><span>مبيعات اليوم</span><b id="salesStat">0 ر.س</b></article>
             </div>
@@ -54,7 +55,8 @@
             <div class="admin-tabs">
                 <button class="active" data-tab="ordersPane">الطلبات</button>
                 <button data-tab="productsPane">المنتجات</button>
-                <button data-tab="settingsPane">الإعدادات</button>
+                <button data-tab="storiesPane">القصص والستوري</button>
+                <button data-tab="settingsPane">الإعدادات والشعار</button>
                 <button data-tab="usersPane" id="usersTab">المستخدمين</button>
             </div>
 
@@ -70,21 +72,50 @@
             <!-- PRODUCTS -->
             <section id="productsPane" class="pane hidden">
                 <div class="section-head">
-                    <h2>المنتجات</h2>
+                    <h2>المنتجات والمشروبات</h2>
                     <button id="newProduct" class="primary small">+ منتج جديد</button>
                 </div>
                 <div id="productsTable" class="table-wrap"></div>
             </section>
 
+            <!-- STORIES -->
+            <section id="storiesPane" class="pane hidden">
+                <div class="section-head">
+                    <h2>القصص والستوري (الهبات والترند)</h2>
+                    <button id="newStory" class="primary small">+ قصة جديدة</button>
+                </div>
+                <div id="storiesTable" class="table-wrap"></div>
+            </section>
+
             <!-- SETTINGS -->
             <section id="settingsPane" class="pane hidden">
-                <h2>إعدادات المتجر</h2>
+                <h2>إعدادات المتجر والشعار</h2>
                 <form id="settingsForm" class="card-form">
-                    <label>رقم واتساب (بصيغة دولية بدون +)
-                        <input name="whatsapp_number" required pattern="[0-9]{8,15}">
+                    <label>شعار الكافيه (Logo)
+                        <div class="file-input-wrapper">
+                            <span>تغيير صورة الشعار</span>
+                            <input type="file" id="logoImageFile" accept="image/*">
+                        </div>
+                        <img id="logoPreview" class="image-preview" style="display:none;width:80px;height:80px;object-fit:cover;border-radius:12px;margin-top:8px;">
+                        <input type="hidden" name="logo_url" id="logoUrlInput">
                     </label>
                     <label>اسم المتجر
                         <input name="store_name" required maxlength="80">
+                    </label>
+                    <label>رقم واتساب الطلبات (بدون +)
+                        <input name="whatsapp_number" required pattern="[0-9]{8,15}">
+                    </label>
+                    <label>يوزر انستقرام (Instagram)
+                        <input name="instagram_username" placeholder="vibes.espresso">
+                    </label>
+                    <label>يوزر تيك توك (TikTok)
+                        <input name="tiktok_username" placeholder="vibes.espresso">
+                    </label>
+                    <label>رابط الموقع في قوقل ماب (Google Maps)
+                        <input name="google_maps_url" type="url" placeholder="https://maps.app.goo.gl/...">
+                    </label>
+                    <label>رسوم التوصيل (ر.س)
+                        <input name="delivery_fee" type="number" step="0.01" min="0" value="15.00">
                     </label>
                     <label>يفتح الساعة
                         <input name="open_hour" type="number" min="0" max="23" required>
@@ -99,7 +130,7 @@
                 </form>
             </section>
 
-            <!-- USERS (Admin only) -->
+            <!-- USERS -->
             <section id="usersPane" class="pane hidden">
                 <div class="section-head">
                     <h2>إدارة المستخدمين</h2>
@@ -110,7 +141,7 @@
         </section>
     </main>
 
-    <!-- ====== PRODUCT EDITOR MODAL ====== -->
+    <!-- PRODUCT MODAL -->
     <dialog id="productEditor" class="modal">
         <button class="close" data-close="productEditor">×</button>
         <h2 id="editorTitle">منتج جديد</h2>
@@ -135,19 +166,41 @@
             </label>
             <label>صورة المنتج
                 <div class="file-input-wrapper">
-                    <span>اختر صورة من جهازك</span>
+                    <span>اختر صورة</span>
                     <input type="file" id="productImage" accept="image/*">
                 </div>
-                <img id="imagePreview" class="image-preview" style="display:none">
+                <img id="imagePreview" class="image-preview" style="display:none;width:80px;height:80px;object-fit:cover;border-radius:10px;margin-top:8px;">
                 <input type="hidden" name="image_url" id="imageUrlInput">
             </label>
             <label class="check">
-                <input name="popular" type="checkbox"> الأكثر طلبًا
+                <input name="popular" type="checkbox"> الأكثر طلباً
             </label>
             <label class="check">
                 <input name="active" type="checkbox" checked> ظاهر في المتجر
             </label>
             <button class="primary" type="submit">حفظ المنتج</button>
+        </form>
+    </dialog>
+
+    <!-- STORY MODAL -->
+    <dialog id="storyEditor" class="modal">
+        <button class="close" data-close="storyEditor">×</button>
+        <h2>إضافة قصة جديدة</h2>
+        <form id="storyForm" class="card-form">
+            <label>عنوان الستوري (مثل: هبة الصيف / جديدنا)
+                <input name="title" required maxlength="40">
+            </label>
+            <label>الوسم
+                <input name="tag" placeholder="جديد Vibes" maxlength="25">
+            </label>
+            <label>صورة القصة
+                <div class="file-input-wrapper">
+                    <span>اختر صورة الستوري</span>
+                    <input type="file" id="storyImageFile" accept="image/*" required>
+                </div>
+                <img id="storyPreview" class="image-preview" style="display:none;width:80px;height:120px;object-fit:cover;border-radius:10px;margin-top:8px;">
+            </label>
+            <button class="primary" type="submit">نشر الستوري</button>
         </form>
     </dialog>
 
