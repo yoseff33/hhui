@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Vibes | لوحة التحكم</title>
+    <title>Vibes | لوحة التحكم المتقدمة</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js" defer></script>
@@ -13,7 +13,7 @@
 <body class="admin-body">
     <main class="admin-container">
 
-        <!-- ====== LOGIN VIEW ====== -->
+        <!-- ====== LOGIN ====== -->
         <section id="loginView" class="login-card">
             <div class="logo">V</div>
             <h1>دخول الإدارة</h1>
@@ -37,6 +37,7 @@
                 <div>
                     <h1>لوحة تحكم Vibes</h1>
                     <p id="adminEmail" class="muted"></p>
+                    <p id="adminRole" class="muted" style="font-size:14px"></p>
                 </div>
                 <div class="actions">
                     <a class="secondary" href="index.html">عرض المتجر</a>
@@ -54,6 +55,7 @@
                 <button class="active" data-tab="ordersPane">الطلبات</button>
                 <button data-tab="productsPane">المنتجات</button>
                 <button data-tab="settingsPane">الإعدادات</button>
+                <button data-tab="usersPane" id="usersTab">المستخدمين</button>
             </div>
 
             <!-- ORDERS -->
@@ -96,6 +98,15 @@
                     <button class="primary" type="submit">حفظ الإعدادات</button>
                 </form>
             </section>
+
+            <!-- USERS (Admin only) -->
+            <section id="usersPane" class="pane hidden">
+                <div class="section-head">
+                    <h2>إدارة المستخدمين</h2>
+                    <button id="refreshUsers" class="secondary">تحديث</button>
+                </div>
+                <div id="usersTable" class="table-wrap"></div>
+            </section>
         </section>
     </main>
 
@@ -122,8 +133,13 @@
                     <option value="other">أخرى</option>
                 </select>
             </label>
-            <label>رابط الصورة
-                <input name="image_url" type="url" placeholder="https://...">
+            <label>صورة المنتج
+                <div class="file-input-wrapper">
+                    <span>اختر صورة من جهازك</span>
+                    <input type="file" id="productImage" accept="image/*">
+                </div>
+                <img id="imagePreview" class="image-preview" style="display:none">
+                <input type="hidden" name="image_url" id="imageUrlInput">
             </label>
             <label class="check">
                 <input name="popular" type="checkbox"> الأكثر طلبًا
@@ -137,4 +153,4 @@
 
     <div id="toast" class="toast"></div>
 </body>
-</html>
+</html>    
