@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1a1410" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>VIBES CALL — اختبار</title>
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22VIBES%20CALL%22%2C%22short_name%22%3A%22VIBES%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a1410%22%2C%22theme_color%22%3A%22%231a1410%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2527http%253A%2F%2Fwww.w3.org%2F2000%2Fsvg%2527%2520viewBox%253D%25270%25200%2520100%2520100%2527%253E%253Crect%2520width%253D%2527100%2527%2520height%253D%2527100%2527%2520rx%253D%252720%2527%2520fill%253D%2527%25231a1410%2527%2F%253E%253Ctext%2520x%253D%252750%2527%2520y%253D%252768%2527%2520font-size%253D%252760%2527%2520text-anchor%253D%2527middle%2527%2520fill%253D%2527%2523d4a574%2527%253E%25E2%2598%2595%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D" />
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #1a1410;
+    color: #f5e6d3;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Kufi Arabic", system-ui, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body {
+    display: flex; flex-direction: column;
+    padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
+  }
+
+  header {
+    text-align: center;
+    padding: 24px 0 8px;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: #d4a574;
+    font-weight: 700;
+  }
+  header p {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: #8a7563;
+    letter-spacing: 1px;
+  }
+
+  .status-bar {
+    display: flex; gap: 8px; justify-content: center;
+    margin: 12px 0 20px;
+    flex-wrap: wrap;
+  }
+  .chip {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #2a1f18;
+    border: 1px solid #3a2c22;
+    color: #8a7563;
+  }
+  .chip.on { color: #6ee7a8; border-color: #2d5a3f; background: #14281c; }
+  .chip.off { color: #f87171; border-color: #5a2d2d; background: #28141a; }
+
+  .card {
+    background: linear-gradient(160deg, #241a14, #1f1610);
+    border: 1px solid #3a2c22;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+  .card h2 {
+    margin: 0 0 14px;
+    font-size: 14px;
+    color: #d4a574;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .order-display {
+    text-align: center;
+    padding: 20px 0;
+  }
+  .order-number {
+    font-size: 72px;
+    font-weight: 800;
+    color: #d4a574;
+    letter-spacing: 2px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .order-label {
+    font-size: 12px;
+    color: #8a7563;
+    letter-spacing: 4px;
+    margin-top: 6px;
+  }
+
+  .inputs {
+    display: flex; gap: 10px; align-items: center; justify-content: center;
+    margin-top: 8px;
+  }
+  .inputs input {
+    width: 100px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 10px;
+    background: #1a1410;
+    border: 1px solid #3a2c22;
+    border-radius: 12px;
+    color: #d4a574;
+    font-family: inherit;
+    outline: none;
+  }
+  .inputs input:focus { border-color: #d4a574; }
+
+  .buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .buttons.full { grid-template-columns: 1fr; }
+
+  button.action {
+    border: none;
+    border-radius: 16px;
+    padding: 16px 12px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform 0.1s, filter 0.15s;
+    color: #fff;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 60px;
+  }
+  button.action:active { transform: scale(0.96); filter: brightness(0.9); }
+
+  .btn-normal   { background: linear-gradient(160deg, #2d5a3f, #1e3d2a); }
+  .btn-important{ background: linear-gradient(160deg, #b8860b, #8a6508); }
+  .btn-urgent   { background: linear-gradient(160deg, #c0392b, #8a2015); }
+  .btn-recall   { background: linear-gradient(160deg, #6d4c91, #4a3268); }
+  .btn-ready    { background: linear-gradient(160deg, #d4a574, #a67c4a); color: #1a1410; }
+  .btn-ghost    { background: #2a1f18; border: 1px solid #3a2c22; color: #d4a574; }
+
+  .full-width { grid-column: 1 / -1; }
+
+  footer {
+    text-align: center;
+    font-size: 11px;
+    color: #4a3d33;
+    padding: 20px 0;
+    letter-spacing: 2px;
+  }
+
+  /* ==== Overlay ==== */
+  #overlay {
+    position: fixed; inset: 0;
+    background: rgba(10, 8, 6, 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+    z-index: 9999;
+    animation: fadeIn 0.25s ease;
+  }
+  #overlay.show { display: flex; }
+  #overlay.urgent {
+    animation: flash 0.6s infinite alternate, fadeIn 0.2s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes flash {
+    from { background: rgba(10, 8, 6, 0.96); }
+    to   { background: rgba(80, 20, 10, 0.96); }
+  }
+
+  #overlay .badge {
+    font-size: 60px;
+    margin-bottom: 20px;
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+  }
+
+  #overlay h2 {
+    font-size: 26px;
+    margin: 0 0 12px;
+    color: #d4a574;
+    letter-spacing: 2px;
+    font-weight: 800;
+  }
+  #overlay .ov-num {
+    font-size: 80px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    margin: 12px 0;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 40px rgba(212, 165, 116, 0.6);
+  }
+  #overlay .ov-msg {
+    font-size: 16px;
+    color: #a89280;
+    margin: 12px 0 32px;
+    max-width: 320px;
+    line-height: 1.5;
+  }
+  #overlay button {
+    background: #d4a574;
+    color: #1a1410;
+    border: none;
+    border-radius: 16px;
+    padding: 16px 40px;
+    font-size: 16px;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+
+  /* order number on overlay can be edited? no - it shows current */
+
+  @media (min-width: 500px) {
+    body { max-width: 500px; margin: 0 auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>VIBES CALL</h1>
+  <p>نظام نداء الطلبات — اختبار</p>
+</header>
+
+<div class="status-bar">
+  <span class="chip" id="chipSound">🔊 الصوت</span>
+  <span class="chip" id="chipVibrate">📳 الاهتزاز</span>
+  <span class="chip" id="chipNotif">🔔 الإشعارات</span>
+</div>
+
+<div class="card">
+  <div class="order-display">
+    <div class="order-label">رقم الطلب</div>
+    <div class="order-number" id="orderNumber">027</div>
+  </div>
+  <div class="inputs">
+    <input type="number" id="orderInput" value="27" min="1" max="999" />
+    <button class="action btn-ghost" onclick="setOrder()" style="padding:12px 16px; min-height:auto;">تعيين</button>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🔔 مستويات النداء</h2>
+  <div class="buttons">
+    <button class="action btn-normal" onclick="trigger('normal')">
+      🔔 عادي
+    </button>
+    <button class="action btn-important" onclick="trigger('important')">
+      🔥 مهم
+    </button>
+    <button class="action btn-urgent full-width" onclick="trigger('urgent')">
+      🚨 نداء عاجل
+    </button>
+    <button class="action btn-recall full-width" onclick="trigger('recall')">
+      📣 إعادة النداء (آخر نداء)
+    </button>
+  </div>
+</div>
+
+<div class="card">
+  <h2>⚙️ إعدادات</h2>
+  <div class="buttons">
+    <button class="action btn-ghost" onclick="testSound('normal')">🎵 صوت عادي</button>
+    <button class="action btn-ghost" onclick="testSound('urgent')">🎵 صوت عاجل</button>
+    <button class="action btn-ghost" onclick="testVibrate('normal')">📳 اهتزاز عادي</button>
+    <button class="action btn-ghost" onclick="testVibrate('urgent')">📳 اهتزاز عاجل</button>
+    <button class="action btn-ghost full-width" onclick="requestNotifPerm()">🔔 تفعيل صلاحية الإشعارات</button>
+    <button class="action btn-ghost full-width" onclick="testNotif()">📨 إرسال إشعار تجريبي</button>
+  </div>
+</div>
+
+<footer>VIBES · اختبار محلي</footer>
+
+<div id="overlay" onclick="dismissOverlay(event)">
+  <div class="badge" id="ovBadge">🚨</div>
+  <h2 id="ovTitle">VIBES</h2>
+  <div class="ov-num" id="ovNum">027</div>
+  <div class="ov-msg" id="ovMsg">طلبك جاهز للاستلام</div>
+  <button onclick="dismissOverlay(event)">تم ✓</button>
+</div>
+
+<script>
+/* ============================================================
+   VIBES CALL — Single-file test
+   - Web Audio API (بدون ملفات صوتية)
+   - Vibration API
+   - Notification API
+============================================================ */
+
+let audioCtx = null;
+let currentOrderNumber = '027';
+let activeOscillators = []; // لإيقاف الأصوات المستمرة
+
+/* ---------- تهيئة AudioContext عند أول تفاعل (قيد المتصفحات) ---------- */
+function ensureAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+/* ---------- نغمة بيل واحدة ---------- */
+function playBell(freq = 880, duration = 0.6, gain = 0.25, type = 'sine', delay = 0) {
+  const ctx = ensureAudio();
+  const t0 = ctx.currentTime + delay;
+
+  const osc = ctx.createOscillator();
+  const g = ctx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, t0);
+
+  g.gain.setValueAtTime(0, t0);
+  g.gain.linearRampToValueAtTime(gain, t0 + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + duration);
+
+  osc.connect(g).connect(ctx.destination);
+  osc.start(t0);
+  osc.stop(t0 + duration + 0.05);
+}
+
+/* ---------- نغمة "عادي" — بيل لطيف ---------- */
+function soundNormal() {
+  playBell(880, 0.5, 0.2, 'sine', 0);
+  playBell(1320, 0.7, 0.15, 'sine', 0.08);
+  playBell(1760, 0.9, 0.1, 'sine', 0.16);
+}
+
+/* ---------- نغمة "مهم" — جرس مزدوج ---------- */
+function soundImportant() {
+  playBell(660, 0.35, 0.28, 'sine', 0);
+  playBell(990, 0.35, 0.22, 'sine', 0.05);
+  playBell(660, 0.35, 0.28, 'sine', 0.35);
+  playBell(990, 0.35, 0.22, 'sine', 0.4);
+  playBell(1320, 0.9, 0.18, 'sine', 0.7);
+}
+
+/* ---------- نغمة "عاجل" — إنذار متكرر ---------- */
+function soundUrgent(durationSec = 4) {
+  const ctx = ensureAudio();
+  const t0 = ctx.currentTime;
+
+  // موجة منشارية مع تعديل gain لخلق صوت إنذار
+  const osc = ctx.createOscillator();
+  const g = ctx.createGain();
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(440, t0);
+
+  // نحاكي صعود وهبوط التردد (siren)
+  const lfo = ctx.createOscillator();
+  const lfoGain = ctx.createGain();
+  lfo.type = 'sine';
+  lfo.frequency.setValueAtTime(2, t0); // 2 هرتز تردد التنبيه
+  lfoGain.gain.setValueAtTime(220, t0);
+  lfo.connect(lfoGain).connect(osc.frequency);
+
+  // تعديل مستوى الصوت للنقرات
+  const pulseLfo = ctx.createOscillator();
+  const pulseGain = ctx.createGain();
+  pulseLfo.type = 'square';
+  pulseLfo.frequency.setValueAtTime(6, t0); // 6 نبضات في الثانية
+  pulseGain.gain.setValueAtTime(0.12, t0);
+  pulseLfo.connect(pulseGain).connect(g.gain);
+
+  g.gain.setValueAtTime(0.18, t0);
+
+  osc.connect(g).connect(ctx.destination);
+  osc.start(t0);
+  lfo.start(t0);
+  pulseLfo.start(t0);
+
+  osc.stop(t0 + durationSec);
+  lfo.stop(t0 + durationSec);
+  pulseLfo.stop(t0 + durationSec);
+
+  activeOscillators.push({ stopAt: t0 + durationSec, nodes: [osc, lfo, pulseLfo] });
+}
+
+/* ---------- نغمة "إعادة النداء" — ثلاث صفارات ---------- */
+function soundRecall() {
+  for (let i = 0; i < 3; i++) {
+    const d = i * 0.35;
+    playBell(1200, 0.2, 0.3, 'square', d);
+    playBell(1600, 0.2, 0.2, 'square', d + 0.05);
+  }
+  playBell(800, 0.8, 0.2, 'sine', 1.05);
+}
+
+/* ---------- إيقاف كل الأصوات ---------- */
+function stopAllSounds() {
+  activeOscillators.forEach(o => {
+    o.nodes.forEach(n => { try { n.stop(); } catch(e){} });
+  });
+  activeOscillators = [];
+  if (audioCtx) {
+    // إعادة إنشاء الـ context لضمان إيقاف أي شيء متبقٍ
+    audioCtx.close().then(() => { audioCtx = null; });
+  }
+}
+
+/* ============================================================
+   الاهتزاز
+============================================================ */
+function vibrateNormal() {
+  if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+}
+function vibrateImportant() {
+  if (navigator.vibrate) navigator.vibrate([300, 150, 300, 150, 300]);
+}
+function vibrateUrgent() {
+  if (navigator.vibrate) {
+    // نمط طويل متكرر — 8 ثواني
+    const pattern = [];
+    for (let i = 0; i < 16; i++) pattern.push(400, 150);
+    navigator.vibrate(pattern);
+  }
+}
+function vibrateRecall() {
+  if (navigator.vibrate) navigator.vibrate([500, 200, 500, 200, 500, 200, 1000]);
+}
+function stopVibrate() {
+  if (navigator.vibrate) navigator.vibrate(0);
+}
+
+/* ============================================================
+   الإشعارات (Notification API)
+============================================================ */
+async function requestNotifPerm() {
+  if (!('Notification' in window)) {
+    alert('متصفحك لا يدعم الإشعارات. على iPhone: أضف الصفحة للشاشة الرئيسية أولاً.');
+    return;
+  }
+  const perm = await Notification.requestPermission();
+  updateChips();
+  alert(perm === 'granted' ? '✅ تم تفعيل الإشعارات' : '❌ لم يتم منح الصلاحية');
+}
+
+function showNotification(title, body, urgent = false) {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  try {
+    const n = new Notification(title, {
+      body,
+      icon: 'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2720%27 fill=%27%231a1410%27/%3E%3Ctext x=%2750%27 y=%2768%27 font-size=%2760%27 text-anchor=%27middle%27 fill=%27%23d4a574%27%3E☕%3C/text%3E%3C/svg%3E',
+      tag: 'vibes-order-' + currentOrderNumber,
+      requireInteraction: urgent,
+      vibrate: urgent ? [500,200,500,200,500] : [200],
+    });
+    n.onclick = () => { window.focus(); n.close(); };
+  } catch (e) {
+    console.warn('Notification failed', e);
+  }
+}
+
+/* ============================================================
+   التحكم بالطلب
+============================================================ */
+function setOrder() {
+  const v = document.getElementById('orderInput').value.padStart(3, '0');
+  currentOrderNumber = v;
+  document.getElementById('orderNumber').textContent = v;
+}
+
+/* ============================================================
+   تشغيل النداء
+============================================================ */
+function trigger(level) {
+  // تأكد من تفعيل الصوت (متطلب متصفح)
+  ensureAudio();
+
+  const num = currentOrderNumber;
+
+  if (level === 'normal') {
+    soundNormal();
+    vibrateNormal();
+    showOverlay('🔔', 'طلبك جاهز', num, 'تفضل، ننتظرك عند الاستلام 🤎', false);
+    showNotification('طلبك جاهز 🤎', `VIBES #${num} — تفضل للاستلام`, false);
+  }
+  else if (level === 'important') {
+    soundImportant();
+    vibrateImportant();
+    showOverlay('🔥', 'VIBES — طلبك ينتظرك', num, 'طلبك جاهز وما زال بانتظارك', false);
+    showNotification('VIBES — طلبك ينتظرك', `#${num} ما زال بانتظارك`, false);
+  }
+  else if (level === 'urgent') {
+    soundUrgent(6);
+    vibrateUrgent();
+    showOverlay('🚨', 'نداء عاجل', num, 'طلبك جاهز للاستلام الآن', true);
+    showNotification('🚨 VIBES — نداء عاجل', `طلبك #${num} جاهز للاستلام الآن`, true);
+  }
+  else if (level === 'recall') {
+    soundRecall();
+    vibrateRecall();
+    showOverlay('📣', 'آخر نداء', num, 'هذا آخر تنبيه لطلبك', true);
+    showNotification('VIBES — آخر نداء', `طلبك #${num} — هذا آخر تنبيه`, true);
+  }
+}
+
+/* ============================================================
+   Overlay
+============================================================ */
+function showOverlay(badge, title, num, msg, urgent) {
+  document.getElementById('ovBadge').textContent = badge;
+  document.getElementById('ovTitle').textContent = title;
+  document.getElementById('ovNum').textContent = num;
+  document.getElementById('ovMsg').textContent = msg;
+
+  const ov = document.getElementById('overlay');
+  ov.classList.toggle('urgent', urgent);
+  ov.classList.add('show');
+}
+
+function dismissOverlay(e) {
+  if (e) e.stopPropagation();
+  document.getElementById('overlay').classList.remove('show', 'urgent');
+  stopAllSounds();
+  stopVibrate();
+}
+
+/* ============================================================
+   اختبارات فردية
+============================================================ */
+function testSound(level) {
+  ensureAudio();
+  if (level === 'normal') soundNormal();
+  else if (level === 'urgent') soundUrgent(4);
+  else if (level === 'important') soundImportant();
+  else if (level === 'recall') soundRecall();
+}
+function testVibrate(level) {
+  if (level === 'normal') vibrateNormal();
+  else if (level === 'urgent') vibrateUrgent();
+  else if (level === 'important') vibrateImportant();
+  else if (level === 'recall') vibrateRecall();
+}
+function testNotif() {
+  showNotification(
+    'VIBES — إشعار تجريبي',
+    `طلبك #${currentOrderNumber} وصل إشعاره 🔔`,
+    false
+  );
+}
+
+/* ============================================================
+   تحديث شرائط الحالة
+============================================================ */
+function updateChips() {
+  const s = document.getElementById('chipSound');
+  const v = document.getElementById('chipVibrate');
+  const n = document.getElementById('chipNotif');
+
+  s.className = 'chip ' + (audioCtx ? 'on' : 'off');
+  s.textContent = audioCtx ? '🔊 الصوت مفعّل' : '🔇 الصوت (المس أي زر)';
+
+  v.className = 'chip ' + (navigator.vibrate ? 'on' : 'off');
+  v.textContent = navigator.vibrate ? '📳 الاهتزاز مدعوم' : '📳 لا يوجد اهتزاز';
+
+  if (!('Notification' in window)) {
+    n.className = 'chip off';
+    n.textContent = '🔔 غير مدعوم';
+  } else if (Notification.permission === 'granted') {
+    n.className = 'chip on';
+    n.textContent = '🔔 الإشعارات مفعّلة';
+  } else if (Notification.permission === 'denied') {
+    n.className = 'chip off';
+    n.textContent = '🔔 مرفوضة';
+  } else {
+    n.className = 'chip off';
+    n.textContent = '🔔 غير مفعّلة';
+  }
+}
+
+/* ---------- ربط أول تفاعل لتهيئة الصوت ---------- */
+document.addEventListener('touchstart', () => { ensureAudio(); updateChips(); }, { once: true });
+document.addEventListener('click', () => { ensureAudio(); updateChips(); }, { once: true });
+
+/* ---------- تحديث الشرائط عند التحميل ---------- */
+updateChips();
+
+/* ---------- حفظ رقم الطلب تلقائيًا ---------- */
+document.getElementById('orderInput').addEventListener('input', (e) => {
+  const v = (e.target.value || '0').padStart(3, '0').slice(-3);
+  currentOrderNumber = v;
+  document.getElementById('orderNumber').textContent = v;
+});
+
+/* ---------- إيقاف كل شيء عند إخفاء الصفحة ---------- */
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopVibrate();
+});
+</script>
+</body>
+</html>
