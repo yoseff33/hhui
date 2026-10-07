@@ -11,12 +11,55 @@
 
 <style>
   :root{
+    /* ألوان أساسية */
     --brown:#7A3F1C;
     --brown-dark:#552A12;
     --paper:#FFF8EC;
     --line:#7A3F1C;
+    --text-main:#552A12;
+    --text-sub:#6b4629;
+
+    /* أبعاد البطاقة */
     --card-w:5.5cm;
     --card-h:9cm;
+
+    /* أحجام الخطوط */
+    --fs-logo-en:0.71cm;
+    --fs-logo-sub:0.215cm;
+    --fs-logo-ar:0.58cm;
+    --fs-origin-ar:0.38cm;
+    --fs-origin-en:0.3cm;
+    --fs-tastes-ar:0.41cm;
+    --fs-tastes-en:0.27cm;
+    --fs-spec-base:0.255cm;
+    --fs-spec-strong:0.32cm;
+    --fs-altitude:0.32cm;
+    --fs-back-logo:0.7cm;
+    --fs-tagline:0.4cm;
+    --fs-story:0.41cm;
+    --fs-brew:0.265cm;
+    --fs-brew-strong:0.32cm;
+    --fs-social-label:0.25cm;
+    --fs-social-value:0.29cm;
+    --fs-qr:0.24cm;
+
+    /* الحدود والانحناءات */
+    --border-outer:0.12cm;
+    --border-inner:0.045cm;
+    --border-line:0.04cm;
+    --border-line-thin:0.035cm;
+    --inset-inner:0.35cm;
+    --radius-outer:0.6cm;
+    --radius-inner:0.48cm;
+    --radius-spec:0.25cm;
+    --radius-qr:0.25cm;
+
+    /* المسافات */
+    --padding-front-info:0.32cm;
+    --padding-story:0.4cm;
+    --gap-spec:0.1cm;
+    --gap-front-info:0.17cm;
+
     --ui-font:"Tajawal", Tahoma, Arial, sans-serif;
     --font-ar-title:"Amiri", serif;
     --font-ar-body:"Tajawal", sans-serif;
@@ -48,46 +91,94 @@
   .hidden-editor{display:none}
   .stage{display:flex;align-items:flex-start;justify-content:center;gap:24px;padding:28px;flex-wrap:wrap;overflow:auto}
   .stage-head{width:100%;text-align:center;color:#6d4426;font-family:var(--font-en-title);font-size:18px;font-weight:700}
-  .card{width:var(--card-w);height:var(--card-h);background:var(--paper);border:0.12cm solid var(--brown);border-radius:0.6cm;overflow:hidden;position:relative;box-shadow:0 16px 40px rgba(75,46,25,.14)}
-  .card-inner{position:absolute;inset:0.35cm;border:0.045cm solid var(--line);border-radius:0.48cm;overflow:hidden;background:var(--paper)}
+
+  /* ======= البطاقة ======= */
+  .card{width:var(--card-w);height:var(--card-h);background:var(--paper);border:var(--border-outer) solid var(--brown);border-radius:var(--radius-outer);overflow:hidden;position:relative;box-shadow:0 16px 40px rgba(75,46,25,.14)}
+  .card-inner{position:absolute;inset:var(--inset-inner);border:var(--border-inner) solid var(--line);border-radius:var(--radius-inner);overflow:hidden;background:var(--paper)}
   .front-layout{display:grid;grid-template-rows:50% auto;height:100%}
-  .front-image{position:relative;overflow:hidden;border-bottom:0.04cm solid var(--line);background:#e8dcc8}
+  .front-image{position:relative;overflow:hidden;border-bottom:var(--border-line) solid var(--line);background:#e8dcc8}
   .front-image img{width:100%;height:100%;object-fit:cover;display:none}
   .front-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;color:#81614b;font-size:12px;line-height:1.6;background:radial-gradient(circle at 20% 25%, rgba(122,63,28,.08), transparent 22%),radial-gradient(circle at 75% 75%, rgba(122,63,28,.08), transparent 22%),#ece1d0}
-  .front-info{padding:0.32cm;display:grid;grid-template-rows:auto auto auto 1fr auto;gap:0.17cm;min-height:0}
+  .front-info{padding:var(--padding-front-info);display:grid;grid-template-rows:auto auto auto 1fr auto;gap:var(--gap-front-info);min-height:0}
   .logo{text-align:center;line-height:1}
-  .logo-en{font-family:var(--font-en-title);font-size:0.71cm;letter-spacing:0.11cm;font-weight:700;color:var(--brown)}
-  .logo-sub{font-family:var(--font-en-body);font-size:0.215cm;letter-spacing:0.06cm;margin-top:0.1cm;color:#6b4629}
-  .logo-ar{font-family:var(--font-ar-title);font-size:0.58cm;font-weight:700;margin-top:0.08cm;color:var(--brown)}
-  .origin{text-align:center;line-height:1.5;padding:0.08cm 0;border-top:0.035cm solid var(--line);border-bottom:0.035cm solid var(--line)}
-  .origin-ar{font-family:var(--font-ar-body);font-size:0.38cm;font-weight:700}
-  .origin-en{font-family:var(--font-en-title);font-size:0.3cm;font-weight:700}
+  .logo-en{font-family:var(--font-en-title);font-size:var(--fs-logo-en);letter-spacing:0.11cm;font-weight:700;color:var(--brown)}
+  .logo-sub{font-family:var(--font-en-body);font-size:var(--fs-logo-sub);letter-spacing:0.06cm;margin-top:0.1cm;color:var(--text-sub)}
+  .logo-ar{font-family:var(--font-ar-title);font-size:var(--fs-logo-ar);font-weight:700;margin-top:0.08cm;color:var(--brown)}
+  .origin{text-align:center;line-height:1.5;padding:0.08cm 0;border-top:var(--border-line-thin) solid var(--line);border-bottom:var(--border-line-thin) solid var(--line)}
+  .origin-ar{font-family:var(--font-ar-body);font-size:var(--fs-origin-ar);font-weight:700}
+  .origin-en{font-family:var(--font-en-title);font-size:var(--fs-origin-en);font-weight:700}
   .tastes{text-align:center}
-  .tastes-ar{font-family:var(--font-ar-body);font-size:0.41cm;line-height:1.4;font-weight:700}
-  .tastes-en{font-family:var(--font-en-title);font-size:0.27cm;line-height:1.45;margin-top:0.08cm}
-  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.1cm;font-size:0.255cm;text-align:center}
-  .spec{border:0.035cm solid rgba(122,63,28,.35);border-radius:0.25cm;padding:0.12cm 0.1cm;line-height:1.45}
-  .spec strong{font-family:var(--font-ar-body);font-size:0.32cm}
+  .tastes-ar{font-family:var(--font-ar-body);font-size:var(--fs-tastes-ar);line-height:1.4;font-weight:700}
+  .tastes-en{font-family:var(--font-en-title);font-size:var(--fs-tastes-en);line-height:1.45;margin-top:0.08cm}
+  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap-spec);font-size:var(--fs-spec-base);text-align:center}
+  .spec{border:var(--border-line-thin) solid rgba(122,63,28,.35);border-radius:var(--radius-spec);padding:0.12cm 0.1cm;line-height:1.45}
+  .spec strong{font-family:var(--font-ar-body);font-size:var(--fs-spec-strong)}
   .spec span{font-family:var(--font-en-title)}
-  .altitude{text-align:center;font-family:var(--font-en-title);font-size:0.32cm;font-weight:700;border-top:0.035cm solid var(--line);padding-top:0.14cm}
+  .altitude{text-align:center;font-family:var(--font-en-title);font-size:var(--fs-altitude);font-weight:700;border-top:var(--border-line-thin) solid var(--line);padding-top:0.14cm}
   .back-layout{height:100%;display:grid;grid-template-rows:2cm 1fr 1.8cm 1.8cm}
-  .back-top{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;border-bottom:0.04cm solid var(--line);padding:0.25cm}
-  .back-logo{font-family:var(--font-en-title);font-size:0.7cm;letter-spacing:0.1cm;font-weight:700;color:var(--brown)}
-  .tagline{margin-top:0.15cm;font-family:var(--font-ar-title);font-size:0.4cm}
-  .story{padding:0.4cm;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.8;white-space:pre-line;font-family:var(--font-ar-body);font-size:0.41cm}
-  .brew{border-top:0.04cm solid var(--line);border-bottom:0.04cm solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);text-align:center;align-items:center;font-family:var(--font-en-title);font-size:0.265cm}
-  .brew > div+div{border-right:0.035cm solid var(--line)}
-  .brew strong{font-size:0.32cm}
+  .back-top{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;border-bottom:var(--border-line) solid var(--line);padding:0.25cm}
+  .back-logo{font-family:var(--font-en-title);font-size:var(--fs-back-logo);letter-spacing:0.1cm;font-weight:700;color:var(--brown)}
+  .tagline{margin-top:0.15cm;font-family:var(--font-ar-title);font-size:var(--fs-tagline)}
+  .story{padding:var(--padding-story);display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.8;white-space:pre-line;font-family:var(--font-ar-body);font-size:var(--fs-story)}
+  .brew{border-top:var(--border-line) solid var(--line);border-bottom:var(--border-line) solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);text-align:center;align-items:center;font-family:var(--font-en-title);font-size:var(--fs-brew)}
+  .brew > div+div{border-right:var(--border-line-thin) solid var(--line)}
+  .brew strong{font-size:var(--fs-brew-strong)}
   .footer-back{display:grid;grid-template-columns:1.2fr .8fr;gap:0.2cm;align-items:center;padding:0.28cm 0.32cm}
   .social-lines{line-height:1.55}
-  .social-lines .label{font-family:var(--font-en-title);font-size:0.25cm}
-  .social-lines .value{font-family:var(--font-en-body);font-size:0.29cm;font-weight:700}
-  .qr{height:1.3cm;border:0.045cm dashed var(--line);border-radius:0.25cm;display:flex;align-items:center;justify-content:center;text-align:center;font-size:0.24cm;font-family:var(--font-en-title)}
-  @media (max-width:1000px){.app{grid-template-columns:1fr}.panel{border-left:0;border-bottom:1px solid #decfbc}}
+  .social-lines .label{font-family:var(--font-en-title);font-size:var(--fs-social-label)}
+  .social-lines .value{font-family:var(--font-en-body);font-size:var(--fs-social-value);font-weight:700}
+  .qr{height:1.3cm;border:var(--border-inner) dashed var(--line);border-radius:var(--radius-qr);display:flex;align-items:center;justify-content:center;text-align:center;font-size:var(--fs-qr);font-family:var(--font-en-title)}
+
+  /* ======= لوحة التحكم العائمة عند المعاينة ======= */
+  .preview-controls-toggle{
+    position:fixed;left:20px;bottom:20px;z-index:1001;
+    background:var(--brown);color:#fff;border:0;padding:12px 20px;border-radius:50px;
+    font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(122,63,28,.4);
+    font-family:var(--ui-font);font-size:14px;display:flex;align-items:center;gap:8px;
+    transition:transform .2s, box-shadow .2s;
+  }
+  .preview-controls-toggle:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(122,63,28,.5)}
+  .preview-controls{
+    position:fixed;left:20px;bottom:80px;top:20px;width:350px;
+    background:#fffaf2;border:1px solid #decfbc;border-radius:16px;padding:16px;
+    overflow-y:auto;z-index:1000;box-shadow:0 12px 40px rgba(0,0,0,.2);
+    transform:translateX(calc(-100% - 40px));transition:transform .3s ease;
+  }
+  .preview-controls.open{transform:translateX(0)}
+  .pc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .pc-header h3{margin:0;font-size:15px;color:var(--brown)}
+  .pc-close{background:#f0e4d2;color:var(--brown-dark);border:0;width:28px;height:28px;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px}
+  .pc-tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:14px}
+  .pc-tab{border:1px solid #d8c4aa;background:#f8efe3;color:var(--brown);border-radius:8px;padding:8px 4px;font-weight:700;cursor:pointer;font-family:var(--ui-font);font-size:11px}
+  .pc-tab.active{background:var(--brown);color:#fff;border-color:var(--brown)}
+  .pc-section.hidden{display:none}
+  .pc-group{background:#fffdf9;border:1px solid #e4d3be;border-radius:12px;padding:12px;margin-bottom:12px}
+  .pc-group h4{margin:0 0 10px;font-size:12px;color:var(--brown)}
+  .pc-item{display:grid;grid-template-columns:1fr auto;gap:6px 8px;align-items:center;margin-bottom:8px}
+  .pc-item label{font-size:11px;margin:0;font-weight:700;grid-column:1/-1}
+  .pc-item input[type="range"]{width:100%;padding:0;height:6px;background:#eadac7;border-radius:3px;appearance:none;outline:none;border:0;grid-column:1}
+  .pc-item input[type="range"]::-webkit-slider-thumb{appearance:none;width:16px;height:16px;border-radius:50%;background:var(--brown);cursor:pointer;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+  .pc-item input[type="range"]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--brown);cursor:pointer;border:2px solid #fff}
+  .pc-val{font-size:11px;color:var(--brown);font-weight:700;min-width:50px;text-align:left;grid-column:2}
+  .pc-item-color{grid-template-columns:1fr auto}
+  .pc-item-color label{grid-column:1}
+  .pc-item-color input[type="color"]{width:40px;height:28px;padding:0;border-radius:8px;cursor:pointer;grid-column:2;border:1px solid #ceb99f}
+  .pc-reset{width:100%;background:#f5e8db;color:#7a3f1c;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;margin-top:6px}
+  .pc-note{font-size:10px;color:#8a6a52;line-height:1.6;margin:0 0 10px;padding:8px 10px;background:#f6ecde;border-radius:8px}
+  .pc-lock{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--brown);cursor:pointer;margin-bottom:8px}
+  .pc-lock input{width:auto}
+
+  @media (max-width:1000px){
+    .app{grid-template-columns:1fr}
+    .panel{border-left:0;border-bottom:1px solid #decfbc}
+  }
+  @media (max-width:500px){
+    .preview-controls{width:calc(100vw - 40px)}
+  }
   @page{margin:0.6cm}
   @media print{
     body{background:#fff}
-    .panel,.stage-head{display:none !important}
+    .panel,.stage-head,.preview-controls,.preview-controls-toggle{display:none !important}
     .app{display:block}
     .stage{padding:0;gap:0.8cm;justify-content:flex-start;align-items:flex-start}
     .card{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
@@ -102,7 +193,7 @@
 
     <div class="tip">
       المقاس الافتراضي: <strong>5.5 × 9 cm</strong><br>
-      والبيانات معبّية على محصول إثيوبيا + حساب الانستقرام <strong>Vibes.espresso</strong>.
+      الآن يمكنك التحكم بكل شيء من لوحة <strong>🎨 تحكم المعاينة</strong> أسفل يسار الشاشة.
     </div>
 
     <div class="tabs">
@@ -251,11 +342,11 @@
       <div class="row">
         <div>
           <label>العرض cm</label>
-          <input id="w" type="number" min="4" max="10" step="0.1" value="5.5" />
+          <input id="w" type="number" min="4" max="12" step="0.1" value="5.5" />
         </div>
         <div>
           <label>الارتفاع cm</label>
-          <input id="h" type="number" min="6" max="14" step="0.1" value="9" />
+          <input id="h" type="number" min="6" max="15" step="0.1" value="9" />
         </div>
       </div>
       <div class="row">
@@ -347,8 +438,31 @@
   </main>
 </div>
 
+<!-- ===== لوحة التحكم العائمة ===== -->
+<button class="preview-controls-toggle" id="previewControlsToggle" type="button">🎨 تحكم المعاينة</button>
+
+<aside class="preview-controls" id="previewControls">
+  <div class="pc-header">
+    <h3>التحكم الكامل بالمعاينة</h3>
+    <button class="pc-close" id="pcClose" type="button">✕</button>
+  </div>
+
+  <div class="pc-tabs">
+    <button class="pc-tab active" data-pctab="pcFonts" type="button">الخطوط</button>
+    <button class="pc-tab" data-pctab="pcColors" type="button">الألوان</button>
+    <button class="pc-tab" data-pctab="pcSizes" type="button">الحدود والمقاسات</button>
+  </div>
+
+  <div id="pcFonts" class="pc-section"></div>
+  <div id="pcColors" class="pc-section hidden"></div>
+  <div id="pcSizes" class="pc-section hidden"></div>
+
+  <button class="pc-reset" id="pcReset" type="button">↺ إرجاع قيم المعاينة للافتراضي</button>
+</aside>
+
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
+/* ============ ربط الحقول بالمعاينة ============ */
 const bind = (inputId, previewId) => {
   const input = document.getElementById(inputId);
   const preview = document.getElementById(previewId);
@@ -368,6 +482,7 @@ const bind = (inputId, previewId) => {
   ['qrText','pQrText']
 ].forEach(x => bind(...x));
 
+/* ============ تبويبات المحرر ============ */
 document.querySelectorAll('.tab').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
@@ -378,6 +493,7 @@ document.querySelectorAll('.tab').forEach(btn => {
   });
 });
 
+/* ============ الصورة ============ */
 const frontImageInput = document.getElementById('frontImageInput');
 const frontPreviewImage = document.getElementById('frontPreviewImage');
 const frontPlaceholder = document.getElementById('frontPlaceholder');
@@ -398,21 +514,51 @@ document.getElementById('frontFit').addEventListener('change', e => {
   frontPreviewImage.style.objectFit = e.target.value;
 });
 
-document.getElementById('w').addEventListener('input', e => {
+/* ============ أبعاد البطاقة + قفل النسب ============ */
+const wInput = document.getElementById('w');
+const hInput = document.getElementById('h');
+let aspectLocked = false;
+let lockedRatio = 5.5 / 9;
+
+const lockAspectCheckbox = document.getElementById('lockAspect');
+if(lockAspectCheckbox){
+  lockAspectCheckbox.addEventListener('change', e => {
+    aspectLocked = e.target.checked;
+    if(aspectLocked){
+      lockedRatio = parseFloat(wInput.value) / parseFloat(hInput.value);
+    }
+  });
+}
+
+wInput.addEventListener('input', e => {
   document.documentElement.style.setProperty('--card-w', e.target.value + 'cm');
+  if(aspectLocked){
+    const newH = (parseFloat(e.target.value) / lockedRatio).toFixed(1);
+    hInput.value = newH;
+    document.documentElement.style.setProperty('--card-h', newH + 'cm');
+  }
 });
-document.getElementById('h').addEventListener('input', e => {
+hInput.addEventListener('input', e => {
   document.documentElement.style.setProperty('--card-h', e.target.value + 'cm');
+  if(aspectLocked){
+    const newW = (parseFloat(e.target.value) * lockedRatio).toFixed(1);
+    wInput.value = newW;
+    document.documentElement.style.setProperty('--card-w', newW + 'cm');
+  }
 });
+
+/* ============ ألوان المحرر الأساسية ============ */
 document.getElementById('brown').addEventListener('input', e => {
   document.documentElement.style.setProperty('--brown', e.target.value);
   document.documentElement.style.setProperty('--brown-dark', e.target.value);
   document.documentElement.style.setProperty('--line', e.target.value);
+  document.documentElement.style.setProperty('--text-main', e.target.value);
 });
 document.getElementById('paper').addEventListener('input', e => {
   document.documentElement.style.setProperty('--paper', e.target.value);
 });
 
+/* ============ الخطوط ============ */
 document.getElementById('fontArTitle').addEventListener('change', e => {
   document.documentElement.style.setProperty('--font-ar-title', e.target.value);
 });
@@ -430,6 +576,7 @@ document.getElementById('reset').addEventListener('click', () => {
   if(confirm('ترجع كل شيء للوضع الافتراضي؟')) location.reload();
 });
 
+/* ============ حفظ الصور ============ */
 async function saveCardAsImage(cardId, filename){
   const card = document.getElementById(cardId);
   const canvas = await html2canvas(card, {
@@ -442,13 +589,226 @@ async function saveCardAsImage(cardId, filename){
   link.href = canvas.toDataURL('image/png');
   link.click();
 }
+document.getElementById('saveFrontBtn').addEventListener('click', () => saveCardAsImage('frontCard', 'vibes-front-card.png'));
+document.getElementById('saveBackBtn').addEventListener('click', () => saveCardAsImage('backCard', 'vibes-back-card.png'));
 
-document.getElementById('saveFrontBtn').addEventListener('click', () => {
-  saveCardAsImage('frontCard', 'vibes-front-card.png');
+/* ============================================================
+   ============ لوحة التحكم العائمة عند المعاينة ============
+   ============================================================ */
+
+const controlConfig = {
+  pcFonts: [
+    { title:'🃏 الوجه الأمامي - الهوية', items:[
+      { label:'شعار EN (VIBES)', var:'--fs-logo-en', min:0.2, max:1.5, step:0.01, value:0.71 },
+      { label:'الوصف الصغير', var:'--fs-logo-sub', min:0.1, max:0.6, step:0.005, value:0.215 },
+      { label:'الشعار العربي', var:'--fs-logo-ar', min:0.2, max:1.2, step:0.01, value:0.58 },
+    ]},
+    { title:'📍 الوجه الأمامي - المعلومات', items:[
+      { label:'الدولة بالعربي', var:'--fs-origin-ar', min:0.2, max:0.8, step:0.01, value:0.38 },
+      { label:'الدولة بالإنجليزي', var:'--fs-origin-en', min:0.15, max:0.7, step:0.005, value:0.3 },
+      { label:'الإيحاء بالعربي', var:'--fs-tastes-ar', min:0.2, max:0.9, step:0.01, value:0.41 },
+      { label:'الإيحاء بالإنجليزي', var:'--fs-tastes-en', min:0.15, max:0.7, step:0.005, value:0.27 },
+      { label:'السلالة (عربي)', var:'--fs-spec-strong', min:0.15, max:0.7, step:0.005, value:0.32 },
+      { label:'السلالة (إنجليزي)', var:'--fs-spec-base', min:0.12, max:0.6, step:0.005, value:0.255 },
+      { label:'الارتفاع', var:'--fs-altitude', min:0.15, max:0.7, step:0.005, value:0.32 },
+    ]},
+    { title:'🔄 الوجه الخلفي', items:[
+      { label:'شعار الظهر', var:'--fs-back-logo', min:0.3, max:1.5, step:0.01, value:0.7 },
+      { label:'العبارة', var:'--fs-tagline', min:0.2, max:0.9, step:0.01, value:0.4 },
+      { label:'الوصف', var:'--fs-story', min:0.2, max:0.9, step:0.01, value:0.41 },
+      { label:'قيم الوصفة', var:'--fs-brew-strong', min:0.15, max:0.7, step:0.005, value:0.32 },
+      { label:'عنوان الوصفة', var:'--fs-brew', min:0.12, max:0.6, step:0.005, value:0.265 },
+      { label:'تواصل - عنوان', var:'--fs-social-label', min:0.12, max:0.6, step:0.005, value:0.25 },
+      { label:'تواصل - قيمة', var:'--fs-social-value', min:0.15, max:0.7, step:0.005, value:0.29 },
+      { label:'QR', var:'--fs-qr', min:0.12, max:0.6, step:0.005, value:0.24 },
+    ]},
+  ],
+  pcColors: [
+    { title:'🎨 الألوان الرئيسية', items:[
+      { label:'البني الرئيسي', var:'--brown', value:'#7A3F1C' },
+      { label:'البني الغامق', var:'--brown-dark', value:'#552A12' },
+      { label:'لون الخلفية (الورق)', var:'--paper', value:'#FFF8EC' },
+      { label:'لون الحدود', var:'--line', value:'#7A3F1C' },
+      { label:'لون النص الأساسي', var:'--text-main', value:'#552A12' },
+      { label:'لون النص الفرعي', var:'--text-sub', value:'#6b4629' },
+    ]},
+  ],
+  pcSizes: [
+    { title:'📐 الحدود والانحناءات', items:[
+      { label:'الحد الخارجي', var:'--border-outer', min:0, max:0.3, step:0.005, value:0.12, unit:'cm' },
+      { label:'الحد الداخلي', var:'--border-inner', min:0, max:0.15, step:0.005, value:0.045, unit:'cm' },
+      { label:'الحد الخطي', var:'--border-line', min:0, max:0.15, step:0.005, value:0.04, unit:'cm' },
+      { label:'الحد الخطي الرفيع', var:'--border-line-thin', min:0, max:0.15, step:0.005, value:0.035, unit:'cm' },
+      { label:'هامش الإطار الداخلي', var:'--inset-inner', min:0, max:0.8, step:0.005, value:0.35, unit:'cm' },
+      { label:'انحناء البطاقة', var:'--radius-outer', min:0, max:1.5, step:0.01, value:0.6, unit:'cm' },
+      { label:'انحناء الإطار', var:'--radius-inner', min:0, max:1.5, step:0.01, value:0.48, unit:'cm' },
+      { label:'انحناء المربعات', var:'--radius-spec', min:0, max:0.8, step:0.01, value:0.25, unit:'cm' },
+      { label:'انحناء QR', var:'--radius-qr', min:0, max:0.8, step:0.01, value:0.25, unit:'cm' },
+    ]},
+    { title:'📏 المسافات الداخلية', items:[
+      { label:'حشو معلومات الوجه', var:'--padding-front-info', min:0, max:1, step:0.01, value:0.32, unit:'cm' },
+      { label:'حشو الوصف (الظهر)', var:'--padding-story', min:0, max:1, step:0.01, value:0.4, unit:'cm' },
+      { label:'فجوة المربعات', var:'--gap-spec', min:0, max:0.5, step:0.005, value:0.1, unit:'cm' },
+      { label:'فجوة معلومات الوجه', var:'--gap-front-info', min:0, max:0.5, step:0.005, value:0.17, unit:'cm' },
+    ]},
+    { title:'📦 أبعاد البطاقة', items:[
+      { label:'العرض', var:'--card-w', min:4, max:12, step:0.1, value:5.5, unit:'cm' },
+      { label:'الارتفاع', var:'--card-h', min:6, max:15, step:0.1, value:9, unit:'cm' },
+    ]},
+  ]
+};
+
+function renderControls(){
+  Object.entries(controlConfig).forEach(([containerId, groups]) => {
+    const container = document.getElementById(containerId);
+    if(!container) return;
+    container.innerHTML = '';
+
+    if(containerId === 'pcSizes'){
+      // أضف مربع قفل النسب في أعلى التبويب
+      const lockWrap = document.createElement('div');
+      lockWrap.className = 'pc-group';
+      lockWrap.innerHTML = `<h4>🔒 خيارات إضافية</h4>
+        <label class="pc-lock"><input type="checkbox" id="lockAspectPanel"> تثبيت النسبة بين العرض والارتفاع</label>`;
+      container.appendChild(lockWrap);
+    }
+
+    groups.forEach(group => {
+      const groupEl = document.createElement('div');
+      groupEl.className = 'pc-group';
+      const h = document.createElement('h4');
+      h.textContent = group.title;
+      groupEl.appendChild(h);
+
+      group.items.forEach(item => {
+        const itemEl = document.createElement('div');
+        itemEl.className = 'pc-item';
+
+        const label = document.createElement('label');
+        label.textContent = item.label;
+        itemEl.appendChild(label);
+
+        const isColor = typeof item.value === 'string' && item.value.startsWith('#');
+
+        if(isColor){
+          itemEl.classList.add('pc-item-color');
+          const input = document.createElement('input');
+          input.type = 'color';
+          input.value = item.value;
+          input.dataset.var = item.var;
+          input.addEventListener('input', () => {
+            document.documentElement.style.setProperty(item.var, input.value);
+          });
+          itemEl.appendChild(input);
+        } else {
+          const input = document.createElement('input');
+          input.type = 'range';
+          input.min = item.min;
+          input.max = item.max;
+          input.step = item.step;
+          input.value = item.value;
+          input.dataset.var = item.var;
+          input.dataset.unit = item.unit || 'cm';
+
+          const val = document.createElement('span');
+          val.className = 'pc-val';
+          val.textContent = item.value + input.dataset.unit;
+
+          input.addEventListener('input', () => {
+            document.documentElement.style.setProperty(item.var, input.value + input.dataset.unit);
+            val.textContent = input.value + input.dataset.unit;
+          });
+
+          itemEl.appendChild(input);
+          itemEl.appendChild(val);
+        }
+        groupEl.appendChild(itemEl);
+      });
+      container.appendChild(groupEl);
+    });
+  });
+
+  // ربط قفل النسبة بالحقول الفعلية
+  const lockPanel = document.getElementById('lockAspectPanel');
+  if(lockPanel){
+    lockPanel.addEventListener('change', e => {
+      aspectLocked = e.target.checked;
+      if(aspectLocked){
+        lockedRatio = parseFloat(wInput.value) / parseFloat(hInput.value);
+      }
+    });
+  }
+}
+renderControls();
+
+/* ============ تبويبات لوحة التحكم ============ */
+document.querySelectorAll('.pc-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pc-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    ['pcFonts','pcColors','pcSizes'].forEach(id => {
+      document.getElementById(id).classList.add('hidden');
+    });
+    document.getElementById(btn.dataset.pctab).classList.remove('hidden');
+  });
 });
-document.getElementById('saveBackBtn').addEventListener('click', () => {
-  saveCardAsImage('backCard', 'vibes-back-card.png');
+
+/* ============ فتح وإغلاق لوحة التحكم ============ */
+const pcPanel = document.getElementById('previewControls');
+document.getElementById('previewControlsToggle').addEventListener('click', () => {
+  pcPanel.classList.toggle('open');
 });
+document.getElementById('pcClose').addEventListener('click', () => {
+  pcPanel.classList.remove('open');
+});
+
+/* ============ إرجاع قيم المعاينة للافتراضي ============ */
+document.getElementById('pcReset').addEventListener('click', () => {
+  if(!confirm('ترجع قيم التحكم بالمعاينة للوضع الافتراضي؟')) return;
+  // احذف كل المتغيرات المخصصة من inline style على <html>
+  const root = document.documentElement;
+  const varsToClear = [
+    '--brown','--brown-dark','--paper','--line','--text-main','--text-sub',
+    '--card-w','--card-h',
+    '--fs-logo-en','--fs-logo-sub','--fs-logo-ar',
+    '--fs-origin-ar','--fs-origin-en',
+    '--fs-tastes-ar','--fs-tastes-en',
+    '--fs-spec-base','--fs-spec-strong','--fs-altitude',
+    '--fs-back-logo','--fs-tagline','--fs-story',
+    '--fs-brew','--fs-brew-strong',
+    '--fs-social-label','--fs-social-value','--fs-qr',
+    '--border-outer','--border-inner','--border-line','--border-line-thin','--inset-inner',
+    '--radius-outer','--radius-inner','--radius-spec','--radius-qr',
+    '--padding-front-info','--padding-story','--gap-spec','--gap-front-info'
+  ];
+  varsToClear.forEach(v => root.style.removeProperty(v));
+
+  // أعد تعيين قيم الحقول في اللوحة العائمة
+  document.querySelectorAll('.preview-controls input[type="range"][data-var]').forEach(input => {
+    const varName = input.dataset.var;
+    const cfgItem = findConfigItem(varName);
+    if(cfgItem){
+      input.value = cfgItem.value;
+      const valEl = input.parentElement.querySelector('.pc-val');
+      if(valEl) valEl.textContent = cfgItem.value + (input.dataset.unit || 'cm');
+    }
+  });
+  document.querySelectorAll('.preview-controls input[type="color"][data-var]').forEach(input => {
+    const cfgItem = findConfigItem(input.dataset.var);
+    if(cfgItem) input.value = cfgItem.value;
+  });
+});
+
+function findConfigItem(varName){
+  for(const groups of Object.values(controlConfig)){
+    for(const g of groups){
+      for(const it of g.items){
+        if(it.var === varName) return it;
+      }
+    }
+  }
+  return null;
+}
 </script>
 </body>
 </html>
