@@ -19,9 +19,9 @@
     --text-main:#552A12;
     --text-sub:#6b4629;
 
-    /* أبعاد البطاقة */
-    --card-w:5.5cm;
-    --card-h:9cm;
+    /* أبعاد البطاقة - المقاس المعتمد */
+    --card-w:6.5cm;
+    --card-h:9.5cm;
 
     /* أحجام الخطوط */
     --fs-logo-en:0.71cm;
@@ -192,7 +192,7 @@
     <p>أضفت لك خطوط كثيرة، ومنها <strong>Amiri</strong>، مع خيارات تغيير الخط العربي والإنجليزي، وزر <strong>حفظ كصورة PNG</strong> لكل بطاقة.</p>
 
     <div class="tip">
-      المقاس الافتراضي: <strong>5.5 × 9 cm</strong><br>
+      المقاس المعتمد: <strong>6.5 × 9.5 cm</strong><br>
       الآن يمكنك التحكم بكل شيء من لوحة <strong>🎨 تحكم المعاينة</strong> أسفل يسار الشاشة.
     </div>
 
@@ -342,11 +342,11 @@
       <div class="row">
         <div>
           <label>العرض cm</label>
-          <input id="w" type="number" min="4" max="12" step="0.1" value="5.5" />
+          <input id="w" type="number" min="4" max="12" step="0.1" value="6.5" />
         </div>
         <div>
           <label>الارتفاع cm</label>
-          <input id="h" type="number" min="6" max="15" step="0.1" value="9" />
+          <input id="h" type="number" min="6" max="15" step="0.1" value="9.5" />
         </div>
       </div>
       <div class="row">
@@ -518,7 +518,7 @@ document.getElementById('frontFit').addEventListener('change', e => {
 const wInput = document.getElementById('w');
 const hInput = document.getElementById('h');
 let aspectLocked = false;
-let lockedRatio = 5.5 / 9;
+let lockedRatio = 6.5 / 9.5; // المقاس المعتمد الجديد
 
 const lockAspectCheckbox = document.getElementById('lockAspect');
 if(lockAspectCheckbox){
@@ -533,7 +533,7 @@ if(lockAspectCheckbox){
 wInput.addEventListener('input', e => {
   document.documentElement.style.setProperty('--card-w', e.target.value + 'cm');
   if(aspectLocked){
-    const newH = (parseFloat(e.target.value) / lockedRatio).toFixed(1);
+    const newH = (parseFloat(e.target.value) / lockedRatio).toFixed(2);
     hInput.value = newH;
     document.documentElement.style.setProperty('--card-h', newH + 'cm');
   }
@@ -541,7 +541,7 @@ wInput.addEventListener('input', e => {
 hInput.addEventListener('input', e => {
   document.documentElement.style.setProperty('--card-h', e.target.value + 'cm');
   if(aspectLocked){
-    const newW = (parseFloat(e.target.value) * lockedRatio).toFixed(1);
+    const newW = (parseFloat(e.target.value) * lockedRatio).toFixed(2);
     wInput.value = newW;
     document.documentElement.style.setProperty('--card-w', newW + 'cm');
   }
@@ -651,9 +651,9 @@ const controlConfig = {
       { label:'فجوة المربعات', var:'--gap-spec', min:0, max:0.5, step:0.005, value:0.1, unit:'cm' },
       { label:'فجوة معلومات الوجه', var:'--gap-front-info', min:0, max:0.5, step:0.005, value:0.17, unit:'cm' },
     ]},
-    { title:'📦 أبعاد البطاقة', items:[
-      { label:'العرض', var:'--card-w', min:4, max:12, step:0.1, value:5.5, unit:'cm' },
-      { label:'الارتفاع', var:'--card-h', min:6, max:15, step:0.1, value:9, unit:'cm' },
+    { title:'📦 أبعاد البطاقة (المقاس المعتمد)', items:[
+      { label:'العرض', var:'--card-w', min:4, max:12, step:0.1, value:6.5, unit:'cm' },
+      { label:'الارتفاع', var:'--card-h', min:6, max:15, step:0.1, value:9.5, unit:'cm' },
     ]},
   ]
 };
@@ -665,7 +665,6 @@ function renderControls(){
     container.innerHTML = '';
 
     if(containerId === 'pcSizes'){
-      // أضف مربع قفل النسب في أعلى التبويب
       const lockWrap = document.createElement('div');
       lockWrap.className = 'pc-group';
       lockWrap.innerHTML = `<h4>🔒 خيارات إضافية</h4>
@@ -728,7 +727,6 @@ function renderControls(){
     });
   });
 
-  // ربط قفل النسبة بالحقول الفعلية
   const lockPanel = document.getElementById('lockAspectPanel');
   if(lockPanel){
     lockPanel.addEventListener('change', e => {
@@ -765,7 +763,6 @@ document.getElementById('pcClose').addEventListener('click', () => {
 /* ============ إرجاع قيم المعاينة للافتراضي ============ */
 document.getElementById('pcReset').addEventListener('click', () => {
   if(!confirm('ترجع قيم التحكم بالمعاينة للوضع الافتراضي؟')) return;
-  // احذف كل المتغيرات المخصصة من inline style على <html>
   const root = document.documentElement;
   const varsToClear = [
     '--brown','--brown-dark','--paper','--line','--text-main','--text-sub',
@@ -783,7 +780,6 @@ document.getElementById('pcReset').addEventListener('click', () => {
   ];
   varsToClear.forEach(v => root.style.removeProperty(v));
 
-  // أعد تعيين قيم الحقول في اللوحة العائمة
   document.querySelectorAll('.preview-controls input[type="range"][data-var]').forEach(input => {
     const varName = input.dataset.var;
     const cfgItem = findConfigItem(varName);
