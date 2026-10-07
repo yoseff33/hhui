@@ -11,7 +11,6 @@
 
 <style>
   :root{
-    /* ألوان أساسية */
     --brown:#7A3F1C;
     --brown-dark:#552A12;
     --paper:#FFF8EC;
@@ -19,7 +18,7 @@
     --text-main:#552A12;
     --text-sub:#6b4629;
 
-    /* أبعاد البطاقة - المقاس المعتمد */
+    /* المقاس المعتمد */
     --card-w:6.5cm;
     --card-h:9.5cm;
 
@@ -30,10 +29,6 @@
     --fs-origin-ar:0.38cm;
     --fs-origin-en:0.3cm;
     --fs-tastes-ar:0.41cm;
-    --fs-tastes-en:0.27cm;
-    --fs-spec-base:0.255cm;
-    --fs-spec-strong:0.32cm;
-    --fs-altitude:0.32cm;
     --fs-back-logo:0.7cm;
     --fs-tagline:0.4cm;
     --fs-story:0.41cm;
@@ -51,14 +46,17 @@
     --inset-inner:0.35cm;
     --radius-outer:0.6cm;
     --radius-inner:0.48cm;
-    --radius-spec:0.25cm;
     --radius-qr:0.25cm;
 
     /* المسافات */
     --padding-front-info:0.32cm;
     --padding-story:0.4cm;
-    --gap-spec:0.1cm;
     --gap-front-info:0.17cm;
+
+    /* الصورة */
+    --img-scale:1;
+    --img-x:0%;
+    --img-y:0%;
 
     --ui-font:"Tajawal", Tahoma, Arial, sans-serif;
     --font-ar-title:"Amiri", serif;
@@ -95,11 +93,21 @@
   /* ======= البطاقة ======= */
   .card{width:var(--card-w);height:var(--card-h);background:var(--paper);border:var(--border-outer) solid var(--brown);border-radius:var(--radius-outer);overflow:hidden;position:relative;box-shadow:0 16px 40px rgba(75,46,25,.14)}
   .card-inner{position:absolute;inset:var(--inset-inner);border:var(--border-inner) solid var(--line);border-radius:var(--radius-inner);overflow:hidden;background:var(--paper)}
-  .front-layout{display:grid;grid-template-rows:50% auto;height:100%}
+  .front-layout{display:grid;grid-template-rows:50% 1fr;height:100%}
   .front-image{position:relative;overflow:hidden;border-bottom:var(--border-line) solid var(--line);background:#e8dcc8}
-  .front-image img{width:100%;height:100%;object-fit:cover;display:none}
+  .front-image img{
+    width:100%;height:100%;object-fit:cover;display:none;
+    transform: scale(var(--img-scale,1)) translate(var(--img-x,0%), var(--img-y,0%));
+    transform-origin: center center;
+    will-change: transform;
+    transition: transform .15s ease;
+  }
   .front-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;color:#81614b;font-size:12px;line-height:1.6;background:radial-gradient(circle at 20% 25%, rgba(122,63,28,.08), transparent 22%),radial-gradient(circle at 75% 75%, rgba(122,63,28,.08), transparent 22%),#ece1d0}
-  .front-info{padding:var(--padding-front-info);display:grid;grid-template-rows:auto auto auto 1fr auto;gap:var(--gap-front-info);min-height:0}
+  .front-info{
+    padding:var(--padding-front-info);
+    display:flex;flex-direction:column;justify-content:space-around;
+    gap:var(--gap-front-info);min-height:0;height:100%;
+  }
   .logo{text-align:center;line-height:1}
   .logo-en{font-family:var(--font-en-title);font-size:var(--fs-logo-en);letter-spacing:0.11cm;font-weight:700;color:var(--brown)}
   .logo-sub{font-family:var(--font-en-body);font-size:var(--fs-logo-sub);letter-spacing:0.06cm;margin-top:0.1cm;color:var(--text-sub)}
@@ -109,12 +117,7 @@
   .origin-en{font-family:var(--font-en-title);font-size:var(--fs-origin-en);font-weight:700}
   .tastes{text-align:center}
   .tastes-ar{font-family:var(--font-ar-body);font-size:var(--fs-tastes-ar);line-height:1.4;font-weight:700}
-  .tastes-en{font-family:var(--font-en-title);font-size:var(--fs-tastes-en);line-height:1.45;margin-top:0.08cm}
-  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap-spec);font-size:var(--fs-spec-base);text-align:center}
-  .spec{border:var(--border-line-thin) solid rgba(122,63,28,.35);border-radius:var(--radius-spec);padding:0.12cm 0.1cm;line-height:1.45}
-  .spec strong{font-family:var(--font-ar-body);font-size:var(--fs-spec-strong)}
-  .spec span{font-family:var(--font-en-title)}
-  .altitude{text-align:center;font-family:var(--font-en-title);font-size:var(--fs-altitude);font-weight:700;border-top:var(--border-line-thin) solid var(--line);padding-top:0.14cm}
+
   .back-layout{height:100%;display:grid;grid-template-rows:2cm 1fr 1.8cm 1.8cm}
   .back-top{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;border-bottom:var(--border-line) solid var(--line);padding:0.25cm}
   .back-logo{font-family:var(--font-en-title);font-size:var(--fs-back-logo);letter-spacing:0.1cm;font-weight:700;color:var(--brown)}
@@ -129,7 +132,7 @@
   .social-lines .value{font-family:var(--font-en-body);font-size:var(--fs-social-value);font-weight:700}
   .qr{height:1.3cm;border:var(--border-inner) dashed var(--line);border-radius:var(--radius-qr);display:flex;align-items:center;justify-content:center;text-align:center;font-size:var(--fs-qr);font-family:var(--font-en-title)}
 
-  /* ======= لوحة التحكم العائمة عند المعاينة ======= */
+  /* ======= لوحة التحكم العائمة ======= */
   .preview-controls-toggle{
     position:fixed;left:20px;bottom:20px;z-index:1001;
     background:var(--brown);color:#fff;border:0;padding:12px 20px;border-radius:50px;
@@ -139,7 +142,7 @@
   }
   .preview-controls-toggle:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(122,63,28,.5)}
   .preview-controls{
-    position:fixed;left:20px;bottom:80px;top:20px;width:350px;
+    position:fixed;left:20px;bottom:80px;top:20px;width:360px;
     background:#fffaf2;border:1px solid #decfbc;border-radius:16px;padding:16px;
     overflow-y:auto;z-index:1000;box-shadow:0 12px 40px rgba(0,0,0,.2);
     transform:translateX(calc(-100% - 40px));transition:transform .3s ease;
@@ -148,7 +151,7 @@
   .pc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
   .pc-header h3{margin:0;font-size:15px;color:var(--brown)}
   .pc-close{background:#f0e4d2;color:var(--brown-dark);border:0;width:28px;height:28px;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px}
-  .pc-tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:14px}
+  .pc-tabs{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:14px}
   .pc-tab{border:1px solid #d8c4aa;background:#f8efe3;color:var(--brown);border-radius:8px;padding:8px 4px;font-weight:700;cursor:pointer;font-family:var(--ui-font);font-size:11px}
   .pc-tab.active{background:var(--brown);color:#fff;border-color:var(--brown)}
   .pc-section.hidden{display:none}
@@ -167,6 +170,8 @@
   .pc-note{font-size:10px;color:#8a6a52;line-height:1.6;margin:0 0 10px;padding:8px 10px;background:#f6ecde;border-radius:8px}
   .pc-lock{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--brown);cursor:pointer;margin-bottom:8px}
   .pc-lock input{width:auto}
+  .pc-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px}
+  .pc-actions button{font-size:10px;padding:8px 4px;border-radius:8px}
 
   @media (max-width:1000px){
     .app{grid-template-columns:1fr}
@@ -193,7 +198,7 @@
 
     <div class="tip">
       المقاس المعتمد: <strong>6.5 × 9.5 cm</strong><br>
-      الآن يمكنك التحكم بكل شيء من لوحة <strong>🎨 تحكم المعاينة</strong> أسفل يسار الشاشة.
+      لوحة <strong>🎨 تحكم المعاينة</strong> أسفل يسار الشاشة تتيح لك التحكم بالخطوط والألوان والمقاسات والصورة.
     </div>
 
     <div class="tabs">
@@ -262,6 +267,7 @@
           <option value="cover">تعبئة الإطار</option>
           <option value="contain">إظهار الصورة كاملة</option>
         </select>
+        <p class="tip" style="margin-top:10px;margin-bottom:0">💡 للتحكم بحجم الصورة وتحريكها، افتح لوحة <strong>🎨 تحكم المعاينة</strong> ← تبويب <strong>الصورة</strong>.</p>
       </div>
 
       <div class="group">
@@ -272,30 +278,6 @@
         <input id="originEn" value="ETHIOPIA" />
         <label>الإيحاء الرئيسي بالعربي</label>
         <input id="notesAr" value="بيري" />
-        <label>الإيحاء الرئيسي بالإنجليزي</label>
-        <input id="notesEn" value="BERRY" />
-        <div class="row">
-          <div>
-            <label>السلالة</label>
-            <input id="process" value="هيرليوم" />
-          </div>
-          <div>
-            <label>المعالجة</label>
-            <input id="roast" value="مجففة" />
-          </div>
-        </div>
-        <div class="row">
-          <div>
-            <label>Variety</label>
-            <input id="processEn" value="HEIRLOOM" />
-          </div>
-          <div>
-            <label>Process</label>
-            <input id="roastEn" value="DRIED" />
-          </div>
-        </div>
-        <label>الارتفاع</label>
-        <input id="altitude" value="1900 - 2100 م" />
       </div>
     </section>
 
@@ -394,15 +376,7 @@
 
             <div class="tastes">
               <div class="tastes-ar" id="pNotesAr">بيري</div>
-              <div class="tastes-en" id="pNotesEn">BERRY</div>
             </div>
-
-            <div class="spec-grid">
-              <div class="spec"><strong id="pProcess">هيرليوم</strong><br><span id="pProcessEn">HEIRLOOM</span></div>
-              <div class="spec"><strong id="pRoast">مجففة</strong><br><span id="pRoastEn">DRIED</span></div>
-            </div>
-
-            <div class="altitude">Altitude · <span id="pAltitude">1900 - 2100 م</span></div>
           </div>
         </div>
       </div>
@@ -438,7 +412,7 @@
   </main>
 </div>
 
-<!-- ===== لوحة التحكم العائمة ===== -->
+<!-- ===== زر ولوحة التحكم العائمة ===== -->
 <button class="preview-controls-toggle" id="previewControlsToggle" type="button">🎨 تحكم المعاينة</button>
 
 <aside class="preview-controls" id="previewControls">
@@ -450,12 +424,50 @@
   <div class="pc-tabs">
     <button class="pc-tab active" data-pctab="pcFonts" type="button">الخطوط</button>
     <button class="pc-tab" data-pctab="pcColors" type="button">الألوان</button>
-    <button class="pc-tab" data-pctab="pcSizes" type="button">الحدود والمقاسات</button>
+    <button class="pc-tab" data-pctab="pcSizes" type="button">الحدود</button>
+    <button class="pc-tab" data-pctab="pcImage" type="button">🖼️ الصورة</button>
   </div>
 
   <div id="pcFonts" class="pc-section"></div>
   <div id="pcColors" class="pc-section hidden"></div>
   <div id="pcSizes" class="pc-section hidden"></div>
+
+  <div id="pcImage" class="pc-section hidden">
+    <div class="pc-group">
+      <h4>🖼️ صورة الوجه - التكبير والتحريك</h4>
+      <p class="pc-note">تحكم كامل بالصورة: كبّرها، صغّرها، وحركها أفقياً أو رأسياً داخل إطار البطاقة.</p>
+      <div class="pc-item">
+        <label>حجم الصورة (تكبير / تصغير)</label>
+        <input type="range" id="imgScale" min="0.3" max="3" step="0.05" value="1">
+        <span class="pc-val" id="imgScaleVal">1.00x</span>
+      </div>
+      <div class="pc-item">
+        <label>الحركة الأفقية (يمين / يسار)</label>
+        <input type="range" id="imgX" min="-100" max="100" step="1" value="0">
+        <span class="pc-val" id="imgXVal">0%</span>
+      </div>
+      <div class="pc-item">
+        <label>الحركة الرأسية (أعلى / أسفل)</label>
+        <input type="range" id="imgY" min="-100" max="100" step="1" value="0">
+        <span class="pc-val" id="imgYVal">0%</span>
+      </div>
+      <div class="pc-actions">
+        <button type="button" class="pc-reset" id="imgCenterBtn" style="margin-top:0">توسيط</button>
+        <button type="button" class="pc-reset" id="imgResetBtn" style="margin-top:0">إرجاع</button>
+        <button type="button" class="pc-reset" id="imgFitToggle" style="margin-top:0">تعبئة/كامل</button>
+      </div>
+    </div>
+
+    <div class="pc-group">
+      <h4>💾 جودة حفظ الصورة</h4>
+      <p class="pc-note">كلما زادت القيمة زادت دقة الصورة المحفوظة وحجمها. القيمة الافتراضية <strong>4x</strong> مناسبة للطباعة.</p>
+      <div class="pc-item">
+        <label>دقة التصدير</label>
+        <input type="range" id="exportScale" min="1" max="8" step="0.5" value="4">
+        <span class="pc-val" id="exportScaleVal">4x</span>
+      </div>
+    </div>
+  </div>
 
   <button class="pc-reset" id="pcReset" type="button">↺ إرجاع قيم المعاينة للافتراضي</button>
 </aside>
@@ -466,16 +478,14 @@
 const bind = (inputId, previewId) => {
   const input = document.getElementById(inputId);
   const preview = document.getElementById(previewId);
+  if(!input || !preview) return;
   input.addEventListener('input', () => preview.textContent = input.value);
 };
 
 [
   ['brandEn','pBrandEn'],['brandSub','pBrandSub'],['brandAr','pBrandAr'],
   ['originAr','pOriginAr'],['originEn','pOriginEn'],
-  ['notesAr','pNotesAr'],['notesEn','pNotesEn'],
-  ['process','pProcess'],['processEn','pProcessEn'],
-  ['roast','pRoast'],['roastEn','pRoastEn'],
-  ['altitude','pAltitude'],
+  ['notesAr','pNotesAr'],
   ['tagline','pTagline'],['story','pStory'],
   ['dose','pDose'],['water','pWater'],['temp','pTemp'],
   ['socialLabel','pSocialLabel'],['social','pSocial'],['location','pLocation'],
@@ -497,6 +507,7 @@ document.querySelectorAll('.tab').forEach(btn => {
 const frontImageInput = document.getElementById('frontImageInput');
 const frontPreviewImage = document.getElementById('frontPreviewImage');
 const frontPlaceholder = document.getElementById('frontPlaceholder');
+let frontFitMode = 'cover';
 
 frontImageInput.addEventListener('change', e => {
   const file = e.target.files?.[0];
@@ -511,24 +522,15 @@ frontImageInput.addEventListener('change', e => {
 });
 
 document.getElementById('frontFit').addEventListener('change', e => {
-  frontPreviewImage.style.objectFit = e.target.value;
+  frontFitMode = e.target.value;
+  frontPreviewImage.style.objectFit = frontFitMode;
 });
 
 /* ============ أبعاد البطاقة + قفل النسب ============ */
 const wInput = document.getElementById('w');
 const hInput = document.getElementById('h');
 let aspectLocked = false;
-let lockedRatio = 6.5 / 9.5; // المقاس المعتمد الجديد
-
-const lockAspectCheckbox = document.getElementById('lockAspect');
-if(lockAspectCheckbox){
-  lockAspectCheckbox.addEventListener('change', e => {
-    aspectLocked = e.target.checked;
-    if(aspectLocked){
-      lockedRatio = parseFloat(wInput.value) / parseFloat(hInput.value);
-    }
-  });
-}
+let lockedRatio = 6.5 / 9.5;
 
 wInput.addEventListener('input', e => {
   document.documentElement.style.setProperty('--card-w', e.target.value + 'cm');
@@ -576,24 +578,62 @@ document.getElementById('reset').addEventListener('click', () => {
   if(confirm('ترجع كل شيء للوضع الافتراضي؟')) location.reload();
 });
 
-/* ============ حفظ الصور ============ */
+/* ============================================================
+   ============ حفظ الصور (بعد الإصلاح) ============
+   ============================================================ */
+let exportScale = 4;
+
 async function saveCardAsImage(cardId, filename){
   const card = document.getElementById(cardId);
-  const canvas = await html2canvas(card, {
-    backgroundColor: null,
-    scale: 4,
-    useCORS: true
-  });
-  const link = document.createElement('a');
-  link.download = filename;
-  link.href = canvas.toDataURL('image/png');
-  link.click();
+  if(!card) return;
+
+  // ضمان تحميل الخطوط قبل الرسم
+  if(document.fonts && document.fonts.ready){
+    try { await document.fonts.ready; } catch(e){}
+  }
+
+  try {
+    const canvas = await html2canvas(card, {
+      backgroundColor: null,
+      scale: exportScale,
+      useCORS: true,
+      allowTaint: false,
+      logging: false,
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: document.documentElement.scrollWidth,
+      windowHeight: document.documentElement.scrollHeight
+    });
+
+    // استخدام toBlob لتفادي مشاكل toDataURL
+    canvas.toBlob(blob => {
+      if(!blob){
+        alert('تعذّر إنشاء الصورة، حاول مرة أخرى.');
+        return;
+      }
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = url;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }, 800);
+    }, 'image/png', 1.0);
+  } catch(err){
+    console.error(err);
+    alert('حدث خطأ أثناء حفظ الصورة: ' + err.message);
+  }
 }
+
 document.getElementById('saveFrontBtn').addEventListener('click', () => saveCardAsImage('frontCard', 'vibes-front-card.png'));
 document.getElementById('saveBackBtn').addEventListener('click', () => saveCardAsImage('backCard', 'vibes-back-card.png'));
 
 /* ============================================================
-   ============ لوحة التحكم العائمة عند المعاينة ============
+   ============ لوحة التحكم العائمة ============
    ============================================================ */
 
 const controlConfig = {
@@ -607,10 +647,6 @@ const controlConfig = {
       { label:'الدولة بالعربي', var:'--fs-origin-ar', min:0.2, max:0.8, step:0.01, value:0.38 },
       { label:'الدولة بالإنجليزي', var:'--fs-origin-en', min:0.15, max:0.7, step:0.005, value:0.3 },
       { label:'الإيحاء بالعربي', var:'--fs-tastes-ar', min:0.2, max:0.9, step:0.01, value:0.41 },
-      { label:'الإيحاء بالإنجليزي', var:'--fs-tastes-en', min:0.15, max:0.7, step:0.005, value:0.27 },
-      { label:'السلالة (عربي)', var:'--fs-spec-strong', min:0.15, max:0.7, step:0.005, value:0.32 },
-      { label:'السلالة (إنجليزي)', var:'--fs-spec-base', min:0.12, max:0.6, step:0.005, value:0.255 },
-      { label:'الارتفاع', var:'--fs-altitude', min:0.15, max:0.7, step:0.005, value:0.32 },
     ]},
     { title:'🔄 الوجه الخلفي', items:[
       { label:'شعار الظهر', var:'--fs-back-logo', min:0.3, max:1.5, step:0.01, value:0.7 },
@@ -642,13 +678,11 @@ const controlConfig = {
       { label:'هامش الإطار الداخلي', var:'--inset-inner', min:0, max:0.8, step:0.005, value:0.35, unit:'cm' },
       { label:'انحناء البطاقة', var:'--radius-outer', min:0, max:1.5, step:0.01, value:0.6, unit:'cm' },
       { label:'انحناء الإطار', var:'--radius-inner', min:0, max:1.5, step:0.01, value:0.48, unit:'cm' },
-      { label:'انحناء المربعات', var:'--radius-spec', min:0, max:0.8, step:0.01, value:0.25, unit:'cm' },
       { label:'انحناء QR', var:'--radius-qr', min:0, max:0.8, step:0.01, value:0.25, unit:'cm' },
     ]},
     { title:'📏 المسافات الداخلية', items:[
       { label:'حشو معلومات الوجه', var:'--padding-front-info', min:0, max:1, step:0.01, value:0.32, unit:'cm' },
       { label:'حشو الوصف (الظهر)', var:'--padding-story', min:0, max:1, step:0.01, value:0.4, unit:'cm' },
-      { label:'فجوة المربعات', var:'--gap-spec', min:0, max:0.5, step:0.005, value:0.1, unit:'cm' },
       { label:'فجوة معلومات الوجه', var:'--gap-front-info', min:0, max:0.5, step:0.005, value:0.17, unit:'cm' },
     ]},
     { title:'📦 أبعاد البطاقة (المقاس المعتمد)', items:[
@@ -744,10 +778,12 @@ document.querySelectorAll('.pc-tab').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.pc-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    ['pcFonts','pcColors','pcSizes'].forEach(id => {
-      document.getElementById(id).classList.add('hidden');
+    ['pcFonts','pcColors','pcSizes','pcImage'].forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.classList.add('hidden');
     });
-    document.getElementById(btn.dataset.pctab).classList.remove('hidden');
+    const target = document.getElementById(btn.dataset.pctab);
+    if(target) target.classList.remove('hidden');
   });
 });
 
@@ -760,6 +796,59 @@ document.getElementById('pcClose').addEventListener('click', () => {
   pcPanel.classList.remove('open');
 });
 
+/* ============================================================
+   ============ تحكم الصورة (تكبير، تصغير، تحريك) ============
+   ============================================================ */
+const imgScale = document.getElementById('imgScale');
+const imgX = document.getElementById('imgX');
+const imgY = document.getElementById('imgY');
+const imgScaleVal = document.getElementById('imgScaleVal');
+const imgXVal = document.getElementById('imgXVal');
+const imgYVal = document.getElementById('imgYVal');
+
+imgScale.addEventListener('input', () => {
+  document.documentElement.style.setProperty('--img-scale', imgScale.value);
+  imgScaleVal.textContent = parseFloat(imgScale.value).toFixed(2) + 'x';
+});
+imgX.addEventListener('input', () => {
+  document.documentElement.style.setProperty('--img-x', imgX.value + '%');
+  imgXVal.textContent = imgX.value + '%';
+});
+imgY.addEventListener('input', () => {
+  document.documentElement.style.setProperty('--img-y', imgY.value + '%');
+  imgYVal.textContent = imgY.value + '%';
+});
+
+document.getElementById('imgCenterBtn').addEventListener('click', () => {
+  imgX.value = 0; imgY.value = 0;
+  document.documentElement.style.setProperty('--img-x', '0%');
+  document.documentElement.style.setProperty('--img-y', '0%');
+  imgXVal.textContent = '0%'; imgYVal.textContent = '0%';
+});
+
+document.getElementById('imgResetBtn').addEventListener('click', () => {
+  imgScale.value = 1; imgX.value = 0; imgY.value = 0;
+  document.documentElement.style.setProperty('--img-scale', '1');
+  document.documentElement.style.setProperty('--img-x', '0%');
+  document.documentElement.style.setProperty('--img-y', '0%');
+  imgScaleVal.textContent = '1.00x';
+  imgXVal.textContent = '0%'; imgYVal.textContent = '0%';
+});
+
+document.getElementById('imgFitToggle').addEventListener('click', () => {
+  frontFitMode = frontFitMode === 'cover' ? 'contain' : 'cover';
+  frontPreviewImage.style.objectFit = frontFitMode;
+  document.getElementById('frontFit').value = frontFitMode;
+});
+
+/* ============ دقة التصدير ============ */
+const exportScaleInput = document.getElementById('exportScale');
+const exportScaleVal = document.getElementById('exportScaleVal');
+exportScaleInput.addEventListener('input', () => {
+  exportScale = parseFloat(exportScaleInput.value);
+  exportScaleVal.textContent = exportScale + 'x';
+});
+
 /* ============ إرجاع قيم المعاينة للافتراضي ============ */
 document.getElementById('pcReset').addEventListener('click', () => {
   if(!confirm('ترجع قيم التحكم بالمعاينة للوضع الافتراضي؟')) return;
@@ -768,21 +857,19 @@ document.getElementById('pcReset').addEventListener('click', () => {
     '--brown','--brown-dark','--paper','--line','--text-main','--text-sub',
     '--card-w','--card-h',
     '--fs-logo-en','--fs-logo-sub','--fs-logo-ar',
-    '--fs-origin-ar','--fs-origin-en',
-    '--fs-tastes-ar','--fs-tastes-en',
-    '--fs-spec-base','--fs-spec-strong','--fs-altitude',
+    '--fs-origin-ar','--fs-origin-en','--fs-tastes-ar',
     '--fs-back-logo','--fs-tagline','--fs-story',
     '--fs-brew','--fs-brew-strong',
     '--fs-social-label','--fs-social-value','--fs-qr',
     '--border-outer','--border-inner','--border-line','--border-line-thin','--inset-inner',
-    '--radius-outer','--radius-inner','--radius-spec','--radius-qr',
-    '--padding-front-info','--padding-story','--gap-spec','--gap-front-info'
+    '--radius-outer','--radius-inner','--radius-qr',
+    '--padding-front-info','--padding-story','--gap-front-info',
+    '--img-scale','--img-x','--img-y'
   ];
   varsToClear.forEach(v => root.style.removeProperty(v));
 
   document.querySelectorAll('.preview-controls input[type="range"][data-var]').forEach(input => {
-    const varName = input.dataset.var;
-    const cfgItem = findConfigItem(varName);
+    const cfgItem = findConfigItem(input.dataset.var);
     if(cfgItem){
       input.value = cfgItem.value;
       const valEl = input.parentElement.querySelector('.pc-val');
@@ -793,6 +880,11 @@ document.getElementById('pcReset').addEventListener('click', () => {
     const cfgItem = findConfigItem(input.dataset.var);
     if(cfgItem) input.value = cfgItem.value;
   });
+
+  // إرجاع قيم الصورة
+  imgScale.value = 1; imgX.value = 0; imgY.value = 0;
+  imgScaleVal.textContent = '1.00x';
+  imgXVal.textContent = '0%'; imgYVal.textContent = '0%';
 });
 
 function findConfigItem(varName){
