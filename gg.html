@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تجربة التنبيه بعد دقيقة</title>
+    <title>مؤقت التنبيه التفاعلي</title>
     <style>
         body {
             font-family: system-ui, -apple-system, sans-serif;
@@ -17,29 +17,44 @@
         }
         .card {
             background-color: #1e293b;
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
             text-align: center;
-            max-width: 400px;
+            max-width: 350px;
             width: 100%;
+        }
+        input, button {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            font-size: 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            box-sizing: border-box;
+        }
+        input {
+            background-color: #334155;
+            color: white;
+            text-align: center;
         }
         button {
             background-color: #3b82f6;
             color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            border-radius: 0.5rem;
             cursor: pointer;
-            margin-top: 1rem;
+            font-weight: bold;
             transition: background 0.2s;
         }
         button:hover {
             background-color: #2563eb;
         }
+        #countdown-display {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1.5rem 0;
+            color: #38bdf8;
+        }
         #status {
-            margin-top: 1rem;
             font-size: 0.9rem;
             color: #94a3b8;
         }
@@ -48,58 +63,76 @@
 <body>
 
     <div class="card">
-        <h2>اختبار التنبيه بعد دقيقة</h2>
-        <p>اضغط الزر وابقى في الصفحة، سيتم تشغيل نغمة وإشعار بعد 60 ثانية بالضبط.</p>
-        <button onclick="startTimer()">بدء المؤقت (دقيقة واحدة)</button>
-        <div id="status">الحالة: جاهز للبدء</div>
+        <h2>مؤقت الثواني التفاعلي</h2>
+        <p>حدد عدد الثواني واضغط بدء:</p>
+        
+        <input type="number" id="secondsInput" value="10" min="1" max="300" placeholder="أدخل عدد الثواني">
+        <button onclick="startCustomTimer()">بدء المؤقت</button>
+
+        <div id="countdown-display">00:00</div>
+        <div id="status">جاهز للاستخدام</div>
     </div>
 
+    <!-- عنصر الصوت المخفي -->
+    <audio id="myAudio" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
-        // دالة لتوليد صوت تنبيه (نغمة بيبي) عبر تقنية الـ Web Audio API دون الحاجة لملف صوت خارجي
-        function playBeep() {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
+        let countdownInterval;
 
-                oscillator.type = 'sine';
-                oscillator.frequency.setValueAtTime(587.33, audioCtx.currentTime); // نغمة D5
-                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        function startCustomTimer() {
+            // إيقاف أي عداد سابق لو كان شغال
+            clearInterval(countdownInterval);
 
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
+            const inputSeconds = parseInt(document.getElementById("secondsInput").value);
+            const display = document.getElementById("countdown-display");
+            const statusDiv = document.getElementById("status");
+            const audio = document.getElementById("myAudio");
 
-                oscillator.start();
-                oscillator.stop(audioCtx.currentTime + 0.5); // مدة الصوت نصف ثانية
-            } catch (e) {
-                console.log("الصوت يحتاج تفاعل مستخدم مسبق");
+            if (isNaN(inputSeconds) || inputSeconds <= 0) {
+                alert("الرجاء إدخال رقم صحيح أكبر من الصفر");
+                return;
             }
+
+            // التحايل البرمجي لأخذ تصريح تشغيل الصوت من المتصفح
+            audio.volume = 0;
+            audio.play().then(() => {
+                audio.pause();
+                audio.currentTime = 0;
+                audio.volume = 1.0;
+
+                let timeLeft = inputSeconds;
+                statusDiv.textContent = "العداد يعمل...";
+
+                // تحديث الشاشة فوراً
+                updateDisplay(timeLeft, display);
+
+                // بدء العد التنازلي ثانية بثانية
+                countdownInterval = setInterval(() => {
+                    timeLeft--;
+                    updateDisplay(timeLeft, display);
+
+                    if (timeLeft <= 0) {
+                        clearInterval(countdownInterval);
+                        statusDiv.textContent = "انتهى الوقت! 🚨";
+                        
+                        // تشغيل الصوت الحقيقي فور انتهاء العداد
+                        audio.play().catch(e => {
+                            console.log("المتصفح منع تشغيل الصوت:", e);
+                        });
+                    }
+                }, 1000);
+
+            }).catch(e => {
+                statusDiv.textContent = "الرجاء الضغط على الشاشة للسماح بالصوت";
+            });
         }
 
-        function startTimer() {
-            const statusDiv = document.getElementById("status");
-            statusDiv.textContent = "الحالة: تم البدء، انتظر دقيقة...";
-
-            // طلب إذن الإشعارات إذا لم يُطلب مسبقاً
-            if (Notification.permission !== "granted") {
-                Notification.requestPermission();
-            }
-
-            // ضبط المؤقت على 60 ثانية (60000 مللي ثانية)
-            setTimeout(() => {
-                statusDiv.textContent = "الحالة: انتهى الوقت! 🚨";
-                
-                // 1. تشغيل الصوت
-                playBeep();
-
-                // 2. محاولة إرسال إشعار المتصفح
-                if (Notification.permission === "granted") {
-                    new Notification("تنبيه طلبك!", {
-                        body: "مرت دقيقة كاملة، هذا إشعار تجريبي من الصفحة.",
-                        icon: "https://cdn-icons-png.flaticon.com/512/1827/1827393.png"
-                    });
-                }
-            }, 60000); // 60,000 ms = 1 minute
+        function updateDisplay(seconds, element) {
+            let mins = Math.floor(seconds / 60);
+            let secs = seconds % 60;
+            element.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
         }
     </script>
 
