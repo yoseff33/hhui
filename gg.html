@@ -1,331 +1,388 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>VIBES</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0a0a0a">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="VIBES">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VIBES | اختبار مؤقت Safari</title>
 
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0a; color: #fff;
-            min-height: 100vh; min-height: 100dvh;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            padding: 24px; position: relative; overflow: hidden;
-        }
-        body::before {
-            content: ''; position: fixed; top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(ellipse at 30% 20%, rgba(99,102,241,0.15) 0%, transparent 50%),
-                        radial-gradient(ellipse at 70% 80%, rgba(168,85,247,0.12) 0%, transparent 50%),
-                        radial-gradient(ellipse at 50% 50%, rgba(236,72,153,0.08) 0%, transparent 60%);
-            z-index: 0; animation: bgShift 20s ease-in-out infinite alternate;
-        }
-        @keyframes bgShift { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-3%,-2%) scale(1.05); } }
-        .container { position: relative; z-index: 1; text-align: center; max-width: 400px; width: 100%; }
-        .logo-icon {
-            width: 96px; height: 96px; border-radius: 24px;
-            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
-            display: inline-flex; align-items: center; justify-content: center;
-            font-size: 42px; font-weight: 800; color: #fff;
-            box-shadow: 0 0 60px rgba(99,102,241,0.4), 0 0 120px rgba(168,85,247,0.2);
-            margin-bottom: 20px;
-        }
-        .brand-name {
-            font-size: 38px; font-weight: 800; letter-spacing: 6px;
-            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text; margin-bottom: 8px;
-        }
-        .brand-tagline { font-size: 14px; color: rgba(255,255,255,0.5); letter-spacing: 1px; margin-bottom: 32px; }
-        .status-badge {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 6px 14px; border-radius: 100px;
-            font-size: 12px; font-weight: 500; margin-bottom: 28px;
-            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
-            color: rgba(255,255,255,0.6);
-        }
-        .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #6366f1; animation: pulse 2s ease-in-out infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
-        .btn-install {
-            display: none; width: 100%; padding: 16px 24px;
-            border: none; border-radius: 16px;
-            font-size: 16px; font-weight: 600; color: #fff;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            cursor: pointer; box-shadow: 0 8px 32px rgba(99,102,241,0.35);
-            font-family: inherit; transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .btn-install:active { transform: scale(0.97); box-shadow: 0 4px 16px rgba(99,102,241,0.3); }
-        .btn-secondary {
-            display: none; width: 100%; margin-top: 12px; padding: 14px;
-            border: 1px solid rgba(255,255,255,0.15); border-radius: 14px;
-            background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.8);
-            font-size: 14px; font-weight: 500; cursor: pointer;
-            font-family: inherit; transition: background 0.2s;
-        }
-        .btn-secondary:active { background: rgba(255,255,255,0.12); }
-        .debug-info {
-            position: fixed; bottom: 12px; left: 12px; right: 12px;
-            font-size: 10px; color: rgba(255,255,255,0.25);
-            text-align: center; font-family: monospace;
-            line-height: 1.5; pointerاول-events: none; z-index:ة 0;
-        }
-        body Web.is-installed .btn-install Install,
-        body.is-installed .btn-secondary { display: none !important; }
-    </style>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #111815;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      padding: 30px 22px;
+      background: #1d2923;
+      border: 1px solid #35483c;
+      border-radius: 24px;
+      text-align: center;
+    }
+
+    .brand {
+      font-size: 15px;
+      letter-spacing: 5px;
+      color: #c8b88a;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: 23px;
+      margin: 18px 0 10px;
+    }
+
+    .description {
+      color: #b9c7bd;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .timer {
+      font-size: 72px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      margin: 28px 0;
+      direction: ltr;
+      color: #f1e6c8;
+    }
+
+    select, button {
+      width: 100%;
+      min-height: 52px;
+      border-radius: 13px;
+      font-size: 16px;
+      margin-top: 12px;
+    }
+
+    select {
+      padding: 12px;
+      background: #101b15;
+      color: white;
+      border: 1px solid #526558;
+    }
+
+    button {
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .start {
+      background: #d8c397;
+      color: #1b241e;
+    }
+
+    .test {
+      background: #334a3b;
+      color: white;
+    }
+
+    .stop {
+      background: #50312e;
+      color: white;
+    }
+
+    .status {
+      margin-top: 22px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #142019;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #d4dfd6;
+    }
+
+    .logs {
+      text-align: right;
+      margin-top: 20px;
+      color: #b7c8ba;
+      font-size: 12px;
+      line-height: 1.9;
+      overflow-wrap: anywhere;
+    }
+
+    .logs div {
+      padding: 5px 0;
+      border-bottom: 1px solid #304035;
+    }
+  </style>
 </head>
+
 <body>
 
-    <div class="container">
-        <div class="logo-icon">V</div>
-        <div class="brand-name">VIBES</div>
-        <div class="brand-tagline">تطبيق الويب التقدمي</div>
+<div class="card">
 
-        <div class="status-badge" id="statusBadge">
-            <span class="status-dot"></span>
-            <span id="statusText">جارٍ الفحص...</span>
-        </div>
+  <div class="brand">VIBES</div>
 
-        <button class="btn-install" id="btnInstall">تثبيت VIBES</button>
-        <button class="btn-secondary" id="btnShortcut">تثبيت سريع عبر الاختصار</button>
-    </div>
+  <h1>اختبار مؤقت الآيفون</h1>
 
-    <div class="debug-info" id="debugInfo"></div>
+  <p class="description">
+    فعّل المؤقت، اقفل شاشة جوالك،
+    وانتظر هل يشتغل صوت التنبيه.
+  </p>
 
-    <!-- مكتبة pwa-install -->
-    <script type="module">
-        import 'https://cdn.jsdelivr.net/npm/@khmyznikov/pwa-install@latest/dist/index.min.js';
-    </script>
+  <div class="timer" id="timer">00:30</div>
 
-    <script>
-    'use strict';
+  <select id="duration">
+    <option value="10">10 ثوانٍ</option>
+    <option value="30" selected>30 ثانية</option>
+    <option value="60">دقيقة</option>
+    <option value="600">10 دقائق</option>
+  </select>
 
-    let deferredInstallPrompt = null;
-    const debugEl = document.getElementById('debugInfo');
-    const statusText = document.getElementById('statusText');
-    const btnInstall = document.getElementById('btnInstall');
-    const btnShortcut = document.getElementById('btnShortcut');
-    const pwaInstallEl = document.querySelector('pwa-install');
+  <button class="start" id="start">
+    تفعيل الصوت وبدء المؤقت
+  </button>
 
-    // ============================================================
-    // اكتشاف المنصة
-    // ============================================================
-    function getPlatform() {
-        const ua = navigator.userAgent;
-        const isIOS = /iPad|iPhone|iPod/.test(ua) ||
-                      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-        const isAndroid = /Android/.test(ua);
-        const isSafari = /Safari/.test(ua) && !/Chrome|CriOS|FxiOS/.test(ua);
-        const isChrome = /Chrome/.test(ua) || /CriOS/.test(ua);
-        const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
-                             window.navigator.standalone === true;
-        const isInAppBrowser = /FBAN|FBAV|Instagram|Twitter|Line|WhatsApp|Telegram/i.test(ua);
+  <button class="test" id="test">
+    تجربة الصوت الآن
+  </button>
 
-        return { isIOS, isAndroid, isSafari, isChrome, isStandalone, isInAppBrowser, ua };
+  <button class="stop" id="stop">
+    إيقاف المؤقت والصوت
+  </button>
+
+  <div class="status" id="status">
+    جاهز للاختبار
+  </div>
+
+  <div class="logs" id="logs"></div>
+
+</div>
+
+<script>
+  let audioContext = null;
+  let interval = null;
+  let endTime = 0;
+  let active = false;
+  let alarmTimer = null;
+
+  const timerEl = document.getElementById("timer");
+  const statusEl = document.getElementById("status");
+  const logsEl = document.getElementById("logs");
+  const durationEl = document.getElementById("duration");
+
+  function log(message) {
+    const time = new Date().toLocaleTimeString("ar-SA");
+    const row = document.createElement("div");
+
+    row.textContent = `${time} — ${message}`;
+    logsEl.prepend(row);
+  }
+
+  function formatTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+
+    return (
+      String(m).padStart(2, "0") + ":" +
+      String(s).padStart(2, "0")
+    );
+  }
+
+  function setStatus(message) {
+    statusEl.textContent = message;
+  }
+
+  async function enableAudio() {
+    const AudioContextClass =
+      window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) {
+      throw new Error("Web Audio غير مدعوم");
     }
 
-    function updateDebug(platform) {
-        debugEl.textContent = [
-            `OS: ${platform.isIOS ? 'iOS' : platform.isAndroid ? 'Android' : 'Desktop'}`,
-            `Browser: ${platform.isSafari ? 'Safari' : platform.isChrome ? 'Chrome' : 'Other'}`,
-            `Standalone: ${platform.isStandalone ? 'YES' : 'NO'}`,
-            `InApp: ${platform.isInAppBrowser ? 'YES' : 'NO'}`,
-            `BIP: ${deferredInstallPrompt ? 'Captured' : 'None'}`
-        ].join(' | ');
+    if (!audioContext) {
+      audioContext = new AudioContextClass();
     }
 
-    // ============================================================
-    // محاولة Web Install API (Chromium 155+)
-    // ============================================================
-    async function tryWebInstallAPI() {
-        if ('install' in navigator && typeof navigator.install === 'function') {
-            try {
-                await navigator.install();
-                console.log('[VIBES] Web Install API triggered ✓');
-                return true;
-            } catch (e) {
-                console.log('[VIBES] Web Install API failed:', e.message);
-            }
-        }
-        return false;
+    await audioContext.resume();
+
+    // تشغيل نغمة قصيرة ضمن ضغطة المستخدم
+    beep(0.08);
+  }
+
+  function beep(duration = 0.3) {
+    if (!audioContext || audioContext.state !== "running") {
+      log("الصوت غير نشط");
+      return;
     }
 
-    // ============================================================
-    // عرض نافذة pwa-install (للـ iOS والاحتياط)
-    // ============================================================
-    function showPWAInstallDialog() {
-        if (pwaInstallEl && typeof pwaInstallEl.showDialog === 'function') {
-            pwaInstallEl.showDialog();
-            return true;
-        }
-        return false;
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = 880;
+
+    gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(
+      0.25,
+      audioContext.currentTime + 0.02
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      audioContext.currentTime + duration
+    );
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + duration + 0.02);
+  }
+
+  function stopAlarm() {
+    if (alarmTimer) {
+      clearInterval(alarmTimer);
+      alarmTimer = null;
     }
+  }
 
-    // ============================================================
-    // 1) التقاط beforeinstallprompt (Android / Chrome)
-    // ============================================================
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredInstallPrompt = e;
-        console.log('[VIBES] beforeinstallprompt captured ✓');
-        updateDebug(getPlatform());
+  function ring() {
+    stopAlarm();
 
-        // محاولة Web Install API أولًا (Chromium 155+)
-        tryWebInstallAPI().then(success => {
-            if (!success) {
-                // إذا فشل، عرض النافذة عبر pwa-install
-                setTimeout(() => {
-                    if (!showPWAInstallDialog()) {
-                        btnInstall.style.display = 'block';
-                        statusText.textContent = 'جاهز للتثبيت — اضغط الزر';
-                    }
-                }, 300);
-            }
-        });
-    });
+    log("وصل وقت التنبيه — محاولة تشغيل الصوت");
 
-    // ============================================================
-    // 2) زر التثبيت الاحتياطي
-    // ============================================================
-    btnInstall.addEventListener('click', async () => {
-        // مح API أولًا
-        if (await tryWebInstallAPI()) return;
+    setStatus("انتهى الوقت! هل سمعت صوت الرنين؟");
 
-        // إذا ما فيه prompt مخزّن، حاول عرض نافذة pwa-install
-        if (!deferredInstallPrompt) {
-            if (showPWAInstallDialog()) return;
-            return;
-        }
+    let count = 0;
 
-        deferredInstallPrompt.prompt();
-        const { outcome } = await deferredInstallPrompt.userChoice;
-        console.log('[VIBES] User choice:', outcome);
+    beep(0.35);
 
-        if (outcome === 'accepted') {
-            statusText.textContent = 'جارٍ التثبيت...';
-            btnInstall.style.display = 'none';
-        } else {
-            statusText.textContent = 'تم إلغاء التثبيت';
-        }
-        deferredInstallPrompt = null;
-    });
+    alarmTimer = setInterval(() => {
+      if (count >= 9) {
+        stopAlarm();
+        return;
+      }
 
-    // ============================================================
-    // 3) زر الاختصار (iOS فقط)
-    // ============================================================
-    btnShortcut.addEventListener('click', () => {
-        // رابط اختصار iOS — يعمل على iOS 15+
-        // هذا الاختصار يفتح الرابط في Safari ويذكّر المستخدم بالإضافة
-        const shortcutUrl = 'https://www.icloud.com/shortcuts/YOUR_SHORTCUT_ID';
-        window.location.href = shortcutUrl;
-    });
+      beep(0.35);
+      count++;
+    }, 500);
+  }
 
-    // ============================================================
-    // 4) التهيئة الرئيسية
-    // ============================================================
-    function init() {
-        const platform = getPlatform();
-        updateDebug(platform);
+  function updateTimer() {
+    if (!active) return;
 
-        // --- الحالة أ: التطبيق مثبت بالفعل ---
-        if (platform.isStandalone) {
-            document.body.classList.add('is-installed');
-            statusText.textContent = 'التطبيق مثبت ويعمل الآن';
-            return;
-        }
+    const remaining = Math.max(
+      0,
+      Math.ceil((endTime - Date.now()) / 1000)
+    );
 
-        // --- الحالة ب: داخل متصفح تطبيق (In-App Browser) ---
-        if (platform.isInAppBrowser) {
-            statusText.textContent = 'افتح الرابط في Safari للتثبيت';
-            btnInstall.textContent = 'افتح في Safari';
-            btnInstall.style.display = 'block';
-            btnInstall.onclick = () => {
-                // محاولة فتح الرابط في Safari
-                const url = window.location.href;
-                if (platform.isIOS) {
-                    window.location.href = url.replace(/^https?:\/\//, 'x-web-search://');
-                    setTimeout(() => { window.location.href = url; }, 500);
-                }
-            };
-            return;
-        }
+    timerEl.textContent = formatTime(remaining);
 
-        // --- الحالة ج: iOS ---
-        if (platform.isIOS) {
-            statusText.textContent = 'تثبيت VIBES على iPhone';
+    if (remaining <= 0) {
+      clearInterval(interval);
+      interval = null;
+      active = false;
 
-            // عرض نافذة pwa-install تلقائيًا
-            setTimeout(() => {
-                if (!showPWAInstallDialog()) {
-                    btnInstall.textContent = 'كيف أثبّت التطبيق؟';
-                    btnInstall.style.display = 'block';
-                }
-            }, 1000);
-
-            // إظهار زر الاختصار كخيار أسرع
-            btnShortcut.style.display = 'block';
-            return;
-        }
-
-        // --- الحالة د: Android ---
-        if (platform.isAndroid || platform.isChrome) {
-            statusText.textContent = 'جارٍ التحقق من إمكانية التثبيت...';
-
-            setTimeout(() => {
-                if (!deferredInstallPrompt) {
-                    statusText.textContent = 'التثبيت غير متاح حاليًا';
-                    btnInstall.textContent = 'افتح القائمة ⋮ واختر «تثبيت التطبيق»';
-                    btnInstall.style.display = 'block';
-                }
-            }, 3000);
-            return;
-        }
-
-        statusText.textContent = 'افتح VIBES على جوالك للتثبيت';
+      ring();
     }
+  }
 
-    // ============================================================
-    // 5) Service Worker
-    // ============================================================
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('[VIBES] SW registered ✓', reg.scope))
-                .catch(err => console.error('[VIBES] SW failed ✗', err));
-        });
+  document.getElementById("start").addEventListener(
+    "click",
+    async () => {
+      try {
+        stopAlarm();
+
+        if (interval) {
+          clearInterval(interval);
+        }
+
+        await enableAudio();
+
+        const seconds = Number(durationEl.value);
+
+        endTime = Date.now() + seconds * 1000;
+        active = true;
+
+        timerEl.textContent = formatTime(seconds);
+
+        interval = setInterval(updateTimer, 250);
+
+        setStatus(
+          "المؤقت يعمل. اقفل شاشة الآيفون الآن."
+        );
+
+        log(`بدأ مؤقت لمدة ${seconds} ثانية`);
+
+      } catch (error) {
+        setStatus("تعذر تفعيل الصوت: " + error.message);
+        log("فشل تفعيل الصوت");
+      }
     }
+  );
 
-    // ============================================================
-    // 6) appinstalled
-    // ============================================================
-    window.addEventListener('appinstalled', () => {
-        console.log('[VIBES] App installed ✓');
-        document.body.classList.add('is-installed');
-        statusText.textContent = 'التطبيق مثبت ويعمل الآن';
-    });
+  document.getElementById("test").addEventListener(
+    "click",
+    async () => {
+      try {
+        await enableAudio();
+        ring();
+      } catch (error) {
+        setStatus("تعذر تشغيل الصوت: " + error.message);
+      }
+    }
+  );
 
-    init();
-    </script>
+  document.getElementById("stop").addEventListener(
+    "click",
+    () => {
+      active = false;
 
-    <!-- إعداد pwa-install -->
-    <pwa-install
-        manifest-url="manifest.json"
-        name="VIBES"
-        description="تطبيق VIBES - تجربة الويب التقدمي الفاخرة"
-        icon-url="icons/icon-192.png"
-        theme-color="#6366f1"
-        install-description="أضف VIBES إلى شاشتك الرئيسية"
-        disable-screenshots="true"
-        manual-apple="false"
-        manual-chrome="false">
-    </pwa-install>
+      clearInterval(interval);
+      interval = null;
+
+      stopAlarm();
+
+      const seconds = Number(durationEl.value);
+
+      timerEl.textContent = formatTime(seconds);
+
+      setStatus("تم إيقاف المؤقت والصوت");
+
+      log("أوقف المستخدم المؤقت");
+    }
+  );
+
+  durationEl.addEventListener("change", () => {
+    if (!active) {
+      timerEl.textContent = formatTime(
+        Number(durationEl.value)
+      );
+    }
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    log(
+      document.hidden
+        ? "انتقل Safari إلى الخلفية أو انقفلت الشاشة"
+        : "رجع Safari إلى الواجهة"
+    );
+
+    if (!document.hidden) {
+      updateTimer();
+    }
+  });
+
+  window.addEventListener("pageshow", () => {
+    log("صفحة الاختبار مفتوحة");
+  });
+</script>
+
 </body>
 </html>
