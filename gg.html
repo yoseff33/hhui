@@ -1,140 +1,27 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مؤقت التنبيه التفاعلي</title>
-    <style>
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .card {
-            background-color: #1e293b;
-            padding: 2.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            text-align: center;
-            max-width: 350px;
-            width: 100%;
-        }
-        input, button {
-            width: 100%;
-            padding: 0.75rem;
-            margin-top: 1rem;
-            font-size: 1rem;
-            border-radius: 0.5rem;
-            border: none;
-            box-sizing: border-box;
-        }
-        input {
-            background-color: #334155;
-            color: white;
-            text-align: center;
-        }
-        button {
-            background-color: #3b82f6;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-        button:hover {
-            background-color: #2563eb;
-        }
-        #countdown-display {
-            font-size: 3rem;
-            font-weight: bold;
-            margin: 1.5rem 0;
-            color: #38bdf8;
-        }
-        #status {
-            font-size: 0.9rem;
-            color: #94a3b8;
-        }
-    </style>
-</head>
-<body>
+<!-- بانر توضيحي يظهر للعميل أول ما يدخل موقعك من الآيفون -->
+<div id="ios-install-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; color: #fff; padding: 20px; text-align: center; border-top-left-radius: 16px; border-top-right-radius: 16px; box-shadow: 0 -5px 25px rgba(0,0,0,0.5); z-index: 9999; font-family: system-ui;">
+    <p style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">🔔 تبي يجيك إشعار أول ما يجهز طلبك؟</p>
+    <p style="margin: 0 0 15px 0; font-size: 13px; color: #94a3b8;">اضغط على زر المشاركة بالأسفل <span style="font-size: 18px; animation: bounce 1s infinite; display: inline-block;">👇</span> ثم اختر <b>"إضافة إلى الشاشة الرئيسية"</b></p>
+    <button onclick="closeBanner()" style="background: #334155; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer;">حسناً، فهمت</button>
+</div>
 
-    <div class="card">
-        <h2>مؤقت الثواني التفاعلي</h2>
-        <p>حدد عدد الثواني واضغط بدء:</p>
-        
-        <input type="number" id="secondsInput" value="10" min="1" max="300" placeholder="أدخل عدد الثواني">
-        <button onclick="startCustomTimer()">بدء المؤقت</button>
+<style>
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+}
+</style>
 
-        <div id="countdown-display">00:00</div>
-        <div id="status">جاهز للاستخدام</div>
-    </div>
+<script>
+    // إظهار البانر فقط إذا كان المستخدم يفتح الموقع من الآيفون ولم يقم بتثبيته مسبقاً
+    const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+    const isInStandaloneMode = ('standalone' in window.navigator) && (window.navigator.standalone);
 
-    <!-- عنصر الصوت المخفي -->
-    <audio id="myAudio" preload="auto">
-        <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
-    </audio>
+    if (isIos && !isInStandaloneMode) {
+        document.getElementById('ios-install-banner').style.display = 'block';
+    }
 
-    <script>
-        let countdownInterval;
-
-        function startCustomTimer() {
-            // إيقاف أي عداد سابق لو كان شغال
-            clearInterval(countdownInterval);
-
-            const inputSeconds = parseInt(document.getElementById("secondsInput").value);
-            const display = document.getElementById("countdown-display");
-            const statusDiv = document.getElementById("status");
-            const audio = document.getElementById("myAudio");
-
-            if (isNaN(inputSeconds) || inputSeconds <= 0) {
-                alert("الرجاء إدخال رقم صحيح أكبر من الصفر");
-                return;
-            }
-
-            // التحايل البرمجي لأخذ تصريح تشغيل الصوت من المتصفح
-            audio.volume = 0;
-            audio.play().then(() => {
-                audio.pause();
-                audio.currentTime = 0;
-                audio.volume = 1.0;
-
-                let timeLeft = inputSeconds;
-                statusDiv.textContent = "العداد يعمل...";
-
-                // تحديث الشاشة فوراً
-                updateDisplay(timeLeft, display);
-
-                // بدء العد التنازلي ثانية بثانية
-                countdownInterval = setInterval(() => {
-                    timeLeft--;
-                    updateDisplay(timeLeft, display);
-
-                    if (timeLeft <= 0) {
-                        clearInterval(countdownInterval);
-                        statusDiv.textContent = "انتهى الوقت! 🚨";
-                        
-                        // تشغيل الصوت الحقيقي فور انتهاء العداد
-                        audio.play().catch(e => {
-                            console.log("المتصفح منع تشغيل الصوت:", e);
-                        });
-                    }
-                }, 1000);
-
-            }).catch(e => {
-                statusDiv.textContent = "الرجاء الضغط على الشاشة للسماح بالصوت";
-            });
-        }
-
-        function updateDisplay(seconds, element) {
-            let mins = Math.floor(seconds / 60);
-            let secs = seconds % 60;
-            element.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-        }
-    </script>
-
-</body>
-</html>
+    function closeBanner() {
+        document.getElementById('ios-install-banner').style.display = 'none';
+    }
+</script>
