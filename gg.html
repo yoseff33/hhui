@@ -1,388 +1,107 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VIBES | اختبار مؤقت Safari</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #111815;
-      color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .card {
-      width: 100%;
-      max-width: 420px;
-      padding: 30px 22px;
-      background: #1d2923;
-      border: 1px solid #35483c;
-      border-radius: 24px;
-      text-align: center;
-    }
-
-    .brand {
-      font-size: 15px;
-      letter-spacing: 5px;
-      color: #c8b88a;
-      font-weight: 700;
-    }
-
-    h1 {
-      font-size: 23px;
-      margin: 18px 0 10px;
-    }
-
-    .description {
-      color: #b9c7bd;
-      font-size: 14px;
-      line-height: 1.9;
-    }
-
-    .timer {
-      font-size: 72px;
-      font-weight: 800;
-      font-variant-numeric: tabular-nums;
-      margin: 28px 0;
-      direction: ltr;
-      color: #f1e6c8;
-    }
-
-    select, button {
-      width: 100%;
-      min-height: 52px;
-      border-radius: 13px;
-      font-size: 16px;
-      margin-top: 12px;
-    }
-
-    select {
-      padding: 12px;
-      background: #101b15;
-      color: white;
-      border: 1px solid #526558;
-    }
-
-    button {
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .start {
-      background: #d8c397;
-      color: #1b241e;
-    }
-
-    .test {
-      background: #334a3b;
-      color: white;
-    }
-
-    .stop {
-      background: #50312e;
-      color: white;
-    }
-
-    .status {
-      margin-top: 22px;
-      padding: 14px;
-      border-radius: 12px;
-      background: #142019;
-      font-size: 14px;
-      line-height: 1.8;
-      color: #d4dfd6;
-    }
-
-    .logs {
-      text-align: right;
-      margin-top: 20px;
-      color: #b7c8ba;
-      font-size: 12px;
-      line-height: 1.9;
-      overflow-wrap: anywhere;
-    }
-
-    .logs div {
-      padding: 5px 0;
-      border-bottom: 1px solid #304035;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تجربة التنبيه بعد دقيقة</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background-color: #1e293b;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #2563eb;
+        }
+        #status {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="card">
+    <div class="card">
+        <h2>اختبار التنبيه بعد دقيقة</h2>
+        <p>اضغط الزر وابقى في الصفحة، سيتم تشغيل نغمة وإشعار بعد 60 ثانية بالضبط.</p>
+        <button onclick="startTimer()">بدء المؤقت (دقيقة واحدة)</button>
+        <div id="status">الحالة: جاهز للبدء</div>
+    </div>
 
-  <div class="brand">VIBES</div>
+    <script>
+        // دالة لتوليد صوت تنبيه (نغمة بيبي) عبر تقنية الـ Web Audio API دون الحاجة لملف صوت خارجي
+        function playBeep() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
 
-  <h1>اختبار مؤقت الآيفون</h1>
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(587.33, audioCtx.currentTime); // نغمة D5
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
 
-  <p class="description">
-    فعّل المؤقت، اقفل شاشة جوالك،
-    وانتظر هل يشتغل صوت التنبيه.
-  </p>
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
 
-  <div class="timer" id="timer">00:30</div>
-
-  <select id="duration">
-    <option value="10">10 ثوانٍ</option>
-    <option value="30" selected>30 ثانية</option>
-    <option value="60">دقيقة</option>
-    <option value="600">10 دقائق</option>
-  </select>
-
-  <button class="start" id="start">
-    تفعيل الصوت وبدء المؤقت
-  </button>
-
-  <button class="test" id="test">
-    تجربة الصوت الآن
-  </button>
-
-  <button class="stop" id="stop">
-    إيقاف المؤقت والصوت
-  </button>
-
-  <div class="status" id="status">
-    جاهز للاختبار
-  </div>
-
-  <div class="logs" id="logs"></div>
-
-</div>
-
-<script>
-  let audioContext = null;
-  let interval = null;
-  let endTime = 0;
-  let active = false;
-  let alarmTimer = null;
-
-  const timerEl = document.getElementById("timer");
-  const statusEl = document.getElementById("status");
-  const logsEl = document.getElementById("logs");
-  const durationEl = document.getElementById("duration");
-
-  function log(message) {
-    const time = new Date().toLocaleTimeString("ar-SA");
-    const row = document.createElement("div");
-
-    row.textContent = `${time} — ${message}`;
-    logsEl.prepend(row);
-  }
-
-  function formatTime(seconds) {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-
-    return (
-      String(m).padStart(2, "0") + ":" +
-      String(s).padStart(2, "0")
-    );
-  }
-
-  function setStatus(message) {
-    statusEl.textContent = message;
-  }
-
-  async function enableAudio() {
-    const AudioContextClass =
-      window.AudioContext || window.webkitAudioContext;
-
-    if (!AudioContextClass) {
-      throw new Error("Web Audio غير مدعوم");
-    }
-
-    if (!audioContext) {
-      audioContext = new AudioContextClass();
-    }
-
-    await audioContext.resume();
-
-    // تشغيل نغمة قصيرة ضمن ضغطة المستخدم
-    beep(0.08);
-  }
-
-  function beep(duration = 0.3) {
-    if (!audioContext || audioContext.state !== "running") {
-      log("الصوت غير نشط");
-      return;
-    }
-
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-
-    oscillator.type = "sine";
-    oscillator.frequency.value = 880;
-
-    gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
-    gain.gain.exponentialRampToValueAtTime(
-      0.25,
-      audioContext.currentTime + 0.02
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-      0.0001,
-      audioContext.currentTime + duration
-    );
-
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
-
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + duration + 0.02);
-  }
-
-  function stopAlarm() {
-    if (alarmTimer) {
-      clearInterval(alarmTimer);
-      alarmTimer = null;
-    }
-  }
-
-  function ring() {
-    stopAlarm();
-
-    log("وصل وقت التنبيه — محاولة تشغيل الصوت");
-
-    setStatus("انتهى الوقت! هل سمعت صوت الرنين؟");
-
-    let count = 0;
-
-    beep(0.35);
-
-    alarmTimer = setInterval(() => {
-      if (count >= 9) {
-        stopAlarm();
-        return;
-      }
-
-      beep(0.35);
-      count++;
-    }, 500);
-  }
-
-  function updateTimer() {
-    if (!active) return;
-
-    const remaining = Math.max(
-      0,
-      Math.ceil((endTime - Date.now()) / 1000)
-    );
-
-    timerEl.textContent = formatTime(remaining);
-
-    if (remaining <= 0) {
-      clearInterval(interval);
-      interval = null;
-      active = false;
-
-      ring();
-    }
-  }
-
-  document.getElementById("start").addEventListener(
-    "click",
-    async () => {
-      try {
-        stopAlarm();
-
-        if (interval) {
-          clearInterval(interval);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.5); // مدة الصوت نصف ثانية
+            } catch (e) {
+                console.log("الصوت يحتاج تفاعل مستخدم مسبق");
+            }
         }
 
-        await enableAudio();
+        function startTimer() {
+            const statusDiv = document.getElementById("status");
+            statusDiv.textContent = "الحالة: تم البدء، انتظر دقيقة...";
 
-        const seconds = Number(durationEl.value);
+            // طلب إذن الإشعارات إذا لم يُطلب مسبقاً
+            if (Notification.permission !== "granted") {
+                Notification.requestPermission();
+            }
 
-        endTime = Date.now() + seconds * 1000;
-        active = true;
+            // ضبط المؤقت على 60 ثانية (60000 مللي ثانية)
+            setTimeout(() => {
+                statusDiv.textContent = "الحالة: انتهى الوقت! 🚨";
+                
+                // 1. تشغيل الصوت
+                playBeep();
 
-        timerEl.textContent = formatTime(seconds);
-
-        interval = setInterval(updateTimer, 250);
-
-        setStatus(
-          "المؤقت يعمل. اقفل شاشة الآيفون الآن."
-        );
-
-        log(`بدأ مؤقت لمدة ${seconds} ثانية`);
-
-      } catch (error) {
-        setStatus("تعذر تفعيل الصوت: " + error.message);
-        log("فشل تفعيل الصوت");
-      }
-    }
-  );
-
-  document.getElementById("test").addEventListener(
-    "click",
-    async () => {
-      try {
-        await enableAudio();
-        ring();
-      } catch (error) {
-        setStatus("تعذر تشغيل الصوت: " + error.message);
-      }
-    }
-  );
-
-  document.getElementById("stop").addEventListener(
-    "click",
-    () => {
-      active = false;
-
-      clearInterval(interval);
-      interval = null;
-
-      stopAlarm();
-
-      const seconds = Number(durationEl.value);
-
-      timerEl.textContent = formatTime(seconds);
-
-      setStatus("تم إيقاف المؤقت والصوت");
-
-      log("أوقف المستخدم المؤقت");
-    }
-  );
-
-  durationEl.addEventListener("change", () => {
-    if (!active) {
-      timerEl.textContent = formatTime(
-        Number(durationEl.value)
-      );
-    }
-  });
-
-  document.addEventListener("visibilitychange", () => {
-    log(
-      document.hidden
-        ? "انتقل Safari إلى الخلفية أو انقفلت الشاشة"
-        : "رجع Safari إلى الواجهة"
-    );
-
-    if (!document.hidden) {
-      updateTimer();
-    }
-  });
-
-  window.addEventListener("pageshow", () => {
-    log("صفحة الاختبار مفتوحة");
-  });
-</script>
+                // 2. محاولة إرسال إشعار المتصفح
+                if (Notification.permission === "granted") {
+                    new Notification("تنبيه طلبك!", {
+                        body: "مرت دقيقة كاملة، هذا إشعار تجريبي من الصفحة.",
+                        icon: "https://cdn-icons-png.flaticon.com/512/1827/1827393.png"
+                    });
+                }
+            }, 60000); // 60,000 ms = 1 minute
+        }
+    </script>
 
 </body>
 </html>
