@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>VIBES</title>
+
+    <!-- ====== إعدادات PWA الأساسية ====== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="VIBES">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(99,102,241,0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(168,85,247,0.12) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 50%, rgba(236,72,153,0.08) 0%, transparent 60%);
+            z-index: 0;
+            animation: bgShift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgShift {
+            0% { transform: translate(0,0) scale(1); }
+            100% { transform: translate(-3%,-2%) scale(1.05); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .logo-icon {
+            width: 96px; height: 96px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px; font-weight: 800; color: #fff;
+            box-shadow: 0 0 60px rgba(99,102,241,0.4), 0 0 120px rgba(168,85,247,0.2);
+            margin-bottom: 20px;
+        }
+
+        .brand-name {
+            font-size: 38px; font-weight: 800; letter-spacing: 6px;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .brand-tagline {
+            font-size: 14px; color: rgba(255,255,255,0.5);
+            letter-spacing: 1px; margin-bottom: 32px;
+        }
+
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 14px; border-radius: 100px;
+            font-size: 12px; font-weight: 500; margin-bottom: 28px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.6);
+        }
+
+        .status-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #6366f1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        /* زر التثبيت الاحتياطي */
+        .btn-install {
+            display: none;
+            width: 100%; padding: 16px 24px;
+            border: none; border-radius: 16px;
+            font-size: 16px; font-weight: 600; color: #fff;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(99,102,241,0.35);
+            font-family: inherit;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-install:active {
+            transform: scale(0.97);
+            box-shadow: 0 4px 16px rgba(99,102,241,0.3);
+        }
+
+        .debug-info {
+            position: fixed; bottom: 12px; left: 12px; right: 12px;
+            font-size: 10px; color: rgba(255,255,255,0.25);
+            text-align: center; font-family: monospace;
+            line-height: 1.5; pointer-events: none; z-index: 0;
+        }
+
+        body.is-installed .btn-install { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo-icon">V</div>
+        <div class="brand-name">VIBES</div>
+        <div class="brand-tagline">تطبيق الويب التقدمي</div>
+
+        <div class="status-badge" id="statusBadge">
+            <span class="status-dot"></span>
+            <span id="statusText">جارٍ الفحص...</span>
+        </div>
+
+        <!-- زر احتياطي (يظهر فقط إذا لم تظهر نافذة pwa-install) -->
+        <button class="btn-install" id="btnInstall">
+            تثبيت تطبيق VIBES
+        </button>
+    </div>
+
+    <div class="debug-info" id="debugInfo"></div>
+
+    <!-- ====== مكتبة pwa-install ====== -->
+    <script type="module">
+        import 'https://cdn.jsdelivr.net/npm/@khmyznikov/pwa-install@latest/dist/index.min.js';
+    </script>
+
+    <script>
+    // ============================================================
+    // VIBES PWA - منطق التثبيت المطور
+    // ============================================================
+
+    'use strict';
+
+    let deferredInstallPrompt = null;
+    const debugEl = document.getElementById('debugInfo');
+    const statusText = document.getElementById('statusText');
+    const btnInstall = document.getElementById('btnInstall');
+    const pwaInstallEl = document.querySelector('pwa-install');
+
+    // ---------- اكتشاف المنصة ----------
+    function getPlatform() {
+        const ua = navigator.userAgent;
+        const isIOS = /iPad|iPhone|iPod/.test(ua) ||
+                      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        const isAndroid = /Android/.test(ua);
+        const isSafari = /Safari/.test(ua) && !/Chrome|CriOS|FxiOS/.test(ua);
+        const isChrome = /Chrome/.test(ua) || /CriOS/.test(ua);
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                             window.navigator.standalone === true;
+
+        return { isIOS, isAndroid, isSafari, isChrome, isStandalone, ua };
+    }
+
+    function updateDebug(platform) {
+        debugEl.textContent = [
+            `OS: ${platform.isIOS ? 'iOS' : platform.isAndroid ? 'Android' : 'Desktop'}`,
+            `Browser: ${platform.isSafari ? 'Safari' : platform.isChrome ? 'Chrome' : 'Other'}`,
+            `Standalone: ${platform.isStandalone ? 'YES' : 'NO'}`,
+            `beforeinstallprompt: ${deferredInstallPrompt ? 'Captured' : 'Not available'}`
+        ].join(' | ');
+    }
+
+    // ---------- استدعاء نافذة pwa-install ----------
+    function showPWAInstallDialog() {
+        if (pwaInstallEl && typeof pwaInstallEl.showDialog === 'function') {
+            pwaInstallEl.showDialog();
+            return true;
+        }
+        return false;
+    }
+
+    // ============================================================
+    // 1) التقاط beforeinstallprompt (Android / Chrome)
+    // ============================================================
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        console.log('[VIBES] beforeinstallprompt captured ✓');
+
+        const platform = getPlatform();
+        updateDebug(platform);
+
+        // محاولة عرض نافذة pwa-install تلقائيًا (بمظهر أصلي)
+        // هذا يعمل فقط على Chromium 155+ مع دعم Web Install API
+        // على المتصفحات الأخرى، نعرض زر التثبيت الاحتياطي
+        setTimeout(() => {
+            if (!showPWAInstallDialog()) {
+                btnInstall.style.display = 'block';
+                statusText.textContent = 'التطبيق جاهز للتثبيت';
+            }
+        }, 300);
+    });
+
+    // ============================================================
+    // 2) دالة التثبيت الاحتياطية (إذا لم تعمل pwa-install)
+    // ============================================================
+    async function triggerInstall() {
+        if (!deferredInstallPrompt) {
+            // إذا ما فيه prompt مخزّن، حاول عرض نافذة pwa-install
+            if (showPWAInstallDialog()) return;
+            return;
+        }
+
+        deferredInstallPrompt.prompt();
+        const { outcome } = await deferredInstallPrompt.userChoice;
+        console.log('[VIBES] User choice:', outcome);
+
+        if (outcome === 'accepted') {
+            statusText.textContent = 'جارٍ التثبيت...';
+            btnInstall.style.display = 'none';
+        } else {
+            statusText.textContent = 'تم إلغاء التثبيت';
+        }
+        deferredInstallPrompt = null;
+    }
+
+    btnInstall.addEventListener('click', triggerInstall);
+
+    // ============================================================
+    // 3) التهيئة الرئيسية
+    // ============================================================
+    function init() {
+        const platform = getPlatform();
+        updateDebug(platform);
+
+        // --- الحالة أ: التطبيق مثبت بالفعل ---
+        if (platform.isStandalone) {
+            document.body.classList.add('is-installed');
+            statusText.textContent = 'التطبيق مثبت ويعمل الآن';
+            return;
+        }
+
+        // --- الحالة ب: iOS ---
+        // لا يوجد beforeinstallprompt على iOS إطلاقًا.
+        // pwa-install تعرض نافذة بمظهر iOS الأصلي (iOS 26+) لكنها إرشادية.
+        if (platform.isIOS) {
+            statusText.textContent = 'جاهز للتثبيت على iPhone';
+
+            // عرض نافذة pwa-install تلقائيًا بعد ثانية
+            setTimeout(() => {
+                if (!showPWAInstallDialog()) {
+                    // احتياطي: عرض زر التثبيت
+                    btnInstall.textContent = 'كيف أثبّت التطبيق؟';
+                    btnInstall.style.display = 'block';
+                }
+            }, 1000);
+
+            return;
+        }
+
+        // --- الحالة ج: Android ---
+        if (platform.isAndroid || platform.isChrome) {
+            statusText.textContent = 'جارٍ التحقق من إمكانية التثبيت...';
+
+            // مهلة احتياطية: إذا لم يصل beforeinstallprompt خلال 3 ثوانٍ
+            setTimeout(() => {
+                if (!deferredInstallPrompt) {
+                    statusText.textContent = 'التثبيت غير متاح حاليًا';
+                    btnInstall.textContent = 'افتح القائمة ⋮ واختر «تثبيت التطبيق»';
+                    btnInstall.style.display = 'block';
+                }
+            }, 3000);
+            return;
+        }
+
+        // --- الحالة د: سطح المكتب ---
+        statusText.textContent = 'افتح VIBES على جوالك للتثبيت';
+    }
+
+    // ============================================================
+    // 4) تسجيل Service Worker
+    // ============================================================
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('[VIBES] SW registered ✓', reg.scope))
+                .catch(err => console.error('[VIBES] SW failed ✗', err));
+        });
+    }
+
+    // ============================================================
+    // 5) حدث appinstalled
+    // ============================================================
+    window.addEventListener('appinstalled', () => {
+        console.log('[VIBES] App installed ✓');
+        document.body.classList.add('is-installed');
+        statusText.textContent = 'التطبيق مثبت ويعمل الآن';
+    });
+
+    init();
+    </script>
+</body>
+</html>
