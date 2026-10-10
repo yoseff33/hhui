@@ -3,79 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مؤقت الطلبات وتنبيهات المتجر</title>
+    <title>تتبع الطلبات - متجرك</title>
     <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-color: #3b82f6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
         body {
             font-family: system-ui, -apple-system, sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            background-image: radial-gradient(circle at top, #1e293b 0%, #0b0f19 100%);
         }
-        .card {
-            background-color: #1e293b;
+        .main-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 2.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             text-align: center;
             max-width: 380px;
             width: 100%;
         }
-        input, button {
-            width: 100%;
-            padding: 0.75rem;
-            margin-top: 1rem;
-            font-size: 1rem;
-            border-radius: 0.5rem;
-            border: none;
-            box-sizing: border-box;
-        }
-        input {
-            background-color: #334155;
-            color: white;
-            text-align: center;
-        }
-        .btn-primary {
-            background-color: #3b82f6;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-        .btn-primary:hover {
-            background-color: #2563eb;
-        }
-        #countdown-display {
-            font-size: 3rem;
-            font-weight: bold;
+        .timer-display {
+            font-size: 3.5rem;
+            font-weight: 800;
             margin: 1.5rem 0;
             color: #38bdf8;
+            letter-spacing: -2px;
         }
-        #status {
-            font-size: 0.9rem;
-            color: #94a3b8;
+        .btn-main {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 0.9rem;
+            width: 100%;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .btn-main:active { transform: scale(0.98); }
+
+        /* تصميم البانر السفلي (Bottom Sheet) الفاخر */
+        #pwa-sheet {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #111827;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 24px;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
+            z-index: 99999;
+            animation: slideUp 0.3s ease-out;
+            text-align: right;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .sheet-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .sheet-icon {
+            font-size: 28px;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 10px;
+            border-radius: 12px;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 22px;
+            cursor: pointer;
+            margin-right: auto;
+        }
+        .step-box {
+            background: #1f2937;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-top: 12px;
+            font-size: 13.5px;
+            color: #cbd5e1;
+            line-height: 1.6;
+            border-right: 4px solid #38bdf8;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h2>مؤقت تتبع الطلب التجريبي</h2>
-        <p>حدد عدد الثواني لاختبار التنبيه والصوت:</p>
+    <div class="main-card">
+        <h2>📦 تتبع طلبك لحظياً</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">اختر مدة التجربة واضغط البدء</p>
         
-        <input type="number" id="secondsInput" value="10" min="1" max="300" placeholder="أدخل عدد الثواني">
-        <button class="btn-primary" onclick="startCustomTimer()">بدء المؤقت</button>
-
-        <div id="countdown-display">00:00</div>
-        <div id="status">جاهز للاستخدام</div>
+        <input type="number" id="secInput" value="15" style="background:#1e293b; border:1px solid #334155; color:#fff; width:100%; padding:0.75rem; border-radius:0.5rem; text-align:center; font-size:1.1rem; margin-top:1rem; box-sizing:border-box;">
+        
+        <div class="timer-display" id="timerBox">00:15</div>
+        
+        <button class="btn-main" onclick="startTest()">بدء المؤقت التجريبي</button>
+        <div id="statusText" style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted);">جاهز للاختبار</div>
     </div>
 
-    <!-- عنصر الصوت المخفي للتنبيه -->
-    <audio id="myAudio" preload="auto">
+    <!-- صوت التنبيه المخفي -->
+    <audio id="alertAudio" preload="auto">
         <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- قالب التوجيه الذكي لإ
+    <!-- قالب البانر السفلي الفاخر المقتبس من أحدث قوالب غيت هاب -->
+    <div id="pwa-sheet">
+        <div class="sheet-header">
+            <div class="sheet-icon">🔔</div>
+            <div>
+                <h3 style="margin: 0; font-size: 16px; color: #fff;">فعّل تنبيهات الطلبات</h3>
+                <span style="font-size: 12px; color: var(--text-muted);">لتصلك النغمة والإشعار حتى لو خرجت من الموقع</span>
+            </div>
+            <button class="close-btn" onclick="closeSheet()">✕</button>
+        </div>
+        
+        <div class="step-box" id="instructionContent">
+            <!-- سيتم تعبئتها تلقائياً حسب نوع جهاز العميل -->
+        </div>
+    </div>
+
+    <script>
+        let countdownTimer;
+
+        function startTest() {
+            clearInterval(countdownTimer);
+            let seconds = parseInt(document.getElementById("secInput").value);
+            const display = document.getElementById("timerBox");
+            const status = document.getElementById("statusText");
+            const audio = document.getElementById("alertAudio");
+
+            if (isNaN(seconds) || seconds <= 0) return;
+
+            // الخداع البرمجي لتفعيل تصريح الصوت بالمتصفح
+            audio.volume = 0;
+            audio.play().then(() => {
+                audio.pause();
+                audio.currentTime = 0;
+                audio.volume = 1.0;
+
+                status.textContent = "العداد يعمل الآن...";
+                updateTime(seconds, display);
+
+                countdownTimer = setInterval(() => {
+                    seconds--;
+                    updateTime(seconds, display);
+
+                    if (seconds <= 0) {
+                        clearInterval(countdownTimer);
+                        status.textContent = "انتهى الوقت! 🚨";
+                        audio.play().catch(e => console.log(e));
+                    }
+                }, 1000);
+            }).catch(() => {
+                status.textContent = "يرجى السماح بالتشغيل بالضغط على الزر";
+            });
+        }
+
+        function updateTime(sec, el) {
+            let m = Math.floor(sec / 60);
+            let s = sec % 60;
+            el.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        // إظهار البانر الاحترافي بذكاء حسب الجهاز
+        function initPwaPrompt() {
+            const ua = navigator.userAgent.toLowerCase();
+            const isIos = /iphone|ipad|ipod/.test(ua);
+            const isAndroid = /android/.test(ua);
+            const isStandalone = ('standalone' in window.navigator) && (window.navigator.standalone);
+
+            if (isStandalone || sessionStorage.getItem('sheetClosed')) return;
+
+            const sheet = document.getElementById('pwa-sheet');
+            const content = document.getElementById('instructionContent');
+
+            if (isIos) {
+                content.innerHTML = `مستخدم آيفون: اضغط على زر <b>المشاركة (Share)</b> في متصفح سفاري، ثم مرر القائمة واختر <br>👉 <b>"إضافة إلى الشاشة الرئيسية" (Add to Home Screen)</b>.`;
+                sheet.style.display = 'block';
+            } else if (isAndroid) {
+                content.innerHTML = `مستخدم أندرويد: اضغط على <b>النقاط الثلاث</b> أعلى المتصفح، ثم اختر <br>👉 <b>"تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية"</b>.`;
+                sheet.style.display = 'block';
+            }
+        }
+
+        function closeSheet() {
+            document.getElementById('pwa-sheet').style.display = 'none';
+            sessionStorage.setItem('sheetClosed', 'true');
+        }
+
+        window.onload = function() {
+            setTimeout(initPwaPrompt, 1200);
+        };
+    </script>
+
+</body>
+</html>
