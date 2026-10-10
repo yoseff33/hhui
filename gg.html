@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>VIBES</title>
-
-    <!-- ====== إعدادات PWA الأساسية ====== -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0a0a0a">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -14,124 +12,74 @@
     <meta name="apple-mobile-web-app-title" content="VIBES">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            position: relative;
-            overflow: hidden;
+            background: #0a0a0a; color: #fff;
+            min-height: 100vh; min-height: 100dvh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 24px; position: relative; overflow: hidden;
         }
-
         body::before {
-            content: '';
-            position: fixed;
-            top: -50%; left: -50%;
+            content: ''; position: fixed; top: -50%; left: -50%;
             width: 200%; height: 200%;
             background: radial-gradient(ellipse at 30% 20%, rgba(99,102,241,0.15) 0%, transparent 50%),
                         radial-gradient(ellipse at 70% 80%, rgba(168,85,247,0.12) 0%, transparent 50%),
                         radial-gradient(ellipse at 50% 50%, rgba(236,72,153,0.08) 0%, transparent 60%);
-            z-index: 0;
-            animation: bgShift 20s ease-in-out infinite alternate;
+            z-index: 0; animation: bgShift 20s ease-in-out infinite alternate;
         }
-
-        @keyframes bgShift {
-            0% { transform: translate(0,0) scale(1); }
-            100% { transform: translate(-3%,-2%) scale(1.05); }
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-
+        @keyframes bgShift { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-3%,-2%) scale(1.05); } }
+        .container { position: relative; z-index: 1; text-align: center; max-width: 400px; width: 100%; }
         .logo-icon {
-            width: 96px; height: 96px;
-            border-radius: 24px;
+            width: 96px; height: 96px; border-radius: 24px;
             background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-flex; align-items: center; justify-content: center;
             font-size: 42px; font-weight: 800; color: #fff;
             box-shadow: 0 0 60px rgba(99,102,241,0.4), 0 0 120px rgba(168,85,247,0.2);
             margin-bottom: 20px;
         }
-
         .brand-name {
             font-size: 38px; font-weight: 800; letter-spacing: 6px;
             background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
+            background-clip: text; margin-bottom: 8px;
         }
-
-        .brand-tagline {
-            font-size: 14px; color: rgba(255,255,255,0.5);
-            letter-spacing: 1px; margin-bottom: 32px;
-        }
-
+        .brand-tagline { font-size: 14px; color: rgba(255,255,255,0.5); letter-spacing: 1px; margin-bottom: 32px; }
         .status-badge {
             display: inline-flex; align-items: center; gap: 6px;
             padding: 6px 14px; border-radius: 100px;
             font-size: 12px; font-weight: 500; margin-bottom: 28px;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
             color: rgba(255,255,255,0.6);
         }
-
-        .status-dot {
-            width: 6px; height: 6px; border-radius: 50%;
-            background: #6366f1;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.8); }
-        }
-
-        /* زر التثبيت الاحتياطي */
+        .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #6366f1; animation: pulse 2s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
         .btn-install {
-            display: none;
-            width: 100%; padding: 16px 24px;
+            display: none; width: 100%; padding: 16px 24px;
             border: none; border-radius: 16px;
             font-size: 16px; font-weight: 600; color: #fff;
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            cursor: pointer;
-            box-shadow: 0 8px 32px rgba(99,102,241,0.35);
-            font-family: inherit;
-            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer; box-shadow: 0 8px 32px rgba(99,102,241,0.35);
+            font-family: inherit; transition: transform 0.2s, box-shadow 0.2s;
         }
-
-        .btn-install:active {
-            transform: scale(0.97);
-            box-shadow: 0 4px 16px rgba(99,102,241,0.3);
+        .btn-install:active { transform: scale(0.97); box-shadow: 0 4px 16px rgba(99,102,241,0.3); }
+        .btn-secondary {
+            display: none; width: 100%; margin-top: 12px; padding: 14px;
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 14px;
+            background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.8);
+            font-size: 14px; font-weight: 500; cursor: pointer;
+            font-family: inherit; transition: background 0.2s;
         }
-
+        .btn-secondary:active { background: rgba(255,255,255,0.12); }
         .debug-info {
             position: fixed; bottom: 12px; left: 12px; right: 12px;
             font-size: 10px; color: rgba(255,255,255,0.25);
             text-align: center; font-family: monospace;
-            line-height: 1.5; pointer-events: none; z-index: 0;
+            line-height: 1.5; pointerاول-events: none; z-index:ة 0;
         }
-
-        body.is-installed .btn-install { display: none !important; }
+        body Web.is-installed .btn-install Install,
+        body.is-installed .btn-secondary { display: none !important; }
     </style>
 </head>
 <body>
@@ -146,33 +94,30 @@
             <span id="statusText">جارٍ الفحص...</span>
         </div>
 
-        <!-- زر احتياطي (يظهر فقط إذا لم تظهر نافذة pwa-install) -->
-        <button class="btn-install" id="btnInstall">
-            تثبيت تطبيق VIBES
-        </button>
+        <button class="btn-install" id="btnInstall">تثبيت VIBES</button>
+        <button class="btn-secondary" id="btnShortcut">تثبيت سريع عبر الاختصار</button>
     </div>
 
     <div class="debug-info" id="debugInfo"></div>
 
-    <!-- ====== مكتبة pwa-install ====== -->
+    <!-- مكتبة pwa-install -->
     <script type="module">
         import 'https://cdn.jsdelivr.net/npm/@khmyznikov/pwa-install@latest/dist/index.min.js';
     </script>
 
     <script>
-    // ============================================================
-    // VIBES PWA - منطق التثبيت المطور
-    // ============================================================
-
     'use strict';
 
     let deferredInstallPrompt = null;
     const debugEl = document.getElementById('debugInfo');
     const statusText = document.getElementById('statusText');
     const btnInstall = document.getElementById('btnInstall');
+    const btnShortcut = document.getElementById('btnShortcut');
     const pwaInstallEl = document.querySelector('pwa-install');
 
-    // ---------- اكتشاف المنصة ----------
+    // ============================================================
+    // اكتشاف المنصة
+    // ============================================================
     function getPlatform() {
         const ua = navigator.userAgent;
         const isIOS = /iPad|iPhone|iPod/.test(ua) ||
@@ -182,8 +127,9 @@
         const isChrome = /Chrome/.test(ua) || /CriOS/.test(ua);
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
                              window.navigator.standalone === true;
+        const isInAppBrowser = /FBAN|FBAV|Instagram|Twitter|Line|WhatsApp|Telegram/i.test(ua);
 
-        return { isIOS, isAndroid, isSafari, isChrome, isStandalone, ua };
+        return { isIOS, isAndroid, isSafari, isChrome, isStandalone, isInAppBrowser, ua };
     }
 
     function updateDebug(platform) {
@@ -191,11 +137,30 @@
             `OS: ${platform.isIOS ? 'iOS' : platform.isAndroid ? 'Android' : 'Desktop'}`,
             `Browser: ${platform.isSafari ? 'Safari' : platform.isChrome ? 'Chrome' : 'Other'}`,
             `Standalone: ${platform.isStandalone ? 'YES' : 'NO'}`,
-            `beforeinstallprompt: ${deferredInstallPrompt ? 'Captured' : 'Not available'}`
+            `InApp: ${platform.isInAppBrowser ? 'YES' : 'NO'}`,
+            `BIP: ${deferredInstallPrompt ? 'Captured' : 'None'}`
         ].join(' | ');
     }
 
-    // ---------- استدعاء نافذة pwa-install ----------
+    // ============================================================
+    // محاولة Web Install API (Chromium 155+)
+    // ============================================================
+    async function tryWebInstallAPI() {
+        if ('install' in navigator && typeof navigator.install === 'function') {
+            try {
+                await navigator.install();
+                console.log('[VIBES] Web Install API triggered ✓');
+                return true;
+            } catch (e) {
+                console.log('[VIBES] Web Install API failed:', e.message);
+            }
+        }
+        return false;
+    }
+
+    // ============================================================
+    // عرض نافذة pwa-install (للـ iOS والاحتياط)
+    // ============================================================
     function showPWAInstallDialog() {
         if (pwaInstallEl && typeof pwaInstallEl.showDialog === 'function') {
             pwaInstallEl.showDialog();
@@ -211,27 +176,31 @@
         e.preventDefault();
         deferredInstallPrompt = e;
         console.log('[VIBES] beforeinstallprompt captured ✓');
+        updateDebug(getPlatform());
 
-        const platform = getPlatform();
-        updateDebug(platform);
-
-        // محاولة عرض نافذة pwa-install تلقائيًا (بمظهر أصلي)
-        // هذا يعمل فقط على Chromium 155+ مع دعم Web Install API
-        // على المتصفحات الأخرى، نعرض زر التثبيت الاحتياطي
-        setTimeout(() => {
-            if (!showPWAInstallDialog()) {
-                btnInstall.style.display = 'block';
-                statusText.textContent = 'التطبيق جاهز للتثبيت';
+        // محاولة Web Install API أولًا (Chromium 155+)
+        tryWebInstallAPI().then(success => {
+            if (!success) {
+                // إذا فشل، عرض النافذة عبر pwa-install
+                setTimeout(() => {
+                    if (!showPWAInstallDialog()) {
+                        btnInstall.style.display = 'block';
+                        statusText.textContent = 'جاهز للتثبيت — اضغط الزر';
+                    }
+                }, 300);
             }
-        }, 300);
+        });
     });
 
     // ============================================================
-    // 2) دالة التثبيت الاحتياطية (إذا لم تعمل pwa-install)
+    // 2) زر التثبيت الاحتياطي
     // ============================================================
-    async function triggerInstall() {
+    btnInstall.addEventListener('click', async () => {
+        // مح API أولًا
+        if (await tryWebInstallAPI()) return;
+
+        // إذا ما فيه prompt مخزّن، حاول عرض نافذة pwa-install
         if (!deferredInstallPrompt) {
-            // إذا ما فيه prompt مخزّن، حاول عرض نافذة pwa-install
             if (showPWAInstallDialog()) return;
             return;
         }
@@ -247,12 +216,20 @@
             statusText.textContent = 'تم إلغاء التثبيت';
         }
         deferredInstallPrompt = null;
-    }
-
-    btnInstall.addEventListener('click', triggerInstall);
+    });
 
     // ============================================================
-    // 3) التهيئة الرئيسية
+    // 3) زر الاختصار (iOS فقط)
+    // ============================================================
+    btnShortcut.addEventListener('click', () => {
+        // رابط اختصار iOS — يعمل على iOS 15+
+        // هذا الاختصار يفتح الرابط في Safari ويذكّر المستخدم بالإضافة
+        const shortcutUrl = 'https://www.icloud.com/shortcuts/YOUR_SHORTCUT_ID';
+        window.location.href = shortcutUrl;
+    });
+
+    // ============================================================
+    // 4) التهيئة الرئيسية
     // ============================================================
     function init() {
         const platform = getPlatform();
@@ -265,29 +242,43 @@
             return;
         }
 
-        // --- الحالة ب: iOS ---
-        // لا يوجد beforeinstallprompt على iOS إطلاقًا.
-        // pwa-install تعرض نافذة بمظهر iOS الأصلي (iOS 26+) لكنها إرشادية.
-        if (platform.isIOS) {
-            statusText.textContent = 'جاهز للتثبيت على iPhone';
+        // --- الحالة ب: داخل متصفح تطبيق (In-App Browser) ---
+        if (platform.isInAppBrowser) {
+            statusText.textContent = 'افتح الرابط في Safari للتثبيت';
+            btnInstall.textContent = 'افتح في Safari';
+            btnInstall.style.display = 'block';
+            btnInstall.onclick = () => {
+                // محاولة فتح الرابط في Safari
+                const url = window.location.href;
+                if (platform.isIOS) {
+                    window.location.href = url.replace(/^https?:\/\//, 'x-web-search://');
+                    setTimeout(() => { window.location.href = url; }, 500);
+                }
+            };
+            return;
+        }
 
-            // عرض نافذة pwa-install تلقائيًا بعد ثانية
+        // --- الحالة ج: iOS ---
+        if (platform.isIOS) {
+            statusText.textContent = 'تثبيت VIBES على iPhone';
+
+            // عرض نافذة pwa-install تلقائيًا
             setTimeout(() => {
                 if (!showPWAInstallDialog()) {
-                    // احتياطي: عرض زر التثبيت
                     btnInstall.textContent = 'كيف أثبّت التطبيق؟';
                     btnInstall.style.display = 'block';
                 }
             }, 1000);
 
+            // إظهار زر الاختصار كخيار أسرع
+            btnShortcut.style.display = 'block';
             return;
         }
 
-        // --- الحالة ج: Android ---
+        // --- الحالة د: Android ---
         if (platform.isAndroid || platform.isChrome) {
             statusText.textContent = 'جارٍ التحقق من إمكانية التثبيت...';
 
-            // مهلة احتياطية: إذا لم يصل beforeinstallprompt خلال 3 ثوانٍ
             setTimeout(() => {
                 if (!deferredInstallPrompt) {
                     statusText.textContent = 'التثبيت غير متاح حاليًا';
@@ -298,12 +289,11 @@
             return;
         }
 
-        // --- الحالة د: سطح المكتب ---
         statusText.textContent = 'افتح VIBES على جوالك للتثبيت';
     }
 
     // ============================================================
-    // 4) تسجيل Service Worker
+    // 5) Service Worker
     // ============================================================
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -314,7 +304,7 @@
     }
 
     // ============================================================
-    // 5) حدث appinstalled
+    // 6) appinstalled
     // ============================================================
     window.addEventListener('appinstalled', () => {
         console.log('[VIBES] App installed ✓');
@@ -324,5 +314,18 @@
 
     init();
     </script>
+
+    <!-- إعداد pwa-install -->
+    <pwa-install
+        manifest-url="manifest.json"
+        name="VIBES"
+        description="تطبيق VIBES - تجربة الويب التقدمي الفاخرة"
+        icon-url="icons/icon-192.png"
+        theme-color="#6366f1"
+        install-description="أضف VIBES إلى شاشتك الرئيسية"
+        disable-screenshots="true"
+        manual-apple="false"
+        manual-chrome="false">
+    </pwa-install>
 </body>
 </html>
