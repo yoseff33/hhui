@@ -18,11 +18,9 @@
     --text-main:#552A12;
     --text-sub:#6b4629;
 
-    /* المقاس المعتمد */
     --card-w:6.5cm;
     --card-h:9.5cm;
 
-    /* أحجام الخطوط */
     --fs-logo-en:0.71cm;
     --fs-logo-sub:0.215cm;
     --fs-logo-ar:0.58cm;
@@ -38,7 +36,6 @@
     --fs-social-value:0.29cm;
     --fs-qr:0.24cm;
 
-    /* الحدود والانحناءات */
     --border-outer:0.12cm;
     --border-inner:0.045cm;
     --border-line:0.04cm;
@@ -48,12 +45,10 @@
     --radius-inner:0.48cm;
     --radius-qr:0.25cm;
 
-    /* المسافات */
     --padding-front-info:0.32cm;
     --padding-story:0.4cm;
     --gap-front-info:0.17cm;
 
-    /* الصورة */
     --img-scale:1;
     --img-x:0%;
     --img-y:0%;
@@ -106,7 +101,7 @@
   .front-info{
     padding:var(--padding-front-info);
     display:flex;flex-direction:column;justify-content:space-around;
-    gap:var(--gap-front-info);min-height:0;height:100%;
+    gap:var(--gap-front-info);min-height:0;height:100%;overflow:hidden;
   }
   .logo{text-align:center;line-height:1}
   .logo-en{font-family:var(--font-en-title);font-size:var(--fs-logo-en);letter-spacing:0.11cm;font-weight:700;color:var(--brown)}
@@ -118,19 +113,57 @@
   .tastes{text-align:center}
   .tastes-ar{font-family:var(--font-ar-body);font-size:var(--fs-tastes-ar);line-height:1.4;font-weight:700}
 
-  .back-layout{height:100%;display:grid;grid-template-rows:2cm 1fr 1.8cm 1.8cm}
-  .back-top{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;border-bottom:var(--border-line) solid var(--line);padding:0.25cm}
+  /* الأسطر المخصصة داخل البطاقة */
+  .custom-line{
+    line-height:1.35;
+    word-break:break-word;
+    padding:0.05cm 0;
+  }
+  .custom-lines-wrap{
+    display:flex;flex-direction:column;gap:0.08cm;
+  }
+
+  .back-layout{height:100%;display:flex;flex-direction:column}
+  .back-top{flex:0 0 2cm;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;border-bottom:var(--border-line) solid var(--line);padding:0.25cm}
   .back-logo{font-family:var(--font-en-title);font-size:var(--fs-back-logo);letter-spacing:0.1cm;font-weight:700;color:var(--brown)}
   .tagline{margin-top:0.15cm;font-family:var(--font-ar-title);font-size:var(--fs-tagline)}
-  .story{padding:var(--padding-story);display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.8;white-space:pre-line;font-family:var(--font-ar-body);font-size:var(--fs-story)}
-  .brew{border-top:var(--border-line) solid var(--line);border-bottom:var(--border-line) solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);text-align:center;align-items:center;font-family:var(--font-en-title);font-size:var(--fs-brew)}
+  .story{flex:1 1 auto;padding:var(--padding-story);display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.8;white-space:pre-line;font-family:var(--font-ar-body);font-size:var(--fs-story);overflow:hidden}
+  .brew{flex:0 0 1.8cm;border-top:var(--border-line) solid var(--line);border-bottom:var(--border-line) solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);text-align:center;align-items:center;font-family:var(--font-en-title);font-size:var(--fs-brew)}
   .brew > div+div{border-right:var(--border-line-thin) solid var(--line)}
   .brew strong{font-size:var(--fs-brew-strong)}
-  .footer-back{display:grid;grid-template-columns:1.2fr .8fr;gap:0.2cm;align-items:center;padding:0.28cm 0.32cm}
+  .footer-back{flex:0 0 1.8cm;display:grid;grid-template-columns:1.2fr .8fr;gap:0.2cm;align-items:center;padding:0.28cm 0.32cm}
   .social-lines{line-height:1.55}
   .social-lines .label{font-family:var(--font-en-title);font-size:var(--fs-social-label)}
   .social-lines .value{font-family:var(--font-en-body);font-size:var(--fs-social-value);font-weight:700}
   .qr{height:1.3cm;border:var(--border-inner) dashed var(--line);border-radius:var(--radius-qr);display:flex;align-items:center;justify-content:center;text-align:center;font-size:var(--fs-qr);font-family:var(--font-en-title)}
+
+  /* ======= لوحة تحكم الأسطر في المحرر ======= */
+  .line-editor{
+    background:#f8efe3;border:1px solid #e4d3be;border-radius:10px;
+    padding:10px;margin-bottom:10px;
+  }
+  .line-editor-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .line-num{font-size:12px;font-weight:700;color:var(--brown)}
+  .line-del{background:#f5d8d8;color:#a03030;border:0;padding:5px 9px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700}
+  .line-del:hover{background:#ecc5c5}
+  .line-editor input[type="text"]{font-size:12px;padding:6px 9px}
+  .line-row{display:flex;gap:8px;align-items:center;margin-top:6px}
+  .line-mini-label{font-size:10px;font-weight:700;margin:0;color:var(--brown);min-width:60px;flex:0 0 auto}
+  .line-size-val{font-size:10px;color:var(--brown);font-weight:700;min-width:48px;text-align:left}
+  .line-row input[type="range"]{flex:1;height:6px;padding:0;background:#eadac7;border-radius:3px;appearance:none;outline:none;border:0}
+  .line-row input[type="range"]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;border-radius:50%;background:var(--brown);cursor:pointer;border:2px solid #fff}
+  .line-row input[type="range"]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--brown);cursor:pointer;border:2px solid #fff}
+  .line-row select{flex:1;font-size:11px;padding:5px 7px}
+  .line-row input[type="color"]{width:38px;height:26px;padding:0;border-radius:6px;cursor:pointer;border:1px solid #ceb99f}
+  .line-bold-label{display:flex;align-items:center;gap:4px;font-size:11px;margin:0;font-weight:700;white-space:nowrap}
+  .line-bold-label input{width:auto;margin:0}
+  .add-line-btn{
+    width:100%;background:var(--brown);color:#fff;border:0;padding:10px;
+    border-radius:10px;font-weight:700;cursor:pointer;font-family:var(--ui-font);font-size:12px;
+    transition:background .15s;
+  }
+  .add-line-btn:hover{background:var(--brown-dark)}
+  .no-lines-msg{font-size:11px;color:#8a6a52;margin:0 0 8px;text-align:center;padding:6px}
 
   /* ======= لوحة التحكم العائمة ======= */
   .preview-controls-toggle{
@@ -151,7 +184,7 @@
   .pc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
   .pc-header h3{margin:0;font-size:15px;color:var(--brown)}
   .pc-close{background:#f0e4d2;color:var(--brown-dark);border:0;width:28px;height:28px;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px}
-  .pc-tabs{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:14px}
+  .pc-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px}
   .pc-tab{border:1px solid #d8c4aa;background:#f8efe3;color:var(--brown);border-radius:8px;padding:8px 4px;font-weight:700;cursor:pointer;font-family:var(--ui-font);font-size:11px}
   .pc-tab.active{background:var(--brown);color:#fff;border-color:var(--brown)}
   .pc-section.hidden{display:none}
@@ -194,11 +227,11 @@
 <div class="app">
   <aside class="panel">
     <h1>VIBES Vertical Card</h1>
-    <p>أضفت لك خطوط كثيرة، ومنها <strong>Amiri</strong>، مع خيارات تغيير الخط العربي والإنجليزي، وزر <strong>حفظ كصورة PNG</strong> لكل بطاقة.</p>
+    <p>أضفت لك نظام الأسطر الديناميكية: أضف عدد ما تشاء من الأسطر، وتحكم بحجم خطها ولونها ومحاذاتها بالكامل.</p>
 
     <div class="tip">
       المقاس المعتمد: <strong>6.5 × 9.5 cm</strong><br>
-      لوحة <strong>🎨 تحكم المعاينة</strong> أسفل يسار الشاشة تتيح لك التحكم بالخطوط والألوان والمقاسات والصورة.
+      استخدم <strong>🎨 تحكم المعاينة</strong> أسفل يسار الشاشة للتحكم الكامل.
     </div>
 
     <div class="tabs">
@@ -267,17 +300,23 @@
           <option value="cover">تعبئة الإطار</option>
           <option value="contain">إظهار الصورة كاملة</option>
         </select>
-        <p class="tip" style="margin-top:10px;margin-bottom:0">💡 للتحكم بحجم الصورة وتحريكها، افتح لوحة <strong>🎨 تحكم المعاينة</strong> ← تبويب <strong>الصورة</strong>.</p>
       </div>
 
       <div class="group">
-        <h3>المعلومات</h3>
+        <h3>المعلومات الأساسية</h3>
         <label>الاسم بالعربي</label>
         <input id="originAr" value="إثيوبيا" />
         <label>الاسم بالإنجليزي</label>
         <input id="originEn" value="ETHIOPIA" />
         <label>الإيحاء الرئيسي بالعربي</label>
         <input id="notesAr" value="بيري" />
+      </div>
+
+      <div class="group">
+        <h3>📝 أسطر إضافية (الوجه الأمامي)</h3>
+        <p class="pc-note">أضف أسطر جديدة تظهر أسفل الإيحاء في البطاقة. تحكم بالحجم، الخط، اللون، والمحاذاة.</p>
+        <div id="frontLinesEditor"></div>
+        <button type="button" class="add-line-btn" data-add-target="front">+ إضافة سطر جديد</button>
       </div>
     </section>
 
@@ -288,6 +327,13 @@
         <input id="tagline" value="محصول إثيوبي بطابع بيري واضح." />
         <label>الوصف / الإيحاءات</label>
         <textarea id="story">الإيحاءات: شوكولاتة، توت، بندق، كراميل</textarea>
+      </div>
+
+      <div class="group">
+        <h3>📝 أسطر إضافية (الظهر)</h3>
+        <p class="pc-note">أضف أسطراً تظهر بين الوصف ووصفة التحضير.</p>
+        <div id="backLinesEditor"></div>
+        <button type="button" class="add-line-btn" data-add-target="back">+ إضافة سطر جديد</button>
       </div>
 
       <div class="group">
@@ -377,6 +423,8 @@
             <div class="tastes">
               <div class="tastes-ar" id="pNotesAr">بيري</div>
             </div>
+
+            <div class="custom-lines-wrap" id="frontCustomLines"></div>
           </div>
         </div>
       </div>
@@ -391,6 +439,8 @@
           </div>
 
           <div class="story" id="pStory">الإيحاءات: شوكولاتة، توت، بندق، كراميل</div>
+
+          <div class="custom-lines-wrap" id="backCustomLines" style="padding:0 0.32cm 0.15cm"></div>
 
           <div class="brew">
             <div><strong id="pDose">15 g</strong><br>COFFEE</div>
@@ -426,28 +476,28 @@
     <button class="pc-tab" data-pctab="pcColors" type="button">الألوان</button>
     <button class="pc-tab" data-pctab="pcSizes" type="button">الحدود</button>
     <button class="pc-tab" data-pctab="pcImage" type="button">🖼️ الصورة</button>
+    <button class="pc-tab" data-pctab="pcLines" type="button">📝 الأسطر</button>
   </div>
 
   <div id="pcFonts" class="pc-section"></div>
   <div id="pcColors" class="pc-section hidden"></div>
   <div id="pcSizes" class="pc-section hidden"></div>
-
   <div id="pcImage" class="pc-section hidden">
     <div class="pc-group">
       <h4>🖼️ صورة الوجه - التكبير والتحريك</h4>
-      <p class="pc-note">تحكم كامل بالصورة: كبّرها، صغّرها، وحركها أفقياً أو رأسياً داخل إطار البطاقة.</p>
+      <p class="pc-note">تحكم كامل بالصورة داخل إطار البطاقة.</p>
       <div class="pc-item">
-        <label>حجم الصورة (تكبير / تصغير)</label>
+        <label>حجم الصورة</label>
         <input type="range" id="imgScale" min="0.3" max="3" step="0.05" value="1">
         <span class="pc-val" id="imgScaleVal">1.00x</span>
       </div>
       <div class="pc-item">
-        <label>الحركة الأفقية (يمين / يسار)</label>
+        <label>الحركة الأفقية</label>
         <input type="range" id="imgX" min="-100" max="100" step="1" value="0">
         <span class="pc-val" id="imgXVal">0%</span>
       </div>
       <div class="pc-item">
-        <label>الحركة الرأسية (أعلى / أسفل)</label>
+        <label>الحركة الرأسية</label>
         <input type="range" id="imgY" min="-100" max="100" step="1" value="0">
         <span class="pc-val" id="imgYVal">0%</span>
       </div>
@@ -457,10 +507,8 @@
         <button type="button" class="pc-reset" id="imgFitToggle" style="margin-top:0">تعبئة/كامل</button>
       </div>
     </div>
-
     <div class="pc-group">
       <h4>💾 جودة حفظ الصورة</h4>
-      <p class="pc-note">كلما زادت القيمة زادت دقة الصورة المحفوظة وحجمها. القيمة الافتراضية <strong>4x</strong> مناسبة للطباعة.</p>
       <div class="pc-item">
         <label>دقة التصدير</label>
         <input type="range" id="exportScale" min="1" max="8" step="0.5" value="4">
@@ -468,6 +516,7 @@
       </div>
     </div>
   </div>
+  <div id="pcLines" class="pc-section hidden"></div>
 
   <button class="pc-reset" id="pcReset" type="button">↺ إرجاع قيم المعاينة للافتراضي</button>
 </aside>
@@ -549,7 +598,7 @@ hInput.addEventListener('input', e => {
   }
 });
 
-/* ============ ألوان المحرر الأساسية ============ */
+/* ============ ألوان المحرر ============ */
 document.getElementById('brown').addEventListener('input', e => {
   document.documentElement.style.setProperty('--brown', e.target.value);
   document.documentElement.style.setProperty('--brown-dark', e.target.value);
@@ -579,15 +628,248 @@ document.getElementById('reset').addEventListener('click', () => {
 });
 
 /* ============================================================
-   ============ حفظ الصور (بعد الإصلاح) ============
+   ============ نظام الأسطر الديناميكية ============
    ============================================================ */
+
+const customLinesData = { front: [], back: [] };
+let lineIdCounter = 0;
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function applyLineStyles(el, line){
+  el.style.fontSize = line.size + 'cm';
+  el.style.fontFamily = line.font === 'title' ? 'var(--font-ar-title)' : 'var(--font-ar-body)';
+  el.style.fontWeight = line.bold ? '700' : '400';
+  el.style.textAlign = line.align;
+  el.style.color = line.color;
+}
+
+function renderLineInCard(target, line){
+  const container = document.getElementById(target === 'front' ? 'frontCustomLines' : 'backCustomLines');
+  let el = document.getElementById(line.id);
+  if(!el){
+    el = document.createElement('div');
+    el.id = line.id;
+    el.className = 'custom-line';
+    container.appendChild(el);
+  }
+  el.textContent = line.text;
+  applyLineStyles(el, line);
+}
+
+function renderLinesEditorUI(target){
+  const container = document.getElementById(target + 'LinesEditor');
+  if(!container) return;
+  const lines = customLinesData[target];
+
+  if(lines.length === 0){
+    container.innerHTML = '<p class="no-lines-msg">لا توجد أسطر بعد. اضغط الزر بالأسفل للإضافة.</p>';
+    return;
+  }
+
+  container.innerHTML = lines.map((line, idx) => `
+    <div class="line-editor" data-id="${line.id}" data-target="${target}">
+      <div class="line-editor-header">
+        <span class="line-num">سطر ${idx + 1}</span>
+        <button type="button" class="line-del" data-action="delete" data-id="${line.id}" data-target="${target}">🗑️ حذف</button>
+      </div>
+      <input type="text" class="line-text" data-field="text" data-id="${line.id}" data-target="${target}" value="${escapeHtml(line.text)}" placeholder="اكتب النص هنا...">
+      <div class="line-row">
+        <label class="line-mini-label">حجم الخط</label>
+        <input type="range" class="line-size" data-field="size" data-id="${line.id}" data-target="${target}" min="0.15" max="1.5" step="0.01" value="${line.size}">
+        <span class="line-size-val">${parseFloat(line.size).toFixed(2)}cm</span>
+      </div>
+      <div class="line-row">
+        <label class="line-mini-label">الخط</label>
+        <select class="line-font" data-field="font" data-id="${line.id}" data-target="${target}">
+          <option value="body" ${line.font === 'body' ? 'selected' : ''}>خط النص</option>
+          <option value="title" ${line.font === 'title' ? 'selected' : ''}>خط العنوان</option>
+        </select>
+      </div>
+      <div class="line-row">
+        <label class="line-mini-label">المحاذاة</label>
+        <select class="line-align" data-field="align" data-id="${line.id}" data-target="${target}">
+          <option value="center" ${line.align === 'center' ? 'selected' : ''}>وسط</option>
+          <option value="right" ${line.align === 'right' ? 'selected' : ''}>يمين</option>
+          <option value="left" ${line.align === 'left' ? 'selected' : ''}>يسار</option>
+        </select>
+      </div>
+      <div class="line-row">
+        <label class="line-mini-label">اللون</label>
+        <input type="color" class="line-color" data-field="color" data-id="${line.id}" data-target="${target}" value="${line.color}">
+        <label class="line-bold-label"><input type="checkbox" class="line-bold" data-field="bold" data-id="${line.id}" data-target="${target}" ${line.bold ? 'checked' : ''}> عريض</label>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderPreviewLinesUI(){
+  const container = document.getElementById('pcLines');
+  if(!container) return;
+
+  let html = '';
+
+  ['front', 'back'].forEach(target => {
+    const lines = customLinesData[target];
+    const label = target === 'front' ? '🃏 أسطر الوجه الأمامي' : '🔄 أسطر الوجه الخلفي';
+
+    html += `<div class="pc-group"><h4>${label}</h4>`;
+    if(lines.length === 0){
+      html += `<p class="pc-note">لا توجد أسطر. أضفها من المحرر.</p>`;
+    } else {
+      lines.forEach((line, idx) => {
+        html += `
+          <div class="pc-item">
+            <label>سطر ${idx + 1}: ${escapeHtml(line.text.substring(0, 25))}${line.text.length > 25 ? '…' : ''}</label>
+            <input type="range" class="pc-line-size" data-id="${line.id}" data-target="${target}" min="0.15" max="1.5" step="0.01" value="${line.size}">
+            <span class="pc-val" data-line-val="${line.id}">${parseFloat(line.size).toFixed(2)}cm</span>
+          </div>
+        `;
+      });
+    }
+    html += `</div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function createLine(target){
+  const id = 'custom-line-' + (++lineIdCounter);
+  const line = {
+    id,
+    text: 'سطر جديد',
+    size: 0.35,
+    font: 'body',
+    bold: true,
+    align: 'center',
+    color: '#552A12'
+  };
+  customLinesData[target].push(line);
+  renderLineInCard(target, line);
+  renderLinesEditorUI(target);
+  renderPreviewLinesUI();
+}
+
+function deleteLine(target, id){
+  customLinesData[target] = customLinesData[target].filter(l => l.id !== id);
+  const el = document.getElementById(id);
+  if(el) el.remove();
+  renderLinesEditorUI(target);
+  renderPreviewLinesUI();
+}
+
+function updateLine(target, id, field, value){
+  const line = customLinesData[target].find(l => l.id === id);
+  if(!line) return;
+
+  if(field === 'size'){
+    line.size = parseFloat(value);
+  } else if(field === 'bold'){
+    line.bold = !!value;
+  } else {
+    line[field] = value;
+  }
+
+  const el = document.getElementById(id);
+  if(el){
+    if(field === 'text') el.textContent = line.text;
+    else applyLineStyles(el, line);
+  }
+
+  // مزامنة مع لوحة تحكم المعاينة إذا تغيّر الحجم
+  if(field === 'size'){
+    const pcSlider = document.querySelector(`.preview-controls input.pc-line-size[data-id="${id}"]`);
+    if(pcSlider) pcSlider.value = line.size;
+    const valEl = document.querySelector(`[data-line-val="${id}"]`);
+    if(valEl) valEl.textContent = line.size.toFixed(2) + 'cm';
+  }
+}
+
+/* ============ أحداث المحرر (event delegation) ============ */
+document.addEventListener('input', e => {
+  const field = e.target.dataset.field;
+  const id = e.target.dataset.id;
+  const target = e.target.dataset.target;
+  if(!field || !id || !target) return;
+  if(!customLinesData[target]) return;
+
+  let value;
+  if(e.target.type === 'checkbox') value = e.target.checked;
+  else value = e.target.value;
+
+  updateLine(target, id, field, value);
+
+  // تحديث عرض قيمة الحجم
+  if(field === 'size'){
+    const valEl = e.target.parentElement.querySelector('.line-size-val');
+    if(valEl) valEl.textContent = parseFloat(value).toFixed(2) + 'cm';
+  }
+});
+
+document.addEventListener('change', e => {
+  const field = e.target.dataset.field;
+  const id = e.target.dataset.id;
+  const target = e.target.dataset.target;
+  if(!field || !id || !target) return;
+  if(!customLinesData[target]) return;
+
+  let value;
+  if(e.target.type === 'checkbox') value = e.target.checked;
+  else value = e.target.value;
+
+  updateLine(target, id, field, value);
+});
+
+document.addEventListener('click', e => {
+  // حذف سطر
+  if(e.target.dataset.action === 'delete'){
+    e.preventDefault();
+    deleteLine(e.target.dataset.target, e.target.dataset.id);
+    return;
+  }
+  // إضافة سطر
+  if(e.target.dataset.addTarget){
+    e.preventDefault();
+    createLine(e.target.dataset.addTarget);
+    return;
+  }
+});
+
+/* ============ تحكم المعاينة في حجم الأسطر ============ */
+document.addEventListener('input', e => {
+  if(!e.target.classList.contains('pc-line-size')) return;
+  const id = e.target.dataset.id;
+  const target = e.target.dataset.target;
+  if(!id || !target) return;
+
+  const line = customLinesData[target].find(l => l.id === id);
+  if(!line) return;
+
+  line.size = parseFloat(e.target.value);
+  const el = document.getElementById(id);
+  if(el) applyLineStyles(el, line);
+
+  const valEl = document.querySelector(`[data-line-val="${id}"]`);
+  if(valEl) valEl.textContent = line.size.toFixed(2) + 'cm';
+
+  // مزامنة مع المحرر
+  const editorSlider = document.querySelector(`#${target}LinesEditor input[data-id="${id}"][data-field="size"]`);
+  if(editorSlider){
+    editorSlider.value = line.size;
+    const editorVal = editorSlider.parentElement.querySelector('.line-size-val');
+    if(editorVal) editorVal.textContent = line.size.toFixed(2) + 'cm';
+  }
+});
+
+/* ============ حفظ الصور ============ */
 let exportScale = 4;
 
 async function saveCardAsImage(cardId, filename){
   const card = document.getElementById(cardId);
   if(!card) return;
 
-  // ضمان تحميل الخطوط قبل الرسم
   if(document.fonts && document.fonts.ready){
     try { await document.fonts.ready; } catch(e){}
   }
@@ -605,7 +887,6 @@ async function saveCardAsImage(cardId, filename){
       windowHeight: document.documentElement.scrollHeight
     });
 
-    // استخدام toBlob لتفادي مشاكل toDataURL
     canvas.toBlob(blob => {
       if(!blob){
         alert('تعذّر إنشاء الصورة، حاول مرة أخرى.');
@@ -778,7 +1059,7 @@ document.querySelectorAll('.pc-tab').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.pc-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    ['pcFonts','pcColors','pcSizes','pcImage'].forEach(id => {
+    ['pcFonts','pcColors','pcSizes','pcImage','pcLines'].forEach(id => {
       const el = document.getElementById(id);
       if(el) el.classList.add('hidden');
     });
@@ -796,9 +1077,7 @@ document.getElementById('pcClose').addEventListener('click', () => {
   pcPanel.classList.remove('open');
 });
 
-/* ============================================================
-   ============ تحكم الصورة (تكبير، تصغير، تحريك) ============
-   ============================================================ */
+/* ============ تحكم الصورة ============ */
 const imgScale = document.getElementById('imgScale');
 const imgX = document.getElementById('imgX');
 const imgY = document.getElementById('imgY');
@@ -849,9 +1128,9 @@ exportScaleInput.addEventListener('input', () => {
   exportScaleVal.textContent = exportScale + 'x';
 });
 
-/* ============ إرجاع قيم المعاينة للافتراضي ============ */
+/* ============ إرجاع قيم المعاينة ============ */
 document.getElementById('pcReset').addEventListener('click', () => {
-  if(!confirm('ترجع قيم التحكم بالمعاينة للوضع الافتراضي؟')) return;
+  if(!confirm('ترجع قيم التحكم بالمعاينة للوضع الافتراضي؟ (الأسطر المخصصة لن تُحذف)')) return;
   const root = document.documentElement;
   const varsToClear = [
     '--brown','--brown-dark','--paper','--line','--text-main','--text-sub',
@@ -881,7 +1160,6 @@ document.getElementById('pcReset').addEventListener('click', () => {
     if(cfgItem) input.value = cfgItem.value;
   });
 
-  // إرجاع قيم الصورة
   imgScale.value = 1; imgX.value = 0; imgY.value = 0;
   imgScaleVal.textContent = '1.00x';
   imgXVal.textContent = '0%'; imgYVal.textContent = '0%';
@@ -897,6 +1175,11 @@ function findConfigItem(varName){
   }
   return null;
 }
+
+/* ============ تهيئة أولية للأسطر ============ */
+renderLinesEditorUI('front');
+renderLinesEditorUI('back');
+renderPreviewLinesUI();
 </script>
 </body>
 </html>
