@@ -1,526 +1,3571 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-<title>ميسر | تقسيط الأجهزة الإلكترونية بالتقسيط المريح</title>
-<meta name="description" content="ميسر - ميسرك المليان لتقسيط جميع الأجهزة الإلكترونية والجوالات بأقساط مريحة تبدأ من 6 حتى 36 شهر" />
-<meta name="theme-color" content="#0a1f44" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0B2146">
 
-<!-- مكتبة AOS للحركات عند التمرير -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+  <title>ميسر | تقسيط الأجهزة الإلكترونية بأقساط مريحة</title>
+  <meta name="description" content="ميسر لتقسيط الأجهزة الإلكترونية والجوالات. قدّم طلبك بسهولة عبر نموذج إلكتروني سريع وتواصل معنا عبر واتساب.">
+  <meta name="robots" content="index, follow">
 
-<!-- خطوط عربية احترافية -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<!-- مكتبة أيقونات Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-<style id="mhzm-modern-theme">
-:root{
-  --primary:#0a1f44;
-  --primary-light:#1e5eb8;
-  --accent:#f5b301;
-  --accent-warm:#ff8a00;
-  --success:#10b981;
-  --gradient-brand:linear-gradient(135deg,#0a1f44 0%,#1e5eb8 50%,#2a7fdc 100%);
-  --gradient-accent:linear-gradient(135deg,#f5b301 0%,#ff8a00 100%);
-  --radius:16px;
-  --radius-xl:32px;
-}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{
-  font-family:'Tajawal','Cairo',system-ui,-apple-system,sans-serif!important;
-  background:#f6f9ff;
-  color:#1a2332;
-  line-height:1.7;
-  overflow-x:hidden;
-}
-h1,h2,h3,h4,h5,h6{
-  font-family:'Tajawal','Cairo',sans-serif!important;
-  font-weight:800!important;
-}
-a{color:inherit;text-decoration:none}
+  <style>
+    /* =========================================
+       01. DESIGN SYSTEM
+    ========================================= */
 
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(1200px 600px at 90% -10%,rgba(30,94,184,.12),transparent 60%),
-    radial-gradient(1000px 500px at -10% 30%,rgba(0,194,168,.10),transparent 55%);
-  pointer-events:none;
-  z-index:0;
-}
-.uicore-body-content{position:relative;z-index:1}
+    :root {
+      --navy: #0B2146;
+      --navy-dark: #07172F;
+      --navy-light: #173866;
 
-/* الهيدر */
-#wrapper-navbar{
-  background:rgba(255,255,255,.88)!important;
-  backdrop-filter:saturate(200%) blur(24px);
-  box-shadow:0 4px 30px rgba(10,31,68,.08);
-  border-bottom:1px solid rgba(10,31,68,.06);
-  padding:14px 0!important;
-  position:sticky;
-  top:0;
-  z-index:999;
-}
-.uicore-header-wrapper nav{padding:0 24px!important;display:flex;justify-content:space-between;align-items:center}
-.uicore-branding a.text-logo{
-  display:inline-flex!important;
-  align-items:center;
-  gap:14px;
-}
-.uicore-branding a.text-logo .logo-icon{
-  width:56px;
-  height:56px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  background:var(--gradient-brand);
-  color:#fff;
-  border-radius:18px;
-  font-size:24px;
-  box-shadow:0 10px 24px rgba(30,94,184,.35);
-}
-.uicore-branding a.text-logo .logo-text{
-  font-size:32px;
-  font-weight:900;
-  background:var(--gradient-brand);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  line-height:1;
-  display:block;
-}
-.uicore-branding a.text-logo .logo-tagline{
-  display:block;
-  font-size:11.5px;
-  font-weight:700;
-  color:#6b7a90;
-  margin-top:4px;
-}
+      --blue: #2467B7;
+      --blue-light: #EAF3FF;
 
-/* البانر */
-.banner-section img{width:100%;display:block;}
+      --gold: #E8AD36;
+      --gold-light: #FFF6DF;
 
-/* حاوية الفورم */
-#form-cont{
-  max-width:750px;
-  margin:-80px auto 40px;
-  padding:0 20px;
-  position:relative;
-  z-index:5;
-}
-.form-card{
-  background:#fff;
-  border-radius:var(--radius-xl);
-  box-shadow:0 30px 80px rgba(10,31,68,.20);
-  padding:40px 32px;
-  border:1px solid rgba(10,31,68,.06);
-  position:relative;
-}
-.form-card::before{
-  content:'';
-  position:absolute;
-  top:0;
-  right:30px;
-  left:30px;
-  height:5px;
-  background:var(--gradient-brand);
-  border-radius:0 0 12px 12px;
-}
-.form-title{
-  font-size:26px;
-  color:var(--primary);
-  margin-bottom:24px;
-  text-align:center;
-  font-weight:900;
-}
+      --green: #16A36A;
+      --green-light: #E9F8F0;
 
-.input-group{
-  margin-bottom:20px;
-}
-.input-group label{
-  display:block;
-  font-weight:700;
-  color:var(--primary);
-  margin-bottom:8px;
-  font-size:15px;
-}
-.input-group input, .input-group select{
-  width:100%;
-  font-family:'Tajawal',sans-serif!important;
-  background:#f8faff!important;
-  border:1.5px solid #e3eaf5!important;
-  border-radius:14px!important;
-  padding:15px 20px!important;
-  font-size:15px!important;
-  color:#0a1f44!important;
-  outline:none!important;
-  transition:all .3s ease;
-}
-.input-group input:focus, .input-group select:focus{
-  border-color:var(--primary-light)!important;
-  background:#fff!important;
-  box-shadow:0 0 0 5px rgba(30,94,184,.1)!important;
-}
+      --red: #D94A4A;
+      --red-light: #FFF0F0;
 
-/* أزرار الاختيارات */
-.options-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
-  gap:10px;
-}
-.option-btn{
-  padding:14px;
-  border:1.5px solid #e3eaf5;
-  border-radius:14px;
-  background:#fff;
-  font-weight:700;
-  color:var(--primary);
-  cursor:pointer;
-  text-align:center;
-  transition:all .3s ease;
-  font-family:'Tajawal',sans-serif;
-  font-size:14px;
-}
-.option-btn.active{
-  background:var(--gradient-brand);
-  color:#fff;
-  border-color:var(--primary-light);
-  box-shadow:0 8px 20px rgba(30,94,184,.3);
-}
+      --text: #182B45;
+      --text-muted: #65748A;
 
-/* زر إرسال واتساب الرئيسي */
-.whatsapp-submit-btn{
-  width:100%;
-  background:linear-gradient(135deg,#25d366 0%,#128c7e 100%);
-  color:#fff;
-  padding:18px;
-  border:none;
-  border-radius:16px;
-  font-family:'Tajawal',sans-serif;
-  font-weight:800;
-  font-size:18px;
-  cursor:pointer;
-  box-shadow:0 12px 30px rgba(37,211,102,.4);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-  transition:all .3s ease;
-  margin-top:30px;
-}
-.whatsapp-submit-btn:hover{
-  transform:translateY(-3px);
-  box-shadow:0 18px 40px rgba(37,211,102,.6);
-}
+      --background: #F5F8FC;
+      --white: #FFFFFF;
 
-/* قسم الشروط والمعلومات */
-.info-section {
-  max-width: 1100px;
-  margin: 40px auto;
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
-}
-.info-card {
-  background: #fff;
-  padding: 30px;
-  border-radius: var(--radius-xl);
-  box-shadow: 0 10px 30px rgba(10,31,68,.08);
-  border: 1px solid #e8eef8;
-}
-.info-card h3 {
-  color: var(--primary);
-  font-size: 20px;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.info-card ul {
-  list-style: none;
-  padding: 0;
-}
-.info-card ul li {
-  padding: 8px 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 15px;
-  color: #4a5568;
-}
-.cr-verify-link{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:10px 18px;
-  background:rgba(245,179,1,.14);
-  border:1.5px solid rgba(245,179,1,.4);
-  border-radius:12px;
-  color:#f5b301!important;
-  font-weight:700;
-  text-decoration:none;
-  transition:all .35s ease;
-  font-size:14px;
-  margin-top:12px;
-}
-.cr-verify-link:hover{
-  background:var(--gradient-accent);
-  color:#0a1f44!important;
-  box-shadow:0 8px 20px rgba(245,179,1,.4);
-}
+      --border: #E5EBF3;
 
-/* الفوتر */
-footer{
-  background:linear-gradient(135deg,#0a1f44 0%,#0f2a5c 100%);
-  color:#fff;
-  padding:40px 20px 20px;
-  text-align:center;
-  margin-top:60px;
-}
+      --shadow-sm: 0 5px 18px rgba(11,33,70,.045);
+      --shadow-md: 0 12px 35px rgba(11,33,70,.075);
+      --shadow-lg: 0 22px 60px rgba(11,33,70,.11);
 
-/* Toast Notification */
-#mhzm-toast{
-  position:fixed;
-  top:30px;
-  left:50%;
-  transform:translate(-50%,-120%);
-  background:#fff;
-  padding:16px 26px;
-  border-radius:14px;
-  box-shadow:0 20px 50px rgba(10,31,68,.25);
-  z-index:99999;
-  display:flex;
-  align-items:center;
-  gap:14px;
-  font-family:'Tajawal',sans-serif;
-  font-weight:700;
-  font-size:15px;
-  transition:transform .5s cubic-bezier(.2,.9,.3,1.4);
-  border-right:5px solid var(--success);
-}
-#mhzm-toast.show{transform:translate(-50%,0)}
-#mhzm-toast.error{border-right-color:#ef4444}
-</style>
-</head>
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 24px;
+      --radius-xl: 30px;
 
-<body class="rtl">
+      --container: 1160px;
 
-<!-- إشعار التنبيه -->
-<div id="mhzm-toast">
-  <div class="toast-icon"><i class="fa-solid fa-check"></i></div>
-  <div class="toast-text"></div>
-</div>
-
-<div class="uicore-body-content">
-  
-  <!-- الهيدر -->
-  <div id="wrapper-navbar">
-    <nav class="uicore-container" style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center">
-      <div class="uicore-branding">
-        <a href="#" class="text-logo">
-          <span class="logo-icon"><i class="fa-solid fa-hand-holding-dollar"></i></span>
-          <span>
-            <span class="logo-text">ميسر</span>
-            <span class="logo-tagline">ميسرك المليان</span>
-          </span>
-        </a>
-      </div>
-      <div>
-        <a href="https://wa.me/966533774766" target="_blank" style="background:#25d366;color:#fff;padding:10px 20px;border-radius:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;font-size:14px;">
-          <i class="fa-brands fa-whatsapp" style="font-size:18px"></i> تواصل عبر الواتساب
-        </a>
-      </div>
-    </nav>
-  </div>
-
-  <!-- البانر -->
-  <div class="banner-section">
-    <img src="https://order.mhzm.sa/wp-content/webp-express/webp-images/uploads/2026/09/ipone-18-banners-01-1-scaled.jpg.webp" alt="ميسر - تقسيط الأجهزة" />
-  </div>
-
-  <!-- نموذج الطلب -->
-  <div id="form-cont">
-    <div class="form-card">
-      <h2 class="form-title">استمارة التحقق والطلب السريع</h2>
-      
-      <form id="mhzm-direct-form">
-        
-        <div class="input-group">
-          <label for="fullName">الاسم الثلاثي</label>
-          <input type="text" id="fullName" placeholder="أدخل اسمك الثلاثي هنا" required />
-        </div>
-
-        <div class="input-group">
-          <label for="phoneNumber">رقم الجوال</label>
-          <input type="tel" id="phoneNumber" placeholder="05XXXXXXXX" required />
-        </div>
-
-        <div class="input-group">
-          <label for="monthlySalary">الراتب الشهري (بالريال)</label>
-          <input type="number" id="monthlySalary" placeholder="أدخل راتبك الشهري" required />
-        </div>
-
-        <div class="input-group">
-          <label for="monthlyCommitments">الالتزامات الشهرية (إجمالي الأقساط)</label>
-          <input type="number" id="monthlyCommitments" placeholder="أدخل إجمالي التزاماتك الشهرية" required />
-        </div>
-
-        <div class="input-group">
-          <label>القطاع</label>
-          <div class="options-grid" id="sector-group">
-            <div class="option-btn" data-value="قطاع حكومي">قطاع حكومي</div>
-            <div class="option-btn" data-value="قطاع خاص">قطاع خاص</div>
-            <div class="option-btn" data-value="متقاعد">متقاعد</div>
-          </div>
-        </div>
-
-        <div class="input-group">
-          <label>مدة الخدمة</label>
-          <div class="options-grid" id="duration-group">
-            <div class="option-btn" data-value="حكومي (شهر أو أكثر)">حكومي (شهر أو أكثر)</div>
-            <div class="option-btn" data-value="قطاع خاص (3 أشهر أو أكثر)">قطاع خاص (3 أشهر فأكثر)</div>
-          </div>
-        </div>
-
-        <button type="button" id="submit-whatsapp" class="whatsapp-submit-btn">
-          <i class="fa-brands fa-whatsapp" style="font-size:24px"></i>
-          <span>تحقق من أهليتك وأرسل الطلب عبر واتساب</span>
-        </button>
-
-      </form>
-    </div>
-  </div>
-
-  <!-- قسم الشروط، السجل التجاري، والموقع -->
-  <div class="info-section">
-    
-    <!-- شروط التقسيط -->
-    <div class="info-card">
-      <h3><i class="fa-solid fa-list-check" style="color:var(--primary-light)"></i> شروط التقسيط</h3>
-      <ul>
-        <li><i class="fa-solid fa-circle-check" style="color:var(--success)"></i> لا توجد مستندات معقدة مطلوبة</li>
-        <li><i class="fa-solid fa-circle-check" style="color:var(--success)"></i> تعبئة بيانات الاسم، الراتب والالتزامات</li>
-        <li><i class="fa-solid fa-circle-check" style="color:var(--success)"></i> خدمة قطاع حكومي (شهر أو أكثر)</li>
-        <li><i class="fa-solid fa-circle-check" style="color:var(--success)"></i> خدمة قطاع خاص (3 أشهر أو أكثر)</li>
-      </ul>
-    </div>
-
-    <!-- معلومات السجل التجاري والتوثيق -->
-    <div class="info-card">
-      <h3><i class="fa-solid fa-shield-halved" style="color:var(--accent)"></i> السجل التجاري والتوثيق</h3>
-      <p style="color:#4a5568;font-size:15px;margin-bottom:12px">شركة موثقة رسمياً لتقديم خدمات التقسيط المريح للأجهزة الإلكترونية.</p>
-      <ul style="margin-bottom:10px">
-        <li><i class="fa-solid fa-briefcase" style="color:var(--primary)"></i> <strong>رقم السجل التجاري:</strong> 7011663205</li>
-      </ul>
-      <a class="cr-verify-link" href="https://qr.saudibusiness.gov.sa/viewcr?nCrNumber=46KkRps+kGWem2kRR/xW9w==" target="_blank" rel="noopener">
-        <i class="fa-solid fa-certificate"></i> عرض وثيقة السجل التجاري المعتمدة
-      </a>
-    </div>
-
-    <!-- الموقع على خرائط جوجل (تم التعديل إلى حفر الباطن) -->
-    <div class="info-card" style="grid-column: 1 / -1;">
-      <h3><i class="fa-solid fa-location-dot" style="color:#ef4444"></i> موقعنا الجغرافي (حفر الباطن)</h3>
-      <p style="color:#4a5568;font-size:15px;margin-bottom:14px">تفضل بزيارتنا في مقرنا بمحافظة حفر الباطن أو تواصل معنا عبر الرابط أدناه:</p>
-      <div style="border-radius:16px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:14px">
-        <iframe src="https://maps.google.com/maps?q=Hafar+Al-Batin&hl=ar&z=13&output=embed" width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-      </div>
-      <a href="https://maps.app.goo.gl/F1RQH5oAo8rLgMkF7?g_st=ic" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:var(--primary-light);font-weight:750;font-size:15px">
-        <i class="fa-solid fa-map-location-dot"></i> افتح موقعنا على خرائط Google مباشرة
-      </a>
-    </div>
-
-  </div>
-
-  <!-- الفوتر -->
-  <footer>
-    <p style="font-size:15px;color:rgba(255,255,255,.85)">جميع الحقوق محفوظة © ميسر | ميسرك المليان 2026 - حفر الباطن</p>
-  </footer>
-
-</div>
-
-<!-- سكربت التشغيل -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  
-  function setupSelector(groupId) {
-    const group = document.getElementById(groupId);
-    if(!group) return;
-    const buttons = group.querySelectorAll('.option-btn');
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      });
-    });
-  }
-  setupSelector('sector-group');
-  setupSelector('duration-group');
-
-  function showToast(message, type) {
-    var toast = document.getElementById('mhzm-toast');
-    if (!toast) return;
-    var icon = toast.querySelector('.toast-icon');
-    var text = toast.querySelector('.toast-text');
-
-    if (type === 'error') {
-      toast.classList.add('error');
-      icon.innerHTML = '<i class="fa-solid fa-xmark"></i>';
-    } else {
-      toast.classList.remove('error');
-      icon.innerHTML = '<i class="fa-solid fa-check"></i>';
+      --transition: .25s ease;
     }
-    text.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 4000);
-  }
 
-  const submitBtn = document.getElementById('submit-whatsapp');
-  if(submitBtn) {
-    submitBtn.addEventListener('click', function(e) {
-      e.preventDefault();
+    /* =========================================
+       02. RESET
+    ========================================= */
 
-      const fullName = document.getElementById('fullName').value.trim();
-      const phone = document.getElementById('phoneNumber').value.trim();
-      const salary = document.getElementById('monthlySalary').value.trim();
-      const commitments = document.getElementById('monthlyCommitments').value.trim();
-      
-      const activeSector = document.querySelector('#sector-group .option-btn.active');
-      const activeDuration = document.querySelector('#duration-group .option-btn.active');
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
 
-      if(!fullName || !phone || !salary || !commitments || !activeSector || !activeDuration) {
-        showToast('الرجاء تعبئة جميع الحقول واختيار القطاع ومدة الخدمة', 'error');
-        return;
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-width: 0;
+      overflow-x: clip;
+      font-family: "Tajawal", sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body,
+    button,
+    input,
+    select,
+    textarea {
+      font-family: "Tajawal", sans-serif;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-size: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+      margin-top: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.4;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    button,
+    input,
+    select {
+      max-width: 100%;
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(36,103,183,.55);
+      outline-offset: 3px;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--container));
+      margin-inline: auto;
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 42px;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 15px;
+      border-radius: 100px;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 17px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(25px, 3.4vw, 37px);
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 13px;
+      letter-spacing: -.5px;
+    }
+
+    .section-heading p {
+      color: var(--text-muted);
+      font-size: 16px;
+      line-height: 1.9;
+      margin-bottom: 0;
+    }
+
+    /* =========================================
+       03. HEADER
+    ========================================= */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 3px 18px rgba(11,33,70,.035);
+    }
+
+    .header-inner {
+      min-height: 86px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      flex-shrink: 0;
+    }
+
+    .brand-icon {
+      width: 49px;
+      height: 49px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      background: var(--navy);
+      color: var(--gold);
+      font-size: 21px;
+      flex-shrink: 0;
+    }
+
+    .brand-details {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .brand-name {
+      font-size: 29px;
+      font-weight: 900;
+      color: var(--navy);
+      letter-spacing: -.8px;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 27px;
+    }
+
+    .header-nav a {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-muted);
+      transition: color var(--transition);
+      white-space: nowrap;
+    }
+
+    .header-nav a:hover {
+      color: var(--blue);
+    }
+
+    .header-contact {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      background: var(--navy);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 13px;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+
+    .header-contact:hover {
+      background: var(--blue);
+      transform: translateY(-2px);
+    }
+
+    .header-contact i {
+      font-size: 18px;
+    }
+
+    /* =========================================
+       04. HERO
+    ========================================= */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(58,124,202,.19), transparent 40%),
+        linear-gradient(125deg, #081B39, #123768);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 440px;
+      height: 440px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 50%;
+      left: -180px;
+      top: -180px;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 50%;
+      right: -110px;
+      bottom: -130px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      padding-top: 58px;
+      padding-bottom: 70px;
+    }
+
+    .hero-copy {
+      text-align: center;
+      max-width: 760px;
+      margin-inline: auto;
+      margin-bottom: 34px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 9px 17px;
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.14);
+      color: #F4D48E;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 19px;
+    }
+
+    .hero h1 {
+      font-size: clamp(31px, 5vw, 54px);
+      font-weight: 900;
+      line-height: 1.3;
+      color: white;
+      margin-bottom: 17px;
+      letter-spacing: -.7px;
+    }
+
+    .hero h1 span {
+      color: #F2BE55;
+    }
+
+    .hero-description {
+      font-size: clamp(15px, 2vw, 18px);
+      line-height: 2;
+      color: rgba(255,255,255,.79);
+      max-width: 600px;
+      margin: 0 auto 26px;
+    }
+
+    .hero-features {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero-feature {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      background: rgba(255,255,255,.075);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 11px;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .hero-feature i {
+      color: #F2BE55;
+    }
+
+    .hero-banner {
+      width: 100%;
+      max-width: 1040px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(255,255,255,.08);
+      box-shadow: 0 20px 50px rgba(0,0,0,.16);
+    }
+
+    .hero-banner img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    /* =========================================
+       05. APPLICATION FORM
+    ========================================= */
+
+    .application-section {
+      position: relative;
+      z-index: 5;
+      margin-top: -34px;
+      padding-bottom: 48px;
+    }
+
+    .application-card {
+      max-width: 800px;
+      margin-inline: auto;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    .application-header {
+      background: #FAFCFF;
+      padding: 31px 36px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 17px;
+    }
+
+    .application-header-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 17px;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .application-header-text {
+      min-width: 0;
+    }
+
+    .application-header h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      color: var(--navy);
+      font-weight: 900;
+      margin-bottom: 5px;
+    }
+
+    .application-header p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .application-body {
+      padding: 36px;
+    }
+
+    .form-section-title {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 22px;
+    }
+
+    .form-section-title .number {
+      width: 29px;
+      height: 29px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      background: var(--navy);
+      color: white;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .form-divider {
+      border: 0;
+      height: 1px;
+      background: var(--border);
+      margin: 29px 0;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 20px;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    .field-full {
+      grid-column: 1 / -1;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 9px;
+    }
+
+    .required {
+      color: var(--red);
+      margin-right: 3px;
+    }
+
+    .field-control {
+      position: relative;
+      min-width: 0;
+    }
+
+    .field-control > i {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8FA1B8;
+      font-size: 15px;
+      pointer-events: none;
+    }
+
+    .field-input {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      height: 53px;
+      border: 1.5px solid #DFE7F1;
+      border-radius: 13px;
+      background: #FAFCFF;
+      color: var(--navy);
+      padding: 12px 44px 12px 15px;
+      font-size: 15px;
+      font-weight: 600;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .field-input::placeholder {
+      color: #9AA9BC;
+      font-weight: 500;
+    }
+
+    .field-input:hover {
+      border-color: #B8CBE2;
+    }
+
+    .field-input:focus {
+      border-color: var(--blue);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(36,103,183,.09);
+    }
+
+    .field-input[aria-invalid="true"] {
+      border-color: var(--red);
+      background: #FFFDFD;
+    }
+
+    .field-help {
+      display: block;
+      color: var(--text-muted);
+      font-size: 12px;
+      margin-top: 7px;
+      line-height: 1.7;
+    }
+
+    .field-error {
+      display: none;
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 7px;
+    }
+
+    .field-error.visible {
+      display: block;
+    }
+
+    /* =========================================
+       06. SELECTION CARDS
+    ========================================= */
+
+    .selection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .selection-grid.two-columns {
+      grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+
+    .selection-card {
+      position: relative;
+      min-width: 0;
+      min-height: 103px;
+      border: 1.5px solid var(--border);
+      border-radius: 15px;
+      background: white;
+      color: var(--navy);
+      padding: 16px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.5;
+      transition: var(--transition);
+      overflow-wrap: anywhere;
+    }
+
+    .selection-card > i {
+      font-size: 22px;
+      color: #8196B0;
+      transition: var(--transition);
+    }
+
+    .selection-card:hover {
+      border-color: var(--blue);
+      background: #F8FBFF;
+      transform: translateY(-2px);
+    }
+
+    .selection-card.active,
+    .selection-card[aria-checked="true"] {
+      background: var(--blue-light);
+      border-color: var(--blue);
+      color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(36,103,183,.06);
+    }
+
+    .selection-card.active > i {
+      color: var(--blue);
+    }
+
+    .selection-card.active::after {
+      content: "\f00c";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      position: absolute;
+      top: 9px;
+      left: 9px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--blue);
+      color: white;
+      font-size: 9px;
+    }
+
+    .duration-wrap {
+      margin-top: 23px;
+    }
+
+    .duration-wrap[hidden] {
+      display: none !important;
+    }
+
+    /* =========================================
+       07. FINANCIAL INFOGRAPHIC
+    ========================================= */
+
+    .financial-summary {
+      margin-top: 24px;
+      background: #F7FAFE;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 20px;
+    }
+
+    .financial-summary-title {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .financial-summary-title i {
+      color: var(--blue);
+    }
+
+    .financial-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .financial-stat {
+      min-width: 0;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .financial-stat-label {
+      display: block;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .financial-stat-value {
+      display: block;
+      color: var(--navy);
+      font-size: clamp(18px, 3vw, 23px);
+      font-weight: 900;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .financial-stat-value small {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .financial-bar {
+      margin-top: 19px;
+    }
+
+    .financial-bar-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      margin-bottom: 9px;
+    }
+
+    .financial-track {
+      width: 100%;
+      height: 10px;
+      border-radius: 100px;
+      background: #E4EBF5;
+      overflow: hidden;
+    }
+
+    .financial-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #2D80C9, #E8AD36);
+      border-radius: inherit;
+      transition: width .35s ease;
+    }
+
+    .financial-disclaimer {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin: 12px 0 0;
+      line-height: 1.8;
+    }
+
+    /* =========================================
+       08. SUBMIT
+    ========================================= */
+
+    .privacy-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin-top: 25px;
+      padding: 15px;
+      background: var(--gold-light);
+      border: 1px solid #F6E6BD;
+      border-radius: 13px;
+    }
+
+    .privacy-note > i {
+      color: #B6841C;
+      font-size: 18px;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .privacy-note p {
+      color: #715A2D;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.9;
+      margin: 0;
+    }
+
+    .submit-button {
+      width: 100%;
+      min-height: 61px;
+      margin-top: 21px;
+      padding: 15px 20px;
+      border: 0;
+      border-radius: 15px;
+      background: #168F5B;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.6;
+      transition: var(--transition);
+      box-shadow: 0 9px 24px rgba(22,143,91,.18);
+    }
+
+    .submit-button i {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .submit-button:hover {
+      background: #117B4D;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(22,143,91,.23);
+    }
+
+    .submit-button:active {
+      transform: scale(.99);
+    }
+
+    .submit-button:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
+
+    .submit-help {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 13px 0 0;
+    }
+
+    /* =========================================
+       09. HOW IT WORKS
+    ========================================= */
+
+    .steps-section {
+      padding: 62px 0 80px;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 22px;
+      position: relative;
+    }
+
+    .step-card {
+      min-width: 0;
+      position: relative;
+      padding: 34px 24px 30px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .step-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .step-number {
+      position: absolute;
+      top: 15px;
+      right: 18px;
+      font-size: 35px;
+      font-weight: 900;
+      color: #EDF2F8;
+      line-height: 1;
+    }
+
+    .step-icon {
+      width: 74px;
+      height: 74px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 21px;
+      border-radius: 22px;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: 27px;
+    }
+
+    .step-card:nth-child(2) .step-icon {
+      background: var(--gold-light);
+      color: #C48A17;
+    }
+
+    .step-card:nth-child(3) .step-icon {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .step-card h3 {
+      color: var(--navy);
+      font-size: 19px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .step-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin: 0;
+    }
+
+    /* =========================================
+       10. INFORMATION CARDS
+    ========================================= */
+
+    .information-section {
+      background: white;
+      padding: 75px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .information-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 23px;
+    }
+
+    .information-card {
+      min-width: 0;
+      padding: 29px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: #FFFFFF;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .information-card-head {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 21px;
+    }
+
+    .information-icon {
+      width: 47px;
+      height: 47px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .information-icon.gold {
+      background: var(--gold-light);
+      color: #B88520;
+    }
+
+    .information-icon.red {
+      background: #FFF0F0;
+      color: #D94A4A;
+    }
+
+    .information-card h3 {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--navy);
+      margin: 0;
+    }
+
+    .information-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.95;
+      margin-bottom: 16px;
+    }
+
+    .conditions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .conditions-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      min-width: 0;
+      color: #52647B;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.8;
+    }
+
+    .conditions-list i {
+      color: var(--green);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .commercial-number {
+      background: #F7FAFE;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 15px 17px;
+      margin: 20px 0;
+    }
+
+    .commercial-number span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .commercial-number strong {
+      display: block;
+      color: var(--navy);
+      font-size: 21px;
+      font-weight: 900;
+      direction: ltr;
+      text-align: right;
+      letter-spacing: 1px;
+      overflow-wrap: anywhere;
+    }
+
+    .document-link {
+      width: 100%;
+      min-height: 49px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 15px;
+      background: var(--gold-light);
+      border: 1px solid #F4DFAB;
+      border-radius: 12px;
+      color: #8B651B;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .document-link:hover {
+      background: #FFEFC6;
+    }
+
+    .location-card {
+      grid-column: 1 / -1;
+    }
+
+    .location-layout {
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+      gap: 25px;
+      align-items: center;
+    }
+
+    .location-description {
+      min-width: 0;
+    }
+
+    .location-city {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #F7FAFE;
+      border: 1px solid var(--border);
+      padding: 9px 14px;
+      border-radius: 10px;
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 17px;
+    }
+
+    .location-city i {
+      color: var(--red);
+    }
+
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 47px;
+      padding: 12px 18px;
+      background: var(--navy);
+      color: white;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .map-link:hover {
+      background: var(--blue);
+    }
+
+    .map-container {
+      width: 100%;
+      min-width: 0;
+      height: 270px;
+      border-radius: 17px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #EAF0F7;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    /* =========================================
+       11. CTA
+    ========================================= */
+
+    .cta-section {
+      padding: 70px 0;
+    }
+
+    .cta-card {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(125deg, #0B2146, #164478);
+      border-radius: var(--radius-xl);
+      padding: 48px 30px;
+      text-align: center;
+      color: white;
+    }
+
+    .cta-card::before {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.035);
+      right: -110px;
+      top: -100px;
+      pointer-events: none;
+    }
+
+    .cta-card h2 {
+      position: relative;
+      font-size: clamp(24px, 3.5vw, 34px);
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .cta-card p {
+      position: relative;
+      color: rgba(255,255,255,.75);
+      font-size: 15px;
+      margin-bottom: 25px;
+    }
+
+    .cta-button {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 27px;
+      background: var(--gold);
+      color: var(--navy);
+      border-radius: 13px;
+      font-size: 15px;
+      font-weight: 900;
+      transition: var(--transition);
+    }
+
+    .cta-button:hover {
+      background: #F7C65C;
+      transform: translateY(-2px);
+    }
+
+    /* =========================================
+       12. FOOTER
+    ========================================= */
+
+    .site-footer {
+      background: #081B37;
+      color: white;
+      padding-top: 58px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 43px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 17px;
+    }
+
+    .footer-brand .brand-icon {
+      background: rgba(255,255,255,.09);
+    }
+
+    .footer-brand-name {
+      display: block;
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .footer-brand-tagline {
+      display: block;
+      color: #A9B8CB;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .footer-about {
+      color: #A9B8CB;
+      font-size: 13px;
+      line-height: 2;
+      max-width: 340px;
+      margin: 0;
+    }
+
+    .footer-column h3 {
+      font-size: 16px;
+      font-weight: 900;
+      margin-bottom: 19px;
+      color: white;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .footer-links a,
+    .footer-links span {
+      color: #A9B8CB;
+      font-size: 13px;
+      font-weight: 600;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      overflow-wrap: anywhere;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+    }
+
+    .footer-links i {
+      width: 17px;
+      text-align: center;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.09);
+      padding: 23px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .footer-bottom p {
+      color: #A9B8CB;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .footer-bottom .footer-credit {
+      color: #8296B1;
+    }
+
+    /* =========================================
+       13. TOAST
+    ========================================= */
+
+    .toast {
+      position: fixed;
+      top: 22px;
+      left: 50%;
+      transform: translate(-50%, -150%);
+      z-index: 99999;
+
+      width: max-content;
+      max-width: min(420px, calc(100vw - 32px));
+
+      background: white;
+      color: var(--navy);
+      border: 1px solid var(--border);
+      border-right: 4px solid var(--green);
+      border-radius: 14px;
+      box-shadow: 0 15px 45px rgba(0,0,0,.15);
+
+      padding: 15px 19px;
+
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.8;
+
+      opacity: 0;
+      visibility: hidden;
+      transition: transform .35s ease, opacity .35s ease, visibility .35s;
+    }
+
+    .toast.show {
+      transform: translate(-50%, 0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .toast.error {
+      border-right-color: var(--red);
+    }
+
+    .toast-icon {
+      color: var(--green);
+      font-size: 19px;
+      flex-shrink: 0;
+    }
+
+    .toast.error .toast-icon {
+      color: var(--red);
+    }
+
+    /* =========================================
+       14. ANIMATIONS
+    ========================================= */
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-up {
+      animation: fadeUp .65s ease both;
+    }
+
+    /* =========================================
+       15. RESPONSIVE TABLET
+    ========================================= */
+
+    @media (max-width: 1024px) {
+
+      .header-nav {
+        gap: 15px;
       }
 
-      let msg = '🌟 *طلب تقسيط جديد - ميسر (حفر الباطن)*\n';
-      msg += '━━━━━━━━━━━━━━━━━━\n\n';
-      msg += '👤 *الاسم الثلاثي:* ' + fullName + '\n';
-      msg += '📱 *رقم الجوال:* ' + phone + '\n';
-      msg += '💰 *الراتب الشهري:* ' + salary + ' ريال\n';
-      msg += '📊 *الالتزامات الشهرية:* ' + commitments + ' ريال\n';
-      msg += '🏢 *القطاع:* ' + activeSector.getAttribute('data-value') + '\n';
-      msg += '⏱️ *مدة الخدمة:* ' + activeDuration.getAttribute('data-value') + '\n\n';
-      msg += '━━━━━━━━━━━━━━━━━━\n';
-      msg += '📅 ' + new Date().toLocaleString('ar-SA');
+      .header-nav a {
+        font-size: 13px;
+      }
 
-      var whatsappUrl = 'https://wa.me/966533774766?text=' + encodeURIComponent(msg);
+      .footer-grid {
+        gap: 25px;
+      }
+    }
 
-      showToast('جاري تحويل طلبك مباشرة إلى واتساب...');
-      setTimeout(() => {
-        window.location.href = whatsappUrl;
-      }, 500);
+    @media (max-width: 768px) {
+
+      .container {
+        width: min(calc(100% - 30px), var(--container));
+      }
+
+      .section {
+        padding: 55px 0;
+      }
+
+      .header-inner {
+        min-height: 74px;
+      }
+
+      .header-nav {
+        display: none;
+      }
+
+      .brand-icon {
+        width: 43px;
+        height: 43px;
+        border-radius: 13px;
+        font-size: 19px;
+      }
+
+      .brand-name {
+        font-size: 25px;
+      }
+
+      .brand-subtitle {
+        font-size: 10px;
+      }
+
+      .header-contact {
+        padding: 11px 13px;
+        font-size: 12px;
+      }
+
+      .hero-inner {
+        padding-top: 42px;
+        padding-bottom: 62px;
+      }
+
+      .hero-copy {
+        margin-bottom: 27px;
+      }
+
+      .hero h1 {
+        font-size: clamp(29px, 6vw, 42px);
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .hero-banner {
+        border-radius: 15px;
+      }
+
+      .application-section {
+        margin-top: -28px;
+      }
+
+      .application-header {
+        padding: 25px;
+      }
+
+      .application-body {
+        padding: 25px;
+      }
+
+      .steps-grid {
+        gap: 14px;
+      }
+
+      .step-card {
+        padding: 30px 16px 24px;
+      }
+
+      .step-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 23px;
+      }
+
+      .step-card h3 {
+        font-size: 16px;
+      }
+
+      .step-card p {
+        font-size: 13px;
+      }
+
+      .location-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .map-container {
+        height: 280px;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+        gap: 35px;
+      }
+
+      .footer-grid > :first-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* =========================================
+       16. RESPONSIVE MOBILE
+    ========================================= */
+
+    @media (max-width: 560px) {
+
+      .container {
+        width: calc(100% - 28px);
+      }
+
+      .header-inner {
+        min-height: 70px;
+        gap: 10px;
+      }
+
+      .brand {
+        gap: 8px;
+      }
+
+      .brand-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 17px;
+      }
+
+      .brand-name {
+        font-size: 23px;
+      }
+
+      .brand-subtitle {
+        font-size: 9px;
+      }
+
+      .header-contact {
+        gap: 7px;
+        padding: 10px 11px;
+        border-radius: 10px;
+        font-size: 11px;
+      }
+
+      .header-contact i {
+        font-size: 16px;
+      }
+
+      .hero-inner {
+        padding-top: 37px;
+        padding-bottom: 55px;
+      }
+
+      .hero-badge {
+        font-size: 11px;
+        padding: 8px 12px;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+        line-height: 1.4;
+      }
+
+      .hero-description {
+        font-size: 14px;
+        line-height: 1.9;
+        margin-bottom: 20px;
+      }
+
+      .hero-features {
+        gap: 8px;
+      }
+
+      .hero-feature {
+        font-size: 11px;
+        padding: 8px 10px;
+      }
+
+      .hero-banner {
+        border-radius: 12px;
+      }
+
+      .application-section {
+        margin-top: -23px;
+        padding-bottom: 20px;
+      }
+
+      .application-card {
+        border-radius: 21px;
+      }
+
+      .application-header {
+        padding: 21px 18px;
+        gap: 12px;
+      }
+
+      .application-header-icon {
+        width: 47px;
+        height: 47px;
+        border-radius: 13px;
+        font-size: 20px;
+      }
+
+      .application-header h2 {
+        font-size: 20px;
+      }
+
+      .application-header p {
+        font-size: 12px;
+        line-height: 1.8;
+      }
+
+      .application-body {
+        padding: 23px 17px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .field-full {
+        grid-column: auto;
+      }
+
+      .field-input {
+        height: 52px;
+        font-size: 14px;
+      }
+
+      .selection-grid {
+        gap: 8px;
+      }
+
+      .selection-card {
+        min-height: 93px;
+        padding: 13px 7px;
+        font-size: 11px;
+        border-radius: 12px;
+      }
+
+      .selection-card > i {
+        font-size: 20px;
+      }
+
+      .selection-grid.two-columns .selection-card {
+        font-size: 12px;
+      }
+
+      .financial-summary {
+        padding: 15px;
+      }
+
+      .financial-stats {
+        gap: 9px;
+      }
+
+      .financial-stat {
+        padding: 11px;
+      }
+
+      .financial-stat-label {
+        font-size: 11px;
+      }
+
+      .financial-stat-value {
+        font-size: 18px;
+      }
+
+      .privacy-note {
+        padding: 12px;
+      }
+
+      .submit-button {
+        min-height: 60px;
+        padding: 13px;
+        font-size: 14px;
+        gap: 9px;
+      }
+
+      .submit-button i {
+        font-size: 21px;
+      }
+
+      .steps-section {
+        padding: 43px 0 58px;
+      }
+
+      .section-heading {
+        margin-bottom: 28px;
+      }
+
+      .section-heading h2 {
+        font-size: 27px;
+      }
+
+      .section-heading p {
+        font-size: 14px;
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .step-card {
+        display: grid;
+        grid-template-columns: 60px minmax(0,1fr);
+        grid-template-rows: auto auto;
+        column-gap: 16px;
+        text-align: right;
+        padding: 21px;
+      }
+
+      .step-icon {
+        grid-row: 1 / 3;
+        grid-column: 1;
+        width: 56px;
+        height: 56px;
+        margin: 0;
+        border-radius: 15px;
+        font-size: 21px;
+      }
+
+      .step-card h3 {
+        grid-column: 2;
+        margin-bottom: 5px;
+        font-size: 17px;
+      }
+
+      .step-card p {
+        grid-column: 2;
+        font-size: 12px;
+      }
+
+      .step-number {
+        top: 9px;
+        left: 14px;
+        right: auto;
+        font-size: 25px;
+      }
+
+      .information-section {
+        padding: 54px 0;
+      }
+
+      .information-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .information-card {
+        padding: 22px 18px;
+        border-radius: 19px;
+      }
+
+      .information-card h3 {
+        font-size: 18px;
+      }
+
+      .information-card p {
+        font-size: 13px;
+      }
+
+      .location-card {
+        grid-column: auto;
+      }
+
+      .map-container {
+        height: 235px;
+      }
+
+      .cta-section {
+        padding: 45px 0;
+      }
+
+      .cta-card {
+        padding: 36px 20px;
+        border-radius: 22px;
+      }
+
+      .cta-card h2 {
+        font-size: 24px;
+      }
+
+      .cta-card p {
+        font-size: 13px;
+      }
+
+      .site-footer {
+        padding-top: 43px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px 15px;
+      }
+
+      .footer-column h3 {
+        font-size: 14px;
+      }
+
+      .footer-links a,
+      .footer-links span {
+        font-size: 12px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 6px;
+      }
+    }
+
+    /* =========================================
+       17. EXTRA SMALL SCREENS
+    ========================================= */
+
+    @media (max-width: 360px) {
+
+      .brand-name {
+        font-size: 21px;
+      }
+
+      .header-contact {
+        font-size: 10px;
+        padding: 9px;
+      }
+
+      .hero h1 {
+        font-size: 27px;
+      }
+
+      .selection-card {
+        font-size: 10px;
+        padding: 11px 5px;
+      }
+
+      .application-body {
+        padding: 20px 13px;
+      }
+
+      .financial-stat-value {
+        font-size: 16px;
+      }
+    }
+
+    /* =========================================
+       18. ACCESSIBILITY
+    ========================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ======================================
+       TOAST
+  ======================================= -->
+
+  <div
+    id="siteToast"
+    class="toast"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+  >
+    <span class="toast-icon">
+      <i class="fa-solid fa-check-circle"></i>
+    </span>
+    <span id="toastMessage"></span>
+  </div>
+
+  <!-- ======================================
+       HEADER
+  ======================================= -->
+
+  <header class="site-header">
+
+    <div class="container header-inner">
+
+      <a href="#" class="brand" aria-label="ميسر - الصفحة الرئيسية">
+
+        <span class="brand-icon">
+          <i class="fa-solid fa-wallet"></i>
+        </span>
+
+        <span class="brand-details">
+          <span class="brand-name">ميسر</span>
+          <span class="brand-subtitle">ميسرك المليان</span>
+        </span>
+
+      </a>
+
+      <nav class="header-nav" aria-label="القائمة الرئيسية">
+        <a href="#application">طلب التقسيط</a>
+        <a href="#how-it-works">كيف نعمل؟</a>
+        <a href="#conditions">الشروط</a>
+        <a href="#location">موقعنا</a>
+      </nav>
+
+      <a
+        class="header-contact"
+        href="https://wa.me/966533774766"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <i class="fa-brands fa-whatsapp"></i>
+        <span>تواصل معنا</span>
+      </a>
+
+    </div>
+
+  </header>
+
+  <main>
+
+    <!-- ======================================
+         HERO
+    ======================================= -->
+
+    <section class="hero">
+
+      <div class="container hero-inner">
+
+        <div class="hero-copy animate-up">
+
+          <div class="hero-badge">
+            <i class="fa-solid fa-sparkles"></i>
+            حلول مريحة لاقتناء أجهزتك
+          </div>
+
+          <h1>
+            جهازك اللي تتمناه
+            <br>
+            <span>صار أقرب لك مع ميسر</span>
+          </h1>
+
+          <p class="hero-description">
+            اختر جهازك المفضل وقدّم طلب التقسيط بخطوات سهلة وواضحة.
+            عبّ بياناتك، وأرسل طلبك لفريق ميسر لمراجعة الخيارات المتاحة لك.
+          </p>
+
+          <div class="hero-features">
+
+            <div class="hero-feature">
+              <i class="fa-solid fa-bolt"></i>
+              تقديم سريع
+            </div>
+
+            <div class="hero-feature">
+              <i class="fa-solid fa-mobile-screen"></i>
+              أجهزة إلكترونية
+            </div>
+
+            <div class="hero-feature">
+              <i class="fa-solid fa-comments"></i>
+              متابعة عبر واتساب
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="hero-banner animate-up">
+
+          <img
+            src="https://order.mhzm.sa/wp-content/webp-express/webp-images/uploads/2026/09/ipone-18-banners-01-1-scaled.jpg.webp"
+            alt="عروض الأجهزة الإلكترونية لدى ميسر"
+            fetchpriority="high"
+            decoding="async"
+          >
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         APPLICATION
+    ======================================= -->
+
+    <section
+      id="application"
+      class="application-section"
+      aria-labelledby="applicationTitle"
+    >
+
+      <div class="container">
+
+        <div class="application-card">
+
+          <div class="application-header">
+
+            <div class="application-header-icon">
+              <i class="fa-solid fa-file-signature"></i>
+            </div>
+
+            <div class="application-header-text">
+
+              <h2 id="applicationTitle">
+                طلب التقسيط الإلكتروني
+              </h2>
+
+              <p>
+                أدخل بياناتك الأساسية وسنساعدك في الخطوة التالية
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="application-body">
+
+            <form id="installmentForm" novalidate>
+
+              <!-- PERSONAL INFORMATION -->
+
+              <div class="form-section-title">
+                <span class="number">01</span>
+                البيانات الشخصية
+              </div>
+
+              <div class="form-grid">
+
+                <div class="field field-full">
+
+                  <label class="field-label" for="fullName">
+                    الاسم الثلاثي
+                    <span class="required">*</span>
+                  </label>
+
+                  <div class="field-control">
+
+                    <i class="fa-regular fa-user"></i>
+
+                    <input
+                      class="field-input"
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      placeholder="اكتب اسمك الثلاثي"
+                      autocomplete="name"
+                      maxlength="100"
+                      required
+                    >
+
+                  </div>
+
+                  <span class="field-error" id="fullNameError"></span>
+
+                </div>
+
+                <div class="field field-full">
+
+                  <label class="field-label" for="phoneNumber">
+                    رقم الجوال
+                    <span class="required">*</span>
+                  </label>
+
+                  <div class="field-control">
+
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+
+                    <input
+                      class="field-input"
+                      type="tel"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      placeholder="05XXXXXXXX"
+                      inputmode="tel"
+                      autocomplete="tel"
+                      maxlength="16"
+                      dir="ltr"
+                      style="text-align:right"
+                      required
+                    >
+
+                  </div>
+
+                  <span class="field-help">
+                    أدخل رقم جوال سعودي صحيح للتواصل معك.
+                  </span>
+
+                  <span class="field-error" id="phoneNumberError"></span>
+
+                </div>
+
+              </div>
+
+              <hr class="form-divider">
+
+              <!-- FINANCIAL INFORMATION -->
+
+              <div class="form-section-title">
+                <span class="number">02</span>
+                المعلومات المالية
+              </div>
+
+              <div class="form-grid">
+
+                <div class="field">
+
+                  <label class="field-label" for="monthlySalary">
+                    الراتب الشهري
+                    <span class="required">*</span>
+                  </label>
+
+                  <div class="field-control">
+
+                    <i class="fa-solid fa-money-bill-wave"></i>
+
+                    <input
+                      class="field-input"
+                      type="number"
+                      id="monthlySalary"
+                      name="monthlySalary"
+                      placeholder="مثال: 6000"
+                      min="1"
+                      step="0.01"
+                      inputmode="decimal"
+                      required
+                    >
+
+                  </div>
+
+                  <span class="field-help">
+                    الراتب بالريال السعودي.
+                  </span>
+
+                  <span class="field-error" id="monthlySalaryError"></span>
+
+                </div>
+
+                <div class="field">
+
+                  <label class="field-label" for="monthlyCommitments">
+                    الالتزامات الشهرية
+                    <span class="required">*</span>
+                  </label>
+
+                  <div class="field-control">
+
+                    <i class="fa-solid fa-chart-pie"></i>
+
+                    <input
+                      class="field-input"
+                      type="number"
+                      id="monthlyCommitments"
+                      name="monthlyCommitments"
+                      placeholder="مثال: 1500"
+                      min="0"
+                      step="0.01"
+                      inputmode="decimal"
+                      required
+                    >
+
+                  </div>
+
+                  <span class="field-help">
+                    إذا ما عندك التزامات، اكتب صفر.
+                  </span>
+
+                  <span class="field-error" id="monthlyCommitmentsError"></span>
+
+                </div>
+
+              </div>
+
+              <!-- FINANCIAL VISUALIZATION -->
+
+              <div class="financial-summary">
+
+                <div class="financial-summary-title">
+                  <i class="fa-solid fa-chart-simple"></i>
+                  ملخص بياناتك المالية
+                </div>
+
+                <div class="financial-stats">
+
+                  <div class="financial-stat">
+
+                    <span class="financial-stat-label">
+                      المتبقي بعد الالتزامات
+                    </span>
+
+                    <strong class="financial-stat-value">
+                      <span id="remainingSalary">—</span>
+                      <small>ر.س</small>
+                    </strong>
+
+                  </div>
+
+                  <div class="financial-stat">
+
+                    <span class="financial-stat-label">
+                      نسبة الالتزامات
+                    </span>
+
+                    <strong class="financial-stat-value">
+                      <span id="commitmentPercentage">—</span>
+                    </strong>
+
+                  </div>
+
+                </div>
+
+                <div class="financial-bar">
+
+                  <div class="financial-bar-head">
+
+                    <span>نسبة الالتزامات من الراتب</span>
+
+                    <span id="percentageLabel">—</span>
+
+                  </div>
+
+                  <div class="financial-track">
+
+                    <div
+                      id="financialFill"
+                      class="financial-fill"
+                    ></div>
+
+                  </div>
+
+                </div>
+
+                <p class="financial-disclaimer">
+                  هذه الأرقام توضيحية فقط، ولا تعني الموافقة على طلب التقسيط
+                  أو تحديد الأهلية النهائية.
+                </p>
+
+              </div>
+
+              <hr class="form-divider">
+
+              <!-- EMPLOYMENT -->
+
+              <div class="form-section-title">
+                <span class="number">03</span>
+                المعلومات الوظيفية
+              </div>
+
+              <div class="field">
+
+                <label class="field-label">
+                  القطاع الوظيفي
+                  <span class="required">*</span>
+                </label>
+
+                <div
+                  class="selection-grid"
+                  id="sectorGroup"
+                  role="radiogroup"
+                  aria-label="اختر القطاع الوظيفي"
+                >
+
+                  <button
+                    type="button"
+                    class="selection-card"
+                    data-sector="government"
+                    data-value="قطاع حكومي"
+                    role="radio"
+                    aria-checked="false"
+                  >
+                    <i class="fa-solid fa-building-columns"></i>
+                    <span>قطاع حكومي</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="selection-card"
+                    data-sector="private"
+                    data-value="قطاع خاص"
+                    role="radio"
+                    aria-checked="false"
+                  >
+                    <i class="fa-solid fa-building"></i>
+                    <span>قطاع خاص</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="selection-card"
+                    data-sector="retired"
+                    data-value="متقاعد"
+                    role="radio"
+                    aria-checked="false"
+                  >
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>متقاعد</span>
+                  </button>
+
+                </div>
+
+                <span class="field-error" id="sectorError"></span>
+
+              </div>
+
+              <!-- DURATION -->
+
+              <div
+                class="duration-wrap"
+                id="durationWrap"
+                hidden
+              >
+
+                <label class="field-label">
+                  مدة الخدمة
+                  <span class="required">*</span>
+                </label>
+
+                <div
+                  class="selection-grid two-columns"
+                  id="durationGroup"
+                  role="radiogroup"
+                  aria-label="اختر مدة الخدمة"
+                >
+
+                  <button
+                    type="button"
+                    class="selection-card"
+                    data-duration="less"
+                    data-value=""
+                    role="radio"
+                    aria-checked="false"
+                  >
+                    <i class="fa-regular fa-clock"></i>
+                    <span id="lessDurationLabel">أقل من المدة المطلوبة</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="selection-card"
+                    data-duration="eligible"
+                    data-value=""
+                    role="radio"
+                    aria-checked="false"
+                  >
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span id="eligibleDurationLabel">المدة المطلوبة أو أكثر</span>
+                  </button>
+
+                </div>
+
+                <span class="field-error" id="durationError"></span>
+
+              </div>
+
+              <!-- PRIVACY NOTE -->
+
+              <div class="privacy-note">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <p>
+                  عند الضغط على إرسال الطلب، سيتم فتح واتساب مع بياناتك
+                  المدخلة لتراجعها وترسلها بنفسك إلى فريق ميسر.
+                  لا ترسل أي معلومات حساسة إضافية إلا بعد التأكد
+                  من الجهة المستقبلة.
+                </p>
+
+              </div>
+
+              <!-- SUBMIT -->
+
+              <button
+                type="submit"
+                class="submit-button"
+                id="submitButton"
+              >
+
+                <i class="fa-brands fa-whatsapp"></i>
+
+                <span>
+                  مراجعة الطلب وإرساله عبر واتساب
+                </span>
+
+                <i class="fa-solid fa-arrow-left" style="font-size:14px"></i>
+
+              </button>
+
+              <p class="submit-help">
+                إرسال الطلب لا يعني الموافقة النهائية على التقسيط.
+              </p>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         HOW IT WORKS
+    ======================================= -->
+
+    <section
+      class="steps-section"
+      id="how-it-works"
+    >
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="section-eyebrow">
+            <i class="fa-solid fa-route"></i>
+            خطوات بسيطة
+          </span>
+
+          <h2>كيف تطلب التقسيط؟</h2>
+
+          <p>
+            ثلاث خطوات واضحة تفصلك عن تقديم طلبك،
+            وفريق ميسر يساعدك في معرفة الخيارات المتاحة.
+          </p>
+
+        </div>
+
+        <div class="steps-grid">
+
+          <article class="step-card">
+
+            <span class="step-number">01</span>
+
+            <div class="step-icon">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+
+            <h3>عبّ بياناتك</h3>
+
+            <p>
+              أدخل معلوماتك الشخصية والمالية والوظيفية
+              في نموذج الطلب الإلكتروني.
+            </p>
+
+          </article>
+
+          <article class="step-card">
+
+            <span class="step-number">02</span>
+
+            <div class="step-icon">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+
+            <h3>أرسل طلبك</h3>
+
+            <p>
+              راجع بياناتك وأرسلها مباشرة إلى فريق ميسر
+              عبر واتساب.
+            </p>
+
+          </article>
+
+          <article class="step-card">
+
+            <span class="step-number">03</span>
+
+            <div class="step-icon">
+              <i class="fa-solid fa-clipboard-check"></i>
+            </div>
+
+            <h3>مراجعة الخيارات</h3>
+
+            <p>
+              يراجع الفريق طلبك ويوضح لك
+              الخيارات والشروط المتاحة.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         INFORMATION
+    ======================================= -->
+
+    <section
+      class="information-section"
+      id="conditions"
+    >
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="section-eyebrow">
+            <i class="fa-solid fa-circle-info"></i>
+            معلومات مهمة
+          </span>
+
+          <h2>كل اللي تحتاج تعرفه</h2>
+
+          <p>
+            معلومات واضحة عن متطلبات تقديم الطلب
+            والسجل التجاري وموقعنا.
+          </p>
+
+        </div>
+
+        <div class="information-grid">
+
+          <!-- CONDITIONS -->
+
+          <article class="information-card">
+
+            <div class="information-card-head">
+
+              <div class="information-icon">
+                <i class="fa-solid fa-list-check"></i>
+              </div>
+
+              <h3>متطلبات تقديم الطلب</h3>
+
+            </div>
+
+            <ul class="conditions-list">
+
+              <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>تعبئة الاسم الثلاثي ورقم الجوال.</span>
+              </li>
+
+              <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>توضيح الراتب والالتزامات الشهرية.</span>
+              </li>
+
+              <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>تحديد القطاع الوظيفي ومدة الخدمة.</span>
+              </li>
+
+              <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>الحد المذكور للخدمة الحكومية: شهر أو أكثر.</span>
+              </li>
+
+              <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>الحد المذكور للخدمة بالقطاع الخاص: 3 أشهر أو أكثر.</span>
+              </li>
+
+              <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>تخضع الطلبات للمراجعة والشروط النهائية.</span>
+              </li>
+
+            </ul>
+
+          </article>
+
+          <!-- COMMERCIAL REGISTER -->
+
+          <article class="information-card">
+
+            <div class="information-card-head">
+
+              <div class="information-icon gold">
+                <i class="fa-solid fa-file-circle-check"></i>
+              </div>
+
+              <h3>السجل التجاري</h3>
+
+            </div>
+
+            <p>
+              يمكنك الاطلاع على وثيقة السجل التجاري
+              والتحقق من البيانات من خلال الرابط الرسمي.
+            </p>
+
+            <div class="commercial-number">
+
+              <span>رقم السجل التجاري</span>
+
+              <strong>7011663205</strong>
+
+            </div>
+
+            <a
+              class="document-link"
+              href="https://qr.saudibusiness.gov.sa/viewcr?nCrNumber=46KkRps+kGWem2kRR/xW9w=="
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+              عرض وثيقة السجل التجاري
+
+            </a>
+
+          </article>
+
+          <!-- LOCATION -->
+
+          <article
+            class="information-card location-card"
+            id="location"
+          >
+
+            <div class="location-layout">
+
+              <div class="location-description">
+
+                <div class="information-card-head">
+
+                  <div class="information-icon red">
+                    <i class="fa-solid fa-location-dot"></i>
+                  </div>
+
+                  <h3>موقعنا</h3>
+
+                </div>
+
+                <div class="location-city">
+                  <i class="fa-solid fa-location-dot"></i>
+                  حفر الباطن، المملكة العربية السعودية
+                </div>
+
+                <p>
+                  يسعدنا تواصلك معنا.
+                  تقدر تفتح موقعنا على خرائط Google
+                  للحصول على الاتجاهات ومعرفة تفاصيل الموقع.
+                </p>
+
+                <a
+                  class="map-link"
+                  href="https://maps.app.goo.gl/F1RQH5oAo8rLgMkF7?g_st=ic"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+
+                  <i class="fa-solid fa-map-location-dot"></i>
+
+                  فتح الموقع على خرائط Google
+
+                </a>
+
+              </div>
+
+              <div class="map-container">
+
+                <iframe
+                  src="https://maps.google.com/maps?q=Hafar+Al-Batin&hl=ar&z=13&output=embed"
+                  title="خريطة حفر الباطن"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  allowfullscreen
+                ></iframe>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         FINAL CTA
+    ======================================= -->
+
+    <section class="cta-section">
+
+      <div class="container">
+
+        <div class="cta-card">
+
+          <h2>جاهز تقدم طلبك؟</h2>
+
+          <p>
+            ابدأ بتعبئة النموذج، وخلّ فريق ميسر يساعدك
+            في معرفة خيارات التقسيط المتاحة.
+          </p>
+
+          <a href="#application" class="cta-button">
+
+            <i class="fa-solid fa-file-pen"></i>
+
+            ابدأ طلب التقسيط
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ======================================
+       FOOTER
+  ======================================= -->
+
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div class="footer-column">
+
+          <div class="footer-brand">
+
+            <span class="brand-icon">
+              <i class="fa-solid fa-wallet"></i>
+            </span>
+
+            <span>
+              <span class="footer-brand-name">ميسر</span>
+              <span class="footer-brand-tagline">ميسرك المليان</span>
+            </span>
+
+          </div>
+
+          <p class="footer-about">
+            ميسر لتقسيط الأجهزة الإلكترونية.
+            نساعدك في تقديم طلبك بسهولة
+            والتواصل مع الفريق لمعرفة خيارات التقسيط المتاحة.
+          </p>
+
+        </div>
+
+        <div class="footer-column">
+
+          <h3>روابط سريعة</h3>
+
+          <div class="footer-links">
+
+            <a href="#application">طلب التقسيط</a>
+
+            <a href="#how-it-works">طريقة التقديم</a>
+
+            <a href="#conditions">المتطلبات والشروط</a>
+
+            <a href="#location">موقعنا</a>
+
+          </div>
+
+        </div>
+
+        <div class="footer-column">
+
+          <h3>تواصل معنا</h3>
+
+          <div class="footer-links">
+
+            <a
+              href="https://wa.me/966533774766"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-whatsapp"></i>
+              0533774766
+            </a>
+
+            <span>
+              <i class="fa-solid fa-location-dot"></i>
+              حفر الباطن، السعودية
+            </span>
+
+            <a
+              href="https://maps.app.goo.gl/F1RQH5oAo8rLgMkF7?g_st=ic"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-solid fa-map"></i>
+              عرض الموقع على الخريطة
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+
+        <p>
+          جميع الحقوق محفوظة ©
+          <span id="currentYear">2026</span>
+          ميسر
+        </p>
+
+        <p class="footer-credit">
+          ميسر | ميسرك المليان
+        </p>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+  <!-- ======================================
+       JAVASCRIPT
+  ======================================= -->
+
+  <script>
+    "use strict";
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+      /* =====================================
+         CONFIGURATION
+      ===================================== */
+
+      const CONFIG = {
+        whatsappNumber: "966533774766",
+        brandName: "ميسر",
+        city: "حفر الباطن"
+      };
+
+      /* =====================================
+         ELEMENTS
+      ===================================== */
+
+      const form = document.getElementById("installmentForm");
+
+      const fullNameInput = document.getElementById("fullName");
+      const phoneInput = document.getElementById("phoneNumber");
+
+      const salaryInput = document.getElementById("monthlySalary");
+      const commitmentsInput = document.getElementById("monthlyCommitments");
+
+      const sectorGroup = document.getElementById("sectorGroup");
+      const durationGroup = document.getElementById("durationGroup");
+      const durationWrap = document.getElementById("durationWrap");
+
+      const lessDurationLabel = document.getElementById("lessDurationLabel");
+      const eligibleDurationLabel = document.getElementById("eligibleDurationLabel");
+
+      const remainingSalaryElement = document.getElementById("remainingSalary");
+      const commitmentPercentageElement = document.getElementById("commitmentPercentage");
+      const percentageLabel = document.getElementById("percentageLabel");
+      const financialFill = document.getElementById("financialFill");
+
+      const toast = document.getElementById("siteToast");
+      const toastMessage = document.getElementById("toastMessage");
+
+      const submitButton = document.getElementById("submitButton");
+
+      let selectedSector = null;
+      let selectedDuration = null;
+      let toastTimer = null;
+
+      /* =====================================
+         YEAR
+      ===================================== */
+
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+
+      /* =====================================
+         TOAST
+      ===================================== */
+
+      function showToast(message, type = "success") {
+
+        clearTimeout(toastTimer);
+
+        toastMessage.textContent = message;
+
+        toast.classList.toggle("error", type === "error");
+
+        const icon = toast.querySelector(".toast-icon");
+
+        icon.innerHTML = type === "error"
+          ? '<i class="fa-solid fa-circle-exclamation"></i>'
+          : '<i class="fa-solid fa-circle-check"></i>';
+
+        toast.setAttribute(
+          "role",
+          type === "error" ? "alert" : "status"
+        );
+
+        toast.classList.add("show");
+
+        toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 4500);
+      }
+
+      /* =====================================
+         FIELD ERRORS
+      ===================================== */
+
+      function setFieldError(input, message) {
+
+        const errorElement =
+          document.getElementById(input.id + "Error");
+
+        input.setAttribute("aria-invalid", "true");
+
+        if (errorElement) {
+          errorElement.textContent = message;
+          errorElement.classList.add("visible");
+        }
+      }
+
+      function clearFieldError(input) {
+
+        const errorElement =
+          document.getElementById(input.id + "Error");
+
+        input.removeAttribute("aria-invalid");
+
+        if (errorElement) {
+          errorElement.textContent = "";
+          errorElement.classList.remove("visible");
+        }
+      }
+
+      function setGroupError(id, message) {
+
+        const errorElement = document.getElementById(id);
+
+        if (!errorElement) return;
+
+        errorElement.textContent = message;
+        errorElement.classList.add("visible");
+      }
+
+      function clearGroupError(id) {
+
+        const errorElement = document.getElementById(id);
+
+        if (!errorElement) return;
+
+        errorElement.textContent = "";
+        errorElement.classList.remove("visible");
+      }
+
+      /* =====================================
+         NUMBERS
+      ===================================== */
+
+      function normalizeDigits(value) {
+
+        return String(value)
+          .replace(/[٠-٩]/g, digit =>
+            String(digit.charCodeAt(0) - 1632)
+          )
+          .replace(/[۰-۹]/g, digit =>
+            String(digit.charCodeAt(0) - 1776)
+          );
+      }
+
+      function getNumericValue(input) {
+
+        const normalized = normalizeDigits(input.value)
+          .replace(/,/g, "")
+          .trim();
+
+        if (normalized === "") return null;
+
+        const number = Number(normalized);
+
+        return Number.isFinite(number) ? number : null;
+      }
+
+      function formatMoney(number) {
+
+        return new Intl.NumberFormat("ar-SA", {
+          maximumFractionDigits: 2
+        }).format(number);
+      }
+
+      /* =====================================
+         PHONE VALIDATION
+      ===================================== */
+
+      function normalizePhone(value) {
+
+        let phone = normalizeDigits(value)
+          .replace(/[^\d+]/g, "");
+
+        if (phone.startsWith("+966")) {
+          phone = "0" + phone.slice(4);
+        } else if (phone.startsWith("966")) {
+          phone = "0" + phone.slice(3);
+        }
+
+        return phone;
+      }
+
+      function isValidSaudiPhone(value) {
+
+        const phone = normalizePhone(value);
+
+        return /^05\d{8}$/.test(phone);
+      }
+
+      /* =====================================
+         SELECTOR LOGIC
+      ===================================== */
+
+      function activateSelection(group, selectedButton) {
+
+        const buttons = group.querySelectorAll(".selection-card");
+
+        buttons.forEach(function (button) {
+
+          const isSelected = button === selectedButton;
+
+          button.classList.toggle("active", isSelected);
+
+          button.setAttribute(
+            "aria-checked",
+            String(isSelected)
+          );
+
+          button.tabIndex = isSelected ? 0 : -1;
+
+        });
+      }
+
+      function setupRadioKeyboard(group) {
+
+        group.addEventListener("keydown", function (event) {
+
+          const keys = [
+            "ArrowRight",
+            "ArrowLeft",
+            "ArrowUp",
+            "ArrowDown"
+          ];
+
+          if (!keys.includes(event.key)) return;
+
+          event.preventDefault();
+
+          const buttons = Array.from(
+            group.querySelectorAll(".selection-card")
+          );
+
+          if (!buttons.length) return;
+
+          const currentIndex = buttons.findIndex(
+            button => button === document.activeElement
+          );
+
+          const direction =
+            event.key === "ArrowLeft" ||
+            event.key === "ArrowDown"
+              ? 1
+              : -1;
+
+          const nextIndex =
+            (currentIndex + direction + buttons.length) %
+            buttons.length;
+
+          buttons[nextIndex].focus();
+          buttons[nextIndex].click();
+
+        });
+      }
+
+      setupRadioKeyboard(sectorGroup);
+      setupRadioKeyboard(durationGroup);
+
+      /* =====================================
+         SECTOR SELECTION
+      ===================================== */
+
+      sectorGroup.querySelectorAll(".selection-card")
+        .forEach(function (button) {
+
+          button.addEventListener("click", function () {
+
+            activateSelection(sectorGroup, button);
+
+            selectedSector = {
+              key: button.dataset.sector,
+              value: button.dataset.value
+            };
+
+            selectedDuration = null;
+
+            clearGroupError("sectorError");
+            clearGroupError("durationError");
+
+            durationGroup.querySelectorAll(".selection-card")
+              .forEach(function (durationButton) {
+
+                durationButton.classList.remove("active");
+                durationButton.setAttribute("aria-checked", "false");
+                durationButton.tabIndex = -1;
+
+              });
+
+            if (selectedSector.key === "retired") {
+
+              durationWrap.hidden = true;
+
+              return;
+            }
+
+            durationWrap.hidden = false;
+
+            if (selectedSector.key === "government") {
+
+              lessDurationLabel.textContent =
+                "أقل من شهر";
+
+              eligibleDurationLabel.textContent =
+                "شهر أو أكثر";
+
+            } else {
+
+              lessDurationLabel.textContent =
+                "أقل من 3 أشهر";
+
+              eligibleDurationLabel.textContent =
+                "3 أشهر أو أكثر";
+
+            }
+
+          });
+
+        });
+
+      /* =====================================
+         DURATION SELECTION
+      ===================================== */
+
+      durationGroup.querySelectorAll(".selection-card")
+        .forEach(function (button) {
+
+          button.addEventListener("click", function () {
+
+            activateSelection(durationGroup, button);
+
+            const label = button.querySelector("span");
+
+            selectedDuration = {
+              key: button.dataset.duration,
+              value: label.textContent.trim()
+            };
+
+            clearGroupError("durationError");
+
+          });
+
+        });
+
+      /* =====================================
+         FINANCIAL SUMMARY
+      ===================================== */
+
+      function updateFinancialSummary() {
+
+        const salary = getNumericValue(salaryInput);
+        const commitments = getNumericValue(commitmentsInput);
+
+        if (
+          salary === null ||
+          commitments === null ||
+          salary <= 0 ||
+          commitments < 0
+        ) {
+
+          remainingSalaryElement.textContent = "—";
+          commitmentPercentageElement.textContent = "—";
+          percentageLabel.textContent = "—";
+          financialFill.style.width = "0%";
+
+          return;
+        }
+
+        const remaining = salary - commitments;
+
+        const percentage = (commitments / salary) * 100;
+
+        remainingSalaryElement.textContent =
+          formatMoney(remaining);
+
+        commitmentPercentageElement.textContent =
+          percentage.toFixed(1) + "%";
+
+        percentageLabel.textContent =
+          percentage.toFixed(1) + "%";
+
+        financialFill.style.width =
+          Math.min(percentage, 100) + "%";
+
+        if (percentage > 100) {
+
+          financialFill.style.background = "#D94A4A";
+
+        } else {
+
+          financialFill.style.background =
+            "linear-gradient(90deg, #2D80C9, #E8AD36)";
+
+        }
+
+      }
+
+      salaryInput.addEventListener(
+        "input",
+        updateFinancialSummary
+      );
+
+      commitmentsInput.addEventListener(
+        "input",
+        updateFinancialSummary
+      );
+
+      /* =====================================
+         CLEAR ERRORS ON INPUT
+      ===================================== */
+
+      [
+        fullNameInput,
+        phoneInput,
+        salaryInput,
+        commitmentsInput
+      ].forEach(function (input) {
+
+        input.addEventListener("input", function () {
+          clearFieldError(input);
+        });
+
+      });
+
+      /* =====================================
+         FORM VALIDATION
+      ===================================== */
+
+      function validateForm() {
+
+        let valid = true;
+        let firstInvalidElement = null;
+
+        const fullName = fullNameInput.value
+          .trim()
+          .replace(/\s+/g, " ");
+
+        const phone = normalizePhone(phoneInput.value);
+
+        const salary = getNumericValue(salaryInput);
+
+        const commitments = getNumericValue(commitmentsInput);
+
+        function invalidate(element, message) {
+
+          valid = false;
+
+          setFieldError(element, message);
+
+          if (!firstInvalidElement) {
+            firstInvalidElement = element;
+          }
+
+        }
+
+        /* NAME */
+
+        if (
+          fullName.length < 5 ||
+          fullName.split(" ").filter(Boolean).length < 3
+        ) {
+
+          invalidate(
+            fullNameInput,
+            "الرجاء إدخال الاسم الثلاثي بشكل صحيح."
+          );
+
+        }
+
+        /* PHONE */
+
+        if (!isValidSaudiPhone(phone)) {
+
+          invalidate(
+            phoneInput,
+            "أدخل رقم جوال سعودي صحيح يبدأ بـ 05."
+          );
+
+        }
+
+        /* SALARY */
+
+        if (salary === null || salary <= 0) {
+
+          invalidate(
+            salaryInput,
+            "الرجاء إدخال راتب شهري صحيح."
+          );
+
+        }
+
+        /* COMMITMENTS */
+
+        if (commitments === null || commitments < 0) {
+
+          invalidate(
+            commitmentsInput,
+            "الرجاء إدخال الالتزامات الشهرية، أو صفر."
+          );
+
+        }
+
+        /* FINANCIAL CONSISTENCY */
+
+        if (
+          salary !== null &&
+          commitments !== null &&
+          salary > 0 &&
+          commitments > salary
+        ) {
+
+          invalidate(
+            commitmentsInput,
+            "الالتزامات أعلى من الراتب. راجع المبلغ المدخل."
+          );
+
+        }
+
+        /* SECTOR */
+
+        if (!selectedSector) {
+
+          valid = false;
+
+          setGroupError(
+            "sectorError",
+            "الرجاء اختيار القطاع الوظيفي."
+          );
+
+          if (!firstInvalidElement) {
+            firstInvalidElement =
+              sectorGroup.querySelector(".selection-card");
+          }
+
+        }
+
+        /* DURATION */
+
+        if (
+          selectedSector &&
+          selectedSector.key !== "retired" &&
+          !selectedDuration
+        ) {
+
+          valid = false;
+
+          setGroupError(
+            "durationError",
+            "الرجاء تحديد مدة الخدمة."
+          );
+
+          if (!firstInvalidElement) {
+            firstInvalidElement =
+              durationGroup.querySelector(".selection-card");
+          }
+
+        }
+
+        if (!valid && firstInvalidElement) {
+
+          firstInvalidElement.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+
+          firstInvalidElement.focus({
+            preventScroll: true
+          });
+
+        }
+
+        return valid;
+      }
+
+      /* =====================================
+         WHATSAPP MESSAGE
+      ===================================== */
+
+      function buildWhatsAppMessage() {
+
+        const fullName = fullNameInput.value
+          .trim()
+          .replace(/\s+/g, " ");
+
+        const phone = normalizePhone(phoneInput.value);
+
+        const salary = getNumericValue(salaryInput);
+
+        const commitments = getNumericValue(commitmentsInput);
+
+        const remaining = salary - commitments;
+
+        const percentage = (
+          commitments / salary * 100
+        ).toFixed(1);
+
+        const sector = selectedSector.value;
+
+        const duration =
+          selectedSector.key === "retired"
+            ? "متقاعد - لا ينطبق"
+            : selectedDuration.value;
+
+        const date = new Date().toLocaleString("ar-SA", {
+          timeZone: "Asia/Riyadh",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+
+        const message = [
+          "طلب تقسيط جديد | ميسر",
+          "━━━━━━━━━━━━━━━━━━",
+          "",
+          "البيانات الشخصية",
+          "",
+          "الاسم الثلاثي: " + fullName,
+          "رقم الجوال: " + phone,
+          "",
+          "المعلومات المالية",
+          "",
+          "الراتب الشهري: " + formatMoney(salary) + " ريال",
+          "الالتزامات الشهرية: " + formatMoney(commitments) + " ريال",
+          "المتبقي بعد الالتزامات: " + formatMoney(remaining) + " ريال",
+          "نسبة الالتزامات: " + percentage + "%",
+          "",
+          "المعلومات الوظيفية",
+          "",
+          "القطاع: " + sector,
+          "مدة الخدمة: " + duration,
+          "",
+          "━━━━━━━━━━━━━━━━━━",
+          "تاريخ الطلب: " + date,
+          "",
+          "أرغب في معرفة خيارات التقسيط المتاحة لي.",
+          "وأتفهم أن تقديم الطلب لا يعني الموافقة النهائية."
+        ];
+
+        return message.join("\n");
+      }
+
+      /* =====================================
+         FORM SUBMIT
+      ===================================== */
+
+      form.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        if (!validateForm()) {
+
+          showToast(
+            "يرجى مراجعة الحقول المحددة وإكمال البيانات المطلوبة.",
+            "error"
+          );
+
+          return;
+        }
+
+        const message = buildWhatsAppMessage();
+
+        const whatsappUrl =
+          "https://wa.me/" +
+          CONFIG.whatsappNumber +
+          "?text=" +
+          encodeURIComponent(message);
+
+        showToast(
+          "تم تجهيز الطلب، سيتم فتح واتساب لمراجعة الرسالة وإرسالها."
+        );
+
+        submitButton.disabled = true;
+
+        setTimeout(function () {
+
+          submitButton.disabled = false;
+
+          window.location.assign(whatsappUrl);
+
+        }, 500);
+
+      });
+
+      /* =====================================
+         INITIAL STATE
+      ===================================== */
+
+      updateFinancialSummary();
+
     });
-  }
-
-});
-</script>
+  </script>
 
 </body>
 </html>
