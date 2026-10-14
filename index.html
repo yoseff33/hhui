@@ -1,1348 +1,526 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
-  <head>
-    <meta charset="UTF-8" />
-    <script>
-      if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}
-    </script>
-    <script>
-      (()=>{class RocketLazyLoadScripts{constructor(){this.v="2.0.5",this.userEvents=["keydown","keyup","mousedown","mouseup","mousemove","mouseover","mouseout","touchmove","touchstart","touchend","touchcancel","wheel","click","dblclick","input"],this.attributeEvents=["onblur","onclick","oncontextmenu","ondblclick","onfocus","onmousedown","onmouseenter","onmouseleave","onmousemove","onmouseout","onmouseover","onmouseup","onmousewheel","onscroll","onsubmit"]}async t(){this.i(),this.o(),/iP(ad|hone)/.test(navigator.userAgent)&&this.h(),this.u(),this.l(this),this.m(),this.k(this),this.p(this),this._(),await Promise.all([this.R(),this.L()]),this.lastBreath=Date.now(),this.S(this),this.P(),this.D(),this.O(),this.M(),await this.C(this.delayedScripts.normal),await this.C(this.delayedScripts.defer),await this.C(this.delayedScripts.async),await this.T(),await this.F(),await this.j(),await this.A(),window.dispatchEvent(new Event("rocket-allScriptsLoaded")),this.everythingLoaded=!0,this.lastTouchEnd&&await new Promise(t=>setTimeout(t,500-Date.now()+this.lastTouchEnd)),this.I(),this.H(),this.U(),this.W()}i(){this.CSPIssue=sessionStorage.getItem("rocketCSPIssue"),document.addEventListener("securitypolicyviolation",t=>{this.CSPIssue||"script-src-elem"!==t.violatedDirective||"data"!==t.blockedURI||(this.CSPIssue=!0,sessionStorage.setItem("rocketCSPIssue",!0))},{isRocket:!0})}o(){window.addEventListener("pageshow",t=>{this.persisted=t.persisted,this.realWindowLoadedFired=!0},{isRocket:!0}),window.addEventListener("pagehide",()=>{this.onFirstUserAction=null},{isRocket:!0})}h(){let t;function e(e){t=e}window.addEventListener("touchstart",e,{isRocket:!0}),window.addEventListener("touchend",function i(o){o.changedTouches[0]&&t.changedTouches[0]&&Math.abs(o.changedTouches[0].pageX-t.changedTouches[0].pageX)<10&&Math.abs(o.changedTouches[0].pageY-t.changedTouches[0].pageY)<10&&o.timeStamp-t.timeStamp<200&&(window.removeEventListener("touchstart",e,{isRocket:!0}),window.removeEventListener("touchend",i,{isRocket:!0}),"INPUT"===o.target.tagName&&"text"===o.target.type||(o.target.dispatchEvent(new TouchEvent("touchend",{target:o.target,bubbles:!0})),o.target.dispatchEvent(new MouseEvent("mouseover",{target:o.target,bubbles:!0})),o.target.dispatchEvent(new PointerEvent("click",{target:o.target,bubbles:!0,cancelable:!0,detail:1,clientX:o.changedTouches[0].clientX,clientY:o.changedTouches[0].clientY})),event.preventDefault()))},{isRocket:!0})}q(t){var mz=t.target&&t.target.closest&&(t.target.matches("input")?t.target:(t.target.closest("label")||{}).control);if("click"===t.type&&mz&&/^(radio|checkbox)$/.test(mz.type))return;this.userActionTriggered||("mousemove"!==t.type||this.firstMousemoveIgnored?"keyup"===t.type||"mouseover"===t.type||"mouseout"===t.type||(this.userActionTriggered=!0,this.onFirstUserAction&&this.onFirstUserAction()):this.firstMousemoveIgnored=!0),"click"===t.type&&t.preventDefault(),t.stopPropagation(),t.stopImmediatePropagation(),"touchstart"===this.lastEvent&&"touchend"===t.type&&(this.lastTouchEnd=Date.now()),"click"===t.type&&(this.lastTouchEnd=0),this.lastEvent=t.type,t.composedPath&&t.composedPath()[0].getRootNode()instanceof ShadowRoot&&(t.rocketTarget=t.composedPath()[0]),this.savedUserEvents.push(t)}u(){this.savedUserEvents=[],this.userEventHandler=this.q.bind(this),this.userEvents.forEach(t=>window.addEventListener(t,this.userEventHandler,{passive:!1,isRocket:!0})),document.addEventListener("visibilitychange",this.userEventHandler,{isRocket:!0})}U(){this.userEvents.forEach(t=>window.removeEventListener(t,this.userEventHandler,{passive:!1,isRocket:!0})),document.removeEventListener("visibilitychange",this.userEventHandler,{isRocket:!0}),this.savedUserEvents.forEach(t=>{(t.rocketTarget||t.target).dispatchEvent(new window[t.constructor.name](t.type,t))})}m(){const t="return false",e=Array.from(this.attributeEvents,t=>"data-rocket-"+t),i="["+this.attributeEvents.join("],[")+"]",o="[data-rocket-"+this.attributeEvents.join("],[data-rocket-")+"]",s=(e,i,o)=>{o&&o!==t&&(e.setAttribute("data-rocket-"+i,o),e["rocket"+i]=new Function("event",o),e.setAttribute(i,t))};new MutationObserver(t=>{for(const n of t)"attributes"===n.type&&(n.attributeName.startsWith("data-rocket-")||this.everythingLoaded?n.attributeName.startsWith("data-rocket-")&&this.everythingLoaded&&this.N(n.target,n.attributeName.substring(12)):s(n.target,n.attributeName,n.target.getAttribute(n.attributeName))),"childList"===n.type&&n.addedNodes.forEach(t=>{if(t.nodeType===Node.ELEMENT_NODE)if(this.everythingLoaded)for(const i of[t,...t.querySelectorAll(o)])for(const t of i.getAttributeNames())e.includes(t)&&this.N(i,t.substring(12));else for(const e of[t,...t.querySelectorAll(i)])for(const t of e.getAttributeNames())this.attributeEvents.includes(t)&&s(e,t,e.getAttribute(t))})}).observe(document,{subtree:!0,childList:!0,attributeFilter:[...this.attributeEvents,...e]})}I(){this.attributeEvents.forEach(t=>{document.querySelectorAll("[data-rocket-"+t+"]").forEach(e=>{this.N(e,t)})})}N(t,e){const i=t.getAttribute("data-rocket-"+e);i&&(t.setAttribute(e,i),t.removeAttribute("data-rocket-"+e))}k(t){Object.defineProperty(HTMLElement.prototype,"onclick",{get(){return this.rocketonclick||null},set(e){this.rocketonclick=e,this.setAttribute(t.everythingLoaded?"onclick":"data-rocket-onclick","this.rocketonclick(event)")}})}S(t){function e(e,i){let o=e[i];e[i]=null,Object.defineProperty(e,i,{get:()=>o,set(s){t.everythingLoaded?o=s:e["rocket"+i]=o=s}})}e(document,"onreadystatechange"),e(window,"onload"),e(window,"onpageshow");try{Object.defineProperty(document,"readyState",{get:()=>t.rocketReadyState,set(e){t.rocketReadyState=e},configurable:!0}),document.readyState="loading"}catch(t){console.log("WPRocket DJE readyState conflict, bypassing")}}l(t){this.originalAddEventListener=EventTarget.prototype.addEventListener,this.originalRemoveEventListener=EventTarget.prototype.removeEventListener,this.savedEventListeners=[],EventTarget.prototype.addEventListener=function(e,i,o){o&&o.isRocket||!t.B(e,this)&&!t.userEvents.includes(e)||t.B(e,this)&&!t.userActionTriggered||e.startsWith("rocket-")||t.everythingLoaded?t.originalAddEventListener.call(this,e,i,o):(t.savedEventListeners.push({target:this,remove:!1,type:e,func:i,options:o}),"mouseenter"!==e&&"mouseleave"!==e||t.originalAddEventListener.call(this,e,t.savedUserEvents.push,o))},EventTarget.prototype.removeEventListener=function(e,i,o){o&&o.isRocket||!t.B(e,this)&&!t.userEvents.includes(e)||t.B(e,this)&&!t.userActionTriggered||e.startsWith("rocket-")||t.everythingLoaded?t.originalRemoveEventListener.call(this,e,i,o):t.savedEventListeners.push({target:this,remove:!0,type:e,func:i,options:o})}}J(t,e){this.savedEventListeners=this.savedEventListeners.filter(i=>{let o=i.type,s=i.target||window;return e!==o||t!==s||(this.B(o,s)&&(i.type="rocket-"+o),this.$(i),!1)})}H(){EventTarget.prototype.addEventListener=this.originalAddEventListener,EventTarget.prototype.removeEventListener=this.originalRemoveEventListener,this.savedEventListeners.forEach(t=>this.$(t))}$(t){t.remove?this.originalRemoveEventListener.call(t.target,t.type,t.func,t.options):this.originalAddEventListener.call(t.target,t.type,t.func,t.options)}p(t){let e;function i(e){return t.everythingLoaded?e:e.split(" ").map(t=>"load"===t||t.startsWith("load.")?"rocket-jquery-load":t).join(" ")}function o(o){function s(e){const s=o.fn[e];o.fn[e]=o.fn.init.prototype[e]=function(){return this[0]===window&&t.userActionTriggered&&("string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=i(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach(t=>{const e=arguments[0][t];delete arguments[0][t],arguments[0][i(t)]=e})),s.apply(this,arguments),this}}if(o&&o.fn&&!t.allJQueries.includes(o)){const e={DOMContentLoaded:[],"rocket-DOMContentLoaded":[]};for(const t in e)document.addEventListener(t,()=>{e[t].forEach(t=>t())},{isRocket:!0});o.fn.ready=o.fn.init.prototype.ready=function(i){function s(){parseInt(o.fn.jquery)>2?setTimeout(()=>i.bind(document)(o)):i.bind(document)(o)}return"function"==typeof i&&(t.realDomReadyFired?!t.userActionTriggered||t.fauxDomReadyFired?s():e["rocket-DOMContentLoaded"].push(s):e.DOMContentLoaded.push(s)),this},s("on"),s("one"),s("off"),t.allJQueries.push(o)}e=o}t.allJQueries=[],o(window.jQuery),Object.defineProperty(window,"jQuery",{get:()=>e,set(t){o(t)}})}P(){const t=new Map;document.write=document.writeln=function(e){const i=document.currentScript,o=document.createRange(),s=i.parentElement;let n=t.get(i);void 0===n&&(n=i.nextSibling,t.set(i,n));const c=document.createDocumentFragment();o.setStart(c,0),c.appendChild(o.createContextualFragment(e)),s.insertBefore(c,n)}}async R(){return new Promise(t=>{this.userActionTriggered?t():this.onFirstUserAction=t})}async L(){return new Promise(t=>{document.addEventListener("DOMContentLoaded",()=>{this.realDomReadyFired=!0,t()},{isRocket:!0})})}async j(){return this.realWindowLoadedFired?Promise.resolve():new Promise(t=>{window.addEventListener("load",t,{isRocket:!0})})}M(){this.pendingScripts=[];this.scriptsMutationObserver=new MutationObserver(t=>{for(const e of t)e.addedNodes.forEach(t=>{"SCRIPT"!==t.tagName||!t.src||t.noModule||t.isWPRocket||this.pendingScripts.push({script:t,promise:new Promise(e=>{const i=()=>{const i=this.pendingScripts.findIndex(e=>e.script===t);i>=0&&this.pendingScripts.splice(i,1),e()};t.addEventListener("load",i,{isRocket:!0}),t.addEventListener("error",i,{isRocket:!0}),setTimeout(i,1e3)})})})}),this.scriptsMutationObserver.observe(document,{childList:!0,subtree:!0})}async F(){await this.X(),this.pendingScripts.length?(await this.pendingScripts[0].promise,await this.F()):this.scriptsMutationObserver.disconnect()}D(){this.delayedScripts={normal:[],async:[],defer:[]},document.querySelectorAll("script[type$=rocketlazyloadscript]").forEach(t=>{t.hasAttribute("data-rocket-src")?t.hasAttribute("async")&&!1!==t.async?this.delayedScripts.async.push(t):t.hasAttribute("defer")&&!1!==t.defer||"module"===t.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(t):this.delayedScripts.normal.push(t):this.delayedScripts.normal.push(t)})}async _(){await this.L();let t=[];document.querySelectorAll("script[type$=rocketlazyloadscript][data-rocket-src]").forEach(e=>{let i=e.getAttribute("data-rocket-src");if(i&&!i.startsWith("data:")){i.startsWith("//")&&(i=location.protocol+i);try{const o=new URL(i).origin;o!==location.origin&&t.push({src:o,crossOrigin:e.crossOrigin||"module"===e.getAttribute("data-rocket-type")})}catch(t){}}}),t=[...new Map(t.map(t=>[JSON.stringify(t),t])).values()],this.Y(t,"preconnect")}async G(t){if(await this.K(),!0!==t.noModule||!("noModule"in HTMLScriptElement.prototype))return new Promise(e=>{let i;function o(){(i||t).setAttribute("data-rocket-status","executed"),e()}try{if(navigator.userAgent.includes("Firefox/")||""===navigator.vendor||this.CSPIssue)i=document.createElement("script"),[...t.attributes].forEach(t=>{let e=t.nodeName;"type"!==e&&("data-rocket-type"===e&&(e="type"),"data-rocket-src"===e&&(e="src"),i.setAttribute(e,t.nodeValue))}),t.text&&(i.text=t.text),t.nonce&&(i.nonce=t.nonce),i.hasAttribute("src")?(i.addEventListener("load",o,{isRocket:!0}),i.addEventListener("error",()=>{i.setAttribute("data-rocket-status","failed-network"),e()},{isRocket:!0}),setTimeout(()=>{i.isConnected||e()},1)):(i.text=t.text,o()),i.isWPRocket=!0,t.parentNode.replaceChild(i,t);else{const i=t.getAttribute("data-rocket-type"),s=t.getAttribute("data-rocket-src");i?(t.type=i,t.removeAttribute("data-rocket-type")):t.removeAttribute("type"),t.addEventListener("load",o,{isRocket:!0}),t.addEventListener("error",i=>{this.CSPIssue&&i.target.src.startsWith("data:")?(console.log("WPRocket: CSP fallback activated"),t.removeAttribute("src"),this.G(t).then(e)):(t.setAttribute("data-rocket-status","failed-network"),e())},{isRocket:!0}),s?(t.fetchPriority="high",t.removeAttribute("data-rocket-src"),t.src=s):t.src="data:text/javascript;base64,"+window.btoa(unescape(encodeURIComponent(t.text)))}}catch(i){t.setAttribute("data-rocket-status","failed-transform"),e()}});t.setAttribute("data-rocket-status","skipped")}async C(t){const e=t.shift();return e?(e.isConnected&&await this.G(e),this.C(t)):Promise.resolve()}O(){this.Y([...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async],"preload")}Y(t,e){this.trash=this.trash||[];let i=!0;var o=document.createDocumentFragment();t.forEach(t=>{const s=t.getAttribute&&t.getAttribute("data-rocket-src")||t.src;if(s&&!s.startsWith("data:")){const n=document.createElement("link");n.href=s,n.rel=e,"preconnect"!==e&&(n.as="script",n.fetchPriority=i?"high":"low"),t.getAttribute&&"module"===t.getAttribute("data-rocket-type")&&(n.crossOrigin=!0),t.crossOrigin&&(n.crossOrigin=t.crossOrigin),t.integrity&&(n.integrity=t.integrity),t.nonce&&(n.nonce=t.nonce),o.appendChild(n),this.trash.push(n),i=!1}}),document.head.appendChild(o)}W(){this.trash.forEach(t=>t.remove())}async T(){try{document.readyState="interactive"}catch(t){}this.fauxDomReadyFired=!0;try{await this.K(),this.J(document,"readystatechange"),document.dispatchEvent(new Event("rocket-readystatechange")),await this.K(),document.rocketonreadystatechange&&document.rocketonreadystatechange(),await this.K(),this.J(document,"DOMContentLoaded"),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this.K(),this.J(window,"DOMContentLoaded"),window.dispatchEvent(new Event("rocket-DOMContentLoaded"))}catch(t){console.error(t)}}async A(){try{document.readyState="complete"}catch(t){}try{await this.K(),this.J(document,"readystatechange"),document.dispatchEvent(new Event("rocket-readystatechange")),await this.K(),document.rocketonreadystatechange&&document.rocketonreadystatechange(),await this.K(),this.J(window,"load"),window.dispatchEvent(new Event("rocket-load")),await this.K(),window.rocketonload&&window.rocketonload(),await this.K(),this.allJQueries.forEach(t=>t(window).trigger("rocket-jquery-load")),await this.K(),this.J(window,"pageshow");const t=new Event("rocket-pageshow");t.persisted=this.persisted,window.dispatchEvent(t),await this.K(),window.rocketonpageshow&&window.rocketonpageshow({persisted:this.persisted})}catch(t){console.error(t)}}async K(){Date.now()-this.lastBreath>45&&(await this.X(),this.lastBreath=Date.now())}async X(){return document.hidden?new Promise(t=>setTimeout(t)):new Promise(t=>requestAnimationFrame(t))}B(t,e=window){return e===document&&"readystatechange"===t||(e===document&&"DOMContentLoaded"===t||(e===window&&"DOMContentLoaded"===t||(e===window&&"load"===t||e===window&&"pageshow"===t)))}static run(){(new RocketLazyLoadScripts).t()}}RocketLazyLoadScripts.run()})();
-    </script>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="profile" href="https://gmpg.org/xfn/11" />
-    <title>ميسر | تقسيط الأجهزة الإلكترونية</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-
-    <meta name="robots" content="max-image-preview:large" />
-    <meta name="theme-color" content="#0a1f44" />
-    <link rel="shortcut icon" href="https://mhzm.sa/wp-content/uploads/2024/09/Logo-Blue-300x300.png" />
-
-    <style id="wp-img-auto-sizes-contain-inline-css">
-      img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
-    </style>
-    <link data-minify="1" rel="stylesheet" id="fluentform-elementor-widget-css" href="https://order.mhzm.sa/wp-content/cache/min/1/wp-content/plugins/fluentform/assets/css/fluent-forms-elementor-widget.css?ver=1791856828" media="all" />
-    <style id="wp-emoji-styles-inline-css">
-      img.wp-smiley, img.emoji { display: inline !important; border: none !important; box-shadow: none !important; height: 1em !important; width: 1em !important; margin: 0 0.07em !important; vertical-align: -0.1em !important; background: none !important; padding: 0 !important; }
-    </style>
-    <style id="classic-theme-styles-inline-css">
-.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}
-    </style>
-    <link rel="stylesheet" id="elementor-frontend-css" href="https://order.mhzm.sa/wp-content/plugins/elementor/assets/css/frontend.min.css?ver=4.3.4" media="all" />
-    <link rel="stylesheet" id="widget-heading-css" href="https://order.mhzm.sa/wp-content/plugins/elementor/assets/css/widget-heading-rtl.min.css?ver=4.3.4" media="all" />
-    <link rel="stylesheet" id="widget-icon-list-css" href="https://order.mhzm.sa/wp-content/plugins/elementor/assets/css/widget-icon-list-rtl.min.css?ver=4.3.4" media="all" />
-    <link rel="stylesheet" id="widget-social-icons-css" href="https://order.mhzm.sa/wp-content/plugins/elementor/assets/css/widget-social-icons-rtl.min.css?ver=4.3.4" media="all" />
-    <link rel="stylesheet" id="e-apple-webkit-css" href="https://order.mhzm.sa/wp-content/plugins/elementor/assets/css/conditionals/apple-webkit.min.css?ver=4.3.4" media="all" />
-    <link rel="stylesheet" id="widget-image-css" href="https://order.mhzm.sa/wp-content/plugins/elementor/assets/css/widget-image-rtl.min.css?ver=4.3.4" media="all" />
-    <link data-minify="1" rel="stylesheet" id="fluent-form-styles-css" href="https://order.mhzm.sa/wp-content/cache/min/1/wp-content/plugins/fluentform/assets/css/fluent-forms-public-rtl.css?ver=1791856828" media="all" />
-    <style id="fluent-form-styles-inline-css">
-      .fluentform .ff-btn-submit.ff-working{font-size:0!important;display:flex;align-items:center;justify-content:center;gap:.5em;pointer-events:none;opacity:.85;}
-.fluentform .ff-btn-submit.ff-working::before{content:"";width:1em;height:1em;font-size:16px;flex:none;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:df-spin .7s linear infinite;}
-.fluentform .ff-btn-submit.ff-working::after{content:"جاري التحقق....";font-size:16px;position:static;background:none;height:auto;animation:none;}
-@keyframes df-spin{to{transform:rotate(360deg)}}
-    </style>
-    <link data-minify="1" rel="stylesheet" id="fluentform-public-default-css" href="https://order.mhzm.sa/wp-content/cache/min/1/wp-content/plugins/fluentform/assets/css/fluentform-public-default-rtl.css?ver=1791856828" media="all" />
-    <link rel="stylesheet" id="e-animation-zoomInRight-css" href="https://order.mhzm.sa/wp-content/plugins/elementor/assets/lib/animations/styles/zoomInRight.min.css?ver=4.3.4" media="all" />
-    <link rel="stylesheet" id="widget-image-box-css" href="https://order.mhzm.sa/wp-content/plugins/elementor/assets/css/widget-image-box-rtl.min.css?ver=4.3.4" media="all" />
-    <link rel="stylesheet" id="widget-nested-accordion-css" href="https://order.mhzm.sa/wp-content/plugins/elementor/assets/css/widget-nested-accordion-rtl.min.css?ver=4.3.4" media="all" />
-    <link rel="stylesheet" id="elementor-post-499-css" href="https://order.mhzm.sa/wp-content/uploads/elementor/css/post-499.css?ver=1791856830" media="all" />
-    <link rel="stylesheet" id="elementor-post-24-css" href="https://order.mhzm.sa/wp-content/uploads/elementor/css/post-24.css?ver=1791856828" media="all" />
-    <link data-minify="1" rel="stylesheet" id="uicore_global-css" href="https://order.mhzm.sa/wp-content/cache/min/1/wp-content/uploads/uicore-global.css?ver=1791856828" media="all" />
-    <link data-minify="1" rel="stylesheet" id="uicore_rtl-css" href="https://order.mhzm.sa/wp-content/cache/min/1/wp-content/plugins/uicore-framework/assets/css/frontend-rtl.css?ver=1791856828" media="all" />
-    <script id="jquery-core-js" src="https://order.mhzm.sa/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" data-rocket-defer="" defer=""></script>
-    <script id="jquery-migrate-js" src="https://order.mhzm.sa/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" data-rocket-defer="" defer=""></script>
-    <link rel="https://api.w.org/" href="https://order.mhzm.sa/wp-json/" />
-
-    <style id="mhzm-checked-buttons">
-      .fluentform .ff-el-group.ff_list_buttons .ff-el-form-check:has(input:checked) label>span{background:linear-gradient(135deg,#0a1f44,#1e5eb8);border-color:#1e5eb8;box-shadow:0 4px 14px rgba(30,94,184,.35);color:#fff;transform:translateY(-1px)}.fluentform .ff-el-group.ff_list_buttons .ff-el-form-check:first-child:has(input:checked) label>span{border-right-color:#1e5eb8}
-    </style>
-
-    <style id="mhzm-modern-theme">
-      :root {
-        --primary: #0a1f44;
-        --primary-light: #1e5eb8;
-        --accent: #f5b301;
-        --accent-2: #00c2a8;
-        --gradient-brand: linear-gradient(135deg, #0a1f44 0%, #1e5eb8 50%, #2a7fdc 100%);
-        --gradient-accent: linear-gradient(135deg, #f5b301 0%, #ff8a00 100%);
-        --gradient-cool: linear-gradient(135deg, #00c2a8 0%, #1e5eb8 100%);
-        --shadow-sm: 0 4px 14px rgba(10,31,68,.08);
-        --shadow-md: 0 10px 30px rgba(10,31,68,.12);
-        --shadow-lg: 0 20px 50px rgba(10,31,68,.18);
-        --radius: 16px;
-        --radius-lg: 24px;
-      }
-
-      html { scroll-behavior: smooth; }
-
-      body {
-        font-family: 'Tajawal', 'Cairo', 'Changa', system-ui, -apple-system, sans-serif !important;
-        background: #f6f9ff;
-        color: #1a2332;
-      }
-
-      h1, h2, h3, h4, h5, h6,
-      .elementor-heading-title,
-      .elementor-image-box-title {
-        font-family: 'Tajawal', 'Cairo', sans-serif !important;
-        font-weight: 800 !important;
-        letter-spacing: -0.01em;
-      }
-
-      body::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background:
-          radial-gradient(1200px 600px at 90% -10%, rgba(30,94,184,.10), transparent 60%),
-          radial-gradient(1000px 500px at -10% 30%, rgba(0,194,168,.08), transparent 55%),
-          radial-gradient(900px 500px at 50% 110%, rgba(245,179,1,.07), transparent 60%);
-        pointer-events: none;
-        z-index: 0;
-      }
-
-      #uicore-page, .uicore-body-content { position: relative; z-index: 1; }
-
-      /* ===== الهيدر (بدون شعار) ===== */
-      #wrapper-navbar {
-        background: rgba(255,255,255,.9) !important;
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
-        box-shadow: 0 2px 20px rgba(10,31,68,.06);
-        border-bottom: 1px solid rgba(10,31,68,.06);
-        padding: 14px 0 !important;
-      }
-
-      /* شعار نصي جديد بدل صورة الشعار */
-      .uicore-branding a.text-logo {
-        display: inline-flex !important;
-        align-items: center;
-        gap: 12px;
-        text-decoration: none;
-      }
-      .uicore-branding a.text-logo .logo-icon {
-        width: 48px; height: 48px;
-        display: inline-flex;
-        align-items: center; justify-content: center;
-        background: var(--gradient-brand);
-        color: #fff;
-        border-radius: 14px;
-        font-size: 22px;
-        box-shadow: 0 8px 20px rgba(30,94,184,.35);
-        transition: transform .4s cubic-bezier(.2,.9,.3,1.4);
-      }
-      .uicore-branding a.text-logo:hover .logo-icon {
-        transform: rotate(-8deg) scale(1.06);
-      }
-      .uicore-branding a.text-logo .logo-text {
-        font-family: 'Tajawal', sans-serif !important;
-        font-size: 30px;
-        font-weight: 900;
-        background: var(--gradient-brand);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        letter-spacing: -0.5px;
-        line-height: 1;
-      }
-      .uicore-branding a.text-logo .logo-tagline {
-        display: block;
-        font-size: 11px;
-        font-weight: 600;
-        color: #6b7a90;
-        margin-top: 2px;
-        letter-spacing: 0.5px;
-      }
-
-      .elementor-element-a03371d img {
-        border-radius: 0;
-        width: 100%;
-        display: block;
-      }
-
-      /* ===== حاوية الفورم ===== */
-      #form-cont .e-con-inner {
-        background: #ffffff;
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-lg);
-        padding: 34px 28px !important;
-        margin-top: -60px;
-        position: relative;
-        z-index: 5;
-        border: 1px solid rgba(10,31,68,.06);
-      }
-      @media (max-width: 767px) {
-        #form-cont .e-con-inner { margin-top: -30px; padding: 22px 16px !important; border-radius: 20px; }
-      }
-
-      .fluentform .ff-el-input--label label {
-        font-family: 'Tajawal', sans-serif !important;
-        font-weight: 700 !important;
-        color: #0a1f44 !important;
-        font-size: 15px !important;
-      }
-
-      .fluentform .ff-el-form-control,
-      .fluentform input[type="text"],
-      .fluentform input[type="tel"],
-      .fluentform input[type="number"] {
-        font-family: 'Tajawal', sans-serif !important;
-        background: #f8faff !important;
-        border: 1.5px solid #e3eaf5 !important;
-        border-radius: 12px !important;
-        padding: 14px 18px !important;
-        font-size: 15px !important;
-        color: #0a1f44 !important;
-        transition: all .25s ease !important;
-        height: auto !important;
-      }
-      .fluentform .ff-el-form-control:focus,
-      .fluentform input:focus {
-        background: #ffffff !important;
-        border-color: var(--primary-light) !important;
-        box-shadow: 0 0 0 4px rgba(30,94,184,.12) !important;
-        outline: none !important;
-      }
-
-      .fluentform .ff-el-group.ff_list_buttons .ff-el-form-check label > span {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Tajawal', sans-serif !important;
-        font-weight: 700 !important;
-        padding: 12px 22px !important;
-        border-radius: 12px !important;
-        border: 1.5px solid #e3eaf5 !important;
-        background: #ffffff !important;
-        color: #0a1f44 !important;
-        cursor: pointer;
-        transition: all .25s cubic-bezier(.2,.9,.3,1.4) !important;
-        font-size: 14px !important;
-        box-shadow: 0 2px 6px rgba(10,31,68,.04);
-        margin: 4px !important;
-        min-width: 110px;
-      }
-      .fluentform .ff-el-group.ff_list_buttons .ff-el-form-check label > span:hover {
-        border-color: var(--primary-light) !important;
-        background: #f3f8ff !important;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(30,94,184,.15);
-      }
-
-      .fluentform .ff-btn,
-      .elementor-button {
-        font-family: 'Tajawal', sans-serif !important;
-        font-weight: 800 !important;
-        border-radius: 14px !important;
-        letter-spacing: .2px;
-        transition: all .3s cubic-bezier(.2,.9,.3,1.4) !important;
-        border: none !important;
-      }
-
-      .fluentform .ff-btn-next,
-      .fluentform .ff-btn-submit,
-      form.fluent_form_6 .ff-btn-submit:not(.ff_btn_no_style) {
-        background: var(--gradient-brand) !important;
-        color: #ffffff !important;
-        padding: 15px 40px !important;
-        font-size: 16px !important;
-        box-shadow: 0 8px 24px rgba(30,94,184,.32) !important;
-        position: relative;
-        overflow: hidden;
-      }
-      .fluentform .ff-btn-next:hover,
-      .fluentform .ff-btn-submit:hover {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 14px 34px rgba(30,94,184,.45) !important;
-        filter: brightness(1.08);
-      }
-
-      .fluentform .ff-btn-prev {
-        background: #eef2f9 !important;
-        color: #0a1f44 !important;
-        padding: 14px 32px !important;
-      }
-      .fluentform .ff-btn-prev:hover {
-        background: #e3eaf5 !important;
-        transform: translateY(-2px);
-      }
-
-      .elementor-element-7d76e71f .elementor-heading-title,
-      .elementor-element-7ba6af79 .elementor-heading-title {
-        font-size: 34px !important;
-        font-weight: 900 !important;
-        text-align: center;
-        background: var(--gradient-brand);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent !important;
-        margin: 30px 0 40px !important;
-        position: relative;
-      }
-      .elementor-element-7d76e71f .elementor-heading-title::after,
-      .elementor-element-7ba6af79 .elementor-heading-title::after {
-        content: '';
-        display: block;
-        width: 80px;
-        height: 5px;
-        margin: 14px auto 0;
-        background: var(--gradient-accent);
-        border-radius: 99px;
-      }
-
-      .e-n-accordion-item {
-        background: #ffffff;
-        border-radius: var(--radius) !important;
-        margin-bottom: 14px !important;
-        border: 1.5px solid #e3eaf5 !important;
-        overflow: hidden;
-        transition: all .3s ease;
-        box-shadow: 0 2px 8px rgba(10,31,68,.04);
-      }
-      .e-n-accordion-item:hover {
-        border-color: rgba(30,94,184,.4) !important;
-        box-shadow: 0 8px 22px rgba(10,31,68,.08);
-        transform: translateY(-2px);
-      }
-      .e-n-accordion-item[open] {
-        border-color: var(--primary-light) !important;
-        box-shadow: 0 10px 30px rgba(30,94,184,.14);
-      }
-      .e-n-accordion-item-title {
-        padding: 20px 24px !important;
-        font-family: 'Tajawal', sans-serif !important;
-        font-weight: 800 !important;
-        color: #0a1f44 !important;
-        font-size: 17px !important;
-      }
-      .e-n-accordion-item-title-icon .e-opened,
-      .e-n-accordion-item-title-icon .e-closed {
-        width: 32px; height: 32px;
-        display: inline-flex;
-        align-items: center; justify-content: center;
-        border-radius: 50%;
-        background: var(--gradient-brand);
-        color: #fff !important;
-        transition: all .3s ease;
-      }
-      .e-n-accordion-item-title-icon svg { fill: #fff !important; width: 14px !important; }
-      .e-n-accordion-item-title-icon .e-opened { background: var(--gradient-accent); }
-
-      .elementor-image-box-wrapper {
-        background: #ffffff;
-        border-radius: var(--radius-lg);
-        padding: 28px 22px !important;
-        border: 1.5px solid #e8eef8;
-        transition: all .4s cubic-bezier(.2,.9,.3,1.2);
-        height: 100%;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-      .elementor-image-box-wrapper::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0; height: 4px;
-        background: var(--gradient-brand);
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform .4s ease;
-      }
-      .elementor-image-box-wrapper:hover::before { transform: scaleX(1); }
-      .elementor-image-box-wrapper:hover {
-        border-color: rgba(30,94,184,.3);
-        box-shadow: 0 18px 40px rgba(10,31,68,.12);
-        transform: translateY(-6px);
-      }
-      .elementor-image-box-img img {
-        max-width: 130px !important;
-        height: auto;
-        transition: transform .5s cubic-bezier(.2,.9,.3,1.6);
-      }
-      .elementor-image-box-wrapper:hover .elementor-image-box-img img { transform: scale(1.1) rotate(-3deg); }
-      .elementor-image-box-title {
-        font-size: 19px !important;
-        color: #0a1f44 !important;
-        margin-top: 12px !important;
-        margin-bottom: 8px !important;
-      }
-      .elementor-image-box-description {
-        color: #6b7a90 !important;
-        font-size: 14.5px !important;
-        line-height: 1.7 !important;
-      }
-
-      #go-form-button .elementor-button {
-        background: var(--gradient-accent) !important;
-        color: #0a1f44 !important;
-        font-weight: 900 !important;
-        border-radius: 99px !important;
-        padding: 16px 40px !important;
-        font-size: 17px !important;
-        box-shadow: 0 14px 32px rgba(245,179,1,.4) !important;
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        animation: pulseBtn 2.2s ease-in-out infinite;
-      }
-      #go-form-button .elementor-button::before {
-        content: '\f00c';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        font-size: 16px;
-      }
-      #go-form-button .elementor-button:hover {
-        transform: translateY(-3px) scale(1.04);
-        box-shadow: 0 20px 44px rgba(245,179,1,.55) !important;
-      }
-      @keyframes pulseBtn {
-        0%,100% { box-shadow: 0 14px 32px rgba(245,179,1,.4); }
-        50% { box-shadow: 0 14px 40px rgba(245,179,1,.7); }
-      }
-
-      /* ===== الفوتر ===== */
-      footer.elementor-location-footer {
-        background: var(--gradient-brand) !important;
-        color: #ffffff !important;
-        position: relative;
-        overflow: hidden;
-        margin-top: 60px;
-      }
-      footer.elementor-location-footer::before {
-        content: '';
-        position: absolute;
-        top: -50%; right: -10%;
-        width: 500px; height: 500px;
-        background: radial-gradient(circle, rgba(245,179,1,.18), transparent 65%);
-        border-radius: 50%;
-        pointer-events: none;
-      }
-      footer.elementor-location-footer::after {
-        content: '';
-        position: absolute;
-        bottom: -50%; left: -10%;
-        width: 600px; height: 600px;
-        background: radial-gradient(circle, rgba(0,194,168,.15), transparent 65%);
-        border-radius: 50%;
-        pointer-events: none;
-      }
-      footer.elementor-location-footer .elementor-element,
-      footer.elementor-location-footer .elementor-widget,
-      footer.elementor-location-footer .e-con-inner {
-        background: transparent !important;
-        background-color: transparent !important;
-      }
-      footer .elementor-heading-title {
-        color: #ffffff !important;
-        font-size: 20px !important;
-        font-weight: 800 !important;
-        position: relative;
-        padding-bottom: 12px;
-        margin-bottom: 22px !important;
-        display: inline-block;
-      }
-      footer .elementor-heading-title::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 42px;
-        height: 3px;
-        background: var(--gradient-accent);
-        border-radius: 99px;
-      }
-      footer .elementor-text-editor,
-      footer .elementor-icon-list-text,
-      footer p {
-        color: rgba(255,255,255,.88) !important;
-        font-family: 'Tajawal', sans-serif !important;
-        line-height: 1.85 !important;
-        font-size: 15px !important;
-      }
-      footer .elementor-icon-list-item {
-        transition: transform .25s ease;
-        padding: 4px 0 !important;
-      }
-      footer .elementor-icon-list-item:hover {
-        transform: translateX(-6px);
-      }
-      footer .elementor-icon-list-item:hover .elementor-icon-list-text {
-        color: var(--accent) !important;
-      }
-
-      footer .elementor-social-icons-wrapper .elementor-icon {
-        background: rgba(255,255,255,.1) !important;
-        border: 1.5px solid rgba(255,255,255,.15) !important;
-        color: #ffffff !important;
-        border-radius: 12px !important;
-        transition: all .3s cubic-bezier(.2,.9,.3,1.4);
-        width: 46px !important;
-        height: 46px !important;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-      }
-      footer .elementor-social-icons-wrapper .elementor-icon:hover {
-        background: var(--gradient-accent) !important;
-        color: #0a1f44 !important;
-        border-color: transparent !important;
-        transform: translateY(-4px) rotate(-6deg) scale(1.08);
-        box-shadow: 0 10px 24px rgba(245,179,1,.4);
-      }
-      footer .elementor-icon svg { fill: currentColor !important; }
-
-      footer iframe {
-        border-radius: var(--radius) !important;
-        filter: saturate(1.1) contrast(1.05);
-        box-shadow: 0 12px 30px rgba(0,0,0,.25);
-      }
-
-      .elementor-element-fbbefcd {
-        border-top: 1px solid rgba(255,255,255,.12);
-        padding-top: 24px !important;
-        margin-top: 10px;
-        text-align: center;
-      }
-      .elementor-element-fbbefcd .elementor-heading-title {
-        font-size: 14px !important;
-        color: rgba(255,255,255,.7) !important;
-        font-weight: 500 !important;
-      }
-      .elementor-element-fbbefcd .elementor-heading-title::after { display: none; }
-
-      @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(24px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      .elementor-image-box-wrapper,
-      .e-n-accordion-item {
-        animation: fadeUp .7s ease both;
-      }
-
-      ::-webkit-scrollbar { width: 10px; }
-      ::-webkit-scrollbar-track { background: #eef2f9; }
-      ::-webkit-scrollbar-thumb {
-        background: var(--gradient-brand);
-        border-radius: 10px;
-      }
-
-      /* الرابط التوثيقي - تصميم مميز */
-      .cr-verify-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        background: rgba(245,179,1,.15);
-        border: 1px solid rgba(245,179,1,.35);
-        border-radius: 10px;
-        color: #f5b301 !important;
-        font-weight: 700;
-        text-decoration: none;
-        transition: all .3s ease;
-        font-size: 14px;
-      }
-      .cr-verify-link:hover {
-        background: var(--gradient-accent);
-        color: #0a1f44 !important;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(245,179,1,.35);
-      }
-    </style>
-
-    <style>
-      .uicore-animate-scroll { animation-fill-mode: both; animation-timing-function: linear; animation-timeline: view(block); }
-      .uicore-animate-hide { opacity: 0; visibility: hidden; }
-    </style>
-    <noscript>
-      <style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style>
-    </noscript>
-    <style id="wpr-lazyload-bg-container"></style>
-    <style id="wpr-lazyload-bg-exclusion"></style>
-    <noscript><style id="wpr-lazyload-bg-nostyle"></style></noscript>
-  </head>
-  <body class="rtl wp-singular page-template-default page page-id-499 wp-embed-responsive wp-theme-outgrid ui-a-dsmm-slide  uicore-menu-focus elementor-default elementor-kit-5 elementor-page elementor-page-499">
-    <div class="uicore-animation-bg"></div>
-    <div class="uicore-body-content">
-      <div id="uicore-page">
-
-        <!-- ============ الهيدر ============ -->
-        <div data-uils="header" data-uils-title="Header" id="wrapper-navbar" itemscope="" itemtype="http://schema.org/WebSite" class="uicore uicore-navbar uicore-section uicore-h-classic">
-          <div class="uicore-header-wrapper">
-            <nav class="uicore uicore-container">
-              <div class="uicore-mobile-head-left"></div>
-              <div class="uicore-branding" data-uils="header-branding" data-uils-title="Site Logo">
-                <!-- ✅ تم حذف صورة شعار محزم واستبدالها بشعار نصي -->
-                <a href="#form" rel="home" class="text-logo">
-                  <span class="logo-icon"><i class="fa-solid fa-hand-holding-dollar"></i></span>
-                  <span>
-                    <span class="logo-text">ميسر</span>
-                    <span class="logo-tagline">ميسرك المليان</span>
-                  </span>
-                </a>
-              </div>
-              <div class="uicore-nav-menu">
-                <div class="uicore uicore-extra" data-uils="header_extra" data-uils-title="Header Extras">
-                  <div class="uicore uicore-socials uicore-only-desktop"></div>
-                </div>
-              </div>
-              <div class="uicore-mobile-head-right"></div>
-            </nav>
-          </div>
-        </div>
-
-        <div id="content" class="uicore-content">
-          <div id="primary" class="content-area">
-            <article id="post-499" class="post-499 page type-page status-publish hentry">
-              <main class="entry-content">
-                <div data-elementor-type="wp-page" data-elementor-id="499" class="elementor elementor-499" data-elementor-post-type="page">
-
-                  <!-- ============ البانر ============ -->
-                  <div class="elementor-element elementor-element-a03371d e-con-full e-flex e-con e-parent" data-id="a03371d" data-element_type="container" data-e-type="container" data-settings='{"background_background":"classic"}'>
-                    <div class="elementor-element elementor-element-4109e900 elementor-widget elementor-widget-image" data-id="4109e900" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
-                      <a href="#form">
-                        <img fetchpriority="high" decoding="async" width="2560" height="1117" src="https://order.mhzm.sa/wp-content/webp-express/webp-images/uploads/2026/09/ipone-18-banners-01-1-scaled.jpg.webp" class="attachment-full size-full wp-image-576" alt="ميسر - تقسيط الأجهزة" />
-                      </a>
-                    </div>
-                  </div>
-
-                  <!-- ============ نموذج الطلب ============ -->
-                  <div class="elementor-element elementor-element-373c10f7 e-flex e-con-boxed e-con e-parent" data-id="373c10f7" data-element_type="container" data-e-type="container" id="form-cont">
-                    <div class="e-con-inner">
-                      <div class="elementor-element elementor-element-7450d9f6 fluentform-widget-section-break-content-center fluentform-widget-submit-button-full-width fluent-form-widget-step-header-yes fluent-form-widget-step-progressbar-yes elementor-widget elementor-widget-fluent-form-widget" data-id="7450d9f6" data-element_type="widget" data-e-type="widget" id="form" data-widget_type="fluent-form-widget.default">
-                        <div class="elementor-widget-container">
-                          <div class="fluentform-widget-wrapper fluentform-widget-custom-radio-checkbox fluentform-widget-align-default">
-                            <div class="fluentform ff-default fluentform_wrapper_6 ffs_default_wrap">
-                              <form data-form_id="6" id="fluentform_6" class="frm-fluent-form fluent_form_6 ff-el-form-top ff_form_instance_6_1 ff-form-loading ff-form-has-steps ffs_default" data-form_instance="ff_form_instance_6_1" method="POST">
-                                <fieldset style="border: none!important;margin: 0!important;padding: 0!important;background-color: transparent!important;box-shadow: none!important;outline: none!important; min-inline-size: 100%;">
-                                  <legend class="ff_screen_reader_title" style="display: block; margin: 0!important;padding: 0!important;height: 0!important;text-indent: -999999px;width: 0!important;overflow:hidden;">Order Form</legend>
-                                  <input type="hidden" name="__fluent_form_embded_post_id" value="499" />
-                                  <input type="hidden" id="_fluentform_6_fluentformnonce" name="_fluentform_6_fluentformnonce" value="a3411c8b77" />
-                                  <input type="hidden" name="_wp_http_referer" value="/b/" />
-                                  <div class="ff-step-container" data-name="step_start-6_3" data-disable_auto_focus="no" data-enable_auto_slider="no" data-enable_step_data_persistency="yes" data-enable_step_page_resume="yes" data-animation_type="slide">
-                                    <span class="ff_step_start"></span>
-                                    <div class="ff-step-body">
-                                      <div class="fluentform-step active" data-name="step_start-6_3" data-disable_auto_focus="no" data-enable_auto_slider="no" data-enable_step_data_persistency="yes" data-enable_step_page_resume="yes" data-animation_type="slide">
-
-                                        <div class="ff-el-group">
-                                          <div class="ff-el-input--label ff-el-is-required asterisk-right">
-                                            <label for="ff_6_fullName" id="label_ff_6_fullName" aria-label="الاسم الثلاثي">الاسم الثلاثي</label>
-                                          </div>
-                                          <div class="ff-el-input--content">
-                                            <input type="text" name="fullName" id="ff_6_fullName" class="ff-el-form-control" data-name="fullName" aria-invalid="false" aria-required="true" placeholder="أدخل اسمك الثلاثي" />
-                                          </div>
-                                        </div>
-
-                                        <div class="ff-el-group">
-                                          <div class="ff-el-input--label ff-el-is-required asterisk-right">
-                                            <label for="ff_6_phoneNumber" id="label_ff_6_phoneNumber" aria-label="رقم الجوال">رقم الجوال</label>
-                                          </div>
-                                          <div class="ff-el-input--content">
-                                            <input name="phoneNumber" class="ff-el-form-control ff-el-phone ff_el_with_extended_validation" type="tel" placeholder="05XXXXXXXX" data-name="phoneNumber" id="ff_6_phoneNumber" inputmode="tel" aria-invalid="false" aria-required="true" />
-                                          </div>
-                                        </div>
-
-                                        <div class="ff-el-group ff_list_buttons">
-                                          <div class="ff-el-input--label ff-el-is-required asterisk-right">
-                                            <label for="" id="label_" aria-label="العمر">العمر</label>
-                                          </div>
-                                          <div class="ff-el-input--content">
-                                            <div class="ff-el-form-check ff-el-form-check-buttons">
-                                              <label class="ff-el-form-check-label" for="birthDate_d532190b3cda45e8530082192a215c96">
-                                                <input type="radio" name="birthDate" class="ff-el-form-check-input ff-el-form-check-radio" data-name="birthDate" value="أكبر من 20 سنة" id="birthDate_d532190b3cda45e8530082192a215c96" aria-label="أكبر من 20 سنة" aria-invalid="false" aria-required="true" />
-                                                <span>أكبر من 20 سنة</span>
-                                              </label>
-                                            </div>
-                                            <div class="ff-el-form-check ff-el-form-check-buttons">
-                                              <label class="ff-el-form-check-label" for="birthDate_82f1e413237831eb4e603b7d08482aac">
-                                                <input type="radio" name="birthDate" class="ff-el-form-check-input ff-el-form-check-radio" data-name="birthDate" value="أصغر من 20 سنة" id="birthDate_82f1e413237831eb4e603b7d08482aac" aria-label="أصغر من 20 سنة" aria-invalid="false" aria-required="true" />
-                                                <span>أصغر من 20 سنة</span>
-                                              </label>
-                                            </div>
-                                          </div>
-                                        </div>
-
-                                        <div class="ff-el-group ff_list_buttons">
-                                          <div class="ff-el-input--label ff-el-is-required asterisk-right">
-                                            <label for="" id="label_" aria-label="مواطن أو مقيم">مواطن أو مقيم</label>
-                                          </div>
-                                          <div class="ff-el-input--content">
-                                            <div class="ff-el-form-check ff-el-form-check-buttons">
-                                              <label class="ff-el-form-check-label" for="citizenshipStatus_ee99959815f63e20991db9e5b9a13605">
-                                                <input type="radio" name="citizenshipStatus" class="ff-el-form-check-input ff-el-form-check-radio" data-name="citizenshipStatus" value="مواطن" id="citizenshipStatus_ee99959815f63e20991db9e5b9a13605" aria-label="مواطن" aria-invalid="false" aria-required="true" />
-                                                <span>مواطن</span>
-                                              </label>
-                                            </div>
-                                            <div class="ff-el-form-check ff-el-form-check-buttons">
-                                              <label class="ff-el-form-check-label" for="citizenshipStatus_70f060b2f516c7f7b9b8c0b3d722c337">
-                                                <input type="radio" name="citizenshipStatus" class="ff-el-form-check-input ff-el-form-check-radio" data-name="citizenshipStatus" value="مقيم" id="citizenshipStatus_70f060b2f516c7f7b9b8c0b3d722c337" aria-label="مقيم" aria-invalid="false" aria-required="true" />
-                                                <span>مقيم</span>
-                                              </label>
-                                            </div>
-                                          </div>
-                                        </div>
-
-                                        <div class="step-nav ff_step_nav_last">
-                                          <button style="float: left;" type="button" data-action="prev" class="ff-btn ff-btn-prev ff-btn-secondary" aria-label=" السابق">السابق</button>
-                                          <button style="float: right;" type="button" data-action="next" class="ff-float-right ff-btn ff-btn-next ff-btn-secondary" aria-label="تحقّق من أهليتك">تحقّق من أهليتك</button>
-                                        </div>
-                                      </div>
-
-                                      <div style="display: none;" class="fluentform-step" data-name="form_step-6_1">
-                                        <div class="ff-el-group" data-name="shortcode-6_2">
-                                          <div class="audio-player" data-url="https://order.mhzm.sa/wp-content/uploads/2026/05/3.mp3">
-                                            <div class="player">
-                                              <button type="button" class="btn-play" aria-label="Play/Pause">
-                                                <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
-                                                <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>
-                                                <svg class="icon-loop" viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"></path></svg>
-                                              </button>
-                                              <div class="timeline">
-                                                <div class="line"><input dir="ltr" type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek" /></div>
-                                                <div class="data"><div class="current-time"></div><div class="time"></div></div>
-                                              </div>
-                                            </div>
-                                            <div class="user">
-                                              <img width="40" height="40" decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%3C/svg%3E" alt="User Avatar" draggable="false" data-lazy-src="https://order.mhzm.sa/wp-content/webp-express/webp-images/uploads/2026/05/unnamed.png.webp" />
-                                              <noscript><img width="40" height="40" decoding="async" src="https://order.mhzm.sa/wp-content/webp-express/webp-images/uploads/2026/05/unnamed.png.webp" alt="User Avatar" draggable="false" /></noscript>
-                                              <svg class="mic-icon" viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"></path><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"></path></svg>
-                                            </div>
-                                          </div>
-                                        </div>
-
-                                        <div class="ff-el-group">
-                                          <div class="ff-el-input--label ff-el-is-required asterisk-right">
-                                            <label for="ff_6_monthlySalary" id="label_ff_6_monthlySalary" aria-label="الراتب الشهري">الراتب الشهري</label>
-                                          </div>
-                                          <div class="ff-el-input--content">
-                                            <input type="number" name="monthlySalary" id="ff_6_monthlySalary" class="ff-el-form-control" data-name="monthlySalary" inputmode="numeric" step="any" aria-invalid="false" aria-required="true" placeholder="أدخل الراتب بالريال" />
-                                          </div>
-                                        </div>
-
-                                        <div class="ff-el-group">
-                                          <div class="ff-el-input--label ff-el-is-required asterisk-right">
-                                            <label for="ff_6_monthlyCommitments" id="label_ff_6_monthlyCommitments" aria-label="الالتزامات الشهرية">الالتزامات الشهرية</label>
-                                          </div>
-                                          <div class="ff-el-input--content">
-                                            <input type="number" name="monthlyCommitments" id="ff_6_monthlyCommitments" class="ff-el-form-control" data-name="monthlyCommitments" inputmode="numeric" step="any" aria-invalid="false" aria-required="true" placeholder="إجمالي الأقساط الشهرية" />
-                                          </div>
-                                        </div>
-
-                                        <div class="ff-el-group ff_list_buttons">
-                                          <div class="ff-el-input--label ff-el-is-required asterisk-right">
-                                            <label for="" id="label_" aria-label="قرض عقاري">قرض عقاري</label>
-                                          </div>
-                                          <div class="ff-el-input--content">
-                                            <div class="ff-el-form-check ff-el-form-check-buttons">
-                                              <label class="ff-el-form-check-label" for="hasMortgage_c69872899c1ba8a1c64aa79897cf600e">
-                                                <input type="radio" name="hasMortgage" class="ff-el-form-check-input ff-el-form-check-radio" data-name="hasMortgage" value="نعم" id="hasMortgage_c69872899c1ba8a1c64aa79897cf600e" aria-label="نعم" aria-invalid="false" aria-required="true" />
-                                                <span>نعم</span>
-                                              </label>
-                                            </div>
-                                            <div class="ff-el-form-check ff-el-form-check-buttons">
-                                              <label class="ff-el-form-check-label" for="hasMortgage_8f95403ba3b99cea4bdbd2cfda4087f3">
-                                                <input type="radio" name="hasMortgage" class="ff-el-form-check-input ff-el-form-check-radio" data-name="hasMortgage" value="لا" id="hasMortgage_8f95403ba3b99cea4bdbd2cfda4087f3" aria-label="لا" aria-invalid="false" aria-required="true" />
-                                                <span>لا</span>
-                                              </label>
-                                            </div>
-                                          </div>
-                                        </div>
-
-                                        <div class="ff-el-group ff_list_buttons">
-                                          <div class="ff-el-input--label ff-el-is-required asterisk-right">
-                                            <label for="" id="label_" aria-label="تحديد نوع قطاع العمل؟">تحديد نوع قطاع العمل؟</label>
-                                          </div>
-                                          <div class="ff-el-input--content">
-                                            <div class="ff-el-form-check ff-el-form-check-buttons">
-                                              <label class="ff-el-form-check-label" for="jobSector_1ef8d09d630fdb88bc9c30619a9dcd43">
-                                                <input type="radio" name="jobSector" class="ff-el-form-check-input ff-el-form-check-radio" data-name="jobSector" value="قطاع حكومي" id="jobSector_1ef8d09d630fdb88bc9c30619a9dcd43" aria-label="قطاع حكومي" aria-invalid="false" aria-required="true" />
-                                                <span>قطاع حكومي</span>
-                                              </label>
-                                            </div>
-                                            <div class="ff-el-form-check ff-el-form-check-buttons">
-                                              <label class="ff-el-form-check-label" for="jobSector_61ae636a567caca7893caa182e6613b3">
-                                                <input type="radio" name="jobSector" class="ff-el-form-check-input ff-el-form-check-radio" data-name="jobSector" value="قطاع خاص - شركات" id="jobSector_61ae636a567caca7893caa182e6613b3" aria-label="قطاع خاص - شركات" aria-invalid="false" aria-required="true" />
-                                                <span>قطاع خاص - شركات</span>
-                                              </label>
-                                            </div>
-                                            <div class="ff-el-form-check ff-el-form-check-buttons">
-                                              <label class="ff-el-form-check-label" for="jobSector_47ec368bd206e33f2e926d59c4026c50">
-                                                <input type="radio" name="jobSector" class="ff-el-form-check-input ff-el-form-check-radio" data-name="jobSector" value="قطاع خاص - مؤسسات" id="jobSector_47ec368bd206e33f2e926d59c4026c50" aria-label="قطاع خاص - مؤسسات" aria-invalid="false" aria-required="true" />
-                                                <span>قطاع خاص - مؤسسات</span>
-                                              </label>
-                                            </div>
-                                            <div class="ff-el-form-check ff-el-form-check-buttons">
-                                              <label class="ff-el-form-check-label" for="jobSector_35ba6e0d6677e6f40840dcfa28cebca1">
-                                                <input type="radio" name="jobSector" class="ff-el-form-check-input ff-el-form-check-radio" data-name="jobSector" value="متقاعد" id="jobSector_35ba6e0d6677e6f40840dcfa28cebca1" aria-label="متقاعد" aria-invalid="false" aria-required="true" />
-                                                <span>متقاعد</span>
-                                              </label>
-                                            </div>
-                                          </div>
-                                        </div>
-
-                                        <div class="ff-el-group ff_list_buttons">
-                                          <div class="ff-el-input--label ff-el-is-required asterisk-right">
-                                            <label for="" id="label_" aria-label="مدة الخدمة">مدة الخدمة</label>
-                                          </div>
-                                          <div class="ff-el-input--content">
-                                            <div class="ff-el-form-check ff-el-form-check-buttons">
-                                              <label class="ff-el-form-check-label" for="ServiceDuration_d63e64ecf89dd900397506a6675c8a59">
-                                                <input type="radio" name="ServiceDuration" class="ff-el-form-check-input ff-el-form-check-radio" data-name="ServiceDuration" value="اقل من ٣ شهور" id="ServiceDuration_d63e64ecf89dd900397506a6675c8a59" aria-label="اقل من ٣ شهور" aria-invalid="false" aria-required="true" />
-                                                <span>اقل من ٣ شهور</span>
-                                              </label>
-                                            </div>
-                                            <div class="ff-el-form-check ff-el-form-check-buttons">
-                                              <label class="ff-el-form-check-label" for="ServiceDuration_0d2c297073b9944f3b7e82ef51440425">
-                                                <input type="radio" name="ServiceDuration" class="ff-el-form-check-input ff-el-form-check-radio" data-name="ServiceDuration" value="اكثر من ٣ شهور" id="ServiceDuration_0d2c297073b9944f3b7e82ef51440425" aria-label="اكثر من ٣ شهور" aria-invalid="false" aria-required="true" />
-                                                <span>اكثر من ٣ شهور</span>
-                                              </label>
-                                            </div>
-                                          </div>
-                                        </div>
-
-                                        <input type="hidden" name="status" data-name="status" />
-                                        <div class="ff-step-t-container ff-inner_submit_container ff-column-container ff_columns_total_2">
-                                          <div class="ff-t-cell ff-t-column-1">
-                                            <div class="step-nav ff_step_nav_last">
-                                              <button style="float: left;" type="button" data-action="prev" class="ff-btn ff-btn-prev ff-btn-secondary" aria-label="السابق">السابق</button>
-                                            </div>
-                                          </div>
-                                          <div class="ff-t-cell ff-t-column-2">
-                                            <div class="ff-el-group ff-text-right ff_submit_btn_wrapper">
-                                              <!-- ✅ تم تغيير الزر ليكون من نوع button بدلاً من submit حتى لا يرسل للنموذج -->
-                                              <button type="button" id="send-whatsapp-btn" class="ff-btn ff-btn-submit ff-btn-md ff_btn_style" aria-label="تقديم الطلب عبر واتساب">
-                                                <i class="fa-brands fa-whatsapp" style="margin-left:8px"></i> تقديم الطلب عبر واتساب
-                                              </button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </fieldset>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- ============ قسم المميزات ============ -->
-                  <div class="elementor-element elementor-element-5b17a84d e-flex e-con-boxed e-con e-child" data-id="5b17a84d" data-element_type="container" data-e-type="container">
-                    <div class="e-con-inner">
-                      <div class="elementor-element elementor-element-4dedc9dc e-grid e-con-full e-con e-child" data-id="4dedc9dc" data-element_type="container" data-e-type="container">
-
-                        <div class="elementor-element elementor-element-70331db2 e-con-full e-flex e-con e-child" data-id="70331db2" data-element_type="container" data-e-type="container">
-                          <div class="elementor-element elementor-element-1a90ea4c elementor-position-top elementor-widget elementor-widget-image-box" data-id="1a90ea4c" data-element_type="widget" data-e-type="widget" data-settings='{"_animation_mobile":"zoomInRight"}' data-widget_type="image-box.default">
-                            <div class="elementor-image-box-wrapper">
-                              <figure class="elementor-image-box-img">
-                                <img decoding="async" width="640" height="640" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20640%20640'%3E%3C/svg%3E" class="attachment-full size-full wp-image-245" alt="" data-lazy-src="https://order.mhzm.sa/wp-content/webp-express/webp-images/uploads/2026/01/frame_000_delay-0.02s.jpg.webp" />
-                                <noscript><img loading="lazy" decoding="async" width="640" height="640" src="https://order.mhzm.sa/wp-content/webp-express/webp-images/uploads/2026/01/frame_000_delay-0.02s.jpg.webp" class="attachment-full size-full wp-image-245" alt="" /></noscript>
-                              </figure>
-                              <div class="elementor-image-box-content">
-                                <h3 class="elementor-image-box-title">قسّط منتجاتك من 6 إلى 36 شهرًا..</h3>
-                                <p class="elementor-image-box-description">قسط المنتجات اللي تبغاه بتقسيط<br />يبدأ من ٦ شهور حتى ٣٦ شهر ..</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="elementor-element elementor-element-7a0a80c8 e-con-full e-flex e-con e-child" data-id="7a0a80c8" data-element_type="container" data-e-type="container">
-                          <div class="elementor-element elementor-element-5099a3c7 elementor-position-top elementor-widget elementor-widget-image-box" data-id="5099a3c7" data-element_type="widget" data-e-type="widget" data-settings='{"_animation_mobile":"zoomInRight"}' data-widget_type="image-box.default">
-                            <div class="elementor-image-box-wrapper">
-                              <figure class="elementor-image-box-img">
-                                <img decoding="async" width="640" height="640" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20640%20640'%3E%3C/svg%3E" class="attachment-full size-full wp-image-246" alt="" data-lazy-src="https://order.mhzm.sa/wp-content/webp-express/webp-images/uploads/2026/01/frame_00_delay-0.02s.jpg.webp" />
-                                <noscript><img loading="lazy" decoding="async" width="640" height="640" src="https://order.mhzm.sa/wp-content/webp-express/webp-images/uploads/2026/01/frame_00_delay-0.02s.jpg.webp" class="attachment-full size-full wp-image-246" alt="" /></noscript>
-                              </figure>
-                              <div class="elementor-image-box-content">
-                                <h3 class="elementor-image-box-title">ما نطلب أحد يكفلك</h3>
-                                <p class="elementor-image-box-description">أنت كفيل نفسك،<br />قسّط بالطريقة اللي تناسبك..</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="elementor-element elementor-element-2f02223a e-con-full e-flex e-con e-child" data-id="2f02223a" data-element_type="container" data-e-type="container">
-                          <div class="elementor-element elementor-element-67801b7e elementor-position-top elementor-widget elementor-widget-image-box" data-id="67801b7e" data-element_type="widget" data-e-type="widget" data-settings='{"_animation_mobile":"zoomInRight"}' data-widget_type="image-box.default">
-                            <div class="elementor-image-box-wrapper">
-                              <figure class="elementor-image-box-img">
-                                <img decoding="async" width="640" height="640" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20640%20640'%3E%3C/svg%3E" class="attachment-full size-full wp-image-247" alt="" data-lazy-src="https://order.mhzm.sa/wp-content/webp-express/webp-images/uploads/2026/01/frame_000_delay-0.02s-1.jpg.webp" />
-                                <noscript><img loading="lazy" decoding="async" width="640" height="640" src="https://order.mhzm.sa/wp-content/webp-express/webp-images/uploads/2026/01/frame_000_delay-0.02s-1.jpg.webp" class="attachment-full size-full wp-image-247" alt="" /></noscript>
-                              </figure>
-                              <div class="elementor-image-box-content">
-                                <h3 class="elementor-image-box-title">أول قسط بعد شهر</h3>
-                                <p class="elementor-image-box-description">قسّط على راحتك بدون ما<br />تشيل هم ميزانيتك!</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="elementor-element elementor-element-2cd6b224 e-con-full e-flex e-con e-child" data-id="2cd6b224" data-element_type="container" data-e-type="container">
-                          <div class="elementor-element elementor-element-7d46369b elementor-position-top elementor-widget elementor-widget-image-box" data-id="7d46369b" data-element_type="widget" data-e-type="widget" data-settings='{"_animation_mobile":"zoomInRight"}' data-widget_type="image-box.default">
-                            <div class="elementor-image-box-wrapper">
-                              <figure class="elementor-image-box-img">
-                                <img decoding="async" width="640" height="640" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20640%20640'%3E%3C/svg%3E" class="attachment-full size-full wp-image-248" alt="" data-lazy-src="https://order.mhzm.sa/wp-content/webo-express/webp-images/uploads/2026/01/frame_00_delay-0.02s-1.jpg.webp" />
-                                <noscript><img loading="lazy" decoding="async" width="640" height="640" src="https://order.mhzm.sa/wp-content/webp-express/webp-images/uploads/2026/01/frame_00_delay-0.02s-1.jpg.webp" class="attachment-full size-full wp-image-248" alt="" /></noscript>
-                              </figure>
-                              <div class="elementor-image-box-content">
-                                <h3 class="elementor-image-box-title">استلام مباشر</h3>
-                                <p class="elementor-image-box-description">بدون انتظار طويل،<br />جهازك تستلمه مباشرةً</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- ============ الأسئلة الشائعة ============ -->
-                  <div class="elementor-element elementor-element-62b92b30 e-flex e-con-boxed e-con e-child" data-id="62b92b30" data-element_type="container" data-e-type="container">
-                    <div class="e-con-inner">
-                      <div class="elementor-element elementor-element-7d76e71f elementor-widget elementor-widget-heading" data-id="7d76e71f" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
-                        <h2 class="elementor-heading-title elementor-size-default">الأسئلة الشائعة</h2>
-                      </div>
-                      <div class="elementor-element elementor-element-53168897 e-grid e-con-full e-con e-child" data-id="53168897" data-element_type="container" data-e-type="container">
-
-                        <div class="elementor-element elementor-element-2aaaa781 elementor-widget elementor-widget-n-accordion" data-id="2aaaa781" data-element_type="widget" data-e-type="widget" data-settings='{"default_state":"all_collapsed","max_items_expended":"one","n_accordion_animation_duration":{"unit":"ms","size":400,"sizes":[]}}' data-widget_type="nested-accordion.default">
-                          <div class="e-n-accordion" aria-label="Accordion">
-                            <details id="e-n-accordion-item-7150" class="e-n-accordion-item">
-                              <summary class="e-n-accordion-item-title" data-accordion-index="1" tabindex="0" aria-expanded="false" aria-controls="e-n-accordion-item-7150">
-                                <span class="e-n-accordion-item-title-header"><div class="e-n-accordion-item-title-text">هل ميسر موثقين؟</div></span>
-                                <span class="e-n-accordion-item-title-icon">
-                                  <span class="e-opened"><svg aria-hidden="true" class="e-font-icon-svg e-fas-minus" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                                  <span class="e-closed"><svg aria-hidden="true" class="e-font-icon-svg e-fas-plus" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                                </span>
-                              </summary>
-                              <div role="region" class="elementor-element elementor-element-38e39597 e-con-full e-flex e-con e-child">
-                                <div class="elementor-element elementor-element-6abb043f e-flex e-con-boxed e-con e-child">
-                                  <div class="e-con-inner">
-                                    <div class="elementor-element elementor-element-789b723a elementor-widget elementor-widget-text-editor">
-                                      <p>شركة سعودية موثقة، نوفر جميع الأجهزة الإلكترونية والذكية والكهربائية والجوالات بأسعار منافسة وخيارات دفع وتمويل مرنة.</p>
-                                      <ul style="list-style:none;padding:0">
-                                        <li style="margin:10px 0"><i class="fa-solid fa-circle-check" style="color:#00c2a8;margin-left:8px"></i><span>السجل التجاري : <strong>7011663205</strong></span></li>
-                                        <li style="margin:10px 0">
-                                          <i class="fa-solid fa-circle-check" style="color:#00c2a8;margin-left:8px"></i>
-                                          <span>للتحقق من صحة السجل:</span><br>
-                                          <a class="cr-verify-link" href="https://qr.saudibusiness.gov.sa/viewcr?nCrNumber=46KkRps+kGWem2kRR/xW9w==" target="_blank" rel="noopener">
-                                            <i class="fa-solid fa-shield-halved"></i> عرض وثيقة السجل التجاري
-                                          </a>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </details>
-
-                            <details id="e-n-accordion-item-7151" class="e-n-accordion-item">
-                              <summary class="e-n-accordion-item-title" data-accordion-index="2" tabindex="-1" aria-expanded="false" aria-controls="e-n-accordion-item-7151">
-                                <span class="e-n-accordion-item-title-header"><div class="e-n-accordion-item-title-text">ما هي شروط التقسيط؟</div></span>
-                                <span class="e-n-accordion-item-title-icon">
-                                  <span class="e-opened"><svg aria-hidden="true" class="e-font-icon-svg e-fas-minus" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                                  <span class="e-closed"><svg aria-hidden="true" class="e-font-icon-svg e-fas-plus" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                                </span>
-                              </summary>
-                              <div role="region" class="elementor-element elementor-element-879f708 e-con-full e-flex e-con e-child">
-                                <div class="elementor-element elementor-element-55727559 e-flex e-con-boxed e-con e-child">
-                                  <div class="e-con-inner">
-                                    <div class="elementor-element elementor-element-7934036c elementor-widget elementor-widget-text-editor">
-                                      <p><span>يجب أن تتوفر الشروط حتى تكون مؤهل للتقسيط:</span></p>
-                                      <ul>
-                                        <li><span>سعودي الجنسية</span></li>
-                                        <li><span>موظف مسجل في التأمينات</span></li>
-                                        <li><span>العمر فوق 20 سنة</span></li>
-                                        <li><span>عدم وجود متعثرات في سمة</span></li>
-                                        <li><span>التزامات أقل من 42%، وفي حال وجود قرض عقاري حتى 55٪</span></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </details>
-
-                            <details id="e-n-accordion-item-7152" class="e-n-accordion-item">
-                              <summary class="e-n-accordion-item-title" data-accordion-index="3" tabindex="-1" aria-expanded="false" aria-controls="e-n-accordion-item-7152">
-                                <span class="e-n-accordion-item-title-header"><div class="e-n-accordion-item-title-text">هل يوجد دفعة أولى؟</div></span>
-                                <span class="e-n-accordion-item-title-icon">
-                                  <span class="e-opened"><svg aria-hidden="true" class="e-font-icon-svg e-fas-minus" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                                  <span class="e-closed"><svg aria-hidden="true" class="e-font-icon-svg e-fas-plus" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                                </span>
-                              </summary>
-                              <div role="region" class="elementor-element elementor-element-35ff61c4 e-con-full e-flex e-con e-child">
-                                <div class="elementor-element elementor-element-27274e65 e-flex e-con-boxed e-con e-child">
-                                  <div class="e-con-inner">
-                                    <div class="elementor-element elementor-element-5b0854a4 elementor-widget elementor-widget-text-editor">
-                                      <p><span>في غالبية العملاء لا يوجد دفعة أولى، إلا إذا كان الحد الائتماني أقل من سعر الجهاز.</span></p>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </details>
-                          </div>
-                        </div>
-
-                        <div class="elementor-element elementor-element-dfff2 elementor-widget elementor-widget-n-accordion" data-id="dfff2" data-element_type="widget" data-e-type="widget" data-settings='{"default_state":"all_collapsed","max_items_expended":"one","n_accordion_animation_duration":{"unit":"ms","size":400,"sizes":[]}}' data-widget_type="nested-accordion.default">
-                          <div class="e-n-accordion" aria-label="Accordion">
-                            <details id="e-n-accordion-item-9170" class="e-n-accordion-item">
-                              <summary class="e-n-accordion-item-title" data-accordion-index="1" tabindex="0" aria-expanded="false" aria-controls="e-n-accordion-item-9170">
-                                <span class="e-n-accordion-item-title-header"><div class="e-n-accordion-item-title-text">ما هي المستندات المطلوبة للحصول على تقسيط؟</div></span>
-                                <span class="e-n-accordion-item-title-icon">
-                                  <span class="e-opened"><svg aria-hidden="true" class="e-font-icon-svg e-fas-minus" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                                  <span class="e-closed"><svg aria-hidden="true" class="e-font-icon-svg e-fas-plus" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                                </span>
-                              </summary>
-                              <div role="region" class="elementor-element elementor-element-6075611d e-con-full e-flex e-con e-child">
-                                <div class="elementor-element elementor-element-3738522e e-flex e-con-boxed e-con e-child">
-                                  <div class="e-con-inner">
-                                    <div class="elementor-element elementor-element-1fdaebf1 elementor-widget elementor-widget-text-editor">
-                                      <p><span>لا توجد مستندات مطلوبة، فقط نحتاج تعبئة البيانات التالية:</span></p>
-                                      <ul>
-                                        <li><span>اسمك الثلاثي</span></li>
-                                        <li><span>الراتب</span></li>
-                                        <li><span>الالتزامات الشهرية (إجمالي الأقساط)</span></li>
-                                        <li><span>مدة الخدمة (حكومي شهر – قطاع خاص 3 أشهر)</span></li>
-                                        <li><span>القطاع (خاص – حكومي – متقاعد)</span></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </details>
-
-                            <details id="e-n-accordion-item-9171" class="e-n-accordion-item">
-                              <summary class="e-n-accordion-item-title" data-accordion-index="2" tabindex="-1" aria-expanded="false" aria-controls="e-n-accordion-item-9171">
-                                <span class="e-n-accordion-item-title-header"><div class="e-n-accordion-item-title-text">لماذا يتم رفض طلب التقسيط؟</div></span>
-                                <span class="e-n-accordion-item-title-icon">
-                                  <span class="e-opened"><svg aria-hidden="true" class="e-font-icon-svg e-fas-minus" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                                  <span class="e-closed"><svg aria-hidden="true" class="e-font-icon-svg e-fas-plus" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                                </span>
-                              </summary>
-                              <div role="region" class="elementor-element elementor-element-642189b1 e-con-full e-flex e-con e-child">
-                                <div class="elementor-element elementor-element-60f236dd e-flex e-con-boxed e-con e-child">
-                                  <div class="e-con-inner">
-                                    <div class="elementor-element elementor-element-c6d8351 elementor-widget elementor-widget-text-editor">
-                                      <p><span>يتم رفض الطلب بسبب عدم استيفاء الشروط، أو في حال وجود متعثرات في سمة.</span></p>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </details>
-
-                            <details id="e-n-accordion-item-9172" class="e-n-accordion-item">
-                              <summary class="e-n-accordion-item-title" data-accordion-index="3" tabindex="-1" aria-expanded="false" aria-controls="e-n-accordion-item-9172">
-                                <span class="e-n-accordion-item-title-header"><div class="e-n-accordion-item-title-text">كيف يتم تحديد مبلغ التقسيط؟</div></span>
-                                <span class="e-n-accordion-item-title-icon">
-                                  <span class="e-opened"><svg aria-hidden="true" class="e-font-icon-svg e-fas-minus" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                                  <span class="e-closed"><svg aria-hidden="true" class="e-font-icon-svg e-fas-plus" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                                </span>
-                              </summary>
-                              <div role="region" class="elementor-element elementor-element-133ada2e e-con-full e-flex e-con e-child">
-                                <div class="elementor-element elementor-element-77eefaa e-flex e-con-boxed e-con e-child">
-                                  <div class="e-con-inner">
-                                    <div class="elementor-element elementor-element-67560fc4 elementor-widget elementor-widget-text-editor">
-                                      <p><span>يتم تحديده بناءً على المدة التي تناسب كل عميل، وحسب مبلغ المشتريات.</span></p>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </details>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- ============ زر عائم ============ -->
-                  <div class="elementor-element elementor-element-7f44bf89 e-con-full e-flex e-con e-parent" data-id="7f44bf89" data-element_type="container" data-e-type="container" id="go-form-button" data-settings='{"position":"fixed"}'>
-                    <div class="elementor-element elementor-element-49caac5b elementor-align-justify elementor-mobile-align-justify elementor-widget elementor-widget-button" data-id="49caac5b" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
-                      <a class="elementor-button elementor-size-sm" role="button">
-                        <span class="elementor-button-content-wrapper">
-                          <span class="elementor-button-text">تحقّق من أهليتك</span>
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-
-                  <div class="elementor-element elementor-element-3234aaf5 e-flex e-con-boxed e-con e-parent" data-id="3234aaf5" data-element_type="container" data-e-type="container">
-                    <div class="e-con-inner">
-                      <div class="elementor-element elementor-element-266a38dd elementor-widget elementor-widget-html" data-id="266a38dd" data-element_type="widget" data-e-type="widget" data-widget_type="html.default">
-                        <script>
-                          window.addEventListener('DOMContentLoaded', function() {
-jQuery(function ($) {
-  var $form = $('#form-cont');
-  var $btn  = $('#go-form-button');
-  if (!$form.length || !$btn.length) return;
-  function isInViewport($el) {
-    var elementTop    = $el.offset().top;
-    var elementBottom = elementTop + $el.outerHeight();
-    var viewportTop    = $(window).scrollTop();
-    var viewportBottom = viewportTop + $(window).height();
-    var visibleHeight = Math.min(elementBottom, viewportBottom) - Math.max(elementTop, viewportTop);
-    return visibleHeight / $el.outerHeight() >= 0.1;
-  }
-  function toggleButton() {
-    if (isInViewport($form)) { $btn.removeClass('is-visible'); }
-    else { $btn.addClass('is-visible'); }
-  }
-  toggleButton();
-  $(window).on('scroll resize', toggleButton);
-});
-});
-                        </script>
-                        <script>
-                          window.addEventListener('DOMContentLoaded', function() {
-jQuery(function ($) {
-  var OFFSET_TOP = 120;
-  $('#go-form-button').on('click', function (e) {
-    e.preventDefault();
-    var $form = $('#form-cont');
-    if (!$form.length) return;
-    var targetTop = $form.offset().top - OFFSET_TOP;
-    $('html, body').animate({ scrollTop: targetTop }, 600, 'swing', function () {
-      var $firstField = $form.find('.ff-el-input--content').first().find('input, textarea, select').first();
-      if ($firstField.length) { $firstField.trigger('click').trigger('focus'); }
-    });
-  });
-});
-});
-                        </script>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </main>
-            </article>
-          </div>
-        </div>
-
-        <!-- ============ الفوتر ============ -->
-        <footer data-elementor-type="footer" data-elementor-id="24" class="elementor elementor-24 elementor-location-footer" data-elementor-post-type="elementor_library">
-          <div class="elementor-element elementor-element-15dd227 e-con-full e-flex e-con e-parent">
-            <div class="elementor-element elementor-element-5fd33fe e-con-full e-flex e-con e-child">
-              <div class="elementor-element elementor-element-4d82620 e-con-full e-flex e-con e-child">
-                <div class="elementor-element elementor-element-6433658 e-con-full e-flex e-con e-child">
-                  <div class="elementor-element elementor-element-2f369a4 e-con-full e-flex e-con e-child">
-                    <div class="elementor-element elementor-element-4307001 e-grid e-con-full e-con e-child">
-
-                      <div class="elementor-element elementor-element-4715bc5 e-con-full e-flex e-con e-child">
-                        <div class="elementor-element elementor-element-1dec143 e-con-full e-flex e-con e-child">
-                          <div class="elementor-element elementor-element-6624ba7 point-animation elementor-widget elementor-widget-heading">
-                            <h6 class="elementor-heading-title elementor-size-default">من نحن</h6>
-                          </div>
-                          <div class="elementor-element elementor-element-72253c1 elementor-widget elementor-widget-text-editor">
-                            ميسر | ميسرك المليان لشراء جميع الأجهزة الإلكترونية الأصلية، بجميع وسائل الدفع، وبأقل الأسعار.
-                          </div>
-                          <div class="elementor-element elementor-element-4a14a6b elementor-widget elementor-widget-html">
-                            <!-- ✅ تم تحديث رابط الخريطة إلى الموقع الجديد -->
-                            <iframe src="about:blank" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="موقع ميسر على خرائط جوجل" data-rocket-lazyload="fitvidscompatible" data-lazy-src="https://maps.google.com/maps?q=24.7405095,46.8048901&amp;hl=ar&amp;z=17&amp;output=embed"></iframe>
-                            <noscript><iframe src="https://maps.google.com/maps?q=24.7405095,46.8048901&amp;hl=ar&amp;z=17&amp;output=embed" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="موقع ميسر على خرائط جوجل"></iframe></noscript>
-                            <a href="https://maps.app.goo.gl/F1RQH5oAo8rLgMkF7?g_st=ic" rel="noopener" style="display:block;margin-top:12px;font-size:15px;line-height:1.7;text-align:center;text-decoration:none;color:#f5b301 !important;font-weight:700" target="_blank">
-                              <i class="fa-solid fa-location-dot" style="margin-left:6px"></i>افتح موقعنا على خرائط Google
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="elementor-element elementor-element-00eafe7 e-con-full e-flex e-con e-child">
-                        <div class="elementor-element elementor-element-28b3dcc e-con-full e-flex e-con e-child">
-                          <div class="elementor-element elementor-element-0f9d304 point-animation elementor-widget elementor-widget-heading">
-                            <h6 class="elementor-heading-title elementor-size-default">معلومات الشركة</h6>
-                          </div>
-                          <div class="elementor-element elementor-element-43222ed elementor-icon-list--layout-traditional elementor-widget elementor-widget-icon-list">
-                            <ul class="elementor-icon-list-items">
-                              <li class="elementor-icon-list-item">
-                                <span class="elementor-icon-list-icon"><i class="fa-solid fa-briefcase" style="color:#f5b301"></i></span>
-                                <span class="elementor-icon-list-text">السجل التجاري : 7011663205</span>
-                              </li>
-                              <li class="elementor-icon-list-item">
-                                <a href="https://qr.saudibusiness.gov.sa/viewcr?nCrNumber=46KkRps+kGWem2kRR/xW9w==" target="_blank" rel="noopener">
-                                  <span class="elementor-icon-list-icon"><i class="fa-solid fa-shield-halved" style="color:#00c2a8"></i></span>
-                                  <span class="elementor-icon-list-text">تحقق من وثيقة السجل التجاري</span>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="elementor-element elementor-element-2303674 e-con-full e-flex e-con e-child">
-                        <div class="elementor-element elementor-element-82d4a65 e-con-full e-flex e-con e-child">
-                          <div class="elementor-element elementor-element-2d4b711 point-animation elementor-widget elementor-widget-heading">
-                            <h6 class="elementor-heading-title elementor-size-default">تواصل معنا</h6>
-                          </div>
-                          <div class="elementor-element elementor-element-bb20402 elementor-align-start elementor-icon-list--layout-traditional elementor-widget elementor-widget-icon-list">
-                            <ul class="elementor-icon-list-items">
-                              <li class="elementor-icon-list-item">
-                                <a href="https://wa.me/96653774766?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D9%85%D9%8A%D8%B3%D8%B1" target="_blank">
-                                  <span class="elementor-icon-list-icon"><i class="fa-brands fa-whatsapp" style="color:#25d366"></i></span>
-                                  <span class="elementor-icon-list-text">تواصل معنا عبر واتساب</span>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-
-                          <!-- ✅ السوشيال ميديا: تم حذف كل الأيقونات ما عدا الواتساب -->
-                          <div class="elementor-element elementor-element-d0b1188 e-grid-align-right elementor-shape-rounded elementor-grid-0 elementor-widget elementor-widget-social-icons">
-                            <div class="elementor-social-icons-wrapper elementor-grid" role="list">
-                              <span class="elementor-grid-item" role="listitem">
-                                <a class="elementor-icon elementor-social-icon elementor-social-icon-whatsapp" href="https://wa.me/96653774766?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D9%85%D9%8A%D8%B3%D8%B1" target="_blank" style="width:56px !important;height:56px !important">
-                                  <span class="elementor-screen-only">Whatsapp</span>
-                                  <svg aria-hidden="true" class="e-font-icon-svg e-fab-whatsapp" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" style="width:26px;height:26px"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"></path></svg>
-                                </a>
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-
-                    <div class="elementor-element elementor-element-45c3fa5 e-con-full e-flex e-con e-child">
-                      <div class="elementor-element elementor-element-fbbefcd elementor-widget elementor-widget-heading">
-                        <span class="elementor-heading-title elementor-size-default">جميع الحقوق محفوظة ميسر © 2025 | ميسرك المليان</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+<title>ميسر | تقسيط الأجهزة الإلكترونية بالتقسيط المريح</title>
+<meta name="description" content="ميسر - ميسرك المليان لتقسيط جميع الأجهزة الإلكترونية والجوالات بأقساط مريحة تبدأ من 6 حتى 36 شهر" />
+<meta name="theme-color" content="#0a1f44" />
+
+<!-- مكتبة AOS للحركات عند التمرير -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+
+<!-- خطوط عربية احترافية -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+
+<!-- مكتبة أيقونات Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+<style id="mhzm-modern-theme">
+:root{
+  --primary:#0a1f44;
+  --primary-light:#1e5eb8;
+  --accent:#f5b301;
+  --accent-warm:#ff8a00;
+  --success:#10b981;
+  --gradient-brand:linear-gradient(135deg,#0a1f44 0%,#1e5eb8 50%,#2a7fdc 100%);
+  --gradient-accent:linear-gradient(135deg,#f5b301 0%,#ff8a00 100%);
+  --radius:16px;
+  --radius-xl:32px;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Tajawal','Cairo',system-ui,-apple-system,sans-serif!important;
+  background:#f6f9ff;
+  color:#1a2332;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4,h5,h6{
+  font-family:'Tajawal','Cairo',sans-serif!important;
+  font-weight:800!important;
+}
+a{color:inherit;text-decoration:none}
+
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(1200px 600px at 90% -10%,rgba(30,94,184,.12),transparent 60%),
+    radial-gradient(1000px 500px at -10% 30%,rgba(0,194,168,.10),transparent 55%);
+  pointer-events:none;
+  z-index:0;
+}
+.uicore-body-content{position:relative;z-index:1}
+
+/* الهيدر */
+#wrapper-navbar{
+  background:rgba(255,255,255,.88)!important;
+  backdrop-filter:saturate(200%) blur(24px);
+  box-shadow:0 4px 30px rgba(10,31,68,.08);
+  border-bottom:1px solid rgba(10,31,68,.06);
+  padding:14px 0!important;
+  position:sticky;
+  top:0;
+  z-index:999;
+}
+.uicore-header-wrapper nav{padding:0 24px!important;display:flex;justify-content:space-between;align-items:center}
+.uicore-branding a.text-logo{
+  display:inline-flex!important;
+  align-items:center;
+  gap:14px;
+}
+.uicore-branding a.text-logo .logo-icon{
+  width:56px;
+  height:56px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--gradient-brand);
+  color:#fff;
+  border-radius:18px;
+  font-size:24px;
+  box-shadow:0 10px 24px rgba(30,94,184,.35);
+}
+.uicore-branding a.text-logo .logo-text{
+  font-size:32px;
+  font-weight:900;
+  background:var(--gradient-brand);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  line-height:1;
+  display:block;
+}
+.uicore-branding a.text-logo .logo-tagline{
+  display:block;
+  font-size:11.5px;
+  font-weight:700;
+  color:#6b7a90;
+  margin-top:4px;
+}
+
+/* البانر */
+.banner-section img{width:100%;display:block;}
+
+/* حاوية الفورم */
+#form-cont{
+  max-width:750px;
+  margin:-80px auto 40px;
+  padding:0 20px;
+  position:relative;
+  z-index:5;
+}
+.form-card{
+  background:#fff;
+  border-radius:var(--radius-xl);
+  box-shadow:0 30px 80px rgba(10,31,68,.20);
+  padding:40px 32px;
+  border:1px solid rgba(10,31,68,.06);
+  position:relative;
+}
+.form-card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  right:30px;
+  left:30px;
+  height:5px;
+  background:var(--gradient-brand);
+  border-radius:0 0 12px 12px;
+}
+.form-title{
+  font-size:26px;
+  color:var(--primary);
+  margin-bottom:24px;
+  text-align:center;
+  font-weight:900;
+}
+
+.input-group{
+  margin-bottom:20px;
+}
+.input-group label{
+  display:block;
+  font-weight:700;
+  color:var(--primary);
+  margin-bottom:8px;
+  font-size:15px;
+}
+.input-group input, .input-group select{
+  width:100%;
+  font-family:'Tajawal',sans-serif!important;
+  background:#f8faff!important;
+  border:1.5px solid #e3eaf5!important;
+  border-radius:14px!important;
+  padding:15px 20px!important;
+  font-size:15px!important;
+  color:#0a1f44!important;
+  outline:none!important;
+  transition:all .3s ease;
+}
+.input-group input:focus, .input-group select:focus{
+  border-color:var(--primary-light)!important;
+  background:#fff!important;
+  box-shadow:0 0 0 5px rgba(30,94,184,.1)!important;
+}
+
+/* أزرار الاختيارات */
+.options-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+  gap:10px;
+}
+.option-btn{
+  padding:14px;
+  border:1.5px solid #e3eaf5;
+  border-radius:14px;
+  background:#fff;
+  font-weight:700;
+  color:var(--primary);
+  cursor:pointer;
+  text-align:center;
+  transition:all .3s ease;
+  font-family:'Tajawal',sans-serif;
+  font-size:14px;
+}
+.option-btn.active{
+  background:var(--gradient-brand);
+  color:#fff;
+  border-color:var(--primary-light);
+  box-shadow:0 8px 20px rgba(30,94,184,.3);
+}
+
+/* زر إرسال واتساب الرئيسي */
+.whatsapp-submit-btn{
+  width:100%;
+  background:linear-gradient(135deg,#25d366 0%,#128c7e 100%);
+  color:#fff;
+  padding:18px;
+  border:none;
+  border-radius:16px;
+  font-family:'Tajawal',sans-serif;
+  font-weight:800;
+  font-size:18px;
+  cursor:pointer;
+  box-shadow:0 12px 30px rgba(37,211,102,.4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  transition:all .3s ease;
+  margin-top:30px;
+}
+.whatsapp-submit-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 40px rgba(37,211,102,.6);
+}
+
+/* قسم الشروط والمعلومات */
+.info-section {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+.info-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 30px rgba(10,31,68,.08);
+  border: 1px solid #e8eef8;
+}
+.info-card h3 {
+  color: var(--primary);
+  font-size: 20px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.info-card ul {
+  list-style: none;
+  padding: 0;
+}
+.info-card ul li {
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: #4a5568;
+}
+.cr-verify-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 18px;
+  background:rgba(245,179,1,.14);
+  border:1.5px solid rgba(245,179,1,.4);
+  border-radius:12px;
+  color:#f5b301!important;
+  font-weight:700;
+  text-decoration:none;
+  transition:all .35s ease;
+  font-size:14px;
+  margin-top:12px;
+}
+.cr-verify-link:hover{
+  background:var(--gradient-accent);
+  color:#0a1f44!important;
+  box-shadow:0 8px 20px rgba(245,179,1,.4);
+}
+
+/* الفوتر */
+footer{
+  background:linear-gradient(135deg,#0a1f44 0%,#0f2a5c 100%);
+  color:#fff;
+  padding:40px 20px 20px;
+  text-align:center;
+  margin-top:60px;
+}
+
+/* Toast Notification */
+#mhzm-toast{
+  position:fixed;
+  top:30px;
+  left:50%;
+  transform:translate(-50%,-120%);
+  background:#fff;
+  padding:16px 26px;
+  border-radius:14px;
+  box-shadow:0 20px 50px rgba(10,31,68,.25);
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  font-family:'Tajawal',sans-serif;
+  font-weight:700;
+  font-size:15px;
+  transition:transform .5s cubic-bezier(.2,.9,.3,1.4);
+  border-right:5px solid var(--success);
+}
+#mhzm-toast.show{transform:translate(-50%,0)}
+#mhzm-toast.error{border-right-color:#ef4444}
+</style>
+</head>
+
+<body class="rtl">
+
+<!-- إشعار التنبيه -->
+<div id="mhzm-toast">
+  <div class="toast-icon"><i class="fa-solid fa-check"></i></div>
+  <div class="toast-text"></div>
+</div>
+
+<div class="uicore-body-content">
+  
+  <!-- الهيدر -->
+  <div id="wrapper-navbar">
+    <nav class="uicore-container" style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center">
+      <div class="uicore-branding">
+        <a href="#" class="text-logo">
+          <span class="logo-icon"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+          <span>
+            <span class="logo-text">ميسر</span>
+            <span class="logo-tagline">ميسرك المليان</span>
+          </span>
+        </a>
       </div>
+      <div>
+        <a href="https://wa.me/966533774766" target="_blank" style="background:#25d366;color:#fff;padding:10px 20px;border-radius:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;font-size:14px;">
+          <i class="fa-brands fa-whatsapp" style="font-size:18px"></i> تواصل عبر الواتساب
+        </a>
+      </div>
+    </nav>
+  </div>
 
-      <!-- ============ قائمة الموبايل ============ -->
-      <div class="uicore-navigation-wrapper uicore-navbar uicore-section uicore-box uicore-mobile-menu-wrapper">
-        <nav class="uicore uicore-container">
-          <div class="uicore-branding uicore-mobile">
-            <a href="#form" rel="home" class="text-logo" style="text-decoration:none">
-              <span class="logo-icon"><i class="fa-solid fa-hand-holding-dollar"></i></span>
-              <span class="logo-text">ميسر</span>
-            </a>
-          </div>
-          <div class="uicore-branding uicore-desktop"></div>
-          <div class="uicore-mobile-head-right">
-            <button type="button" class="uicore-toggle uicore-ham" aria-label="mobile-menu">
-              <span class="bars"><span class="bar"></span><span class="bar"></span><span class="bar"></span></span>
-            </button>
-          </div>
-        </nav>
-        <div class="uicore-navigation-content">
-          <div class="uicore uicore-extra">
-            <div class="uicore uicore-socials uicore-only-desktop"></div>
+  <!-- البانر -->
+  <div class="banner-section">
+    <img src="https://order.mhzm.sa/wp-content/webp-express/webp-images/uploads/2026/09/ipone-18-banners-01-1-scaled.jpg.webp" alt="ميسر - تقسيط الأجهزة" />
+  </div>
+
+  <!-- نموذج الطلب -->
+  <div id="form-cont">
+    <div class="form-card">
+      <h2 class="form-title">استمارة التحقق والطلب السريع</h2>
+      
+      <form id="mhzm-direct-form">
+        
+        <div class="input-group">
+          <label for="fullName">الاسم الثلاثي</label>
+          <input type="text" id="fullName" placeholder="أدخل اسمك الثلاثي هنا" required />
+        </div>
+
+        <div class="input-group">
+          <label for="phoneNumber">رقم الجوال</label>
+          <input type="tel" id="phoneNumber" placeholder="05XXXXXXXX" required />
+        </div>
+
+        <div class="input-group">
+          <label for="monthlySalary">الراتب الشهري (بالريال)</label>
+          <input type="number" id="monthlySalary" placeholder="أدخل راتبك الشهري" required />
+        </div>
+
+        <div class="input-group">
+          <label for="monthlyCommitments">الالتزامات الشهرية (إجمالي الأقساط)</label>
+          <input type="number" id="monthlyCommitments" placeholder="أدخل إجمالي التزاماتك الشهرية" required />
+        </div>
+
+        <div class="input-group">
+          <label>القطاع</label>
+          <div class="options-grid" id="sector-group">
+            <div class="option-btn" data-value="قطاع حكومي">قطاع حكومي</div>
+            <div class="option-btn" data-value="قطاع خاص">قطاع خاص</div>
+            <div class="option-btn" data-value="متقاعد">متقاعد</div>
           </div>
         </div>
-      </div>
+
+        <div class="input-group">
+          <label>مدة الخدمة</label>
+          <div class="options-grid" id="duration-group">
+            <div class="option-btn" data-value="حكومي (شهر أو أكثر)">حكومي (شهر أو أكثر)</div>
+            <div class="option-btn" data-value="قطاع خاص (3 أشهر أو أكثر)">قطاع خاص (3 أشهر فأكثر)</div>
+          </div>
+        </div>
+
+        <button type="button" id="submit-whatsapp" class="whatsapp-submit-btn">
+          <i class="fa-brands fa-whatsapp" style="font-size:24px"></i>
+          <span>تحقق من أهليتك وأرسل الطلب عبر واتساب</span>
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- قسم الشروط، السجل التجاري، والموقع -->
+  <div class="info-section">
+    
+    <!-- شروط التقسيط -->
+    <div class="info-card">
+      <h3><i class="fa-solid fa-list-check" style="color:var(--primary-light)"></i> شروط التقسيط</h3>
+      <ul>
+        <li><i class="fa-solid fa-circle-check" style="color:var(--success)"></i> لا توجد مستندات معقدة مطلوبة</li>
+        <li><i class="fa-solid fa-circle-check" style="color:var(--success)"></i> تعبئة بيانات الاسم، الراتب والالتزامات</li>
+        <li><i class="fa-solid fa-circle-check" style="color:var(--success)"></i> خدمة قطاع حكومي (شهر أو أكثر)</li>
+        <li><i class="fa-solid fa-circle-check" style="color:var(--success)"></i> خدمة قطاع خاص (3 أشهر أو أكثر)</li>
+      </ul>
     </div>
 
-    <!-- ============ سكربت إرسال النموذج إلى واتساب ============ -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var btn = document.getElementById('send-whatsapp-btn');
-      if (!btn) return;
+    <!-- معلومات السجل التجاري والتوثيق -->
+    <div class="info-card">
+      <h3><i class="fa-solid fa-shield-halved" style="color:var(--accent)"></i> السجل التجاري والتوثيق</h3>
+      <p style="color:#4a5568;font-size:15px;margin-bottom:12px">شركة موثقة رسمياً لتقديم خدمات التقسيط المريح للأجهزة الإلكترونية.</p>
+      <ul style="margin-bottom:10px">
+        <li><i class="fa-solid fa-briefcase" style="color:var(--primary)"></i> <strong>رقم السجل التجاري:</strong> 7011663205</li>
+      </ul>
+      <a class="cr-verify-link" href="https://qr.saudibusiness.gov.sa/viewcr?nCrNumber=46KkRps+kGWem2kRR/xW9w==" target="_blank" rel="noopener">
+        <i class="fa-solid fa-certificate"></i> عرض وثيقة السجل التجاري المعتمدة
+      </a>
+    </div>
 
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
+    <!-- الموقع على خرائط جوجل (تم التعديل إلى حفر الباطن) -->
+    <div class="info-card" style="grid-column: 1 / -1;">
+      <h3><i class="fa-solid fa-location-dot" style="color:#ef4444"></i> موقعنا الجغرافي (حفر الباطن)</h3>
+      <p style="color:#4a5568;font-size:15px;margin-bottom:14px">تفضل بزيارتنا في مقرنا بمحافظة حفر الباطن أو تواصل معنا عبر الرابط أدناه:</p>
+      <div style="border-radius:16px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:14px">
+        <iframe src="https://maps.google.com/maps?q=Hafar+Al-Batin&hl=ar&z=13&output=embed" width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+      <a href="https://maps.app.goo.gl/F1RQH5oAo8rLgMkF7?g_st=ic" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:var(--primary-light);font-weight:750;font-size:15px">
+        <i class="fa-solid fa-map-location-dot"></i> افتح موقعنا على خرائط Google مباشرة
+      </a>
+    </div>
 
-        function val(name) {
-          var el = document.querySelector('[name="' + name + '"]');
-          return el ? (el.value || '').trim() : '';
-        }
-        function radioVal(name) {
-          var el = document.querySelector('[name="' + name + '"]:checked');
-          return el ? el.value : '';
-        }
+  </div>
 
-        var data = {
-          fullName: val('fullName'),
-          phone: val('phoneNumber'),
-          age: radioVal('birthDate'),
-          citizen: radioVal('citizenshipStatus'),
-          salary: val('monthlySalary'),
-          commitments: val('monthlyCommitments'),
-          mortgage: radioVal('hasMortgage'),
-          sector: radioVal('jobSector'),
-          duration: radioVal('ServiceDuration')
-        };
+  <!-- الفوتر -->
+  <footer>
+    <p style="font-size:15px;color:rgba(255,255,255,.85)">جميع الحقوق محفوظة © ميسر | ميسرك المليان 2026 - حفر الباطن</p>
+  </footer>
 
-        // التحقق من اكتمال الحقول
-        var missing = [];
-        if (!data.fullName) missing.push('الاسم الثلاثي');
-        if (!data.phone) missing.push('رقم الجوال');
-        if (!data.age) missing.push('العمر');
-        if (!data.citizen) missing.push('مواطن أو مقيم');
-        if (!data.salary) missing.push('الراتب الشهري');
-        if (!data.commitments) missing.push('الالتزامات الشهرية');
-        if (!data.mortgage) missing.push('قرض عقاري');
-        if (!data.sector) missing.push('القطاع');
-        if (!data.duration) missing.push('مدة الخدمة');
+</div>
 
-        if (missing.length) {
-          alert('⚠️ الرجاء إكمال الحقول التالية:\n• ' + missing.join('\n• '));
-          return;
-        }
-
-        // التحقق من الشروط
-        if (data.age === 'أصغر من 20 سنة') {
-          alert('❌ نأسف، يجب أن يكون عمرك أكبر من 20 سنة للتأهل للتقسيط.');
-          return;
-        }
-
-        if (data.citizen === 'مقيم') {
-          alert('❌ نأسف، خدمة التقسيط متاحة للمواطنين السعوديين فقط.');
-          return;
-        }
-
-        // حساب نسبة الالتزامات
-        var salary = parseFloat(data.salary) || 0;
-        var commitments = parseFloat(data.commitments) || 0;
-        if (salary > 0) {
-          var ratio = (commitments / salary) * 100;
-          var limit = (data.mortgage === 'نعم') ? 55 : 42;
-          if (ratio > limit) {
-            alert('❌ نأسف، نسبة التزاماتك الشهرية (' + ratio.toFixed(1) + '%) تتجاوز الحد المسموح (' + limit + '%).');
-            return;
-          }
-        }
-
-        // بناء الرسالة الاحترافية
-        var msg = '🌟 *طلب تقسيط جديد - ميسر*\n';
-        msg += '━━━━━━━━━━━━━━━━━━\n\n';
-        msg += '👤 *الاسم الثلاثي:* ' + data.fullName + '\n';
-        msg += '📱 *رقم الجوال:* ' + data.phone + '\n';
-        msg += '🎂 *العمر:* ' + data.age + '\n';
-        msg += '🪪 *الحالة:* ' + data.citizen + '\n\n';
-        msg += '💰 *الراتب الشهري:* ' + data.salary + ' ريال\n';
-        msg += '📊 *الالتزامات الشهرية:* ' + data.commitments + ' ريال\n';
-        msg += '🏠 *قرض عقاري:* ' + data.mortgage + '\n';
-        msg += '🏢 *القطاع:* ' + data.sector + '\n';
-        msg += '⏱️ *مدة الخدمة:* ' + data.duration + '\n\n';
-        msg += '━━━━━━━━━━━━━━━━━━\n';
-        msg += '✅ تم استيفاء الشروط المبدئية';
-
-        var url = 'https://wa.me/96653774766?text=' + encodeURIComponent(msg);
-        window.open(url, '_blank');
+<!-- سكربت التشغيل -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  function setupSelector(groupId) {
+    const group = document.getElementById(groupId);
+    if(!group) return;
+    const buttons = group.querySelectorAll('.option-btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
       });
     });
-    </script>
+  }
+  setupSelector('sector-group');
+  setupSelector('duration-group');
 
-    <script>
-      var uicore_frontend = {'back':'العوده', 'rtl' : '1','mobile_br' : '1025'};
-    </script>
-    <script type="speculationrules">
-      {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/outgrid/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
-    </script>
-    <noscript>
-      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N8V6QBV4" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript>
+  function showToast(message, type) {
+    var toast = document.getElementById('mhzm-toast');
+    if (!toast) return;
+    var icon = toast.querySelector('.toast-icon');
+    var text = toast.querySelector('.toast-text');
 
-    <script>
-      (()=>{class RocketElementorPreload{constructor(){this.deviceMode=document.createElement("span"),this.deviceMode.id="elementor-device-mode-wpr",this.deviceMode.setAttribute("class","elementor-screen-only"),document.body.appendChild(this.deviceMode)}t(){let t=getComputedStyle(this.deviceMode,":after").content.replace(/"/g,"");this.animationSettingKeys=this.i(t),document.querySelectorAll(".elementor-invisible[data-settings]").forEach(t=>{const e=t.getBoundingClientRect();if(e.bottom>=0&&e.top<=window.innerHeight)try{this.o(t)}catch(t){}})}o(t){const e=JSON.parse(t.dataset.settings),i=e.m||e.animation_delay||0,n=e[this.animationSettingKeys.find(t=>e[t])];if("none"===n)return void t.classList.remove("elementor-invisible");t.classList.remove(n),this.currentAnimation&&t.classList.remove(this.currentAnimation),this.currentAnimation=n;let o=setTimeout(()=>{t.classList.remove("elementor-invisible"),t.classList.add("animated",n),this.l(t,e)},i);window.addEventListener("rocket-startLoading",function(){clearTimeout(o)})}i(t="mobile"){const e=[""];switch(t){case"mobile":e.unshift("_mobile");case"tablet":e.unshift("_tablet");case"desktop":e.unshift("_desktop")}const i=[];return["animation","_animation"].forEach(t=>{e.forEach(e=>{i.push(t+e)})}),i}l(t,e){this.i().forEach(t=>delete e[t]),t.dataset.settings=JSON.stringify(e)}static run(){const t=new RocketElementorPreload;requestAnimationFrame(t.t.bind(t))}}document.addEventListener("DOMContentLoaded",RocketElementorPreload.run)})();
-    </script>
-  </body>
+    if (type === 'error') {
+      toast.classList.add('error');
+      icon.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    } else {
+      toast.classList.remove('error');
+      icon.innerHTML = '<i class="fa-solid fa-check"></i>';
+    }
+    text.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  const submitBtn = document.getElementById('submit-whatsapp');
+  if(submitBtn) {
+    submitBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      const fullName = document.getElementById('fullName').value.trim();
+      const phone = document.getElementById('phoneNumber').value.trim();
+      const salary = document.getElementById('monthlySalary').value.trim();
+      const commitments = document.getElementById('monthlyCommitments').value.trim();
+      
+      const activeSector = document.querySelector('#sector-group .option-btn.active');
+      const activeDuration = document.querySelector('#duration-group .option-btn.active');
+
+      if(!fullName || !phone || !salary || !commitments || !activeSector || !activeDuration) {
+        showToast('الرجاء تعبئة جميع الحقول واختيار القطاع ومدة الخدمة', 'error');
+        return;
+      }
+
+      let msg = '🌟 *طلب تقسيط جديد - ميسر (حفر الباطن)*\n';
+      msg += '━━━━━━━━━━━━━━━━━━\n\n';
+      msg += '👤 *الاسم الثلاثي:* ' + fullName + '\n';
+      msg += '📱 *رقم الجوال:* ' + phone + '\n';
+      msg += '💰 *الراتب الشهري:* ' + salary + ' ريال\n';
+      msg += '📊 *الالتزامات الشهرية:* ' + commitments + ' ريال\n';
+      msg += '🏢 *القطاع:* ' + activeSector.getAttribute('data-value') + '\n';
+      msg += '⏱️ *مدة الخدمة:* ' + activeDuration.getAttribute('data-value') + '\n\n';
+      msg += '━━━━━━━━━━━━━━━━━━\n';
+      msg += '📅 ' + new Date().toLocaleString('ar-SA');
+
+      var whatsappUrl = 'https://wa.me/966533774766?text=' + encodeURIComponent(msg);
+
+      showToast('جاري تحويل طلبك مباشرة إلى واتساب...');
+      setTimeout(() => {
+        window.location.href = whatsappUrl;
+      }, 500);
+    });
+  }
+
+});
+</script>
+
+</body>
 </html>
